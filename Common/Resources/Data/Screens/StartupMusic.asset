@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Screen name="PersistentStartupAndMainMenu" guid="47ddc39e-3daf-4f3b-8eb9-59637e771b06">
+    <GameObjects>
+      <GameObject name="Audio">
+        <Components>
+          <AudioSource sound="[AUDIO_FILE_PATH]" is_playing="true" is_looping="true" volume="1" audio_type="Music"/>
+        </Components>
+      </GameObject>
+    </GameObjects>
+  </Screen>
+</Root>

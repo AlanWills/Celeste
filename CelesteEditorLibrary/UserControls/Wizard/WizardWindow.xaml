@@ -1,0 +1,45 @@
+﻿<editor_windows:EditorWindow x:Class="CelesteEngineEditor.UserControls.Wizard.WizardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:editor_windows="clr-namespace:CelesteEngineEditor.Windows"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+		BorderThickness="0" 
+		GlowBrush="Black"
+		ShowInTaskbar="False">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="PageTitle" Grid.Row="0" Style="{StaticResource LightText}" Margin="0,30,0,0" 
+                       FontWeight="Bold" FontSize="24"
+                       HorizontalAlignment="Center"/>
+            <TextBlock x:Name="Description" Grid.Row="1" Style="{StaticResource LightText}"
+                       FontSize="13" TextWrapping="Wrap"
+                       HorizontalAlignment="Center" Margin="20,25,20,30"/>
+			<Rectangle Grid.Row="2" Style="{StaticResource HorizontalSeparatorStyle}" Margin="0,40,0,0"/>
+            <Frame x:Name="Frame" Grid.Row="3" Style="{StaticResource DefaultFrame}" />
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="15,10,15,10">
+            <Button x:Name="CancelButton" Style="{StaticResource DefaultButton}"
+                    Content="Cancel" VerticalAlignment="Center"
+                    Click="CloseWizard"/>
+            <Button x:Name="BackButton" Style="{StaticResource DefaultButton}" Margin="5,0,0,0"
+                    Content="Back" VerticalAlignment="Center"
+                    Click="Back_Click"/>
+            <Button x:Name="NextButton" Style="{StaticResource DefaultButton}" Margin="5,0,0,0"
+                    Content="Next" VerticalAlignment="Center"
+                    Click="Next_Click"/>
+        </StackPanel>
+    </Grid>
+</editor_windows:EditorWindow>

@@ -1,0 +1,3 @@
+local EmptyModule = { }
+
+return EmptyModule

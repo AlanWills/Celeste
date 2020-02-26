@@ -1,0 +1,197 @@
+#include "Animation/Animator.h"
+#include "UtilityHeaders/ComponentHeaders.h"
+
+using namespace Celeste::Resources;
+
+
+namespace Celeste::Animation
+{
+  REGISTER_SCRIPT(Animator, 10)
+
+    //------------------------------------------------------------------------------------------------
+    Animator::Animator() :
+    m_spriteSheetDimensions(1),
+    m_currentFrame(0),
+    m_currentFrameDirty(false),
+    m_spriteRenderer(),
+    m_begun(false),
+    m_playImmediately(true),
+    m_loop(true),
+    m_playing(false),
+    m_currentSecondsPerFrame(0),
+    m_secondsPerFrame(0.1f),
+    m_name(0)
+  {
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Animator::onSetGameObject(GameObject& gameObject)
+  {
+    Inherited::onSetGameObject(gameObject);
+
+    m_spriteRenderer = gameObject.findComponent<Rendering::SpriteRenderer>();
+    if (m_spriteRenderer == nullptr)
+    {
+      ASSERT_FAIL();
+      return;
+    }
+
+    // Tell this animation that it is going to have to recalculate the texture origin
+    // This is to avoid a bug where the first frame is the whole texture if we set the
+    // sprite sheet dimensions after adding the component
+    m_currentFrameDirty = true;
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Animator::setSpriteSheetDimensions(const glm::uvec2& spriteSheetDimensions)
+  {
+    m_spriteSheetDimensions = spriteSheetDimensions;
+
+    if (m_spriteRenderer != nullptr)
+    {
+      // Set the scissor rectangle to be the size of one frame
+      const glm::vec2& dimensions = m_spriteRenderer->getDimensions();
+      float singleFrameWidth = dimensions.x / m_spriteSheetDimensions.x;
+      float singleFrameHeight = dimensions.y / m_spriteSheetDimensions.y;
+
+      m_spriteRenderer->getScissorRectangle().setDimensions(singleFrameWidth, singleFrameHeight);
+      m_spriteRenderer->getScissorRectangle().setCentre(0, 0);
+    }
+
+    setTextureToIndex(m_currentFrame);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Animator::begin()
+  {
+    m_begun = true;
+
+    if (m_playImmediately)
+    {
+      play();
+    }
+    else
+    {
+      stop();
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Animator::onUpdate(GLfloat secondsPerUpdate)
+  {
+    Inherited::onUpdate(secondsPerUpdate);
+
+#if _DEBUG
+    if (m_spriteRenderer == nullptr)
+    {
+      ASSERT_FAIL();
+      return;
+    }
+#endif
+
+    if (!m_begun)
+    {
+      begin();
+    }
+
+    if (m_playing)
+    {
+      m_currentSecondsPerFrame += secondsPerUpdate;
+
+      if (m_currentSecondsPerFrame >= m_secondsPerFrame)
+      {
+        size_t numFrames = getFrameCount();
+        ASSERT(numFrames);
+
+        m_currentSecondsPerFrame -= m_secondsPerFrame;
+
+        m_currentFrame++;
+        m_currentFrame %= numFrames;
+
+        if (!m_loop && (m_currentFrame == numFrames - 1))
+        {
+          // If we are not looping and we have reached the end of the animation frames we stop playing the animation
+          // This will freeze the sprite renderer on the final frame
+          pause();
+          m_currentSecondsPerFrame = 0;
+        }
+
+        // Tell the animation that it needs to recalculate the texture scissor rect
+        m_currentFrameDirty = true;
+      }
+
+      if (m_currentFrameDirty)
+      {
+        // Update texture
+        setTextureToIndex(m_currentFrame);
+
+        m_currentFrameDirty = false;
+      }
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Animator::onDeath()
+  {
+    Inherited::onDeath();
+
+    m_spriteSheetDimensions = glm::uvec2(1);
+    m_currentFrameDirty = false;
+    m_currentFrame = 0;
+    m_secondsPerFrame = 0.1f;
+    m_begun = false;
+    m_playing = false;
+    m_playImmediately = true;
+    m_loop = true;
+    m_name = 0;
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Animator::play()
+  {
+    size_t numFrames = getFrameCount();
+
+    if (m_loop || (0 < numFrames && (m_currentFrame != numFrames - 1)))
+    {
+      // If we are looping or have not reached the end of a non-looping animation we continue playing
+      m_playing = true;
+      m_currentFrameDirty = true;
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Animator::stop()
+  {
+    pause();
+    restart();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Animator::restart()
+  {
+    size_t numFrames = getFrameCount();
+
+    m_currentFrame = 0;
+    m_currentSecondsPerFrame = 0;
+    m_currentFrameDirty = true;
+
+    setTextureToIndex(0);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Animator::setTextureToIndex(size_t index)
+  {
+    if (index >= getFrameCount() || m_spriteRenderer == nullptr)
+    {
+      // Invalid index
+      return;
+    }
+
+    size_t column = index % m_spriteSheetDimensions.x;
+    size_t row = index / m_spriteSheetDimensions.x;
+
+    // Change the origin of the renderer so that the image remains in the same place
+    m_spriteRenderer->setOrigin((column + 0.5f) / m_spriteSheetDimensions.x,
+      (m_spriteSheetDimensions.y - row - 0.5f) / m_spriteSheetDimensions.y);
+  }
+}

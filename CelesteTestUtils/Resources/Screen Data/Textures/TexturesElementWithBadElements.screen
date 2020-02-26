@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Screen name="Test">
+  <Resources>
+    <Textures>
+      <Texture>Texture1.png</Texture>
+      <Texture>Another\Texture.jpg</Texture>
+      <Texture>Texture3.png</Texture>
+      <texture>Texture4.png</texture>
+      <WubDub>Texture5.png</WubDub>
+    </Textures>
+  </Resources>
+</Screen>

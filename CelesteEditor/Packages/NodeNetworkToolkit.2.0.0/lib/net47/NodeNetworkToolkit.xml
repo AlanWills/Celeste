@@ -1,0 +1,259 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NodeNetworkToolkit</name>
+    </assembly>
+    <members>
+        <member name="T:NodeNetwork.Toolkit.GraphAlgorithms">
+            <summary>
+            This class is a collection of various graph algoritms.
+            </summary>
+        </member>
+        <member name="M:NodeNetwork.Toolkit.GraphAlgorithms.FindLoops(NodeNetwork.ViewModels.NetworkViewModel)">
+            <summary>
+            Searches for loops in a network. 
+            A loop is a connection sequence that starts and ends at the same node.
+            </summary>
+            <param name="network">the network to search for loops.</param>
+            <returns>an enumeration of connections involved in loops</returns>
+        </member>
+        <member name="M:NodeNetwork.Toolkit.GraphAlgorithms.GetConnectedNodesTunneling(NodeNetwork.ViewModels.NodeViewModel,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Returns the nodes connected to the starting node, then the nodes connected to those nodes, ... and so on.
+            If the subgraph that contains the starting nodes has a loop, then this function will keep producing the values in the loop.
+            A call to FindLoops is recommended before using this function
+            </summary>
+            <param name="startingNode">The node from which to branch out</param>
+            <param name="includeInputs">Include nodes connected through node inputs?</param>
+            <param name="includeOutputs">Include nodes connected through node outputs?</param>
+            <param name="includeSelf">Include the starting node? (will be first)</param>
+            <returns>An enumeration of the nodes connected to the starting node.</returns>
+        </member>
+        <member name="M:NodeNetwork.Toolkit.GraphAlgorithms.GetConnectedNodesBubbling(NodeNetwork.ViewModels.NodeViewModel,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Similar to GetConnectedNodesTunneling, but returns the outermost nodes first.
+            If the subgraph that contains the starting nodes has a loop, then this function will never return.
+            A call to FindLoops is recommended before using this function
+            </summary>
+        </member>
+        <member name="M:NodeNetwork.Toolkit.GraphAlgorithms.FindStartingNodes(NodeNetwork.ViewModels.NetworkViewModel)">
+            <summary>
+            Returns the starting nodes in the network.
+            Starting nodes are nodes that do not have inputs connected to an output.
+            </summary>
+            <param name="network">The network to find starting nodes in</param>
+            <returns>An enumerable of starting nodes</returns>
+        </member>
+        <member name="M:NodeNetwork.Toolkit.GraphAlgorithms.FindStartingNodes(System.Collections.Generic.IEnumerable{NodeNetwork.ViewModels.NodeViewModel})">
+            <summary>
+            Returns the starting nodes in the node group.
+            Starting nodes are nodes that do not have inputs connected to an output of a node in the group.
+            </summary>
+        </member>
+        <member name="M:NodeNetwork.Toolkit.GraphAlgorithms.FindConnectedNodes(NodeNetwork.ViewModels.NodeViewModel,System.Collections.Generic.IEnumerable{NodeNetwork.ViewModels.NodeViewModel})">
+            <summary>
+            Takes the provided set of nodes and returns the nodes are connected to the source node, directly or indirectly.
+            This method uses breadth-first search and keeps track of visited nodes, so it can handle networks with loops.
+            </summary>
+            <param name="sourceNode">The node from which the search for connected nodes starts</param>
+            <param name="nodes">
+            The nodes to look for when searching. 
+            If this set contains the sourcenode, the first item returned will be the source node.
+            </param>
+            <returns>An enumeration of connected nodes</returns>
+        </member>
+        <member name="M:NodeNetwork.Toolkit.GraphAlgorithms.FindSubGraphs(System.Collections.Generic.IEnumerable{NodeNetwork.ViewModels.NodeViewModel})">
+            <summary>
+            Takes the provided set of nodes and groups these nodes in sets that are connected, directly or indirectly.
+            Because this method uses FindConnectedNodes, it is capable of handling networks with loops.
+            </summary>
+            <param name="nodes">the nodes to group into sets</param>
+        </member>
+        <member name="M:NodeNetwork.Toolkit.GraphAlgorithms.IsContinuousSubGraphSet(System.Collections.Generic.IEnumerable{NodeNetwork.ViewModels.NodeViewModel})">
+            <summary>
+            Returns true if the given set of nodes form continuous subgraphs.
+            The given set of nodes is split into subgraphs based on the connections between the nodes.
+            If for each subgraph it is true that all nodes of the subgraph are in the provided set, then true is returned.
+            Otherwise false is returned.
+            Because this method uses FindSubGraphs, it is capable of handling networks with loops.
+            </summary>
+        </member>
+        <member name="T:NodeNetwork.Toolkit.NodeList.NodeListView">
+            <summary>
+            NodeListView
+            </summary>
+        </member>
+        <member name="M:NodeNetwork.Toolkit.NodeList.NodeListView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:NodeNetwork.Toolkit.NodeList.NodeListViewModel">
+            <summary>
+            A viewmodel for a UI List component that contains NodeViewModels
+            and can be used to let the user add new nodes to a network.
+            </summary>
+        </member>
+        <member name="T:NodeNetwork.Toolkit.NodeList.NodeListViewModel.DisplayMode">
+            <summary>
+            The formatting mode of the list.
+            </summary>
+        </member>
+        <member name="F:NodeNetwork.Toolkit.NodeList.NodeListViewModel.DisplayMode.Tiles">
+            <summary>
+            The nodes are displayed graphically in a grid.
+            </summary>
+        </member>
+        <member name="F:NodeNetwork.Toolkit.NodeList.NodeListViewModel.DisplayMode.List">
+            <summary>
+            The node names are displayed as text in a list.
+            </summary>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.NodeList.NodeListViewModel.Title">
+            <summary>
+            The string that is displayed at the top of the list
+            </summary>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.NodeList.NodeListViewModel.EmptyLabel">
+            <summary>
+            The string that is displayed when VisibleNodes is empty.
+            </summary>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.NodeList.NodeListViewModel.Display">
+            <summary>
+            The way the list of available nodes is formatted.
+            </summary>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.NodeList.NodeListViewModel.NodeFactories">
+            <summary>
+            A dictionary of node types and functions to create instances of them.
+            To add a new node type to this list, DO NOT use this property but use AddNodeType instead.
+            </summary>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.NodeList.NodeListViewModel.Nodes">
+            <summary>
+            List of all the available nodes in the list.
+            To add a new node type, do not use this list, use AddNodeType instead.
+            </summary>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.NodeList.NodeListViewModel.VisibleNodes">
+            <summary>
+            List of nodes that are actually visible in the list.
+            This list is based on Nodes and SearchQuery.
+            </summary>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.NodeList.NodeListViewModel.SearchQuery">
+            <summary>
+            The current search string that is used to filter Nodes into VisibleNodes.
+            </summary>
+        </member>
+        <member name="M:NodeNetwork.Toolkit.NodeList.NodeListViewModel.AddNodeType``1(System.Func{``0})">
+            <summary>
+            Adds a new node type to the list.
+            Every time a node is added to a network from this list, the factory function will be called to create a new instance of the viewmodel type.
+            </summary>
+            <typeparam name="T">The subtype of NodeViewModel to add to the list.</typeparam>
+            <param name="factory">The factory function to create a new instance of T</param>
+        </member>
+        <member name="T:NodeNetwork.Toolkit.ValueNode.ValueEditorViewModel`1">
+            <summary>
+            An editor for ValueNodeInputViewModel or ValueNodeOutputViewModel.
+            For inputs, this class can provide values when no connection is present.
+            For outputs, this class can provide a way to configure the value produced by the output.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.ValueNode.ValueEditorViewModel`1.Value">
+            <summary>
+            The value currently set in the editor.
+            </summary>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.ValueNode.ValueEditorViewModel`1.ValueChanged">
+            <summary>
+            Observable that produces an object when the value changes.
+            </summary>
+        </member>
+        <member name="T:NodeNetwork.Toolkit.ValueNode.ValueListNodeInputViewModel`1">
+            <summary>
+            A node input that keeps a list of the latest values produced by all of the connected ValueNodeOutputViewModels.
+            This input can take multiple connections, ValueNodeInputViewModel cannot.
+            </summary>
+            <typeparam name="T">The type of object this input can receive</typeparam>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.ValueNode.ValueListNodeInputViewModel`1.Values">
+            <summary>
+            The current values of the outputs connected to this input
+            </summary>
+        </member>
+        <member name="T:NodeNetwork.Toolkit.ValueNode.ValueNodeInputViewModel`1">
+            <summary>
+            A node input that keeps track of the latest value produced by either the connected ValueNodeOutputViewModel, 
+            or the ValueEditorViewModel in the Editor property.
+            </summary>
+            <typeparam name="T">The type of object this input can receive</typeparam>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.ValueNode.ValueNodeInputViewModel`1.Value">
+            <summary>
+            The value currently associated with this input.
+            If the input is not connected, the value is taken from ValueEditorViewModel.Value in the Editor property.
+            If the input is connected, the value is taken from ValueNodeOutputViewModel.LatestValue unless the network is not traversable.
+            Note that this value may be equal to default(T) if there is an error somewhere.
+            </summary>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.ValueNode.ValueNodeInputViewModel`1.ValueChanged">
+            <summary>
+            An observable that fires when the input value changes. 
+            This may be because of a connection change, editor value change, network validation change, ...
+            </summary>
+        </member>
+        <member name="T:NodeNetwork.Toolkit.ValueNode.ValueNodeInputViewModel`1.ValidationAction">
+            <summary>
+            Action that should be taken based on the validation result
+            </summary>
+        </member>
+        <member name="F:NodeNetwork.Toolkit.ValueNode.ValueNodeInputViewModel`1.ValidationAction.DontValidate">
+            <summary>
+            Don't run the validation. (LatestValidation is not updated)
+            </summary>
+        </member>
+        <member name="F:NodeNetwork.Toolkit.ValueNode.ValueNodeInputViewModel`1.ValidationAction.IgnoreValidation">
+            <summary>
+            Run the validation, but ignore the result and assume the network is valid.
+            </summary>
+        </member>
+        <member name="F:NodeNetwork.Toolkit.ValueNode.ValueNodeInputViewModel`1.ValidationAction.WaitForValid">
+            <summary>
+            Run the validation and if the network is invalid then wait until it is valid.
+            </summary>
+        </member>
+        <member name="F:NodeNetwork.Toolkit.ValueNode.ValueNodeInputViewModel`1.ValidationAction.PushDefaultValue">
+            <summary>
+            Run the validation and if the network is invalid then make default(T) the current value.
+            </summary>
+        </member>
+        <member name="M:NodeNetwork.Toolkit.ValueNode.ValueNodeInputViewModel`1.#ctor(NodeNetwork.Toolkit.ValueNode.ValueNodeInputViewModel{`0}.ValidationAction,NodeNetwork.Toolkit.ValueNode.ValueNodeInputViewModel{`0}.ValidationAction)">
+            <summary>
+            Constructs a new ValueNodeInputViewModel with the specified ValidationActions. 
+            The default values are carefully chosen and should probably not be changed unless you know what you are doing.
+            </summary>
+            <param name="connectionChangedValidationAction">The validation behaviour when the connection of this input changes.</param>
+            <param name="connectedValueChangedValidationAction">The validation behaviour when the value of this input changes.</param>
+        </member>
+        <member name="T:NodeNetwork.Toolkit.ValueNode.ValueNodeOutputViewModel`1">
+            <summary>
+            A viewmodel for a node output that produces a value based on the inputs.
+            </summary>
+            <typeparam name="T">The type of object produced by this output.</typeparam>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.ValueNode.ValueNodeOutputViewModel`1.Value">
+            <summary>
+            Observable that produces the value every time it changes.
+            </summary>
+        </member>
+        <member name="P:NodeNetwork.Toolkit.ValueNode.ValueNodeOutputViewModel`1.CurrentValue">
+            <summary>
+            The latest value produced by this output.
+            </summary>
+        </member>
+    </members>
+</doc>

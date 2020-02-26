@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+  <ServerIP>localhost</ServerIP>
+  <ServerPort>1490</ServerPort>
+  <Email>alawills@googlemail.com</Email>
+  <!--Put N here for all build updates-->
+  <OnlyEmailOnFail>N</OnlyEmailOnFail>
+</Root>

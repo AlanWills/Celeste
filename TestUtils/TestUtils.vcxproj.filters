@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TestResources\Mock Resources\Nested\Mock2.txt" />
+    <Text Include="TestResources\Mock Resources\Mock1.txt" />
+    <Text Include="TestResources\More Mock Resources\Nested\Mock2.txt" />
+    <Text Include="TestResources\More Mock Resources\Mock1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\AssertExt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\BaseUnitTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\FileAssert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\DirectoryAssert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\AssertExt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FileAssert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DirectoryAssert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestResources\Fragment Shaders\colour.frag" />
+    <None Include="TestResources\Fragment Shaders\sprite.frag" />
+    <None Include="TestResources\Fragment Shaders\text.frag" />
+    <None Include="TestResources\Vertex Shaders\colour.vert" />
+    <None Include="TestResources\Vertex Shaders\sprite.vert" />
+    <None Include="TestResources\Vertex Shaders\text.vert" />
+    <None Include="Build Events\CopyDependencyFiles.bat">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="TestResources\Audio\ButtonHover.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="TestResources\Audio\ButtonPressed.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="TestResources\Data\Data.xml" />
+    <Xml Include="TestResources\Data\ElementDataAsVectorFloat.xml" />
+    <Xml Include="TestResources\Data\ElementDataAsVectorString.xml" />
+    <Xml Include="TestResources\Data\InvalidAnimationData.xml" />
+    <Xml Include="TestResources\Data\ValidAnimationData.xml" />
+    <Xml Include="TestResources\Mock Resources\Mock3.xml" />
+    <Xml Include="TestResources\More Mock Resources\Mock3.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="TestResources\Fonts\arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="TestResources\Textures\Sprites\UI\ButtonDefault.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="TestResources\Textures\Sprites\UI\ButtonHighlighted.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="TestResources\Textures\Sprites\UI\ButtonPressed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="TestResources\Textures\block.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="TestResources\Textures\container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

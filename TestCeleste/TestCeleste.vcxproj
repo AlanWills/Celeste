@@ -1,0 +1,521 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E07541B6-55FF-4134-B937-1C62821EE5FB}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>TestCelestePlus</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>TestCeleste</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)..\CelesteTestUtils\Headers;$(ProjectDir)..\TestUtils\Headers;$(ProjectDir)..\Celeste\Headers;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)..\CelesteTestUtils\Headers;$(ProjectDir)..\TestUtils\Headers;$(ProjectDir)..\Celeste\Headers;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
+    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)..\TestUtils\Headers;$(ProjectDir)..\CelestePlus\Headers;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
+    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Lua\Headers;$(VCInstallDir)Auxiliary\VS\UnitTest\include;$(ProjectDir)Headers;$(ProjectDir)..\3rdParty\Include;$(ProjectDir)..\3rdParty\Include\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseFullPaths>true</UseFullPaths>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\3rdParty\Lib\$(Platform);$(OutDir);$(VCInstallDir)Auxiliary\VS\UnitTest\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>liblua53.a;opengl32.lib;freetype.lib;glew32.lib;glfw3dll.lib;tinyxml2.lib;alut.lib;OpenAL32.lib;SOIL.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Outputs>
+      </Outputs>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>call "$(ProjectDir)Build Events\CopyDependencyDLLs.bat" "$(TargetDir)" $(Configuration) $(Platform)</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\3rdParty\Include\Assimp;$(ProjectDir)..\Lua\Headers;$(VCInstallDir)Auxiliary\VS\UnitTest\include;$(ProjectDir)Headers;$(ProjectDir)..\3rdParty\Include;$(ProjectDir)..\3rdParty\Include\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CETESTUTILS_STATIC_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseFullPaths>true</UseFullPaths>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\Celeste\bin\$(Platform)\$(Configuration);$(ProjectDir)..\3rdParty\Lib\$(Platform)\$(Configuration);$(VCInstallDir)Auxiliary\VS\UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc140-mt.lib;liblua53.lib;opengl32.lib;freetype.lib;glew32.lib;glfw3dll.lib;tinyxml2.lib;alut.lib;OpenAL32.lib;SOIL.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>call "$(ProjectDir)Build Events\CopyDependencyFiles.bat" "$(TargetDir)" $(Configuration) $(Platform)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>Force.txt</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ProjectDir)Headers;"$(ProjectDir)..\3rd Party\Include";%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseFullPaths>true</UseFullPaths>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\TestUtils\bin\$(Platform)\$(Configuration);$(ProjectDir)..\CelestePlus\bin\$(Platform)\$(Configuration);$(VCInstallDir)UnitTest\lib;$(ProjectDir)..\3rd Party\Lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>liblua53.akernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>call "$(ProjectDir)..\CelestePlus\Build Events\Copy3rdPartyDLLs.bat" $(TargetDir)</Command>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Outputs>
+      </Outputs>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseFullPaths>true</UseFullPaths>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>liblua53.akernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CustomBuildStep>
+      <Command>call "$(ProjectDir)Build Events\CopyDependencyFiles.bat" "$(TargetDir)" $(Configuration) $(Platform)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>Force.txt</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Animation\Animators\TestChangeScaleAnimator.cpp" />
+    <ClCompile Include="Source\Animation\Animators\TestMoveToPositionAnimator.cpp" />
+    <ClCompile Include="Source\Animation\TestAnimationState.cpp" />
+    <ClCompile Include="Source\Animation\TestAnimator.cpp" />
+    <ClCompile Include="Source\Audio\TestAudioEnums.cpp" />
+    <ClCompile Include="Source\Audio\TestAudioManager.cpp" />
+    <ClCompile Include="Source\Audio\TestAudioSource.cpp" />
+    <ClCompile Include="Source\Bindings\TestAudioTypeDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestBoolDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestGLMUVector2DataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestGLMUVector3DataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestGLMUVector4DataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestHorizontalAlignmentDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestIncrementModeDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestKeyDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestOrientationDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestPathDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestBindingsGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestBindingUtils.cpp" />
+    <ClCompile Include="Source\Bindings\TestFloatDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestGLMVector2DataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestGLMVector3DataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestGLMVector4DataBindingsGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestIntDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestSize_tDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestSpaceDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestStringDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestTexture2DDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\TestVerticalAlignmentDataBindingGenerator.cpp" />
+    <ClCompile Include="Source\Callbacks\TestActivateGameObject.cpp" />
+    <ClCompile Include="Source\Callbacks\TestCallbackRegistry.cpp" />
+    <ClCompile Include="Source\Callbacks\TestExecuteLuaScript.cpp" />
+    <ClCompile Include="Source\Callbacks\TestKillGameObject.cpp" />
+    <ClCompile Include="Source\Callbacks\TestKillOwnerScreen.cpp" />
+    <ClCompile Include="Source\Callbacks\TestKillScreen.cpp" />
+    <ClCompile Include="Source\Callbacks\TestRenderGameObject.cpp" />
+    <ClCompile Include="Source\Callbacks\TestTransitionToScreen.cpp" />
+    <ClCompile Include="Source\DataConverters\Audio\TestAudioSourceDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Input\TestKeyboardRigidBody2DControllerDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Input\TestKeyboardTransformerDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Objects\TestEntityDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Objects\TestScriptableObjectDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Physics\TestRigidBody2DDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Resources\TestPrefabDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Physics\TestRectangleColliderDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\UI\TestSliderDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\UI\TestTextBoxDataConverter.cpp" />
+    <ClCompile Include="Source\Debug\Profiling\TestFPSCounter.cpp" />
+    <ClCompile Include="Source\Debug\TestLog.cpp" />
+    <ClCompile Include="Source\Debug\TestProfile.cpp" />
+    <ClCompile Include="Source\Deserialization\TestAudioTypeDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestBoolDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestFloatDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestGLMUVector2Deserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestIncrementModeDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestInputModeDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestKeyDeserialization.cpp" />
+    <ClCompile Include="Source\Deserialization\TestProjectionModeDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestUIntDeserializer.cpp" />
+    <ClCompile Include="Source\Input\TestKey.cpp" />
+    <ClCompile Include="Source\Lua\Components\TestLuaComponentManifestRegistryAllocator.cpp" />
+    <ClCompile Include="Source\Lua\DataConverters\TestLuaComponentDataConverter.cpp" />
+    <ClCompile Include="Source\Lua\DataConverters\TestLuaComponentDataConverterRegistry.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Animation\TestAnimatorScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Audio\TestAudioScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Audio\TestAudioSourceScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\TestComponentDataConverterScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\TestDataConverterScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\TestLuaComponentDataConverterScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Input\TestInputScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Input\TestKeyboardActivatorScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Input\TestKeyboardVisibilityScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Input\TestMouseInteractionHandlerScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Input\TestTransformScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Lua\Components\TestLuaComponentManifestRegistryScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Maths\TestMathsScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Maths\TestVectorScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Media\TestVideoScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\ObjectFX\TestLimitedLifeTimeScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\ObjectFX\TestObjectFXScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Objects\TestComponentScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Objects\TestEntityScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Objects\TestGameObjectScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Objects\TestObjectScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Physics\TestEllipseColliderScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Physics\TestPhysicsScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Rendering\TestCanvasScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Rendering\TestRenderingScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Rendering\TestSpriteRendererScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Rendering\TestTextRendererScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\2D\TestTexture2DScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\3D\TestModelScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Audio\TestSoundScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Data\TestDataScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Data\TestPrefabScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Fonts\TestFontScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Shaders\TestFragmentShaderScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Shaders\TestShaderScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Shaders\TestVertexShaderScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Settings\TestGameSettingsScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Settings\TestWindowSettingsScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\TestCelesteScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\TestCoreScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\TestResourcesScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Screens\TestScreenScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Objects\TestScriptableObjectScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\TestScriptCommandUtils.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\UI\TestProgressBarScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\UI\TestSliderScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\UI\TestStackPanelScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\UI\TestUIScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\XML\TestAttributeScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\XML\TestElementScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\XML\Testtinyxml2ScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\XML\TestXMLObjectScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\XML\TestXMLScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\TestLuaComponent.cpp" />
+    <ClCompile Include="Source\Lua\TestLuaComponentManifest.cpp" />
+    <ClCompile Include="Source\Lua\TestLuaComponentManifestRegistry.cpp" />
+    <ClCompile Include="Source\Lua\TestLuaState.cpp" />
+    <ClCompile Include="Source\Maths\TestMathsUtils.cpp" />
+    <ClCompile Include="Source\Objects\TestEntity.cpp" />
+    <ClCompile Include="Source\Reflection\TestReflectionUtils.cpp" />
+    <ClCompile Include="Source\Registries\TestDefaultRegistryAllocator.cpp" />
+    <ClCompile Include="Source\Rendering\TestCanvas.cpp" />
+    <ClCompile Include="Source\Rendering\TestRenderManager.cpp" />
+    <ClCompile Include="Source\Rendering\TestRenderUtils.cpp" />
+    <ClCompile Include="Source\Resources\TestResourceUtils.cpp" />
+    <ClCompile Include="Source\Screens\Loading\TestScreenLoader.cpp" />
+    <ClCompile Include="Source\Serialization\TestGLMUVector2Serializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestInputModeSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestKeySerializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestPathDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestSize_tDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestSpaceDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestTexture2DDeserializer.cpp" />
+    <ClCompile Include="Source\Fields\TestDataField.cpp" />
+    <ClCompile Include="Source\Fields\TestField.cpp" />
+    <ClCompile Include="Source\Deserialization\TestGLMVector2Deserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestGLMVector3Deserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestGLMVector4Deserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestIntDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestStringDeserializer.cpp" />
+    <ClCompile Include="Source\Input\TestInputEnums.cpp" />
+    <ClCompile Include="Source\Input\Utils\TestGlfwKeyConverter.cpp" />
+    <ClCompile Include="Source\Maths\TestMathsEnums.cpp" />
+    <ClCompile Include="Source\Objects\TestScriptableObject.cpp" />
+    <ClCompile Include="Source\Reflection\TestType.cpp" />
+    <ClCompile Include="Source\Registries\TestComponentRegistry.cpp" />
+    <ClCompile Include="Source\Registries\TestScriptableObjectRegistry.cpp" />
+    <ClCompile Include="Source\Resources\Data\TestPrefab.cpp" />
+    <ClCompile Include="Source\Serialization\TestAudioTypeSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestBoolSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestFloatSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestGLMVector2Serializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestGLMVector3Serializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestGLMVector4Serializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestHorizontalAlignmentSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestIncrementModeSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestIntSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestOrientationSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestPathSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestSize_tSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestSpaceSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestStringSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestTexture2DSerializer.cpp" />
+    <ClCompile Include="Source\Serialization\TestUIntSerializers.cpp" />
+    <ClCompile Include="Source\Serialization\TestVerticalAlignmentSerializer.cpp" />
+    <ClCompile Include="Source\Settings\TestWindowSettings.cpp" />
+    <ClCompile Include="Source\Time\TestTimeUtils.cpp" />
+    <ClCompile Include="Source\UI\TestLayoutEnums.cpp" />
+    <ClCompile Include="Source\Utils\TestGameObjectXMLUtils.cpp" />
+    <ClCompile Include="Source\Utils\TestScreenXMLUtils.cpp" />
+    <ClCompile Include="Source\Utils\TestXMLUtils.cpp" />
+    <ClCompile Include="Source\Viewport\TestViewportEnums.cpp" />
+    <ClCompile Include="Source\XML\Attributes\TestAttribute.cpp" />
+    <ClCompile Include="Source\DataConverters\Callbacks\TestCallbackDataConverter.cpp" />
+    <ClCompile Include="Source\XML\Attributes\TestDataAttribute.cpp" />
+    <ClCompile Include="Source\XML\Elements\TestComponentDataConverterListElement.cpp" />
+    <ClCompile Include="Source\XML\Elements\TestDataConverterListElement.cpp" />
+    <ClCompile Include="Source\XML\Elements\TestDataElement.cpp" />
+    <ClCompile Include="Source\XML\Elements\TestElement.cpp" />
+    <ClCompile Include="Source\XML\Elements\TestFloatDataElement.cpp" />
+    <ClCompile Include="Source\XML\Elements\TestFloatListElement.cpp" />
+    <ClCompile Include="Source\XML\Elements\TestGameObjectDataConverterListElement.cpp" />
+    <ClCompile Include="Source\XML\Elements\TestListElement.cpp" />
+    <ClCompile Include="Source\DataConverters\GraphicalFX\TestOpacityLerperDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\ObjectFX\TestLimitedLifeTimeDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Objects\TestComponentDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Objects\TestGameObjectDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Objects\TestObjectDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Rendering\TestSpriteRendererDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Rendering\TestTextRendererDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Screens\TestScreenDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\TestComponentDataConverterRegistry.cpp" />
+    <ClCompile Include="Source\DataConverters\TestDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\UI\TestButtonDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\UI\TestStackPanelDataConverter.cpp" />
+    <ClCompile Include="Source\Physics\TestPhysicsManager.cpp" />
+    <ClCompile Include="Source\Physics\TestPhysicsUtils.cpp" />
+    <ClCompile Include="Source\Deserialization\TestHorizontalAlignmentDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestOrientationDeserializer.cpp" />
+    <ClCompile Include="Source\Deserialization\TestVerticalAlignmentDeserializer.cpp" />
+    <ClCompile Include="Source\XML\Elements\TestStringDataElement.cpp" />
+    <ClCompile Include="Source\XML\Elements\TestStringListElement.cpp" />
+    <ClCompile Include="Source\XML\TestChildXMLElementWalker.cpp" />
+    <ClCompile Include="Source\XML\TestConstChildXMLElementWalker.cpp" />
+    <ClCompile Include="Source\XML\TestConstSiblingXMLElementIterator.cpp" />
+    <ClCompile Include="Source\XML\TestXMLObject.cpp" />
+    <ClCompile Include="Source\XML\TestXMLObjectFactory.cpp" />
+    <ClCompile Include="Source\XML\Test_tinyxml2_ext.cpp" />
+    <ClCompile Include="Source\Debug\Logging\TestLogger.cpp" />
+    <ClCompile Include="Source\Debug\Profiling\TestProfiler.cpp" />
+    <ClCompile Include="Source\Events\TestEvent.cpp" />
+    <ClCompile Include="Source\Events\TestEventTriggerer.cpp" />
+    <ClCompile Include="Source\FileSystem\TestDirectory.cpp" />
+    <ClCompile Include="Source\FileSystem\TestFile.cpp" />
+    <ClCompile Include="Source\FileSystem\TestPath.cpp" />
+    <ClCompile Include="Source\GraphicalFX\TestOpacityLerper.cpp" />
+    <ClCompile Include="Source\Input\TestInputManager.cpp" />
+    <ClCompile Include="Source\Input\TestInputUtils.cpp" />
+    <ClCompile Include="Source\Input\TestKeyboard.cpp" />
+    <ClCompile Include="Source\Input\TestKeyboardActivator.cpp" />
+    <ClCompile Include="Source\Input\TestKeyboardRigidBody2DController.cpp" />
+    <ClCompile Include="Source\Input\TestMouse.cpp" />
+    <ClCompile Include="Source\Input\TestKeyboardTransformer.cpp" />
+    <ClCompile Include="Source\Input\TestKeyboardVisibility.cpp" />
+    <ClCompile Include="Source\Input\TestMouseInteractionHandler.cpp" />
+    <ClCompile Include="Source\Maths\TestMatrix.cpp" />
+    <ClCompile Include="Source\Maths\TestRandomGenerator.cpp" />
+    <ClCompile Include="Source\Maths\TestRay.cpp" />
+    <ClCompile Include="Source\Maths\TestRectangle.cpp" />
+    <ClCompile Include="Source\Maths\TestTransform.cpp" />
+    <ClCompile Include="Source\Maths\TestVector.cpp" />
+    <ClCompile Include="Source\XML\TestSiblingXMLElementIterator.cpp" />
+    <ClCompile Include="Source\Memory\Iterators\TestGameObjectIterator.cpp" />
+    <ClCompile Include="Source\Memory\Iterators\TestPoolAllocatorIterator.cpp" />
+    <ClCompile Include="Source\Memory\Allocators\TestEntityAllocator.cpp" />
+    <ClCompile Include="Source\Memory\Iterators\TestEntityAllocatorIterator.cpp" />
+    <ClCompile Include="Source\Memory\Allocators\TestDoubleBufferAllocator.cpp" />
+    <ClCompile Include="Source\Memory\Allocators\TestPoolAllocator.cpp" />
+    <ClCompile Include="Source\ModuleInitialize.cpp" />
+    <ClCompile Include="Source\ObjectFX\TestLimitedLifeTime.cpp" />
+    <ClCompile Include="Source\Objects\TestComponent.cpp" />
+    <ClCompile Include="Source\Objects\TestGameObject.cpp" />
+    <ClCompile Include="Source\Physics\TestCollider.cpp" />
+    <ClCompile Include="Source\Physics\TestRectangleCollider.cpp" />
+    <ClCompile Include="Source\Physics\TestRigidBody2D.cpp" />
+    <ClCompile Include="Source\Rendering\TestRenderer.cpp" />
+    <ClCompile Include="Source\Rendering\TestSpriteBatch.cpp" />
+    <ClCompile Include="Source\Rendering\TestSpriteRenderer.cpp" />
+    <ClCompile Include="Source\Rendering\TestTextRenderer.cpp" />
+    <ClCompile Include="Source\Resources\Fonts\TestFontInstance.cpp" />
+    <ClCompile Include="Source\Resources\Shaders\TestProgram.cpp" />
+    <ClCompile Include="Source\Resources\TestLoadResourcesAsyncScript.cpp" />
+    <ClCompile Include="Source\Resources\2D\TestRawImageLoader.cpp" />
+    <ClCompile Include="Source\Screens\TestScreen.cpp" />
+    <ClCompile Include="Source\Screens\TestScreenManager.cpp" />
+    <ClCompile Include="Source\Animation\TestStateMachine.cpp" />
+    <ClCompile Include="Source\Settings\TestGameSettings.cpp" />
+    <ClCompile Include="Source\UI\TestButton.cpp" />
+    <ClCompile Include="Source\UI\TestProgressBar.cpp" />
+    <ClCompile Include="Source\UI\TestSlider.cpp" />
+    <ClCompile Include="Source\UI\TestStackPanel.cpp" />
+    <ClCompile Include="Source\UI\TestTextBox.cpp" />
+    <ClCompile Include="Source\Viewport\TestCamera.cpp" />
+    <ClCompile Include="Source\Viewport\TestOpenGLWindow.cpp" />
+    <ClCompile Include="Source\Resources\Shaders\TestFragmentShader.cpp" />
+    <ClCompile Include="Source\Resources\Shaders\TestVertexShader.cpp" />
+    <ClCompile Include="Source\Resources\Audio\TestSound.cpp" />
+    <ClCompile Include="Source\Resources\Data\TestData.cpp" />
+    <ClCompile Include="Source\Resources\Fonts\TestFont.cpp" />
+    <ClCompile Include="Source\Resources\TestResource.cpp" />
+    <ClCompile Include="Source\Resources\TestResourceLoader.cpp" />
+    <ClCompile Include="Source\Resources\TestResourceManager.cpp" />
+    <ClCompile Include="Source\Resources\Shaders\TestShader.cpp" />
+    <ClCompile Include="Source\Resources\2D\TestTexture2D.cpp" />
+    <ClCompile Include="Source\UID\TestStringId.cpp" />
+    <ClCompile Include="Source\Time\TestClock.cpp" />
+    <ClCompile Include="Source\Utils\TestStringUtils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CelesteTestUtils\CelesteTestUtils.vcxproj">
+      <Project>{bb04ba24-e88d-4697-b55c-7c518afd6bf8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Celeste\Celeste.vcxproj">
+      <Project>{e9980a8d-828e-44f0-978e-a57abc348f47}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TestUtils\TestUtils.vcxproj">
+      <Project>{7f06e53e-178c-4e7e-8f24-061f18aa402a}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Build Events\CopyDependencyFiles.bat" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

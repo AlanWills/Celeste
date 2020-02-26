@@ -1,0 +1,726 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E9980A8D-828E-44F0-978E-A57ABC348F47}</ProjectGuid>
+    <RootNamespace>CelestePlus</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Celeste</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(SolutionDir)Debug;$(ProjectDir)..\3rdParty\Lib\$(Platform);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>$(SolutionDir)Debug;$(ProjectDir)..\3rdParty\Lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>$(ProjectDir)..\3rdParty\Lib\$(Platform)\$(Configuration);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+    <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
+    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LibraryPath>$(ProjectDir)..\3rdParty\Lib\$(Platform)\$(Configuration);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+    <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
+    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Lua\Headers;$(ProjectDir)Headers;$(ProjectDir)..\3rdParty\Include;$(ProjectDir)..\3rdParty\Include\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;BUILDING_CELESTE_ENGINE_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>liblua53.a;opengl32.lib;freetype.lib;glew32.lib;glfw3dll.lib;tinyxml2.lib;alut.lib;OpenAL32.lib;SOIL.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>call "$(ProjectDir)Build Events\CopyDependencyDLLs.bat" "$(TargetDir)" $(Platform)</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Lua\Headers;$(ProjectDir)Headers;$(ProjectDir)..\3rdParty\Include;$(ProjectDir)..\3rdParty\Include\freetype2;$(ProjectDir)..\3rdParty\Include\Assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CURL_STATICLIB;_WINDLL;BUILDING_CELESTE_ENGINE_DLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <RemoveUnreferencedCodeData>false</RemoveUnreferencedCodeData>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <Link>
+      <AdditionalDependencies>libcurl.lib;curlcpp.lib;Crypt32.lib;ws2_32.lib;winmm.lib;wldap32.lib;swscale.lib;avutil.lib;avcodec.lib;avformat.lib;assimp-vc140-mt.lib;liblua53.lib;opengl32.lib;freetype.lib;glew32.lib;glfw3dll.lib;tinyxml2.lib;alut.lib;OpenAL32.lib;SOIL.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+    </Link>
+    <CustomBuildStep>
+      <Command>call "$(ProjectDir)Build Events\CustomBuildStep.bat" "$(ProjectDir)" $(Configuration) $(Platform) </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>Force.txt</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)Headers;$(ProjectDir)..\3rdParty\Include;$(ProjectDir)..\3rdParty\Include\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;BUILDING_CELESTE_ENGINE_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>liblua53.a;opengl32.lib;freetype.lib;glew32.lib;glfw3dll.lib;tinyxml2.lib;alut.lib;OpenAL32.lib;SOIL.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\Lua\Lua\bin\x64\Debug;</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>call "$(ProjectDir)Build Events\CopyEngineDLLs.bat" $(TargetDir) $(Configuration)</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>call "$(ProjectDir)Build Events\Copy3rdPartyDLLs.bat" $(TargetDir) </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Lua\Headers;$(ProjectDir)Headers;$(ProjectDir)..\3rdParty\Include;$(ProjectDir)..\3rdParty\Include\freetype2;$(ProjectDir)..\3rdParty\Include\Assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CURL_STATICLIB;BUILDING_CELESTE_ENGINE_DLL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl.lib;curlcpp.lib;Crypt32.lib;ws2_32.lib;winmm.lib;wldap32.lib;swscale.lib;avutil.lib;avcodec.lib;avformat.lib;assimp-vc140-mt.lib;liblua53.lib;opengl32.lib;freetype.lib;glew32.lib;glfw3dll.lib;tinyxml2.lib;alut.lib;OpenAL32.lib;SOIL.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>call "$(ProjectDir)Build Events\CopyDependencyFiles.bat" "$(TargetDir)" $(Platform)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>Force.txt</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\Animation\AnimationEnums.h" />
+    <ClInclude Include="Headers\Animation\Animators\ChangeScaleAnimator.h" />
+    <ClInclude Include="Headers\Animation\Animators\MoveToPositionAnimator.h" />
+    <ClInclude Include="Headers\Animation\Animator.h" />
+    <ClInclude Include="Headers\Audio\AudioEnums.h" />
+    <ClInclude Include="Headers\Audio\AudioUtils.h" />
+    <ClInclude Include="Headers\Bindings\AudioDataBindingGenerators.h" />
+    <ClInclude Include="Headers\Bindings\BindingsGenerator.h" />
+    <ClInclude Include="Headers\Bindings\BindingUtils.h" />
+    <ClInclude Include="Headers\Bindings\DataBindingGenerators.h" />
+    <ClInclude Include="Headers\Bindings\InputDataBindingGenerators.h" />
+    <ClInclude Include="Headers\Bindings\MathsDataBindingGenerators.h" />
+    <ClInclude Include="Headers\Bindings\UIDataBindingGenerators.h" />
+    <ClInclude Include="Headers\Callbacks\Callback.h" />
+    <ClInclude Include="Headers\Callbacks\ExecuteLuaScript.h" />
+    <ClInclude Include="Headers\DataConverters\Objects\ScriptableObjectDataConverter.h" />
+    <ClInclude Include="Headers\Debug\Asserting\IAsserter.h" />
+    <ClInclude Include="Headers\Debug\Logging\ILogger.h" />
+    <ClInclude Include="Headers\Debug\Log.h" />
+    <ClInclude Include="Headers\Debug\Profiling\IProfiler.h" />
+    <ClInclude Include="Headers\Debug\Profile.h" />
+    <ClInclude Include="Headers\Lua\Components\LuaComponentManifestRegistryAllocator.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Input\MouseInteractionHandlerScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Maths\TransformScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\ObjectFX\LimitedLifeTimeScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\ObjectFX\ObjectFXScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Rendering\SpriteRendererScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Rendering\TextRendererScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\UI\ProgressBarScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\UI\SliderScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\UI\StackPanelScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\UI\UIScriptCommands.h" />
+    <ClInclude Include="Headers\Media\VideoSettings.h" />
+    <ClInclude Include="Headers\Memory\ObserverPtr.h" />
+    <ClInclude Include="Headers\Networking\NetworkUtils.h" />
+    <ClInclude Include="Headers\Threads\ThreadPool.h" />
+    <ClInclude Include="Headers\UtilityHeaders\CallbackHeaders.h" />
+    <ClInclude Include="Headers\UtilityHeaders\ComponentHeaders.h" />
+    <ClInclude Include="Headers\DataConverters\Audio\AudioSourceDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Input\KeyboardRigidBody2DControllerDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Input\KeyboardTransformerDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Objects\EntityDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Physics\RigidBody2DDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Resources\PrefabDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Physics\RectangleColliderDataConverter.h" />
+    <ClInclude Include="Headers\Debug\Profiling\FPSCounter.h" />
+    <ClInclude Include="Headers\Debug\Asserting\Pow2Assert.h" />
+    <ClInclude Include="Headers\Deserialization\AudioDeserializers.h" />
+    <ClInclude Include="Headers\Deserialization\InputDeserializers.h" />
+    <ClInclude Include="Headers\Deserialization\MathsDeserializers.h" />
+    <ClInclude Include="Headers\Deserialization\UIDeserializers.h" />
+    <ClInclude Include="Headers\Deserialization\ViewportDeserializers.h" />
+    <ClInclude Include="Headers\Input\Key.h" />
+    <ClInclude Include="Headers\Input\Utils\GlfwKeyConverter.h" />
+    <ClInclude Include="Headers\Lua\DataConverters\LuaComponentDataConverter.h" />
+    <ClInclude Include="Headers\Lua\Components\LuaComponent.h" />
+    <ClInclude Include="Headers\Lua\Components\LuaComponentManifest.h" />
+    <ClInclude Include="Headers\Lua\DataConverters\LuaComponentDataConverterRegistry.h" />
+    <ClInclude Include="Headers\UtilityHeaders\LuaHeaders.h" />
+    <ClInclude Include="Headers\Lua\Components\LuaComponentManifestRegistry.h" />
+    <ClInclude Include="Headers\Lua\LuaState.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Animation\AnimatorScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Audio\AudioScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Audio\AudioSourceScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\CoreScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\DataConverters\Objects\ComponentDataConverterScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\DataConverters\DataConverterScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\DataConverters\LuaComponentDataConverterScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Input\InputScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Input\KeyboardActivatorScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Input\KeyboardVisibilityScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\CelesteScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Lua\Components\LuaComponentManifestRegistryScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Maths\VectorScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Maths\MathsScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Media\VideoScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Objects\ComponentScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Objects\EntityScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Objects\GameObjectScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Objects\ObjectScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Physics\EllipseColliderScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Physics\PhysicsScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Rendering\CanvasScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Rendering\RenderingScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Resources\2D\Texture2DScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Resources\3D\ModelScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Resources\Data\DataScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Resources\Data\PrefabScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Resources\Fonts\FontScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Resources\ResourcesScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Resources\Audio\SoundScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Resources\Shaders\FragmentShaderScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Resources\Shaders\ShaderScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Resources\Shaders\VertexShaderScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Screens\ScreenScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Objects\ScriptableObjectScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Settings\GameSettingsScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Settings\WindowSettingsScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\XML\AttributeScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\XML\ElementScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\XML\tinyxml2ScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\XML\XMLObjectScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\XML\XMLScriptCommands.h" />
+    <ClInclude Include="Headers\Maths\Ellipse.h" />
+    <ClInclude Include="Headers\Maths\MathsEnums.h" />
+    <ClInclude Include="Headers\Maths\MathsUtils.h" />
+    <ClInclude Include="Headers\Media\Video.h" />
+    <ClInclude Include="Headers\Objects\Entity.h" />
+    <ClInclude Include="Headers\OpenAL\OpenALState.h" />
+    <ClInclude Include="Headers\OpenGL\GL.h" />
+    <ClInclude Include="Headers\OpenGL\ManagedGLBuffer.h" />
+    <ClInclude Include="Headers\Physics\EllipseCollider.h" />
+    <ClInclude Include="Headers\Reflection\ITypeInfo.h" />
+    <ClInclude Include="Headers\Reflection\ReflectionUtils.h" />
+    <ClInclude Include="Headers\Reflection\Type.h" />
+    <ClInclude Include="Headers\Reflection\TypeTraits.h" />
+    <ClInclude Include="Headers\Registries\DefaultRegistryAllocator.h" />
+    <ClInclude Include="Headers\Registries\RegistryAllocator.h" />
+    <ClInclude Include="Headers\Registries\ScriptableObjectRegistry.h" />
+    <ClInclude Include="Headers\Rendering\Canvas.h" />
+    <ClInclude Include="Headers\Rendering\ModelRenderer.h" />
+    <ClInclude Include="Headers\Rendering\RenderManager.h" />
+    <ClInclude Include="Headers\Rendering\RenderUtils.h" />
+    <ClInclude Include="Headers\Resources\3D\Mesh.h" />
+    <ClInclude Include="Headers\Resources\3D\Model.h" />
+    <ClInclude Include="Headers\Resources\3D\Texture.h" />
+    <ClInclude Include="Headers\Resources\3D\Vertex.h" />
+    <ClInclude Include="Headers\Resources\ResourceUtils.h" />
+    <ClInclude Include="Headers\Serialization\InputSerializers.h" />
+    <ClInclude Include="Headers\Serialization\MathsSerializers.h" />
+    <ClInclude Include="Headers\Serialization\Serializers.h" />
+    <ClInclude Include="Headers\Fields\Field.h" />
+    <ClInclude Include="Headers\Fields\DataField.h" />
+    <ClInclude Include="Headers\Objects\ScriptableObject.h" />
+    <ClInclude Include="Headers\Registries\CallbackRegistry.h" />
+    <ClInclude Include="Headers\Callbacks\ActivateGameObject.h" />
+    <ClInclude Include="Headers\Callbacks\ExitGame.h" />
+    <ClInclude Include="Headers\Callbacks\KillGameObject.h" />
+    <ClInclude Include="Headers\Callbacks\KillOwnerScreen.h" />
+    <ClInclude Include="Headers\Callbacks\KillScreen.h" />
+    <ClInclude Include="Headers\Callbacks\RenderGameObject.h" />
+    <ClInclude Include="Headers\Callbacks\TransitionToScreen.h" />
+    <ClInclude Include="Headers\Animation\AnimationState.h" />
+    <ClInclude Include="Headers\Animation\StateMachine.h" />
+    <ClInclude Include="Headers\Audio\AudioManager.h" />
+    <ClInclude Include="Headers\Audio\AudioSource.h" />
+    <ClInclude Include="Headers\DataConverters\UI\SliderDataConverter.h" />
+    <ClInclude Include="Headers\Registries\ComponentRegistry.h" />
+    <ClInclude Include="Headers\Resources\Data\Prefab.h" />
+    <ClInclude Include="Headers\Deserialization\Deserializers.h" />
+    <ClInclude Include="Headers\Settings\WindowSettings.h" />
+    <ClInclude Include="Headers\System\Process.h" />
+    <ClInclude Include="Headers\Templates\ctstring.h" />
+    <ClInclude Include="Headers\Templates\XMLObjectTypeTraits.h" />
+    <ClInclude Include="Headers\Time\TimeUtils.h" />
+    <ClInclude Include="Headers\UID\Guid.hpp" />
+    <ClInclude Include="Headers\UtilityHeaders\NetworkHeaders.h" />
+    <ClInclude Include="Headers\UtilityHeaders\PlatformHeaders.h" />
+    <ClInclude Include="Headers\UtilityHeaders\ScriptableObjectHeaders.h" />
+    <ClInclude Include="Headers\UtilityHeaders\ScriptCommandHeaders.h" />
+    <ClInclude Include="Headers\UtilityMacros\ComponentDataConverterMacros.h" />
+    <ClInclude Include="Headers\UtilityMacros\ComponentMacros.h" />
+    <ClInclude Include="Headers\UtilityMacros\ScriptableObjectMacros.h" />
+    <ClInclude Include="Headers\Utils\ToString.h" />
+    <ClInclude Include="Headers\Viewport\ViewportEnums.h" />
+    <ClInclude Include="Headers\XML\Attributes\Attribute.h" />
+    <ClInclude Include="Headers\DataConverters\Callbacks\CallbackDataConverter.h" />
+    <ClInclude Include="Headers\XML\XMLObjectFactory.h" />
+    <ClInclude Include="Headers\XML\Attributes\DataAttribute.h" />
+    <ClInclude Include="Headers\XML\Elements\DataConverterListElement.h" />
+    <ClInclude Include="Headers\XML\Elements\Element.h" />
+    <ClInclude Include="Headers\XML\Elements\DataElement.h" />
+    <ClInclude Include="Headers\XML\Elements\ListElement.h" />
+    <ClInclude Include="Headers\DataConverters\Enums\ConverterEnums.h" />
+    <ClInclude Include="Headers\DataConverters\GraphicalFX\OpacityLerperDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\ObjectFX\LimitedLifeTimeDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Objects\ComponentDataConverter.h" />
+    <ClInclude Include="Headers\Registries\ComponentDataConverterRegistry.h" />
+    <ClInclude Include="Headers\DataConverters\DataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Objects\GameObjectDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Objects\ObjectDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Rendering\SpriteRendererDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Rendering\TextRendererDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Screens\ScreenDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\UI\ButtonDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\UI\StackPanelDataConverter.h" />
+    <ClInclude Include="Headers\Physics\SimulatedBody.h" />
+    <ClInclude Include="Headers\Screens\Loading\ScreenLoader.h" />
+    <ClInclude Include="Headers\Templates\ChooseClass.h" />
+    <ClInclude Include="Headers\XML\ChildXMLElementWalker.h" />
+    <ClInclude Include="Headers\XML\tinyxml2_ext.h" />
+    <ClInclude Include="Headers\Debug\Assert.h" />
+    <ClInclude Include="Headers\Debug\Logging\Logger.h" />
+    <ClInclude Include="Headers\Debug\Profiling\Profiler.h" />
+    <ClInclude Include="Headers\Debug\Profiling\ProfilingBlock.h" />
+    <ClInclude Include="Headers\Debug\Asserting\DebugAsserter.h" />
+    <ClInclude Include="Headers\Debug\Asserting\NullAsserter.h" />
+    <ClInclude Include="Headers\CelesteDllExport.h" />
+    <ClInclude Include="Headers\Events\Event.h" />
+    <ClInclude Include="Headers\Events\EventTriggerer.h" />
+    <ClInclude Include="Headers\FileSystem\Directory.h" />
+    <ClInclude Include="Headers\FileSystem\File.h" />
+    <ClInclude Include="Headers\FileSystem\Path.h" />
+    <ClInclude Include="Headers\Game\Game.h" />
+    <ClInclude Include="Headers\GraphicalFX\OpacityLerper.h" />
+    <ClInclude Include="Headers\Input\InputEnums.h" />
+    <ClInclude Include="Headers\Input\InputManager.h" />
+    <ClInclude Include="Headers\Input\InputUtils.h" />
+    <ClInclude Include="Headers\Input\KeyboardActivator.h" />
+    <ClInclude Include="Headers\Input\KeyboardTransformer.h" />
+    <ClInclude Include="Headers\Input\KeyboardRigidBody2DController.h" />
+    <ClInclude Include="Headers\Input\KeyboardVisibility.h" />
+    <ClInclude Include="Headers\Input\Keyboard.h" />
+    <ClInclude Include="Headers\Input\MouseInteractionHandler.h" />
+    <ClInclude Include="Headers\Input\Mouse.h" />
+    <ClInclude Include="Headers\Maths\Matrix.h" />
+    <ClInclude Include="Headers\Maths\RandomGenerator.h" />
+    <ClInclude Include="Headers\Maths\Ray.h" />
+    <ClInclude Include="Headers\Maths\Rectangle.h" />
+    <ClInclude Include="Headers\Maths\Transform.h" />
+    <ClInclude Include="Headers\Maths\Vector.h" />
+    <ClInclude Include="Headers\Memory\Allocators\AlignedAllocator.h" />
+    <ClInclude Include="Headers\XML\SiblingXMLElementIterator.h" />
+    <ClInclude Include="Headers\Memory\Iterators\GameObjectIterator.h" />
+    <ClInclude Include="Headers\Memory\Iterators\EntityAllocatorIterator.h" />
+    <ClInclude Include="Headers\Memory\Iterators\PoolAllocatorIterator.h" />
+    <ClInclude Include="Headers\Memory\Allocators\EntityAllocator.h" />
+    <ClInclude Include="Headers\Memory\Allocators\DoubleBufferAllocator.h" />
+    <ClInclude Include="Headers\Memory\Allocators\PoolAllocator.h" />
+    <ClInclude Include="Headers\ObjectFX\LimitedLifeTime.h" />
+    <ClInclude Include="Headers\Objects\Component.h" />
+    <ClInclude Include="Headers\Objects\GameObject.h" />
+    <ClInclude Include="Headers\Objects\Object.h" />
+    <ClInclude Include="Headers\Objects\Script.h" />
+    <ClInclude Include="Headers\UtilityHeaders\ALHeaders.h" />
+    <ClInclude Include="Headers\UtilityHeaders\GLHeaders.h" />
+    <ClInclude Include="Headers\Physics\Collider.h" />
+    <ClInclude Include="Headers\Physics\PhysicsManager.h" />
+    <ClInclude Include="Headers\Physics\PhysicsUtils.h" />
+    <ClInclude Include="Headers\Physics\RectangleCollider.h" />
+    <ClInclude Include="Headers\Physics\RigidBody2D.h" />
+    <ClInclude Include="Headers\Rendering\Renderer.h" />
+    <ClInclude Include="Headers\Rendering\SpriteBatch.h" />
+    <ClInclude Include="Headers\Rendering\SpriteRenderer.h" />
+    <ClInclude Include="Headers\Resources\Fonts\Character.h" />
+    <ClInclude Include="Headers\Resources\Fonts\FontInstance.h" />
+    <ClInclude Include="Headers\Resources\Audio\Sound.h" />
+    <ClInclude Include="Headers\Resources\Data\Data.h" />
+    <ClInclude Include="Headers\Resources\Fonts\Font.h" />
+    <ClInclude Include="Headers\Loading\LoadResourcesAsyncScript.h" />
+    <ClInclude Include="Headers\Resources\2D\RawImageLoader.h" />
+    <ClInclude Include="Headers\Resources\Resource.h" />
+    <ClInclude Include="Headers\Resources\ResourceLoader.h" />
+    <ClInclude Include="Headers\Resources\ResourceManager.h" />
+    <ClInclude Include="Headers\Resources\Shaders\FragmentShader.h" />
+    <ClInclude Include="Headers\Resources\Shaders\Program.h" />
+    <ClInclude Include="Headers\Resources\Shaders\Shader.h" />
+    <ClInclude Include="Headers\Resources\Shaders\VertexShader.h" />
+    <ClInclude Include="Headers\Resources\2D\Texture2D.h" />
+    <ClInclude Include="Headers\Screens\Screen.h" />
+    <ClInclude Include="Headers\Screens\ScreenManager.h" />
+    <ClInclude Include="Headers\Screens\ScreenUtils.h" />
+    <ClInclude Include="Headers\Settings\GameSettings.h" />
+    <ClInclude Include="Headers\UID\StringId.h" />
+    <ClInclude Include="Headers\Time\Clock.h" />
+    <ClInclude Include="Headers\UI\Button.h" />
+    <ClInclude Include="Headers\UI\LayoutEnums.h" />
+    <ClInclude Include="Headers\UI\ProgressBar.h" />
+    <ClInclude Include="Headers\UI\Slider.h" />
+    <ClInclude Include="Headers\UI\StackPanel.h" />
+    <ClInclude Include="Headers\UI\TextBox.h" />
+    <ClInclude Include="Headers\Utils\StringUtils.h" />
+    <ClInclude Include="Headers\Rendering\TextRenderer.h" />
+    <ClInclude Include="Headers\Viewport\Camera.h" />
+    <ClInclude Include="Headers\Viewport\OpenGLWindow.h" />
+    <ClInclude Include="Headers\XML\XMLEnums.h" />
+    <ClInclude Include="Headers\XML\XMLObject.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\ScriptCommandUtils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Animation\AnimationState.cpp" />
+    <ClCompile Include="Source\Animation\Animators\ChangeScaleAnimator.cpp" />
+    <ClCompile Include="Source\Animation\Animators\MoveToPositionAnimator.cpp" />
+    <ClCompile Include="Source\Animation\Animator.cpp" />
+    <ClCompile Include="Source\Animation\StateMachine.cpp" />
+    <ClCompile Include="Source\Audio\AudioManager.cpp" />
+    <ClCompile Include="Source\Audio\AudioSource.cpp" />
+    <ClCompile Include="Source\Audio\AudioUtils.cpp" />
+    <ClCompile Include="Source\Bindings\BindingsGenerator.cpp" />
+    <ClCompile Include="Source\Bindings\BindingUtils.cpp" />
+    <ClCompile Include="Source\Callbacks\ExecuteLuaScript.cpp" />
+    <ClCompile Include="Source\DataConverters\Audio\AudioSourceDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Input\KeyboardRigidBody2DControllerDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Input\KeyboardTransformerDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Objects\ScriptableObjectDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Physics\RigidBody2DDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Resources\PrefabDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Physics\RectangleColliderDataConverter.cpp" />
+    <ClCompile Include="Source\Debug\Assert.cpp" />
+    <ClCompile Include="Source\Debug\Log.cpp" />
+    <ClCompile Include="Source\Debug\Profile.cpp" />
+    <ClCompile Include="Source\Debug\Profiling\FPSCounter.cpp" />
+    <ClCompile Include="Source\Debug\Asserting\Pow2Assert.cpp" />
+    <ClCompile Include="Source\Deserialization\Deserializers.cpp" />
+    <ClCompile Include="Source\Deserialization\InputDeserializers.cpp" />
+    <ClCompile Include="Source\Deserialization\ViewportDeserializers.cpp" />
+    <ClCompile Include="Source\Input\InputEnums.cpp" />
+    <ClCompile Include="Source\Input\Key.cpp" />
+    <ClCompile Include="Source\Input\Utils\GlfwKeyConverter.cpp" />
+    <ClCompile Include="Source\Lua\Components\LuaComponent.cpp" />
+    <ClCompile Include="Source\Lua\Components\LuaComponentManifest.cpp" />
+    <ClCompile Include="Source\Lua\Components\LuaComponentManifestRegistry.cpp" />
+    <ClCompile Include="Source\Lua\Components\LuaComponentManifestRegistryAllocator.cpp" />
+    <ClCompile Include="Source\Lua\DataConverters\LuaComponentDataConverter.cpp" />
+    <ClCompile Include="Source\Lua\DataConverters\LuaComponentDataConverterRegistry.cpp" />
+    <ClCompile Include="Source\Lua\LuaState.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Animation\AnimatorScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Audio\AudioScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Audio\AudioSourceScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\CoreScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\Objects\ComponentDataConverterScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\DataConverterScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\LuaComponentDataConverterScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Input\InputScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Input\KeyboardActivatorScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Input\KeyboardVisibilityScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\CelesteScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Input\MouseInteractionHandlerScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Lua\Components\LuaComponentManifestRegistryScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Maths\TransformScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Maths\VectorScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Maths\MathsScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Media\VideoScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\ObjectFX\LimitedLifeTimeScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\ObjectFX\ObjectFXScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Objects\ComponentScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Objects\EntityScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Objects\GameObjectScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Objects\ObjectScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Physics\EllipseColliderScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Physics\PhysicsScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Rendering\CanvasScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Rendering\RenderingScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Rendering\SpriteRendererScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Rendering\TextRendererScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\2D\Texture2DScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\3D\ModelScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Data\DataScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Data\PrefabScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Fonts\FontScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\ResourcesScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Audio\SoundScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Shaders\FragmentShaderScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Shaders\ShaderScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Resources\Shaders\VertexShaderScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Screens\ScreenScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Objects\ScriptableObjectScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Settings\GameSettingsScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\UI\ProgressBarScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\UI\SliderScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\UI\StackPanelScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\UI\UIScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\XML\AttributeScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\XML\ElementScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\XML\tinyxml2ScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\XML\XMLObjectScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\XML\XMLScriptCommands.cpp" />
+    <ClCompile Include="Source\Maths\MathsEnums.cpp" />
+    <ClCompile Include="Source\Maths\MathsUtils.cpp" />
+    <ClCompile Include="Source\Maths\RandomGenerator.cpp" />
+    <ClCompile Include="Source\Media\Video.cpp" />
+    <ClCompile Include="Source\Networking\NetworkUtils.cpp" />
+    <ClCompile Include="Source\Objects\Entity.cpp" />
+    <ClCompile Include="Source\Objects\ScriptableObject.cpp" />
+    <ClCompile Include="Source\OpenAL\OpenALState.cpp" />
+    <ClCompile Include="Source\OpenGL\ManagedGLBuffer.cpp" />
+    <ClCompile Include="Source\Physics\EllipseCollider.cpp" />
+    <ClCompile Include="Source\OpenGL\GL.cpp" />
+    <ClCompile Include="Source\Registries\CallbackRegistry.cpp" />
+    <ClCompile Include="Source\Callbacks\ActivateGameObject.cpp" />
+    <ClCompile Include="Source\Callbacks\ExitGame.cpp" />
+    <ClCompile Include="Source\Callbacks\KillGameObject.cpp" />
+    <ClCompile Include="Source\Callbacks\KillOwnerScreen.cpp" />
+    <ClCompile Include="Source\Callbacks\KillScreen.cpp" />
+    <ClCompile Include="Source\Callbacks\RenderGameObject.cpp" />
+    <ClCompile Include="Source\Callbacks\TransitionToScreen.cpp" />
+    <ClCompile Include="Source\DataConverters\Callbacks\CallbackDataConverter.cpp" />
+    <ClCompile Include="Source\Registries\ComponentDataConverterRegistry.cpp" />
+    <ClCompile Include="Source\DataConverters\DataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\GraphicalFX\OpacityLerperDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\ObjectFX\LimitedLifeTimeDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Objects\GameObjectDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Rendering\SpriteRendererDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Rendering\TextRendererDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Screens\ScreenDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\tinyxml2_ext.cpp" />
+    <ClCompile Include="Source\DataConverters\UI\ButtonDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\UI\SliderDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\UI\StackPanelDataConverter.cpp" />
+    <ClCompile Include="Source\Debug\Logging\Logger.cpp" />
+    <ClCompile Include="Source\Debug\Profiling\Profiler.cpp" />
+    <ClCompile Include="Source\Debug\Asserting\DebugAsserter.cpp" />
+    <ClCompile Include="Source\Events\EventTriggerer.cpp" />
+    <ClCompile Include="Source\FileSystem\Directory.cpp" />
+    <ClCompile Include="Source\FileSystem\File.cpp" />
+    <ClCompile Include="Source\FileSystem\Path.cpp" />
+    <ClCompile Include="Source\Game\Game.cpp" />
+    <ClCompile Include="Source\GraphicalFX\OpacityLerper.cpp" />
+    <ClCompile Include="Source\Input\InputManager.cpp" />
+    <ClCompile Include="Source\Input\InputUtils.cpp" />
+    <ClCompile Include="Source\Input\KeyboardActivator.cpp" />
+    <ClCompile Include="Source\Input\KeyboardTransformer.cpp" />
+    <ClCompile Include="Source\Input\KeyboardRigidBody2DController.cpp" />
+    <ClCompile Include="Source\Input\KeyboardVisibility.cpp" />
+    <ClCompile Include="Source\Input\Keyboard.cpp" />
+    <ClCompile Include="Source\Input\MouseInteractionHandler.cpp" />
+    <ClCompile Include="Source\Input\Mouse.cpp" />
+    <ClCompile Include="Source\Maths\Matrix.cpp" />
+    <ClCompile Include="Source\Maths\Rectangle.cpp" />
+    <ClCompile Include="Source\Maths\Transform.cpp" />
+    <ClCompile Include="Source\Memory\AlignedAllocator.cpp" />
+    <ClCompile Include="Source\ObjectFX\LimitedLifeTime.cpp" />
+    <ClCompile Include="Source\Objects\Component.cpp" />
+    <ClCompile Include="Source\Objects\GameObject.cpp" />
+    <ClCompile Include="Source\Physics\Collider.cpp" />
+    <ClCompile Include="Source\Physics\PhysicsManager.cpp" />
+    <ClCompile Include="Source\Physics\PhysicsUtils.cpp" />
+    <ClCompile Include="Source\Physics\RectangleCollider.cpp" />
+    <ClCompile Include="Source\Physics\RigidBody2D.cpp" />
+    <ClCompile Include="Source\Registries\ComponentRegistry.cpp" />
+    <ClCompile Include="Source\Registries\ScriptableObjectRegistry.cpp" />
+    <ClCompile Include="Source\Rendering\Canvas.cpp" />
+    <ClCompile Include="Source\Rendering\ModelRenderer.cpp" />
+    <ClCompile Include="Source\Rendering\Renderer.cpp" />
+    <ClCompile Include="Source\Rendering\RenderManager.cpp" />
+    <ClCompile Include="Source\Rendering\RenderUtils.cpp" />
+    <ClCompile Include="Source\Rendering\SpriteBatch.cpp" />
+    <ClCompile Include="Source\Rendering\SpriteRenderer.cpp" />
+    <ClCompile Include="Source\Rendering\TextRenderer.cpp" />
+    <ClCompile Include="Source\Resources\3D\Mesh.cpp" />
+    <ClCompile Include="Source\Resources\3D\Model.cpp" />
+    <ClCompile Include="Source\Resources\Fonts\FontInstance.cpp" />
+    <ClCompile Include="Source\Resources\Data\Prefab.cpp" />
+    <ClCompile Include="Source\Resources\Audio\Sound.cpp" />
+    <ClCompile Include="Source\Resources\Data\Data.cpp" />
+    <ClCompile Include="Source\Resources\Fonts\Font.cpp" />
+    <ClCompile Include="Source\Loading\LoadResourcesAsyncScript.cpp" />
+    <ClCompile Include="Source\Resources\2D\RawImageLoader.cpp" />
+    <ClCompile Include="Source\Resources\Resource.cpp" />
+    <ClCompile Include="Source\Resources\ResourceManager.cpp" />
+    <ClCompile Include="Source\Resources\ResourceUtils.cpp" />
+    <ClCompile Include="Source\Resources\Shaders\Program.cpp" />
+    <ClCompile Include="Source\Resources\Shaders\Shader.cpp" />
+    <ClCompile Include="Source\Resources\2D\Texture2D.cpp" />
+    <ClCompile Include="Source\Screens\Loading\ScreenLoader.cpp" />
+    <ClCompile Include="Source\Screens\Screen.cpp" />
+    <ClCompile Include="Source\Screens\ScreenManager.cpp" />
+    <ClCompile Include="Source\Screens\ScreenUtils.cpp" />
+    <ClCompile Include="Source\Deserialization\AudioDeserializers.cpp" />
+    <ClCompile Include="Source\Serialization\InputSerializers.cpp" />
+    <ClCompile Include="Source\Deserialization\MathsDeserializers.cpp" />
+    <ClCompile Include="Source\Serialization\MathsSerializers.cpp" />
+    <ClCompile Include="Source\Serialization\Serializers.cpp" />
+    <ClCompile Include="Source\Deserialization\UIDeserializers.cpp" />
+    <ClCompile Include="Source\Settings\GameSettings.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Settings\WindowSettingsScriptCommands.cpp" />
+    <ClCompile Include="Source\Settings\WindowSettings.cpp" />
+    <ClCompile Include="Source\System\Process.cpp" />
+    <ClCompile Include="Source\UID\Guid.cpp" />
+    <ClCompile Include="Source\UID\StringId.cpp" />
+    <ClCompile Include="Source\Time\Clock.cpp" />
+    <ClCompile Include="Source\Time\TimeUtils.cpp" />
+    <ClCompile Include="Source\UI\Button.cpp" />
+    <ClCompile Include="Source\UI\LayoutEnums.cpp" />
+    <ClCompile Include="Source\UI\ProgressBar.cpp" />
+    <ClCompile Include="Source\UI\Slider.cpp" />
+    <ClCompile Include="Source\UI\StackPanel.cpp" />
+    <ClCompile Include="Source\UI\TextBox.cpp" />
+    <ClCompile Include="Source\Utils\StringUtils.cpp" />
+    <ClCompile Include="Source\Viewport\Camera.cpp" />
+    <ClCompile Include="Source\Viewport\OpenGLWindow.cpp" />
+    <ClCompile Include="Source\Viewport\ViewportEnums.cpp" />
+    <ClCompile Include="Source\XML\Elements\DataConverterListElement.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Build Events\CheckLuaFiles.bat" />
+    <None Include="Build Events\CustomBuildStep.bat" />
+    <None Include="Common\Resources\Data\Screens\MainMenuScreen.asset" />
+    <None Include="Common\Resources\Data\Screens\OptionsScreen.asset" />
+    <None Include="Common\Resources\Data\Screens\SplashScreen.asset" />
+    <None Include="Common\Resources\Data\Screens\StartupMusic.asset" />
+    <None Include="Common\Resources\Scripts\Game.lua" />
+    <None Include="Resources\Scripts\Core\FileSystem\Path.lua" />
+    <None Include="Resources\Scripts\Core\Utils\Inspect.lua" />
+    <None Include="Resources\Scripts\DataConverters\Animation\AnimatorDataConverter.lua" />
+    <None Include="Resources\Scripts\DataConverters\Audio\AudioSourceDataConverter.lua">
+      <SubType>
+      </SubType>
+    </None>
+    <None Include="Resources\Scripts\DataConverters\DataConverters.lua" />
+    <None Include="Resources\Scripts\DataConverters\Input\KeyboardActivatorDataConverter.lua" />
+    <None Include="Resources\Scripts\DataConverters\Input\KeyboardVisibilityDataConverter.lua" />
+    <None Include="Resources\Scripts\DataConverters\Physics\EllipseColliderDataConverter.lua" />
+    <None Include="Resources\Scripts\DataConverters\Rendering\CanvasDataConverter.lua" />
+    <None Include="Resources\Scripts\Objects\GameObject.lua" />
+    <None Include="Resources\Shaders\Model.frag">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Resources\Shaders\Model.vert">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\CelesteLogo.png" />
+    <Image Include="Resources\CelesteGamesLogo.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

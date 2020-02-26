@@ -1,0 +1,5 @@
+include_directories ("${PROJECT_SOURCE_DIR}/incs")
+include_directories ("${PROJECT_SOURCE_DIR}/srcs")
+add_subdirectory (incs)
+add_subdirectory (srcs)
+add_library(SOIL2 srcs/SOIL2.c)

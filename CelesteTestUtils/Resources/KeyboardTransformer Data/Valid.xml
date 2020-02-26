@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<KeyboardTransformer translate_left_key="A" translate_right_key="B"
+                    translate_up_key="C" translate_down_key="D"
+                    rotate_left_key="E" rotate_right_key="F"
+                    translation_speed="4" rotation_speed="0.5"/>

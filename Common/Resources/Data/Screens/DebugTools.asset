@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Screen name="Gameplay">
+    <Resources>
+      <Fonts>
+        
+      </Fonts>
+      <FragmentShaders>
+        
+      </FragmentShaders>
+      <Sounds>
+        
+      </Sounds>
+      <Textures>
+        
+      </Textures>
+      <VertexShaders>
+        
+      </VertexShaders>
+    </Resources>
+    <GameObjects>
+      <Prefab path="Prefabs\Debugging\DebugConsole.prefab"/>
+      <Prefab path="Prefabs\Debugging\FPSCounter.prefab"/>
+    </GameObjects>
+  </Screen>
+</Root>

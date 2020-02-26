@@ -1,0 +1,12 @@
+<Root>
+  <BackgroundRelativeFilePath>Backgrounds\RainbowNebula.png</BackgroundRelativeFilePath>
+  <TinyAsteroidCount>30</TinyAsteroidCount>
+  <SmallAsteroidCount>20</SmallAsteroidCount>
+  <LargeAsteroidCount>10</LargeAsteroidCount>
+  <HugeAsteroidCount>3</HugeAsteroidCount>
+  <LevelBounds width="3000" height="3000"/>
+  <SpawnPoints>
+    <Item x="-1000" y="-1000">Sprites\Spawn Points\NavBuoy.png</Item>
+    <Item x="1000" y="1000">Sprites\Spawn Points\NavBuoy.png</Item>
+  </SpawnPoints>
+</Root>

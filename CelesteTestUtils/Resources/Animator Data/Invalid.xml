@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Animation seconds_per_frame="fdasd" looping="6" active="asdas">
+  <Frames>
+    <Frame>Parent\Path.jpg</Frame>
+    <Frame>        </Frame>
+    <Frmea>Another\Parent\Path.png</Frmea>
+  </Frames>
+</Animation>

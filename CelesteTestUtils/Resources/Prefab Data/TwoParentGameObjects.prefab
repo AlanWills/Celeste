@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Prefab>
+  <GameObjects>
+    <GameObject name="GameObject1">
+      <Components>
+        <TextRenderer/>
+      </Components>
+    </GameObject>
+    <GameObject name="GameObject2">
+      <Components>
+        <TextRenderer/>
+      </Components>
+    </GameObject>
+  </GameObjects>
+</Prefab>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Animation sprite_sheet_dimensions="4, 12" seconds_per_frame="0.6" looping="false" play_immediately="false" active="true">
+  <Frames>
+    <Frame>Textures\UI\ButtonDefault.png</Frame>
+    <Frame>Textures\UI\ButtonClicked.png</Frame>
+  </Frames>
+</Animation>

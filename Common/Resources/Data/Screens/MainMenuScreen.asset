@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Screen name="Main Menu" guid="7d5623bd-af84-468a-bf94-44b2400de483">
+    <GameObjects>
+      <GameObject name="Canvas" position="0,0,-1">
+        <Components>
+          <Canvas projection_mode="Orthographic" dimensions="1%,1%"/>
+        </Components>
+      </GameObject>
+      <GameObject name="Background" position="0.5%, 0.5%, 0" parent="Canvas">
+        <Components>
+          <SpriteRenderer sprite="[BACKGROUND_IMAGE_PATH]" size="1%, 1%"/>
+        </Components>
+      </GameObject>
+      <GameObject name="Canvas2">
+        <Components>
+          <Canvas projection_mode="Orthographic" dimensions="1%,1%"/>
+        </Components>
+      </GameObject>
+      <GameObject name="Title" position="0.5%, 0.8%, 0" parent="Canvas2">
+        <Components>
+          <TextRenderer font_height="32" horizontal_alignment="centre">
+            <Lines>
+              <Line>[GAME_NAME]</Line>
+            </Lines>
+          </TextRenderer>
+        </Components>
+      </GameObject>
+      <GameObject name="PlayButton">
+        <Components>
+          <SpriteRenderer/>
+          <RectangleCollider/>
+          <MouseInteractionHandler/>
+          <AudioSource audio_type="SFX"/>
+          <Button>
+            <LeftClickCallbacks>
+              <Callback name="KillScreen" arg="StartupMusic"/>
+              <Callback name="KillOwnerScreen"/>
+            </LeftClickCallbacks>
+          </Button>
+        </Components>
+      </GameObject>
+      <GameObject name="PlayText" parent="PlayButton" position="0,1,0">
+        <Components>
+          <TextRenderer font_height="24">
+            <Lines>
+              <Line>Play</Line>
+            </Lines>
+          </TextRenderer>
+        </Components>
+      </GameObject>
+      <GameObject name="OptionsButton">
+        <Components>
+          <SpriteRenderer/>
+          <RectangleCollider/>
+          <MouseInteractionHandler/>
+          <AudioSource audio_type="SFX"/>
+          <Button>
+            <LeftClickCallbacks>
+              <Callback name="TransitionToScreen" arg="Data\Screens\OptionsScreen.asset"/>
+            </LeftClickCallbacks>
+          </Button>
+        </Components>
+      </GameObject>
+      <GameObject name="OptionsText" parent="OptionsButton" position="0,1,0">
+        <Components>
+          <TextRenderer font_height="24">
+            <Lines>
+              <Line>Options</Line>
+            </Lines>
+          </TextRenderer>
+        </Components>
+      </GameObject>
+      <GameObject name="ExitButton">
+        <Components>
+          <SpriteRenderer/>
+          <RectangleCollider/>
+          <MouseInteractionHandler/>
+          <AudioSource audio_type="SFX"/>
+          <Button>
+            <LeftClickCallbacks>
+              <Callback name="ExitGame"/>
+            </LeftClickCallbacks>
+          </Button>
+        </Components>
+      </GameObject>
+      <GameObject name="ExitText" parent="ExitButton" position="0,1,0">
+        <Components>
+          <TextRenderer font_height="24">
+            <Lines>
+              <Line>Exit</Line>
+            </Lines>
+          </TextRenderer>
+        </Components>
+      </GameObject>
+      <GameObject position="0.5%, 0.5%, 0" name="LayoutStackPanel" parent="Canvas2">
+        <Components>
+          <StackPanel orientation="vertical" vertical_alignment="centre" padding="20">
+            <Children>
+              <Child>PlayButton</Child>
+              <Child>OptionsButton</Child>
+              <Child>ExitButton</Child>
+            </Children>
+          </StackPanel>
+        </Components>
+      </GameObject>
+    </GameObjects>
+  </Screen>
+</Root>

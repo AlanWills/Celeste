@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Screen name="Test">
+  <Resources>
+    <VertexShaders>
+      <VertexShader>Shader1.vert</VertexShader>
+      <VertexShader>Another\Shader.vert</VertexShader>
+      <VertexShader>Shader3.vert</VertexShader>
+    </VertexShaders>
+  </Resources>
+</Screen>

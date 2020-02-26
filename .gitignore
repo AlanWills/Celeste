@@ -1,0 +1,15 @@
+Build/
+bin/
+obj/
+*.tlog
+*.db
+*.opendb
+*.TMP
+*.suo
+*.orig
+ipch/
+Log.txt
+Profiler.txt
+TestResults.xml
+Build\ Server/
+.vs/

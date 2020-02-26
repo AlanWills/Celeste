@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:CelesteEngineEditor.Converters">
+    <converters:FlipBoolConverter x:Key="FlipBool"/>
+    <converters:Texture2DToImageSourceConverter x:Key="Texture2DToImageSourceConverter"/>
+    <converters:PathIsNonEmpty x:Key="PathIsNonEmpty"/>
+    <converters:PathIsNonEmpty x:Key="PathToExistingDirectory"/>
+    <converters:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
+    <converters:BoolToCollapsedVisibilityConverter x:Key="BoolToCollapsedVisibilityConverter"/>
+</ResourceDictionary>

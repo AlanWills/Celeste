@@ -1,0 +1,657 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\Mocks\Audio\MockAudioSource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Input\MockKeyboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Input\MockMouse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Objects\MockComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Objects\MockGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Objects\MockObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Objects\MockScript.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Physics\MockCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Physics\MockRigidBody2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Rendering\MockRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Rendering\MockSpriteBatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Rendering\MockSpriteRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Rendering\MockTextRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\Fonts\MockFont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\Fonts\MockFontInstance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\Shaders\MockFragmentShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\Shaders\MockShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\Shaders\MockVertexShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\MockLoadResourcesAsyncScript.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\MockResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\MockResourceLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\MockResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\UI\MockButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\UI\MockTextBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\ALUnitTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\AssertCel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\AutoALDeallocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\AutoDeallocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\AutoGLDeallocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\AutoKiller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\CelesteUnitTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\KeyboardTextInputtedEventUnsubscriber.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Physics\CollisionDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Objects\MockObjectDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Objects\MockComponentDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Screens\ScreenLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Objects\GameObjectLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Rendering\SpriteRendererLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\GraphicalFX\OpacityLerperLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\MockDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Objects\MockGameObjectDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Rendering\MockSpriteRendererDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\GraphicalFX\MockOpacityLerperDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\ObjectFX\MockLimitedLifeTimeDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\ObjectFX\LimitedLifeTimeLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\UI\MockButtonDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\UI\ButtonLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\UI\MockStackPanelDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\UI\StackPanelLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Rendering\MockTextRendererDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Rendering\TextRendererLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Callbacks\MockCallbackDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\UI\MockSliderDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\UI\SliderLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Screens\MockScreenDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Physics\RectangleColliderLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Audio\MockAudioSourceDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Audio\AudioSourceLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Resources\MockPrefabDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Fields\MockField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Fields\MockDataField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Objects\MockScriptableObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Objects\FailDeserializationScriptableObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Fields\FailDeserializationField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\XML\Attributes\MockAttribute.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\XML\Elements\MockElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Physics\MockRigidBody2DDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Physics\RigidBody2DLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Input\MockKeyboardRigidBody2DControllerDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Input\KeyboardRigidBody2DControllerLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Input\MockKeyboardTransformer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Input\KeyboardTransformerLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Input\MockKeyboardTransformerDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Objects\MockScriptableObjectLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Settings\GameSettingsLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\Data\MockData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\2D\MockTexture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Resources\Data\PrefabLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\TestResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Animation\MockAnimator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Resources\Models\ModelLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Input\MockKeyboardVisibility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Input\MockKeyboardActivator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Physics\MockEllipseCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Rendering\MockCanvas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Objects\MockEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\DataConverters\Objects\MockEntityDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\Audio\MockSound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\Data\MockPrefab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Resources\3D\MockModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Animation\AnimatorLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Input\KeyboardActivatorLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Input\KeyboardVisibilityLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Physics\EllipseColliderLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Rendering\CanvasLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Lua\LuaScriptResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Resources\Settings\WindowSettingsLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Utils\GameObjectXMLUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Utils\XMLUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Utils\ScreenXMLUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\ObjectFX\MockLimitedLifeTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Utils\ObjectUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Utils\InputUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\UtilityHeaders\UnitTestHeaders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\AssertSpecialization\FileSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\UI\MockProgressBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\CelesteTestUtilsDllExport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Mocks\Objects\MockComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Objects\MockScript.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Physics\MockCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Physics\MockRigidBody2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Rendering\MockRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Rendering\MockSpriteRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Rendering\MockTextRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Resources\MockLoadResourcesAsyncScript.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\UI\MockButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\UI\MockTextBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CelesteUnitTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Physics\CollisionDetector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Objects\GameObjectLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Screens\ScreenLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Rendering\SpriteRendererLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\GraphicalFX\OpacityLerperLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\ObjectFX\LimitedLifeTimeLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\UI\ButtonLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\UI\StackPanelLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Rendering\TextRendererLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\UI\SliderLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Headers\Mocks\DataConverters\Physics\MockRectangleColliderDataConverter.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Physics\RectangleColliderLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Audio\AudioSourceLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\DataConverters\Objects\MockComponentDataConverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Physics\RigidBody2DLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Input\KeyboardRigidBody2DControllerLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Input\MockKeyboardTransformer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Input\KeyboardTransformerLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Objects\MockScriptableObjectLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Settings\GameSettingsLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Resources\Data\PrefabLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Animation\MockAnimator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Resources\Models\ModelLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Objects\MockScriptableObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\TestResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Input\MockKeyboardVisibility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Input\MockKeyboardActivator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Physics\MockEllipseCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Rendering\MockCanvas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Animation\AnimatorLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Input\KeyboardActivatorLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Input\KeyboardVisibilityLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Physics\EllipseColliderLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Rendering\CanvasLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AssertCel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resources\Settings\WindowSettingsLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\GameObjectXMLUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\XMLUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\ScreenXMLUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\ObjectFX\MockLimitedLifeTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\KeyboardTextInputtedEventUnsubscriber.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ALUnitTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\InputUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\UI\MockProgressBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AutoDeallocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scripts\LuaAssert.lua" />
+    <None Include="Resources\Scripts\CelesteAssert.lua" />
+    <None Include="Resources\Fragment Shaders\colour.frag" />
+    <None Include="Resources\Fragment Shaders\sprite.frag" />
+    <None Include="Resources\Fragment Shaders\text.frag" />
+    <None Include="Resources\Models\Box\Crate1.mtl" />
+    <None Include="Resources\Vertex Shaders\colour.vert" />
+    <None Include="Resources\Vertex Shaders\sprite.vert" />
+    <None Include="Resources\Vertex Shaders\text.vert" />
+    <None Include="Resources\Models\Box\Crate1.obj" />
+    <None Include="Resources\EllipseCollider Data\Valid.xml" />
+    <None Include="Build Events\CopyDependencyFiles.bat">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Resources\Scripts\EmptyModule.lua" />
+    <None Include="Resources\Screen Data\EmptyScreen.screen" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resources\AudioSource Data\Invalid.xml" />
+    <Xml Include="Resources\AudioSource Data\Valid.xml" />
+    <Xml Include="Resources\Button Data\Invalid.xml" />
+    <Xml Include="Resources\Button Data\ValidNoCallbacks.xml" />
+    <Xml Include="Resources\Button Data\ValidWithCallbacks.xml" />
+    <Xml Include="Resources\Data\Data.xml" />
+    <Xml Include="Resources\Data\ElementDataAsVectorFloat.xml" />
+    <Xml Include="Resources\Data\ElementDataAsVectorString.xml" />
+    <Xml Include="Resources\GameObject Data\Invalid.xml" />
+    <Xml Include="Resources\GameObject Data\Valid.xml" />
+    <Xml Include="Resources\KeyboardRigidBody2DController Data\Invalid.xml" />
+    <Xml Include="Resources\KeyboardRigidBody2DController Data\Valid.xml" />
+    <Xml Include="Resources\KeyboardTransformer Data\Invalid.xml" />
+    <Xml Include="Resources\KeyboardTransformer Data\Valid.xml" />
+    <Xml Include="Resources\LimitedLifeTime Data\Invalid.xml" />
+    <Xml Include="Resources\LimitedLifeTime Data\ValidNoCallbacks.xml" />
+    <Xml Include="Resources\LimitedLifeTime Data\ValidWithCallbacks.xml" />
+    <Xml Include="Resources\Mock Resources\Mock3.xml" />
+    <Xml Include="Resources\MockScriptableObject Data\Invalid.xml" />
+    <Xml Include="Resources\MockScriptableObject Data\Valid.xml" />
+    <Xml Include="Resources\More Mock Resources\Mock3.xml" />
+    <Xml Include="Resources\OpacityLerper Data\Invalid.xml" />
+    <Xml Include="Resources\OpacityLerper Data\Valid.xml" />
+    <Xml Include="Resources\RectangleCollider Data\Invalid.xml" />
+    <Xml Include="Resources\RectangleCollider Data\Valid.xml" />
+    <Xml Include="Resources\RigidBody2D Data\Invalid.xml" />
+    <Xml Include="Resources\RigidBody2D Data\Valid.xml" />
+    <Xml Include="Resources\Slider Data\Invalid.xml" />
+    <Xml Include="Resources\Slider Data\ValidNoCallbacks.xml" />
+    <Xml Include="Resources\Slider Data\ValidWithCallbacks.xml" />
+    <Xml Include="Resources\SpriteRenderer Data\Invalid.xml" />
+    <Xml Include="Resources\SpriteRenderer Data\Valid.xml" />
+    <Xml Include="Resources\StackPanel Data\Invalid.xml" />
+    <Xml Include="Resources\TextRenderer Data\Invalid.xml" />
+    <Xml Include="Resources\TextRenderer Data\ValidNoLines.xml" />
+    <Xml Include="Resources\TextRenderer Data\ValidWithLines.xml" />
+    <Xml Include="Resources\Animator Data\Valid.xml" />
+    <Xml Include="Resources\KeyboardActivator Data\Invalid.xml" />
+    <Xml Include="Resources\KeyboardActivator Data\Valid.xml" />
+    <Xml Include="Resources\KeyboardVisibility Data\Invalid.xml" />
+    <Xml Include="Resources\EllipseCollider Data\Invalid.xml" />
+    <Xml Include="Resources\Canvas Data\Valid.xml" />
+    <Xml Include="Resources\Canvas Data\Invalid.xml" />
+    <Xml Include="Resources\StackPanel Data\Valid.xml" />
+    <Xml Include="Resources\Animator Data\Invalid.xml" />
+    <Xml Include="Resources\Screen Data\NoResourcesElement.screen" />
+    <Xml Include="Resources\Screen Data\EmptyFile.screen" />
+    <Xml Include="Resources\Screen Data\VertexShaders\VertexShadersElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\VertexShaders\VertexShadersElement.screen" />
+    <Xml Include="Resources\Screen Data\VertexShaders\NoVertexShadersElement.screen" />
+    <Xml Include="Resources\Screen Data\Textures\TexturesElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\Textures\TexturesElement.screen" />
+    <Xml Include="Resources\Screen Data\Textures\NoTexturesElement.screen" />
+    <Xml Include="Resources\Screen Data\Sounds\SoundsElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\Sounds\SoundsElement.screen" />
+    <Xml Include="Resources\Screen Data\Sounds\NoSoundsElement.screen" />
+    <Xml Include="Resources\Screen Data\Prefabs\PrefabWithParent.screen" />
+    <Xml Include="Resources\Screen Data\Prefabs\GameObjectsElement.screen" />
+    <Xml Include="Resources\Screen Data\Name\NoNameAttribute.screen" />
+    <Xml Include="Resources\Screen Data\Name\NameAttribute.screen" />
+    <Xml Include="Resources\Screen Data\GameObjects\NoGameObjectsElement.screen" />
+    <Xml Include="Resources\Screen Data\GameObjects\GameObjectsElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\GameObjects\GameObjectsElement.screen" />
+    <Xml Include="Resources\Screen Data\FragmentShaders\NoFragmentShadersElement.screen" />
+    <Xml Include="Resources\Screen Data\FragmentShaders\FragmentShadersElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\FragmentShaders\FragmentShadersElement.screen" />
+    <Xml Include="Resources\Screen Data\Fonts\NoFontsElement.screen" />
+    <Xml Include="Resources\Screen Data\Fonts\FontsElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\Fonts\FontsElement.screen" />
+    <Xml Include="Resources\Screen Data\Data\NoDataElement.screen" />
+    <Xml Include="Resources\Screen Data\Data\DataElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\Data\DataElement.screen" />
+    <Xml Include="Resources\Prefab Data\Empty.prefab" />
+    <Xml Include="Resources\Prefab Data\Invalid.prefab" />
+    <Xml Include="Resources\Prefab Data\NoGameObjectsElement.prefab" />
+    <Xml Include="Resources\Prefab Data\TwoParentGameObjects.prefab" />
+    <Xml Include="Resources\Prefab Data\ValidMultipleChildrenForSingleParent.prefab" />
+    <Xml Include="Resources\Prefab Data\ValidMultipleGameObjects.prefab" />
+    <Xml Include="Resources\Prefab Data\ValidSingleGameObject.prefab" />
+    <Xml Include="Resources\GameSettings Data\Invalid.asset" />
+    <Xml Include="Resources\GameSettings Data\Valid.asset" />
+    <Xml Include="Resources\WindowSettings Data\Invalid.asset" />
+    <Xml Include="Resources\WindowSettings Data\Valid.asset" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Audio\SFX\ButtonClicked.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Audio\SFX\ButtonHover.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resources\Fonts\arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\Mock Resources\Nested\Mock2.txt" />
+    <Text Include="Resources\Mock Resources\Mock1.txt" />
+    <Text Include="Resources\More Mock Resources\Nested\Mock2.txt" />
+    <Text Include="Resources\More Mock Resources\Mock1.txt" />
+    <Text Include="Resources\KeyboardVisibility Data\Valid.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Models\Box\crate_1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Models\Box\CrateImage1.JPG">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Models\Box\CrateImage2.JPG">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UI\ButtonClicked.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UI\ButtonDefault.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UI\ButtonHighlighted.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Textures\block.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Textures\container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

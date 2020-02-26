@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                    xmlns:editor_views="clr-namespace:CelesteEngineEditor.Views;assembly=CelesteEngineEditorLibrary">
+    <Style x:Key="MainWindow" TargetType="Metro:MetroWindow">
+        <Setter Property="WindowTitleBrush" Value="White"/>
+        <Setter Property="NonActiveWindowTitleBrush" Value="White"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="TitleCaps" Value="False"/>
+        <Setter Property="TitleForeground" Value="Black"/>
+        <Setter Property="WindowMinButtonStyle" Value="{DynamicResource WindowBarButton}"/>
+        <Setter Property="WindowMaxButtonStyle" Value="{DynamicResource WindowBarButton}"/>
+        <Setter Property="WindowCloseButtonStyle" Value="{DynamicResource WindowBarButton}"/>
+        <Setter Property="IgnoreTaskbarOnMaximize" Value="false"/>
+        <Setter Property="WindowState" Value="Maximized"/>
+        <Setter Property="TitlebarHeight" Value="40"/>
+        <Setter Property="IconTemplate" Value="{DynamicResource WindowIconTemplate}"/>
+        <Setter Property="WindowTransitionsEnabled" Value="False"/>
+        <Setter Property="Icon" Value="{DynamicResource MainWindowLogo}"/>
+    </Style>
+</ResourceDictionary>

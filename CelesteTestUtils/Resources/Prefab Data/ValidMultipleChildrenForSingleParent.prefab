@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Prefab>
+  <GameObjects>
+    <GameObject name="Parent">
+      <Components>
+        <TextRenderer/>
+      </Components>
+      <GameObjects>
+        <GameObject name="Child1">
+          <Components>
+            <SpriteRenderer/>
+          </Components>
+        </GameObject>
+        <GameObject name="Child2">
+          <Components>
+            <SpriteRenderer/>
+          </Components>
+        </GameObject>
+      </GameObjects>
+    </GameObject>
+  </GameObjects>
+</Prefab>

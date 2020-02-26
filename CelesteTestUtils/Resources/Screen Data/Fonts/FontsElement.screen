@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Screen name="Test">
+  <Resources>
+    <Fonts>
+      <Font>Test\Path.ttf</Font>
+      <Font>Test\Path\Two.ttf</Font>
+      <Font>Three.ttf</Font>
+    </Fonts>
+  </Resources>
+</Screen>

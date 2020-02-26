@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<KeyboardRigidBody2DController decrease_x_linear_velocity_key="A" increase_x_linear_velocity_key="B"
+                               decrease_y_linear_velocity_key="C" increase_y_linear_velocity_key="D"
+                               decrease_angular_velocity_key="E" increase_angular_velocity_key="F"
+                               linear_velocity_delta="1,2" angular_velocity_delta="4"
+                               space="World" increment_mode="Toggle"/>

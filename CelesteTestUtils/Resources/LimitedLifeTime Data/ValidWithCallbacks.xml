@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LimitedLifeTime lifetime="0.1" trigger_key="a">
+  <OnDeathCallbacks>
+    <Callback name="ActivateGameObject" arg="Test"/>
+  </OnDeathCallbacks>
+</LimitedLifeTime>

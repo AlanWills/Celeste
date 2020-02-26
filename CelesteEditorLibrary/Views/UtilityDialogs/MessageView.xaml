@@ -1,0 +1,17 @@
+﻿<local:BaseView x:Class="CelesteEngineEditor.Views.MessageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CelesteEngineEditor.Views"
+      mc:Ignorable="d"
+      Style="{StaticResource DefaultPage}"
+      MaxWidth="750">
+    <StackPanel Margin="20,20,20,0">
+        <TextBlock x:Name="Message" Style="{StaticResource DarkText}"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontSize="13" TextWrapping="Wrap"/>
+        <Button Name="OkButton" Style="{StaticResource DefaultButton}" Content="OK"
+                Click="CloseWindow_Success" IsDefault="True" HorizontalAlignment="Right" Margin="0,10,0,20"/>
+    </StackPanel>
+</local:BaseView>

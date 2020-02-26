@@ -1,0 +1,3 @@
+C:/Repos/Soil2/CMakeFiles/SOIL2.dir
+C:/Repos/Soil2/CMakeFiles/ALL_BUILD.dir
+C:/Repos/Soil2/CMakeFiles/ZERO_CHECK.dir

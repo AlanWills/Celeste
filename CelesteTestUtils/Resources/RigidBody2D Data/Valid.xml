@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RigidBody2D linear_velocity="120,4" angular_velocity="0.25"
+                   min_linear_velocity="1,-1" max_linear_velocity="1000,1000"
+                   min_angular_velocity="0" max_angular_velocity="2.2"/>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button active="true"
+        default_texture="Textures\UI\ButtonDefault.png"
+        highlighted_texture="Textures\UI\ButtonHighlighted.png"
+        clicked_texture="Textures\UI\ButtonClicked.png"
+        clicked_sound="Audio\SFX\ButtonHover.wav"
+        highlighted_sound="Audio\SFX\ButtonClicked.wav">
+  <LeftClickCallbacks>
+    <Callback name="Callback1"/>
+    <Callback name="Callback2" arg="Argument"/>
+  </LeftClickCallbacks>
+</Button>

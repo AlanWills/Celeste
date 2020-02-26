@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Screen name="Unit Test" guid="7d5623bd-af84-468a-bf94-44b2400de483">
+  <GameObjects>
+    <GameObject name="Canvas" position="0,0,-1">
+      <Components>
+        <Canvas projection_mode="Orthographic" dimensions="1%,1%"/>
+      </Components>
+      <GameObjects>
+        <GameObject name="TestClassesContainer" position="0.25%,0.75%,0">
+          <Components>
+            <StackPanel orientation="Vertical" vertical_alignment="Top" padding="5"/>
+          </Components>
+        </GameObject>
+        <GameObject name="TestsContainer" position="0.5%,0.5%,0">
+          <Components/>
+        </GameObject>
+        <GameObject name="TestDiscoverer">
+          <Components>
+            <TestDiscoverer/>
+          </Components>
+        </GameObject>
+      </GameObjects>
+    </GameObject>
+    <GameObject name="DebugCanvas" position="0,0,-1">
+      <Components>
+        <Canvas projection_mode="Orthographic" dimensions="1%,1%"/>
+      </Components>
+      <GameObjects>
+        <GameObject name="LogText" position="50,100,0">
+          <Components>
+            <TextRenderer horizontal_alignment="Left"/>
+          </Components>
+        </GameObject>
+      </GameObjects>
+    </GameObject>
+  </GameObjects>
+</Screen>

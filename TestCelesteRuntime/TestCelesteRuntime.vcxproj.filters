@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\TestCelesteEngineRuntime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Testing\TestDiscoverer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Lua\ScriptCommands\Testing\TestDiscovererScriptCommands.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\TestCelesteEngineRuntimeGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scripts\Game.lua" />
+    <None Include="Resources\Scripts\Tests\DataConverters\Audio\TestAudioSourceDataConverter.lua" />
+    <None Include="Resources\Data\Screens\UnitTestScreen.asset" />
+    <None Include="Resources\Scripts\Tests\DataConverters\Animation\TestAnimatorDataConverter.lua" />
+    <None Include="Resources\Scripts\Tests\Core\FileSystem\TestPath.lua" />
+    <None Include="Resources\Scripts\Tests\DataConverters\Input\TestKeyboardActivatorDataConverter.lua" />
+    <None Include="Resources\Scripts\Tests\DataConverters\Input\TestKeyboardVisibilityDataConverter.lua" />
+    <None Include="Resources\Scripts\Tests\DataConverters\Physics\TestEllipseColliderDataConverter.lua" />
+    <None Include="Resources\Scripts\Tests\DataConverters\Rendering\TestCanvasDataConverter.lua" />
+    <None Include="Resources\Scripts\Tests\Core\Maths\TestVec2.lua" />
+    <None Include="Resources\Scripts\Tests\Core\Maths\TestUVec2.lua" />
+    <None Include="Resources\Scripts\Tests\Objects\TestGameObject.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\Testing\TestDiscoverer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Lua\ScriptCommands\Testing\TestDiscovererScriptCommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Game\TestCelesteEngineRuntimeGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\TestCERuntimeDllExport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Textures\UI\ButtonClicked.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UI\ButtonDefault.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UI\ButtonHighlighted.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UI\ProgressBar.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UI\Rectangle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UI\UpDirectionIndicator.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Audio\SFX\BeamLaser.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Audio\SFX\ButtonClicked.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Audio\SFX\ButtonHover.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Audio\SFX\LaserFire.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Audio\SFX\LightThruster.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Audio\SFX\MissileLaunch.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resources\Fonts\Arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Build Events\CopyDependencyFiles.bat">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SpriteRenderer sprite="Textures\block.png" size="50,20" colour="0.1,0.2,1" opacity="0.5" preserve_aspect_ratio="true"
+                scissor_rectangle_dimensions="10,15"
+                scissor_rectangle_centre="-5,1"/>

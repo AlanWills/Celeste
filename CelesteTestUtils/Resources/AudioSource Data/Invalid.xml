@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AudioSource sound="SFX\ButtonHover.wav" is_playing="basdia" is_looping="true" volume="0.5f" audio_type="SFX"/>

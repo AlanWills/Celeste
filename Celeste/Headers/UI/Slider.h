@@ -1,0 +1,58 @@
+#pragma once
+
+#include "Objects/Script.h"
+#include "Events/Event.h"
+
+
+namespace Celeste::UI
+{
+  class Slider : public Script
+  {
+    DECLARE_SCRIPT(Slider, CelesteDllExport)
+
+  public:
+    using ValueChangedEvent = Event<GameObject&, float>;
+
+    inline float getMin() const { return m_min; }
+    inline void setMin(float min) { m_min = min; }
+
+    inline float getMax() const { return m_max; }
+    inline void setMax(float max) { m_max = max; }
+
+    inline float getCurrentValue() const { return m_currentValue; }
+    CelesteDllExport void setCurrentValue(float currentValue);
+
+    inline const ValueChangedEvent& getValueChangedEvent() const { return m_valueChanged; }
+
+    template <typename ...Callbacks>
+    void subscribeValueChangedCallback(const Event<GameObject&, float>::Function& callback, const Callbacks&... callbacks);
+    inline CelesteDllExport void subscribeValueChangedCallback(const Event<GameObject&, float>::Function& callback)
+    {
+      m_valueChanged.subscribe(callback);
+    }
+
+  protected:
+    CelesteDllExport void onHandleInput() override;
+    CelesteDllExport void onDeath() override;
+
+  private:
+    using Inherited = Script;
+
+    bool m_sliderClicked;
+    float m_min;
+    float m_max;
+    float m_currentValue;
+
+    ValueChangedEvent m_valueChanged;
+  };
+
+  //------------------------------------------------------------------------------------------------
+  template <typename ...Callbacks>
+  void Slider::subscribeValueChangedCallback(
+    const Event<GameObject&, float>::Function& callback,
+    const Callbacks&... callbacks)
+  {
+    subscribeValueChangedCallback(callback);
+    subscribeValueChangedCallback(calback...);
+  }
+}

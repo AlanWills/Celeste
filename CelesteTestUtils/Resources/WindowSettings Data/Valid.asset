@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WindowSettings name="Window Settings" guid="e00086e1-1b46-4fc3-97aa-de4353b279f2"
+                window_title="Test Window Settings"
+                window_icon="Textures\Icons\WindowIcon.png"
+                windowed="false"
+                resolution="120,200"/>

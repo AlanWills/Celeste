@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{666C6C00-C233-40C4-957F-3338666B228A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CelesteBindings</RootNamespace>
+    <AssemblyName>CelesteBindings</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\BindingsKernel\BindingsKernel.csproj">
+      <Project>{cbd493a8-dfc5-444a-9bc6-ca02ccd76410}</Project>
+      <Name>BindingsKernel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CelesteBindingsLibrary\CelesteBindingsLibrary.csproj">
+      <Project>{5d848227-6467-45c7-b9f7-e34c1a2f7a78}</Project>
+      <Name>CelesteBindingsLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Bindings\GameSettings.cs" />
+    <Compile Include="Bindings\WindowSettings.cs" />
+    <Compile Include="Bindings\AnimationState.cs" />
+    <Compile Include="Bindings\ChangeScaleAnimator.cs" />
+    <Compile Include="Bindings\MoveToPositionAnimator.cs" />
+    <Compile Include="Bindings\Animator.cs" />
+    <Compile Include="Bindings\StateMachine.cs" />
+    <Compile Include="Bindings\AudioSource.cs" />
+    <Compile Include="Bindings\FPSCounter.cs" />
+    <Compile Include="Bindings\EllipseCollider.cs" />
+    <Compile Include="Bindings\EventTriggerer.cs" />
+    <Compile Include="Bindings\OpacityLerper.cs" />
+    <Compile Include="Bindings\KeyboardActivator.cs" />
+    <Compile Include="Bindings\KeyboardTransformer.cs" />
+    <Compile Include="Bindings\KeyboardRigidBody2DController.cs" />
+    <Compile Include="Bindings\KeyboardVisibility.cs" />
+    <Compile Include="Bindings\MouseInteractionHandler.cs" />
+    <Compile Include="Bindings\LimitedLifeTime.cs" />
+    <Compile Include="Bindings\RectangleCollider.cs" />
+    <Compile Include="Bindings\RigidBody2D.cs" />
+    <Compile Include="Bindings\Canvas.cs" />
+    <Compile Include="Bindings\ModelRenderer.cs" />
+    <Compile Include="Bindings\SpriteRenderer.cs" />
+    <Compile Include="Bindings\TextRenderer.cs" />
+    <Compile Include="Bindings\LoadResourcesAsyncScript.cs" />
+    <Compile Include="Bindings\Button.cs" />
+    <Compile Include="Bindings\ProgressBar.cs" />
+    <Compile Include="Bindings\Slider.cs" />
+    <Compile Include="Bindings\StackPanel.cs" />
+    <Compile Include="Bindings\TextBox.cs" />
+    <Compile Include="Bindings\ToolTip.cs" />
+  </ItemGroup>
+</Project>

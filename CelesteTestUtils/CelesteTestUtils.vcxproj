@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{BB04BA24-E88D-4697-B55C-7C518AFD6BF8}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+    <TargetExt>.dll</TargetExt>
+    <IncludePath>$(ProjectDir)..\TestUtils\Headers;$(ProjectDir)..\Celeste\Headers;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)..\TestUtils\Headers;$(ProjectDir)..\Celeste\Headers;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <ExtensionsToDeleteOnClean>*.cdf;*.cache;*.obj;*.obj.enc;*.ilk;*.ipdb;*.iobj;*.resources;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.pgc;*.pgd;*.meta;*.tlog;*.manifest;*.res;*.pch;*.exp;*.idb;*.rep;*.xdc;*.pdb;*_manifest.rc;*.bsc;*.sbr;*.xml;*.metagen;*.bi</ExtensionsToDeleteOnClean>
+    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
+    <TargetExt>.lib</TargetExt>
+    <TargetName>$(ProjectName)</TargetName>
+    <EnableManagedIncrementalBuild>false</EnableManagedIncrementalBuild>
+    <LinkIncremental>true</LinkIncremental>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ExtensionsToDeleteOnClean>*.cdf;*.cache;*.obj;*.obj.enc;*.ilk;*.ipdb;*.iobj;*.resources;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.pgc;*.pgd;*.meta;*.tlog;*.manifest;*.res;*.pch;*.exp;*.idb;*.rep;*.xdc;*.pdb;*_manifest.rc;*.bsc;*.sbr;*.xml;*.metagen;*.bi</ExtensionsToDeleteOnClean>
+    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Lua\Headers;$(VCInstallDir)Auxiliary\VS\UnitTest\include;$(ProjectDir)Headers;$(ProjectDir)..\3rdParty\Include;$(ProjectDir)..\3rdParty\Include\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>BUILDING_CETESTUTILS_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\3rdParty\Lib\$(Platform);$(OutDir);$(VCInstallDir)Auxiliary\VS\UnitTest\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>liblua53.a;opengl32.lib;freetype.lib;glew32.lib;glfw3dll.lib;tinyxml2.lib;alut.lib;OpenAL32.lib;SOIL.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>call "$(ProjectDir)Build Events\CopyDependencyDLLs.bat" "$(TargetDir)" $(Configuration) $(Platform)</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\3rdParty\Include\Assimp;$(ProjectDir)..\Lua\Headers;$(VCInstallDir)Auxiliary\VS\UnitTest\include;$(ProjectDir)Headers;$(ProjectDir)..\3rdParty\Include;$(ProjectDir)..\3rdParty\Include\freetype2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CETESTUTILS_STATIC_LIB;BUILDING_Celeste_TESTUTILS_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\3rdParty\Lib\$(Platform)\$(Configuration);$(OutDir);$(VCInstallDir)Auxiliary\VS\UnitTest\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc140-mt.lib;liblua53.lib;opengl32.lib;freetype.lib;glew32.lib;glfw3dll.lib;tinyxml2.lib;alut.lib;OpenAL32.lib;SOIL.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>call "$(ProjectDir)Build Events\CopyDependencyFiles.bat" "$(TargetDir)" $(Configuration) $(Platform)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>Force.txt</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CustomBuildStep>
+      <Command>call "$(ProjectDir)Build Events\CopyDependencyFiles.bat" "$(TargetDir)" $(Configuration) $(Platform)</Command>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CustomBuildStep>
+      <Outputs>Force.txt</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\ALUnitTest.h" />
+    <ClInclude Include="Headers\AssertCel.h" />
+    <ClInclude Include="Headers\AssertSpecialization\FileSystem.h" />
+    <ClInclude Include="Headers\AutoALDeallocator.h" />
+    <ClInclude Include="Headers\AutoDeallocator.h" />
+    <ClInclude Include="Headers\AutoGLDeallocator.h" />
+    <ClInclude Include="Headers\AutoKiller.h" />
+    <ClInclude Include="Headers\CelesteUnitTest.h" />
+    <ClInclude Include="Headers\CelesteTestUtilsDllExport.h" />
+    <ClInclude Include="Headers\KeyboardTextInputtedEventUnsubscriber.h" />
+    <ClInclude Include="Headers\Mocks\Animation\MockAnimator.h" />
+    <ClInclude Include="Headers\Mocks\Audio\MockAudioSource.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Input\MockKeyboardRigidBody2DControllerDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Input\MockKeyboardTransformerDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Objects\MockEntityDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Physics\MockRigidBody2DDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\Input\MockKeyboardActivator.h" />
+    <ClInclude Include="Headers\Mocks\Input\MockKeyboardVisibility.h" />
+    <ClInclude Include="Headers\Mocks\ObjectFX\MockLimitedLifeTime.h" />
+    <ClInclude Include="Headers\Mocks\Objects\MockEntity.h" />
+    <ClInclude Include="Headers\Mocks\Physics\MockEllipseCollider.h" />
+    <ClInclude Include="Headers\Mocks\Rendering\MockCanvas.h" />
+    <ClInclude Include="Headers\Mocks\Resources\3D\MockModel.h" />
+    <ClInclude Include="Headers\Mocks\Resources\Audio\MockSound.h" />
+    <ClInclude Include="Headers\Mocks\Resources\Data\MockPrefab.h" />
+    <ClInclude Include="Headers\Mocks\UI\MockProgressBar.h" />
+    <ClInclude Include="Headers\Mocks\XML\Attributes\MockAttribute.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Audio\MockAudioSourceDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Callbacks\MockCallbackDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\XML\Elements\MockElement.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\GraphicalFX\MockOpacityLerperDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\MockDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\ObjectFX\MockLimitedLifeTimeDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Objects\MockComponentDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Objects\MockGameObjectDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Objects\MockObjectDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Resources\MockPrefabDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Rendering\MockSpriteRendererDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Rendering\MockTextRendererDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\Screens\MockScreenDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\UI\MockButtonDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\UI\MockSliderDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\DataConverters\UI\MockStackPanelDataConverter.h" />
+    <ClInclude Include="Headers\Mocks\Fields\FailDeserializationField.h" />
+    <ClInclude Include="Headers\Mocks\Fields\MockDataField.h" />
+    <ClInclude Include="Headers\Mocks\Fields\MockField.h" />
+    <ClInclude Include="Headers\Mocks\Input\MockKeyboard.h" />
+    <ClInclude Include="Headers\Mocks\Input\MockKeyboardTransformer.h" />
+    <ClInclude Include="Headers\Mocks\Input\MockMouse.h" />
+    <ClInclude Include="Headers\Mocks\Objects\FailDeserializationScriptableObject.h" />
+    <ClInclude Include="Headers\Mocks\Objects\MockComponent.h" />
+    <ClInclude Include="Headers\Mocks\Objects\MockGameObject.h" />
+    <ClInclude Include="Headers\Mocks\Objects\MockObject.h" />
+    <ClInclude Include="Headers\Mocks\Objects\MockScript.h" />
+    <ClInclude Include="Headers\Mocks\Objects\MockScriptableObject.h" />
+    <ClInclude Include="Headers\Mocks\Physics\CollisionDetector.h" />
+    <ClInclude Include="Headers\Mocks\Physics\MockCollider.h" />
+    <ClInclude Include="Headers\Mocks\Physics\MockRigidBody2D.h" />
+    <ClInclude Include="Headers\Mocks\Rendering\MockRenderer.h" />
+    <ClInclude Include="Headers\Mocks\Rendering\MockSpriteBatch.h" />
+    <ClInclude Include="Headers\Mocks\Rendering\MockSpriteRenderer.h" />
+    <ClInclude Include="Headers\Mocks\Rendering\MockTextRenderer.h" />
+    <ClInclude Include="Headers\Mocks\Resources\Fonts\MockFont.h" />
+    <ClInclude Include="Headers\Mocks\Resources\Fonts\MockFontInstance.h" />
+    <ClInclude Include="Headers\Mocks\Resources\Data\MockData.h" />
+    <ClInclude Include="Headers\Mocks\Resources\MockLoadResourcesAsyncScript.h" />
+    <ClInclude Include="Headers\Mocks\Resources\MockResource.h" />
+    <ClInclude Include="Headers\Mocks\Resources\MockResourceLoader.h" />
+    <ClInclude Include="Headers\Mocks\Resources\MockResourceManager.h" />
+    <ClInclude Include="Headers\Mocks\Resources\2D\MockTexture2D.h" />
+    <ClInclude Include="Headers\Mocks\Resources\Shaders\MockFragmentShader.h" />
+    <ClInclude Include="Headers\Mocks\Resources\Shaders\MockShader.h" />
+    <ClInclude Include="Headers\Mocks\Resources\Shaders\MockVertexShader.h" />
+    <ClInclude Include="Headers\Mocks\UI\MockButton.h" />
+    <ClInclude Include="Headers\Mocks\UI\MockTextBox.h" />
+    <ClInclude Include="Headers\Resources\Animation\AnimatorLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Audio\AudioSourceLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\GraphicalFX\OpacityLerperLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Input\KeyboardActivatorLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Input\KeyboardRigidBody2DControllerLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Input\KeyboardTransformerLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Input\KeyboardVisibilityLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Lua\LuaScriptResources.h" />
+    <ClInclude Include="Headers\Resources\ObjectFX\LimitedLifeTimeLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Objects\GameObjectLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Objects\MockScriptableObjectLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Physics\EllipseColliderLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Physics\RigidBody2DLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Rendering\CanvasLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Resources\Data\PrefabLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Physics\RectangleColliderLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Rendering\SpriteRendererLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Rendering\TextRendererLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Resources\Models\ModelLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Settings\WindowSettingsLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\TestResources.h" />
+    <ClInclude Include="Headers\Resources\Screens\ScreenLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\Settings\GameSettingsLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\UI\ButtonLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\UI\SliderLoadingResources.h" />
+    <ClInclude Include="Headers\Resources\UI\StackPanelLoadingResources.h" />
+    <ClInclude Include="Headers\UtilityHeaders\UnitTestHeaders.h" />
+    <ClInclude Include="Headers\Utils\GameObjectXMLUtils.h" />
+    <ClInclude Include="Headers\Utils\InputUtils.h" />
+    <ClInclude Include="Headers\Utils\ObjectUtils.h" />
+    <ClInclude Include="Headers\Utils\ScreenXMLUtils.h" />
+    <ClInclude Include="Headers\Utils\XMLUtils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Headers\Mocks\DataConverters\Physics\MockRectangleColliderDataConverter.h" />
+    <ClCompile Include="Source\ALUnitTest.cpp" />
+    <ClCompile Include="Source\AssertCel.cpp" />
+    <ClCompile Include="Source\AutoDeallocator.cpp" />
+    <ClCompile Include="Source\CelesteUnitTest.cpp" />
+    <ClCompile Include="Source\KeyboardTextInputtedEventUnsubscriber.cpp" />
+    <ClCompile Include="Source\Mocks\Animation\MockAnimator.cpp" />
+    <ClCompile Include="Source\Mocks\DataConverters\Objects\MockComponentDataConverter.cpp" />
+    <ClCompile Include="Source\Mocks\Input\MockKeyboardActivator.cpp" />
+    <ClCompile Include="Source\Mocks\Input\MockKeyboardTransformer.cpp" />
+    <ClCompile Include="Source\Mocks\Input\MockKeyboardVisibility.cpp" />
+    <ClCompile Include="Source\Mocks\ObjectFX\MockLimitedLifeTime.cpp" />
+    <ClCompile Include="Source\Mocks\Objects\MockComponent.cpp" />
+    <ClCompile Include="Source\Mocks\Objects\MockScript.cpp" />
+    <ClCompile Include="Source\Mocks\Objects\MockScriptableObject.cpp" />
+    <ClCompile Include="Source\Mocks\Physics\CollisionDetector.cpp" />
+    <ClCompile Include="Source\Mocks\Physics\MockCollider.cpp" />
+    <ClCompile Include="Source\Mocks\Physics\MockEllipseCollider.cpp" />
+    <ClCompile Include="Source\Mocks\Physics\MockRigidBody2D.cpp" />
+    <ClCompile Include="Source\Mocks\Rendering\MockCanvas.cpp" />
+    <ClCompile Include="Source\Mocks\Rendering\MockRenderer.cpp" />
+    <ClCompile Include="Source\Mocks\Rendering\MockSpriteRenderer.cpp" />
+    <ClCompile Include="Source\Mocks\Rendering\MockTextRenderer.cpp" />
+    <ClCompile Include="Source\Mocks\Resources\MockLoadResourcesAsyncScript.cpp" />
+    <ClCompile Include="Source\Mocks\UI\MockButton.cpp" />
+    <ClCompile Include="Source\Mocks\UI\MockProgressBar.cpp" />
+    <ClCompile Include="Source\Mocks\UI\MockTextBox.cpp" />
+    <ClCompile Include="Source\Resources\Animation\AnimatorLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Audio\AudioSourceLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\GraphicalFX\OpacityLerperLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Input\KeyboardActivatorLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Input\KeyboardRigidBody2DControllerLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Input\KeyboardTransformerLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Input\KeyboardVisibilityLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\ObjectFX\LimitedLifeTimeLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Objects\GameObjectLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Objects\MockScriptableObjectLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Physics\EllipseColliderLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Physics\RigidBody2DLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Rendering\CanvasLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Resources\Data\PrefabLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Physics\RectangleColliderLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Rendering\SpriteRendererLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Rendering\TextRendererLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Resources\Models\ModelLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Screens\ScreenLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Settings\GameSettingsLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\Settings\WindowSettingsLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\TestResources.cpp" />
+    <ClCompile Include="Source\Resources\UI\ButtonLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\UI\SliderLoadingResources.cpp" />
+    <ClCompile Include="Source\Resources\UI\StackPanelLoadingResources.cpp" />
+    <ClCompile Include="Source\Utils\GameObjectXMLUtils.cpp" />
+    <ClCompile Include="Source\Utils\InputUtils.cpp" />
+    <ClCompile Include="Source\Utils\ScreenXMLUtils.cpp" />
+    <ClCompile Include="Source\Utils\XMLUtils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Build Events\CopyDependencyFiles.bat" />
+    <None Include="Resources\EllipseCollider Data\Valid.xml" />
+    <None Include="Resources\Fragment Shaders\colour.frag" />
+    <None Include="Resources\Fragment Shaders\sprite.frag" />
+    <None Include="Resources\Fragment Shaders\text.frag" />
+    <None Include="Resources\Models\Box\Crate1.mtl" />
+    <None Include="Resources\Screen Data\EmptyScreen.screen" />
+    <None Include="Resources\Scripts\CelesteAssert.lua" />
+    <None Include="Resources\Scripts\LuaAssert.lua" />
+    <None Include="Resources\Scripts\EmptyModule.lua" />
+    <None Include="Resources\Vertex Shaders\colour.vert" />
+    <None Include="Resources\Vertex Shaders\sprite.vert" />
+    <None Include="Resources\Vertex Shaders\text.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Celeste\Celeste.vcxproj">
+      <Project>{e9980a8d-828e-44f0-978e-a57abc348f47}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TestUtils\TestUtils.vcxproj">
+      <Project>{7f06e53e-178c-4e7e-8f24-061f18aa402a}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resources\Animator Data\Invalid.xml" />
+    <Xml Include="Resources\Animator Data\Valid.xml" />
+    <Xml Include="Resources\AudioSource Data\Invalid.xml" />
+    <Xml Include="Resources\AudioSource Data\Valid.xml" />
+    <Xml Include="Resources\Button Data\Invalid.xml" />
+    <Xml Include="Resources\Button Data\ValidNoCallbacks.xml" />
+    <Xml Include="Resources\Button Data\ValidWithCallbacks.xml" />
+    <Xml Include="Resources\Canvas Data\Invalid.xml" />
+    <Xml Include="Resources\Canvas Data\Valid.xml" />
+    <Xml Include="Resources\Data\Data.xml" />
+    <Xml Include="Resources\Data\ElementDataAsVectorFloat.xml" />
+    <Xml Include="Resources\Data\ElementDataAsVectorString.xml" />
+    <Xml Include="Resources\EllipseCollider Data\Invalid.xml" />
+    <Xml Include="Resources\GameObject Data\Invalid.xml" />
+    <Xml Include="Resources\GameObject Data\Valid.xml" />
+    <Xml Include="Resources\GameSettings Data\Invalid.asset" />
+    <Xml Include="Resources\GameSettings Data\Valid.asset" />
+    <Xml Include="Resources\KeyboardActivator Data\Invalid.xml" />
+    <Xml Include="Resources\KeyboardActivator Data\Valid.xml" />
+    <Xml Include="Resources\KeyboardRigidBody2DController Data\Invalid.xml" />
+    <Xml Include="Resources\KeyboardRigidBody2DController Data\Valid.xml" />
+    <Xml Include="Resources\KeyboardTransformer Data\Invalid.xml" />
+    <Xml Include="Resources\KeyboardTransformer Data\Valid.xml" />
+    <Xml Include="Resources\KeyboardVisibility Data\Invalid.xml" />
+    <Xml Include="Resources\LimitedLifeTime Data\Invalid.xml" />
+    <Xml Include="Resources\LimitedLifeTime Data\ValidNoCallbacks.xml" />
+    <Xml Include="Resources\LimitedLifeTime Data\ValidWithCallbacks.xml" />
+    <Xml Include="Resources\Mock Resources\Mock3.xml" />
+    <Xml Include="Resources\MockScriptableObject Data\Invalid.xml" />
+    <Xml Include="Resources\MockScriptableObject Data\Valid.xml" />
+    <Xml Include="Resources\More Mock Resources\Mock3.xml" />
+    <Xml Include="Resources\OpacityLerper Data\Invalid.xml" />
+    <Xml Include="Resources\OpacityLerper Data\Valid.xml" />
+    <Xml Include="Resources\Prefab Data\Empty.prefab" />
+    <Xml Include="Resources\Prefab Data\Invalid.prefab" />
+    <Xml Include="Resources\Prefab Data\NoGameObjectsElement.prefab" />
+    <Xml Include="Resources\Prefab Data\TwoParentGameObjects.prefab" />
+    <Xml Include="Resources\Prefab Data\ValidMultipleChildrenForSingleParent.prefab" />
+    <Xml Include="Resources\Prefab Data\ValidMultipleGameObjects.prefab" />
+    <Xml Include="Resources\Prefab Data\ValidSingleGameObject.prefab" />
+    <Xml Include="Resources\RectangleCollider Data\Invalid.xml" />
+    <Xml Include="Resources\RectangleCollider Data\Valid.xml" />
+    <Xml Include="Resources\RigidBody2D Data\Invalid.xml" />
+    <Xml Include="Resources\RigidBody2D Data\Valid.xml" />
+    <Xml Include="Resources\Screen Data\Data\DataElement.screen" />
+    <Xml Include="Resources\Screen Data\Data\DataElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\Data\NoDataElement.screen" />
+    <Xml Include="Resources\Screen Data\EmptyFile.screen" />
+    <Xml Include="Resources\Screen Data\Fonts\FontsElement.screen" />
+    <Xml Include="Resources\Screen Data\Fonts\FontsElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\Fonts\NoFontsElement.screen" />
+    <Xml Include="Resources\Screen Data\FragmentShaders\FragmentShadersElement.screen" />
+    <Xml Include="Resources\Screen Data\FragmentShaders\FragmentShadersElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\FragmentShaders\NoFragmentShadersElement.screen" />
+    <Xml Include="Resources\Screen Data\GameObjects\GameObjectsElement.screen" />
+    <Xml Include="Resources\Screen Data\GameObjects\GameObjectsElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\GameObjects\NoGameObjectsElement.screen" />
+    <Xml Include="Resources\Screen Data\Name\NameAttribute.screen" />
+    <Xml Include="Resources\Screen Data\Name\NoNameAttribute.screen" />
+    <Xml Include="Resources\Screen Data\NoResourcesElement.screen" />
+    <Xml Include="Resources\Screen Data\Prefabs\GameObjectsElement.screen" />
+    <Xml Include="Resources\Screen Data\Prefabs\PrefabWithParent.screen" />
+    <Xml Include="Resources\Screen Data\Sounds\NoSoundsElement.screen" />
+    <Xml Include="Resources\Screen Data\Sounds\SoundsElement.screen" />
+    <Xml Include="Resources\Screen Data\Sounds\SoundsElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\Textures\NoTexturesElement.screen" />
+    <Xml Include="Resources\Screen Data\Textures\TexturesElement.screen" />
+    <Xml Include="Resources\Screen Data\Textures\TexturesElementWithBadElements.screen" />
+    <Xml Include="Resources\Screen Data\VertexShaders\NoVertexShadersElement.screen" />
+    <Xml Include="Resources\Screen Data\VertexShaders\VertexShadersElement.screen" />
+    <Xml Include="Resources\Screen Data\VertexShaders\VertexShadersElementWithBadElements.screen" />
+    <Xml Include="Resources\Slider Data\Invalid.xml" />
+    <Xml Include="Resources\Slider Data\ValidNoCallbacks.xml" />
+    <Xml Include="Resources\Slider Data\ValidWithCallbacks.xml" />
+    <Xml Include="Resources\SpriteRenderer Data\Invalid.xml" />
+    <Xml Include="Resources\SpriteRenderer Data\Valid.xml" />
+    <Xml Include="Resources\StackPanel Data\Invalid.xml" />
+    <Xml Include="Resources\StackPanel Data\Valid.xml" />
+    <Xml Include="Resources\TextRenderer Data\Invalid.xml" />
+    <Xml Include="Resources\TextRenderer Data\ValidNoLines.xml" />
+    <Xml Include="Resources\TextRenderer Data\ValidWithLines.xml" />
+    <Xml Include="Resources\WindowSettings Data\Invalid.asset" />
+    <Xml Include="Resources\WindowSettings Data\Valid.asset" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Audio\SFX\ButtonClicked.wav" />
+    <Media Include="Resources\Audio\SFX\ButtonHover.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resources\Fonts\arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\KeyboardVisibility Data\Valid.xml" />
+    <Text Include="Resources\Mock Resources\Mock1.txt" />
+    <Text Include="Resources\Mock Resources\Nested\Mock2.txt" />
+    <Text Include="Resources\More Mock Resources\Mock1.txt" />
+    <Text Include="Resources\More Mock Resources\Nested\Mock2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Models\Box\CrateImage1.JPG" />
+    <Image Include="Resources\Models\Box\CrateImage2.JPG" />
+    <Image Include="Resources\Models\Box\crate_1.jpg" />
+    <Image Include="Resources\Textures\block.png" />
+    <Image Include="Resources\Textures\container.jpg" />
+    <Image Include="Resources\Textures\UI\ButtonClicked.png" />
+    <Image Include="Resources\Textures\UI\ButtonDefault.png" />
+    <Image Include="Resources\Textures\UI\ButtonHighlighted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Models\Box\Crate1.obj">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
