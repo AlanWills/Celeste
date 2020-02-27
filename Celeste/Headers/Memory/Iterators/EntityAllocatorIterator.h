@@ -48,26 +48,14 @@ namespace Celeste
         ++m_entityIt;
       }
 
-      inline void advanceEntity()
-      {
-        while (m_entityIt != m_entityEndIt)
-        {
-          next();
-        }
-      }
-
       inline void advance()
       {
-        advanceEntity();
-
         while (m_entityIt == m_entityEndIt && ++m_allocatorIt != m_allocatorEndIt)
         {
           // We are at the end of the allocator, but not in an allocated entry
           // We move to the next allocator
           m_entityIt = static_cast<AllocatorType>((*m_allocatorIt).get())->begin();
           m_entityEndIt = static_cast<AllocatorType>((*m_allocatorIt).get())->end();
-
-          advanceEntity();
         }
       }
 

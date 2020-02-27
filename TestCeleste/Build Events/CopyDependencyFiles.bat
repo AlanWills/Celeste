@@ -8,6 +8,6 @@ rem echo %OutputDir%..\..\..\..\TestCelesteEngine\bin\%Platform%\Debug\ >> log.t
 
 cd %OutputDir%
 
-(robocopy ..\..\..\..\CelesteEngine\bin\%Platform%\%Configuration%\ .\ /E /IS /IT /XO) &
+(robocopy ..\..\..\..\Celeste\bin\%Platform%\%Configuration%\ .\ /E /IS /IT /XO) &
 (robocopy ..\..\..\..\TestUtils\bin\%Platform%\%Configuration%\ .\ /E /IS /IT /XO) &
-(robocopy ..\..\..\..\CelesteEngineTestUtils\bin\%Platform%\%Configuration%\ .\ /E /IS /IT /XO) & exit 0
+(robocopy ..\..\..\..\CelesteTestUtils\bin\%Platform%\%Configuration%\ .\ /E /IS /IT /XO) & exit 0

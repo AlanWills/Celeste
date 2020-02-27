@@ -6,7 +6,7 @@ set "ResourcesDir=%OutputDir%\Resources"
 
 cd %ProjectDir%
 
-(robocopy ..\3rdParty\DLL\%Platform% %ResourcesDir% /IS /IT /XO)
+(robocopy ..\3rdParty\DLL\%Platform% %OutputDir% /IS /IT /XO)
 (robocopy Resources %ResourcesDir% /E /IS /IT /XO)
 
 echo "Executing Lua Script Validation"
