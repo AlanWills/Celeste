@@ -88,18 +88,6 @@ namespace Celeste::Rendering
   }
 
   //------------------------------------------------------------------------------------------------
-  void TextRenderer::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_font.reset();
-    m_lines.clear();
-    m_horizontalAlignment = UI::HorizontalAlignment::kCentre;
-    m_verticalAlignment = UI::VerticalAlignment::kCentre;
-    m_dimensions = glm::vec2();
-  }
-
-  //------------------------------------------------------------------------------------------------
   void TextRenderer::setFont(const std::string& relativePathToFont, float height)
   {
     observer_ptr<Font> font = getResourceManager().load<Font>(relativePathToFont);

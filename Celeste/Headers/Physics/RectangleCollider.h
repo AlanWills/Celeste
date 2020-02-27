@@ -40,11 +40,11 @@ namespace Celeste::Physics
       /// Use the attached game object to ensure the collider's values are up to date
       CelesteDllExport void sync();
 
+      void update(float secondsPerUpdate) override;
+
     protected:
       void onSetGameObject(GameObject& gameObject) override;
-      void onUpdate(float secondsPerUpdate) override;
       void onSetOffset(const glm::vec2& oldOffset, const glm::vec2& newOffset) override;
-      void onDeath() override;
 
     private:
       using Inherited = Collider;

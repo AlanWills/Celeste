@@ -24,9 +24,9 @@ namespace Celeste::Rendering
   }
 
   //------------------------------------------------------------------------------------------------
-  void Canvas::onHandleInput()
+  void Canvas::handleInput()
   {
-    Inherited::onHandleInput();
+    Inherited::handleInput();
 
     Maths::Ray ray = m_camera.createRay();
 
@@ -80,18 +80,6 @@ namespace Celeste::Rendering
     {
       nearestCollider->setHitByRay(true);
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void Canvas::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_spriteBatch.destroy();
-    m_camera = Camera();
-
-    // Nothing in the handle input or render functions interrupts so this should always be empty if it's ever killed
-    ASSERT(m_gameObjectQueue.empty());
   }
 
   //------------------------------------------------------------------------------------------------

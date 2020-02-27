@@ -25,8 +25,6 @@ namespace Celeste
       DECLARE_SCRIPT(MouseInteractionHandler, CelesteDllExport)
 
       public:
-        CelesteDllExport ~MouseInteractionHandler();
-
         /// An event that will be called when the mouse first enters the parent's collider
         inline const GameObjectEvent& getOnEnterEvent() const { return m_onEnter; }
 
@@ -52,10 +50,10 @@ namespace Celeste
         /// An event that will be called the first time the mouse is released having been right pressed whilst the mouse was over this collider.
         inline const GameObjectEvent& getOnRightButtonUpEvent() const { return m_onRightButtonUp; }
 
+        CelesteDllExport void handleInput() override;
+
       protected:
         CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
-        CelesteDllExport void onHandleInput() override;
-        CelesteDllExport void onDeath() override;
 
         inline observer_ptr<Physics::Collider> getCollider() const { return m_collider; }
         inline bool isMouseOver() const { return m_isMouseOver; }

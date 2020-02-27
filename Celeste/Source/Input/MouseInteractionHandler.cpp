@@ -22,28 +22,7 @@ namespace Celeste::Input
     m_onRightButtonDown(),
     m_onRightButtonUp()
   {
-  }
-
-  //------------------------------------------------------------------------------------------------
-  MouseInteractionHandler::~MouseInteractionHandler()
-  {
-    m_collider = nullptr;
-    m_isMouseOver = false;
-
-    for (size_t i = 0; i < m_mouseButtonPressed.size(); ++i)
-    {
-      m_mouseButtonPressed[i] = false;
-    }
-
-    // Reset all the events
-    m_onEnter.unsubscribeAll();
-    m_onLeave.unsubscribeAll();
-    m_onLeftButtonDown.unsubscribeAll();
-    m_onLeftButtonUp.unsubscribeAll();
-    m_onMiddleButtonDown.unsubscribeAll();
-    m_onMiddleButtonUp.unsubscribeAll();
-    m_onRightButtonDown.unsubscribeAll();
-    m_onRightButtonUp.unsubscribeAll();
+    m_mouseButtonPressed.fill(false);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -55,9 +34,9 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void MouseInteractionHandler::onHandleInput()
+  void MouseInteractionHandler::handleInput()
   {
-    Inherited::onHandleInput();
+    Inherited::handleInput();
 
 #if _DEBUG
     if (m_collider == nullptr)
@@ -117,29 +96,5 @@ namespace Celeste::Input
     m_mouseButtonPressed[0] = leftMouseButtonPressed;
     m_mouseButtonPressed[1] = middleMouseButtonPressed;
     m_mouseButtonPressed[2] = rightMouseButtonPressed;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void MouseInteractionHandler::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_collider = nullptr;
-    m_isMouseOver = false;
-
-    for (size_t i = 0; i < m_mouseButtonPressed.size(); ++i)
-    {
-      m_mouseButtonPressed[i] = false;
-    }
-
-    // Reset all the events
-    m_onEnter.unsubscribeAll();
-    m_onLeave.unsubscribeAll();
-    m_onLeftButtonDown.unsubscribeAll();
-    m_onLeftButtonUp.unsubscribeAll();
-    m_onMiddleButtonDown.unsubscribeAll();
-    m_onMiddleButtonUp.unsubscribeAll();
-    m_onRightButtonDown.unsubscribeAll();
-    m_onRightButtonUp.unsubscribeAll();
   }
 }

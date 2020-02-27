@@ -19,6 +19,8 @@ namespace Celeste::Input
   {
     public:
       CelesteDllExport InputManager(GLFWwindow* window);
+      CelesteDllExport ~InputManager() override;
+
       InputManager(const InputManager&) = delete;
       InputManager& operator=(const InputManager&) = delete;
 
@@ -28,10 +30,8 @@ namespace Celeste::Input
       inline Mouse& getMouse() { return m_mouse; }
       inline const Mouse& getMouse() const { return m_mouse; }
 
-    protected:
-      CelesteDllExport void onHandleInput() override;
-      CelesteDllExport void onUpdate(float elapsedGameTime) override;
-      CelesteDllExport void onDeath() override;
+      CelesteDllExport void handleInput() override;
+      CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Entity;

@@ -14,9 +14,15 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void InputManager::onHandleInput()
+  InputManager::~InputManager()
   {
-    Inherited::onHandleInput();
+    KeyboardActivator::m_componentAllocator.deallocateAll();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void InputManager::handleInput()
+  {
+    Inherited::handleInput();
 
     m_keyboard.handleInput();
 
@@ -29,19 +35,11 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void InputManager::onUpdate(GLfloat elapsedGameTime)
+  void InputManager::update(GLfloat elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
     KeyboardActivator::m_componentAllocator.update(elapsedGameTime);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void InputManager::onDeath()
-  {
-    Inherited::onDeath();
-
-    KeyboardActivator::m_componentAllocator.die();
   }
 
   //------------------------------------------------------------------------------------------------

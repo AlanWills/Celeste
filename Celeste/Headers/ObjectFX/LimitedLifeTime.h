@@ -13,6 +13,8 @@ namespace Celeste
     public:
       using DeathEvent = Event<GameObject&>;
 
+      CelesteDllExport ~LimitedLifeTime() override;
+
       inline float getCurrentTimeAlive() const { return m_currentTimeAlive; }
 
       inline float getLifeTime() const { return m_lifeTime; }
@@ -27,9 +29,7 @@ namespace Celeste
 
       inline const DeathEvent& getOnDeathEvent() const { return m_onDeathEvent; }
 
-    protected:
-      CelesteDllExport void onUpdate(float elapsedGameTime) override;
-      CelesteDllExport void onDeath() override;
+      CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Script;

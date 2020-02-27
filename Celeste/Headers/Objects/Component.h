@@ -20,6 +20,7 @@ namespace Celeste
   {
     public:
       CelesteDllExport Component();
+      CelesteDllExport ~Component() override;
 
       virtual void collisionEnter(Physics::Collider& collider) { }
       virtual void collision(Physics::Collider& collider) { }
@@ -41,9 +42,6 @@ namespace Celeste
 
       /// Called after the parent is successfully set
       virtual void onSetGameObject(GameObject& parent) { }
-
-      /// Called after the component's state has been reset to before it was created
-      CelesteDllExport void onDeath() override;
 
     private:
       using Inherited = Entity;

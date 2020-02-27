@@ -6,8 +6,8 @@ namespace Celeste::Physics
 {
   REGISTER_COMPONENT(RigidBody2D, 50)
 
-    //------------------------------------------------------------------------------------------------
-    RigidBody2D::RigidBody2D() :
+  //------------------------------------------------------------------------------------------------
+  RigidBody2D::RigidBody2D() :
     m_linearVelocity(0),
     m_minLinearVelocity(-FLT_MAX, -FLT_MAX),
     m_maxLinearVelocity(FLT_MAX, FLT_MAX),
@@ -18,9 +18,9 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void RigidBody2D::onUpdate(float secondsPerUpdate)
+  void RigidBody2D::update(float secondsPerUpdate)
   {
-    Inherited::onUpdate(secondsPerUpdate);
+    Inherited::update(secondsPerUpdate);
 
 #if _DEBUG
     if (getTransform() == nullptr)
@@ -39,18 +39,5 @@ namespace Celeste::Physics
     {
       getTransform()->rotate(m_angularVelocity * secondsPerUpdate);
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void RigidBody2D::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_linearVelocity = glm::vec2();
-    m_minLinearVelocity = glm::vec2(-FLT_MAX, -FLT_MAX);
-    m_maxLinearVelocity = glm::vec2(FLT_MAX, FLT_MAX);
-    m_angularVelocity = 0;
-    m_minAngularVelocity = -FLT_MAX;
-    m_maxAngularVelocity = FLT_MAX;
   }
 }

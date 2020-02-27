@@ -11,7 +11,7 @@ namespace Celeste::Rendering
 
   //------------------------------------------------------------------------------------------------
   ModelRenderer::ModelRenderer() :
-    m_model()
+    m_model(nullptr)
   {
   }
 
@@ -37,13 +37,5 @@ namespace Celeste::Rendering
         mesh.unbind();
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void ModelRenderer::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_model = nullptr;
   }
 }

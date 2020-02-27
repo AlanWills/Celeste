@@ -14,6 +14,8 @@ namespace Celeste::Physics
   {
     public:
       CelesteDllExport PhysicsManager();
+      CelesteDllExport ~PhysicsManager() override;
+
       PhysicsManager(const PhysicsManager&) = delete;
       PhysicsManager& operator=(const PhysicsManager&) = delete;
 
@@ -27,10 +29,8 @@ namespace Celeste::Physics
       CelesteDllExport void addSimulatedBody(RigidBody2D& rigidBody);
       CelesteDllExport void addSimulatedBody(Collider& collider, RigidBody2D& rigidBody);
 
-    protected:
-      void onHandleInput() override;
-      void onUpdate(float elapsedGameTime) override;
-      void onDeath() override;
+      void handleInput() override;
+      void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Entity;

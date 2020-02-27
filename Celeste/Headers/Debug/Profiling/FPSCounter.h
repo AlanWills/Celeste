@@ -15,9 +15,11 @@ namespace Celeste::Debugging
   {
     DECLARE_SCRIPT(FPSCounter, CelesteDllExport)
 
+    public:
+      CelesteDllExport void update(float elapsedGameTime) override;
+
     protected:
       CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
-      CelesteDllExport void onUpdate(float elapsedGameTime) override;
 
     private:
       using Inherited = Celeste::Script;

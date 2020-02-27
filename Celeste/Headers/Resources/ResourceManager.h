@@ -26,7 +26,7 @@ namespace Celeste::Resources
     public:
       CelesteDllExport ResourceManager(const std::string& resourceDirectory);
       CelesteDllExport ResourceManager(const Path& resourceDirectory) : ResourceManager(resourceDirectory.as_string()) { }
-      CelesteDllExport ~ResourceManager() override = default;
+      CelesteDllExport ~ResourceManager() override;
 
       /// Delete these - we should not allow copy construction as it will really screw with the singlar ownership of this class with it's resources
       ResourceManager(const ResourceManager&) = delete;
@@ -54,9 +54,6 @@ namespace Celeste::Resources
       CelesteDllExport void unloadAllResources();
 
     protected:
-      /// Frees the resources from the resource manager's memory
-      CelesteDllExport void onDeath() override;
-
   #define DEFINE_RESOURCE(ResourceType, LoaderMemberName) \
         public: \
           \

@@ -22,6 +22,7 @@ namespace Celeste::Rendering
   {
     public:
       CelesteDllExport SpriteBatch();
+      CelesteDllExport ~SpriteBatch();
 
       CelesteDllExport void initialize();
       CelesteDllExport void destroy();

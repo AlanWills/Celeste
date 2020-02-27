@@ -273,34 +273,10 @@
     <ClInclude Include="Headers\DataConverters\ObjectFX\LimitedLifeTimeDataConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Callbacks\Callback.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Callbacks\ActivateGameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Callbacks\RenderGameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Callbacks\KillOwnerScreen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Callbacks\TransitionToScreen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Callbacks\KillGameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\DataConverters\UI\ButtonDataConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Callbacks\ExitGame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\DataConverters\UI\StackPanelDataConverter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Callbacks\KillScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\DataConverters\Rendering\TextRendererDataConverter.h">
@@ -702,9 +678,6 @@
     <ClInclude Include="Headers\Lua\ScriptCommands\Media\VideoScriptCommands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Callbacks\ExecuteLuaScript.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\OpenGL\GL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -804,9 +777,6 @@
     <ClInclude Include="Headers\Debug\Assert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\CelesteEngineDllExport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\UtilityMacros\ComponentMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -847,6 +817,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Memory\Iterators\EntityAllocatorIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\CelesteDllExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1037,31 +1010,10 @@
     <ClCompile Include="Source\DataConverters\ObjectFX\LimitedLifeTimeDataConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Callbacks\ActivateGameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Callbacks\RenderGameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Callbacks\KillOwnerScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Callbacks\TransitionToScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Callbacks\KillGameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\DataConverters\UI\ButtonDataConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Callbacks\ExitGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\DataConverters\UI\StackPanelDataConverter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Callbacks\KillScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\DataConverters\Rendering\TextRendererDataConverter.cpp">
@@ -1382,9 +1334,6 @@
     <ClCompile Include="Source\Lua\ScriptCommands\Media\VideoScriptCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Callbacks\ExecuteLuaScript.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\OpenGL\GL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1487,10 +1436,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\CelesteEngineLogo.png">
+    <Image Include="Resources\CelesteGamesLogo.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Resources\CelesteGamesLogo.png">
+    <Image Include="Resources\CelesteLogo.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

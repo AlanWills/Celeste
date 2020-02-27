@@ -15,7 +15,7 @@ namespace Celeste
   {
     public:
       CelesteDllExport ScreenManager();
-      CelesteDllExport ~ScreenManager();
+      CelesteDllExport ~ScreenManager() override;
 
       // Do not want to allow copying of this object
       ScreenManager(const ScreenManager&) = delete;
@@ -30,10 +30,8 @@ namespace Celeste
       observer_ptr<Screen> findScreen(const std::string& name) { return findScreen(internString(name)); }
       CelesteDllExport observer_ptr<Screen> findScreen(StringId name);
 
-    protected:
-      void onHandleInput() override;
-      void onUpdate(float elapsedGameTime) override;
-      void onDeath() override;
+      void handleInput() override;
+      void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Entity;

@@ -114,12 +114,9 @@ namespace Celeste
         findGameObjectsWithTag(tag, foundGO);
         return foundGO;
       }
-      //------------------------------------------------------------------------------------------------
 
-    protected:
-      CelesteDllExport void onHandleInput() override;
-      CelesteDllExport void onUpdate(float elapsedGameTime) override;
-      CelesteDllExport void onDeath() override;
+      CelesteDllExport void handleInput() override;
+      CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Entity;

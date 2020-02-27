@@ -177,14 +177,6 @@ namespace Celeste
 
     onExit();
 
-    // We have exited the game loop, so we cleanup
-    m_inputManager.die();
-    m_physicsManager.die();
-    m_audioManager.die();
-    m_renderManager.die();
-    m_screenManager.die();  // Kill screen manager after all other cleanup has taken place
-    m_resourceManager.die();
-
     GL::terminate();
 
     // Finally, make sure we flush the log in case we have buffered output we have not committed to file yet

@@ -47,7 +47,6 @@ namespace Celeste::Physics
       CelesteDllExport bool intersects(const Collider& collider) const;
 
     protected:
-      CelesteDllExport void onDeath() override;
       virtual void onSetOffset(const glm::vec2& oldOffset, const glm::vec2& newOffset) = 0;
 
     private:

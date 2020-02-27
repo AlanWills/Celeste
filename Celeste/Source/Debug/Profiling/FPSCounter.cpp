@@ -24,9 +24,9 @@ namespace Celeste::Debugging
   }
 
   //------------------------------------------------------------------------------------------------
-  void FPSCounter::onUpdate(float elapsedGameTime)
+  void FPSCounter::update(float elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
 #if _DEBUG
     if (m_textRenderer == nullptr)

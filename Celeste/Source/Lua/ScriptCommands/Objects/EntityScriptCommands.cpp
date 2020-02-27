@@ -12,7 +12,6 @@ namespace Celeste::Lua::EntityScriptCommands
     registerUserType<Entity>("Entity",
       sol::base_classes, sol::bases<Object>(),
       "isActive", &Entity::isActive,
-      "setActive", &Entity::setActive,
-      "die", &Entity::die);
+      "setActive", &Entity::setActive);
   }
 }

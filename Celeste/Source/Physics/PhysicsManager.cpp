@@ -16,9 +16,17 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void PhysicsManager::onHandleInput()
+  PhysicsManager::~PhysicsManager()
   {
-    Inherited::onHandleInput();
+    RigidBody2D::m_componentAllocator.deallocateAll();
+    RectangleCollider::m_componentAllocator.deallocateAll();
+    EllipseCollider::m_componentAllocator.deallocateAll();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void PhysicsManager::handleInput()
+  {
+    Inherited::handleInput();
 
     RigidBody2D::m_componentAllocator.handleInput();
     RectangleCollider::m_componentAllocator.handleInput();
@@ -26,9 +34,9 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void PhysicsManager::onUpdate(float elapsedGameTime)
+  void PhysicsManager::update(float elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
     RectangleCollider::m_componentAllocator.update(elapsedGameTime);
     EllipseCollider::m_componentAllocator.update(elapsedGameTime);
@@ -77,18 +85,6 @@ namespace Celeste::Physics
     }
 
     RigidBody2D::m_componentAllocator.update(elapsedGameTime);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void PhysicsManager::onDeath()
-  {
-    Inherited::onDeath();
-
-    RigidBody2D::m_componentAllocator.die();
-    RectangleCollider::m_componentAllocator.die();
-    EllipseCollider::m_componentAllocator.die();
-
-    clearSimulatedBodies();
   }
 
   //------------------------------------------------------------------------------------------------

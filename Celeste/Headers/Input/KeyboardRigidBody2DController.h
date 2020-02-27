@@ -49,10 +49,10 @@ namespace Celeste::Input
       inline IncrementMode getIncrementMode() const { return m_incrementMode; }
       inline void setIncrementMode(IncrementMode incrementMode) { m_incrementMode = incrementMode; }
 
+      CelesteDllExport void handleInput() override;
+
     protected:
       CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
-      CelesteDllExport void onHandleInput() override;
-      CelesteDllExport void onDeath() override;
 
     private:
       using Inherited = Script;

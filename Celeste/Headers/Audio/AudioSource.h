@@ -13,6 +13,8 @@ namespace Celeste::Audio
     DECLARE_COMPONENT(AudioSource, AudioManager, CelesteDllExport)
 
     public:
+      CelesteDllExport ~AudioSource();
+
       inline observer_ptr<const Resources::Sound> getSound() const { return m_sound; }
       CelesteDllExport void setSound(const Path& wavFilePath);
       CelesteDllExport void setSound(Resources::Sound* sound);
@@ -32,8 +34,6 @@ namespace Celeste::Audio
       CelesteDllExport void stop();
 
     protected:
-      CelesteDllExport void onDeath() override;
-
       ALuint getSourceHandle() const { return m_sourceHandle; }
 
     private:
@@ -41,7 +41,6 @@ namespace Celeste::Audio
 
       observer_ptr<Resources::Sound> m_sound = nullptr;
       ALuint m_sourceHandle = AL_NONE;
-
       bool m_isPlaying = false;
       float m_volume = 1.0f;
       AudioType m_audioType = AudioType::kSFX;

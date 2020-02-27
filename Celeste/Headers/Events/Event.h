@@ -20,6 +20,7 @@ namespace Celeste
 
     public:
       Event() : m_callbacks() { }
+      ~Event() { unsubscribeAll(); }
 
       size_t getSubscriberCount() const { return m_callbacks.size(); }
 

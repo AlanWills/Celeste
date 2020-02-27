@@ -45,9 +45,6 @@ namespace Celeste::Rendering
       inline bool isPreservingAspectRatio() const { return m_preserveAspectRatio; }
       inline void shouldPreserveAspectRatio(Rendering::RatioMode shouldPreserveAspectRatio) { m_preserveAspectRatio = shouldPreserveAspectRatio == Rendering::RatioMode::kPreserveAspectRatio; }
 
-    protected:
-      CelesteDllExport void onDeath() override;
-
     private:
       using Inherited = Renderer;
 

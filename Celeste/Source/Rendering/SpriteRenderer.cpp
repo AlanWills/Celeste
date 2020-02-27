@@ -12,7 +12,7 @@ namespace Celeste::Rendering
 
   //------------------------------------------------------------------------------------------------
   SpriteRenderer::SpriteRenderer() :
-    m_texture(),
+    m_texture(nullptr),
     m_dimensions(),
     m_preserveAspectRatio(false)
   {
@@ -46,16 +46,6 @@ namespace Celeste::Rendering
     m_texture->unbind();
 
     glDisable(GL_SCISSOR_TEST);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void SpriteRenderer::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_texture = nullptr;
-    m_dimensions = glm::vec2();
-    m_preserveAspectRatio = false;
   }
 
   //------------------------------------------------------------------------------------------------

@@ -55,10 +55,10 @@ namespace Celeste::Animation
       /// Will return true if this animation is playing
       inline bool isPlaying() const { return m_playing; }
 
+      CelesteDllExport void update(GLfloat secondsPerUpdate) override;
+
     protected:
       CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
-      CelesteDllExport void onUpdate(GLfloat secondsPerUpdate) override;
-      CelesteDllExport void onDeath() override;
 
       inline size_t getCurrentFrame() const { return m_currentFrame; }
       inline void setCurrentFrame(size_t newFrame) { m_currentFrame = newFrame; }

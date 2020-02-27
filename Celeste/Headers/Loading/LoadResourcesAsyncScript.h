@@ -15,17 +15,11 @@ namespace Celeste
     public:
       const Event<>& getLoadCompleteEvent() const { return m_loadComplete; }
 
-    protected:
-      CelesteDllExport void onUpdate(float secondsPerUpdate) override;
-      CelesteDllExport void onDeath() override;
+      CelesteDllExport void update(float secondsPerUpdate) override;
 
     private:
-      typedef Script Inherited;
+      using Inherited = Script;
 
       Event<> m_loadComplete;
-
-      // Don't like this, but running into copy constructor deletion issues
-      // If there is a way around this, I'm all ears
-      //std::thread* m_loadingThread;
   };
 }

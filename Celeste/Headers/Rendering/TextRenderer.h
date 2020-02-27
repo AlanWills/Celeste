@@ -87,8 +87,6 @@ namespace Celeste::Rendering
       inline UI::VerticalAlignment getVerticalAlignment() const { return m_verticalAlignment; }
 
     protected:
-      CelesteDllExport void onDeath() override;
-
       inline float getXPosition(float halfLineWidth) const { return -static_cast<int>(m_horizontalAlignment)* halfLineWidth; }
       inline float getYPosition(float halfMaxHeight) const { return (2 - static_cast<int>(m_verticalAlignment))* halfMaxHeight; }
 

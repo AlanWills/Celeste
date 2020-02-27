@@ -20,9 +20,9 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Screen::onHandleInput()
+  void Screen::handleInput()
   {
-    Inherited::onHandleInput();
+    Inherited::handleInput();
 
     ASSERT(m_gameObjectQueue.empty());
 
@@ -59,9 +59,9 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Screen::onUpdate(float elapsedGameTime)
+  void Screen::update(float elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
     ASSERT(m_gameObjectQueue.empty());
 
@@ -98,20 +98,6 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Screen::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_name = 0;
-
-    // Reset scene root transform (in case it's been changed)
-    // Don't just assign a new transform here as we'll lose references to children
-    m_screenRoot.setRotation(0);
-    m_screenRoot.setTranslation(0, 0, 0);
-    m_screenRoot.setScale(0, 0, 0);
-  }
-
-  //------------------------------------------------------------------------------------------------
   void Screen::deallocate(Screen& screen)
   {
     if (m_componentAllocator.isAllocated(screen))
@@ -126,7 +112,7 @@ namespace Celeste
     // This also deallocates the game objects
     // Call this here rather than die, so that objects are not instantly killed when a screen dies
     // This allows us to kill screens using events
-    m_gameObjectAllocator.die();
+    m_gameObjectAllocator.deallocateAll();
 
     ASSERT(m_gameObjectQueue.empty());
     return m_componentAllocator.deallocate(*this);

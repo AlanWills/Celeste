@@ -27,7 +27,6 @@ namespace Celeste::UI
 
     protected:
       CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
-      CelesteDllExport void onDeath() override;
 
     private:
       using Inherited = Script;

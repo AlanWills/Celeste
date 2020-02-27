@@ -10,9 +10,8 @@ namespace Celeste::Lua
     m_componentTable(componentTable),
     m_onSetActiveFunc(),
     m_onSetGameObjectFunc(),
-    m_onHandleInputFunc(),
-    m_onUpdateFunc(),
-    m_onDeathFunc()
+    m_handleInputFunc(),
+    m_updateFunc()
   {
     processCallbacks(componentTable);
   }
@@ -28,9 +27,8 @@ namespace Celeste::Lua
 
     processCallback(componentTable, "onSetActive", m_onSetActiveFunc);
     processCallback(componentTable, "onSetGameObject", m_onSetGameObjectFunc);
-    processCallback(componentTable, "onHandleInput", m_onHandleInputFunc);
-    processCallback(componentTable, "onUpdate", m_onUpdateFunc);
-    processCallback(componentTable, "onDeath", m_onDeathFunc);
+    processCallback(componentTable, "handleInput", m_handleInputFunc);
+    processCallback(componentTable, "update", m_updateFunc);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -52,9 +50,8 @@ namespace Celeste::Lua
     // Set up callbacks
     luaComponent.setOnSetActiveFunc(m_onSetActiveFunc);
     luaComponent.setOnSetGameObjectFunc(m_onSetGameObjectFunc);
-    luaComponent.setOnHandleInputFunc(m_onHandleInputFunc);
-    luaComponent.setOnUpdateFunc(m_onUpdateFunc);
-    luaComponent.setOnDeathFunc(m_onDeathFunc);
+    luaComponent.setHandleInputFunc(m_handleInputFunc);
+    luaComponent.setUpdateFunc(m_updateFunc);
     luaComponent.setInstance(instance);
   }
 }

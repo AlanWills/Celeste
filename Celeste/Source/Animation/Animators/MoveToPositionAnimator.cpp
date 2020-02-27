@@ -18,9 +18,9 @@ namespace Celeste::Animators
   }
 
   //------------------------------------------------------------------------------------------------
-  void MoveToPositionAnimator::onUpdate(float elapsedGameTime)
+  void MoveToPositionAnimator::update(float elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
 #if _DEBUG
     observer_ptr<GameObject> gameObject = getGameObject();
@@ -40,17 +40,6 @@ namespace Celeste::Animators
       // Animation complete
       setActive(false);
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void MoveToPositionAnimator::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_time = 0;
-    m_elapsedTime = 0;
-    m_targetPosition = glm::vec3();
-    m_startingPosition = glm::vec3();
   }
 
   //------------------------------------------------------------------------------------------------

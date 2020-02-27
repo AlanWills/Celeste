@@ -16,6 +16,8 @@ namespace Celeste::UI
     DECLARE_SCRIPT(TextBox, CelesteDllExport)
 
     public:
+      CelesteDllExport ~TextBox() override;
+
       size_t getLineIndex() const { return m_lineIndex; }
       size_t getLetterIndex() const { return m_letterIndex; }
 
@@ -24,7 +26,6 @@ namespace Celeste::UI
 
     protected:
       CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
-      CelesteDllExport void onDeath() override;
 
       StringId getTextInputtedEventHandle() const { return m_textInputtedEventHandle; }
       StringId getKeyPressedEventHandle() const { return m_keyPressedEventHandle; }

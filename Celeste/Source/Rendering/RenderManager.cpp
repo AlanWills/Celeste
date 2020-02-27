@@ -10,27 +10,25 @@ namespace Celeste::Rendering
   }
 
   //------------------------------------------------------------------------------------------------
-  void RenderManager::onHandleInput()
+  RenderManager::~RenderManager()
   {
-    Inherited::onHandleInput();
+    Canvas::m_componentAllocator.deallocateAll();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void RenderManager::handleInput()
+  {
+    Inherited::handleInput();
 
     Canvas::m_componentAllocator.handleInput();
   }
 
   //------------------------------------------------------------------------------------------------
-  void RenderManager::onUpdate(float elapsedGameTime)
+  void RenderManager::update(float elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
     Canvas::m_componentAllocator.update(elapsedGameTime);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void RenderManager::onDeath()
-  {
-    Inherited::onDeath();
-
-    Canvas::m_componentAllocator.die();
   }
 
   //------------------------------------------------------------------------------------------------

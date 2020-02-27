@@ -52,9 +52,9 @@ namespace Celeste
     std::string name = deinternString(gameObject->getName());
 
     // Ensure the game object is dead and reset
-    if (gameObject != nullptr && gameObject->isAlive())
+    if (gameObject != nullptr)
     {
-      gameObject->die();
+      gameObject->deallocate();
     }
     
     m_parent = nullptr;

@@ -215,8 +215,6 @@
     <ClInclude Include="Headers\Bindings\InputDataBindingGenerators.h" />
     <ClInclude Include="Headers\Bindings\MathsDataBindingGenerators.h" />
     <ClInclude Include="Headers\Bindings\UIDataBindingGenerators.h" />
-    <ClInclude Include="Headers\Callbacks\Callback.h" />
-    <ClInclude Include="Headers\Callbacks\ExecuteLuaScript.h" />
     <ClInclude Include="Headers\DataConverters\Objects\ScriptableObjectDataConverter.h" />
     <ClInclude Include="Headers\Debug\Asserting\IAsserter.h" />
     <ClInclude Include="Headers\Debug\Logging\ILogger.h" />
@@ -337,13 +335,6 @@
     <ClInclude Include="Headers\Fields\DataField.h" />
     <ClInclude Include="Headers\Objects\ScriptableObject.h" />
     <ClInclude Include="Headers\Registries\CallbackRegistry.h" />
-    <ClInclude Include="Headers\Callbacks\ActivateGameObject.h" />
-    <ClInclude Include="Headers\Callbacks\ExitGame.h" />
-    <ClInclude Include="Headers\Callbacks\KillGameObject.h" />
-    <ClInclude Include="Headers\Callbacks\KillOwnerScreen.h" />
-    <ClInclude Include="Headers\Callbacks\KillScreen.h" />
-    <ClInclude Include="Headers\Callbacks\RenderGameObject.h" />
-    <ClInclude Include="Headers\Callbacks\TransitionToScreen.h" />
     <ClInclude Include="Headers\Animation\AnimationState.h" />
     <ClInclude Include="Headers\Animation\StateMachine.h" />
     <ClInclude Include="Headers\Audio\AudioManager.h" />
@@ -492,7 +483,6 @@
     <ClCompile Include="Source\Audio\AudioUtils.cpp" />
     <ClCompile Include="Source\Bindings\BindingsGenerator.cpp" />
     <ClCompile Include="Source\Bindings\BindingUtils.cpp" />
-    <ClCompile Include="Source\Callbacks\ExecuteLuaScript.cpp" />
     <ClCompile Include="Source\DataConverters\Audio\AudioSourceDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Input\KeyboardRigidBody2DControllerDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Input\KeyboardTransformerDataConverter.cpp" />
@@ -581,13 +571,6 @@
     <ClCompile Include="Source\Physics\EllipseCollider.cpp" />
     <ClCompile Include="Source\OpenGL\GL.cpp" />
     <ClCompile Include="Source\Registries\CallbackRegistry.cpp" />
-    <ClCompile Include="Source\Callbacks\ActivateGameObject.cpp" />
-    <ClCompile Include="Source\Callbacks\ExitGame.cpp" />
-    <ClCompile Include="Source\Callbacks\KillGameObject.cpp" />
-    <ClCompile Include="Source\Callbacks\KillOwnerScreen.cpp" />
-    <ClCompile Include="Source\Callbacks\KillScreen.cpp" />
-    <ClCompile Include="Source\Callbacks\RenderGameObject.cpp" />
-    <ClCompile Include="Source\Callbacks\TransitionToScreen.cpp" />
     <ClCompile Include="Source\DataConverters\Callbacks\CallbackDataConverter.cpp" />
     <ClCompile Include="Source\Registries\ComponentDataConverterRegistry.cpp" />
     <ClCompile Include="Source\DataConverters\DataConverter.cpp" />

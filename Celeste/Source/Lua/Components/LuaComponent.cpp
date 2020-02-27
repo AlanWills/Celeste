@@ -11,9 +11,8 @@ namespace Celeste::Lua
   //------------------------------------------------------------------------------------------------
   LuaComponent::LuaComponent() :
     m_onSetGameObjectFunc(),
-    m_onHandleInputFunc(),
-    m_onUpdateFunc(),
-    m_onDeathFunc()
+    m_handleInputFunc(),
+    m_updateFunc()
   {
   }
 
@@ -48,38 +47,25 @@ namespace Celeste::Lua
   }
 
   //------------------------------------------------------------------------------------------------
-  void LuaComponent::onHandleInput()
+  void LuaComponent::handleInput()
   {
-    Inherited::onHandleInput();
+    Inherited::handleInput();
 
-    if (m_onHandleInputFunc.valid())
+    if (m_handleInputFunc.valid())
     {
-      m_onHandleInputFunc(m_instance);
+      m_handleInputFunc(m_instance);
     }
   }
 
   //------------------------------------------------------------------------------------------------
-  void LuaComponent::onUpdate(float elapsedGameTime)
+  void LuaComponent::update(float elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
-    if (m_onUpdateFunc.valid())
+    if (m_updateFunc.valid())
     {
-      m_onUpdateFunc(m_instance, elapsedGameTime);
+      m_updateFunc(m_instance, elapsedGameTime);
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void LuaComponent::onDeath()
-  {
-    Inherited::onDeath();
-
-    if (m_onDeathFunc.valid())
-    {
-      m_onDeathFunc(m_instance);
-    }
-
-    resetCallbacks();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -88,8 +74,7 @@ namespace Celeste::Lua
     m_instance = sol::nil;
     m_onSetActiveFunc = sol::nil;
     m_onSetGameObjectFunc = sol::nil;
-    m_onHandleInputFunc = sol::nil;
-    m_onUpdateFunc = sol::nil;
-    m_onDeathFunc = sol::nil;
+    m_handleInputFunc = sol::nil;
+    m_updateFunc = sol::nil;
   }
 }

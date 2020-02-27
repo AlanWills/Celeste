@@ -32,12 +32,13 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   ScreenManager::~ScreenManager()
   {
+    Screen::m_componentAllocator.deallocateAll();
   }
 
   //------------------------------------------------------------------------------------------------
-  void ScreenManager::onHandleInput()
+  void ScreenManager::handleInput()
   {
-    Inherited::onHandleInput();
+    Inherited::handleInput();
 
     getWindow()->handleInput();
     
@@ -45,19 +46,11 @@ namespace Celeste
   }
   
   //------------------------------------------------------------------------------------------------
-  void ScreenManager::onUpdate(float elapsedGameTime)
+  void ScreenManager::update(float elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
     Screen::m_componentAllocator.update(elapsedGameTime);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void ScreenManager::onDeath()
-  {
-    Inherited::onDeath();
-
-    Screen::m_componentAllocator.die();
   }
 
   //------------------------------------------------------------------------------------------------

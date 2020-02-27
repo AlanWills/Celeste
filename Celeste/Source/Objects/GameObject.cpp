@@ -138,9 +138,9 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void GameObject::onHandleInput()
+  void GameObject::handleInput()
   {
-    Inherited::onHandleInput();
+    Inherited::handleInput();
 
     // Act on a copy so we can remove components during the handle input step
     for (Component* script : std::vector<Component*>(m_scripts))
@@ -153,9 +153,9 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void GameObject::onUpdate(GLfloat elapsedGameTime)
+  void GameObject::update(GLfloat elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
     // Act on a copy so we can remove components during the update step
     for (Component* script : std::vector<Component*>(m_scripts))
@@ -165,31 +165,6 @@ namespace Celeste
         script->update(elapsedGameTime);
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void GameObject::onDeath()
-  {
-    Inherited::onDeath();
-
-    for (Component* component : m_components)
-    {
-      if (component->isAlive())
-      {
-        component->die();
-      }
-    }
-
-    for (Component* script : m_scripts)
-    {
-      if (script->isAlive())
-      {
-        script->die();
-      }
-    }
-
-    m_name = 0;
-    m_tag = 0;
   }
 
   //------------------------------------------------------------------------------------------------

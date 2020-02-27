@@ -159,18 +159,6 @@ namespace Celeste::UI
   }
 
   //------------------------------------------------------------------------------------------------
-  void StackPanel::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_children.clear();
-    m_orientation = Orientation::kVertical;
-    m_horizontalAlignment = HorizontalAlignment::kCentre;
-    m_verticalAlignment = VerticalAlignment::kCentre;
-    m_padding = 5;
-  }
-
-  //------------------------------------------------------------------------------------------------
   void StackPanel::clearChildren()
   {
     m_children.clear();

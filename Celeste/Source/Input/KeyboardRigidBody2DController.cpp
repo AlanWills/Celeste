@@ -34,9 +34,9 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void KeyboardRigidBody2DController::onHandleInput()
+  void KeyboardRigidBody2DController::handleInput()
   {
-    Inherited::onHandleInput();
+    Inherited::handleInput();
 
 #if _DEBUG
     if (m_rigidBody2D == nullptr)
@@ -100,23 +100,5 @@ namespace Celeste::Input
         m_rigidBody2D->incrementAngularVelocity(deltaAngular);
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void KeyboardRigidBody2DController::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_rigidBody2D = nullptr;
-    m_decreaseXLinearVelocityKey = -1;
-    m_increaseXLinearVelocityKey = -1;
-    m_decreaseYLinearVelocityKey = -1;
-    m_increaseYLinearVelocityKey = -1;
-    m_decreaseAngularVelocityKey = -1;
-    m_increaseAngularVelocityKey = -1;
-    m_linearVelocityDelta = glm::vec2(1);
-    m_angularVelocityDelta = 0.1f;
-    m_space = Maths::Space::kLocal;
-    m_incrementMode = IncrementMode::kContinuous;
   }
 }

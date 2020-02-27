@@ -50,7 +50,7 @@ namespace Celeste
 
       inline void advanceEntity()
       {
-        while (m_entityIt != m_entityEndIt && !(*m_entityIt).isAlive())
+        while (m_entityIt != m_entityEndIt)
         {
           next();
         }

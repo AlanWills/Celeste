@@ -11,10 +11,8 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Component::onDeath()
+  Component::~Component()
   {
-    Inherited::onDeath();
-
     if (m_gameObject != nullptr)
     {
       m_gameObject->removeComponent(this);

@@ -15,16 +15,6 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void Collider::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_colliderType = ColliderType::kCollider;
-    m_hitByRay = false;
-    m_offset = glm::vec2();
-  }
-
-  //------------------------------------------------------------------------------------------------
   bool Collider::intersects(const Collider& collider) const
   {
     if (const RectangleCollider* rectangleCollider = dynamic_cast<const RectangleCollider*>(&collider); rectangleCollider != nullptr)

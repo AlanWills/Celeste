@@ -24,9 +24,9 @@ namespace Celeste::UI
   }
 
   //------------------------------------------------------------------------------------------------
-  void Slider::onHandleInput()
+  void Slider::handleInput()
   {
-    Inherited::onHandleInput();
+    Inherited::handleInput();
 
 #if _DEBUG
     if (getGameObject() == nullptr)
@@ -50,18 +50,6 @@ namespace Celeste::UI
     {
       m_sliderClicked = getMouse().isButtonClicked(MouseButton::kLeft) && getGameObject()->findComponent<RectangleCollider>()->isHitByRay();
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void Slider::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_sliderClicked = false;
-    m_min = 0;
-    m_max = 1;
-    m_currentValue = 0;
-    m_valueChanged.unsubscribeAll();
   }
 
   //------------------------------------------------------------------------------------------------

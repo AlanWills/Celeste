@@ -28,9 +28,7 @@ namespace Celeste::Input
       void setTarget(const std::string& targetName) { setTarget(internString(targetName)); }
       CelesteDllExport void setTarget(StringId targetName);
 
-    protected:
-      CelesteDllExport void onHandleInput() override;
-      CelesteDllExport void onDeath() override;
+      CelesteDllExport void handleInput() override;
 
     private:
       using Inherited = Script;

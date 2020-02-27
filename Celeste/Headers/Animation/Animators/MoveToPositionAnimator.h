@@ -17,9 +17,7 @@ namespace Celeste::Animators
       inline const glm::vec3& getTargetPosition() const { return m_targetPosition; }
       CelesteDllExport void setTargetPosition(const glm::vec3& targetPosition);
 
-    protected:
-      void onUpdate(float elapsedGameTime) override;
-      void onDeath() override;
+      void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Script;

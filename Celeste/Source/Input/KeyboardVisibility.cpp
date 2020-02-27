@@ -21,9 +21,9 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void KeyboardVisibility::onHandleInput()
+  void KeyboardVisibility::handleInput()
   {
-    Inherited::onHandleInput();
+    Inherited::handleInput();
 
     if (m_target == nullptr || (m_visibilityKey < 0 && m_invisibilityKey < 0))
     {
@@ -54,17 +54,6 @@ namespace Celeste::Input
         }
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void KeyboardVisibility::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_visibilityKey = GLFW_KEY_UNKNOWN;
-    m_invisibilityKey = GLFW_KEY_UNKNOWN;
-    m_inputMode = InputMode::kToggle;
-    m_target = nullptr;
   }
 
   //------------------------------------------------------------------------------------------------

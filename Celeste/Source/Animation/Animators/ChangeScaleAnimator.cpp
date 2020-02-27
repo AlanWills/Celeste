@@ -16,9 +16,9 @@ namespace Celeste::Animators
   }
 
   //------------------------------------------------------------------------------------------------
-  void ChangeScaleAnimator::onUpdate(float elapsedGameTime)
+  void ChangeScaleAnimator::update(float elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
 #if _DEBUG
     observer_ptr<GameObject> gameObject = getGameObject();
@@ -44,17 +44,6 @@ namespace Celeste::Animators
       // Animation complete
       setActive(false);
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void ChangeScaleAnimator::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_time = 0;
-    m_elapsedTime = 0;
-    m_targetScale = glm::vec3(1);
-    m_startingScale = glm::vec3(1);
   }
 
   //------------------------------------------------------------------------------------------------

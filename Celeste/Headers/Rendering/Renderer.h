@@ -40,9 +40,6 @@ namespace Celeste::Rendering
       /// Returns the raw size of the item being rendered multiplied by the game objects local scale
       CelesteDllExport glm::vec2 getScaledDimensions() const;
 
-    protected:
-      CelesteDllExport void onDeath() override;
-
     private:
       using Inherited = Script;
 

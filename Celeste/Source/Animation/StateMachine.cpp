@@ -13,9 +13,9 @@ namespace Celeste::Animation
   }
 
   //------------------------------------------------------------------------------------------------
-  void StateMachine::onUpdate(float secondsPerUpdate)
+  void StateMachine::update(float secondsPerUpdate)
   {
-    Inherited::onUpdate(secondsPerUpdate);
+    Inherited::update(secondsPerUpdate);
 
 #if _DEBUG
     if (m_currentAnimStateIndex >= m_states.size())
@@ -42,15 +42,6 @@ namespace Celeste::Animation
         break;
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void StateMachine::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_currentAnimStateIndex = 0;
-    m_states.clear();
   }
 
   //------------------------------------------------------------------------------------------------

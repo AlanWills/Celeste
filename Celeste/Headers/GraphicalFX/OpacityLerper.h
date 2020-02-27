@@ -36,9 +36,7 @@ namespace Celeste
       inline bool isLerpingUp() const { return m_lerpingUp; }
       inline void setLerpingUp(bool lerpingUp) { m_lerpingUp = lerpingUp; }
 
-    protected:
-      void onUpdate(float elapsedGameTime) override;
-      void onDeath() override;
+      void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Script;

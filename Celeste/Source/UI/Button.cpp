@@ -73,9 +73,9 @@ namespace Celeste
     }
 
     //------------------------------------------------------------------------------------------------
-    void Button::onUpdate(float secondsPerUpdate)
+    void Button::update(float secondsPerUpdate)
     {
-      Inherited::onUpdate(secondsPerUpdate);
+      Inherited::update(secondsPerUpdate);
 
       m_clickTimer += secondsPerUpdate;
 
@@ -96,25 +96,6 @@ namespace Celeste
 
         m_state = ButtonState::kIdle;
       }
-    }
-
-    //------------------------------------------------------------------------------------------------
-    void Button::onDeath()
-    {
-      Inherited::onDeath();
-
-      m_state = ButtonState::kIdle;
-      m_clickTimer = 0;
-
-      m_defaultTexture = nullptr;
-      m_highlightedTexture = nullptr;
-      m_clickedTexture = nullptr;
-      m_highlightedSound = nullptr;
-      m_clickedSound = nullptr;
-      m_collider = nullptr;
-      m_spriteRenderer = nullptr;
-      m_mouseInteraction = nullptr;
-      m_audio = nullptr;
     }
 
     //------------------------------------------------------------------------------------------------

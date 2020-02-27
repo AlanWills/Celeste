@@ -33,21 +33,14 @@ namespace Celeste::Audio
   }
 
   //------------------------------------------------------------------------------------------------
-  void AudioSource::onDeath()
+  AudioSource::~AudioSource()
   {
-    Inherited::onDeath();
-
     stop();
 
     if (alIsSource(m_sourceHandle))
     {
       alDeleteSources(1, &m_sourceHandle);
     }
-
-    m_sourceHandle = AL_NONE;
-    m_sound = nullptr;
-    m_volume = 1;
-    m_audioType = AudioType::kSFX;
   }
 
   //------------------------------------------------------------------------------------------------

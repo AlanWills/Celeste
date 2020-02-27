@@ -77,9 +77,9 @@ namespace Celeste::Animation
   }
 
   //------------------------------------------------------------------------------------------------
-  void Animator::onUpdate(GLfloat secondsPerUpdate)
+  void Animator::update(GLfloat secondsPerUpdate)
   {
-    Inherited::onUpdate(secondsPerUpdate);
+    Inherited::update(secondsPerUpdate);
 
 #if _DEBUG
     if (m_spriteRenderer == nullptr)
@@ -128,22 +128,6 @@ namespace Celeste::Animation
         m_currentFrameDirty = false;
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void Animator::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_spriteSheetDimensions = glm::uvec2(1);
-    m_currentFrameDirty = false;
-    m_currentFrame = 0;
-    m_secondsPerFrame = 0.1f;
-    m_begun = false;
-    m_playing = false;
-    m_playImmediately = true;
-    m_loop = true;
-    m_name = 0;
   }
 
   //------------------------------------------------------------------------------------------------

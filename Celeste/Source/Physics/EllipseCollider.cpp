@@ -24,9 +24,9 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void EllipseCollider::onUpdate(float secondsPerUpdate)
+  void EllipseCollider::update(float secondsPerUpdate)
   {
-    Inherited::onUpdate(secondsPerUpdate);
+    Inherited::update(secondsPerUpdate);
 
     sync();
   }
@@ -35,16 +35,6 @@ namespace Celeste::Physics
   void EllipseCollider::onSetOffset(const glm::vec2& oldOffset, const glm::vec2& newOffset)
   {
     m_ellipse.m_centre += (newOffset - oldOffset);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void EllipseCollider::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_unscaledDimensions = glm::vec2();
-    m_ellipse.m_centre = glm::vec2();
-    m_ellipse.m_dimensions = glm::vec2();
   }
 
   //------------------------------------------------------------------------------------------------

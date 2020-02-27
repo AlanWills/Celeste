@@ -15,9 +15,8 @@ namespace Celeste::Lua
 
       inline const sol::function& getOnSetActiveFunc() const { return m_onSetActiveFunc; }
       inline const sol::function& getOnSetGameObjectFunc() const { return m_onSetGameObjectFunc; }
-      inline const sol::function& getOnHandleInputFunc() const { return m_onHandleInputFunc; }
-      inline const sol::function& getOnUpdateFunc() const { return m_onUpdateFunc; }
-      inline const sol::function& getOnDeathFunc() const { return m_onDeathFunc; }
+      inline const sol::function& getHandleInputFunc() const { return m_handleInputFunc; }
+      inline const sol::function& getUpdateFunc() const { return m_updateFunc; }
 
       CelesteDllExport void initializeComponent(LuaComponent& luaComponent) const;
 
@@ -28,8 +27,7 @@ namespace Celeste::Lua
       sol::table m_componentTable;
       sol::function m_onSetActiveFunc;
       sol::function m_onSetGameObjectFunc;
-      sol::function m_onHandleInputFunc;
-      sol::function m_onUpdateFunc;
-      sol::function m_onDeathFunc;
+      sol::function m_handleInputFunc;
+      sol::function m_updateFunc;
   };
 }

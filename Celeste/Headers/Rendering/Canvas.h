@@ -25,11 +25,8 @@ namespace Celeste
         ProjectionMode getProjectionMode() const { return m_camera.getProjectionMode(); }
         CelesteDllExport void setProjectionMode(ProjectionMode projectionMode);
 
+        CelesteDllExport void handleInput() override;
         CelesteDllExport void render(float lag);
-
-      protected:
-        CelesteDllExport void onHandleInput() override;
-        CelesteDllExport void onDeath() override;
       
       private:
         using Inherited = Component;

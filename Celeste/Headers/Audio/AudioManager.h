@@ -10,6 +10,7 @@ namespace Celeste::Audio
   {
     public:
       CelesteDllExport AudioManager();
+      CelesteDllExport ~AudioManager() override;
 
       AudioManager(const AudioManager&) = delete;
       AudioManager& operator=(const AudioManager&) = delete;
@@ -23,10 +24,8 @@ namespace Celeste::Audio
       float getSFXVolume() const { return m_sfxVolume; }
       CelesteDllExport void setSFXVolume(float volume);
 
-    protected:
-      void onHandleInput() override;
-      void onUpdate(float elapsedGameTime) override;
-      void onDeath() override;
+      void handleInput() override;
+      void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Entity;

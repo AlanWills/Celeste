@@ -10,15 +10,15 @@ namespace Celeste::Rendering
   {
     public:
       CelesteDllExport RenderManager();
+      CelesteDllExport ~RenderManager() override;
+
       RenderManager(const RenderManager&) = delete;
       RenderManager& operator=(const RenderManager&) = delete;
 
       CelesteDllExport void render(float lag);
 
-    protected:
-      void onHandleInput() override;
-      void onUpdate(float elapsedGameTime) override;
-      void onDeath() override;
+      void handleInput() override;
+      void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Entity;

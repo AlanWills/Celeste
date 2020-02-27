@@ -23,9 +23,9 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void OpacityLerper::onUpdate(float elapsedGameTime)
+  void OpacityLerper::update(float elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
 #if _DEBUG
     if (getGameObject() == nullptr)
@@ -84,20 +84,5 @@ namespace Celeste
     }
     
     renderer->setOpacity(currentOpacity);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void OpacityLerper::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_minOpacity = 0;
-    m_maxOpacity = 1;
-    m_lerpUpTime = 1;
-    m_lerpDownTime = 1;
-    m_maxOpacityWaitTime = 0;
-    m_minOpacityWaitTime = 0;
-    m_waitTime = 0;
-    m_lerpingUp = false;
   }
 }

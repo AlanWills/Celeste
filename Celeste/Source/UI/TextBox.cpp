@@ -33,6 +33,13 @@ namespace Celeste::UI
   }
 
   //------------------------------------------------------------------------------------------------
+  TextBox::~TextBox()
+  {
+    getKeyboard().getTextInputtedEvent().unsubscribe(m_textInputtedEventHandle);
+    getKeyboard().getKeyPressedEvent().unsubscribe(m_keyPressedEventHandle);
+  }
+
+  //------------------------------------------------------------------------------------------------
   void TextBox::onSetGameObject(GameObject& gameObject)
   {
     Inherited::onSetGameObject(gameObject);
@@ -202,22 +209,6 @@ namespace Celeste::UI
 
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextBox::onDeath()
-  {
-    Inherited::onDeath();
-
-    getKeyboard().getTextInputtedEvent().unsubscribe(m_textInputtedEventHandle);
-    getKeyboard().getKeyPressedEvent().unsubscribe(m_keyPressedEventHandle);
-
-    m_textInputtedEventHandle = 0;
-    m_keyPressedEventHandle = 0;
-    m_textRenderer = nullptr;
-
-    m_lineIndex = 0;
-    m_letterIndex = 0;
   }
 
   //------------------------------------------------------------------------------------------------

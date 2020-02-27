@@ -18,9 +18,9 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void KeyboardActivator::onHandleInput()
+  void KeyboardActivator::handleInput()
   {
-    Inherited::onHandleInput();
+    Inherited::handleInput();
 
     if ((m_activationKey < 0 && m_deactivationKey < 0) || m_target == nullptr)
     {
@@ -51,17 +51,6 @@ namespace Celeste::Input
         }
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void KeyboardActivator::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_activationKey = GLFW_KEY_UNKNOWN;
-    m_deactivationKey = GLFW_KEY_UNKNOWN;
-    m_inputMode = InputMode::kToggle;
-    m_target = nullptr;
   }
 
   //------------------------------------------------------------------------------------------------

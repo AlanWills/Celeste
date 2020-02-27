@@ -121,13 +121,10 @@ namespace Celeste
       CelesteDllExport Component* getComponent(size_t index);
       CelesteDllExport const Component* getConstComponent(size_t index) const { return const_cast<GameObject*>(this)->getComponent(index); }
 
-    protected:
-      /// Called after the component is initialized and it's internal state is set so that it is alive
-      virtual void onInitialize() { }
-      CelesteDllExport void onHandleInput();
-      CelesteDllExport void onUpdate(GLfloat elapsedGameTime);
-      CelesteDllExport void onDeath() override;
+      CelesteDllExport void handleInput();
+      CelesteDllExport void update(GLfloat elapsedGameTime);
 
+    protected:
       inline size_t component_count() const { return m_components.size(); }
       inline size_t script_count() const { return m_scripts.size(); }
 
@@ -186,7 +183,7 @@ namespace Celeste
     {
       for (Component* script : m_scripts)
       {
-        if (script->isAlive() && dynamic_cast<T*>(script) != nullptr)
+        if (dynamic_cast<T*>(script) != nullptr)
         {
           return reinterpret_cast<T*>(script);
         }
@@ -196,7 +193,7 @@ namespace Celeste
     {
       for (Component* component : m_components)
       {
-        if (component->isAlive() && dynamic_cast<T*>(component) != nullptr)
+        if (dynamic_cast<T*>(component) != nullptr)
         {
           return reinterpret_cast<T*>(component);
         }
@@ -216,8 +213,7 @@ namespace Celeste
     {
       for (Component* script : m_scripts)
       {
-        if (script->isAlive() && 
-            dynamic_cast<T*>(script) != nullptr && 
+        if (dynamic_cast<T*>(script) != nullptr && 
             componentPredicate(reinterpret_cast<T*>(script)))
         {
           return reinterpret_cast<T*>(script);
@@ -228,8 +224,7 @@ namespace Celeste
     {
       for (Component* component : m_components)
       {
-        if (component->isAlive() && 
-            dynamic_cast<T*>(component) != nullptr &&
+        if (dynamic_cast<T*>(component) != nullptr &&
             componentPredicate(reinterpret_cast<T*>(component)))
         {
           return reinterpret_cast<T*>(component);
@@ -248,7 +243,7 @@ namespace Celeste
     {
       for (Component* script : m_scripts)
       {
-        if (script->isAlive() && dynamic_cast<T*>(script) != nullptr)
+        if (dynamic_cast<T*>(script) != nullptr)
         {
           return true;
         }
@@ -258,7 +253,7 @@ namespace Celeste
     {
       for (Component* component : m_components)
       {
-        if (component->isAlive() && dynamic_cast<T*>(component) != nullptr)
+        if (dynamic_cast<T*>(component) != nullptr)
         {
           return true;
         }

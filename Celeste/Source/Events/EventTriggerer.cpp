@@ -15,9 +15,9 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void EventTriggerer::onUpdate(float elapsedGameTime)
+  void EventTriggerer::update(float elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
     if (m_condition && m_condition(*getGameObject()))
     {
@@ -25,18 +25,8 @@ namespace Celeste
 
       if (m_triggerMode == TriggerMode::kOnce)
       {
-        die();
+        deallocate();
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void EventTriggerer::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_triggerMode = TriggerMode::kOnce;
-    m_condition = nullptr;
-    m_event.unsubscribeAll();
   }
 }

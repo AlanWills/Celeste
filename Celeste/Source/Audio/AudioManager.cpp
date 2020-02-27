@@ -20,30 +20,28 @@ namespace Celeste::Audio
   }
 
   //------------------------------------------------------------------------------------------------
-  void AudioManager::onHandleInput()
+  AudioManager::~AudioManager()
   {
-    Inherited::onHandleInput();
+    AudioSource::m_componentAllocator.deallocateAll();
+
+    // Terminate the OpenAL state
+    OpenALState::terminate();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void AudioManager::handleInput()
+  {
+    Inherited::handleInput();
 
     AudioSource::m_componentAllocator.handleInput();
   }
 
   //------------------------------------------------------------------------------------------------
-  void AudioManager::onUpdate(float elapsedGameTime)
+  void AudioManager::update(float elapsedGameTime)
   {
-    Inherited::onUpdate(elapsedGameTime);
+    Inherited::update(elapsedGameTime);
 
     AudioSource::m_componentAllocator.update(elapsedGameTime);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void AudioManager::onDeath()
-  {
-    Inherited::onDeath();
-
-    AudioSource::m_componentAllocator.die();
-
-    // Terminate the OpenAL state
-    OpenALState::terminate();
   }
 
   //------------------------------------------------------------------------------------------------

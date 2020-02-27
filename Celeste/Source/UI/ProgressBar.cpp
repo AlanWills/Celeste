@@ -33,17 +33,6 @@ namespace Celeste::UI
   }
 
   //------------------------------------------------------------------------------------------------
-  void ProgressBar::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_spriteRenderer = nullptr;
-    m_progress = 0;
-    m_min = 0;
-    m_max = 100;
-  }
-
-  //------------------------------------------------------------------------------------------------
   void ProgressBar::setMin(float min)
   {
     m_min = min;

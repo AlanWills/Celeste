@@ -50,9 +50,6 @@ namespace Celeste::UI
       /// Update all positions of the objects within the stack panel
       CelesteDllExport void layout() const;
 
-    protected:
-      CelesteDllExport void onDeath();
-
     private:
       using Inherited = Script;
 

@@ -25,9 +25,9 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void RectangleCollider::onUpdate(GLfloat secondsPerUpdate)
+  void RectangleCollider::update(GLfloat secondsPerUpdate)
   {
-    Inherited::onUpdate(secondsPerUpdate);
+    Inherited::update(secondsPerUpdate);
 
     sync();
   }
@@ -36,16 +36,6 @@ namespace Celeste::Physics
   void RectangleCollider::onSetOffset(const glm::vec2& oldOffset, const glm::vec2& newOffset)
   {
     m_rectangle.setCentre(m_rectangle.getCentre() + newOffset - oldOffset);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void RectangleCollider::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_rectangle.setCentre(0, 0);
-    m_rectangle.setDimensions(0, 0);
-    m_dimensions = glm::vec2();
   }
 
   //------------------------------------------------------------------------------------------------

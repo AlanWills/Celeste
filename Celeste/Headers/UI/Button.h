@@ -72,10 +72,10 @@ namespace Celeste
         void subscribeLeftClickCallback(const GameObjectClickCallback& callback, const Callbacks&... callbacks);
         CelesteDllExport void subscribeLeftClickCallback(const GameObjectClickCallback& callback);
 
+        CelesteDllExport void update(float secondsPerUpdate) override;
+
       protected:
         CelesteDllExport void onSetGameObject(GameObject& parent) override;
-        CelesteDllExport void onUpdate(float secondsPerUpdate) override;
-        CelesteDllExport void onDeath() override;
 
         inline ButtonState getButtonState() const { return m_state; }
         inline void setButtonState(ButtonState state) { m_state = state; }

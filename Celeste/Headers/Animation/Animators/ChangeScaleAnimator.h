@@ -17,9 +17,7 @@ namespace Celeste::Animators
       inline const glm::vec3& getTargetScale() const { return m_targetScale; }
       CelesteDllExport void setTargetScale(const glm::vec3& targetScale);
 
-    protected:
-      void onUpdate(float elapsedGameTime) override;
-      void onDeath() override;
+      void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Script;

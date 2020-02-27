@@ -24,22 +24,19 @@ namespace Celeste
         const sol::function& getOnSetGameObjectFunc() const { return m_onSetGameObjectFunc; }
         void setOnSetGameObjectFunc(const sol::function& func) { m_onSetGameObjectFunc = func; }
 
-        const sol::function& getOnHandleInputFunc() const { return m_onHandleInputFunc; }
-        void setOnHandleInputFunc(const sol::function& func) { m_onHandleInputFunc = func; }
+        const sol::function& getHandleInputFunc() const { return m_handleInputFunc; }
+        void setHandleInputFunc(const sol::function& func) { m_handleInputFunc = func; }
 
-        const sol::function& getOnUpdateFunc() const { return m_onUpdateFunc; }
-        void setOnUpdateFunc(const sol::function& func) { m_onUpdateFunc = func; }
-
-        const sol::function& getOnDeathFunc() const { return m_onDeathFunc; }
-        void setOnDeathFunc(const sol::function& func) { m_onDeathFunc = func; }
+        const sol::function& getUpdateFunc() const { return m_updateFunc; }
+        void setUpdateFunc(const sol::function& func) { m_updateFunc = func; }
 
         CelesteDllExport void setActive(bool active) override;
 
+        void handleInput() override;
+        void update(float elapsedGameTime) override;
+
       protected:
         void onSetGameObject(GameObject& gameObject) override;
-        void onHandleInput() override;
-        void onUpdate(float elapsedGameTime) override;
-        void onDeath() override;
 
       private:
         using Inherited = Script;
@@ -49,9 +46,8 @@ namespace Celeste
         sol::table m_instance;
         sol::function m_onSetActiveFunc;
         sol::function m_onSetGameObjectFunc;
-        sol::function m_onHandleInputFunc;
-        sol::function m_onUpdateFunc;
-        sol::function m_onDeathFunc;
+        sol::function m_handleInputFunc;
+        sol::function m_updateFunc;
     };
   }
 }

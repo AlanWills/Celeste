@@ -31,9 +31,7 @@ namespace Celeste::UI
       m_valueChanged.subscribe(callback);
     }
 
-  protected:
-    CelesteDllExport void onHandleInput() override;
-    CelesteDllExport void onDeath() override;
+    CelesteDllExport void handleInput() override;
 
   private:
     using Inherited = Script;

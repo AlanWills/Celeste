@@ -33,6 +33,7 @@ namespace Celeste
       /// Free the memory reserved in the templated allocator for reuse.
       /// die will be called on the object if it hasn't already.
       bool deallocate(T& item);
+      void deallocateAll();
 
       inline EntityAllocatorIterator<T> begin()
       {
@@ -127,7 +128,6 @@ namespace Celeste
 
       void handleInput();
       void update(float elapsedGameTime);
-      void die();
 
     private:
       observer_ptr<PoolAllocator<T>> getAllocator(T& item);
@@ -180,12 +180,6 @@ namespace Celeste
       return false;
     }
 
-    if (item.isAlive())
-    {
-      // Call die if we have not done so already - this will reset the component state flags
-      item.die();
-    }
-
     // Deallocate the actual memory
     return allocator->deallocate(item);
   }
@@ -223,18 +217,6 @@ namespace Celeste
   template <typename T>
   void EntityAllocator<T>::update(float elapsedGameTime)
   {
-    for (const auto& allocator : m_allocators)
-    {
-      for (T& object : *allocator)
-      {
-        // Go through all elements and check to see if any are dead, but not deallocated and deallocate them
-        if (!object.isAlive())
-        {
-          object.deallocate();
-        }
-      }
-    }
-
     for (T& object : *this)
     {
       if (object.isActive())
@@ -246,20 +228,12 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  void EntityAllocator<T>::die()
+  void EntityAllocator<T>::deallocateAll()
   {
     for (const auto& allocator : m_allocators)
     {
       for (T& object : *allocator)
       {
-        // Go through all elements
-        // Deallocate, or if still alive, kill first
-        // This is so that all game objects have die, then deallocate deterministically called on them
-        if (object.isAlive())
-        {
-          object.die();
-        }
-
         object.deallocate();
       }
     }

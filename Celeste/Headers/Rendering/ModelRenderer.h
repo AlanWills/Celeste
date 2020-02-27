@@ -10,19 +10,16 @@ namespace Celeste::Rendering
   {
     DECLARE_SCRIPT(ModelRenderer, CelesteDllExport)
 
-  public:
-    CelesteDllExport void render(const Resources::Program& shaderProgram) const;
+    public:
+      CelesteDllExport void render(const Resources::Program& shaderProgram) const;
 
-    CelesteDllExport void setModel(const Path& modelRelativePath);
-    inline void setModel(observer_ptr<Resources::Model> model) { m_model = model; }
-    inline observer_ptr<Resources::Model> getModel() const { return m_model; }
+      CelesteDllExport void setModel(const Path& modelRelativePath);
+      inline void setModel(observer_ptr<Resources::Model> model) { m_model = model; }
+      inline observer_ptr<Resources::Model> getModel() const { return m_model; }
 
-  protected:
-    void onDeath() override;
+    private:
+      using Inherited = Script;
 
-  private:
-    using Inherited = Script;
-
-    observer_ptr<Resources::Model> m_model;
+      observer_ptr<Resources::Model> m_model;
   };
 }

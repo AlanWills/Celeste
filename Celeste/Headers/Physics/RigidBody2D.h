@@ -44,9 +44,7 @@ namespace Celeste::Physics
 
       inline void incrementAngularVelocity(float angularVelocityDelta) { setAngularVelocity(m_angularVelocity + angularVelocityDelta); }
 
-    protected:
-      CelesteDllExport void onUpdate(float secondsPerUpdate) override;
-      CelesteDllExport void onDeath() override;
+      CelesteDllExport void update(float secondsPerUpdate) override;
 
     private:
       using Inherited = Component;

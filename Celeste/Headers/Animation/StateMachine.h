@@ -25,9 +25,7 @@ namespace Celeste::Animation
       inline observer_ptr<const AnimationState> getCurrentAnimationState() const { return &m_states[m_currentAnimStateIndex]; }
       inline const States& getStates() const { return m_states; }
 
-    protected:
-      CelesteDllExport void onUpdate(float secondsPerUpdate) override;
-      CelesteDllExport void onDeath() override;
+      CelesteDllExport void update(float secondsPerUpdate) override;
 
     private:
       using Inherited = Component;

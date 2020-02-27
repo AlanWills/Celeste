@@ -13,22 +13,13 @@ namespace Celeste
       CelesteDllExport Entity();
       virtual ~Entity() = default;
 
-      CelesteDllExport void handleInput();
-      CelesteDllExport void update(float elapsedGameTime);
-      CelesteDllExport void die();
+      virtual void handleInput() {}
+      virtual void update(float /*elapsedGameTime*/) {}
 
-      inline bool isAlive() const { return m_alive; }
       inline bool isActive() const { return m_active; }
-
       virtual void setActive(bool isActive) { m_active = isActive; }
 
-    protected:
-      virtual void onHandleInput() { }
-      virtual void onUpdate(float elapsedGameTime) { }
-      virtual void onDeath() { }
-
     private:
-      bool m_alive = true;
       bool m_active = false;
   };
 }
