@@ -1,6 +1,6 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Attributes;
-using CelesteEngineEditor.Editors;
+using CelesteEditor.Attributes;
+using CelesteEditor.Editors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CelesteEngineEditor.Editors
+namespace CelesteEditor.Editors
 {
     /// <summary>
     /// Interaction logic for Inspector.xaml

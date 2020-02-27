@@ -1,8 +1,8 @@
-﻿using CelesteEngineEditor.Core;
-using CelesteEngineEditor.DataTemplates;
-using CelesteEngineEditor.Extensibility;
-using CelesteEngineEditor.Settings;
-using CelesteEngineEditor.Windows;
+﻿using CelesteEditor.Core;
+using CelesteEditor.DataTemplates;
+using CelesteEditor.Extensibility;
+using CelesteEditor.Settings;
+using CelesteEditor.Windows;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
 
-namespace CelesteEngineEditor
+namespace CelesteEditor
 {
     /// <summary>
     /// Interaction logic for App.xaml

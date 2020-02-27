@@ -1,14 +1,14 @@
 ﻿using BindingsKernel;
 using BindingsKernel.Objects;
-using CelesteEngineEditor.Assets;
-using CelesteEngineEditor.Comparer;
-using CelesteEngineEditor.Core;
+using CelesteEditor.Assets;
+using CelesteEditor.Comparer;
+using CelesteEditor.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 
-namespace CelesteEngineEditor.Editors
+namespace CelesteEditor.Editors
 {
     public class ProjectExplorerViewModel : EditorViewModel
     {

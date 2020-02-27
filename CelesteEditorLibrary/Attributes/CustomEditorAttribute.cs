@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Attributes
+namespace CelesteEditor.Attributes
 {
     public class CustomEditorAttribute : Attribute
     {

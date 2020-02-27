@@ -46,9 +46,6 @@ namespace CelesteTestUtils
       void collision(Celeste::Physics::Collider& collider) override { ++m_collisionCount; }
       void collisionExit(Celeste::Physics::Collider& collider) override { ++m_collisionExitCount; }
 
-    protected:
-      void onDeath() { Inherited::onDeath(); reset(); }
-
     private:
       using Inherited = Celeste::Script;
 

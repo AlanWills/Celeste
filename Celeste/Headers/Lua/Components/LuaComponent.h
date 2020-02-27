@@ -32,8 +32,8 @@ namespace Celeste
 
         CelesteDllExport void setActive(bool active) override;
 
-        void handleInput() override;
-        void update(float elapsedGameTime) override;
+        CelesteDllExport void handleInput() override;
+        CelesteDllExport void update(float elapsedGameTime) override;
 
       protected:
         void onSetGameObject(GameObject& gameObject) override;

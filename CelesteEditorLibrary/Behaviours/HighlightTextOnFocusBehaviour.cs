@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 
-namespace CelesteEngineEditor.Behaviours
+namespace CelesteEditor.Behaviours
 {
     public class HighlightTextOnFocusBehaviour : Behavior<TextBox>
     {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using BindingsKernel;
 
-namespace CelesteEngine
+namespace Celeste
 {
 	public class LoadResourcesAsyncScript : Component
 	{

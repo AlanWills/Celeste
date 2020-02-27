@@ -18,13 +18,6 @@ namespace CelesteTestUtils
 
       bool isRenderCalled() const { return m_renderCalled; }
 
-    protected:
-      void onDeath() override
-      {
-        Celeste::Rendering::Renderer::onDeath();
-        m_renderCalled = false;
-      }
-
     private:
       mutable bool m_renderCalled;
       glm::vec2 m_dimensions;

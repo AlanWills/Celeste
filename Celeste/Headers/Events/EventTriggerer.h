@@ -27,7 +27,7 @@ namespace Celeste
       inline const GameObjectEvent& getEvent() const { return m_event; }
       inline void setCondition(const Condition& condition) { m_condition = condition; }
 
-      void update(float elapsedGameTime) override;
+      CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Script;

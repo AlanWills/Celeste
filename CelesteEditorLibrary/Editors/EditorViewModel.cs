@@ -1,12 +1,12 @@
-﻿using CelesteEngineEditor.Core;
-using CelesteEngineEditor.ViewModels;
+﻿using CelesteEditor.Core;
+using CelesteEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Editors
+namespace CelesteEditor.Editors
 {
     public class EditorViewModel : Notifier
     {

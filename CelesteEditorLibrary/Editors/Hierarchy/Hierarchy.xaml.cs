@@ -1,7 +1,7 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Attributes;
-using CelesteEngineEditor.Editors;
-using CelesteEngineEditor.Extensibility;
+using CelesteEditor.Attributes;
+using CelesteEditor.Editors;
+using CelesteEditor.Extensibility;
 using DevZest.Windows.Docking;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CelesteEngineEditor.Editors
+namespace CelesteEditor.Editors
 {
     /// <summary>
     /// Interaction logic for Hierarchy.xaml

@@ -2,7 +2,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 #include "Registries/ComponentRegistry.h"
 #include "Mocks/Physics/MockRigidBody2D.h"
-#include "Utils/ObjectUtils.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -24,7 +24,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(MoveToPositionAnimator_IsAllocatableFromComponentRegistry)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(MoveToPositionAnimator::type_name(), gameObject);
 
@@ -63,7 +63,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(MoveToPositionAnimator_SetTargetPosition_SetsTargetPositionToInputtedValue)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<MoveToPositionAnimator> animator = gameObject.addComponent<MoveToPositionAnimator>();
 
       Assert::IsTrue(&gameObject == animator->getGameObject());
@@ -91,7 +91,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(MoveToPositionAnimator_Update_TimeIsZero_SetsGameObjectToTargetPosition)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<MoveToPositionAnimator> animator = gameObject.addComponent<MoveToPositionAnimator>();
       animator->setTime(0);
       animator->setTargetPosition(glm::vec3(100, 200, 300));
@@ -106,7 +106,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(MoveToPositionAnimator_Update_TimeNonZero_LerpsBetweenStartAndTarget_UsingElapsedTime)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setTranslation(1, 1, 1);
       AutoDeallocator<MoveToPositionAnimator> animator = gameObject.addComponent<MoveToPositionAnimator>();
       animator->setTime(0.5f);
@@ -122,7 +122,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(MoveToPositionAnimator_Update_ElapsedTimeEqualToTime_SetsGameObjectToTargetPosition)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<MoveToPositionAnimator> animator = gameObject.addComponent<MoveToPositionAnimator>();
       animator->setTime(0.5f);
       animator->setTargetPosition(glm::vec3(100, 200, 300));
@@ -137,7 +137,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(MoveToPositionAnimator_Update_ElapsedTimeEqualToTime_DeactivatesScript)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<MoveToPositionAnimator> animator = gameObject.addComponent<MoveToPositionAnimator>();
       animator->setTime(0.5f);
 
@@ -151,7 +151,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(MoveToPositionAnimator_Update_ElapsedTimeGreaterThanTime_SetsGameObjectToTargetPosition)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<MoveToPositionAnimator> animator = gameObject.addComponent<MoveToPositionAnimator>();
       animator->setTime(0.5f);
       animator->setTargetPosition(glm::vec3(100, 200, 300));
@@ -166,7 +166,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(MoveToPositionAnimator_Update_ElapsedTimeGreaterThanTime_DeactivatesScript)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<MoveToPositionAnimator> animator = gameObject.addComponent<MoveToPositionAnimator>();
       animator->setTime(0.5f);
 
@@ -179,24 +179,5 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(MoveToPositionAnimator_Die_ResetsValuesToDefault)
-    {
-      MoveToPositionAnimator animator;
-      animator.setTime(0.5f);
-      animator.setTargetPosition(glm::vec3(100, 200, 300));
-
-      Assert::AreEqual(0.5f, animator.getTime());
-      Assert::AreEqual(glm::vec3(100, 200, 300), animator.getTargetPosition());
-
-      animator.die();
-
-      Assert::AreEqual(0.0f, animator.getTime());
-      Assert::AreEqual(glm::vec3(), animator.getTargetPosition());
-    }
-
-#pragma endregion
   };
 }

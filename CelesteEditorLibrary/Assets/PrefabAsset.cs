@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace CelesteEngineEditor.Assets
+namespace CelesteEditor.Assets
 {
     public class PrefabAsset : Asset<Prefab>
     {

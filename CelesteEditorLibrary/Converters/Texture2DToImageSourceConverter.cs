@@ -1,5 +1,5 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Core;
+using CelesteEditor.Core;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace CelesteEngineEditor.Converters
+namespace CelesteEditor.Converters
 {
     public class Texture2DToImageSourceConverter : IValueConverter
     {

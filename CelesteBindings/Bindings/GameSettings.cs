@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using BindingsKernel;
 
-namespace CelesteEngine.Settings
+namespace Celeste.Settings
 {
 	public class GameSettings : ScriptableObject
 	{

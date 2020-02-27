@@ -1,8 +1,8 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Attributes;
-using CelesteEngineEditor.Editors;
-using CelesteEngineEditor.Extensibility;
-using CelesteEngineEditor.UserControls.MainMenu.MenuItemContexts;
+using CelesteEditor.Attributes;
+using CelesteEditor.Editors;
+using CelesteEditor.Extensibility;
+using CelesteEditor.UserControls.MainMenu.MenuItemContexts;
 using DevZest.Windows.Docking;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CelesteEngineEditor.UserControls
+namespace CelesteEditor.UserControls
 {
     /// <summary>
     /// Interaction logic for MainMenuView.xaml
@@ -149,9 +149,9 @@ namespace CelesteEngineEditor.UserControls
             MainMenu.Exit();
         }
         
-        private void AboutCelesteEngineEditor_Click(object sender, RoutedEventArgs e)
+        private void AboutCelesteEditor_Click(object sender, RoutedEventArgs e)
         {
-            MainMenu.AboutCelesteEngineEditor();
+            MainMenu.AboutCelesteEditor();
         }
 
         #endregion

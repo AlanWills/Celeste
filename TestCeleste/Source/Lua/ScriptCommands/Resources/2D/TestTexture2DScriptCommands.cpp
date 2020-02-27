@@ -6,7 +6,6 @@
 #include "Lua/LuaState.h"
 
 #include "Mocks/Resources/2D/MockTexture2D.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;

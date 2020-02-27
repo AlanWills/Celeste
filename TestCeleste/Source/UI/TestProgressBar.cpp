@@ -5,7 +5,6 @@
 #include "Screens/Screen.h"
 #include "Resources/ResourceManager.h"
 #include "Resources/TestResources.h"
-#include "Utils/ObjectUtils.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
 #include "AssertExt.h"
@@ -101,49 +100,6 @@ namespace TestCeleste
 
       AssertCel::HasComponent<SpriteRenderer>(*gameObject);
       Assert::AreEqual(glm::vec2(-renderer->getDimensions().x * 0.5f, 0), renderer->getScissorRectangle().getCentre());
-    }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ProgressBar_Die_SetsProgressToZero)
-    {
-      ProgressBar bar;
-      bar.setProgress(50);
-
-      Assert::AreEqual(50.0f, bar.getProgress());
-
-      bar.die();
-
-      Assert::AreEqual(0.0f, bar.getProgress());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ProgressBar_Die_SetsMinToZero)
-    {
-      ProgressBar bar;
-      bar.setMin(5);
-
-      Assert::AreEqual(5.0f, bar.getMin());
-
-      bar.die();
-
-      Assert::AreEqual(0.0f, bar.getMin());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ProgressBar_Die_SetsMaxToZero)
-    {
-      ProgressBar bar;
-      bar.setMax(5);
-
-      Assert::AreEqual(5.0f, bar.getMax());
-
-      bar.die();
-
-      Assert::AreEqual(100.0f, bar.getMax());
     }
 
 #pragma endregion

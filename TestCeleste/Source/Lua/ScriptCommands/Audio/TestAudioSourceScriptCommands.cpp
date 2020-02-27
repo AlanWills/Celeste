@@ -4,7 +4,6 @@
 #include "Lua/ScriptCommands/Audio/AudioSourceScriptCommands.h"
 #include "Lua/ScriptCommands/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 #include "Mocks/Audio/MockAudioSource.h"

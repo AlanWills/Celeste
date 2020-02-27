@@ -19,13 +19,6 @@ namespace CelesteTestUtils
 
       bool isRenderCalled() const { return m_renderCalled; }
 
-    protected:
-      void onDeath() override
-      {
-        Celeste::Rendering::SpriteRenderer::onDeath();
-        m_renderCalled = false;
-      }
-
     private:
       mutable bool m_renderCalled;
   };

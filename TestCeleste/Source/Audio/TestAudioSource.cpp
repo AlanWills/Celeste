@@ -5,7 +5,6 @@
 #include "Audio/AudioUtils.h"
 #include "Audio/AudioManager.h"
 #include "OpenAL/OpenALState.h"
-#include "Utils/ObjectUtils.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
 #include "AssertExt.h"
@@ -57,7 +56,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioSource_IsAllocatableFromComponentRegistry)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(AudioSource::type_name(), gameObject);
 
@@ -132,91 +131,21 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Initialize Tests
-    
-#pragma endregion
-
-#pragma region Die Tests
+#pragma region Destructor Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioSource_Die_OnNotInitializedAudioSource_DoesNotThrow)
+    TEST_METHOD(AudioSource_Destructor_DeallocatesSourceHandle)
     {
-      MockAudioSource audioSource;
+      ALuint audioSourceHandle = 0;
 
-      Assert::AreEqual(static_cast<ALuint>(0), audioSource.getSourceHandle_Public());
-      Assert::IsFalse(alIsSource(audioSource.getSourceHandle_Public()));
+      {
+        MockAudioSource audioSource;
+        audioSourceHandle = audioSource.getSourceHandle_Public();
 
-      audioSource.die();
+        Assert::IsTrue(alIsSource(audioSourceHandle));
+      }
 
-      Assert::AreEqual(static_cast<ALuint>(0), audioSource.getSourceHandle_Public());
-      Assert::IsFalse(alIsSource(audioSource.getSourceHandle_Public()));
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioSource_Die_OnInitializedAudioSource_DeallocatesSourceHandle_AndStopsAudio)
-    {
-      MockAudioSource audioSource;
-
-      Assert::IsTrue(alIsSource(audioSource.getSourceHandle_Public()));
-
-      audioSource.die();
-
-      Assert::IsFalse(audioSource.isPlaying());
-      Assert::IsFalse(alIsSource(audioSource.getSourceHandle_Public()));
-      Assert::AreEqual((ALuint)0, audioSource.getSourceHandle_Public());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioSource_Die_SetsSoundToNull)
-    {
-      MockAudioSource audioSource;
-      audioSource.setSound(TestResources::getButtonHoverWavRelativePath());
-
-      Assert::IsNotNull(audioSource.getSound());
-
-      audioSource.die();
-
-      Assert::IsNull(audioSource.getSound());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioSource_Die_SetsIsPlayingToFalse)
-    {
-      MockAudioSource audioSource;
-      audioSource.setSound(TestResources::getButtonHoverWavRelativePath());
-      audioSource.play();
-
-      Assert::IsTrue(audioSource.isPlaying());
-
-      audioSource.die();
-
-      Assert::IsFalse(audioSource.isPlaying());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioSource_Die_SetsVolumeToOne)
-    {
-      MockAudioSource audioSource;
-      audioSource.setVolume(0.5f);
-
-      Assert::AreEqual(0.5f, audioSource.getVolume());
-
-      audioSource.die();
-
-      Assert::AreEqual(1.0f, audioSource.getVolume());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioSource_Die_SetsAudioTypeToSFX)
-    {
-      MockAudioSource audioSource;
-      audioSource.setAudioType(AudioType::kMusic);
-
-      Assert::IsTrue(audioSource.getAudioType() == AudioType::kMusic);
-
-      audioSource.die();
-
-      Assert::IsTrue(audioSource.getAudioType() == AudioType::kSFX);
+      Assert::IsFalse(alIsSource(audioSourceHandle));
     }
 
 #pragma endregion

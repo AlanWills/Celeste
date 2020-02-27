@@ -1,6 +1,6 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Assets;
-using CelesteEngineEditor.Core;
+using CelesteEditor.Assets;
+using CelesteEditor.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace CelesteEngineEditor.Data
+namespace CelesteEditor.Data
 {
     public class PropertyData
     {

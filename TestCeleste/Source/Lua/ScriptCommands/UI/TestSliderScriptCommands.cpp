@@ -5,7 +5,6 @@
 #include "Lua/LuaState.h"
 
 #include "UI/Slider.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;

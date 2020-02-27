@@ -1,7 +1,6 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Objects/MockObjectDataConverter.h"
-#include "Utils/ObjectUtils.h"
 
 using namespace Celeste;
 

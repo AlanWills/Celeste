@@ -34,7 +34,7 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocatorIterator_Constructor_MovesIteratorToFirstAliveElement)
+    TEST_METHOD(EntityAllocatorIterator_Constructor_MovesIteratorToFirstAllocatedElement)
     {
       std::unique_ptr<PoolAllocator<MockComponent>> allocator = std::make_unique<PoolAllocator<MockComponent>>(3);
       observer_ptr<MockComponent> component1 = allocator->allocate();
@@ -47,30 +47,27 @@ namespace TestCeleste
 
       Assert::AreSame(*component1, *it);
 
-      component1->die();
+      component1->deallocate();
       it = EntityAllocatorIterator<MockComponent>(allocators.begin(), allocators.end());
 
       Assert::AreSame(*component2, *it);
 
-      component2->die();
+      component2->deallocate();
       it = EntityAllocatorIterator<MockComponent>(allocators.begin(), allocators.end());
 
       Assert::AreSame(*component3, *it);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocatorIterator_Constructor_WithAllDeadObjects_MovesIteratorToEnd)
+    TEST_METHOD(EntityAllocatorIterator_Constructor_WithAllDeallocatedObjects_MovesIteratorToEnd)
     {
       std::unique_ptr<PoolAllocator<MockComponent>> allocator = std::make_unique<PoolAllocator<MockComponent>>(3);
-      observer_ptr<MockComponent> component1 = allocator->allocate();
-      observer_ptr<MockComponent> component2 = allocator->allocate();
-      observer_ptr<MockComponent> component3 = allocator->allocate();
       std::list<std::unique_ptr<PoolAllocator<MockComponent>>> allocators;
       allocators.emplace_back(std::move(allocator));
 
       EntityAllocatorIterator<MockComponent> it(allocators.begin(), allocators.end());
 
-      Assert::AreEqual(component3 + 1, it.get());
+      Assert::AreEqual(allocators.back()->end().get(), it.get());
     }
 
 #pragma endregion
@@ -110,7 +107,7 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocatorIterator_ShouldOnlyIterateOverAllocatedAndAliveComponents)
+    TEST_METHOD(EntityAllocatorIterator_ShouldOnlyIterateOverAllocatedComponents)
     {
       std::unique_ptr<PoolAllocator<MockComponent>> allocator = std::make_unique<PoolAllocator<MockComponent>>(3);
       observer_ptr<MockComponent> component1 = allocator->allocate();
@@ -119,7 +116,7 @@ namespace TestCeleste
       std::list<std::unique_ptr<PoolAllocator<MockComponent>>> allocators;
       allocators.emplace_back(std::move(allocator));
 
-      // Iterator over 3 allocated and alive objects
+      // Iterator over 3 allocated objects
       {
         EntityAllocatorIterator<MockComponent> it(allocators.begin(), allocators.end());
 
@@ -146,9 +143,9 @@ namespace TestCeleste
         Assert::AreSame(*component3, *it);
       }
 
-      // Kill an object
+      // Deallocate another object
       {
-        component3->die();
+        component3->deallocate();
         EntityAllocatorIterator<MockComponent> it(allocators.begin(), allocators.end());
 
         Assert::AreSame(*component1, *it);

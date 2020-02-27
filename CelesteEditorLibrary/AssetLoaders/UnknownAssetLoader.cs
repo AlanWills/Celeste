@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CelesteEngineEditor.Assets;
+using CelesteEditor.Assets;
 
-namespace CelesteEngineEditor.AssetLoaders
+namespace CelesteEditor.AssetLoaders
 {
     public class UnknownAssetLoader : AssetLoader
     {

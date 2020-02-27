@@ -3,9 +3,9 @@
 #include "Lua/Components/LuaComponent.h"
 #include "Lua/LuaState.h"
 #include "UtilityHeaders/UnitTestHeaders.h"
+#include "Objects/GameObject.h"
 
 #include "Mocks/Objects/MockComponent.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -33,7 +33,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponentManifestRegistryAllocator_allocate_InputtingNonExistentComponentName_ReturnsNullHandle)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     Assert::IsFalse(LuaComponentManifestRegistry::hasComponent(MockComponent::type_name()));
     Assert::IsNull(LuaComponentManifestRegistryAllocator().allocate(MockComponent::type_name(), gameObject));
@@ -49,7 +49,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponentManifestRegistryAllocator_allocate_InputtingExistentComponentName_ReturnsHandleToLuaComponent)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     LuaComponentManifestRegistry::registerComponent(MockComponent::type_name(), LuaState::instance().create_table());
 
     Assert::IsTrue(LuaComponentManifestRegistry::hasComponent(MockComponent::type_name()));
@@ -63,7 +63,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponentManifestRegistryAllocator_allocate_InputtingExistentComponentName_ComponentIsAssignedToInputtedGameObject)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     LuaComponentManifestRegistry::registerComponent(MockComponent::type_name(), LuaState::instance().create_table());
 
     Assert::IsTrue(LuaComponentManifestRegistry::hasComponent(MockComponent::type_name()));

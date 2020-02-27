@@ -25,20 +25,20 @@ int main(int argc, char** argv)
   std::cout << std::to_string(files.size()) << " scene files found" << std::endl;
 
   Game game;
-  ResourceManager* resourceManager = game.getResourceManager();
-  resourceManager->setResourcesDirectory(pathToResourcesDirectory);
+  ResourceManager& resourceManager = game.getResourceManager();
+  resourceManager.setResourcesDirectory(pathToResourcesDirectory);
 
   int errorFileCount = 0;
   for (const File& file : files)
   {
-    Handle<Screen> screen = ScreenLoader::load(file.getFilePath());
-    if (screen.is_null())
+    observer_ptr<Screen> screen = ScreenLoader::load(file.getFilePath());
+    if (screen == nullptr)
     {
       ++errorFileCount;
       std::cout << file.getFilePath().c_str() << ": Failed" << std::endl;
     }
 
-    resourceManager->unload<Data>(file.getFilePath());
+    resourceManager.unload<Data>(file.getFilePath());
   }
 
   return errorFileCount;

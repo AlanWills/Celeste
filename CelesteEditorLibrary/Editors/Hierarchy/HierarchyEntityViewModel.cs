@@ -1,5 +1,5 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.ViewModels;
+using CelesteEditor.ViewModels;
 using DevZest.Windows.Docking;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Editors
+namespace CelesteEditor.Editors
 {
     public abstract class HierarchyEntityViewModel : Notifier
     {

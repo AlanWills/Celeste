@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Comparer
+namespace CelesteEditor.Comparer
 {
     public class DirectoryInfoEqualityComparer : IEqualityComparer<DirectoryInfo>
     {

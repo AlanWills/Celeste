@@ -6,7 +6,6 @@
 #include "Deserialization/InputDeserializers.h"
 #include "Resources/ResourceManager.h"
 #include "Input/KeyboardRigidBody2DController.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste::Resources;
@@ -34,7 +33,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(KeyboardRigidBody2DControllerDataConverter_CheckCanBeConvertedFromXML)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(KeyboardRigidBody2DControllerLoadingResources::getValidFullPath());
     AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 

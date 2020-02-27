@@ -6,7 +6,6 @@
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "DataConverters/Callbacks/CallbackDataConverter.h"
 #include "ObjectFX/LimitedLifeTime.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste::Resources;
@@ -33,7 +32,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LimitedLifeTimeDataConverter_CheckCanBeConvertedFromXML)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(LimitedLifeTimeLoadingResources::getValidNoCallbacksFullPath());
     AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 

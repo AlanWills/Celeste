@@ -1,4 +1,4 @@
-﻿using CelesteEngineEditor.Attributes;
+﻿using CelesteEditor.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CelesteEngineEditor.UserControls.MainMenu.MenuItemContexts
+namespace CelesteEditor.UserControls.MainMenu.MenuItemContexts
 {
     public class FunctionMenuItemContext : MenuItemContext
     {

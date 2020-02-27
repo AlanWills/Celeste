@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace CelesteEngineEditor.ViewModels
+namespace CelesteEditor.ViewModels
 {
     /// <summary>
     /// An implementation of the INotifyPropertyChanged interface which allows other classes to inherit a unified interface implementation.

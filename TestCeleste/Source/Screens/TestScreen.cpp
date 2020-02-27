@@ -1,7 +1,6 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Screens/Screen.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -32,11 +31,10 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_Constructor_Sets_AliveAndActive_ToTrue)
+    TEST_METHOD(Screen_Constructor_Sets_Active_ToTrue)
     {
       Screen screen;
 
-      Assert::IsTrue(screen.isAlive());
       Assert::IsTrue(screen.isActive());
     }
 
@@ -50,66 +48,6 @@ namespace TestCeleste
       AutoDeallocator<Screen> screen = Screen::allocate();
 
       Assert::IsNotNull(screen.get());
-    }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_Die_KillsScreen)
-    {
-      Screen screen;
-
-      Assert::IsTrue(screen.isAlive());
-
-      screen.die();
-
-      Assert::IsFalse(screen.isAlive());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_Die_SetsActiveToFalse)
-    {
-      Screen screen;
-
-      Assert::IsTrue(screen.isActive());
-
-      screen.die();
-
-      Assert::IsFalse(screen.isActive());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_Die_SetsNameToZero)
-    {
-      Screen screen;
-      screen.setName("Test");
-
-      Assert::AreEqual(internString("Test"), screen.getName());
-
-      screen.die();
-
-      Assert::AreEqual((StringId)0, screen.getName());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_Die_SetsSceneRootToIdentity)
-    {
-      Screen screen;
-      const_cast<Transform&>(screen.getScreenRoot()).setTranslation(1, 2, 3);
-      const_cast<Transform&>(screen.getScreenRoot()).setScale(4, 5, 6);
-      const_cast<Transform&>(screen.getScreenRoot()).setRotation(7);
-
-      Assert::AreEqual(glm::vec3(1, 2, 3), screen.getScreenRoot().getTranslation());
-      Assert::AreEqual(glm::vec3(4, 5, 6), screen.getScreenRoot().getScale());
-      Assert::AreEqual(7.0f, screen.getScreenRoot().getRotation());
-
-      screen.die();
-
-      Assert::AreEqual(glm::vec3(), screen.getScreenRoot().getTranslation());
-      Assert::AreEqual(glm::vec3(1), screen.getScreenRoot().getScale());
-      Assert::AreEqual(0.0f, screen.getScreenRoot().getRotation());
     }
 
 #pragma endregion
@@ -219,25 +157,19 @@ namespace TestCeleste
 #pragma region Deallocate Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_Deallocate_OnAliveScreen_ReturnsTrue)
+    TEST_METHOD(Screen_Deallocate_OnScreenFromAllocator_ReturnsTrue)
     {
       AutoDeallocator<Screen> screen = Screen::allocate();
 
-      Assert::IsTrue(screen->isAlive());
       Assert::IsTrue(screen->deallocate());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_Deallocate_OnDeadScreen_ReturnsTrue)
+    TEST_METHOD(Screen_Deallocate_OnScreenNotFromAllocator_ReturnsTrue)
     {
-      AutoDeallocator<Screen> screen = Screen::allocate();
+      Screen screen;
 
-      Assert::IsTrue(screen->isAlive());
-
-      screen->die();
-
-      Assert::IsFalse(screen->isAlive());
-      Assert::IsTrue(screen->deallocate());
+      Assert::IsTrue(screen.deallocate());
     }
 
 #pragma endregion
@@ -245,7 +177,7 @@ namespace TestCeleste
 #pragma region Allocate Game Object Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_AllocateGameObject_ShouldReturnInitializedGameObject_WithOwnerScreenSetToScreenInstance_AndTransformParentSetToScreenRoot)
+    TEST_METHOD(Screen_AllocateGameObject_ShouldReturnGameObject_WithOwnerScreenSetToScreenInstance_AndTransformParentSetToScreenRoot)
     {
       Screen screen;
 
@@ -253,14 +185,13 @@ namespace TestCeleste
 
       Assert::IsNotNull(gameObject.get());
       Assert::IsNotNull(gameObject->getTransform());
-      Assert::IsTrue(gameObject->isAlive());
       Assert::IsTrue(gameObject->isActive());
       Assert::IsTrue(&screen == gameObject->getScreen());
       Assert::IsTrue(&screen.getScreenRoot() == gameObject->getTransform()->getParent());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_AllocateGameObject_InputtingTransform_ShouldReturnInitializedGameObject_WithOwnerScreenSetToScreenInstance_AndTransformParentSetToInput)
+    TEST_METHOD(Screen_AllocateGameObject_InputtingTransform_ShouldReturnGameObject_WithOwnerScreenSetToScreenInstance_AndTransformParentSetToInput)
     {
       Screen screen;
       Transform transform;
@@ -268,7 +199,6 @@ namespace TestCeleste
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject(transform);
 
       Assert::IsNotNull(gameObject.get());
-      Assert::IsTrue(gameObject->isAlive());
       Assert::IsTrue(gameObject->isActive());
       Assert::IsNotNull(gameObject->getTransform());
       Assert::IsTrue(&transform == gameObject->getTransform()->getParent());
@@ -287,37 +217,35 @@ namespace TestCeleste
       AutoDeallocator<GameObject> gameObject = screen2.allocateGameObject();
 
       Assert::IsNotNull(gameObject.get());
-      AssertCel::IsAlive(gameObject.get());
+      AssertCel::IsActive(gameObject.get());
       Assert::IsFalse(screen.deallocateGameObject(*gameObject));
       Assert::IsNotNull(gameObject.get());
-      AssertCel::IsAlive(gameObject.get());
+      AssertCel::IsActive(gameObject.get());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_DeallocateGameObject_InputtingDeadGameObjectFromScreen_ReturnsTrue)
+    TEST_METHOD(Screen_DeallocateGameObject_InputtingDeallocatedGameObjectFromScreen_ReturnsFalse)
     {
       Screen screen;
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-      gameObject->die();
+      gameObject->deallocate();
 
-      Assert::IsNotNull(gameObject.get());
-      AssertCel::IsNotAlive(gameObject.get());
-      Assert::IsTrue(screen.deallocateGameObject(*gameObject));
+      Assert::IsFalse(screen.deallocateGameObject(*gameObject));
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_DeallocateGameObject_InputtingAliveGameObjectFromScreen_ShouldDeallocateGameObject)
+    TEST_METHOD(Screen_DeallocateGameObject_InputtingGameObjectFromScreen_ShouldDeallocateGameObject)
     {
       Screen screen;
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
 
       Assert::IsNotNull(gameObject.get());
-      AssertCel::IsAlive(gameObject.get());
+      AssertCel::IsActive(gameObject.get());
       
       screen.deallocateGameObject(*gameObject);
 
       Assert::IsNotNull(gameObject.get());
-      AssertCel::IsNotAlive(gameObject.get());
+      AssertCel::IsNotActive(gameObject.get());
     }
 
 #pragma endregion
@@ -331,9 +259,6 @@ namespace TestCeleste
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<GameObject> gameObject2 = screen.allocateGameObject();
-
-      Assert::IsTrue(gameObject->isAlive());
-      Assert::IsTrue(gameObject2->isAlive());
 
       const observer_ptr<GameObject> foundGO = screen.findGameObject(
         [&gameObject](const GameObject& go) -> bool

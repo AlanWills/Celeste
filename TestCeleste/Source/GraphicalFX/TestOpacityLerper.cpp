@@ -3,7 +3,7 @@
 #include "GraphicalFX/OpacityLerper.h"
 #include "Registries/ComponentRegistry.h"
 #include "Rendering/SpriteRenderer.h"
-#include "Utils/ObjectUtils.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -25,7 +25,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(OpacityLerper_IsAllocatableFromComponentRegistry)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(OpacityLerper::type_name(), gameObject);
 
@@ -70,7 +70,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Update_WithParentButNoRenderer_DoesNotThrow)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
 
       Assert::IsNotNull(lerper->getGameObject());
@@ -83,7 +83,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Update_LerpingUp_LerpUpTimeIsZero_IncreasesOpacityToMaxImmediately)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
 
@@ -99,7 +99,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Update_LerpingUp_WithNoWaitTime_IncreasesOpacityToMax_ThenLerpsDown)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
 
@@ -125,7 +125,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Update_LerpingUp_WithWaitTime_IncreasesOpacityToMax_ThenWaits_ThenLerpsDown)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
 
@@ -152,7 +152,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Update_LerpingDown_LerpDownTimeIsZero_DecreasesOpacityToMinImmediately)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
 
@@ -168,7 +168,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Update_LerpingDown_WithNoWaitTime_DecreasesOpacityToMin_ThenLerpsUp)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
 
@@ -194,7 +194,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Update_LerpingDown_WithNoWaitTime_DecreasesOpacityToMin_ThenWaits_ThenLerpsUp)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
 
@@ -216,42 +216,6 @@ namespace TestCeleste
 
       Assert::AreEqual(0.0f, renderer->getOpacity());
       Assert::IsFalse(lerper->isLerpingUp());
-    }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(OpacityLerper_Die_ResetValuesToDefault)
-    {
-      OpacityLerper lerper;
-
-      lerper.setMinOpacity(0.1f);
-      lerper.setMaxOpacity(0.9f);
-      lerper.setLerpUpTime(0.5f);
-      lerper.setLerpDownTime(0.2f);
-      lerper.setMaxOpacityWaitTime(1);
-      lerper.setMinOpacityWaitTime(1);
-      lerper.setLerpingUp(true);
-
-      Assert::AreEqual(0.1f, lerper.getMinOpacity());
-      Assert::AreEqual(0.9f, lerper.getMaxOpacity());
-      Assert::AreEqual(0.5f, lerper.getLerpUpTime());
-      Assert::AreEqual(0.2f, lerper.getLerpDownTime());
-      Assert::AreEqual(1.0f, lerper.getMaxOpacityWaitTime());
-      Assert::AreEqual(1.0f, lerper.getMinOpacityWaitTime());
-      Assert::IsTrue(lerper.isLerpingUp());
-
-      lerper.die();
-
-      Assert::AreEqual(0.0f, lerper.getMinOpacity());
-      Assert::AreEqual(1.0f, lerper.getMaxOpacity());
-      Assert::AreEqual(1.0f, lerper.getLerpUpTime());
-      Assert::AreEqual(1.0f, lerper.getLerpDownTime());
-      Assert::AreEqual(0.0f, lerper.getMaxOpacityWaitTime());
-      Assert::AreEqual(0.0f, lerper.getMinOpacityWaitTime());
-      Assert::IsFalse(lerper.isLerpingUp());
     }
 
 #pragma endregion

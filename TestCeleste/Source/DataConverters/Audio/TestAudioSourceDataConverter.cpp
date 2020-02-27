@@ -5,7 +5,6 @@
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Resources/ResourceManager.h"
 #include "Audio/AudioSource.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -34,7 +33,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioSourceDataConverter_CheckCanBeConvertedFromXML)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(AudioSourceLoadingResources::getValidFullPath());
     AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 

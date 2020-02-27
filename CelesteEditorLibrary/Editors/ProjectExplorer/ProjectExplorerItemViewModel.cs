@@ -1,4 +1,4 @@
-﻿using CelesteEngineEditor.ViewModels;
+﻿using CelesteEditor.ViewModels;
 using JulMar.Windows.Actions;
 using JulMar.Windows.Interactivity;
 using JulMar.Windows.Mvvm;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace CelesteEngineEditor.Editors
+namespace CelesteEditor.Editors
 {
     public abstract class ProjectExplorerItemViewModel : Notifier
     {

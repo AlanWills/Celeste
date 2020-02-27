@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Serialization
+namespace CelesteEditor.Serialization
 {
     public class SerializationContext
     {

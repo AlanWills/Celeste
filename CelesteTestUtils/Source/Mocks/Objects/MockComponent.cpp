@@ -10,8 +10,7 @@ namespace CelesteTestUtils
   MockComponent::MockComponent() :
     m_onSetGameObjectCalled(false),
     m_handleInputCalled(false),
-    m_updateCalled(false),
-    m_onDeathCalled(false)
+    m_updateCalled(false)
   {
   }
 }

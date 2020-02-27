@@ -1,10 +1,10 @@
-﻿using CelesteEngineEditor.Views;
+﻿using CelesteEditor.Views;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using static CelesteEngineEditor.Windows.UtilityWindows;
+using static CelesteEditor.Windows.UtilityWindows;
 
-namespace CelesteEngineEditor.ViewModels
+namespace CelesteEditor.ViewModels
 {
     public class BaseProgressViewModel : Notifier
 	{

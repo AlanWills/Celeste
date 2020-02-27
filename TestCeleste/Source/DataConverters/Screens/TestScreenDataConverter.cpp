@@ -8,7 +8,6 @@
 #include "Objects/GameObject.h"
 #include "Utils/GameObjectXMLUtils.h"
 #include "Utils/ScreenXMLUtils.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 #include <numeric>

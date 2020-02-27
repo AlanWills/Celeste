@@ -1,7 +1,6 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Rendering/MockRenderer.h"
-#include "Utils/ObjectUtils.h"
 
 
 namespace TestCeleste
@@ -80,52 +79,6 @@ namespace TestCeleste
     renderer.setOpacity((current + 1) * 0.5f);
 
     Assert::AreEqual((current + 1) * 0.5f, renderer.getOpacity());
-  }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Renderer_Die_SetsColourToOpaqueWhite)
-  {
-    MockRenderer renderer;
-    renderer.setColour(0.25f, 0.2f, 0.5f, 0.6f);
-
-    Assert::AreEqual(glm::vec4(0.25f, 0.2f, 0.5f, 0.6f), renderer.getColour());
-
-    renderer.die();
-
-    Assert::AreEqual(glm::vec4(1), renderer.getColour());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Renderer_Die_SetsOriginTo_ZeroPointFive_ZeroPointFive)
-  {
-    MockRenderer renderer;
-    renderer.setOrigin(1, 1);
-
-    Assert::AreEqual(glm::vec2(1), renderer.getOrigin());
-
-    renderer.die();
-
-    Assert::AreEqual(glm::vec2(0.5f), renderer.getOrigin());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Renderer_Die_SetsScissorRectangleToEmptyRectangle)
-  {
-    MockRenderer renderer;
-    renderer.getScissorRectangle().setDimensions(0.5, 1.0f);
-    renderer.getScissorRectangle().setCentre(1, 2);
-
-    Assert::AreEqual(glm::vec2(0.5, 1.0f), renderer.getScissorRectangle().getDimensions());
-    Assert::AreEqual(glm::vec2(1, 2), renderer.getScissorRectangle().getCentre());
-
-    renderer.die();
-
-    Assert::AreEqual(glm::vec2(), renderer.getScissorRectangle().getDimensions());
-    Assert::AreEqual(glm::vec2(), renderer.getScissorRectangle().getCentre());
   }
 
 #pragma endregion

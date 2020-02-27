@@ -3,7 +3,6 @@
 #include "Registries/ComponentRegistry.h"
 #include "Mocks/Objects/MockComponent.h"
 #include "Registries/DefaultRegistryAllocator.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -167,7 +166,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_AddComponent_InputtingComponentTypeThatDoesntExist_CustomAllocatorType_AddsComponentWithCustomAllocator)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     ComponentRegistry::deregisterComponent<MockComponent>();
 
@@ -239,7 +238,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_Allocate_InputtingEmptyComponentName_ReturnsNullptr)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     Assert::IsNull(ComponentRegistry::allocateComponent("", gameObject));
   }
@@ -247,7 +246,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_Allocate_InputtingNonExistentComponentName_ReturnsNullptr)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     Assert::IsFalse(ComponentRegistry::hasComponent<NonRegisteredComponent>());
     Assert::IsNull(ComponentRegistry::allocateComponent(NonRegisteredComponent::type_name(), gameObject));
@@ -256,7 +255,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_Allocate_ReturnsCorrectlyAllocatedComponentType)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     std::unique_ptr<RegistryAllocator> allocator(new DummyRegistryAllocator());
     ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), std::move(allocator));

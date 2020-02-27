@@ -4,7 +4,7 @@
 #include "AssertExt.h"
 #include "AssertCel.h"
 #include "Registries/ComponentRegistry.h"
-#include "Utils/ObjectUtils.h"
+#include "Objects/GameObject.h"
 
 using namespace Celeste;
 
@@ -67,7 +67,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_Update_WithParentAndNonZeroLinearVelocity_UpdatesTransformTranslation)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
 
       rigidBody->setLinearVelocity(glm::vec2(100, 100));
@@ -80,7 +80,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_Update_WithParentAndNonZeroAngularVelocity_UpdatesTransformRotation)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
 
       rigidBody->setAngularVelocity(1);
@@ -93,7 +93,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_Update_WithParentAndNonZeroVelocities_UpdatesTransformTranslationAndRotation)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
 
       rigidBody->setLinearVelocity(glm::vec2(100, 100));
@@ -107,38 +107,6 @@ namespace TestCeleste
 
       AssertExt::AreAlmostEqual(glm::vec3(100, 100, 0), gameObject.getTransform()->getTranslation());
       Assert::AreEqual(glm::pi<float>(), gameObject.getTransform()->getRotation());
-    }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(RigidBody2D_Die_ResetsLinearAndAngularVelocities)
-    {
-      RigidBody2D rigidBody;
-      rigidBody.setLinearVelocity(glm::vec2(12, -0.5f));
-      rigidBody.setMinLinearVelocity(glm::vec2(-6, -4));
-      rigidBody.setMaxLinearVelocity(glm::vec2(22, 22));
-      rigidBody.setAngularVelocity(-6);
-      rigidBody.setMinAngularVelocity(-7);
-      rigidBody.setMaxAngularVelocity(12);
-
-      Assert::AreEqual(glm::vec2(12, -0.5f), rigidBody.getLinearVelocity());
-      Assert::AreEqual(glm::vec2(-6, -4), rigidBody.getMinLinearVelocity());
-      Assert::AreEqual(glm::vec2(22, 22), rigidBody.getMaxLinearVelocity());
-      Assert::AreEqual(-6.0f, rigidBody.getAngularVelocity());
-      Assert::AreEqual(-7.0f, rigidBody.getMinAngularVelocity());
-      Assert::AreEqual(12.0f, rigidBody.getMaxAngularVelocity());
-
-      rigidBody.die();
-
-      Assert::AreEqual(glm::vec2(), rigidBody.getLinearVelocity());
-      Assert::AreEqual(glm::vec2(-FLT_MAX, -FLT_MAX), rigidBody.getMinLinearVelocity());
-      Assert::AreEqual(glm::vec2(FLT_MAX, FLT_MAX), rigidBody.getMaxLinearVelocity());
-      Assert::AreEqual(0.0f, rigidBody.getAngularVelocity());
-      Assert::AreEqual(-FLT_MAX, rigidBody.getMinAngularVelocity());
-      Assert::AreEqual(FLT_MAX, rigidBody.getMaxAngularVelocity());
     }
 
 #pragma endregion

@@ -1,6 +1,6 @@
-﻿using CelesteEngineEditor.Assets;
-using CelesteEngineEditor.Core;
-using CelesteEngineEditor.ViewModels;
+﻿using CelesteEditor.Assets;
+using CelesteEditor.Core;
+using CelesteEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.UserControls.ProjectAssetSelector
+namespace CelesteEditor.UserControls.ProjectAssetSelector
 {
     public class AssetSelectorViewModel : Notifier
     {

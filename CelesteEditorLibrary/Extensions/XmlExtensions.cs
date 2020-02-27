@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace CelesteEngineEditor
+namespace CelesteEditor
 {
     /// <summary>
     ///  Provides utility functions for handling XmlElements and XmlDocuments

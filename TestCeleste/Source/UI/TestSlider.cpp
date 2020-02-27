@@ -6,7 +6,6 @@
 #include "Screens/Screen.h"
 #include "Resources/TestResources.h"
 #include "Input/InputManager.h"
-#include "Utils/ObjectUtils.h"
 #include "Utils/InputUtils.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
@@ -248,71 +247,6 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Slider_Die_SetsMinToZero)
-    {
-      Slider slider;
-      slider.setMin(2);
-
-      Assert::AreEqual(2.0f, slider.getMin());
-
-      slider.die();
-
-      Assert::AreEqual(0.0f, slider.getMin());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Slider_Die_SetsMaxToOne)
-    {
-      Slider slider;
-      slider.setMax(2);
-
-      Assert::AreEqual(2.0f, slider.getMax());
-
-      slider.die();
-
-      Assert::AreEqual(1.0f, slider.getMax());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Slider_Die_SetsCurrentValueToZero)
-    {
-      Slider slider;
-      slider.setCurrentValue(0.2f);
-
-      Assert::AreEqual(0.2f, slider.getCurrentValue());
-
-      slider.die();
-
-      Assert::AreEqual(0.0f, slider.getCurrentValue());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Slider_Die_UnsubscribesAllFromValueChangedEvent)
-    {
-      bool called = false;
-
-      Slider slider;
-      slider.subscribeValueChangedCallback([&called](GameObject&, float) -> void
-      {
-        called = true;
-      });
-
-      slider.setCurrentValue(1);
-
-      Assert::IsTrue(called);
-
-      called = false;
-      slider.die();
-      slider.setCurrentValue(1);
-
-      Assert::IsFalse(called);
-    }
-
-#pragma endregion
-
 #pragma region Set Current Value Tests
 
     //------------------------------------------------------------------------------------------------
@@ -346,7 +280,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Slider_SetCurrentValue_UpdatesSliderPositionCorrectly)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       renderer->setDimensions(400, 200);
       renderer->getScissorRectangle().setDimensions(40, 200);

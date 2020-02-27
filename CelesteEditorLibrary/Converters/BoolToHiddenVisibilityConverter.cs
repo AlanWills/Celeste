@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace CelesteEngineEditor.Converters
+namespace CelesteEditor.Converters
 {
     public class BoolToHiddenVisibilityConverter : IValueConverter
     {

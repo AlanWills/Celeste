@@ -3,7 +3,7 @@
 #include "Mocks/Input/MockKeyboardTransformer.h"
 #include "Input/InputManager.h"
 #include "Registries/ComponentRegistry.h"
-#include "Utils/ObjectUtils.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 #include "AssertExt.h"
 
@@ -40,7 +40,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_IsAllocatableFromComponentRegistry)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(KeyboardTransformer::type_name(), gameObject);
 
@@ -306,7 +306,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_Update_WithTransform_AppliesRotationScaledWithTime)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<MockKeyboardTransformer> kmScript = gameObject.addComponent<MockKeyboardTransformer>();
       kmScript->setRotationSpeed(2);
@@ -322,7 +322,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_Update_WithTransform_AppliesDirectionVectorScaledWithTime)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());  // Rotate the transform local space to show that the movement is locally
 
       AutoDeallocator<MockKeyboardTransformer> kmScript = gameObject.addComponent<MockKeyboardTransformer>();

@@ -2,7 +2,6 @@
 #include "Mocks/Animation/MockAnimator.h"
 #include "Resources/TestResources.h"
 #include "Registries/ComponentRegistry.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 #include "AssertExt.h"
 
@@ -29,7 +28,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_IsAllocatableFromComponentRegistry)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(Animator::type_name(), gameObject);
 
@@ -139,7 +138,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_SetGameObject_NoSpriteRendererInParent_DoesNotPlayAnimation)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
       Assert::IsNotNull(animation->getGameObject());
@@ -149,7 +148,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_SetGameObject_SpriteRendererInParent_DoesNotPlayAnimation)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
@@ -163,7 +162,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_SetSpriteSheetDimensions_SetsSpriteRendererScissorRectangleDimensions_ToSingleFrameDimensions)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
@@ -181,7 +180,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_SetSpriteSheetDimensions_SetsScissorRectangleCentre)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
@@ -220,7 +219,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Play_WhenLooping_ShouldPlayAnimation)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
       animation->setPlaying_Public(false);
@@ -237,7 +236,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Play_WhenNotLooping_CurrentFrameNotAtEnd_ShouldPlayAnimation)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
       renderer->setTexture(TestResources::getBlockPngRelativePath());
@@ -253,7 +252,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Play_WhenNotLooping_NoFrames_ShouldNotPlayAnimation)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
       animation->setPlaying_Public(false);
@@ -272,7 +271,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Play_WhenNotLooping_WithFramesAndCurrentFrameIsLastFrame_ShouldNotPlayAnimation)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
       renderer->setTexture(TestResources::getBlockPngRelativePath());
@@ -294,7 +293,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Restart_WithFramesButNoSpriteRenderer_ResetsFrameValues)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
       animation->setCurrentSecondsPerFrame_Public(1);
       animation->setCurrentFrame_Public(1);
@@ -312,7 +311,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Restart_WithSpriteRendererButNoFrames_ResetsFrameValues)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
       animation->setSpriteSheetDimensions(glm::uvec2(0));
@@ -332,7 +331,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Restart_WithSpriteRendererAndFrames_ResetsFrameValues_SetsSpriteRendererToFirstFrame)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
@@ -361,7 +360,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Stop_WithAnimationPlaying_StopsAnimationFromPlaying)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
@@ -381,7 +380,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Stop_SetsCurrentFrameToZero)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
@@ -406,7 +405,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Stop_SetsCurrentSecondsPerFrameToZero)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
@@ -435,7 +434,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Update_WithFramesButNoSpriteRenderer_DoesNotAnimate)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
       Assert::AreNotEqual(static_cast<size_t>(0), animation->getFrameCount());
@@ -453,7 +452,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Update_WithFramesAndSpriteRenderer_UpdatesFrameValues_AndSetsSpriteRendererTexture)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
@@ -481,7 +480,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Update_WithValidSetup_Looping_LoopsValues)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
@@ -520,7 +519,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Update_WithValidSetup_NotLooping_StopsUpdatingValuesAndTextureAtLastFrame)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
@@ -559,7 +558,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Animator_Update_WithValidSetup_NotPlaying_DoesNothing)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
 
@@ -584,107 +583,6 @@ namespace TestCeleste
       Assert::IsTrue(texture1 == renderer->getTexture());
       Assert::AreEqual((size_t)0, animation->getCurrentFrame_Public());
       Assert::AreEqual(0.0f, animation->getCurrentSecondsPerFrame_Public());
-    }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Animator_Die_StopsAndRestartsAnimation)
-    {
-      GAMEOBJECT(gameObject);
-      AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
-      AutoDeallocator<MockAnimator> animation = gameObject.addComponent<MockAnimator>();
-
-      observer_ptr<Texture2D> texture1 = getResourceManager().load<Texture2D>(TestResources::getBlockPngRelativePath());
-
-      renderer->setTexture(texture1);
-      animation->setLooping(LoopMode::kLooping);
-      animation->setSpriteSheetDimensions(glm::uvec2(2, 2));
-      animation->play();
-
-      Assert::IsTrue(animation->isPlaying());
-      Assert::AreEqual((size_t)0, animation->getCurrentFrame_Public());
-      Assert::AreNotEqual(static_cast<size_t>(0), animation->getFrameCount());
-
-      float secondsPerFrame = animation->getSecondsPerFrame();
-      animation->update(1.5f * secondsPerFrame);
-      animation->setCurrentSecondsPerFrame_Public(0.5f);
-
-      Assert::IsTrue(animation->isPlaying());
-      Assert::AreEqual((size_t)1, animation->getCurrentFrame_Public());
-      Assert::AreNotEqual(0.0f, animation->getCurrentSecondsPerFrame_Public());
-
-      animation->die();
-
-      Assert::IsFalse(animation->isPlaying());
-      Assert::AreEqual((size_t)0, animation->getCurrentFrame_Public());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Animator_Die_SetsSpriteSheetDimensionsToUVec2One)
-    {
-      MockAnimator animation;
-      animation.setSpriteSheetDimensions(glm::uvec2(3, 4));
-
-      Assert::AreEqual(glm::uvec2(3, 4), animation.getSpriteSheetDimensions());
-
-      animation.die();
-
-      Assert::AreEqual(glm::uvec2(1), animation.getSpriteSheetDimensions());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Animator_Die_SetsSecondsPerFrameToZeroPointOne)
-    {
-      MockAnimator animation;
-      animation.setSecondsPerFrame(0.5f);
-
-      Assert::AreEqual(0.5f, animation.getSecondsPerFrame());
-
-      animation.die();
-
-      Assert::AreEqual(0.1f, animation.getSecondsPerFrame());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Animator_Die_SetsPlayImmediatelyToTrue)
-    {
-      MockAnimator animation;
-      animation.setPlayImmediately(false);
-
-      Assert::IsFalse(animation.getPlayImmediately());
-
-      animation.die();
-
-      Assert::IsTrue(animation.getPlayImmediately());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Animator_Die_SetsIsLoopingToTrue)
-    {
-      MockAnimator animation;
-      animation.setLooping(LoopMode::kOneTime);
-
-      Assert::IsFalse(animation.isLooping());
-
-      animation.die();
-
-      Assert::IsTrue(animation.isLooping());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Animator_Die_SetsNameToEmptyStringId)
-    {
-      MockAnimator animation;
-      animation.setName("Test");
-
-      Assert::AreEqual(internString("Test"), animation.getName());
-
-      animation.die();
-
-      Assert::AreEqual(static_cast<StringId>(0), animation.getName());
     }
 
 #pragma endregion

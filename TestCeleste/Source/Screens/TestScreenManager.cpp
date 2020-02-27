@@ -3,7 +3,6 @@
 #include "Screens/ScreenManager.h"
 #include "Screens/Screen.h"
 #include "Mocks/Rendering/MockRenderer.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -42,23 +41,6 @@ namespace TestCeleste
       ScreenManager screenManager;
 
       Assert::IsNotNull(screenManager.getWindow());
-    }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScreenManager_Die_CallsDieOnAllScreens)
-    {
-      ScreenManager screenManager;
-      AutoDeallocator<Screen> screen = Screen::allocate();
-
-      Assert::IsTrue(screen->isAlive());
-
-      screenManager.die();
-
-      Assert::IsFalse(screen->isAlive());
     }
 
 #pragma endregion

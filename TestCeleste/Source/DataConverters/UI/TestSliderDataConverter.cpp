@@ -8,7 +8,6 @@
 #include "DataConverters/Callbacks/CallbackDataConverter.h"
 #include "Rendering/SpriteRenderer.h"
 #include "UI/Slider.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste::Resources;
@@ -30,7 +29,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SliderDataConverter_CheckCanBeConvertedFromXML)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<Rendering::SpriteRenderer> spriteRenderer = gameObject.addComponent<Rendering::SpriteRenderer>();
     observer_ptr<Data> data = getResourceManager().load<Data>(SliderLoadingResources::getValidNoCallbacksFullPath());
     AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);

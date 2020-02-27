@@ -3,10 +3,10 @@
 #include "Input/KeyboardRigidBody2DController.h"
 #include "Mocks/Physics/MockRigidBody2D.h"
 #include "Registries/ComponentRegistry.h"
-#include "Utils/ObjectUtils.h"
 #include "Input/InputUtils.h"
 #include "Input/InputEnums.h"
 #include "Input/Keyboard.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 #include "AssertExt.h"
 
@@ -37,7 +37,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_IsAllocatableFromComponentRegistry)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(KeyboardRigidBody2DController::type_name(), gameObject);
 
@@ -74,7 +74,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_SetGameObject_WithGameObjectWithNoRigidBody2D_DoesNothing)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       
       AssertCel::DoesNotHaveComponent<RigidBody2D>(gameObject);
 
@@ -99,7 +99,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_DecreaseXLinearVelocityKeyDown_DecrementsXLinearVelocity)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -123,7 +123,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_IncreaseXLinearVelocityKeyDown_IncrementsXLinearVelocity)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -147,7 +147,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_DecreaseYLinearVelocityKeyDown_DecrementsYLinearVelocity)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -171,7 +171,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_KLocal_IncreaseYLinearVelocityKeyDown_IncrementsYLinearVelocity)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -195,7 +195,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_DecreaseAngularVelocityKeyDown_DecrementsAngularVelocity)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -218,7 +218,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_IncreaseAngularVelocityKeyDown_IncrementsAngularVelocity)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -241,7 +241,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_BothIncreaseAndDecreaseXVelocityPressed_DoesNothing)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -267,7 +267,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_BothIncreaseAndDecreaseYVelocityPressed_DoesNothing)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -293,7 +293,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_BothIncreaseAndDecreaseAngularVelocityPressed_DoesNothing)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -319,7 +319,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_BothDecreaseXAndYLinearVelocityPressed_DecrementsXAndYLinearVelocities)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -346,7 +346,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_BothIncreaseXAndYLinearVelocityPressed_IncrementsXAndYLinearVelocities)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -373,7 +373,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_BothIncreaseLinearVelocityAndAngularVelocity_IncrementsLinearAndVelocities)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -404,7 +404,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_kContinuous_AccumulatesChangesInLinearVelocity)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -468,7 +468,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_kContinuous_AccumulatesChangesInAngularVelocity)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -520,7 +520,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_kToggle_SetsLinearVelocityToDeltaWhenKeyDown)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -584,7 +584,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_kToggle_SetsLinearVelocityToZeroWhenKeyUp)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -657,7 +657,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_kToggle_SetsAngularVelocityToDeltaWhenKeyDown)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -709,7 +709,7 @@ namespace TestCeleste::Input
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardRigidBody2DController_HandleInput_kLocal_kToggle_SetsAngularVelocityToZeroWhenKeyUp)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());
 
       AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
@@ -777,7 +777,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -805,7 +805,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -833,7 +833,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -861,7 +861,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -889,7 +889,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -917,7 +917,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -945,7 +945,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -976,7 +976,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -1007,7 +1007,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -1038,7 +1038,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -1069,7 +1069,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -1100,7 +1100,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -1135,7 +1135,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -1204,7 +1204,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -1261,7 +1261,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -1330,7 +1330,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -1408,7 +1408,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -1465,7 +1465,7 @@ namespace TestCeleste::Input
       Transform transform;
       transform.setRotation(glm::half_pi<float>());
 
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.getTransform()->setParent(&transform);
       gameObject.getTransform()->setRotation(-glm::half_pi<float>());
 
@@ -1526,53 +1526,6 @@ namespace TestCeleste::Input
     }
 
 #pragma endregion
-
-#pragma endregion
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardRigidBody2DController_Die_ResetsAllValuesToDefault)
-    {
-      GAMEOBJECT(gameObject);
-      AutoDeallocator<MockRigidBody2D> rigidBody = gameObject.addComponent<MockRigidBody2D>();
-      AutoDeallocator<KeyboardRigidBody2DController> controller = gameObject.addComponent<KeyboardRigidBody2DController>();
-
-      controller->setDecreaseXLinearVelocityKey(GLFW_KEY_A);
-      controller->setIncreaseXLinearVelocityKey(GLFW_KEY_D);
-      controller->setDecreaseYLinearVelocityKey(GLFW_KEY_S);
-      controller->setIncreaseYLinearVelocityKey(GLFW_KEY_W);
-      controller->setDecreaseAngularVelocityKey(GLFW_KEY_Z);
-      controller->setIncreaseAngularVelocityKey(GLFW_KEY_X);
-      controller->setLinearVelocityDelta(0.5f, 0.5f);
-      controller->setAngularVelocityDelta(0.2f);
-      controller->setSpace(Maths::Space::kWorld);
-      controller->setIncrementMode(Celeste::Input::IncrementMode::kToggle);
-
-      Assert::AreEqual(GLFW_KEY_A, controller->getDecreaseXLinearVelocityKey());
-      Assert::AreEqual(GLFW_KEY_D, controller->getIncreaseXLinearVelocityKey());
-      Assert::AreEqual(GLFW_KEY_S, controller->getDecreaseYLinearVelocityKey());
-      Assert::AreEqual(GLFW_KEY_W, controller->getIncreaseYLinearVelocityKey());
-      Assert::AreEqual(GLFW_KEY_Z, controller->getDecreaseAngularVelocityKey());
-      Assert::AreEqual(GLFW_KEY_X, controller->getIncreaseAngularVelocityKey());
-      Assert::AreEqual(glm::vec2(0.5f, 0.5f), controller->getLinearVelocityDelta());
-      Assert::AreEqual(0.2f, controller->getAngularVelocityDelta());
-      Assert::IsTrue(Maths::Space::kWorld == controller->getSpace());
-      Assert::IsTrue(Celeste::Input::IncrementMode::kToggle == controller->getIncrementMode());
-
-      controller->die();
-
-      Assert::AreEqual(-1, controller->getDecreaseXLinearVelocityKey());
-      Assert::AreEqual(-1, controller->getIncreaseXLinearVelocityKey());
-      Assert::AreEqual(-1, controller->getIncreaseYLinearVelocityKey());
-      Assert::AreEqual(-1, controller->getDecreaseYLinearVelocityKey());
-      Assert::AreEqual(-1, controller->getDecreaseAngularVelocityKey());
-      Assert::AreEqual(-1, controller->getIncreaseAngularVelocityKey());
-      Assert::AreNotEqual(glm::vec2(0.5f, 0.5f), controller->getLinearVelocityDelta());
-      Assert::AreNotEqual(0.2f, controller->getAngularVelocityDelta());
-      Assert::IsTrue(Maths::Space::kLocal == controller->getSpace());
-      Assert::IsTrue(Celeste::Input::IncrementMode::kContinuous == controller->getIncrementMode());
-    }
 
 #pragma endregion
 

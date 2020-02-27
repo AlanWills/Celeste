@@ -1,6 +1,6 @@
-﻿using CelesteEngineEditor.Views;
+﻿using CelesteEditor.Views;
 
-namespace CelesteEngineEditor.UserControls.Wizard
+namespace CelesteEditor.UserControls.Wizard
 {
     public abstract class WizardPageView : BaseView
     {

@@ -1,4 +1,4 @@
-﻿using CelesteEngineEditor.Data;
+﻿using CelesteEditor.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CelesteEngineEditor.DataTemplates
+namespace CelesteEditor.DataTemplates
 {
     public class PropertyDataTemplateSelector : DataTemplateSelector
     {

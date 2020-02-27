@@ -102,9 +102,6 @@
     <ClInclude Include="Headers\AutoGLDeallocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\AutoKiller.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\CelesteUnitTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -316,9 +313,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Mocks\ObjectFX\MockLimitedLifeTime.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Utils\ObjectUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Utils\InputUtils.h">

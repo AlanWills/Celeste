@@ -1,4 +1,4 @@
-﻿using CelesteEngineEditor.Objects;
+﻿using CelesteEditor.Objects;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Assets
+namespace CelesteEditor.Assets
 {
     public class UnknownAsset : Asset<Unknown>
     { 

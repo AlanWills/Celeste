@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Xceed.Wpf.Toolkit;
 
-namespace CelesteEngineEditor.UserControls.IntVector
+namespace CelesteEditor.UserControls.IntVector
 {
     /// <summary>
     /// Interaction logic for IntVector3Control.xaml

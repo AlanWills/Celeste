@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using BindingsKernel;
 
-namespace CelesteEngine.Physics
+namespace Celeste.Physics
 {
 	public class RectangleCollider : Component
 	{

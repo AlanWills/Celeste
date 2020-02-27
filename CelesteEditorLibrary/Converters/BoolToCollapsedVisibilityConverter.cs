@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace CelesteEngineEditor.Converters
+namespace CelesteEditor.Converters
 {
     public class BoolToCollapsedVisibilityConverter : MarkupExtension, IValueConverter
     {

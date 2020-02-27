@@ -1,13 +1,13 @@
-﻿using CelesteEngineEditor.Commands;
-using CelesteEngineEditor.ViewModels;
-using CelesteEngineEditor.Windows;
+﻿using CelesteEditor.Commands;
+using CelesteEditor.ViewModels;
+using CelesteEditor.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows;
 
-namespace CelesteEngineEditor.UserControls
+namespace CelesteEditor.UserControls
 {
     public class MainMenuViewModel : Notifier
     {
@@ -66,9 +66,9 @@ namespace CelesteEngineEditor.UserControls
         /// Launches a modal dialog with information about the editor.  
         /// Therefore we are guaranteed only one instance of this window, so don't need to do any checks on that.
         /// </summary>
-        public void AboutCelesteEngineEditor()
+        public void AboutCelesteEditor()
         {
-            EditorWindows.AboutCelesteEngineEditorWindow.ShowDialog();
+            EditorWindows.AboutCelesteEditorWindow.ShowDialog();
         }
         
         #endregion

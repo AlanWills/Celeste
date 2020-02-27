@@ -4,7 +4,6 @@
 #include "Lua/LuaState.h"
 
 #include "UtilityHeaders/UnitTestHeaders.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 #include "Mocks/Animation/MockAnimator.h"

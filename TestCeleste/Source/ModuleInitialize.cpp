@@ -32,14 +32,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_MODULE_CLEANUP(TestCelestePlus_Cleanup)
   {
-    // Issues with unique_ptrs over dll boundaries so have to do this in the test project
-    Game::getScreenManager().die();
-    Game::getInputManager().die();
-    Game::getPhysicsManager().die();
-    Game::getAudioManager().die();
-    Game::getResourceManager().die();
     Game::exit();
-
     GL::terminate();
   }
 }

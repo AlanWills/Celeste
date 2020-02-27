@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Xceed.Wpf.Toolkit;
 
-namespace CelesteEngineEditor.UserControls.Vector
+namespace CelesteEditor.UserControls.Vector
 {
     /// <summary>
     /// Interaction logic for Vector3Control.xaml

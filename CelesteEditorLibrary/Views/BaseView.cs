@@ -1,11 +1,11 @@
-﻿using CelesteEngineEditor.ViewModels;
+﻿using CelesteEditor.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using static CelesteEngineEditor.Windows.UtilityWindows;
+using static CelesteEditor.Windows.UtilityWindows;
 
-namespace CelesteEngineEditor.Views
+namespace CelesteEditor.Views
 {
-    public abstract class BaseView : Page
+    public class BaseView : Page
     {
         #region Properties and Fields
         public Notifier ViewModel { get; private set; }

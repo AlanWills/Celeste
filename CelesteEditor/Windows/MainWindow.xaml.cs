@@ -1,11 +1,11 @@
-﻿using CelesteEngineEditor.Attributes;
-using CelesteEngineEditor.Core;
-using CelesteEngineEditor.DataTemplates;
-using CelesteEngineEditor.Editors;
-using CelesteEngineEditor.Extensibility;
-using CelesteEngineEditor.Settings;
-using CelesteEngineEditor.UserControls;
-using CelesteEngineEditor.ViewModels.Windows;
+﻿using CelesteEditor.Attributes;
+using CelesteEditor.Core;
+using CelesteEditor.DataTemplates;
+using CelesteEditor.Editors;
+using CelesteEditor.Extensibility;
+using CelesteEditor.Settings;
+using CelesteEditor.UserControls;
+using CelesteEditor.ViewModels.Windows;
 using DevZest.Windows.Docking;
 using MahApps.Metro.Controls;
 using NodeNetwork.Toolkit.NodeList;
@@ -32,7 +32,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CelesteEngineEditor.Windows
+namespace CelesteEditor.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

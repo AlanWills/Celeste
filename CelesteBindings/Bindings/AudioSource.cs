@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using BindingsKernel;
 
-namespace CelesteEngine.Audio
+namespace Celeste.Audio
 {
 	public class AudioSource : Component
 	{

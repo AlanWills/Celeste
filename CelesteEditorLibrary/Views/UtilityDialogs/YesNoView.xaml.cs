@@ -1,4 +1,4 @@
-﻿namespace CelesteEngineEditor.Views
+﻿namespace CelesteEditor.Views
 {
     /// <summary>
     /// Interaction logic for MessageView.xaml

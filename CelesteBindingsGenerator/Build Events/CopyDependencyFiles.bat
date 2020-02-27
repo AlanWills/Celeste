@@ -7,5 +7,5 @@ rem echo %OutputDir% > log.txt
 
 cd %OutputDir%
 
-(robocopy ..\..\..\..\CelesteEngine\bin\%Platform%\%Configuration%\ .\ /IS /IT /XO) ^&
+(robocopy ..\..\..\..\Celeste\bin\%Platform%\%Configuration%\ .\ /IS /IT /XO) ^&
 (robocopy ..\..\..\..\BindingsGenerator\bin\%Platform%\%Configuration%\ .\ /IS /IT /XO) ^& exit 0

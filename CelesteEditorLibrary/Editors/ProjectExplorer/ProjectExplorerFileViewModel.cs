@@ -1,7 +1,7 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Assets;
-using CelesteEngineEditor.Core;
-using CelesteEngineEditor.Extensibility;
+using CelesteEditor.Assets;
+using CelesteEditor.Core;
+using CelesteEditor.Extensibility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace CelesteEngineEditor.Editors
+namespace CelesteEditor.Editors
 {
     public class ProjectExplorerFileViewModel : ProjectExplorerItemViewModel
     {

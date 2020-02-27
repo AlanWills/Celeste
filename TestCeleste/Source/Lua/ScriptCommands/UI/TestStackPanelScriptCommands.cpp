@@ -7,7 +7,6 @@
 
 #include "UI/StackPanel.h"
 #include "Mocks/Rendering/MockRenderer.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -101,7 +100,7 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StackPanelScriptCommands_addChild_InputtingGameObjectWithoutRenderer_DoesNotAddChild)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     GameObject child;
 
     AutoDeallocator<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
@@ -210,8 +209,8 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StackPanelScriptCommands_layout_CorrectlyPositionsChildObjects)
   {
-    GAMEOBJECT(gameObject);
-    GAMEOBJECT(child);
+    GameObject gameObject;
+    GameObject child;
     AutoDeallocator<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
     AutoDeallocator<MockRenderer> renderer = child.addComponent<MockRenderer>();
     renderer->setDimensions(glm::vec2(100, 200));

@@ -5,7 +5,6 @@
 #include "Resources/ResourceManager.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Rendering/TextRenderer.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertSpecialization/FileSystem.h"
 #include "AssertCel.h"
 
@@ -35,7 +34,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(TextRendererDataConverter_CheckCanBeConvertedFromXML)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(TextRendererLoadingResources::getValidNoLinesFullPath());
     AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using BindingsKernel;
 
-namespace CelesteEngine.Debugging
+namespace Celeste.Debugging
 {
 	public class FPSCounter : Component
 	{

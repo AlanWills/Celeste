@@ -1,13 +1,13 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.AssetLoaders;
-using CelesteEngineEditor.Assets;
-using CelesteEngineEditor.Extensibility;
+using CelesteEditor.AssetLoaders;
+using CelesteEditor.Assets;
+using CelesteEditor.Extensibility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 
-namespace CelesteEngineEditor.Core.AssetLoaders
+namespace CelesteEditor.Core.AssetLoaders
 {
     public static class AssetLoaderExtensibility
     {

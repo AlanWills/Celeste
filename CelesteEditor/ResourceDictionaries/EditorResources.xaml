@@ -8,10 +8,10 @@
         <!-- Accent and AppTheme setting -->
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/CelesteEngineEditor;component/ResourceDictionaries/EditorConverters.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/CelesteEngineEditor;component/ResourceDictionaries/EditorIcons.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/CelesteEngineEditor;component/ResourceDictionaries/EditorStyles.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/CelesteEngineEditor;component/ResourceDictionaries/EditorControlTemplates.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/CelesteEngineEditor;component/ResourceDictionaries/EditorPropertyDataTemplates.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/CelesteEditor;component/ResourceDictionaries/EditorConverters.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/CelesteEditor;component/ResourceDictionaries/EditorIcons.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/CelesteEditor;component/ResourceDictionaries/EditorStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/CelesteEditor;component/ResourceDictionaries/EditorControlTemplates.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/CelesteEditor;component/ResourceDictionaries/EditorPropertyDataTemplates.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

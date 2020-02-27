@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:data_templates="clr-namespace:CelesteEngineEditor.DataTemplates"
+                    xmlns:data_templates="clr-namespace:CelesteEditor.DataTemplates"
                     xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                     xmlns:bindings_kernel="clr-namespace:BindingsKernel;assembly=BindingsKernel"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
-                    xmlns:converters="clr-namespace:CelesteEngineEditor.Converters">
+                    xmlns:converters="clr-namespace:CelesteEditor.Converters">
     <converters:FlipBoolConverter x:Key="FlipBool"/>
     <data_templates:PropertyDataTemplate x:Key="IntVector2DataTemplate" DataType="{x:Type bindings_kernel:IntVector2}">
         <StackPanel Orientation="Horizontal">

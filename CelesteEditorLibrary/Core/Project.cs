@@ -1,19 +1,19 @@
 ﻿using BindingsKernel;
 using BindingsKernel.Objects;
 using BindingsKernel.Serialization;
-using CelesteEngineEditor.Assets;
-using CelesteEngineEditor.Core.AssetLoaders;
-using CelesteEngineEditor.Extensibility;
-using CelesteEngineEditor.Settings;
-using CelesteEngineEditor.Windows;
+using CelesteEditor.Assets;
+using CelesteEditor.Core.AssetLoaders;
+using CelesteEditor.Extensibility;
+using CelesteEditor.Settings;
+using CelesteEditor.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using static CelesteEngineEditor.Windows.UtilityWindows;
+using static CelesteEditor.Windows.UtilityWindows;
 
-namespace CelesteEngineEditor.Core
+namespace CelesteEditor.Core
 {
     public class Project
     {

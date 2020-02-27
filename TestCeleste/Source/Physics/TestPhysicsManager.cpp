@@ -5,7 +5,6 @@
 #include "Physics/RectangleCollider.h"
 #include "Physics/RigidBody2D.h"
 #include "Mocks/Physics/CollisionDetector.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -164,7 +163,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyWithInactiveCollider_DoesNotPerformCollisions)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setActive(false);
@@ -194,7 +193,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyDoesNotPerformCollisionsWithInactiveColliders)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -225,7 +224,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyDoesNotPerformCollisionsWithItself)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -251,7 +250,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithTriggerForFirstTime_CallsTriggerEnter)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -280,7 +279,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithTriggerNotForFirstTime_DoesNotCallTriggerEnter)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -317,7 +316,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithTrigger_CallsTrigger)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -354,7 +353,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithMultipleTriggers_CallsTriggerForEveryTriggerItCollidesWith)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -391,7 +390,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithCollider_NoRigidBody_DoesNotThrow)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -419,7 +418,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithColliderForFirstTime_CallsCollisionEnter)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -447,7 +446,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithColliderNotForFirstTime_DoesNotCallCollisionEnter)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -483,7 +482,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithCollider_CallsCollision)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -519,7 +518,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithMultipleColliders_CallsCollisionForEveryColliderItCollidesWith)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -559,7 +558,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithCollider_BodyIsTrigger_DoesNotAffectRigidBody)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
     rigidBody->setLinearVelocity(10, 20);
@@ -593,7 +592,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithCollider_BodyIsCollider_Left_SetsLeftVelocityToZero)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     gameObject.getTransform()->setTranslation(50, 0);
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
@@ -627,7 +626,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithCollider_BodyIsCollider_Up_SetsUpVelocityToZero)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     gameObject.getTransform()->setTranslation(0, -50);
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
@@ -661,7 +660,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithCollider_BodyIsCollider_Right_SetsRightVelocityToZero)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     gameObject.getTransform()->setTranslation(-50, 0);
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
@@ -695,7 +694,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithCollider_BodyIsCollider_Down_SetsDownVelocityToZero)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     gameObject.getTransform()->setTranslation(0, 50);
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
@@ -729,7 +728,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyDoesNotCollideWithTrigger_ButDidLastFrame_CallsTriggerExit)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -773,7 +772,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyDoesNotCollideWithTrigger_AndDidNotLastFrame_DoesNotCallTriggerExit)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     gameObject.getTransform()->setTranslation(500, 500);
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
@@ -813,7 +812,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyDoesNotCollideWithCollider_ButDidLastFrame_CallsCollisionExit)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
@@ -856,7 +855,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyDoesNotCollideWithTrigger_AndDidNotLastFrame_DoesNotCallCollisionExit)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     gameObject.getTransform()->setTranslation(500, 500);
     AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
@@ -890,51 +889,6 @@ namespace TestCeleste
     getPhysicsManager().update(0.1f);
 
     Assert::IsFalse(detector->collisionExitCalled());
-  }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(PhysicsManager_Die_CallsDieOnAllRigidBodies)
-  {
-    AutoDeallocator<RigidBody2D> rigidBody = RigidBody2D::allocate(GameObject());
-
-    AssertCel::IsAlive(rigidBody.get());
-
-    PhysicsManager().die();
-
-    AssertCel::IsNotAlive(rigidBody.get());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(PhysicsManager_Die_CallsDieOnAllRectangleColliders)
-  {
-    AutoDeallocator<RectangleCollider> collider = RectangleCollider::allocate(GameObject());
-
-    AssertCel::IsAlive(collider.get());
-
-    PhysicsManager().die();
-
-    AssertCel::IsNotAlive(collider.get());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(PhysicsManager_Die_ClearsSimulatedBodies)
-  {
-    RectangleCollider collider;
-    PhysicsManager manager;
-
-    Assert::AreEqual((size_t)0, manager.getSimulatedBodiesSize());
-
-    manager.addSimulatedBody(collider);
-
-    Assert::AreEqual((size_t)1, manager.getSimulatedBodiesSize());
-
-    manager.die();
-
-    Assert::AreEqual((size_t)0, manager.getSimulatedBodiesSize());
   }
 
 #pragma endregion

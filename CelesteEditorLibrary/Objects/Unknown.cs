@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Objects
+namespace CelesteEditor.Objects
 {
     public class Unknown : IReference
     {

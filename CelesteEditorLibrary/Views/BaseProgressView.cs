@@ -1,10 +1,10 @@
-﻿using CelesteEngineEditor.ViewModels;
+﻿using CelesteEditor.ViewModels;
 using System;
 using System.ComponentModel;
 using System.Windows;
-using static CelesteEngineEditor.Windows.UtilityWindows;
+using static CelesteEditor.Windows.UtilityWindows;
 
-namespace CelesteEngineEditor.Views
+namespace CelesteEditor.Views
 {
     public delegate void ProgressMessageUpdateCallback(string message);
 	public delegate void ProgressPercentageUpdateCallback(int percentage);

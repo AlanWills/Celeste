@@ -1,12 +1,12 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor;
-using CelesteEngineEditor.UserControls.Wizard;
-using CelesteEngineEditor.ViewModels;
+using CelesteEditor;
+using CelesteEditor.UserControls.Wizard;
+using CelesteEditor.ViewModels;
 using System.Windows;
-using static CelesteEngineEditor.Windows.UtilityWindows;
-using static CelesteEngineEditor.UserControls.Wizard.WizardWindow;
+using static CelesteEditor.Windows.UtilityWindows;
+using static CelesteEditor.UserControls.Wizard.WizardWindow;
 
-namespace CelesteEngineEditor.UserControls.Wizard
+namespace CelesteEditor.UserControls.Wizard
 {
     public abstract class WizardPageViewModel : Notifier
     {

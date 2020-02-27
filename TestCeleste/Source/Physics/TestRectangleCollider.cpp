@@ -3,8 +3,8 @@
 #include "Physics/RectangleCollider.h"
 #include "Maths/Ray.h"
 #include "Mocks/Physics/MockCollider.h"
-#include "Utils/ObjectUtils.h"
 #include "Registries/ComponentRegistry.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
 
@@ -71,7 +71,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(RectangleCollider_SetGameObject_SynchronizesPosition)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     gameObject.getTransform()->setTranslation(50, -30);
 
     AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
@@ -98,7 +98,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RectangleCollider_SetOffset_FromNonZero_ToAnotherZero_UpdatesRectangleWithDelta)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
 
       Assert::AreEqual(glm::vec2(), collider->getCentre());
@@ -157,8 +157,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RectangleCollider_Update_WithTransformSet_NoOffset_SetsColliderCentreToTransformWorldPosition)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(parent);
+      GameObject gameObject;
+      GameObject parent;
       AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
       
       collider->setDimensions(10, 10);
@@ -184,8 +184,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RectangleCollider_Update_WithTransformSet_AndOffset_SetsColliderCentreToTransformWorldPosition_PlusOffset)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(parent);
+      GameObject gameObject;
+      GameObject parent;
       AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
 
       collider->setDimensions(10, 10);
@@ -212,8 +212,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RectangleCollider_Update_WithTransformSet_SetsColliderDimensionsToWorldScaledDimensions)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(parent);
+      GameObject gameObject;
+      GameObject parent;
       AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
 
       collider->setDimensions(10, 10);
@@ -231,56 +231,6 @@ namespace TestCeleste
       collider->update(0);
 
       Assert::AreEqual(glm::vec2(4, 2.5f), collider->getDimensions());
-    }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(RectangleCollider_Die_SesRectangleToEmpty)
-    {
-      GAMEOBJECT(gameObject);
-      gameObject.getTransform()->setTranslation(50, -30);
-      gameObject.getTransform()->setScale(5, 2);
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      collider->setDimensions(50, 40);
-
-      Assert::AreEqual(glm::vec2(50, -30), collider->getCentre());
-      Assert::AreEqual(250.0f, collider->getWidth());
-      Assert::AreEqual(80.0f, collider->getHeight());
-
-      collider->die();
-
-      Assert::AreEqual(glm::vec2(), collider->getCentre());
-      Assert::AreEqual(0.0f, collider->getWidth());
-      Assert::AreEqual(0.0f, collider->getHeight());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(RectangleCollider_Die_SetsDimensionsToZero)
-    {
-      RectangleCollider collider;
-      collider.setDimensions(50, 40);
-
-      Assert::AreEqual(glm::vec2(50, 40), collider.getDimensions());
-
-      collider.die();
-
-      Assert::AreEqual(glm::vec2(), collider.getDimensions());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(RectangleCollider_Die_SetsColliderTypeTo_kCollider)
-    {
-      RectangleCollider collider;
-      collider.setColliderType(ColliderType::kTrigger);
-
-      Assert::IsTrue(collider.getColliderType() == ColliderType::kTrigger);
-
-      collider.die();
-
-      Assert::IsTrue(collider.getColliderType() == ColliderType::kCollider);
     }
 
 #pragma endregion
@@ -304,7 +254,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RectangleCollider_Sync_SynchronizesPositionAndScale)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
       collider->setDimensions(20, 30);
@@ -339,7 +289,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RectangleCollider_IntersectsRay_NoOffset_ShouldReturnTrue)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
 
       collider->setDimensions(10, 10);
@@ -357,7 +307,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RectangleCollider_IntersectsRay_NoOffset_ShouldReturnFalse)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
       collider->setDimensions(10, 10);
 
@@ -374,7 +324,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RectangleCollider_IntersectsRay_WithOffset_ShouldReturnTrue)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
 
       collider->setDimensions(10, 10);
@@ -397,7 +347,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RectangleCollider_IntersectsRay_WithOffset_ShouldReturnFalse)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
       collider->setDimensions(10, 10);
       collider->setOffset(-10, 5);

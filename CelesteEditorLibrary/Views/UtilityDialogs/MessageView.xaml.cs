@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace CelesteEngineEditor.Views
+namespace CelesteEditor.Views
 {
     /// <summary>
     /// Interaction logic for MessageView.xaml

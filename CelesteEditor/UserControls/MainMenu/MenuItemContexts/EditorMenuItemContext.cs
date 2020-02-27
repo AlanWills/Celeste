@@ -1,5 +1,5 @@
-﻿using CelesteEngineEditor.Attributes;
-using CelesteEngineEditor.Editors;
+﻿using CelesteEditor.Attributes;
+using CelesteEditor.Editors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CelesteEngineEditor.UserControls.MainMenu.MenuItemContexts
+namespace CelesteEditor.UserControls.MainMenu.MenuItemContexts
 {
     public class EditorMenuItemContext : MenuItemContext
     {

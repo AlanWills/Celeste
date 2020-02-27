@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/CelesteEngineEditorLibrary;component/ResourceDictionaries/EditorConverters.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/CelesteEngineEditorLibrary;component/ResourceDictionaries/EditorStyles.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/CelesteEngineEditorLibrary;component/ResourceDictionaries/EditorPropertyDataTemplates.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/CelesteEditorLibrary;component/ResourceDictionaries/EditorConverters.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/CelesteEditorLibrary;component/ResourceDictionaries/EditorStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/CelesteEditorLibrary;component/ResourceDictionaries/EditorPropertyDataTemplates.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

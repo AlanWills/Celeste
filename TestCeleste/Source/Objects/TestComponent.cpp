@@ -3,7 +3,6 @@
 #include "Mocks/Objects/MockComponent.h"
 #include "Objects/GameObject.h"
 #include "Rendering/SpriteRenderer.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -24,56 +23,14 @@ namespace TestCeleste
 
     Assert::IsNull(component.getGameObject());
     Assert::IsNull(component.getTransform());
-    Assert::IsFalse(component.isAlive());
-    Assert::IsFalse(component.isAlive());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Component_Constructor_Sets_AliveAndActiveToTrue)
+  TEST_METHOD(Component_Constructor_Sets_ActiveToTrue)
   {
     MockComponent component;
 
-    Assert::IsNull(component.getGameObject());
-    Assert::IsTrue(component.isAlive());
-    Assert::IsTrue(component.isAlive());
-  }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Component_Die_SetsGameObjectToNull)
-  {
-    GameObject gameObject;
-    MockComponent component;
-
-    component.setGameObject_Public(gameObject);
-
-    Assert::AreEqual(&gameObject, component.getGameObject());
-
-    component.die();
-
-    Assert::IsNull(component.getGameObject());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Component_Die_OnAlreadyDeadObject_DoesNothing)
-  {
-    MockComponent component;
-
-    Assert::IsTrue(component.isAlive());
     Assert::IsTrue(component.isActive());
-
-    component.die();
-
-    Assert::IsFalse(component.isAlive());
-    Assert::IsFalse(component.isActive());
-   
-    component.die();
-
-    Assert::IsFalse(component.isAlive());
-    Assert::IsFalse(component.isActive());
   }
 
 #pragma endregion
@@ -81,23 +38,11 @@ namespace TestCeleste
 #pragma region Deallocate Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Component_Deallocate_WithDeadHandle_DeallocatesObject_ReturnsTrue)
-  {
-    AutoDeallocator<MockComponent> component = MockComponent::allocate(GameObject());
-    component->die();
-
-    Assert::IsFalse(component->isAlive());
-    Assert::IsTrue(component->deallocate());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Component_Deallocate_WithAliveHandle_CallsDie_ReturnsTrue)
+  TEST_METHOD(Component_Deallocate_WithObjectFromAllocator_ReturnsTrue)
   {
     AutoDeallocator<MockComponent> component = MockComponent::allocate(GameObject());
 
-    Assert::IsTrue(component->isAlive());
     Assert::IsTrue(component->deallocate());
-    Assert::IsFalse(component->isAlive());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -105,7 +50,6 @@ namespace TestCeleste
   {
     MockComponent component;
 
-    Assert::IsTrue(component.isAlive());
     Assert::IsFalse(component.deallocate());
   }
 
@@ -148,7 +92,7 @@ namespace TestCeleste
     TEST_METHOD(Component_SetGameObject_OnParentlessComponent_CallsOnSetParent)
     {
       MockComponent component;
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       Assert::IsFalse(component.onSetGameObjectCalled());
       Assert::IsNull(component.getGameObject());
@@ -162,8 +106,8 @@ namespace TestCeleste
     TEST_METHOD(Component_SetGameObject_OnComponentWithExistingParent_CallsOnSetParent)
     {
       MockComponent component;
-      GAMEOBJECT(parent1);
-      GAMEOBJECT(parent2);
+      GameObject parent1;
+      GameObject parent2;
 
       component.setGameObject_Public(parent1);
 

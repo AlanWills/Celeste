@@ -5,7 +5,6 @@
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Resources/ResourceManager.h"
 #include "GraphicalFX/OpacityLerper.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -14,7 +13,6 @@ using namespace Celeste::Resources;
 
 namespace TestCeleste
 {
-
   CELESTE_TEST_CLASS(TestOpacityLerperDataConverter)
 
   //------------------------------------------------------------------------------------------------
@@ -34,7 +32,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(OpacityLerperDataConverter_CheckCanBeConvertedFromXML)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(OpacityLerperLoadingResources::getValidFullPath());
     AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 

@@ -1,6 +1,6 @@
 #include "Animation/Animators/ChangeScaleAnimator.h"
 #include "UtilityHeaders/UnitTestHeaders.h"
-#include "Utils/ObjectUtils.h"
+#include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
 
@@ -23,7 +23,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ChangeScaleAnimator_IsAllocatableFromComponentRegistry)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(ChangeScaleAnimator::type_name(), gameObject);
 
@@ -62,7 +62,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ChangeScaleAnimator_SetTargetScale_SetsTargetScaleToInputtedValue)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<ChangeScaleAnimator> animator = gameObject.addComponent<ChangeScaleAnimator>();
 
     Assert::IsTrue(&gameObject == animator->getGameObject());
@@ -90,7 +90,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ChangeScaleAnimator_Update_TimeIsZero_SetsGameObjectToTargetScale)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<ChangeScaleAnimator> animator = gameObject.addComponent<ChangeScaleAnimator>();
     animator->setTime(0);
     animator->setTargetScale(glm::vec3(100, 200, 300));
@@ -105,7 +105,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ChangeScaleAnimator_Update_TimeNonZero_LerpsBetweenStartAndTarget_UsingElapsedTime)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<ChangeScaleAnimator> animator = gameObject.addComponent<ChangeScaleAnimator>();
     animator->setTime(0.5f);
     animator->setTargetScale(glm::vec3(100, 200, 300));
@@ -120,7 +120,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ChangeScaleAnimator_Update_ElapsedTimeEqualToTime_SetsGameObjectToScale)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<ChangeScaleAnimator> animator = gameObject.addComponent<ChangeScaleAnimator>();
     animator->setTime(0.5f);
     animator->setTargetScale(glm::vec3(100, 200, 300));
@@ -135,7 +135,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ChangeScaleAnimator_Update_ElapsedTimeEqualToTime_DeactivatesScript)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<ChangeScaleAnimator> animator = gameObject.addComponent<ChangeScaleAnimator>();
     animator->setTime(0.5f);
 
@@ -149,7 +149,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ChangeScaleAnimator_Update_ElapsedTimeGreaterThanTime_SetsGameObjectToTargetScale)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<ChangeScaleAnimator> animator = gameObject.addComponent<ChangeScaleAnimator>();
     animator->setTime(0.5f);
     animator->setTargetScale(glm::vec3(100, 200, 300));
@@ -164,7 +164,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ChangeScaleAnimator_Update_ElapsedTimeGreaterThanTime_DeactivatesScript)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<ChangeScaleAnimator> animator = gameObject.addComponent<ChangeScaleAnimator>();
     animator->setTime(0.5f);
 
@@ -173,26 +173,6 @@ namespace TestCeleste
     animator->update(1);
 
     AssertCel::IsNotActive(animator.get());
-  }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ChangeScaleAnimator_Die_ResetsValuesToDefault)
-  {
-    ChangeScaleAnimator animator;
-    animator.setTime(0.5f);
-    animator.setTargetScale(glm::vec3(100, 200, 300));
-
-    Assert::AreEqual(0.5f, animator.getTime());
-    Assert::AreEqual(glm::vec3(100, 200, 300), animator.getTargetScale());
-
-    animator.die();
-
-    Assert::AreEqual(0.0f, animator.getTime());
-    Assert::AreEqual(glm::vec3(1), animator.getTargetScale());
   }
 
 #pragma endregion

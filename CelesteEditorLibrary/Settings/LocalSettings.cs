@@ -1,5 +1,5 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Core;
+using CelesteEditor.Core;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Settings
+namespace CelesteEditor.Settings
 {
     [Serializable]
     public class LocalSettings

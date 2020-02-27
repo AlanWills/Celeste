@@ -4,8 +4,8 @@
 #include "Lua/Components/LuaComponentManifestRegistry.h"
 #include "Lua/Components/LuaComponent.h"
 #include "Registries/ComponentRegistry.h"
+#include "Objects/GameObject.h"
 
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -144,7 +144,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AllocateComponent_InputtingNonRegisteredComponentName_DoesNotAddComponent)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       Assert::AreEqual(static_cast<size_t>(0), LuaComponentManifestRegistry::registeredComponentsSize());
       AssertCel::DoesNotHaveComponent<LuaComponent>(gameObject);
@@ -157,7 +157,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AllocateComponent_InputtingNonRegisteredComponentName_ReturnsNullHandle)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       Assert::AreEqual(static_cast<size_t>(0), LuaComponentManifestRegistry::registeredComponentsSize());
       AssertCel::DoesNotHaveComponent<LuaComponent>(gameObject);
@@ -170,7 +170,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AllocateComponent_InputtingRegisteredComponentName_AddsComponent)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       LuaComponentManifestRegistry::registerComponent("Test", LuaState::instance().globals());
 
@@ -185,7 +185,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AllocateComponent_InputtingRegisteredComponentName_ReturnsCreatedComponentHandle)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       LuaComponentManifestRegistry::registerComponent("Test", LuaState::instance().globals());
 

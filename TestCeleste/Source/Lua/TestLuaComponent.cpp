@@ -4,7 +4,6 @@
 #include "Lua/Components/LuaComponent.h"
 #include "Lua/Components/LuaComponentManifest.h"
 
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -19,17 +18,13 @@ namespace TestCeleste::Lua
   std::string resetScript = R"(
   onSetActiveCalled = false
   onSetGameObjectCalled = false
-  onInitializeCalled = false
-  onHandleInputCalled = false
-  onUpdateCalled = false
-  onDeathCalled = false
+  handleInputCalled = false
+  updateCalled = false
 
   onSetActive = nil
   onSetGameObject = nil
-  onInitialize = nil
-  onHandleInput = nil
-  onUpdate = nil
-  onDeath = nil
+  handleInput = nil
+  update = nil
   )";
 
   //------------------------------------------------------------------------------------------------
@@ -51,38 +46,20 @@ namespace TestCeleste::Lua
     )";
 
   //------------------------------------------------------------------------------------------------
-  std::string onInitializeScript = R"(
-    onInitializeCalled = false
+  std::string handleInputScript = R"(
+    handleInputCalled = false
 
-    function onInitialize(component)
-      onInitializeCalled = true
+    function handleInput(component)
+      handleInputCalled = true
     end
     )";
 
   //------------------------------------------------------------------------------------------------
-  std::string onHandleInputScript = R"(
-    onHandleInputCalled = false
+  std::string updateScript = R"(
+    updateCalled = false
 
-    function onHandleInput(component)
-      onHandleInputCalled = true
-    end
-    )";
-
-  //------------------------------------------------------------------------------------------------
-  std::string onUpdateScript = R"(
-    onUpdateCalled = false
-
-    function onUpdate(component, time)
-      onUpdateCalled = true
-    end
-    )";
-
-  //------------------------------------------------------------------------------------------------
-  std::string onDeathScript = R"(
-    onDeathCalled = false
-
-    function onDeath(component)
-      onDeathCalled = true
+    function update(component, time)
+      updateCalled = true
     end
     )";
 
@@ -117,27 +94,19 @@ namespace TestCeleste::Lua
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_Constructor_SetsOnHandleInputFunc_ToEmptyFunc)
+  TEST_METHOD(LuaComponent_Constructor_SetsHandleInputFunc_ToEmptyFunc)
   {
     LuaComponent luaComponent;
 
-    Assert::IsFalse(luaComponent.getOnHandleInputFunc().valid());
+    Assert::IsFalse(luaComponent.getHandleInputFunc().valid());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_Constructor_SetsOnUpdateFunc_ToEmptyFunc)
+  TEST_METHOD(LuaComponent_Constructor_SetsUpdateFunc_ToEmptyFunc)
   {
     LuaComponent luaComponent;
 
-    Assert::IsFalse(luaComponent.getOnUpdateFunc().valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_Constructor_SetsOnDeathFunc_ToEmptyFunc)
-  {
-    LuaComponent luaComponent;
-
-    Assert::IsFalse(luaComponent.getOnDeathFunc().valid());
+    Assert::IsFalse(luaComponent.getUpdateFunc().valid());
   }
 
 #pragma endregion
@@ -185,197 +154,66 @@ namespace TestCeleste::Lua
 
 #pragma endregion
 
-#pragma region On Handle Input Function Tests
+#pragma region Handle Input Function Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_OnHandleInput_WithNoOnHandleInputFunction_DoesNothing)
+  TEST_METHOD(LuaComponent_HandleInput_WithNoHandleInputFunction_DoesNothing)
   {
     LuaComponent luaComponent;
 
-    Assert::IsFalse(luaComponent.getOnHandleInputFunc().valid());
+    Assert::IsFalse(luaComponent.getHandleInputFunc().valid());
 
     luaComponent.handleInput();
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_OnHandleInput_WithOnHandleInputFunction_CallsOnHandleInputFunction)
+  TEST_METHOD(LuaComponent_HandleInput_WithHandleInputFunction_CallsHandleInputFunction)
   {
     sol::state& state = LuaState::instance();
 
-    Assert::IsTrue(state.safe_script(onHandleInputScript).valid());
-    Assert::IsFalse(state["onHandleInputCalled"]);
+    Assert::IsTrue(state.safe_script(handleInputScript).valid());
+    Assert::IsFalse(state["handleInputCalled"]);
 
     LuaComponent luaComponent;
-    luaComponent.setOnHandleInputFunc(state["onHandleInput"]);
+    luaComponent.setHandleInputFunc(state["handleInput"]);
 
-    Assert::IsTrue(luaComponent.getOnHandleInputFunc().valid());
+    Assert::IsTrue(luaComponent.getHandleInputFunc().valid());
 
     luaComponent.handleInput();
 
-    Assert::IsTrue(state["onHandleInputCalled"]);
+    Assert::IsTrue(state["handleInputCalled"]);
   }
 
 #pragma endregion
 
-#pragma region On Update Function Tests
+#pragma region Update Function Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_OnUpdate_WithNoOnUpdateFunction_DoesNothing)
+  TEST_METHOD(LuaComponent_Update_WithNoUpdateFunction_DoesNothing)
   {
     LuaComponent luaComponent;
 
-    Assert::IsFalse(luaComponent.getOnUpdateFunc().valid());
+    Assert::IsFalse(luaComponent.getUpdateFunc().valid());
 
     luaComponent.update(0);
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_OnUpdate_WithOnUpdateFunction_CallsOnUpdateFunction)
+  TEST_METHOD(LuaComponent_Update_WithUpdateFunction_CallsOnUpdateFunction)
   {
     sol::state& state = LuaState::instance();
 
-    Assert::IsTrue(state.safe_script(onUpdateScript).valid());
-    Assert::IsFalse(state["onUpdateCalled"]);
+    Assert::IsTrue(state.safe_script(updateScript).valid());
+    Assert::IsFalse(state["updateCalled"]);
 
     LuaComponent luaComponent;
-    luaComponent.setOnUpdateFunc(state["onUpdate"]);
+    luaComponent.setUpdateFunc(state["update"]);
 
-    Assert::IsTrue(luaComponent.getOnUpdateFunc().valid());
+    Assert::IsTrue(luaComponent.getUpdateFunc().valid());
 
     luaComponent.update(0);
 
-    Assert::IsTrue(state["onUpdateCalled"]);
-  }
-
-#pragma endregion
-
-#pragma region On Death Function Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_OnDeath_WithNoOnDeathFunction_DoesNothing)
-  {
-    LuaComponent luaComponent;
-
-    Assert::IsTrue(luaComponent.isAlive());
-    Assert::IsTrue(luaComponent.isActive());
-    Assert::IsFalse(luaComponent.getOnDeathFunc().valid());
-
-    luaComponent.die();
-
-    Assert::IsFalse(luaComponent.isAlive());
-    Assert::IsFalse(luaComponent.isActive());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_OnDeath_WithOnDeathFunction_CallsOnDeathFunction)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsTrue(state.safe_script(onDeathScript).valid());
-    Assert::IsFalse(state["onDeathCalled"]);
-
-    LuaComponent luaComponent;
-    luaComponent.setOnDeathFunc(state["onDeath"]);
-
-    Assert::IsTrue(luaComponent.isAlive());
-    Assert::IsTrue(luaComponent.isActive());
-    Assert::IsTrue(luaComponent.getOnDeathFunc().valid());
-
-    luaComponent.die();
-
-    Assert::IsFalse(luaComponent.isAlive());
-    Assert::IsFalse(luaComponent.isActive());
-    Assert::IsTrue(state["onDeathCalled"]);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_OnDeath_ResetsOnSetActiveFunc)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsTrue(state.safe_script(onSetActiveScript).valid());
-    Assert::IsFalse(state["onSetActiveCalled"]);
-
-    LuaComponent luaComponent;
-    luaComponent.setOnSetActiveFunc(state["onSetActive"]);
-
-    Assert::IsTrue(luaComponent.getOnSetActiveFunc().valid());
-
-    luaComponent.die();
-
-    Assert::IsFalse(luaComponent.getOnSetActiveFunc().valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_OnDeath_ResetsOnSetGameObjectFunc)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsTrue(state.safe_script(onSetGameObjectScript).valid());
-    Assert::IsFalse(state["onSetGameObjectCalled"]);
-
-    LuaComponent luaComponent;
-    luaComponent.setOnSetGameObjectFunc(state["onSetGameObject"]);
-
-    Assert::IsTrue(luaComponent.getOnSetGameObjectFunc().valid());
-
-    luaComponent.die();
-
-    Assert::IsFalse(luaComponent.getOnSetGameObjectFunc().valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_OnDeath_ResetsOnHandleInputFunc)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsTrue(state.safe_script(onHandleInputScript).valid());
-    Assert::IsFalse(state["onHandleInputCalled"]);
-
-    LuaComponent luaComponent;
-    luaComponent.setOnHandleInputFunc(state["onHandleInput"]);
-
-    Assert::IsTrue(luaComponent.getOnHandleInputFunc().valid());
-
-    luaComponent.die();
-
-    Assert::IsFalse(luaComponent.getOnHandleInputFunc().valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_OnDeath_ResetsOnUpdateFunc)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsTrue(state.safe_script(onUpdateScript).valid());
-    Assert::IsFalse(state["onUpdateCalled"]);
-
-    LuaComponent luaComponent;
-    luaComponent.setOnUpdateFunc(state["onUpdate"]);
-
-    Assert::IsTrue(luaComponent.getOnUpdateFunc().valid());
-
-    luaComponent.die();
-
-    Assert::IsFalse(luaComponent.getOnUpdateFunc().valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_OnDeath_ResetsOnDeathFunc)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsTrue(state.safe_script(onDeathScript).valid());
-    Assert::IsFalse(state["onDeathCalled"]);
-
-    LuaComponent luaComponent;
-    luaComponent.setOnDeathFunc(state["onDeath"]);
-
-    Assert::IsTrue(luaComponent.getOnDeathFunc().valid());
-
-    luaComponent.die();
-
-    Assert::IsFalse(luaComponent.getOnDeathFunc().valid());
+    Assert::IsTrue(state["updateCalled"]);
   }
 
 #pragma endregion

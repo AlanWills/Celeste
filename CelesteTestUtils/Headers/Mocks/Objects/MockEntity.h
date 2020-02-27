@@ -12,32 +12,31 @@ namespace CelesteTestUtils
 
     public:
       MockEntity() :
+        m_setActiveCalled(false),
         m_onHandleInputCalled(false),
-        m_onUpdateCalled(false),
-        m_onDeathCalled(false)
+        m_onUpdateCalled(false)
         { }
 
       ~MockEntity() = default;
 
+      bool isSetActiveCalled() const { return m_setActiveCalled; }
       bool isOnHandleInputCalled() const { return m_onHandleInputCalled; }
       bool isOnUpdateCalled() const { return m_onUpdateCalled; }
-      bool isOnDeathCalled() const { return m_onDeathCalled; }
 
       void reset()
       {
+        m_setActiveCalled = false;
         m_onHandleInputCalled = false;
         m_onUpdateCalled = false;
-        m_onDeathCalled = false;
       }
 
-    protected:
-      void onHandleInput() override { Inherited::onHandleInput(); m_onHandleInputCalled = true; }
-      void onUpdate(float elapsedGameTime) override { Inherited::onUpdate(elapsedGameTime); m_onUpdateCalled = true; }
-      void onDeath() override { Inherited::onDeath(); m_onDeathCalled = true; }
+      void setActive(bool isActive) { Inherited::setActive(isActive); m_setActiveCalled = isActive; }
+      void handleInput() override { Inherited::handleInput(); m_onHandleInputCalled = true; }
+      void update(float elapsedGameTime) override { Inherited::update(elapsedGameTime); m_onUpdateCalled = true; }
 
     private:
+      bool m_setActiveCalled;
       bool m_onHandleInputCalled;
       bool m_onUpdateCalled;
-      bool m_onDeathCalled;
   };
 }

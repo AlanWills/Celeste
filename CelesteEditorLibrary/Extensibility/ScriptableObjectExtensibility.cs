@@ -5,9 +5,9 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using static CelesteEngineEditor.Assets.ScriptableObjectAsset;
+using static CelesteEditor.Assets.ScriptableObjectAsset;
 
-namespace CelesteEngineEditor.Extensibility
+namespace CelesteEditor.Extensibility
 {
     public static class ScriptableObjectExtensibility
     {

@@ -1,12 +1,12 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Attributes;
-using CelesteEngineEditor.Extensibility;
+using CelesteEditor.Attributes;
+using CelesteEditor.Extensibility;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CelesteEngineEditor.Editors
+namespace CelesteEditor.Editors
 {
     /// <summary>
     /// Interaction logic for GameObjectEditor.xaml

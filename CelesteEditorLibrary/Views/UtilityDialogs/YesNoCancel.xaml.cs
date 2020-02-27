@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace CelesteEngineEditor.Views
+namespace CelesteEditor.Views
 {
     /// <summary>
     /// Interaction logic for YesNoCancelView.xaml

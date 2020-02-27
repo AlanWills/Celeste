@@ -4,7 +4,6 @@
 #include "Game/Game.h"
 #include "Physics/RectangleCollider.h"
 #include "Physics/RigidBody2D.h"
-#include "Utils/ObjectUtils.h"
 
 using namespace Celeste;
 using namespace Celeste::Physics;

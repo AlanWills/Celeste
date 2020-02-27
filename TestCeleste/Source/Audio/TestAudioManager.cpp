@@ -2,7 +2,7 @@
 #include "Audio/AudioSource.h"
 #include "OpenAL/OpenALState.h"
 #include "UtilityHeaders/UnitTestHeaders.h"
-#include "Utils/ObjectUtils.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -205,44 +205,5 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioManager_Die_CallsDieOnAllAliveAudioSources)
-    {
-      AudioManager manager;
-
-      GAMEOBJECT(gameObject);
-      observer_ptr<AudioSource> audio = gameObject.addComponent<AudioSource>();
-      audio->setActive(false);
-
-      AssertCel::IsAlive(audio);
-      AssertCel::IsNotActive(audio);
-
-      manager.die();
-
-      AssertCel::IsNotAlive(audio);
-      AssertCel::IsNotActive(audio);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioManager_Die_CallsDieOnAllActiveAudioSources)
-    {
-      AudioManager manager;
-
-      GAMEOBJECT(gameObject);
-      observer_ptr<AudioSource> audio = gameObject.addComponent<AudioSource>();
-      audio->setActive(true);
-
-      AssertCel::IsAlive(audio);
-      AssertCel::IsActive(audio);
-
-      manager.die();
-
-      AssertCel::IsNotAlive(audio);
-      AssertCel::IsNotActive(audio);
-    }
-
-#pragma endregion
   };
 }

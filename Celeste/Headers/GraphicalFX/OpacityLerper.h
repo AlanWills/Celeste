@@ -36,7 +36,7 @@ namespace Celeste
       inline bool isLerpingUp() const { return m_lerpingUp; }
       inline void setLerpingUp(bool lerpingUp) { m_lerpingUp = lerpingUp; }
 
-      void update(float elapsedGameTime) override;
+      CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Script;

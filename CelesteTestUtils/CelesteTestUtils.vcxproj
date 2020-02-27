@@ -146,7 +146,6 @@
     <ClInclude Include="Headers\AutoALDeallocator.h" />
     <ClInclude Include="Headers\AutoDeallocator.h" />
     <ClInclude Include="Headers\AutoGLDeallocator.h" />
-    <ClInclude Include="Headers\AutoKiller.h" />
     <ClInclude Include="Headers\CelesteUnitTest.h" />
     <ClInclude Include="Headers\CelesteTestUtilsDllExport.h" />
     <ClInclude Include="Headers\KeyboardTextInputtedEventUnsubscriber.h" />
@@ -244,7 +243,6 @@
     <ClInclude Include="Headers\UtilityHeaders\UnitTestHeaders.h" />
     <ClInclude Include="Headers\Utils\GameObjectXMLUtils.h" />
     <ClInclude Include="Headers\Utils\InputUtils.h" />
-    <ClInclude Include="Headers\Utils\ObjectUtils.h" />
     <ClInclude Include="Headers\Utils\ScreenXMLUtils.h" />
     <ClInclude Include="Headers\Utils\XMLUtils.h" />
   </ItemGroup>

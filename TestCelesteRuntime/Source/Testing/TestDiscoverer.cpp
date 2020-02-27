@@ -38,7 +38,7 @@ namespace TestCelesteRuntime
     }
 
     //------------------------------------------------------------------------------------------------
-    void TestDiscoverer::onSetGameObject(const Handle<GameObject>& gameObject)
+    void TestDiscoverer::onSetGameObject(GameObject& gameObject)
     {
       Inherited::onSetGameObject(gameObject);
 
@@ -46,8 +46,8 @@ namespace TestCelesteRuntime
       std::vector<File> testLuaFiles;
       testDirectory.findFiles(testLuaFiles, ".lua", true);
 
-      Handle<Screen> screen = gameObject->getScreen();
-      Handle<GameObject> canvasGameObject = screen->findGameObject("Canvas");
+      observer_ptr<Screen> screen = gameObject.getScreen();
+      observer_ptr<GameObject> canvasGameObject = screen->findGameObject("Canvas");
       m_testClassesContainer = screen->findGameObject("TestClassesContainer");
       m_testsContainer = screen->findGameObject("TestsContainer");
 
@@ -59,30 +59,21 @@ namespace TestCelesteRuntime
           sol::table testClass = result.get<sol::table>();
           std::string testClassName = testClass.get_or("name", testLuaFile.getExtensionlessFileName());
 
-          Handle<GameObject> testClassGameObject = createTestClass(testClass, testClassName, m_testClassesContainer);
-          m_testClassesContainer->findComponent<StackPanel>()->addChildren(testClassGameObject);
+          observer_ptr<GameObject> testClassGameObject = createTestClass(testClass, testClassName, *m_testClassesContainer);
+          m_testClassesContainer->findComponent<StackPanel>()->addChildren(*testClassGameObject);
 
-          Handle<GameObject> unitTestsGameObject = createUnitTestsContainer(testClass, testClassName, m_testsContainer);
+          observer_ptr<GameObject> unitTestsGameObject = createUnitTestsContainer(testClass, testClassName, *m_testsContainer);
         }
       }
     }
 
     //------------------------------------------------------------------------------------------------
-    void TestDiscoverer::onDeath()
+    observer_ptr<GameObject> TestDiscoverer::createTestClassesContainer(GameObject& parent)
     {
-      Inherited::onDeath();
-
-      m_testClassesContainer.reset();
-      m_testsContainer.reset();
-    }
-
-    //------------------------------------------------------------------------------------------------
-    Handle<GameObject> TestDiscoverer::createTestClassesContainer(const Handle<GameObject>& parent)
-    {
-      Handle<GameObject> testClassesContainerGameObject = parent->getScreen()->allocateGameObject(parent->getTransform());
+      observer_ptr<GameObject> testClassesContainerGameObject = parent.getScreen()->allocateGameObject(*parent.getTransform());
       testClassesContainerGameObject->getTransform()->setTranslation(getViewportDimensions().x * 0.25f, getViewportDimensions().y * 0.5f);
 
-      Handle<StackPanel> stackPanel = testClassesContainerGameObject->addComponent<StackPanel>();
+      observer_ptr<StackPanel> stackPanel = testClassesContainerGameObject->addComponent<StackPanel>();
       stackPanel->setOrientation(Orientation::kVertical);
       stackPanel->setVerticalAlignment(VerticalAlignment::kTop);
 
@@ -90,33 +81,32 @@ namespace TestCelesteRuntime
     }
 
     //------------------------------------------------------------------------------------------------
-    Handle<GameObject> TestDiscoverer::createTestClass(sol::table testClass, const std::string& testClassName, const Handle<GameObject>& parent)
+    observer_ptr<GameObject> TestDiscoverer::createTestClass(sol::table testClass, const std::string& testClassName, GameObject& parent)
     {
-      Handle<GameObject> testClassGameObject = parent->getScreen()->allocateGameObject(parent->getTransform());
-      Handle<SpriteRenderer> testClassSpriteRenderer = testClassGameObject->addComponent<SpriteRenderer>();
+      observer_ptr<GameObject> testClassGameObject = parent.getScreen()->allocateGameObject(*parent.getTransform());
+      observer_ptr<SpriteRenderer> testClassSpriteRenderer = testClassGameObject->addComponent<SpriteRenderer>();
       testClassGameObject->addComponent<RectangleCollider>();
       testClassGameObject->addComponent<MouseInteractionHandler>();
 
-      Handle<GameObject> testClassGameObjectLabelGameObject = testClassGameObject->getScreen()->allocateGameObject(testClassGameObject->getTransform());
-      Handle<TextRenderer> textRenderer = testClassGameObjectLabelGameObject->addComponent<TextRenderer>();
+      observer_ptr<GameObject> testClassGameObjectLabelGameObject = testClassGameObject->getScreen()->allocateGameObject(*testClassGameObject->getTransform());
+      observer_ptr<TextRenderer> textRenderer = testClassGameObjectLabelGameObject->addComponent<TextRenderer>();
       textRenderer->addLine(testClassName);
 
-      Handle<Button> runAllTestsButton = testClassGameObject->addComponent<Button>();
-      runAllTestsButton->subscribeLeftClickCallback([testClass, this](EventArgs& e, const Handle<GameObject>& gameObject) -> void
+      observer_ptr<Button> runAllTestsButton = testClassGameObject->addComponent<Button>();
+      runAllTestsButton->subscribeLeftClickCallback([testClass, this](GameObject& gameObject) -> void
       {
         // Clear Log
-        Handle<TextRenderer> logRenderer = gameObject->getScreen()->findGameObject("LogText")->findComponent<TextRenderer>();
+        observer_ptr<TextRenderer> logRenderer = gameObject.getScreen()->findGameObject("LogText")->findComponent<TextRenderer>();
         logRenderer->clearLines();
 
         // Find the game object for this class
-        Handle<GameObject> testClassGameObject = m_testsContainer->findChildGameObject(testClass.get<std::string>("name"));
+        observer_ptr<GameObject> testClassGameObject = m_testsContainer->findChildGameObject(testClass.get<std::string>("name"));
 
         // Disable all other game objects except for those involved with this test class
         for (size_t i = 0; i < m_testsContainer->getChildCount(); ++i)
         {
-          Handle<GameObject> child = m_testsContainer->getChildGameObject(i);
+          observer_ptr<GameObject> child = m_testsContainer->getChildGameObject(i);
           child->setActive(child == testClassGameObject);
-          child->setShouldRender(child == testClassGameObject);
         }
 
         // Test Class Initialize
@@ -125,7 +115,7 @@ namespace TestCelesteRuntime
         // Then create UI and run tests in alphabetical order
         for (size_t i = 0; i < testClassGameObject->getChildCount(); ++i)
         {
-          Handle<GameObject> unitTestGameObject = testClassGameObject->getChildGameObject(i);
+          observer_ptr<GameObject> unitTestGameObject = testClassGameObject->getChildGameObject(i);
           std::string testName = deinternString(unitTestGameObject->getName());
 
           bool testPassed = true;
@@ -133,7 +123,7 @@ namespace TestCelesteRuntime
           // Test Initialize
           testInitialize(testClass);
 
-          Handle<Screen> screen = Screen::allocate();
+          observer_ptr<Screen> screen = Screen::allocate();
           const_cast<sol::table&>(testClass)["Screen"] = screen;
 
           // Run Test
@@ -166,17 +156,17 @@ namespace TestCelesteRuntime
     }
 
     //------------------------------------------------------------------------------------------------
-    Handle<GameObject> TestDiscoverer::createUnitTestsContainer(sol::table testClass, const std::string& testClassName, const Handle<GameObject>& parent)
+    observer_ptr<GameObject> TestDiscoverer::createUnitTestsContainer(sol::table testClass, const std::string& testClassName, GameObject& parent)
     {
-      Handle<GameObject> unitTestsContainerGameObject = parent->getScreen()->allocateGameObject(parent->getTransform());
+      observer_ptr<GameObject> unitTestsContainerGameObject = parent.getScreen()->allocateGameObject(*parent.getTransform());
       unitTestsContainerGameObject->getTransform()->setTranslation(0, getViewportDimensions().y * 0.45f);
       unitTestsContainerGameObject->setName(testClassName);
 
-      Handle<StackPanel> stackPanel = unitTestsContainerGameObject->addComponent<StackPanel>();
+      observer_ptr<StackPanel> stackPanel = unitTestsContainerGameObject->addComponent<StackPanel>();
       stackPanel->setOrientation(Orientation::kVertical);
       stackPanel->setVerticalAlignment(VerticalAlignment::kTop);
 
-      Handle<KeyboardTransformer> keyboardTransformer = unitTestsContainerGameObject->addComponent<KeyboardTransformer>();
+      observer_ptr<KeyboardTransformer> keyboardTransformer = unitTestsContainerGameObject->addComponent<KeyboardTransformer>();
       keyboardTransformer->setTranslateUpKey(GLFW_KEY_UP);
       keyboardTransformer->setTranslateDownKey(GLFW_KEY_DOWN);
       keyboardTransformer->setTranslationSpeed(500);
@@ -200,23 +190,22 @@ namespace TestCelesteRuntime
 
       for (const std::string& testName : testNames)
       {
-        Handle<GameObject> unitTestGameObject = createUnitTest(testName, unitTestsContainerGameObject);
-        stackPanel->addChildren(unitTestGameObject);
+        observer_ptr<GameObject> unitTestGameObject = createUnitTest(testName, *unitTestsContainerGameObject);
+        stackPanel->addChildren(*unitTestGameObject);
       }
 
       unitTestsContainerGameObject->setActive(false);
-      unitTestsContainerGameObject->setShouldRender(false);
 
       return unitTestsContainerGameObject;
     }
 
     //------------------------------------------------------------------------------------------------
-    Handle<GameObject> TestDiscoverer::createUnitTest(const std::string& testName, const Handle<GameObject>& parent)
+    observer_ptr<GameObject> TestDiscoverer::createUnitTest(const std::string& testName, GameObject& parent)
     {
-      Handle<GameObject> unitTestGameObject = parent->getScreen()->allocateGameObject(parent->getTransform());
+      observer_ptr<GameObject> unitTestGameObject = parent.getScreen()->allocateGameObject(*parent.getTransform());
       unitTestGameObject->setName(testName);
 
-      Handle<TextRenderer> unitTestTextRenderer = unitTestGameObject->addComponent<TextRenderer>();
+      observer_ptr<TextRenderer> unitTestTextRenderer = unitTestGameObject->addComponent<TextRenderer>();
       unitTestTextRenderer->setHorizontalAlignment(HorizontalAlignment::kLeft);
       unitTestTextRenderer->addLine(testName);
 
@@ -265,7 +254,7 @@ namespace TestCelesteRuntime
       temp.create();
 
       getMouse().flush();
-      getMouse().getTransform()->setTranslation(glm::vec3());
+      getMouse().getTransform().setTranslation(glm::vec3());
       
       getKeyboard().flush();
     }
@@ -323,7 +312,7 @@ namespace TestCelesteRuntime
               // Test Initialize
               testInitialize(testClass);
 
-              Handle<Screen> screen = Screen::allocate();
+              observer_ptr<Screen> screen = Screen::allocate();
               const_cast<sol::table&>(testClass)["Screen"] = screen;
 
               // Run Test

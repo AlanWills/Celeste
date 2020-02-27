@@ -8,14 +8,14 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.Reflection;
-using CelesteEngineEditor.Extensibility;
+using CelesteEditor.Extensibility;
 using BindingsKernel.Serialization;
 using System.Collections;
-using CelesteEngineEditor.Core;
+using CelesteEditor.Core;
 using BindingsKernel.Objects;
 using DynamicData;
 
-namespace CelesteEngineEditor.Assets
+namespace CelesteEditor.Assets
 {
     public class ScriptableObjectAsset : Asset<ScriptableObject>
     {

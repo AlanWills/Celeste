@@ -10,7 +10,6 @@
 #include "Input/Utils/GlfwKeyConverter.h"
 #include "Screens/Screen.h"
 
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -465,7 +464,7 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     KeyboardVisibility keyboardVisibility;
     keyboardVisibility.setTarget(&gameObject);

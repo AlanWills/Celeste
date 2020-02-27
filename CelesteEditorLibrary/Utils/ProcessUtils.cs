@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace CelesteEngineEditor
+namespace CelesteEditor
 {
     public static class ProcessUtils
     {

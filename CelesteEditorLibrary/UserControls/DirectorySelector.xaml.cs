@@ -1,5 +1,5 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Core;
+using CelesteEditor.Core;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
-namespace CelesteEngineEditor.UserControls
+namespace CelesteEditor.UserControls
 {
     /// <summary>
     /// Interaction logic for DirectorySelector.xaml

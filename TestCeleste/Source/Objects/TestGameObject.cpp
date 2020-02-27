@@ -10,7 +10,6 @@
 #include "Mocks/Rendering/MockSpriteRenderer.h"
 #include "Mocks/Rendering/MockTextRenderer.h"
 #include "AssertCel.h"
-#include "Utils/ObjectUtils.h"
 
 using namespace Celeste;
 
@@ -102,7 +101,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetActive_ToFalse_ShouldSetAllScriptsToAddToInActive)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<MockScript> component1 = gameObject.addComponent<MockScript>();
       AutoDeallocator<MockScript> component2 = gameObject.addComponent<MockScript>();
@@ -122,7 +121,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetActive_ToFalse_ShouldSetAllScriptsToInActive)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<MockScript> component1 = gameObject.addComponent<MockScript>();
       AutoDeallocator<MockScript> component2 = gameObject.addComponent<MockScript>();
@@ -144,7 +143,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetActive_ToFalse_ShouldSetAllComponentsToInActive)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<MockComponent> component1 = gameObject.addComponent<MockComponent>();
       AutoDeallocator<MockComponent> component2 = gameObject.addComponent<MockComponent>();
@@ -166,9 +165,9 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetActive_ToFalse_DoesNotModifyChildGameObjectActiveFlag)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
-      GAMEOBJECT(child2);
+      GameObject gameObject;
+      GameObject child1;
+      GameObject child2;
       
       child1.getTransform()->setParent(gameObject.getTransform());
       child2.getTransform()->setParent(gameObject.getTransform());
@@ -188,7 +187,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetActive_ToTrue_ShouldSetAllScriptsToAddToActive)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<MockScript> component1 = gameObject.addComponent<MockScript>();
       AutoDeallocator<MockScript> component2 = gameObject.addComponent<MockScript>();
@@ -208,7 +207,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetActive_ToTrue_ShouldSetAllScriptsToActive)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<MockScript> component1 = gameObject.addComponent<MockScript>();
       AutoDeallocator<MockScript> component2 = gameObject.addComponent<MockScript>();
@@ -230,7 +229,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetActive_ToTrue_ShouldSetAllComponentsToActive)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<MockComponent> component1 = gameObject.addComponent<MockComponent>();
       AutoDeallocator<MockComponent> component2 = gameObject.addComponent<MockComponent>();
@@ -252,9 +251,9 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetActive_ToTrue_DoesNotModifyChildGameObjectActiveFlag)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
-      GAMEOBJECT(child2);
+      GameObject gameObject;
+      GameObject child1;
+      GameObject child2;
 
       child1.getTransform()->setParent(gameObject.getTransform());
       child2.getTransform()->setParent(gameObject.getTransform());
@@ -287,7 +286,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetParentTransform_WithNullTransformParent_ReturnsNull)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       Assert::IsNotNull(gameObject.getTransform());
       Assert::IsNull(gameObject.getTransform()->getParent());
@@ -297,7 +296,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetParentTransform_WithTransformParent_ReturnsCorrectTransformParent)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       
       AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
       
@@ -322,7 +321,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetConstParentTransform_WithNullTransformParent_ReturnsConstNull)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       const GameObject& cgameObject = gameObject;
 
       Assert::IsNotNull(cgameObject.getTransform());
@@ -333,7 +332,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetConstParentTransform_WithTransformParent_ReturnsCorrectTransformParentConst)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       const GameObject& cgameObject = gameObject;
       AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
@@ -364,9 +363,9 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetParentTransform_InputtingTransform_SetsTransformParentToInput)
     {
-      GAMEOBJECT(parent);
-      GAMEOBJECT(parent2);
-      GAMEOBJECT(gameObject);
+      GameObject parent;
+      GameObject parent2;
+      GameObject gameObject;
 
       Assert::IsNotNull(gameObject.getTransform());
 
@@ -405,8 +404,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetParent_WithTransformParentGameObject_ReturnsCorrectGameObject)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(parentGameObject);
+      GameObject gameObject;
+      GameObject parentGameObject;
      
       AutoDeallocator<Transform> parent = Transform::allocate(parentGameObject);
       gameObject.setParentTransform(parent.get());
@@ -428,7 +427,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetConstParent_WithNullTransformParent_ReturnsConstNull)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       Assert::IsNotNull(gameObject.getTransform());
       Assert::IsNull(gameObject.getParentTransform());
@@ -438,8 +437,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetConstParent_WithTransformParentGameObject_ReturnsCorrectConstGameObject)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(parentGameObject);
+      GameObject gameObject;
+      GameObject parentGameObject;
       
       AutoDeallocator<Transform> parent = Transform::allocate(parentGameObject);
       gameObject.setParentTransform(parent.get());
@@ -456,7 +455,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetParent_WithNullTransform_InputtingGameObject_DoesNothing)
     {
-      GAMEOBJECT(parent);
+      GameObject parent;
       GameObject gameObject;
 
       Assert::IsNull(gameObject.getTransform());
@@ -467,8 +466,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetParent_InputtingNullGameObject_DoesNothing)
     {
-      GAMEOBJECT(parent);
-      GAMEOBJECT(gameObject);
+      GameObject parent;
+      GameObject gameObject;
 
       Assert::IsNotNull(gameObject.getTransform());
 
@@ -484,9 +483,9 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetParent_InputtingGameObject_SetsTransformParentToGameObjectTransform)
     {
-      GAMEOBJECT(parent);
-      GAMEOBJECT(parent2);
-      GAMEOBJECT(gameObject);
+      GameObject parent;
+      GameObject parent2;
+      GameObject gameObject;
 
       Assert::IsNotNull(gameObject.getTransform());
 
@@ -515,7 +514,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetChildCount_NoChildren_ReturnsZero)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       Assert::IsNotNull(gameObject.getTransform());
       Assert::AreEqual((size_t)0, gameObject.getTransform()->getChildCount());
@@ -525,9 +524,9 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetChildCount_WithChildren_ReturnsCorrectChildCount)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
-      GAMEOBJECT(child2);
+      GameObject gameObject;
+      GameObject child1;
+      GameObject child2;
       
       child1.getTransform()->setParent(gameObject.getTransform());
       child2.getTransform()->setParent(gameObject.getTransform());
@@ -553,7 +552,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetChildTransform_NoChildren_ReturnsNullTransform)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       Assert::IsNotNull(gameObject.getTransform());
       Assert::IsNull(gameObject.getTransform()->getChildTransform(0));
@@ -563,9 +562,9 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetChildTransform_WithChildren_ReturnsCorrectTransform)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
-      GAMEOBJECT(child2);
+      GameObject gameObject;
+      GameObject child1;
+      GameObject child2;
       
       child1.getTransform()->setParent(gameObject.getTransform());
       child2.getTransform()->setParent(gameObject.getTransform());
@@ -593,7 +592,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetChildGameObject_NoChildren_ReturnsNullGameObject)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       Assert::IsNotNull(gameObject.getTransform());
       Assert::IsNull(gameObject.getTransform()->getChildGameObject(0));
@@ -603,9 +602,9 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetChildGameObject_WithChildren_ReturnsCorrectGameObject)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
-      GAMEOBJECT(child2);
+      GameObject gameObject;
+      GameObject child1;
+      GameObject child2;
       
       child1.getTransform()->setParent(gameObject.getTransform());
       child2.getTransform()->setParent(gameObject.getTransform());
@@ -644,8 +643,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_FindChildGameObject_StringId_InputtingNameWhichDoesntHaveMatch_ReturnsNull)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
+      GameObject gameObject;
+      GameObject child1;
       
       child1.setParent(&gameObject);
       child1.setName("Test_2");
@@ -657,8 +656,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_FindChildGameObject_StringId_InputtingNameWhichDoesHaveMatch_ReturnsGameObject)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
+      GameObject gameObject;
+      GameObject child1;
       
       child1.setParent(&gameObject);
       child1.setName("Test");
@@ -670,9 +669,9 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_FindChildGameObject_StringId_InputtingNameWhichDoesHaveMultipleMatchs_ReturnsFirstMatchingGameObject)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
-      GAMEOBJECT(child2);
+      GameObject gameObject;
+      GameObject child1;
+      GameObject child2;
       
       child1.setParent(&gameObject);
       child1.setName("Test");
@@ -708,8 +707,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_FindChildGameObject_String_InputtingNameWhichDoesntHaveMatch_ReturnsNull)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
+      GameObject gameObject;
+      GameObject child1;
       
       child1.setParent(&gameObject);
       child1.setName("Test_2");
@@ -721,8 +720,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_FindChildGameObject_String_InputtingNameWhichDoesHaveMatch_ReturnsGameObject)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
+      GameObject gameObject;
+      GameObject child1;
       
       child1.setParent(&gameObject);
       child1.setName("Test");
@@ -734,9 +733,9 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_FindChildGameObject_String_InputtingNameWhichDoesHaveMultipleMatchs_ReturnsFirstMatchingGameObject)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
-      GAMEOBJECT(child2);
+      GameObject gameObject;
+      GameObject child1;
+      GameObject child2;
       
       child1.setParent(&gameObject);
       child1.setName("Test");
@@ -772,7 +771,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_ForEach_TransformHasNoChildren_PerformsNoIteration)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       Assert::IsNotNull(gameObject.getTransform());
       Assert::AreEqual((size_t)0, gameObject.getTransform()->getChildCount());
@@ -789,9 +788,9 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_ForEach_TransformHasChildren_PerformsIterationOverEachChildTransformsGameObject)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child1);
-      GAMEOBJECT(child2);
+      GameObject gameObject;
+      GameObject child1;
+      GameObject child2;
       
       child1.setParent(&gameObject);
       child2.setParent(&gameObject);
@@ -811,11 +810,10 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Constructor_Sets_ActiveAndAliveToTrue)
+    TEST_METHOD(GameObject_Constructor_Sets_ActiveToTrue)
     {
       MockGameObject gameObject;
 
-      Assert::IsTrue(gameObject.isAlive());
       Assert::IsTrue(gameObject.isActive());
     }
 
@@ -873,14 +871,13 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_HasComponent_NonScriptComponentWhichIsDead_ShouldReturnFalse)
+    TEST_METHOD(GameObject_HasComponent_NonScriptComponentWhichWasDeallocated_ShouldReturnFalse)
     {
       GameObject gameObject;
 
       AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
-      component->die();
+      component->deallocate();
 
-      AssertCel::IsNotAlive(component.get());
       Assert::IsFalse(gameObject.hasComponent<MockComponent>());
     }
 
@@ -902,14 +899,13 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_HasComponent_ScriptComponentWhichIsDead_ShouldReturnFalse)
+    TEST_METHOD(GameObject_HasComponent_ScriptComponentWhichIsDeallocated_ShouldReturnFalse)
     {
       GameObject gameObject;
 
       AutoDeallocator<MockScript> component = gameObject.addComponent<MockScript>();
-      component->die();
+      component->deallocate();
 
-      AssertCel::IsNotAlive(component.get());
       Assert::IsFalse(gameObject.hasComponent<MockScript>());
     }
 
@@ -1018,14 +1014,13 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindComponent_WithNonScriptComponentThatIsDead_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindComponent_WithNonScriptComponentThatIsDeallocated_ShouldntFindComponent)
     {
       GameObject gameObject;
 
       AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
-      component->die();
+      component->deallocate();
 
-      AssertCel::IsNotAlive(component.get());
       Assert::IsNull(gameObject.findComponent<MockComponent>());
     }
 
@@ -1047,14 +1042,13 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindComponent_WithScriptComponentThatIsDead_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindComponent_WithScriptComponentThatIsDeallocated_ShouldntFindComponent)
     {
       GameObject gameObject;
 
       AutoDeallocator<MockScript> component = gameObject.addComponent<MockScript>();
-      component->die();
+      component->deallocate();
 
-      AssertCel::IsNotAlive(component.get());
       Assert::IsNull(gameObject.findComponent<MockScript>());
     }
 
@@ -1083,14 +1077,13 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindConstComponent_WithNonScriptComponentThatIsDead_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindConstComponent_WithNonScriptComponentThatIsDeallocated_ShouldntFindComponent)
     {
       GameObject gameObject;
 
       AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
-      component->die();
+      component->deallocate();
 
-      AssertCel::IsNotAlive(component.get());
       Assert::IsNull(static_cast<const GameObject*>(&gameObject)->findComponent<MockComponent>());
     }
 
@@ -1114,14 +1107,13 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindConstComponent_WithScriptComponentThatIsDead_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindConstComponent_WithScriptComponentThatIsDeallocated_ShouldntFindComponent)
     {
       GameObject gameObject;
 
       AutoDeallocator<MockScript> component = gameObject.addComponent<MockScript>();
-      component->die();
+      component->deallocate();
 
-      AssertCel::IsNotAlive(component.get());
       Assert::IsNull(static_cast<const GameObject*>(&gameObject)->findComponent<MockScript>());
     }
 
@@ -1130,23 +1122,21 @@ namespace TestCeleste
 #pragma region Find Component With Predicate Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindComponentWithPredicate_WithNonScriptComponent_ShouldFindComponent)
+    TEST_METHOD(GameObject_FindComponentWithPredicate_WithMatchingNonScriptComponent_ReturnsCorrectPtr)
     {
       GameObject gameObject;
       AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
 
-      Assert::IsTrue(component->isAlive());
-
       auto predicate = [](const MockComponent* component) -> bool
       {
-        return component->isAlive();
+        return true;
       };
 
       Assert::IsTrue(gameObject.findComponent<MockComponent>(predicate) == component.get());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindComponentWithPredicate_WithNonScriptComponent_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindComponentWithPredicate_WithNoMatchingNonScriptComponent_ReturnsNullptr)
     {
       GameObject gameObject;
 
@@ -1155,24 +1145,20 @@ namespace TestCeleste
 
       AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
 
-      Assert::IsTrue(component->isAlive());
-
       auto predicate = [](const MockComponent* component) -> bool
       {
-        return !component->isAlive();
+        return false;
       };
 
       Assert::IsNull(gameObject.findComponent<MockComponent>(predicate));
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindComponentWithPredicate_WithNonScriptComponentThatIsDead_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindComponentWithPredicate_WithNonScriptComponentThatIsDeallocated_ReturnsNullptr)
     {
       GameObject gameObject;
       AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
-      component->die();
-
-      AssertCel::IsNotAlive(component.get());
+      component->deallocate();
 
       auto predicate = [](const MockComponent* component) -> bool
       {
@@ -1183,23 +1169,21 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindComponentWithPredicate_WithScriptComponent_ShouldFindComponent)
+    TEST_METHOD(GameObject_FindComponentWithPredicate_WithMatchingScriptComponent_ReturnsCorrectPtr)
     {
       GameObject gameObject;
       AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
 
-      Assert::IsTrue(script->isAlive());
-
       auto predicate = [](const MockScript* script) -> bool
       {
-        return script->isAlive();
+        return true;
       };
 
       Assert::IsTrue(gameObject.findComponent<MockScript>() == script.get());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindComponentWithPredicate_WithScriptComponent_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindComponentWithPredicate_WithNoMatchingScriptComponent_ReturnsNullptr)
     {
       GameObject gameObject;
 
@@ -1207,24 +1191,20 @@ namespace TestCeleste
 
       AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
 
-      Assert::IsTrue(script->isAlive());
-
       auto predicate = [](const MockScript* script) -> bool
       {
-        return !script->isAlive();
+        return false;
       };
 
       Assert::IsNull(gameObject.findComponent<MockScript>(predicate));
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindComponentWithPredicate_WithScriptComponentThatIsDead_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindComponentWithPredicate_WithScriptComponentThatIsDeallocated_ReturnsNullptr)
     {
       GameObject gameObject;
       AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
-      script->die();
-
-      AssertCel::IsNotAlive(script.get());
+      script->deallocate();
 
       auto predicate = [](const MockScript* script) -> bool
       {
@@ -1239,16 +1219,14 @@ namespace TestCeleste
 #pragma region Find Const Component With Predicate Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithNonScriptComponent_ShouldFindComponent)
+    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithMatchingNonScriptComponent_ReturnsCorrectPtr)
     {
       GameObject gameObject;
       AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
 
-      Assert::IsTrue(component->isAlive());
-
       auto predicate = [](const MockComponent* component) -> bool
       {
-        return component->isAlive();
+        return true;
       };
 
       const MockComponent* handle = static_cast<const GameObject*>(&gameObject)->findComponent<MockComponent>(predicate);
@@ -1257,7 +1235,7 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithNonScriptComponent_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithNoMatchingNonScriptComponent_ReturnsNullptr)
     {
       GameObject gameObject;
 
@@ -1269,11 +1247,9 @@ namespace TestCeleste
 
       AutoDeallocator<MockComponent> component2 = gameObject.addComponent<MockComponent>();
 
-      Assert::IsTrue(component2->isAlive());
-
       auto predicate = [](const MockComponent* component) -> bool
       {
-        return !component->isAlive();
+        return false;
       };
 
       const MockComponent* result2 = static_cast<const GameObject*>(&gameObject)->findComponent<MockComponent>(predicate);
@@ -1282,13 +1258,11 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithNonScriptComponentThatIsDead_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithNonScriptComponentThatIsDeallocated_ReturnsNullptr)
     {
       GameObject gameObject;
       AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
-      component->die();
-
-      AssertCel::IsNotAlive(component.get());
+      component->deallocate();
 
       auto predicate = [](const MockComponent* component) -> bool
       {
@@ -1299,16 +1273,14 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithScriptComponent_ShouldFindComponent)
+    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithMatchingScriptComponent_ReturnsCorrectPtr)
     {
       GameObject gameObject;
       AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
 
-      AssertCel::IsAlive(script.get());
-
       auto predicate = [](const MockScript* component) -> bool
       {
-        return component->isAlive();
+        return true;
       };
 
       const MockScript* handle = static_cast<const GameObject*>(&gameObject)->findComponent<MockScript>(predicate);
@@ -1317,7 +1289,7 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithScriptComponent_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithNoMatchingScriptComponent_ReturnsNullptr)
     {
       GameObject gameObject;
 
@@ -1327,11 +1299,9 @@ namespace TestCeleste
 
       AutoDeallocator<MockScript> component2 = gameObject.addComponent<MockScript>();
 
-      Assert::IsTrue(component2->isAlive());
-
       auto predicate = [](const MockScript* component) -> bool
       {
-        return !component->isAlive();
+        return false;
       };
 
       const MockScript* result2 = static_cast<const GameObject*>(&gameObject)->findComponent<MockScript>(predicate);
@@ -1340,13 +1310,11 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithScriptComponentThatIsDead_ShouldntFindComponent)
+    TEST_METHOD(GameObject_FindConstComponentWithPredicate_WithScriptComponentThatIsDeallocated_ReturnsNullptr)
     {
       GameObject gameObject;
       AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
-      script->die();
-
-      AssertCel::IsNotAlive(script.get());
+      script->deallocate();
 
       auto predicate = [](const MockScript* component) -> bool
       {
@@ -1373,24 +1341,24 @@ namespace TestCeleste
       GameObject gameObject;
       MockComponent component;
 
-      AssertCel::IsAlive(component);
+      AssertCel::IsActive(component);
       Assert::AreNotEqual(&gameObject, component.getGameObject());
 
       gameObject.removeComponent(&component);
 
-      AssertCel::IsAlive(component);
+      AssertCel::IsActive(component);
 
-      GAMEOBJECT(gameObject2);
+      GameObject gameObject2;
       AutoDeallocator<MockComponent> component2 = gameObject2.addComponent<MockComponent>();
 
       Assert::IsNotNull(component2.get());
-      AssertCel::IsAlive(component2.get());
+      AssertCel::IsActive(component2.get());
       Assert::AreNotEqual(&gameObject, component2.get()->getGameObject());
 
       gameObject.removeComponent(component2.get());
 
       Assert::IsNotNull(component2.get());
-      AssertCel::IsAlive(component2.get());
+      AssertCel::IsActive(component2.get());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -1400,14 +1368,14 @@ namespace TestCeleste
       AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
 
       Assert::IsNotNull(component.get());
-      AssertCel::IsAlive(component.get());
+      AssertCel::IsActive(component.get());
       Assert::AreEqual(&gameObject, component.get()->getGameObject());
       AssertCel::HasComponent<MockComponent>(gameObject);
 
       gameObject.removeComponent(component.get());
 
       Assert::IsNotNull(component.get());
-      AssertCel::IsAlive(component.get());
+      AssertCel::IsActive(component.get());
       Assert::AreEqual(&gameObject, component.get()->getGameObject());
       AssertCel::DoesNotHaveComponent<MockComponent>(gameObject);
     }
@@ -1420,14 +1388,14 @@ namespace TestCeleste
       gameObject.update(0);   // Make sure it's added
 
       Assert::IsNotNull(script.get());
-      AssertCel::IsAlive(script.get());
+      AssertCel::IsActive(script.get());
       Assert::AreEqual(&gameObject, script.get()->getGameObject());
       AssertCel::HasComponent<MockScript>(gameObject);
 
       gameObject.removeComponent(script.get());
 
       Assert::IsNotNull(script.get());
-      AssertCel::IsAlive(script.get());
+      AssertCel::IsActive(script.get());
       Assert::AreEqual(&gameObject, script.get()->getGameObject());
       AssertCel::DoesNotHaveComponent<MockScript>(gameObject);
     }
@@ -1439,14 +1407,14 @@ namespace TestCeleste
       AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
 
       Assert::IsNotNull(script.get());
-      AssertCel::IsAlive(script.get());
+      AssertCel::IsActive(script.get());
       Assert::AreEqual(&gameObject, script.get()->getGameObject());
       AssertCel::HasComponent<MockScript>(gameObject);
 
       gameObject.removeComponent(script.get());
 
       Assert::IsNotNull(script.get());
-      AssertCel::IsAlive(script.get());
+      AssertCel::IsActive(script.get());
       Assert::AreEqual(&gameObject, script.get()->getGameObject());
       AssertCel::DoesNotHaveComponent<MockScript>(gameObject);
     }
@@ -1540,7 +1508,7 @@ namespace TestCeleste
 #pragma region Update Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Update_CallsUpdateOnAllAliveScripts_WhichAreActive)
+    TEST_METHOD(GameObject_Update_CallsUpdateOnAllScripts_WhichAreActive)
     {
       GameObject gameObject;
       AutoDeallocator<MockScript> script1 = gameObject.addComponent<MockScript>();
@@ -1548,12 +1516,11 @@ namespace TestCeleste
       AutoDeallocator<MockScript> script3 = gameObject.addComponent<MockScript>();
 
       script2->setActive(false);
-      script3->die();
       gameObject.update(0);
 
       Assert::IsTrue(script1->updateCalled());
       Assert::IsFalse(script2->updateCalled());
-      Assert::IsFalse(script3->updateCalled());
+      Assert::IsTrue(script3->updateCalled());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -1700,316 +1667,26 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_SetsActiveToFalse)
-    {
-      MockGameObject gameObject;
-
-      Assert::IsTrue(gameObject.isActive());
-
-      gameObject.die();
-
-      Assert::IsFalse(gameObject.isActive());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_SetsNameToZero)
-    {
-      GameObject gameObject;
-      gameObject.setName("Test");
-
-      Assert::AreNotEqual(static_cast<StringId>(0), gameObject.getName());
-
-      gameObject.die();
-
-      Assert::AreEqual(static_cast<StringId>(0), gameObject.getName());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_SetsTagToZero)
-    {
-      GameObject gameObject;
-      gameObject.setTag("Test");
-
-      Assert::AreNotEqual(static_cast<StringId>(0), gameObject.getTag());
-
-      gameObject.die();
-
-      Assert::AreEqual(static_cast<StringId>(0), gameObject.getTag());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_DeallocatesAndResetsTransform)
-    {
-      GameObject gameObject;
-
-      Assert::IsNotNull(gameObject.getTransform());
-
-      gameObject.die();
-
-      Assert::IsNull(gameObject.getTransform());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_CallsDieOnAllChildGameObjects)
-    {
-      GameObject gameObject;
-      GameObject child1;
-      GameObject child2;
-      child1.setParent(&gameObject);
-      child2.setParent(&gameObject);
-      
-      Assert::AreEqual((size_t)2, gameObject.getChildCount());
-      AssertCel::IsAlive(child1);
-      AssertCel::IsAlive(child2);
-
-      gameObject.die();
-
-      AssertCel::IsNotAlive(child1);
-      AssertCel::IsNotAlive(child2);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_CallsDieOnAllUnmanagedComponentsToAdd)
-    {
-      GameObject gameObject;
-      AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
-
-      Assert::IsTrue(script->isAlive());
-      Assert::IsNotNull(script->getGameObject());
-      Assert::IsTrue(gameObject.hasComponent<MockScript>());
-
-      gameObject.die();
-
-      // Script will be dead so won't be found by this function
-      Assert::IsFalse(gameObject.hasComponent<MockScript>());
-      Assert::IsNotNull(script.get());
-      AssertCel::IsNotAlive(script.get());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_CallsDieOnAllUnmanagedComponents)
-    {
-      GameObject gameObject;
-      AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
-      gameObject.update(0); // Do this to ensure the component is added to the unmanaged components
-
-      Assert::IsTrue(script->isAlive());
-      Assert::IsNotNull(script->getGameObject());
-      Assert::IsTrue(gameObject.hasComponent<MockScript>());
-
-      gameObject.die();
-
-      // Script will be dead so won't be found by this function
-      Assert::IsFalse(gameObject.hasComponent<MockScript>());
-      Assert::IsNotNull(script.get());
-      AssertCel::IsNotAlive(script.get());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_WithDeadUnmanagedComponent_DoesNotCallDieAgain)
-    {
-      GameObject gameObject;
-      AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
-      gameObject.update(0); // Do this to ensure the component is added to the unmanaged components
-
-      Assert::IsTrue(script->isAlive());
-      Assert::IsNotNull(script->getGameObject());
-
-      script->die();
-
-      Assert::IsFalse(script->isAlive());
-      Assert::IsTrue(script->onDeathCalled());
-
-      script->reset();
-
-      Assert::IsFalse(script->onDeathCalled());
-
-      gameObject.die();
-
-      Assert::IsNotNull(script.get());
-      Assert::IsFalse(script->onDeathCalled());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_WithAlreadyDeallocatedUnmanagedComponent_DoesNotThrow)
-    {
-      GameObject gameObject;
-      AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
-      gameObject.update(0); // Do this to ensure the component is added to the unmanaged components
-
-      Assert::IsTrue(script->isAlive());
-      Assert::IsNotNull(script->getGameObject());
-      AssertCel::HasComponent<MockScript>(gameObject);
-
-      script->deallocate();
-
-      AssertCel::DoesNotHaveComponent<MockScript>(gameObject);
-
-      gameObject.die();
-
-      AssertCel::DoesNotHaveComponent<MockScript>(gameObject);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_CallsDieOnAllManagedComponents)
-    {
-      GameObject gameObject;
-      AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
-
-      Assert::IsTrue(component->isAlive());
-      Assert::IsNotNull(component->getGameObject());
-      Assert::IsTrue(gameObject.hasComponent<MockComponent>());
-
-      gameObject.die();
-
-      AssertCel::IsNotAlive(component.get());
-      AssertCel::IsNotActive(component.get());
-      Assert::IsNull(component->getGameObject());
-      Assert::IsFalse(gameObject.hasComponent<MockComponent>());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_WithDeadManagedComponent_DoesNotCallDieAgain)
-    {
-      GameObject gameObject;
-      AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
-
-      Assert::IsTrue(component->isAlive());
-      Assert::IsNotNull(component->getGameObject());
-
-      component->die();
-      component->setActive(true);
-
-      AssertCel::IsActive(component.get());
-      AssertCel::IsNotAlive(component.get());
-
-      gameObject.die();
-
-      // If die had been called again, this would be false
-      AssertCel::IsActive(component.get());
-      AssertCel::IsNotAlive(component.get());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_WithAlreadyDeallocatedNonScriptComponent_DoesNotThrow)
-    {
-      GameObject gameObject;
-      MockComponent* component = gameObject.addComponent<MockComponent>();
-
-      Assert::IsTrue(component->isAlive());
-      Assert::IsNotNull(component->getGameObject());
-      AssertCel::HasComponent<MockComponent>(gameObject);
-
-      MockComponent::getAllocator().deallocate(*component);
-
-      AssertCel::DoesNotHaveComponent<MockComponent>(gameObject);
-
-      // Check this doesn't throw
-      gameObject.die();
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_WithAlreadyDeallocatedScriptComponent_DoesNotThrow)
-    {
-      GameObject gameObject;
-      MockScript* script = gameObject.addComponent<MockScript>();
-
-      Assert::IsTrue(script->isAlive());
-      Assert::IsNotNull(script->getGameObject());
-      AssertCel::HasComponent<MockScript>(gameObject);
-
-      // Update the game object to add the script
-      gameObject.update(0);
-      script->deallocate();
-
-      AssertCel::DoesNotHaveComponent<MockScript>(gameObject);
-
-      // Check this doesn't throw
-      gameObject.die();
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_WithAlreadyDeallocatedScriptComponentToAdd_DoesNotThrow)
-    {
-      GameObject gameObject;
-      MockScript* script = gameObject.addComponent<MockScript>();
-
-      Assert::IsTrue(script->isAlive());
-      Assert::IsNotNull(script->getGameObject());
-      AssertCel::HasComponent<MockScript>(gameObject);
-
-      script->deallocate();
-
-      AssertCel::DoesNotHaveComponent<MockScript>(gameObject);
-
-      // Check this doesn't throw
-      gameObject.die();
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Die_ClearsAllComponents)
-    {
-      GameObject gameObject;
-      MockScript* script = gameObject.addComponent<MockScript>();
-      AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
-
-      Assert::AreEqual(static_cast<size_t>(2), gameObject.getComponentCount());
-
-      gameObject.die();
-    
-      Assert::AreEqual(static_cast<size_t>(0), gameObject.getComponentCount());
-    }
-
-#pragma endregion
-
 #pragma region Deallocate Tests
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_Deallocate_WithNoScreen_AndDead_ReturnsFalse)
     {
       GameObject gameObject;
-      gameObject.die();
+      gameObject.deallocate();
 
       Assert::IsNull(gameObject.getScreen());
-      Assert::IsFalse(gameObject.isAlive());
       Assert::IsFalse(gameObject.deallocate());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Deallocate_WithNoScreen_AndAlive_ReturnsFalseAndLeavesGameObjectAlive)
-    {
-      GameObject gameObject;
-
-      Assert::IsNull(gameObject.getScreen());
-      Assert::IsTrue(gameObject.isAlive());
-      Assert::IsFalse(gameObject.deallocate());
-      Assert::IsTrue(gameObject.isAlive());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Deallocate_WithScreenAndDead_DeallocatesObject_ReturnsTrue)
-    {
-      AutoDeallocator<Screen> screen = Screen::allocate();
-      AutoDeallocator<GameObject> gameObject = screen->allocateGameObject();
-      gameObject->die();
-
-      Assert::IsNotNull(gameObject->getScreen());
-      Assert::IsFalse(gameObject->isAlive());
-      Assert::IsTrue(gameObject->deallocate());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_Deallocate_WithScreenAndAlive_DeallocatesObject_ReturnsTrue)
+    TEST_METHOD(GameObject_Deallocate_WithScreen_DeallocatesObject_ReturnsTrue)
     {
       AutoDeallocator<Screen> screen = Screen::allocate();
       AutoDeallocator<GameObject> gameObject = screen->allocateGameObject();
       const GameObject* ptr = gameObject.get();
 
       Assert::IsNotNull(gameObject->getScreen());
-      Assert::IsTrue(gameObject->isAlive());
       Assert::IsTrue(gameObject->deallocate());
     }
 
@@ -2018,7 +1695,6 @@ namespace TestCeleste
     {
       GameObject gameObject;
 
-      Assert::IsTrue(gameObject.isAlive());
       Assert::IsFalse(gameObject.deallocate());
     }
 
@@ -2039,7 +1715,7 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_AllocateGameObjectInScreen_WithScreenSet_ShouldReturnInitializedGameObject_WithScreenSetToSame)
+    TEST_METHOD(GameObject_AllocateGameObjectInScreen_WithScreenSet_ShouldReturnAllocatedGameObject_WithScreenSetToSame)
     {
       Screen screen;
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
@@ -2049,7 +1725,6 @@ namespace TestCeleste
       AutoDeallocator<GameObject> createdGameObject = gameObject->allocateGameObjectInScreen();
 
       Assert::IsNotNull(createdGameObject.get());
-      AssertCel::IsAlive(createdGameObject.get());
       AssertCel::IsActive(createdGameObject.get());
       Assert::IsNotNull(createdGameObject->getTransform());
       Assert::IsTrue(&screen == createdGameObject->getScreen());
@@ -2069,7 +1744,7 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_AllocateGameObjectInScreen_WithScreenSet_InputtingTransform_ShouldReturnInitializedGameObject_WithScreenSetToSame_AndTransformParentSetToInput)
+    TEST_METHOD(GameObject_AllocateGameObjectInScreen_WithScreenSet_InputtingTransform_ShouldReturnGameObject_WithScreenSetToSame_AndTransformParentSetToInput)
     {
       Screen screen;
       Transform transform;
@@ -2080,7 +1755,6 @@ namespace TestCeleste
       AutoDeallocator<GameObject> createdGameObject = gameObject->allocateGameObjectInScreen(transform);
 
       Assert::IsNotNull(createdGameObject.get());
-      AssertCel::IsAlive(createdGameObject.get());
       AssertCel::IsActive(createdGameObject.get());
       Assert::IsNotNull(createdGameObject->getTransform());
       Assert::AreEqual(&transform, createdGameObject->getTransform()->getParent());

@@ -11,7 +11,6 @@
 #include "Mocks/Resources/Data/MockPrefab.h"
 #include "Screens/Screen.h"
 
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;

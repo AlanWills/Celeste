@@ -1,8 +1,8 @@
 ﻿using System.Windows.Controls;
 using System.Windows;
-using CelesteEngineEditor.Views;
+using CelesteEditor.Views;
 
-namespace CelesteEngineEditor.Windows
+namespace CelesteEditor.Windows
 {
     /// <summary>
     /// Interaction logic for ViewHostWindow.xaml

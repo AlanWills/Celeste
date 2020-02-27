@@ -1,5 +1,5 @@
-﻿using CelesteEngineEditor.Assets;
-using CelesteEngineEditor.Core;
+﻿using CelesteEditor.Assets;
+using CelesteEditor.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.AssetLoaders
+namespace CelesteEditor.AssetLoaders
 {
     public abstract class AssetLoader
     {

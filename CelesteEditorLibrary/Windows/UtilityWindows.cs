@@ -1,8 +1,8 @@
-﻿using CelesteEngineEditor.Views;
+﻿using CelesteEditor.Views;
 using System;
-using static CelesteEngineEditor.Windows.EditorWindow;
+using static CelesteEditor.Windows.EditorWindow;
 
-namespace CelesteEngineEditor.Windows
+namespace CelesteEditor.Windows
 {
     /// <summary>
     /// A class which wraps up set up logic for various windows throughout our application

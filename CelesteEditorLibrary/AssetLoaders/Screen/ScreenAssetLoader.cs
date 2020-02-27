@@ -1,9 +1,9 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Assets;
-using CelesteEngineEditor.Extensibility;
+using CelesteEditor.Assets;
+using CelesteEditor.Extensibility;
 using System.IO;
 
-namespace CelesteEngineEditor.AssetLoaders
+namespace CelesteEditor.AssetLoaders
 {
     public class ScreenAssetLoader : AssetLoader
     {

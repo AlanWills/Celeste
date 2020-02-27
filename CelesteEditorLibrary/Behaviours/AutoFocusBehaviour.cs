@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace CelesteEngineEditor.Behaviours
+namespace CelesteEditor.Behaviours
 {
 	public class AutoFocusBehaviour : Behavior<UIElement>
 	{

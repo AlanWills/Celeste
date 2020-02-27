@@ -4,7 +4,6 @@
 #include "Memory/Allocators/PoolAllocator.h"
 #include "Mocks/Objects/MockComponent.h"
 #include "AssertCel.h"
-#include "Utils/ObjectUtils.h"
 
 using namespace Celeste;
 
@@ -18,13 +17,12 @@ namespace TestCeleste
 #pragma region Allocate Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Allocate_WithSpaceInAllocator_ReturnsAlivePtr)
+    TEST_METHOD(EntityAllocator_Allocate_WithSpaceInAllocator_ReturnsAllocatedPtr)
     {
       EntityAllocator<MockComponent> allocator(10);
       observer_ptr<MockComponent> handle = allocator.allocate();
 
       Assert::IsNotNull(handle);
-      Assert::IsTrue(handle->isAlive());
       Assert::AreEqual((size_t)1, allocator.size());
     }
 
@@ -51,27 +49,21 @@ namespace TestCeleste
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
       Assert::IsNotNull(handle);
-      Assert::IsTrue(handle->isAlive());
-
       Assert::IsNotNull(handle2);
-      Assert::IsTrue(handle2->isAlive());
-
       Assert::IsNotNull(handle3);
-      Assert::IsTrue(handle3->isAlive());
-
       Assert::IsFalse(handle == handle2);
       Assert::AreEqual((size_t)3, allocator.size());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Allocate_PreviouslyDeallocatedObject_ObjectNowAlive)
+    TEST_METHOD(EntityAllocator_Allocate_PreviouslyDeallocatedObject_ObjectReallocated)
     {
       EntityAllocator<MockComponent> allocator(10);
       observer_ptr<MockComponent> handle = allocator.allocate();
 
       allocator.deallocate(*handle);
 
-      Assert::IsFalse(handle->isAlive());
+      Assert::IsFalse(allocator.isAllocated(*handle));
       Assert::AreEqual((size_t)0, allocator.size());
 
       observer_ptr<MockComponent> handle2 = allocator.allocate();
@@ -79,7 +71,7 @@ namespace TestCeleste
       Assert::AreEqual((size_t)1, allocator.size());
       Assert::IsNotNull(handle2);
       Assert::IsTrue(handle == handle2);
-      Assert::IsTrue(handle->isAlive());
+      Assert::IsTrue(allocator.isAllocated(*handle));
     }
 
 #pragma endregion
@@ -92,10 +84,10 @@ namespace TestCeleste
       EntityAllocator<MockComponent> allocator(1);
       MockComponent component;
 
-      Assert::IsTrue(component.isAlive());
+      Assert::IsTrue(component.isActive());
       Assert::IsFalse(allocator.contains(component));
       Assert::IsFalse(allocator.deallocate(component));
-      Assert::IsTrue(component.isAlive());
+      Assert::IsTrue(component.isActive());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -104,28 +96,15 @@ namespace TestCeleste
       EntityAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle = allocator.allocate();
 
-      Assert::IsTrue(handle->isAlive());
       Assert::IsTrue(handle->isActive());
       Assert::AreEqual((size_t)1, allocator.size());
+      Assert::IsTrue(allocator.isAllocated(*handle));
 
       Assert::IsTrue(allocator.deallocate(*handle));
 
-      Assert::IsFalse(handle->isAlive());
       Assert::IsFalse(handle->isActive());
       Assert::AreEqual((size_t)0, allocator.size());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Deallocate_AllocatedObject_CallsDieIfNecessary)
-    {
-      EntityAllocator<MockComponent> allocator(1);
-      observer_ptr<MockComponent> handle = allocator.allocate();
-
-      Assert::IsTrue(handle->isAlive());
-      Assert::IsFalse(handle->onDeathCalled());
-      Assert::IsTrue(allocator.deallocate(*handle));
-      Assert::IsFalse(handle->isAlive());
-      Assert::IsTrue(handle->onDeathCalled());
+      Assert::IsFalse(allocator.isAllocated(*handle));
     }
 
 #pragma endregion
@@ -148,10 +127,6 @@ namespace TestCeleste
 
       Assert::AreEqual((size_t)3, allocator.size());
 
-      handle->die();
-
-      Assert::AreEqual((size_t)3, allocator.size());
-
       allocator.allocate();
 
       Assert::AreEqual((size_t)4, allocator.size());
@@ -166,7 +141,7 @@ namespace TestCeleste
 #pragma region Begin Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Begin_ReturnsFirstAllocatedAndAliveObject)
+    TEST_METHOD(EntityAllocator_Begin_ReturnsFirstAllocatedObject)
     {
       EntityAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
@@ -181,16 +156,10 @@ namespace TestCeleste
       it = allocator.begin();
 
       Assert::AreSame(*handle2, *it);
-
-      // Kill an object, but keep it allocated
-      handle2->die();
-      it = allocator.begin();
-
-      Assert::AreSame(*handle3, *it);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_BeginOnConst_ReturnsConstFirstAllocatedAndAliveObject)
+    TEST_METHOD(EntityAllocator_BeginOnConst_ReturnsConstFirstAllocatedObject)
     {
       EntityAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
@@ -205,16 +174,10 @@ namespace TestCeleste
       it = (static_cast<const EntityAllocator<MockComponent>&>(allocator).begin());
 
       Assert::AreSame(*handle2, *it);
-
-      // Kill an object, but keep it allocated
-      handle2->die();
-      it = (static_cast<const EntityAllocator<MockComponent>&>(allocator).begin());
-
-      Assert::AreSame(*handle3, *it);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_CBegin_ReturnsConstFirstAllocatedAndAliveObject)
+    TEST_METHOD(EntityAllocator_CBegin_ReturnsConstFirstAllocatedObject)
     {
       EntityAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
@@ -229,12 +192,6 @@ namespace TestCeleste
       it = allocator.cbegin();
 
       Assert::AreSame(*handle2, *it);
-
-      // Kill an object, but keep it allocated
-      handle2->die();
-      it = allocator.cbegin();
-
-      Assert::AreSame(*handle3, *it);
     }
 
     //------------------------------------------------------------------------------------------------
@@ -258,14 +215,14 @@ namespace TestCeleste
 #pragma region Foreach Iteration
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ForeachIteration_AllPoolAllocated_IteratesOverAllocatedAliveObjectsOnly)
+    TEST_METHOD(EntityAllocator_ForeachIteration_AllPoolAllocated_IteratesOverAllocatedObjectsOnly)
     {
       EntityAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
-      // 3 alive objects
+      // 3 allocated objects
       {
         int count = 0;
         for (const MockComponent& component : allocator)
@@ -289,9 +246,9 @@ namespace TestCeleste
         Assert::AreEqual(2, count);
       }
 
-      // Now kill another object
+      // Now deallocate another object
       {
-        handle2->die();
+        handle2->deallocate();
 
         int count = 0;
         for (const MockComponent& component : allocator)
@@ -304,14 +261,14 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ForeachIteration_PoolResizeOccurred_IteratesOverAllocatedAliveObjectsOnly)
+    TEST_METHOD(EntityAllocator_ForeachIteration_PoolResizeOccurred_IteratesOverAllocatedObjectsOnly)
     {
       EntityAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
-      // 3 alive objects
+      // 3 allocated objects
       {
         int count = 0;
         for (const MockComponent& component : allocator)
@@ -335,9 +292,9 @@ namespace TestCeleste
         Assert::AreEqual(2, count);
       }
 
-      // Now kill another object
+      // Now deallocate another object
       {
-        handle2->die();
+        handle2->deallocate();
 
         int count = 0;
         for (const MockComponent& component : allocator)
@@ -354,18 +311,18 @@ namespace TestCeleste
 #pragma region Find Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Find_NoResizeOccurred_OnlySearchesThroughAllocatedAndAliveObjects)
+    TEST_METHOD(EntityAllocator_Find_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
       EntityAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
-      Assert::IsTrue(handle1->isAlive());
-      Assert::IsTrue(handle2->isAlive());
-      Assert::IsTrue(handle3->isAlive());
+      Assert::IsTrue(allocator.isAllocated(*handle1));
+      Assert::IsTrue(allocator.isAllocated(*handle2));
+      Assert::IsTrue(allocator.isAllocated(*handle3));
 
-      // All three objects alive and allocated
+      // All three objects allocated
       {
         observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
 
@@ -373,9 +330,9 @@ namespace TestCeleste
         Assert::AreEqual(handle1, foundObject);
       }
 
-      // 2 alive objects
+      // 2 allocated objects
       {
-        handle1->die();
+        handle1->deallocate();
 
         observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
 
@@ -383,7 +340,7 @@ namespace TestCeleste
         Assert::AreEqual(handle2, foundObject);
       }
 
-      // 1 alive object
+      // 1 allocated object
       {
         // Have to get the allocator to deallocate, since this component is not from the static MockComponent allocator
         allocator.deallocate(*handle2);
@@ -396,18 +353,18 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Find_ResizeOccurred_OnlySearchesThroughAllocatedAndAliveObjects)
+    TEST_METHOD(EntityAllocator_Find_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
       EntityAllocator<MockComponent> allocator(2);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
-      Assert::IsTrue(handle1->isAlive());
-      Assert::IsTrue(handle2->isAlive());
-      Assert::IsTrue(handle3->isAlive());
+      Assert::IsTrue(allocator.isAllocated(*handle1));
+      Assert::IsTrue(allocator.isAllocated(*handle2));
+      Assert::IsTrue(allocator.isAllocated(*handle3));
 
-      // All three objects alive and allocated
+      // All three objects allocated
       {
         observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
 
@@ -415,9 +372,9 @@ namespace TestCeleste
         Assert::AreEqual(handle1, foundObject);
       }
 
-      // 2 alive objects
+      // 2 allocated objects
       {
-        handle1->die();
+        handle1->deallocate();
 
         observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
 
@@ -425,7 +382,7 @@ namespace TestCeleste
         Assert::AreEqual(handle2, foundObject);
       }
 
-      // 1 alive object
+      // 1 allocated object
       {
         // Have to get the allocator to deallocate, since this component is not from the static MockComponent allocator
         allocator.deallocate(*handle2);
@@ -503,21 +460,21 @@ namespace TestCeleste
 #pragma region Const Find Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFind_NoResizeOccurred_OnlySearchesThroughAllocatedAndAliveObjects)
+    TEST_METHOD(EntityAllocator_ConstFind_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
       EntityAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
-      Assert::IsTrue(handle1->isAlive());
-      Assert::IsTrue(handle2->isAlive());
-      Assert::IsTrue(handle3->isAlive());
+      Assert::IsTrue(allocator.isAllocated(*handle1));
+      Assert::IsTrue(allocator.isAllocated(*handle2));
+      Assert::IsTrue(allocator.isAllocated(*handle3));
 
       // Need const reference to call const functions
       const EntityAllocator<MockComponent>& allocatorRef = allocator;
 
-      // All three objects alive and allocated
+      // All three objects allocated
       {
         observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent& component) -> bool { return true; });
 
@@ -525,9 +482,9 @@ namespace TestCeleste
         Assert::AreEqual(static_cast<const MockComponent*>(handle1), foundObject);
       }
 
-      // 2 alive objects
+      // 2 allocated objects
       {
-        handle1->die();
+        handle1->deallocate();
 
         observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent& component) -> bool { return true; });
 
@@ -535,7 +492,7 @@ namespace TestCeleste
         Assert::AreEqual(static_cast<const MockComponent*>(handle2), foundObject);
       }
 
-      // 1 alive object
+      // 1 allocated object
       {
         // Have to get the allocator to deallocate, since this component is not from the static MockComponent allocator
         allocator.deallocate(*handle2);
@@ -548,21 +505,21 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFind_ResizeOccurred_OnlySearchesThroughAllocatedAndAliveObjects)
+    TEST_METHOD(EntityAllocator_ConstFind_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
       EntityAllocator<MockComponent> allocator(2);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
-      AssertCel::IsAlive(handle1);
-      AssertCel::IsAlive(handle2);
-      AssertCel::IsAlive(handle3);
+      Assert::IsTrue(allocator.isAllocated(*handle1));
+      Assert::IsTrue(allocator.isAllocated(*handle2));
+      Assert::IsTrue(allocator.isAllocated(*handle3));
 
       // Need a const reference to call const functions
       const EntityAllocator<MockComponent>& allocatorRef = allocator;
 
-      // All three objects alive and allocated
+      // All three objects allocated
       {
         observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent& component) -> bool { return true; });
 
@@ -570,11 +527,11 @@ namespace TestCeleste
         Assert::AreEqual(static_cast<const MockComponent*>(handle1), foundObject);
       }
 
-      // 2 alive objects
+      // 2 allocated objects
       {
-        handle1->die();
+        handle1->deallocate();
 
-        AssertCel::IsNotAlive(handle1);
+        Assert::IsFalse(allocator.isAllocated(*handle1));
 
         observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent& component) -> bool { return true; });
 
@@ -582,7 +539,7 @@ namespace TestCeleste
         Assert::AreEqual(static_cast<const MockComponent*>(handle2), foundObject);
       }
 
-      // 1 alive object
+      // 1 allocated object
       {
         // Have to get the allocator to deallocate, since this component is not from the static MockComponent allocator
         allocator.deallocate(*handle2);
@@ -670,14 +627,14 @@ namespace TestCeleste
 #pragma region Find All Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_FindAll_NoResizeOccurred_OnlySearchesThroughAllocatedAndAliveObjects)
+    TEST_METHOD(EntityAllocator_FindAll_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
       EntityAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
       
-      // Two allocated and alive objects
+      // Three allocated objects
       {
         std::vector<std::reference_wrapper<MockComponent>> foundObjects;
         allocator.findAll([](const MockComponent&) { return true; }, foundObjects);
@@ -695,9 +652,9 @@ namespace TestCeleste
         Assert::AreEqual((size_t)2, foundObjects.size());
       }
 
-      // Now kill the other
+      // Now deallocator another
       {
-        handle2->die();
+        handle2->deallocate();
 
         std::vector<std::reference_wrapper<MockComponent>> foundObjects;
         allocator.findAll([](const MockComponent&) { return true; }, foundObjects);
@@ -707,14 +664,14 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_FindAll_ResizeOccurred_OnlySearchesThroughAllocatedAndAliveObjects)
+    TEST_METHOD(EntityAllocator_FindAll_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
       EntityAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
-      // Two allocated and alive objects
+      // Three allocated objects
       {
         std::vector<std::reference_wrapper<MockComponent>> foundObjects;
         allocator.findAll([](const MockComponent&) { return true; }, foundObjects);
@@ -732,9 +689,9 @@ namespace TestCeleste
         Assert::AreEqual((size_t)2, foundObjects.size());
       }
 
-      // Now kill the other
+      // Now deallocate another another
       {
-        handle2->die();
+        handle2->deallocate();
 
         std::vector<std::reference_wrapper<MockComponent>> foundObjects;
         allocator.findAll([](const MockComponent&) { return true; }, foundObjects);
@@ -804,7 +761,7 @@ namespace TestCeleste
 #pragma region Const Find All Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFindAll_NoResizeOccurred_OnlySearchesThroughAllocatedAndAliveObjects)
+    TEST_METHOD(EntityAllocator_ConstFindAll_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
       EntityAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
@@ -814,7 +771,7 @@ namespace TestCeleste
       // Used so we can force the const version of find
       const EntityAllocator<MockComponent>& allocatorRef = allocator;
 
-      // Two allocated and alive objects
+      // Three allocated objects
       {
         std::vector<std::reference_wrapper<const MockComponent>> foundObjects;
         allocatorRef.findAll([](const MockComponent&) { return true; }, foundObjects);
@@ -832,9 +789,9 @@ namespace TestCeleste
         Assert::AreEqual((size_t)2, foundObjects.size());
       }
 
-      // Now kill the other
+      // Now deallocate another
       {
-        handle2->die();
+        handle2->deallocate();
 
         std::vector<std::reference_wrapper<const MockComponent>> foundObjects;
         allocatorRef.findAll([](const MockComponent&) { return true; }, foundObjects);
@@ -844,7 +801,7 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFindAll_ResizeOccurred_OnlySearchesThroughAllocatedAndAliveObjects)
+    TEST_METHOD(EntityAllocator_ConstFindAll_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
       EntityAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
@@ -854,7 +811,7 @@ namespace TestCeleste
       // Used so we can force the const version of find
       const EntityAllocator<MockComponent>& allocatorRef = allocator;
 
-      // Two allocated and alive objects
+      // Three allocated objects
       {
         std::vector<std::reference_wrapper<const MockComponent>> foundObjects;
         allocatorRef.findAll([](const MockComponent&) { return true; }, foundObjects);
@@ -872,9 +829,9 @@ namespace TestCeleste
         Assert::AreEqual((size_t)2, foundObjects.size());
       }
 
-      // Now kill the other
+      // Now deallocate another
       {
-        handle2->die();
+        handle2->deallocate();
 
         std::vector<std::reference_wrapper<const MockComponent>> foundObjects;
         allocatorRef.findAll([](const MockComponent&) { return true; }, foundObjects);
@@ -1048,34 +1005,12 @@ namespace TestCeleste
       Assert::IsTrue(handle3->updateCalled());
     }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Update_DeallocatesAllOverflowAllocatedDeadObjects)
-    {
-      EntityAllocator<MockComponent> allocator(1);
-      allocator.allocate();
-      observer_ptr<MockComponent> handle1 = allocator.allocate();
-      observer_ptr<MockComponent> handle2 = allocator.allocate();
-
-      Assert::AreEqual((size_t)3, allocator.size());
-
-      handle1->die();
-      handle2->die();
-
-      Assert::IsFalse(handle1->isAlive());
-      Assert::IsFalse(handle2->isAlive());
-
-      allocator.update(0);
-
-      // Cannot directly test allocated handles as they will have been deallocated by shared ptr
-      Assert::AreEqual((size_t)1, allocator.size());
-    }
-
 #pragma endregion
 
-#pragma region Die Tests
+#pragma region Deallocate All Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Die_CallsDieOnAllPoolAllocatedObjects_AndDeallocatesThem)
+    TEST_METHOD(EntityAllocator_DeallocateAll_DeallocatesAllPoolAllocatedObjects)
     {
       EntityAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
@@ -1084,41 +1019,54 @@ namespace TestCeleste
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       const MockComponent* ptr2 = handle2;
 
-      allocator.die();
+      allocator.deallocateAll();
 
       Assert::AreEqual((size_t)0, allocator.size());
-      Assert::IsFalse(ptr1->isAlive());
+      Assert::IsFalse(allocator.isAllocated(*ptr1));
       Assert::IsNull(ptr1->getGameObject());
-      Assert::IsFalse(ptr2->isAlive());
+      Assert::IsFalse(allocator.isAllocated(*ptr2));
       Assert::IsNull(ptr2->getGameObject());
 
       observer_ptr<MockComponent> handle3 = allocator.allocate();
       const MockComponent* ptr3 = handle3;
 
-      Assert::IsTrue(handle3->isAlive());
+      Assert::IsTrue(allocator.isAllocated(*handle3));
 
-      allocator.die();
+      allocator.deallocateAll();
 
       Assert::AreEqual((size_t)0, allocator.size());
-      Assert::IsFalse(ptr3->isAlive());
+      Assert::IsFalse(allocator.isAllocated(*ptr3));
       Assert::IsNull(ptr3->getGameObject());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Die_ClearsOverflowVector)
+    TEST_METHOD(EntityAllocator_DeallocateAll_ResizeOccurred_DeallocatesAllPoolAllocatedObjects)
     {
       EntityAllocator<MockComponent> allocator(1);
-      allocator.allocate();
-      allocator.allocate();
-      allocator.allocate();
-      
-      Assert::AreEqual((size_t)3, allocator.size());
+      observer_ptr<MockComponent> handle1 = allocator.allocate();
+      const MockComponent* ptr1 = handle1;
 
-      allocator.die();
+      observer_ptr<MockComponent> handle2 = allocator.allocate();
+      const MockComponent* ptr2 = handle2;
 
-      // Since the objects are deallocated, we will not be able to access the overflow elements
+      allocator.deallocateAll();
 
       Assert::AreEqual((size_t)0, allocator.size());
+      Assert::IsFalse(allocator.isAllocated(*ptr1));
+      Assert::IsNull(ptr1->getGameObject());
+      Assert::IsFalse(allocator.isAllocated(*ptr2));
+      Assert::IsNull(ptr2->getGameObject());
+
+      observer_ptr<MockComponent> handle3 = allocator.allocate();
+      const MockComponent* ptr3 = handle3;
+
+      Assert::IsTrue(allocator.isAllocated(*handle3));
+
+      allocator.deallocateAll();
+
+      Assert::AreEqual((size_t)0, allocator.size());
+      Assert::IsFalse(allocator.isAllocated(*ptr3));
+      Assert::IsNull(ptr3->getGameObject());
     }
 
 #pragma endregion

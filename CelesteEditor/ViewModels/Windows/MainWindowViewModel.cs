@@ -1,5 +1,5 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Data;
+using CelesteEditor.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace CelesteEngineEditor.ViewModels.Windows
+namespace CelesteEditor.ViewModels.Windows
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {

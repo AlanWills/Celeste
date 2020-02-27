@@ -12,7 +12,7 @@ using BindingsKernel;
 using Path = System.IO.Path;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
-namespace CelesteEngineEditor
+namespace CelesteEditor
 {
 	/// <summary>
 	/// Static class which contains extra helper functions to extend the current C# API.

@@ -2,8 +2,9 @@
 
 #include "ObjectFX/LimitedLifeTime.h"
 #include "Objects/GameObject.h"
-#include "Utils/ObjectUtils.h"
 #include "Utils/InputUtils.h"
+#include "Input/InputUtils.h"
+#include "Input/Keyboard.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
 
@@ -122,7 +123,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(LimitedLifeTime_Update_LifeTimeReached_TriggersOnDeathEvent)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<LimitedLifeTime> lifeTime = gameObject.addComponent<LimitedLifeTime>();
       lifeTime->setLifeTime(2);
 
@@ -137,134 +138,74 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LimitedLifeTime_Update_KillsGameObject_IfCurrentTimeEqualToLifeTime)
+    TEST_METHOD(LimitedLifeTime_Update_DeallocatesGameObject_IfCurrentTimeEqualToLifeTime)
     {
-      GAMEOBJECT(gameObject);
+      Assert::Fail();
+
+      GameObject gameObject;
       AutoDeallocator<LimitedLifeTime> lifeTime = gameObject.addComponent<LimitedLifeTime>();
       lifeTime->setLifeTime(2);
 
-      AssertCel::IsAlive(gameObject);
+      //AssertCel::IsAlive(gameObject);
 
       lifeTime->update(2);
 
-      AssertCel::IsNotAlive(gameObject);
+      //AssertCel::IsNotAlive(gameObject);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LimitedLifeTime_Update_KillsGameObject_IfCurrentTimeGreaterThanLifeTime)
+    TEST_METHOD(LimitedLifeTime_Update_DeallocatesGameObject_IfCurrentTimeGreaterThanLifeTime)
     {
-      GAMEOBJECT(gameObject);
+      Assert::Fail();
+
+      GameObject gameObject;
       AutoDeallocator<LimitedLifeTime> lifeTime = gameObject.addComponent<LimitedLifeTime>();
       lifeTime->setLifeTime(2);
 
-      AssertCel::IsAlive(gameObject);
+      //AssertCel::IsAlive(gameObject);
 
       lifeTime->update(3);
 
-      AssertCel::IsNotAlive(gameObject);
+      //AssertCel::IsNotAlive(gameObject);
     }
 
 #pragma endregion
 
-#pragma region Die Tests
+#pragma region Destructor Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LimitedLifeTime_Die_UnsubscribesFromKeyboardKeyReleasedEvent)
+    TEST_METHOD(LimitedLifeTime_Destructor_UnsubscribesFromKeyboardKeyReleasedEvent)
     {
-      GAMEOBJECT(gameObject);
-      AutoDeallocator<LimitedLifeTime> lifeTime = gameObject.addComponent<LimitedLifeTime>();
-      lifeTime->setTriggerKey(GLFW_KEY_A);
+      {
+        GameObject gameObject;
+        AutoDeallocator<LimitedLifeTime> lifeTime = gameObject.addComponent<LimitedLifeTime>();
+        lifeTime->setTriggerKey(GLFW_KEY_A);
 
-      Assert::AreEqual(GLFW_KEY_A, lifeTime->getTriggerKey());
-      AssertCel::IsAlive(gameObject);
-
-      lifeTime->die();
-
-      AssertCel::IsAlive(gameObject);
-
-      simulateKeyReleased(GLFW_KEY_A);
-
-      AssertCel::IsAlive(gameObject);
+        Assert::AreEqual(static_cast<size_t>(1), Celeste::Input::getKeyboard().getKeyReleasedEvent().getSubscriberCount());
+      }
+    
+      Assert::AreEqual(static_cast<size_t>(0), Celeste::Input::getKeyboard().getKeyReleasedEvent().getSubscriberCount());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LimitedLifeTime_Die_SetsTriggerKeyToDefault)
+    TEST_METHOD(LimitedLifeTime_Destructor_TriggersOnDeathEvent)
     {
-      LimitedLifeTime lifeTime;
-      lifeTime.setTriggerKey(GLFW_KEY_A);
-
-      Assert::AreEqual(GLFW_KEY_A, lifeTime.getTriggerKey());
-
-      lifeTime.die();
-
-      Assert::AreEqual(-1, lifeTime.getTriggerKey());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LimitedLifeTime_Die_SetsLifeTimeAndCurrentTimeAliveToZero)
-    {
-      LimitedLifeTime lifeTime;
-
-      Assert::AreEqual(0.0f, lifeTime.getLifeTime());
-      Assert::AreEqual(0.0f, lifeTime.getCurrentTimeAlive());
-
-      lifeTime.setLifeTime(10);
-      lifeTime.update(2);
-
-      Assert::AreEqual(10.0f, lifeTime.getLifeTime());
-      Assert::AreEqual(2.0f, lifeTime.getCurrentTimeAlive());
-
-      lifeTime.die();
-
-      Assert::AreEqual(0.0f, lifeTime.getLifeTime());
-      Assert::AreEqual(0.0f, lifeTime.getCurrentTimeAlive());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LimitedLifeTime_Die_TriggersOnDeathEvent)
-    {
-      GAMEOBJECT(gameObject);
-      AutoDeallocator<LimitedLifeTime> lifeTime = gameObject.addComponent<LimitedLifeTime>();
-      lifeTime->setLifeTime(2);
-
       bool called = false;
-      lifeTime->subscribeOnDeathCallback([&called, &gameObject](GameObject& caller) -> void
-        { 
-          called = (&caller == &gameObject);
-        });
+      GameObject gameObject;
 
-      Assert::IsFalse(called);
+      {
+        AutoDeallocator<LimitedLifeTime> lifeTime = gameObject.addComponent<LimitedLifeTime>();
+        lifeTime->setLifeTime(2);
 
-      lifeTime->die();
+        lifeTime->subscribeOnDeathCallback([&called, &gameObject](GameObject& caller) -> void
+          {
+            called = (&caller == &gameObject);
+          });
+
+        Assert::IsFalse(called);
+      }
 
       Assert::IsTrue(called);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LimitedLifeTime_Die_UnsubscribesAllFromEvents)
-    {
-      LimitedLifeTime lifeTime;
-
-      bool called = false;
-      lifeTime.subscribeOnDeathCallback([&called](GameObject&) -> void { called = true; });
-
-      Assert::IsFalse(called);
-
-      lifeTime.getOnDeathEvent().invoke(GameObject());
-
-      Assert::IsTrue(called);
-
-      called = false;
-
-      Assert::IsFalse(called);
-
-      lifeTime.die();
-      
-      // Die will call the event so need to set flag after
-      called = false;
-      lifeTime.getOnDeathEvent().invoke(GameObject());
-
-      Assert::IsFalse(called);
     }
 
 #pragma endregion
@@ -274,7 +215,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(LimitedLifeTime_OnKeyReleased_TriggerKeyNotSet_DoesNothing)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<LimitedLifeTime> lifeTime = gameObject.addComponent<LimitedLifeTime>();
 
       Assert::AreEqual(-1, lifeTime->getTriggerKey());
@@ -293,7 +234,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(LimitedLifeTime_OnKeyReleased_TriggerKeyDifferentToKeyReleased_DoesNothing)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<LimitedLifeTime> lifeTime = gameObject.addComponent<LimitedLifeTime>();
       lifeTime->setTriggerKey(GLFW_KEY_B);
 
@@ -313,7 +254,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(LimitedLifeTime_OnKeyReleased_TriggerKeySameAsKeyPressed_ButNotActive_DoesNothing)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<LimitedLifeTime> lifeTime = gameObject.addComponent<LimitedLifeTime>();
       lifeTime->setActive(false);
       lifeTime->setTriggerKey(GLFW_KEY_A);
@@ -353,15 +294,16 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LimitedLifeTime_OnKeyReleased_TriggerKeySameAsKeyReleased_KillsGameObject_DoesNothing)
+    TEST_METHOD(LimitedLifeTime_OnKeyReleased_TriggerKeySameAsKeyReleased_DeallocatesGameObject)
     {
-      GAMEOBJECT(gameObject);
+      Assert::Fail();
+
+      GameObject gameObject;
       AutoDeallocator<LimitedLifeTime> lifeTime = gameObject.addComponent<LimitedLifeTime>();
       lifeTime->setTriggerKey(GLFW_KEY_A);
 
       Assert::AreEqual(GLFW_KEY_A, lifeTime->getTriggerKey());
       Assert::IsTrue(&gameObject == lifeTime->getGameObject());
-      AssertCel::IsAlive(gameObject);
 
       bool called = false;
       lifeTime->getOnDeathEvent().subscribe([&called](GameObject&) -> void
@@ -372,7 +314,7 @@ namespace TestCeleste
       simulateKeyReleased(GLFW_KEY_A);
 
       Assert::IsTrue(called);
-      AssertCel::IsNotAlive(gameObject);
+      //AssertCel::IsNotAlive(gameObject);
     }
 
 #pragma endregion

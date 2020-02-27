@@ -2,7 +2,6 @@
 
 #include "Mocks/Rendering/MockSpriteBatch.h"
 #include "Mocks/Rendering/MockRenderer.h"
-#include "Utils/ObjectUtils.h"
 
 using namespace Celeste::Rendering;
 

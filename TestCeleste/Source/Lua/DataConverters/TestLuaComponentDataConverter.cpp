@@ -3,7 +3,6 @@
 #include "Lua/LuaState.h"
 
 #include "UtilityHeaders/UnitTestHeaders.h"
-#include "Utils/ObjectUtils.h"
 
 #include "Mocks/Objects/MockComponent.h"
 

@@ -2,7 +2,6 @@
 
 #include "Registries/DefaultRegistryAllocator.h"
 #include "Mocks/Objects/MockComponent.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;

@@ -2,11 +2,11 @@
 using System.Windows;
 using System.ComponentModel;
 using System.Windows.Input;
-using CelesteEngineEditor.Windows;
-using CelesteEngineEditor.UserControls.Wizard;
-using CelesteEngineEditor.Converters;
+using CelesteEditor.Windows;
+using CelesteEditor.UserControls.Wizard;
+using CelesteEditor.Converters;
 
-namespace CelesteEngineEditor.UserControls.Wizard
+namespace CelesteEditor.UserControls.Wizard
 {
     /// <summary>
     /// Interaction logic for WizardWindow.xaml

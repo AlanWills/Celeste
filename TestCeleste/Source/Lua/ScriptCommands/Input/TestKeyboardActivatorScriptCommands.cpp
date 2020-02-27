@@ -10,7 +10,6 @@
 #include "Input/Utils/GlfwKeyConverter.h"
 #include "Screens/Screen.h"
 
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -464,7 +463,7 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     KeyboardActivator keyboardActivator;
     keyboardActivator.setTarget(&gameObject);

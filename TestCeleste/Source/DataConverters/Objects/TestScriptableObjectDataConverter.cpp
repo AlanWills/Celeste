@@ -4,7 +4,6 @@
 #include "Registries/ScriptableObjectRegistry.h"
 #include "Resources/Objects/MockScriptableObjectLoadingResources.h"
 #include "Mocks/Objects/MockScriptableObject.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 #include "AssertExt.h"
 

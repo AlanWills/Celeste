@@ -7,8 +7,8 @@
 #include "Physics/PhysicsManager.h"
 #include "OpenGL/GL.h"
 #include "Screens/ScreenUtils.h"
+#include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using RectangleCollider = Celeste::Physics::RectangleCollider;
@@ -32,7 +32,7 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_IsAllocatableFromComponentRegistry)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(Canvas::type_name(), gameObject);
 
@@ -76,7 +76,7 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_HandleInput_GameObjectActive_WithCollider_RaycastsCollider)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
     AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
@@ -93,7 +93,7 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_HandleInput_GameObjectNotActive_WithCollider_DoesNotRaycastCollider)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     gameObject.setActive(false);
 
     AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
@@ -111,9 +111,9 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_HandleInput_GameObjectNotActive_DoesNotRaycastChildren)
   {
-    GAMEOBJECT(gameObject);
-    GAMEOBJECT(child);
-    GAMEOBJECT(grandChild);
+    GameObject gameObject;
+    GameObject child;
+    GameObject grandChild;
     gameObject.setActive(false);
     child.setParent(&gameObject);
     grandChild.setParent(&child);
@@ -138,8 +138,8 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_HandleInput_ChildWithCollider_ColliderIsActive_RaycastsCollider)
   {
-    GAMEOBJECT(gameObject);
-    GAMEOBJECT(child);
+    GameObject gameObject;
+    GameObject child;
     child.setParent(&gameObject);
 
     AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
@@ -159,8 +159,8 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_HandleInput_ChildWithCollider_ColliderIsNotActive_DoesNotRaycastCollider)
   {
-    GAMEOBJECT(gameObject);
-    GAMEOBJECT(child);
+    GameObject gameObject;
+    GameObject child;
     child.setParent(&gameObject);
 
     AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
@@ -182,8 +182,8 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_HandleInput_ChildHasCanvasAndCollider_DoesNotRaycastCollider)
   {
-    GAMEOBJECT(gameObject);
-    GAMEOBJECT(child);
+    GameObject gameObject;
+    GameObject child;
     child.setParent(&gameObject);
 
     AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
@@ -205,9 +205,9 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_HandleInput_RaycastsGrandChildren)
   {
-    GAMEOBJECT(gameObject);
-    GAMEOBJECT(child);
-    GAMEOBJECT(grandChild);
+    GameObject gameObject;
+    GameObject child;
+    GameObject grandChild;
     child.setParent(&gameObject);
     grandChild.setParent(&child);
 
@@ -231,9 +231,9 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_HandleInput_ChildHasCanvas_DoesNotRaycastAnyGrandChildColliders)
   {
-    GAMEOBJECT(gameObject);
-    GAMEOBJECT(child);
-    GAMEOBJECT(grandChild);
+    GameObject gameObject;
+    GameObject child;
+    GameObject grandChild;
     child.setParent(&gameObject);
     grandChild.setParent(&child);
 
@@ -258,9 +258,9 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_HandleInput_ChildIsNotActive_DoesNotRaycastAnyGrandChildColliders)
   {
-    GAMEOBJECT(gameObject);
-    GAMEOBJECT(child);
-    GAMEOBJECT(grandChild);
+    GameObject gameObject;
+    GameObject child;
+    GameObject grandChild;
     child.setActive(false);
     child.setParent(&gameObject);
     grandChild.setParent(&child);
@@ -291,7 +291,7 @@ namespace TestCeleste::Rendering
   {
     if (Celeste::GL::isInitialized())
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
 
@@ -306,7 +306,7 @@ namespace TestCeleste::Rendering
   {
     if (Celeste::GL::isInitialized())
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
       AutoDeallocator<MockSpriteRenderer> renderer = gameObject.addComponent<MockSpriteRenderer>();
@@ -326,7 +326,7 @@ namespace TestCeleste::Rendering
   {
     if (Celeste::GL::isInitialized())
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       gameObject.setActive(false);
 
       AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
@@ -347,7 +347,7 @@ namespace TestCeleste::Rendering
   {
     if (Celeste::GL::isInitialized())
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
       AutoDeallocator<MockSpriteRenderer> renderer = gameObject.addComponent<MockSpriteRenderer>();
@@ -368,8 +368,8 @@ namespace TestCeleste::Rendering
   {
     if (Celeste::GL::isInitialized())
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child);
+      GameObject gameObject;
+      GameObject child;
       gameObject.setActive(false);
       child.setParent(&gameObject);
 
@@ -392,8 +392,8 @@ namespace TestCeleste::Rendering
   {
     if (Celeste::GL::isInitialized())
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child);
+      GameObject gameObject;
+      GameObject child;
       child.setParent(&gameObject);
 
       Assert::IsTrue(&gameObject == child.getParent());
@@ -417,9 +417,9 @@ namespace TestCeleste::Rendering
   {
     if (Celeste::GL::isInitialized())
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child);
-      GAMEOBJECT(grandChild);
+      GameObject gameObject;
+      GameObject child;
+      GameObject grandChild;
       child.setParent(&gameObject);
       grandChild.setParent(&child);
 
@@ -445,8 +445,8 @@ namespace TestCeleste::Rendering
   {
     if (Celeste::GL::isInitialized())
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child);
+      GameObject gameObject;
+      GameObject child;
       child.setParent(&gameObject);
 
       Assert::IsTrue(&gameObject == child.getParent());
@@ -471,9 +471,9 @@ namespace TestCeleste::Rendering
   {
     if (Celeste::GL::isInitialized())
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(child);
-      GAMEOBJECT(grandChild);
+      GameObject gameObject;
+      GameObject child;
+      GameObject grandChild;
       child.setParent(&gameObject);
       grandChild.setParent(&child);
 
@@ -493,36 +493,6 @@ namespace TestCeleste::Rendering
 
       Assert::IsFalse(renderer->isRenderCalled());
     }
-  }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Canvas_Die_SetsProjectionMode_ToPerspective)
-  {
-    Canvas canvas;
-    canvas.setProjectionMode(ProjectionMode::kOrthographic);
-
-    Assert::IsTrue(canvas.getProjectionMode() == ProjectionMode::kOrthographic);
-
-    canvas.die();
-
-    Assert::IsTrue(canvas.getProjectionMode() == ProjectionMode::kPerspective);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Canvas_Die_SetsDimensions_ToOneVector)
-  {
-    Canvas canvas;
-    canvas.setDimensions(glm::vec2(200, 300));
-
-    Assert::AreEqual(glm::vec2(200, 300), canvas.getDimensions());
-
-    canvas.die();
-
-    Assert::AreEqual(glm::vec2(1), canvas.getDimensions());
   }
 
 #pragma endregion

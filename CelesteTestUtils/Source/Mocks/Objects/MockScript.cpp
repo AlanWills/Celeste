@@ -9,34 +9,23 @@ namespace CelesteTestUtils
   //------------------------------------------------------------------------------------------------
   MockScript::MockScript() :
     m_handleInputCalled(false),
-    m_updateCalled(false),
-    m_onDeathCalled(false)
+    m_updateCalled(false)
   { 
   }
 
   //------------------------------------------------------------------------------------------------
-  void MockScript::onHandleInput()
+  void MockScript::handleInput()
   {
-    Inherited::onHandleInput();
+    Inherited::handleInput();
 
     m_handleInputCalled = true;
   }
 
   //------------------------------------------------------------------------------------------------
-  void MockScript::onUpdate(float secondsPerUpdate)
+  void MockScript::update(float secondsPerUpdate)
   {
-    Inherited::onUpdate(secondsPerUpdate);
+    Inherited::update(secondsPerUpdate);
 
     m_updateCalled = true;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void MockScript::onDeath()
-  {
-    Inherited::onDeath();
-
-    m_onDeathCalled = true;
-    m_handleInputCalled = false;
-    m_updateCalled = false;
   }
 }

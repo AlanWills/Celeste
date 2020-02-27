@@ -24,20 +24,20 @@ int main(int argc, char** argv)
   std::cout << std::to_string(files.size()) << " prefab files found" << std::endl;
 
   Game game;
-  ResourceManager* resourceManager = game.getResourceManager();
-  resourceManager->setResourcesDirectory(pathToResourcesDirectory);
+  ResourceManager& resourceManager = game.getResourceManager();
+  resourceManager.setResourcesDirectory(pathToResourcesDirectory);
 
   int errorFileCount = 0;
   for (const File& file : files)
   {
-    Handle<Prefab> prefab = resourceManager->load<Prefab>(file.getFilePath());
-    if (prefab.is_null())
+    observer_ptr<Prefab> prefab = resourceManager.load<Prefab>(file.getFilePath());
+    if (prefab == nullptr)
     {
       ++errorFileCount;
       std::cout << file.getFilePath().c_str() << ": Failed" << std::endl;
     }
 
-    resourceManager->unload<Prefab>(file.getFilePath());
+    resourceManager.unload<Prefab>(file.getFilePath());
   }
 
   return errorFileCount;

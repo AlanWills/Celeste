@@ -1,9 +1,9 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Assets;
-using CelesteEngineEditor.Core;
+using CelesteEditor.Assets;
+using CelesteEditor.Core;
 using System.IO;
 
-namespace CelesteEngineEditor.AssetLoaders
+namespace CelesteEditor.AssetLoaders
 {
     public class WmaAssetLoader : AssetLoader
     {

@@ -1,5 +1,5 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Core;
+using CelesteEditor.Core;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace CelesteEngineEditor
+namespace CelesteEditor
 {
     public static class Texture2DExtensions
     {

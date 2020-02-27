@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using BindingsKernel;
 
-namespace CelesteEngine.Animation
+namespace Celeste.Animation
 {
 	public class Animator : Component
 	{

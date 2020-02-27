@@ -1,7 +1,7 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Data;
-using CelesteEngineEditor.Editors;
-using CelesteEngineEditor.ViewModels;
+using CelesteEditor.Data;
+using CelesteEditor.Editors;
+using CelesteEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Editors
+namespace CelesteEditor.Editors
 {
     public class LuaShellViewModel : EditorViewModel
     {

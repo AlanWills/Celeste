@@ -4,8 +4,6 @@
 #include "Lua/Components/LuaComponent.h"
 #include "Lua/LuaState.h"
 
-#include "Utils/ObjectUtils.h"
-
 using namespace Celeste;
 using namespace Celeste::Lua;
 
@@ -20,17 +18,13 @@ namespace TestCeleste
     std::string resetScript = R"(
     onSetActiveCalled = false
     onSetGameObjectCalled = false
-    onInitializeCalled = false
-    onHandleInputCalled = false
-    onUpdateCalled = false
-    onDeathCalled = false
+    handleInputCalled = false
+    updateCalled = false
 
     onSetActive = nil
     onSetGameObject = nil
-    onInitialize = nil
-    onHandleInput = nil
-    onUpdate = nil
-    onDeath = nil
+    handleInput = nil
+    update = nil
     )";
 
     //------------------------------------------------------------------------------------------------
@@ -52,38 +46,20 @@ namespace TestCeleste
     )";
 
     //------------------------------------------------------------------------------------------------
-    std::string onInitializeScript = R"(
-    onInitializeCalled = false
+    std::string handleInputScript = R"(
+    handleInputCalled = false
 
-    function onInitialize(component)
-      onInitializeCalled = true
+    function handleInput(component)
+      handleInputCalled = true
     end
     )";
 
     //------------------------------------------------------------------------------------------------
-    std::string onHandleInputScript = R"(
-    onHandleInputCalled = false
+    std::string updateScript = R"(
+    updateCalled = false
 
-    function onHandleInput(component)
-      onHandleInputCalled = true
-    end
-    )";
-
-    //------------------------------------------------------------------------------------------------
-    std::string onUpdateScript = R"(
-    onUpdateCalled = false
-
-    function onUpdate(component, time)
-      onUpdateCalled = true
-    end
-    )";
-
-    //------------------------------------------------------------------------------------------------
-    std::string onDeathScript = R"(
-    onDeathCalled = false
-
-    function onDeath(component)
-      onDeathCalled = true
+    function update(component, time)
+      updateCalled = true
     end
     )";
 
@@ -162,93 +138,63 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithoutValidOnHandleInputCallback_SetsOnHandleInputToEmptyFunc)
+    TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithoutValidHandleInputCallback_SetsHandleInputToEmptyFunc)
     {
       sol::state& state = LuaState::instance();
 
-      Assert::IsFalse(state["onHandleInput"].valid());
+      Assert::IsFalse(state["handleInput"].valid());
 
       LuaComponentManifest manifest{ state.globals() };
 
-      Assert::IsFalse(manifest.getOnHandleInputFunc().valid());
+      Assert::IsFalse(manifest.getHandleInputFunc().valid());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithValidOnHandleInputCallback_SetsOnHandleInputToFunc)
+    TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithValidHandleInputCallback_SetsHandleInputToFunc)
     {
       sol::state& state = LuaState::instance();
 
-      Assert::IsTrue(state.script(onHandleInputScript).valid());
-      Assert::IsTrue(state["onHandleInput"].valid());
+      Assert::IsTrue(state.script(handleInputScript).valid());
+      Assert::IsTrue(state["handleInput"].valid());
 
       LuaComponentManifest manifest{ state.globals() };
 
-      Assert::IsTrue(manifest.getOnHandleInputFunc().valid());
-      Assert::IsFalse(state["onHandleInputCalled"]);
+      Assert::IsTrue(manifest.getHandleInputFunc().valid());
+      Assert::IsFalse(state["handleInputCalled"]);
 
-      manifest.getOnHandleInputFunc()(nullptr);
+      manifest.getHandleInputFunc()(nullptr);
 
-      Assert::IsTrue(state["onHandleInputCalled"]);
+      Assert::IsTrue(state["handleInputCalled"]);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithoutValidOnUpdateCallback_SetsOnUpdateToEmptyFunc)
+    TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithoutValidUpdateCallback_SetsUpdateToEmptyFunc)
     {
       sol::state& state = LuaState::instance();
 
-      Assert::IsFalse(state["onUpdate"].valid());
+      Assert::IsFalse(state["update"].valid());
 
       LuaComponentManifest manifest{ state.globals() };
 
-      Assert::IsFalse(manifest.getOnUpdateFunc().valid());
+      Assert::IsFalse(manifest.getUpdateFunc().valid());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithValidOnUpdateCallback_SetsOnUpdateToFunc)
+    TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithValidUpdateCallback_SetsUpdateToFunc)
     {
       sol::state& state = LuaState::instance();
 
-      Assert::IsTrue(state.script(onUpdateScript).valid());
-      Assert::IsTrue(state["onUpdate"].valid());
+      Assert::IsTrue(state.script(updateScript).valid());
+      Assert::IsTrue(state["update"].valid());
 
       LuaComponentManifest manifest{ state.globals() };
 
-      Assert::IsTrue(manifest.getOnUpdateFunc().valid());
-      Assert::IsFalse(state["onUpdateCalled"]);
+      Assert::IsTrue(manifest.getUpdateFunc().valid());
+      Assert::IsFalse(state["updateCalled"]);
 
-      manifest.getOnUpdateFunc()(nullptr, 1.0f);
+      manifest.getUpdateFunc()(nullptr, 1.0f);
 
-      Assert::IsTrue(state["onUpdateCalled"]);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithoutValidOnDeathCallback_SetsOnDeathToEmptyFunc)
-    {
-      sol::state& state = LuaState::instance();
-
-      Assert::IsFalse(state["onDeath"].valid());
-
-      LuaComponentManifest manifest{ state.globals() };
-
-      Assert::IsFalse(manifest.getOnDeathFunc().valid());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithValidOnDeathCallback_SetsOnDeathToFunc)
-    {
-      sol::state& state = LuaState::instance();
-
-      Assert::IsTrue(state.script(onDeathScript).valid());
-      Assert::IsTrue(state["onDeath"].valid());
-
-      LuaComponentManifest manifest{ state.globals() };
-
-      Assert::IsTrue(manifest.getOnDeathFunc().valid());
-      Assert::IsFalse(state["onDeathCalled"]);
-
-      manifest.getOnDeathFunc()(nullptr);
-
-      Assert::IsTrue(state["onDeathCalled"]);
+      Assert::IsTrue(state["updateCalled"]);
     }
 
 #pragma endregion
@@ -263,18 +209,15 @@ namespace TestCeleste
       
       Assert::IsTrue(state.script(onSetActiveScript).valid());
       Assert::IsTrue(state.script(onSetGameObjectScript).valid());
-      Assert::IsTrue(state.script(onInitializeScript).valid());
-      Assert::IsTrue(state.script(onHandleInputScript).valid());
-      Assert::IsTrue(state.script(onUpdateScript).valid());
-      Assert::IsTrue(state.script(onDeathScript).valid());
+      Assert::IsTrue(state.script(handleInputScript).valid());
+      Assert::IsTrue(state.script(updateScript).valid());
 
       LuaComponentManifest manifest{ state.globals() };
 
       Assert::IsTrue(manifest.getOnSetActiveFunc().valid());
       Assert::IsTrue(manifest.getOnSetGameObjectFunc().valid());
-      Assert::IsTrue(manifest.getOnHandleInputFunc().valid());
-      Assert::IsTrue(manifest.getOnUpdateFunc().valid());
-      Assert::IsTrue(manifest.getOnDeathFunc().valid());
+      Assert::IsTrue(manifest.getHandleInputFunc().valid());
+      Assert::IsTrue(manifest.getUpdateFunc().valid());
 
       manifest.initializeComponent(luaComponent);
 
@@ -284,14 +227,11 @@ namespace TestCeleste
       Assert::IsTrue(luaComponent.getOnSetGameObjectFunc().valid());
       Assert::IsTrue(manifest.getOnSetGameObjectFunc() == luaComponent.getOnSetGameObjectFunc());
 
-      Assert::IsTrue(luaComponent.getOnHandleInputFunc().valid());
-      Assert::IsTrue(manifest.getOnHandleInputFunc() == luaComponent.getOnHandleInputFunc());
+      Assert::IsTrue(luaComponent.getHandleInputFunc().valid());
+      Assert::IsTrue(manifest.getHandleInputFunc() == luaComponent.getHandleInputFunc());
 
-      Assert::IsTrue(luaComponent.getOnUpdateFunc().valid());
-      Assert::IsTrue(manifest.getOnUpdateFunc() == luaComponent.getOnUpdateFunc());
-
-      Assert::IsTrue(luaComponent.getOnDeathFunc().valid());
-      Assert::IsTrue(manifest.getOnDeathFunc() == luaComponent.getOnDeathFunc());
+      Assert::IsTrue(luaComponent.getUpdateFunc().valid());
+      Assert::IsTrue(manifest.getUpdateFunc() == luaComponent.getUpdateFunc());
     }
 
 #pragma endregion

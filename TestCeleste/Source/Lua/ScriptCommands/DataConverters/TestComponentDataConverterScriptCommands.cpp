@@ -4,7 +4,6 @@
 
 #include "Mocks/Objects/MockComponent.h"
 #include "UtilityHeaders/UnitTestHeaders.h"
-#include "Utils/ObjectUtils.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;

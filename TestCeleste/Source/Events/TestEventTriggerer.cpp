@@ -3,7 +3,7 @@
 #include "Events/EventTriggerer.h"
 #include "Registries/ComponentRegistry.h"
 #include "Registries/ComponentRegistry.h"
-#include "Utils/ObjectUtils.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -81,76 +81,41 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(EventTriggerer_Update_ConditionTrue_TriggerModeOnce_KillsComponent)
     {
-      EventTriggerer eventTriggerer;
+      GameObject gameObject;
+      AutoDeallocator<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
 
-      Assert::IsTrue(eventTriggerer.getTriggerMode() == EventTriggerer::TriggerMode::kOnce);
-      AssertCel::IsAlive(eventTriggerer);
+      Assert::IsTrue(eventTriggerer->getTriggerMode() == EventTriggerer::TriggerMode::kOnce);
+      AssertCel::HasComponent<EventTriggerer>(gameObject);
 
-      eventTriggerer.setCondition([](const GameObject&) -> bool { return true; });
-      eventTriggerer.update(0);
+      eventTriggerer->setCondition([](const GameObject&) -> bool { return true; });
+      eventTriggerer->update(0);
 
-      AssertCel::IsNotAlive(eventTriggerer);
+      AssertCel::DoesNotHaveComponent<EventTriggerer>(gameObject);
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(EventTriggerer_Update_ConditionTrue_TriggerModeContinuous_DoesNotKillComponent)
     {
-      EventTriggerer eventTriggerer;
-      eventTriggerer.setTriggerMode(EventTriggerer::TriggerMode::kUnlimited);
+      GameObject gameObject;
+      AutoDeallocator<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
+      eventTriggerer->setTriggerMode(EventTriggerer::TriggerMode::kUnlimited);
 
-      Assert::IsTrue(eventTriggerer.getTriggerMode() == EventTriggerer::TriggerMode::kUnlimited);
-
-      bool called = false;
-      auto f = [&called](const GameObject&) -> void { called = true; };
-      eventTriggerer.setCondition([](const GameObject&) -> bool { return true; });
-      eventTriggerer.getEvent().subscribe(f);
-      eventTriggerer.update(0);
-
-      AssertCel::IsAlive(eventTriggerer);
-      Assert::IsTrue(called);
-
-      called = false;
-      eventTriggerer.update(0);
-
-      AssertCel::IsAlive(eventTriggerer);
-      Assert::IsTrue(called);
-    }
-
-#pragma endregion
-
-#pragma region Death Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EventTriggerer_Die_ResetsAllValuesToDefault)
-    {
-      EventTriggerer eventTriggerer;
-      eventTriggerer.setTriggerMode(EventTriggerer::TriggerMode::kUnlimited);
-
-      Assert::IsTrue(EventTriggerer::TriggerMode::kUnlimited == eventTriggerer.getTriggerMode());
-
-      eventTriggerer.die();
-
-      Assert::IsTrue(EventTriggerer::TriggerMode::kOnce == eventTriggerer.getTriggerMode());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EventTriggerer_Die_UnsubscribesAllEvents)
-    {
-      EventTriggerer eventTriggerer;
+      Assert::IsTrue(eventTriggerer->getTriggerMode() == EventTriggerer::TriggerMode::kUnlimited);
 
       bool called = false;
       auto f = [&called](const GameObject&) -> void { called = true; };
-      eventTriggerer.setCondition([](const GameObject&) -> bool { return true; });
-      eventTriggerer.getEvent().subscribe(f);
-      eventTriggerer.update(0);
+      eventTriggerer->setCondition([](const GameObject&) -> bool { return true; });
+      eventTriggerer->getEvent().subscribe(f);
+      eventTriggerer->update(0);
 
+      AssertCel::HasComponent<EventTriggerer>(gameObject);
       Assert::IsTrue(called);
 
       called = false;
-      eventTriggerer.die();
-      eventTriggerer.getEvent().invoke(GameObject());
+      eventTriggerer->update(0);
 
-      Assert::IsFalse(called);
+      AssertCel::HasComponent<EventTriggerer>(gameObject);
+      Assert::IsTrue(called);
     }
 
 #pragma endregion

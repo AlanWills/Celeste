@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Assets
+namespace CelesteEditor.Assets
 {
     public abstract class Asset<T> : IAsset where T : IReference
     {

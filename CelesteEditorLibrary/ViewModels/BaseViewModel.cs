@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace CelesteEngineEditor.ViewModels
+namespace CelesteEditor.ViewModels
 {
     /// <summary>
     /// A base class for a ViewModel which takes in an instance of a Model to then display.

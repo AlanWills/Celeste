@@ -2,7 +2,6 @@
 #include "Animation/AnimationState.h"
 #include "Mocks/Animation/MockAnimator.h"
 #include "Registries/ComponentRegistry.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;

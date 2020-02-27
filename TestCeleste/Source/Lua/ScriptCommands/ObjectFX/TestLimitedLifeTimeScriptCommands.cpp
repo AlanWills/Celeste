@@ -6,7 +6,6 @@
 
 #include "Screens/Screen.h"
 #include "Mocks/ObjectFX/MockLimitedLifeTime.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;

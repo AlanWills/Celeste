@@ -1,6 +1,6 @@
-﻿using CelesteEngineEditor.Attributes;
-using CelesteEngineEditor.Editors;
-using CelesteEngineEditor.Extensibility;
+﻿using CelesteEditor.Attributes;
+using CelesteEditor.Editors;
+using CelesteEditor.Extensibility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Extensibility
+namespace CelesteEditor.Extensibility
 {
     public static class EditorExtensibility
     {

@@ -1,11 +1,11 @@
-﻿using CelesteEngineEditor.Attributes;
+﻿using CelesteEditor.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Icons
+namespace CelesteEditor.Icons
 {
     [FileIcon(".png", "Icons/Image.ico")]
     public class PngIcon { }

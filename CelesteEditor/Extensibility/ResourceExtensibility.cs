@@ -1,4 +1,4 @@
-﻿using CelesteEngineEditor.Extensibility;
+﻿using CelesteEditor.Extensibility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace CelesteEngineEditor.Extensibility
+namespace CelesteEditor.Extensibility
 {
     public static class ResourceExtensibility
     {

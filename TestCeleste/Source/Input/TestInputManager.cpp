@@ -3,9 +3,9 @@
 #include "Mocks/Input/MockKeyboard.h"
 #include "Input/KeyboardActivator.h"
 #include "Input/InputManager.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 #include "KeyboardTextInputtedEventUnsubscriber.h"
+#include "Objects/GameObject.h"
 
 using namespace Celeste;
 using namespace Celeste::Input;
@@ -21,46 +21,6 @@ namespace TestCeleste
       getInputManager().getKeyboard().flush();
       getInputManager().getMouse().flush();
     }
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(InputManager_Die_CallsDieOnAliveKeyboardActivators)
-    {
-      InputManager manager(nullptr);
-
-      GAMEOBJECT(gameObject);
-      AutoDeallocator<KeyboardActivator> activator = gameObject.addComponent<KeyboardActivator>();
-      activator->setActive(false);
-
-      AssertCel::IsAlive(activator.get());
-      AssertCel::IsNotActive(activator.get());
-
-      manager.die();
-
-      AssertCel::IsNotAlive(activator.get());
-      AssertCel::IsNotActive(activator.get());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(InputManager_Die_CallsDieOnAllActiveKeyboardActivators)
-    {
-      InputManager manager(nullptr);
-
-      GAMEOBJECT(gameObject);
-      AutoDeallocator<KeyboardActivator> activator = gameObject.addComponent<KeyboardActivator>();
-      activator->setActive(true);
-
-      AssertCel::IsAlive(activator.get());
-      AssertCel::IsActive(activator.get());
-
-      manager.die();
-
-      AssertCel::IsNotAlive(activator.get());
-      AssertCel::IsNotActive(activator.get());
-    }
-
-#pragma endregion
 
 #pragma region Key Callback Tests
 

@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Objects/MockComponentDataConverter.h"
-#include "Utils/ObjectUtils.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -80,7 +80,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentDataConverter_SetValues_GameObjectNotActive_ComponentActive_SetsComponentToActive)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     gameObject.setActive(false);
     MockComponentDataConverter converter;
     XMLDocument document;
@@ -104,7 +104,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentDataConverter_SetValues_GameObjectNotActive_ComponentNotActive_KeepsComponentAsNotActive)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     gameObject.setActive(false);
     MockComponentDataConverter converter;
     XMLDocument document;
@@ -129,7 +129,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentDataConverter_SetValues_GameObjectActive_ComponentNotActive_KeepsComponentAsNotActive)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     MockComponentDataConverter converter;
     XMLDocument document;
     XMLElement* element = document.NewElement("Component");
@@ -152,7 +152,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentDataConverter_SetValues_GameObjectActive_ComponentActive_KeepsComponentAsActive)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     MockComponentDataConverter converter;
     XMLDocument document;
     XMLElement* element = document.NewElement("Component");

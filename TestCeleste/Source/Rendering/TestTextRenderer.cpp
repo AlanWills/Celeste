@@ -3,7 +3,6 @@
 #include "Mocks/Rendering/MockTextRenderer.h"
 #include "Resources/ResourceManager.h"
 #include "Resources/TestResources.h"
-#include "Utils/ObjectUtils.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
 
@@ -1596,79 +1595,6 @@ namespace TestCeleste
       Assert::AreEqual(5.0f, renderer.getFontHeight());
       Assert::AreEqual(glm::vec2(font.measureString("T").x - font.measureString("Test").x, 10), renderer.getLetterOffset(0, 1));
       Assert::AreEqual(glm::vec2(font.measureString("Test").x - font.measureString("Test2").x, 5), renderer.getLetterOffset(1, 4));
-    }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextRenderer_Die_OnUninitializedRenderer_ResetsFont)
-    {
-      MockTextRenderer textRenderer;
-
-      textRenderer.setFont(Path("Fonts", "Arial.ttf"), 5);
-
-      Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
-
-      textRenderer.die();
-
-      Assert::AreEqual(0.0f, textRenderer.getFont().getHeight());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextRenderer_Die_SetsTextLines_ToEmptyVector)
-    {
-      MockTextRenderer textRenderer;
-      textRenderer.addLine("Text");
-
-      Assert::AreEqual((size_t)1, textRenderer.getLineCount());
-      Assert::AreEqual("Text", textRenderer.getLine(0).c_str());
-
-      textRenderer.die();
-
-      Assert::AreEqual((size_t)0, textRenderer.getLineCount());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextRenderer_Die_SetsHorizontalAlignment_ToCentre)
-    {
-      MockTextRenderer textRenderer;
-
-      textRenderer.setHorizontalAlignment(UI::HorizontalAlignment::kLeft);
-
-      Assert::IsTrue(textRenderer.getHorizontalAlignment() == UI::HorizontalAlignment::kLeft);
-
-      textRenderer.die();
-
-      Assert::IsTrue(textRenderer.getHorizontalAlignment() == UI::HorizontalAlignment::kCentre);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextRenderer_Die_SetsVerticalAlignment_ToCentre)
-    {
-      MockTextRenderer textRenderer;
-
-      textRenderer.setVerticalAlignment(UI::VerticalAlignment::kTop);
-
-      Assert::IsTrue(textRenderer.getVerticalAlignment() == UI::VerticalAlignment::kTop);
-
-      textRenderer.die();
-
-      Assert::IsTrue(textRenderer.getVerticalAlignment() == UI::VerticalAlignment::kCentre);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextRenderer_Die_SetsDimensions_ToVec2Zero)
-    {
-      MockTextRenderer textRenderer;
-      textRenderer.addLine("Text");
-
-      Assert::AreNotEqual(glm::vec2(), textRenderer.getDimensions());
-
-      textRenderer.die();
-
-      Assert::AreEqual(glm::vec2(), textRenderer.getDimensions());
     }
 
 #pragma endregion

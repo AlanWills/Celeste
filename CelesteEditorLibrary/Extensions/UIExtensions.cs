@@ -8,11 +8,11 @@ using UIntParseResult = System.Tuple<bool, uint>;
 using System.Windows.Controls;
 using System.Windows.Data;
 using BindingsKernel;
-using CelesteEngineEditor.Views;
-using CelesteEngineEditor.Windows;
-using static CelesteEngineEditor.Windows.UtilityWindows;
+using CelesteEditor.Views;
+using CelesteEditor.Windows;
+using static CelesteEditor.Windows.UtilityWindows;
 
-namespace CelesteEngineEditor
+namespace CelesteEditor
 {
     public static class UIExtensions
     {

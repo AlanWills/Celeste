@@ -1,15 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                    xmlns:editor_views="clr-namespace:CelesteEngineEditor.Views">
+                    xmlns:editor_views="clr-namespace:CelesteEditor.Views">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/CelesteEngineEditorLibrary;component/ResourceDictionaries/Styles/NumericUpDownBoxStyles.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/CelesteEngineEditorLibrary;component/ResourceDictionaries/Styles/DataGridViewStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/CelesteEditorLibrary;component/ResourceDictionaries/Styles/NumericUpDownBoxStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/CelesteEditorLibrary;component/ResourceDictionaries/Styles/DataGridViewStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <Color x:Key="EditorDarkBlueColour">#596B93</Color>
     <Color x:Key="EditorLightColour">#E0EEFF</Color>

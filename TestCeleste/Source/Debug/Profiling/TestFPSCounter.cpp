@@ -2,9 +2,10 @@
 
 #include "Debug/Profiling/FPSCounter.h"
 #include "Rendering/TextRenderer.h"
-#include "Utils/ObjectUtils.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
+using namespace Celeste;
 using namespace Celeste::Debugging;
 
 
@@ -26,7 +27,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(FPSCounter_Update_LessThanHalfASecondPassed_DoesNotChangeTextRenderer)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<Celeste::Rendering::TextRenderer> renderer = gameObject.addComponent<Celeste::Rendering::TextRenderer>();
     renderer->addLine("Text");
     AutoDeallocator<FPSCounter> fpsCounter = gameObject.addComponent<FPSCounter>();
@@ -43,7 +44,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(FPSCounter_Update_AtLeastHalfASecondPassed_UpdatesTextRendererWithCorrectText)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     AutoDeallocator<Celeste::Rendering::TextRenderer> renderer = gameObject.addComponent<Celeste::Rendering::TextRenderer>();
     renderer->addLine("Text");
     AutoDeallocator<FPSCounter> fpsCounter = gameObject.addComponent<FPSCounter>();

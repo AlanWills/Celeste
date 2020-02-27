@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Commands
+namespace CelesteEditor.Commands
 {
     public static class EditorCommands
     {

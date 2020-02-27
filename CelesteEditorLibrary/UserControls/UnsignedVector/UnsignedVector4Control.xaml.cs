@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Xceed.Wpf.Toolkit;
 
-namespace CelesteEngineEditor.UserControls.UnsignedVector
+namespace CelesteEditor.UserControls.UnsignedVector
 {
     /// <summary>
     /// Interaction logic for UnsignedVector4Control.xaml

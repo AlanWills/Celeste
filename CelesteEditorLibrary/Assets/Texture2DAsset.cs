@@ -1,5 +1,5 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Core;
+using CelesteEditor.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Assets
+namespace CelesteEditor.Assets
 {
     public class Texture2DAsset : Asset<Texture2D>
     {

@@ -9,7 +9,6 @@
 #include "Physics/RectangleCollider.h"
 #include "Screens/Screen.h"
 #include "DataConverters/UI/ButtonDataConverter.h"
-#include "Utils/ObjectUtils.h"
 #include "Utils/InputUtils.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
@@ -586,31 +585,6 @@ namespace TestCeleste
       Assert::IsTrue(called);
       Assert::IsTrue(Button::ButtonState::kIdle == button->getButtonState_Public());
     }
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Button_Die_ResetsButtonState)
-    {
-      Screen screen;
-      AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-      setUpButtonComponents(gameObject);
-      observer_ptr<Collider> collider = gameObject->findComponent<Collider>();
-      observer_ptr<SpriteRenderer> spriteRenderer = gameObject->findComponent<SpriteRenderer>();
-      observer_ptr<AudioSource> audioSource = gameObject->findComponent<AudioSource>();
-      observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject->findComponent<MouseInteractionHandler>();
-
-      AutoDeallocator<MockButton> button = gameObject->addComponent<MockButton>();
-      button->setButtonState_Public(Button::ButtonState::kClicked);
-
-      Assert::IsTrue(button->getButtonState_Public() == Button::ButtonState::kClicked);
-
-      button->die();
-
-      Assert::IsTrue(button->getButtonState_Public() == Button::ButtonState::kIdle);
-    }
-
-#pragma endregion
 
 #pragma region Set Default Texture Tests
 

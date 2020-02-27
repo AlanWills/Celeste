@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace CelesteEngineEditor
+namespace CelesteEditor
 {
     public class InternetUtils
     {

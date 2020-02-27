@@ -1,7 +1,7 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Data;
-using CelesteEngineEditor.Editors;
-using CelesteEngineEditor.ViewModels;
+using CelesteEditor.Data;
+using CelesteEditor.Editors;
+using CelesteEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace CelesteEngineEditor.Editors
+namespace CelesteEditor.Editors
 {
     public class SpriteSheetPackerViewModel : EditorViewModel
     {

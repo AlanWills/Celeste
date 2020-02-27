@@ -1,4 +1,4 @@
-﻿using CelesteEngineEditor.ViewModels;
+﻿using CelesteEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor
+namespace CelesteEditor
 {
     public static class EnumUtils
     {

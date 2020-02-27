@@ -5,7 +5,6 @@
 #include "Lua/LuaState.h"
 
 #include "Mocks/Objects/MockEntity.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -133,26 +132,6 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsFalse(entity.isActive());
-  }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(EntityScriptCommands_die_InputtingAliveObject_KillsObject)
-  {
-    MockEntity entity;
-
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::EntityScriptCommands::initialize();
-
-    Assert::IsTrue(entity.isAlive());
-
-    auto result = state.globals()["Entity"]["die"].get<sol::protected_function>().call(static_cast<Entity&>(entity));
-
-    Assert::IsTrue(result.valid());
-    Assert::IsFalse(entity.isAlive());
   }
 
 #pragma endregion

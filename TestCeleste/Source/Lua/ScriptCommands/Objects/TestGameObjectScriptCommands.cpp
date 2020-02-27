@@ -10,7 +10,6 @@
 #include "Mocks/Objects/MockComponent.h"
 #include "Mocks/Rendering/MockRenderer.h"
 #include "Mocks/Objects/MockGameObject.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -472,7 +471,7 @@ namespace TestCeleste::Lua::ScriptCommands
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
     Screen screen;
-    GAMEOBJECT(parent);
+    GameObject parent;
     AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
     gameObject->setParent(&parent);
 
@@ -692,8 +691,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getComponentCount_NoComponents_ReturnsZero)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -709,8 +707,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getComponentCount_WithComponents_ReturnsCorrectComponentCount)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
     AutoDeallocator<MockComponent> component2 = gameObject.addComponent<MockComponent>();
@@ -733,8 +730,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getComponent_InputtingInvalidComponentIndex_ReturnsNullComponentHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -759,8 +755,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getComponent_InputtingValidComponentIndex_ReturnsCorrectComponentHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
     AutoDeallocator<MockComponent> component2 = gameObject.addComponent<MockComponent>();
@@ -788,8 +783,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_addComponent_InputtingNonExistentComponentName_DoesNotAddComponent)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -806,8 +800,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_addComponent_InputtingNonExistentComponentName_ReturnsNullHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -823,8 +816,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_addComponent_InputtingValid_UnRegisteredComponentName_AddsComponent)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -844,8 +836,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_addComponent_InputtingValid_UnregisteredComponentName_ReturnsComponentHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -864,8 +855,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_addComponent_InputtingValidComponentName_AddsComponentToGameObject)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -886,8 +876,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_addComponent_InputtingValidComponentName_ReturnsComponentHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -911,8 +900,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getChildCount_NoChildren_ReturnsZero)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -928,10 +916,9 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getChildCount_WithChildren_ReturnsCorrectChildCount)
   {
-    GAMEOBJECT(mockGameObject);
-    GAMEOBJECT(child1);
-    GAMEOBJECT(child2);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
+    GameObject child1;
+    GameObject child2;
     child1.setParent(&gameObject);
     child2.setParent(&gameObject);
 
@@ -953,8 +940,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getChildTransform_NoChildren_ReturnsNullHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -970,9 +956,8 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getChildTransform_InputtingInvalidIndex_ReturnsNullHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GAMEOBJECT(child1);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
+    GameObject child1;
     child1.setParent(&gameObject);
 
     sol::state& state = LuaState::instance();
@@ -989,9 +974,8 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getChildTransform_InputtingValidIndex_ReturnsCorrectTransformHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GAMEOBJECT(child1);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
+    GameObject child1;
     child1.setParent(&gameObject);
 
     sol::state& state = LuaState::instance();
@@ -1012,8 +996,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getChildGameObject_NoChildren_ReturnsNullHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -1029,9 +1012,8 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getChildGameObject_InputtingInvalidIndex_ReturnsNullHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GAMEOBJECT(child1);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
+    GameObject child1;
     child1.setParent(&gameObject);
 
     sol::state& state = LuaState::instance();
@@ -1048,9 +1030,8 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getChildGameObject_InputtingValidIndex_ReturnsCorrectGameObjectHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GAMEOBJECT(child1);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
+    GameObject child1;
     child1.setParent(&gameObject);
 
     sol::state& state = LuaState::instance();
@@ -1071,8 +1052,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_findChildGameObject_NoChildren_ReturnsNullHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -1088,9 +1068,8 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_findChildGameObject_NoChildWithMatchingName_ReturnsNullHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GAMEOBJECT(child);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
+    GameObject child;
     child.setParent(&gameObject);
 
     sol::state& state = LuaState::instance();
@@ -1108,9 +1087,8 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_findChildGameObject_OneChildWithMatchingName_ReturnsCorrectHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GAMEOBJECT(child);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
+    GameObject child;
     child.setParent(&gameObject);
     child.setName("Child");
 
@@ -1129,10 +1107,9 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_findChildGameObject_MultipleChildrenWithMatchingName_ReturnsFirstMatchingCorrectHandle)
   {
-    GAMEOBJECT(mockGameObject);
-    GAMEOBJECT(child);
-    GAMEOBJECT(child2);
-    GameObject& gameObject = static_cast<GameObject&>(mockGameObject);
+    GameObject gameObject;
+    GameObject child;
+    GameObject child2;
     child.setParent(&gameObject);
     child.setName("Child");
     child2.setParent(&gameObject);

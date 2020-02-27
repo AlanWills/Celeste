@@ -2,7 +2,6 @@
 
 #include "TestCERuntimeDllExport.h"
 #include "Objects/Script.h"
-#include "Memory/Handle.h"
 #include "Lua/LuaState.h"
 
 #include <memory>
@@ -30,16 +29,15 @@ namespace TestCelesteRuntime
         std::unique_ptr<tinyxml2::XMLDocument> executeTests();
 
       protected:
-        void onSetGameObject(const Celeste::Handle<Celeste::GameObject>& gameObject) override;
-        void onDeath() override;
+        void onSetGameObject(Celeste::GameObject& gameObject) override;
 
       private:
         using Inherited = Celeste::Script;
 
-        Celeste::Handle<Celeste::GameObject> createTestClassesContainer(const Celeste::Handle<Celeste::GameObject>& parent);
-        Celeste::Handle<Celeste::GameObject> createTestClass(sol::table testClass, const std::string& testClassName, const Celeste::Handle<Celeste::GameObject>& parent);
-        Celeste::Handle<Celeste::GameObject> createUnitTestsContainer(sol::table testClass, const std::string& testClassName, const Celeste::Handle<Celeste::GameObject>& parent);
-        Celeste::Handle<Celeste::GameObject> createUnitTest(const std::string& testName, const Celeste::Handle<Celeste::GameObject>& parent);
+        observer_ptr<Celeste::GameObject> createTestClassesContainer(Celeste::GameObject& parent);
+        observer_ptr<Celeste::GameObject> createTestClass(sol::table testClass, const std::string& testClassName, Celeste::GameObject& parent);
+        observer_ptr<Celeste::GameObject> createUnitTestsContainer(sol::table testClass, const std::string& testClassName, Celeste::GameObject& parent);
+        observer_ptr<Celeste::GameObject> createUnitTest(const std::string& testName, Celeste::GameObject& parent);
 
         void testClassInitialize();
         void testClassCleanup();
@@ -47,8 +45,8 @@ namespace TestCelesteRuntime
         void testCleanup(const sol::table& testClass);
         void resetState();
 
-        Celeste::Handle<Celeste::GameObject> m_testClassesContainer;
-        Celeste::Handle<Celeste::GameObject> m_testsContainer;
+        observer_ptr<Celeste::GameObject> m_testClassesContainer;
+        observer_ptr<Celeste::GameObject> m_testsContainer;
     };
   }
 }

@@ -1,5 +1,5 @@
-﻿using CelesteEngineEditor.Core;
-using CelesteEngineEditor.UserControls.ProjectAssetSelector;
+﻿using CelesteEditor.Core;
+using CelesteEditor.UserControls.ProjectAssetSelector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CelesteEngineEditor.UserControls
+namespace CelesteEditor.UserControls
 {
     /// <summary>
     /// Interaction logic for AssetSelector.xaml

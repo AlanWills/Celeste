@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CelesteEngineEditor.UserControls.MainMenu.MenuItemContexts
+namespace CelesteEditor.UserControls.MainMenu.MenuItemContexts
 {
     public class MenuItemContext
     {

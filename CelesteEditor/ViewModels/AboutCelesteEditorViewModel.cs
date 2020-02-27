@@ -1,6 +1,6 @@
-﻿namespace CelesteEngineEditor.ViewModels
+﻿namespace CelesteEditor.ViewModels
 {
-    public class AboutCelesteEngineEditorViewModel : Notifier
+    public class AboutCelesteEditorViewModel : Notifier
     {
         #region Properties and Fields
 

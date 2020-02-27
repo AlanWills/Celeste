@@ -50,22 +50,6 @@ namespace CelesteTestUtils
       static inline void IsNotActive(T* const entity) { Assert::IsFalse(entity->isActive()); }
 
       //------------------------------------------------------------------------------------------------
-      // IsAlive
-      template <typename T>
-      static inline void IsAlive(T const &entity) { Assert::IsTrue(entity.isAlive()); }
-
-      template <typename T>
-      static inline void IsAlive(T* const entity) { Assert::IsTrue(entity->isAlive()); }
-
-      //------------------------------------------------------------------------------------------------
-      // IsNotAlive
-      template <typename T>
-      static inline void IsNotAlive(T const &entity) { Assert::IsFalse(entity.isAlive()); }
-
-      template <typename T>
-      static inline void IsNotAlive(T* const entity) { Assert::IsFalse(entity->isAlive()); }
-
-      //------------------------------------------------------------------------------------------------
       // FileExists
       static void FileExists(const Celeste::Path& path);
 

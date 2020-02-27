@@ -7,7 +7,6 @@
 #include "Screens/Screen.h"
 #include "Mocks/Rendering/MockRenderer.h"
 #include "Registries/ComponentDataConverterRegistry.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste::Resources;
@@ -29,7 +28,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StackPanelDataConverter_CheckCanBeConvertedFromXML)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(StackPanelLoadingResources::getValidRelativePath());
     AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 

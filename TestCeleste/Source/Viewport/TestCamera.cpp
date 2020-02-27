@@ -6,7 +6,6 @@
 #include "Input/InputUtils.h"
 #include "AssertCel.h"
 #include "AssertExt.h"
-#include "Utils/ObjectUtils.h"
 
 using namespace Celeste;
 using namespace Celeste::Input;

@@ -6,7 +6,6 @@
 #include "Registries/ComponentRegistry.h"
 #include "Screens/Screen.h"
 #include "Mocks/Rendering/MockRenderer.h"
-#include "Utils/ObjectUtils.h"
 #include "Utils/InputUtils.h"
 #include "AssertCel.h"
 
@@ -43,7 +42,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardVisibility_IsAllocatableFromComponentRegistry)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(KeyboardVisibility::type_name(), gameObject);
 
@@ -109,7 +108,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardVisibility_HandleInput_TargetHasNoRenderer_DoesNothing)
     {
       KeyboardVisibility kvScript;
-      GAMEOBJECT(target);
+      GameObject target;
       kvScript.setTarget(&target);
 
       Assert::IsNotNull(kvScript.getTarget());
@@ -124,8 +123,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardVisibility_HandleInput_WithNeitherVisibilityOrInvisibilityKeySet_DoesNothing)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       AutoDeallocator<MockRenderer> renderer = target.addComponent<MockRenderer>();
       renderer->setActive(false);
       AutoDeallocator<KeyboardVisibility> kvScript = gameObject.addComponent<KeyboardVisibility>();
@@ -145,8 +144,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardVisibility_HandleInput_ToggleMode_VisibilityKeyNotSet_DoesNotMakeTargetVisible)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       AutoDeallocator<MockRenderer> renderer = target.addComponent<MockRenderer>();
       renderer->setActive(false);
       AutoDeallocator<KeyboardVisibility> kvScript = gameObject.addComponent<KeyboardVisibility>();
@@ -168,8 +167,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardVisibility_HandleInput_ToggleMode_VisibilityKeySet_MakesTargetVisible)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       AutoDeallocator<MockRenderer> renderer = target.addComponent<MockRenderer>();
       renderer->setActive(false);
       AutoDeallocator<KeyboardVisibility> kvScript = gameObject.addComponent<KeyboardVisibility>();
@@ -193,8 +192,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardVisibility_HandleInput_ToggleMode_InvisibilityKeyNotSet_DoesNotMakeTargetInvisible)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       AutoDeallocator<MockRenderer> renderer = target.addComponent<MockRenderer>();
       AutoDeallocator<KeyboardVisibility> kvScript = gameObject.addComponent<KeyboardVisibility>();
       kvScript->setVisibilityKey(GLFW_KEY_D);
@@ -215,8 +214,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardVisibility_HandleInput_ToggleMode_InvisibilityKeySet_MakesTargetInvisible)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       AutoDeallocator<MockRenderer> renderer = target.addComponent<MockRenderer>();
       AutoDeallocator<KeyboardVisibility> kvScript = gameObject.addComponent<KeyboardVisibility>();
       kvScript->setInvisibilityKey(GLFW_KEY_A);
@@ -239,8 +238,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardVisibility_HandleInput_ToggleMode_VisibilityAndInvisibilityKeysSet_InvertsTargetShouldRenderFlagWhenKeysPressed)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       AutoDeallocator<MockRenderer> renderer = target.addComponent<MockRenderer>();
       renderer->setActive(false);
       AutoDeallocator<KeyboardVisibility> kvScript = gameObject.addComponent<KeyboardVisibility>();
@@ -282,8 +281,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardVisibility_HandleInput_ContinuousMode_VisibilityKeyNotSet_DoesNotChangeTargetShouldRenderFlag)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       AutoDeallocator<MockRenderer> renderer = target.addComponent<MockRenderer>();
       renderer->setActive(false);
       AutoDeallocator<KeyboardVisibility> kvScript = gameObject.addComponent<KeyboardVisibility>();
@@ -305,8 +304,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardVisibility_HandleInput_ContinuousMode_VisibilityKeySet_TargetShouldRenderFlag_EqualsWhetherKeyPressed)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       AutoDeallocator<MockRenderer> renderer = target.addComponent<MockRenderer>();
       renderer->setActive(false);
       AutoDeallocator<KeyboardVisibility> kvScript = gameObject.addComponent<KeyboardVisibility>();
@@ -346,63 +345,6 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_Die_SetsVisibilityKeyTo_GLFW_KEY_UNKNOWN)
-    {
-      KeyboardVisibility visibility;
-      visibility.setVisibilityKey(GLFW_KEY_A);
-
-      Assert::AreEqual(GLFW_KEY_A, visibility.getVisibilityKey());
-
-      visibility.die();
-
-      Assert::AreEqual(GLFW_KEY_UNKNOWN, visibility.getVisibilityKey());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_Die_SetsInvisibilityKeyTo_GLFW_KEY_UNKNOWN)
-    {
-      KeyboardVisibility visibility;
-      visibility.setInvisibilityKey(GLFW_KEY_A);
-
-      Assert::AreEqual(GLFW_KEY_A, visibility.getInvisibilityKey());
-
-      visibility.die();
-
-      Assert::AreEqual(GLFW_KEY_UNKNOWN, visibility.getInvisibilityKey());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_Die_SetsInputModeTo_kToggle)
-    {
-      KeyboardVisibility visibility;
-      visibility.setInputMode(InputMode::kContinuous);
-
-      Assert::IsTrue(visibility.getInputMode() == InputMode::kContinuous);
-
-      visibility.die();
-
-      Assert::IsTrue(visibility.getInputMode() == InputMode::kToggle);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_Die_SetsTargetToNull)
-    {
-      KeyboardVisibility visibility;
-      GAMEOBJECT(target);
-      visibility.setTarget(&target);
-
-      Assert::IsTrue(&target == visibility.getTarget());
-
-      visibility.die();
-
-      Assert::IsNull(visibility.getTarget());
-    }
-
-#pragma endregion
-
 #pragma region Set Target Tests
 
 #pragma region Game Object Overload
@@ -410,8 +352,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardVisibility_SetTarget_SetsTargetToInputtedGameObject)
     {
-      GAMEOBJECT(target1);
-      GAMEOBJECT(target2);
+      GameObject target1;
+      GameObject target2;
 
       KeyboardVisibility visibility;
 
@@ -438,7 +380,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardVisibility_SetTarget_EmptyString_SetsTargetToNull)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardVisibility> visibility = gameObject->addComponent<KeyboardVisibility>();
@@ -455,7 +397,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardVisibility_SetTarget_NonExistentGameObjectStringName_SetsTargetToNull)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardVisibility> visibility = gameObject->addComponent<KeyboardVisibility>();
@@ -473,7 +415,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardVisibility_SetTarget_ExistentGameObjectStringName_SetsTargetToCorrectGameObject)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardVisibility> visibility = gameObject->addComponent<KeyboardVisibility>();
@@ -497,7 +439,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardVisibility_SetTarget_ZeroStringId_SetsTargetToNull)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardVisibility> visibility = gameObject->addComponent<KeyboardVisibility>();
@@ -514,7 +456,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardVisibility_SetTarget_NonExistentGameObjectStringIdName_SetsTargetToNull)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardVisibility> visibility = gameObject->addComponent<KeyboardVisibility>();
@@ -532,7 +474,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardVisibility_SetTarget_ExistentGameObjectStringIdName_SetsTargetToCorrectGameObject)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardVisibility> visibility = gameObject->addComponent<KeyboardVisibility>();

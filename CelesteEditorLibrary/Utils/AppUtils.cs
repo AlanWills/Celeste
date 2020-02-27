@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor
+namespace CelesteEditor
 {
     public static class AppUtils
     {

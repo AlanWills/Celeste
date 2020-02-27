@@ -3,7 +3,7 @@
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "DataConverters/Objects/ComponentDataConverter.h"
 #include "UI/TextBox.h"
-#include "Utils/ObjectUtils.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -24,7 +24,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(TextBoxDataConverter_CheckCanBeConvertedFromXML)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     XMLDocument document;
     XMLElement* element = document.NewElement("TextBox");
 

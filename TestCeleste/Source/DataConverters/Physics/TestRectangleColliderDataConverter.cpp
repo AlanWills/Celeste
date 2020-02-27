@@ -5,7 +5,6 @@
 #include "Resources/ResourceManager.h"
 #include "Physics/RectangleCollider.h"
 #include "Registries/ComponentDataConverterRegistry.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste::Resources;
@@ -33,7 +32,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(RectangleColliderDataConverter_CheckCanBeConvertedFromXML)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(RectangleColliderLoadingResources::getValidFullPath());
     AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 

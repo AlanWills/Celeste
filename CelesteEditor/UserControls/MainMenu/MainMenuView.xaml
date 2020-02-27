@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="CelesteEngineEditor.UserControls.MainMenuView"
+﻿<UserControl x:Class="CelesteEditor.UserControls.MainMenuView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CelesteEngineEditor.UserControls"
+             xmlns:local="clr-namespace:CelesteEditor.UserControls"
              mc:Ignorable="d"
              MinHeight="50">
     <Grid>
@@ -29,7 +29,7 @@
                     <MenuItem Header="Exit" Click="Exit_Click" Style="{StaticResource DefaultSubMenuItem}"/>
                 </MenuItem>
                 <MenuItem Header="Help" Style="{StaticResource DefaultMenuItem}" Template="{DynamicResource MainMenuItemControlTemplate}">
-                    <MenuItem Header="About Celeste Engine Editor" Click="AboutCelesteEngineEditor_Click" Style="{StaticResource DefaultSubMenuItem}">
+                    <MenuItem Header="About Celeste Engine Editor" Click="AboutCelesteEditor_Click" Style="{StaticResource DefaultSubMenuItem}">
                         <MenuItem.Icon>
                             <Image Source="{StaticResource MainWindowLogo}" Style="{StaticResource MenuItemIcon}"/>
                         </MenuItem.Icon>

@@ -1,6 +1,6 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Assets;
-using CelesteEngineEditor.Core;
+using CelesteEditor.Assets;
+using CelesteEditor.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Path = System.IO.Path;
 
-namespace CelesteEngineEditor.Editors
+namespace CelesteEditor.Editors
 {
     public class ProjectExplorerDirectoryViewModel : ProjectExplorerItemViewModel
     {
@@ -24,7 +24,7 @@ namespace CelesteEngineEditor.Editors
         /// <summary>
         /// The string which points to the resource containing the icon for this resource.
         /// </summary>
-        public string IconSource { get { return "pack://application:,,,/CelesteEngineEditor;component/Icons/Folder.ico"; } }
+        public string IconSource { get { return "pack://application:,,,/CelesteEditor;component/Icons/Folder.ico"; } }
 
         /// <summary>
         /// The filesystem information for this directory.

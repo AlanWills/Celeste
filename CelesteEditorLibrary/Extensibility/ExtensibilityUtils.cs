@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Extensibility
+namespace CelesteEditor.Extensibility
 {
     public static class ExtensibilityUtils
     {

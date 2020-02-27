@@ -1,7 +1,7 @@
 ﻿using BindingsKernel;
 using System;
 
-namespace CelesteEngineEditor
+namespace CelesteEditor
 {
     /// <summary>
     /// Provides extra maths utility functions missing from standard C# API.

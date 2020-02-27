@@ -5,7 +5,6 @@
 #include "Mocks/Rendering/MockSpriteRenderer.h"
 #include "Resources/ResourceManager.h"
 #include "Resources/TestResources.h"
-#include "Utils/ObjectUtils.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
 
@@ -238,65 +237,6 @@ namespace TestCeleste
       renderer.setDimensions(500, 140);
 
       Assert::AreEqual(textureDims * std::min(500 / textureDims.x, 140.0f / textureDims.y), renderer.getDimensions());
-    }
-
-#pragma endregion
-
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(SpriteRenderer_Die_OnInitializedRendererWithTextureSet_SetsTextureHandleToNull)
-    {
-      MockSpriteRenderer renderer;
-
-      renderer.setTexture(TestResources::getBlockPngRelativePath());
-
-      Assert::IsNotNull(renderer.getTexture());
-
-      renderer.die();
-
-      Assert::IsNull(renderer.getTexture());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(SpriteRenderer_Die_OnUninitializedRenderer_SetsTextureHandleToZero)
-    {
-      MockSpriteRenderer renderer;
-
-      renderer.setTexture(TestResources::getBlockPngRelativePath());
-
-      Assert::IsNotNull(renderer.getTexture());
-
-      renderer.die();
-
-      Assert::IsNull(renderer.getTexture());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(SpriteRenderer_Die_SetsDimensionsToZero)
-    {
-      MockSpriteRenderer renderer;
-
-      renderer.setDimensions(400, 200);
-
-      Assert::AreEqual(glm::vec2(400, 200), renderer.getDimensions());
-
-      renderer.die();
-
-      Assert::AreEqual(glm::vec2(), renderer.getDimensions());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(SpriteRenderer_Die_SetsIsPreserveAspectRatio_ToFalse)
-    {
-      MockSpriteRenderer renderer;
-      renderer.shouldPreserveAspectRatio(RatioMode::kPreserveAspectRatio);
-
-      Assert::IsTrue(renderer.isPreservingAspectRatio());
-
-      renderer.die();
-
-      Assert::IsFalse(renderer.isPreservingAspectRatio());
     }
 
 #pragma endregion

@@ -1,22 +1,29 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Objects/MockEntity.h"
+#include "AssertCel.h"
 
 
 namespace TestCeleste
 {
-
   CELESTE_TEST_CLASS(TestEntity)
 
 #pragma region Constructor Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Entity_Constructor_Sets_AliveAndActive_ToFalse)
+  TEST_METHOD(Entity_Constructor_Sets_Active_ToTrue)
   {
     MockEntity entity;
 
-    Assert::IsFalse(entity.isAlive());
-    Assert::IsFalse(entity.isActive());
+    AssertCel::IsActive(entity);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(Entity_Constructor_CallsSetActive)
+  {
+    MockEntity entity;
+
+    Assert::IsTrue(entity.isSetActiveCalled());
   }
 
 #pragma endregion
@@ -53,35 +60,5 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Die Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Entity_Die_Sets_AliveAndActive_ToFalse)
-  {
-    MockEntity entity;
-    entity.setActive(true);
-
-    Assert::IsTrue(entity.isAlive());
-    Assert::IsTrue(entity.isActive());
-
-    entity.die();
-
-    Assert::IsFalse(entity.isAlive());
-    Assert::IsFalse(entity.isActive());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Entity_Die_CallsOnDeath)
-  {
-    MockEntity entity;
-
-    Assert::IsFalse(entity.isOnDeathCalled());
-
-    entity.die();
-
-    Assert::IsTrue(entity.isOnDeathCalled());
-  }
-
-#pragma endregion
-};
+  };
 }

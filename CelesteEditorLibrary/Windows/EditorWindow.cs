@@ -1,9 +1,9 @@
 ﻿using BindingsKernel;
 using MahApps.Metro.Controls;
 using System.Windows;
-using static CelesteEngineEditor.Windows.UtilityWindows;
+using static CelesteEditor.Windows.UtilityWindows;
 
-namespace CelesteEngineEditor.Windows
+namespace CelesteEditor.Windows
 {
     public abstract class EditorWindow : MetroWindow
     {        

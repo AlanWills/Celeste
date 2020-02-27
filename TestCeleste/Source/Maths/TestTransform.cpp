@@ -1,9 +1,9 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Maths/Transform.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 #include "AssertExt.h"
-#include "Utils/ObjectUtils.h"
 
 using namespace Celeste;
 
@@ -339,7 +339,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetChildGameObject_NonConst_IndexLessThanChildCount_ReturnsChildTransformsGameObjectHandle)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<Transform> transform = Transform::allocate(gameObject);
       AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
       transform->setParent(parent.get());
@@ -377,7 +377,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetChildGameObject_Const_IndexLessThanChildCount_ReturnsChildTransformsConstcnGameObjectHandle)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<Transform> transform = Transform::allocate(gameObject);
       AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
       transform->setParent(parent.get());
@@ -387,6 +387,7 @@ namespace TestCeleste
     }
 
 #pragma endregion
+
 #pragma endregion
 
 #pragma region For Each Iteration Tests
@@ -1101,7 +1102,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_Allocate_WithAllocatedHandle_SetsGameObjectToInput)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<Transform> handle = Transform::allocate(gameObject);
 
       Assert::IsTrue(&gameObject == handle->getGameObject());
@@ -1112,7 +1113,7 @@ namespace TestCeleste
 #pragma region Deallocate Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Deallocate_WithAllocatedHandle_ResetsAllTransformValues)
+    TEST_METHOD(Transform_Deallocate_ResetsAllTransformValues)
     {
       AutoDeallocator<Transform> handle = Transform::allocate(GameObject());
       const Transform* hPtr = handle.get();
@@ -1128,32 +1129,34 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Deallocate_WithDeadGameObject_ResetsGameObject)
+    TEST_METHOD(Transform_Deallocate_WithDeallocatedGameObject_SetsGameObjectToNullptr)
     {
-      GAMEOBJECT(gameObject);
-      gameObject.die();
-      AutoDeallocator<Transform> handle = Transform::allocate(gameObject);
+      GameObject gameObject;
+      GameObject* gameObjectPtr = &gameObject;
 
-      AssertCel::IsNotAlive(gameObject);
-      Assert::IsTrue(&gameObject == handle->getGameObject());
+      AutoDeallocator<Transform> handle = Transform::allocate(gameObject);
+      gameObject.deallocate();
+
+      Assert::AreEqual(gameObjectPtr, handle->getGameObject());
 
       handle->deallocate();
 
-      Assert::IsFalse(gameObject.isAlive());
+      Assert::IsNull(handle->getGameObject());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Deallocate_WithAliveGameObject_KillsGameObject)
+    TEST_METHOD(Transform_Deallocate_WithAllocatedGameObject_SetsGameObjectToNullptr)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
+      GameObject* gameObjectPtr = &gameObject;
+
       AutoDeallocator<Transform> handle = Transform::allocate(gameObject);
 
-      AssertCel::IsAlive(gameObject);
-      Assert::IsTrue(&gameObject == handle->getGameObject());
+      Assert::AreEqual(gameObjectPtr, handle->getGameObject());
 
       handle->deallocate();
 
-      Assert::IsFalse(gameObject.isAlive());
+      Assert::IsNull(handle->getGameObject());
     }
 
     //------------------------------------------------------------------------------------------------

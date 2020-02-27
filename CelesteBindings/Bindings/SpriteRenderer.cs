@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using BindingsKernel;
 
-namespace CelesteEngine.Rendering
+namespace Celeste.Rendering
 {
 	public class SpriteRenderer : Component
 	{

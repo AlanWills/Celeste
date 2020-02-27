@@ -249,14 +249,6 @@
     <ClCompile Include="Source\Bindings\TestStringDataBindingGenerator.cpp" />
     <ClCompile Include="Source\Bindings\TestTexture2DDataBindingGenerator.cpp" />
     <ClCompile Include="Source\Bindings\TestVerticalAlignmentDataBindingGenerator.cpp" />
-    <ClCompile Include="Source\Callbacks\TestActivateGameObject.cpp" />
-    <ClCompile Include="Source\Callbacks\TestCallbackRegistry.cpp" />
-    <ClCompile Include="Source\Callbacks\TestExecuteLuaScript.cpp" />
-    <ClCompile Include="Source\Callbacks\TestKillGameObject.cpp" />
-    <ClCompile Include="Source\Callbacks\TestKillOwnerScreen.cpp" />
-    <ClCompile Include="Source\Callbacks\TestKillScreen.cpp" />
-    <ClCompile Include="Source\Callbacks\TestRenderGameObject.cpp" />
-    <ClCompile Include="Source\Callbacks\TestTransitionToScreen.cpp" />
     <ClCompile Include="Source\DataConverters\Audio\TestAudioSourceDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Input\TestKeyboardRigidBody2DControllerDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Input\TestKeyboardTransformerDataConverter.cpp" />
@@ -345,7 +337,6 @@
     <ClCompile Include="Source\Reflection\TestReflectionUtils.cpp" />
     <ClCompile Include="Source\Registries\TestDefaultRegistryAllocator.cpp" />
     <ClCompile Include="Source\Rendering\TestCanvas.cpp" />
-    <ClCompile Include="Source\Rendering\TestRenderManager.cpp" />
     <ClCompile Include="Source\Rendering\TestRenderUtils.cpp" />
     <ClCompile Include="Source\Resources\TestResourceUtils.cpp" />
     <ClCompile Include="Source\Screens\Loading\TestScreenLoader.cpp" />

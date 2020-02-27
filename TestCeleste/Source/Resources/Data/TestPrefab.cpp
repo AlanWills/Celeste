@@ -8,7 +8,6 @@
 #include "DataConverters/Objects/GameObjectDataConverter.h"
 #include "FileAssert.h"
 #include "AssertCel.h"
-#include "Utils/ObjectUtils.h"
 
 using namespace Celeste;
 using namespace Celeste::Resources;

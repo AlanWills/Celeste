@@ -40,7 +40,7 @@ namespace Celeste::Physics
       /// Use the attached game object to ensure the collider's values are up to date
       CelesteDllExport void sync();
 
-      void update(float secondsPerUpdate) override;
+      CelesteDllExport void update(float secondsPerUpdate) override;
 
     protected:
       void onSetGameObject(GameObject& gameObject) override;

@@ -1,14 +1,14 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Assets;
-using CelesteEngineEditor.Core;
-using CelesteEngineEditor.Extensibility;
+using CelesteEditor.Assets;
+using CelesteEditor.Core;
+using CelesteEditor.Extensibility;
 using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using static CelesteEngineEditor.Assets.ScriptableObjectAsset;
+using static CelesteEditor.Assets.ScriptableObjectAsset;
 
-namespace CelesteEngineEditor.AssetLoaders
+namespace CelesteEditor.AssetLoaders
 {
     public class PrefabAssetLoader : AssetLoader
     {

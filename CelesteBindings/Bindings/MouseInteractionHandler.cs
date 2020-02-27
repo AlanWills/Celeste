@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using BindingsKernel;
 
-namespace CelesteEngine.Input
+namespace Celeste.Input
 {
 	public class MouseInteractionHandler : Component
 	{

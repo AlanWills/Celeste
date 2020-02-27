@@ -1,4 +1,4 @@
-﻿using CelesteEngineEditor.ViewModels;
+﻿using CelesteEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace CelesteEngineEditor.Converters
+namespace CelesteEditor.Converters
 {
     [ValueConversion(typeof(Enum), typeof(IEnumerable<EnumViewModel>))]
     public class EnumToCollectionConverter : MarkupExtension, IValueConverter

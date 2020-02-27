@@ -6,10 +6,10 @@
 using namespace Celeste;
 
 
-namespace CelestCelesteils
+namespace CelesteTestUtils
 {
   template <typename T>
-  class MoCelesteder : public Celeste::Resources::ResourceLoader<T>
+  class MockResourceLoader : public Celeste::Resources::ResourceLoader<T>
   {
     public:
       MockResourceLoader(size_t length) : Celeste::Resources::ResourceLoader<T>(length, TestResources::getMockResourcesDirectory()) { }

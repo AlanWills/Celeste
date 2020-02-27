@@ -3,7 +3,7 @@
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Mocks/DataConverters/Objects/MockComponentDataConverter.h"
 #include "Registries/ComponentRegistry.h"
-#include "Utils/ObjectUtils.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -188,7 +188,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentDataConverterRegistry_Convert_InputtingNullXMLElement_ReturnsNullComponentHandle)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(nullptr, gameObject);
 
@@ -198,7 +198,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentDataConverterRegistry_Convert_InputtingXMLElement_WithUnregisteredComponentName_ReturnsNullComponentHandle)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     XMLDocument document;
     XMLElement* element = document.NewElement("WubbaLubbaDubDub");
 
@@ -212,7 +212,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentDataConverterRegistry_Convert_InputtingXMLElement_WithNonCustomDataConverter_AddsComponentToGameObject_WithCorrectData)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     MockComponentDataConverter converter;
     XMLDocument document;
     XMLElement* element = document.NewElement(MockComponentDataConverter::ComponentType::type_name());
@@ -232,7 +232,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentDataConverterRegistry_Convert_InputtingXMLElement_WithCustomDataConverter_AddsComponentToGameObject_WithCorrectData)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
     MockComponentDataConverter converter;
     XMLDocument document;
     XMLElement* element = document.NewElement(MockComponentDataConverter::ComponentType::type_name());

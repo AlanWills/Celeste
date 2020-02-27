@@ -6,7 +6,6 @@
 #include "Objects/GameObject.h"
 #include "Screens/Screen.h"
 #include "Objects/Component.h"
-#include "Utils/ObjectUtils.h"
 #include "Utils/InputUtils.h"
 #include "AssertCel.h"
 
@@ -43,7 +42,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardActivator_IsAllocatableFromComponentRegistry)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
 
       AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(KeyboardActivator::type_name(), gameObject);
 
@@ -109,8 +108,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardActivator_HandleInput_ActivationKeyAndDeactivationKeyLessThanZero_DoesNothing)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
       activation->setTarget(&target);
 
@@ -127,8 +126,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardActivator_HandleInput_Toggle_ActivationKeyLessThanZero_DoesNothing)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       target.setActive(false);
       AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
       activation->setDeactivationKey(GLFW_KEY_D);
@@ -149,8 +148,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardActivator_HandleInput_Toggle_ActivationKeySet_ActivatesTarget)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       target.setActive(false);
       AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
       activation->setActivationKey(GLFW_KEY_D);
@@ -174,8 +173,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardActivator_HandleInput_Toggle_DeactivationKeyLessThanZero_DoesNotDeactivateTarget)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       target.setActive(true);
       AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
       activation->setActivationKey(GLFW_KEY_D);
@@ -196,8 +195,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardActivator_HandleInput_Toggle_DeactivationKeySet_DeactivatesTarget)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       target.setActive(true);
       AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
       activation->setDeactivationKey(GLFW_KEY_D);
@@ -221,8 +220,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardActivator_HandleInput_ToggleMode_ActivationAndDeactivationKeysSet_InvertsTargetsActiveFlagWhenKeysPressed)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       target.setActive(false);
       AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
       activation->setActivationKey(GLFW_KEY_D);
@@ -256,8 +255,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardActivator_HandleInput_Continuous_ActivationKeyNotSet_DoesNotActivateTarget)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       target.setActive(false);
       AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
       activation->setInputMode(InputMode::kContinuous);
@@ -277,8 +276,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardActivator_HandleInput_Continuous_ActivationKeySetAndDown_ActivatesTarget)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       target.setActive(false);
       AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
       activation->setInputMode(InputMode::kContinuous);
@@ -302,8 +301,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardActivator_HandleInput_Continuous_ActivationKeySetAndNotDown_DeactivatesTarget)
     {
-      GAMEOBJECT(gameObject);
-      GAMEOBJECT(target);
+      GameObject gameObject;
+      GameObject target;
       target.setActive(true);
       AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
       activation->setInputMode(InputMode::kContinuous);
@@ -323,64 +322,6 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_Die_SetsActivationKeyTo_GLFW_KEY_UNKNOWN)
-    {
-      KeyboardActivator activation;
-      activation.setActivationKey(GLFW_KEY_A);
-
-      Assert::AreEqual(GLFW_KEY_A, activation.getActivationKey());
-
-      activation.die();
-
-      Assert::AreEqual(GLFW_KEY_UNKNOWN, activation.getActivationKey());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_Die_SetsDeactivationKeyTo_GLFW_KEY_UNKNOWN)
-    {
-      KeyboardActivator activation;
-      activation.setDeactivationKey(GLFW_KEY_A);
-
-      Assert::AreEqual(GLFW_KEY_A, activation.getDeactivationKey());
-
-      activation.die();
-
-      Assert::AreEqual(GLFW_KEY_UNKNOWN, activation.getDeactivationKey());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_Die_SetsInputModeToToggle)
-    {
-      KeyboardActivator activation;
-      activation.setInputMode(InputMode::kContinuous);
-
-      Assert::IsTrue(InputMode::kContinuous == activation.getInputMode());
-
-      activation.die();
-
-      Assert::IsTrue(InputMode::kToggle == activation.getInputMode());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_Die_SetsTargetToNull)
-    {
-      KeyboardActivator activation;
-      GAMEOBJECT(target);
-      activation.setInputMode(InputMode::kContinuous);
-      activation.setTarget(&target);
-
-      Assert::IsNotNull(activation.getTarget());
-
-      activation.die();
-
-      Assert::IsNull(activation.getTarget());
-    }
-
-#pragma endregion
-
 #pragma region Set Target Tests
 
 #pragma region Game Object Overload
@@ -388,8 +329,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardActivator_SetTarget_SetsTargetToInputtedGameObject)
     {
-      GAMEOBJECT(target1);
-      GAMEOBJECT(target2);
+      GameObject target1;
+      GameObject target2;
 
       KeyboardActivator activator;
 
@@ -416,7 +357,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardActivator_SetTarget_EmptyString_SetsTargetToNull)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
       
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();
@@ -433,7 +374,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardActivator_SetTarget_NonExistentGameObjectStringName_SetsTargetToNull)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();
@@ -451,7 +392,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardActivator_SetTarget_ExistentGameObjectStringName_SetsTargetToCorrectGameObject)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();
@@ -475,7 +416,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardActivator_SetTarget_ZeroStringId_SetsTargetToNull)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();
@@ -492,7 +433,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardActivator_SetTarget_NonExistentGameObjectStringIdName_SetsTargetToNull)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();
@@ -510,7 +451,7 @@ namespace TestCeleste
     TEST_METHOD(KeyboardActivator_SetTarget_ExistentGameObjectStringIdName_SetsTargetToCorrectGameObject)
     {
       Screen screen;
-      GAMEOBJECT(target1);
+      GameObject target1;
 
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();

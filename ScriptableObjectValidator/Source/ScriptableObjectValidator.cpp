@@ -26,14 +26,14 @@ int main(int argc, char** argv)
   std::cout << std::to_string(files.size()) << " scriptable object files found" << std::endl;
 
   Game game;
-  ResourceManager* resourceManager = game.getResourceManager();
-  resourceManager->setResourcesDirectory(pathToResourcesDirectory);
+  ResourceManager& resourceManager = game.getResourceManager();
+  resourceManager.setResourcesDirectory(pathToResourcesDirectory);
 
   int errorFileCount = 0;
   for (const File& file : files)
   {
-    Handle<Data> data = resourceManager->load<Data>(file.getFilePath());
-    if (data.is_null())
+    observer_ptr<Data> data = resourceManager.load<Data>(file.getFilePath());
+    if (data == nullptr)
     {
       ++errorFileCount;
       std::cout << file.getFilePath().c_str() << ": Loading Failed" << std::endl;
@@ -48,7 +48,7 @@ int main(int argc, char** argv)
       }
     }
 
-    resourceManager->unload<Data>(file.getFilePath());
+    resourceManager.unload<Data>(file.getFilePath());
   }
 
   return errorFileCount;

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows;
-using CelesteEngineEditor.Windows;
+using CelesteEditor.Windows;
 
 
-namespace CelesteEngineEditor.Views
+namespace CelesteEditor.Views
 {
     /// <summary>
     /// Interaction logic for ProgressView.xaml

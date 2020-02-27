@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace CelesteEngineEditor.Assets
+namespace CelesteEditor.Assets
 {
     public class ScreenAsset : Asset<Screen>
     {

@@ -1,5 +1,5 @@
-﻿using CelesteEngineEditor.Attributes;
-using CelesteEngineEditor.Views;
+﻿using CelesteEditor.Attributes;
+using CelesteEditor.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Extensibility
+namespace CelesteEditor.Extensibility
 {
     public static class MenuItemExtensibility
     {

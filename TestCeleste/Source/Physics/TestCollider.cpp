@@ -3,7 +3,6 @@
 #include "Mocks/Physics/MockCollider.h"
 #include "Objects/GameObject.h"
 #include "AssertCel.h"
-#include "Utils/ObjectUtils.h"
 
 using namespace Celeste;
 
@@ -54,7 +53,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Collider_SetGameObject_WithParent_SetsTransformToParentsTransform)
     {
-      GAMEOBJECT(gameObject);
+      GameObject gameObject;
       AutoDeallocator<MockCollider> collider = gameObject.addComponent<MockCollider>();
 
       Assert::IsNotNull(collider->getTransform());
@@ -84,47 +83,5 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Die Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Collider_Die_SetsColliderTypeTo_kCollider)
-    {
-      MockCollider collider;
-      collider.setColliderType(Physics::ColliderType::kTrigger);
-
-      Assert::IsTrue(collider.getColliderType() == Physics::ColliderType::kTrigger);
-
-      collider.die();
-
-      Assert::IsTrue(collider.getColliderType() == Physics::ColliderType::kCollider);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Collider_Die_SetsIsHitByRayToFalse)
-    {
-      MockCollider collider;
-      collider.setHitByRay(true);
-
-      Assert::IsTrue(collider.isHitByRay());
-
-      collider.die();
-
-      Assert::IsFalse(collider.isHitByRay());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Collider_Die_SetsOffsetToZero)
-    {
-      MockCollider collider;
-      collider.setOffset(100, 200);
-
-      Assert::AreEqual(glm::vec2(100, 200), collider.getOffset());
-
-      collider.die();
-
-      Assert::AreEqual(glm::vec2(), collider.getOffset());
-    }
-
-#pragma endregion
   };
 }

@@ -5,7 +5,6 @@
 #include "Animation/AnimationState.h"
 #include "Mocks/Animation/MockAnimator.h"
 
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -27,7 +26,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StateMachine_IsAllocatableFromComponentRegistry)
   {
-    GAMEOBJECT(gameObject);
+    GameObject gameObject;
 
     AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(StateMachine::type_name(), gameObject);
 
@@ -156,23 +155,5 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Die Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(StateMachine_Die_ResetsAllValuesToDefault_AndClearsStatesVector)
-  {
-    StateMachine stateMachine;
-    MockAnimator animator;
-    AnimationState animState1(animator);
-    AnimationState animState2(animator);
-
-    stateMachine.addStates(animState1, animState2);
-    stateMachine.die();
-
-    Assert::IsTrue(stateMachine.getStates().empty());
-    Assert::IsNull(stateMachine.getCurrentAnimationState());
-  }
-
-#pragma endregion
   };
 }

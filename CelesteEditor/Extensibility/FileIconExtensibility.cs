@@ -1,6 +1,6 @@
 ﻿using BindingsKernel;
-using CelesteEngineEditor.Attributes;
-using CelesteEngineEditor.Extensibility;
+using CelesteEditor.Attributes;
+using CelesteEditor.Extensibility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelesteEngineEditor.Extensibility
+namespace CelesteEditor.Extensibility
 {
     public static class FileIconExtensibility
     {
@@ -18,7 +18,7 @@ namespace CelesteEngineEditor.Extensibility
         /// <summary>
         /// The default Uri we use if we cannot find a custom icon for a file extension.
         /// </summary>
-        private static string DefaultUri { get; set; } = "pack://application:,,,/CelesteEngineEditor;component/Icons/New.ico";
+        private static string DefaultUri { get; set; } = "pack://application:,,,/CelesteEditor;component/Icons/New.ico";
 
         private static Dictionary<string, string> fileExtensionToIconLookup;
         /// <summary>

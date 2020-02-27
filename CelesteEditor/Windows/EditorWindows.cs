@@ -1,11 +1,11 @@
-﻿using CelesteEngineEditor.Views;
+﻿using CelesteEditor.Views;
 using MahApps.Metro.Controls;
 using System;
 using System.Linq;
 using System.Windows;
-using static CelesteEngineEditor.Windows.EditorWindow;
+using static CelesteEditor.Windows.EditorWindow;
 
-namespace CelesteEngineEditor.Windows
+namespace CelesteEditor.Windows
 {
     /// <summary>
     /// A class which wraps up set up logic for various windows throughout our application
@@ -15,9 +15,9 @@ namespace CelesteEngineEditor.Windows
         /// <summary>
         /// Returns a window containing information about the editor.
         /// </summary>
-        public static EditorWindow AboutCelesteEngineEditorWindow
+        public static EditorWindow AboutCelesteEditorWindow
         {
-            get { return new ViewHostWindow(new AboutCelesteEngineEditorView(), "About Celeste Engine Editor"); }
+            get { return new ViewHostWindow(new AboutCelesteEditorView(), "About Celeste Engine Editor"); }
         }
     }
 }

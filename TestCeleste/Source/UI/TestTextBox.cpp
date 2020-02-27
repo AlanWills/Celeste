@@ -8,7 +8,6 @@
 #include "Input/InputUtils.h"
 #include "Input/InputManager.h"
 #include "Input/Keyboard.h"
-#include "Utils/ObjectUtils.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
 
@@ -1148,87 +1147,41 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Die Tests
+#pragma region Destructor Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextBox_Die_UnsubscribesFromKeyboardTextInputtedEvent)
+    TEST_METHOD(TextBox_Destructor_UnsubscribesFromKeyboardTextInputtedEvent)
     {
       Screen screen;
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<MockTextRenderer> rendering = gameObject->addComponent<MockTextRenderer>();
-      AutoDeallocator<MockTextBox> textBox = gameObject->addComponent<MockTextBox>();
-      rendering->removeLine(0);
 
-      Assert::AreNotEqual((StringId)0, textBox->getTextInputtedEventHandle_Public());
-      Assert::AreEqual((size_t)0, rendering->getLineCount());
+      {
+        AutoDeallocator<MockTextBox> textBox = gameObject->addComponent<MockTextBox>();
+        rendering->removeLine(0);
 
-      textBox->die();
-      Input::charCallback(nullptr, 'a');
+        Assert::AreNotEqual((StringId)0, textBox->getTextInputtedEventHandle_Public());
+        Assert::AreEqual(static_cast<size_t>(1), getKeyboard().getTextInputtedEvent().getSubscriberCount());
+      }
 
-      Assert::AreEqual((StringId)0, textBox->getTextInputtedEventHandle_Public());
-      Assert::AreEqual((size_t)0, rendering->getLineCount());
+      Assert::AreEqual(static_cast<size_t>(0), getKeyboard().getTextInputtedEvent().getSubscriberCount());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextBox_Die_UnsubscribesFromKeyboardKeyPressedEvent)
+    TEST_METHOD(TextBox_Destructor_UnsubscribesFromKeyboardKeyPressedEvent)
     {
       Screen screen;
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
       AutoDeallocator<MockTextRenderer> rendering = gameObject->addComponent<MockTextRenderer>();
-      AutoDeallocator<MockTextBox> textBox = gameObject->addComponent<MockTextBox>();
-      rendering->setLine(0, "Hello");
-
-      Assert::AreEqual((size_t)1, rendering->getLineCount());
-      Assert::AreEqual("Hello", rendering->getLine(0).c_str());
-      Assert::AreNotEqual((StringId)0, textBox->getKeyPressedEventHandle_Public());
-
-      textBox->die();
-
-      Assert::AreEqual((size_t)1, rendering->getLineCount());
-      Assert::AreEqual("Hello", rendering->getLine(0).c_str());
-
-      Input::keyCallback(nullptr, GLFW_KEY_BACKSPACE, 0, GLFW_PRESS, 0);
-
-      Assert::AreEqual((StringId)0, textBox->getKeyPressedEventHandle_Public());
-      Assert::AreEqual((size_t)1, rendering->getLineCount());
-      Assert::AreEqual("Hello", rendering->getLine(0).c_str());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextBox_Die_SetsLineIndexToZero)
-    {
-      Screen screen;
-      AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-      AutoDeallocator<MockTextRenderer> rendering = gameObject->addComponent<MockTextRenderer>();
-      AutoDeallocator<MockTextBox> textBox = gameObject->addComponent<MockTextBox>();
       
-      rendering->addLine();
-      rendering->addLine();
-      textBox->setLineIndex(1);
-
-      Assert::AreEqual((size_t)1, textBox->getLineIndex());
-      
-      textBox->die();
-
-      Assert::AreEqual((size_t)0, textBox->getLineIndex());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextBox_Die_SetsLetterIndexToZero)
-    {
-      Screen screen;
-      AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-      AutoDeallocator<MockTextRenderer> rendering = gameObject->addComponent<MockTextRenderer>();
-      AutoDeallocator<MockTextBox> textBox = gameObject->addComponent<MockTextBox>();
-
-      rendering->setLine(0, "Test");
-      textBox->setLetterIndex(2);
-
-      Assert::AreEqual((size_t)2, textBox->getLetterIndex());
-
-      textBox->die();
-
-      Assert::AreEqual((size_t)0, textBox->getLetterIndex());
+      {
+        AutoDeallocator<MockTextBox> textBox = gameObject->addComponent<MockTextBox>();
+        
+        Assert::AreNotEqual((StringId)0, textBox->getKeyPressedEventHandle_Public());
+        Assert::AreEqual(static_cast<size_t>(1), getKeyboard().getKeyPressedEvent().getSubscriberCount());
+      }
+    
+      Assert::AreEqual(static_cast<size_t>(0), getKeyboard().getKeyPressedEvent().getSubscriberCount());
     }
 
 #pragma endregion

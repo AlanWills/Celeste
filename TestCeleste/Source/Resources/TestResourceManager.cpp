@@ -470,44 +470,6 @@ namespace TestCeleste::Resources
 
 #pragma endregion
 
-#pragma region Die Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ResourceManager_Die_UnloadsResourcesFromLoaders)
-  {
-    MockResourceManager resourceManager;
-    resourceManager.load<VertexShader>(TestResources::getSpriteVertexShaderFullPath());
-    resourceManager.load<FragmentShader>(TestResources::getSpriteFragmentShaderFullPath());
-    resourceManager.load<Font>(TestResources::getArialTtfFullPath());
-    resourceManager.load<Data>(AnimatorLoadingResources::getValidFullPath());
-    resourceManager.load<Sound>(TestResources::getButtonHoverWavFullPath());
-    resourceManager.load<Texture2D>(TestResources::getBlockPngFullPath());
-    resourceManager.load<Prefab>(PrefabLoadingResources::getValidSingleGameObjectFullPath());
-    resourceManager.load<Model>(ModelLoadingResources::getBoxFullPath());
-
-    Assert::AreEqual((size_t)1, resourceManager.getVertexShaderLoader().size());
-    Assert::AreEqual((size_t)1, resourceManager.getFragmentShaderLoader().size());
-    Assert::AreEqual((size_t)1, resourceManager.getTexture2DLoader().size());
-    Assert::AreEqual((size_t)1, resourceManager.getFontLoader().size());
-    Assert::AreEqual((size_t)1, resourceManager.getSoundLoader().size());
-    Assert::AreEqual((size_t)1, resourceManager.getDataLoader().size());
-    Assert::AreEqual((size_t)1, resourceManager.getPrefabLoader().size());
-    Assert::AreEqual((size_t)1, resourceManager.getModelLoader().size());
-
-    resourceManager.die();
-
-    Assert::AreEqual((size_t)0, resourceManager.getVertexShaderLoader().size());
-    Assert::AreEqual((size_t)0, resourceManager.getFragmentShaderLoader().size());
-    Assert::AreEqual((size_t)0, resourceManager.getTexture2DLoader().size());
-    Assert::AreEqual((size_t)0, resourceManager.getFontLoader().size());
-    Assert::AreEqual((size_t)0, resourceManager.getSoundLoader().size());
-    Assert::AreEqual((size_t)0, resourceManager.getDataLoader().size());
-    Assert::AreEqual((size_t)0, resourceManager.getPrefabLoader().size());
-    Assert::AreEqual((size_t)0, resourceManager.getModelLoader().size());
-  }
-
-#pragma endregion
-
 #pragma region Is Vertex Shader Loaded Tests
 
   //------------------------------------------------------------------------------------------------

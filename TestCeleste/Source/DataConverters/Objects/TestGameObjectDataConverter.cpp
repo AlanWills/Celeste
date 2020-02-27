@@ -10,7 +10,6 @@
 #include "DataConverters/Resources/PrefabDataConverter.h"
 #include "Screens/ScreenUtils.h"
 #include "Utils/GameObjectXMLUtils.h"
-#include "Utils/ObjectUtils.h"
 #include "AssertCel.h"
 #include "Lua/Components/LuaComponentManifestRegistry.h"
 #include "Lua/Components/LuaComponent.h"
