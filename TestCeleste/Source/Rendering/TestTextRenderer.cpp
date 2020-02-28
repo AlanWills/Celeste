@@ -40,14 +40,6 @@ namespace TestCeleste
 #pragma region Constructor Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextRenderer_Constructor_SetsFontHeight_ToZero)
-    {
-      MockTextRenderer textRenderer;
-
-      Assert::AreEqual(0.0f, textRenderer.getFont().getHeight());
-    }
-
-    //------------------------------------------------------------------------------------------------
     TEST_METHOD(TextRenderer_Constructor_SetsLines_ToEmptyVector)
     {
       MockTextRenderer textRenderer;
@@ -96,8 +88,9 @@ namespace TestCeleste
     {
       // Don't initialize so we don't set up default font
       MockTextRenderer textRenderer;
+      textRenderer.setFontHeight(20);
 
-      Assert::AreEqual(0.0f, textRenderer.getFont().getHeight());
+      Assert::AreEqual(20.0f, textRenderer.getFont().getHeight());
 
       textRenderer.setFont(TestResources::getArialTtfRelativePath().c_str());
 
@@ -109,8 +102,9 @@ namespace TestCeleste
     {
       // Don't initialize so we don't set up default font
       MockTextRenderer textRenderer;
-      
-      Assert::AreEqual(0.0f, textRenderer.getFont().getHeight());
+      textRenderer.setFontHeight(20);
+
+      Assert::AreEqual(20.0f, textRenderer.getFont().getHeight());
 
       textRenderer.setFont(TestResources::getArialTtfRelativePath());
 
@@ -122,8 +116,9 @@ namespace TestCeleste
     {
       // Don't initialize so we don't set up default font
       MockTextRenderer textRenderer;
+      textRenderer.setFontHeight(20);
 
-      Assert::AreEqual(0.0f, textRenderer.getFont().getHeight());
+      Assert::AreEqual(20.0f, textRenderer.getFont().getHeight());
 
       textRenderer.setFont(Path(TestResources::getArialTtfRelativePath()));
 
@@ -247,20 +242,7 @@ namespace TestCeleste
 #pragma region Set Font Height Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextRenderer_SetFontHeight_WithNoFontLoaded_DoesNothing)
-    {
-      // Don't initialize, font will be set to default value
-      MockTextRenderer textRenderer;
-
-      Assert::AreEqual(0.0f, textRenderer.getFont().getHeight());
-
-      textRenderer.setFontHeight(10);
-
-      Assert::AreEqual(0.0f, textRenderer.getFont().getHeight());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextRenderer_SetFontHeight_WithFontLoaded_ChangesFontHeightToInputtedValue)
+    TEST_METHOD(TextRenderer_SetFontHeight_ChangesFontHeightToInputtedValue)
     {
       MockTextRenderer textRenderer;
       textRenderer.setFont(TestResources::getArialTtfRelativePath(), 6.0f);
@@ -273,7 +255,7 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextRenderer_SetFontHeight_WithFontLoaded_InputtingInvalidHeight_ChangesFontHeightToZero)
+    TEST_METHOD(TextRenderer_SetFontHeight_InputtingInvalidHeight_ChangesFontHeightToZero)
     {
       MockTextRenderer textRenderer;
       textRenderer.setFont(TestResources::getArialTtfRelativePath(), 6.0f);
@@ -392,16 +374,6 @@ namespace TestCeleste
 #pragma endregion
 
 #pragma region Get Dimensions Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(TextRenderer_GetDimensions_WithNoFont_ReturnsZeroVector)
-    {
-      MockTextRenderer textRenderer;
-      textRenderer.addLine("Hello");
-
-      Assert::AreEqual(0.0f, textRenderer.getFont().getHeight());
-      Assert::AreEqual(glm::zero<glm::vec2>(), textRenderer.getDimensions());
-    }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(TextRenderer_GetDimensions_WithNoText_ReturnsZeroVector)

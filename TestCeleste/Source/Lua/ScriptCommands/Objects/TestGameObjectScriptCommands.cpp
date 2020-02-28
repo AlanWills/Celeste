@@ -571,22 +571,6 @@ namespace TestCeleste::Lua::ScriptCommands
 #pragma region Get Transform Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_getTransform_TransformNull_ReturnsNullHandle)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    GameObject gameObject;
-
-    Assert::IsNull(gameObject.getTransform());
-
-    auto functionResult = state.globals()["GameObject"]["getTransform"].get<sol::protected_function>().call(gameObject);
-
-    Assert::IsTrue(functionResult.valid());
-    Assert::IsNull(functionResult.get<Transform*>());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getTransform_TransformNotNull_ReturnsCorrectHandle)
   {
     sol::state& state = LuaState::instance();

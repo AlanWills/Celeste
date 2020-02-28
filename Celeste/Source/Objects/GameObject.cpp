@@ -212,14 +212,16 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   bool GameObject::deallocate()
   {
-    for (Component* component : m_components)
+    // Iterate in reverse so components can remove themselves from the m_components vector
+    for (size_t i = m_components.size(); i > 0; --i)
     {
-      component->deallocate();
+      m_components[i - 1]->deallocate();
     }
 
-    for (Component* component : m_scripts)
+    // Iterate in reverse so scripts can remove themselves from the m_scripts vector
+    for (size_t i = m_scripts.size(); i > 0; --i)
     {
-      component->deallocate();
+      m_scripts[i - 1]->deallocate();
     }
 
     Transform* transform = m_transform;
@@ -227,7 +229,7 @@ namespace Celeste
 
     if (transform != nullptr && transform->getGameObject() != nullptr)
     {
-      // If the transform's gameobject is nullptr, it means it's already been deallocated
+      // If the transform's gameobject is nullptr, it means deallocate has already been called on it
       transform->deallocate();
     }
 

@@ -28,14 +28,6 @@ namespace TestCeleste
 #pragma region Constructor Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScreenManager_Constructor_SetsValuesToDefault)
-    {
-      ScreenManager screenManager;
-
-      Assert::IsNull(screenManager.getWindow());
-    }
-
-    //------------------------------------------------------------------------------------------------
     TEST_METHOD(ScreenManager_Constructor_CreatesWindow)
     {
       ScreenManager screenManager;

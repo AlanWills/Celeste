@@ -18,14 +18,6 @@ namespace TestCeleste
     AssertCel::IsActive(entity);
   }
 
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Entity_Constructor_CallsSetActive)
-  {
-    MockEntity entity;
-
-    Assert::IsTrue(entity.isSetActiveCalled());
-  }
-
 #pragma endregion
 
 #pragma region Handle Input Tests
@@ -35,11 +27,11 @@ namespace TestCeleste
   {
     MockEntity entity;
 
-    Assert::IsFalse(entity.isOnHandleInputCalled());
+    Assert::IsFalse(entity.isHandleInputCalled());
 
     entity.handleInput();
 
-    Assert::IsTrue(entity.isOnHandleInputCalled());
+    Assert::IsTrue(entity.isHandleInputCalled());
   }
 
 #pragma endregion
@@ -51,11 +43,11 @@ namespace TestCeleste
   {
     MockEntity entity;
 
-    Assert::IsFalse(entity.isOnUpdateCalled());
+    Assert::IsFalse(entity.isUpdateCalled());
 
     entity.update(0);
 
-    Assert::IsTrue(entity.isOnUpdateCalled());
+    Assert::IsTrue(entity.isUpdateCalled());
   }
 
 #pragma endregion

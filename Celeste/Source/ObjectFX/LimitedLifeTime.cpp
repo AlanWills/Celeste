@@ -11,7 +11,7 @@ namespace Celeste
   LimitedLifeTime::LimitedLifeTime() :
     m_onDeathEvent()
   {
-    Input::getKeyboard().getKeyReleasedEvent().subscribe(
+    m_keyUpEvent = Input::getKeyboard().getKeyReleasedEvent().subscribe(
       [this](int key)
       {
         onKeyUp(key);

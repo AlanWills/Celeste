@@ -54,15 +54,10 @@ namespace TestCeleste
 #pragma region Constructor Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Button_Constructor_SetsValuesToDefault)
+    TEST_METHOD(Button_Constructor_SetsButtonStateTo_kIdle)
     {
       MockButton button;
 
-      Assert::IsNull(button.getDefaultTexture());
-      Assert::IsNull(button.getHighlightedTexture());
-      Assert::IsNull(button.getClickedTexture());
-      Assert::IsNull(button.getClickedSound());
-      Assert::IsNull(button.getHighlightedSound());
       Assert::IsTrue(button.getButtonState_Public() == Button::ButtonState::kIdle);
     }
 

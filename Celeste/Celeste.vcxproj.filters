@@ -309,9 +309,6 @@
     <ClInclude Include="Headers\Registries\ComponentDataConverterRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Registries\CallbackRegistry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\DataConverters\Physics\RectangleColliderDataConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1028,9 +1025,6 @@
     <ClCompile Include="Source\Registries\ComponentRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Registries\CallbackRegistry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Registries\ComponentDataConverterRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1257,9 +1251,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Lua\ScriptCommands\Resources\ResourcesScriptCommands.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Objects\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\EntityScriptCommands.cpp">

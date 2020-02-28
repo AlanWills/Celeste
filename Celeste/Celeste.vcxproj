@@ -334,7 +334,6 @@
     <ClInclude Include="Headers\Fields\Field.h" />
     <ClInclude Include="Headers\Fields\DataField.h" />
     <ClInclude Include="Headers\Objects\ScriptableObject.h" />
-    <ClInclude Include="Headers\Registries\CallbackRegistry.h" />
     <ClInclude Include="Headers\Animation\AnimationState.h" />
     <ClInclude Include="Headers\Animation\StateMachine.h" />
     <ClInclude Include="Headers\Audio\AudioManager.h" />
@@ -564,13 +563,11 @@
     <ClCompile Include="Source\Maths\RandomGenerator.cpp" />
     <ClCompile Include="Source\Media\Video.cpp" />
     <ClCompile Include="Source\Networking\NetworkUtils.cpp" />
-    <ClCompile Include="Source\Objects\Entity.cpp" />
     <ClCompile Include="Source\Objects\ScriptableObject.cpp" />
     <ClCompile Include="Source\OpenAL\OpenALState.cpp" />
     <ClCompile Include="Source\OpenGL\ManagedGLBuffer.cpp" />
     <ClCompile Include="Source\Physics\EllipseCollider.cpp" />
     <ClCompile Include="Source\OpenGL\GL.cpp" />
-    <ClCompile Include="Source\Registries\CallbackRegistry.cpp" />
     <ClCompile Include="Source\DataConverters\Callbacks\CallbackDataConverter.cpp" />
     <ClCompile Include="Source\Registries\ComponentDataConverterRegistry.cpp" />
     <ClCompile Include="Source\DataConverters\DataConverter.cpp" />

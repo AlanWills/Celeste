@@ -26,7 +26,6 @@ namespace Celeste
       inline const Path& getClickedTexturePath() const { return m_clickedTexturePath.getValue(); }
       inline const Path& getHighlightedSoundPath() const { return m_highlightedSoundPath.getValue(); }
       inline const Path& getClickedSoundPath() const { return m_clickedSoundPath.getValue(); }
-      inline const CallbackDataConverters& getLeftClickCallbacks() const { return m_leftClickCallbacks.getItems(); }
 
       inline CelesteDllExport static const Path& getDefaultTextureDefaultPath() { return m_defaultTextureDefaultPath; }
       inline CelesteDllExport static void setDefaultTextureDefaultPath(const Path& path) { m_defaultTextureDefaultPath = path; }
@@ -48,8 +47,6 @@ namespace Celeste
       CelesteDllExport static const char* const CLICKED_TEXTURE_ATTRIBUTE_NAME;
       CelesteDllExport static const char* const HIGHLIGHTED_SOUND_ATTRIBUTE_NAME;
       CelesteDllExport static const char* const CLICKED_SOUND_ATTRIBUTE_NAME;
-      CelesteDllExport static const char* const LEFT_CLICK_CALLBACKS_ELEMENT_NAME;
-      CelesteDllExport static const char* const CALLBACK_ELEMENT_NAME;
 
     private:
       using Inherited = ComponentDataConverter;
@@ -59,7 +56,6 @@ namespace Celeste
       XML::ReferenceAttribute<Path>& m_clickedTexturePath;
       XML::ReferenceAttribute<Path>& m_highlightedSoundPath;
       XML::ReferenceAttribute<Path>& m_clickedSoundPath;
-      XML::DataConverterListElement<CallbackDataConverter>& m_leftClickCallbacks;
 
       static Path m_defaultTextureDefaultPath;
       static Path m_highlightedTextureDefaultPath;

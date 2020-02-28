@@ -467,10 +467,10 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    class Screen : public Celeste::Screen {};
-    state.new_usertype<Screen>("Screen");
+    class DerivedScreen : public Celeste::Screen {};
+    state.new_usertype<DerivedScreen>("DerivedScreen");
 
-    auto functionResult = state.globals()["Screen"]["as"].get<sol::protected_function>().call(nullptr, "Screen");
+    auto functionResult = state.globals()["Screen"]["as"].get<sol::protected_function>().call(nullptr, "DerivedScreen");
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(sol::type::nil == functionResult.get_type());
@@ -547,11 +547,11 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    class Screen : public Celeste::Screen {};
-    state.new_usertype<Screen>("Screen");
+    class DerivedScreen : public Celeste::Screen {};
+    state.new_usertype<DerivedScreen>("DerivedScreen");
 
     Screen screen;
-    auto functionResult = state.globals()["Screen"]["as"].get<sol::protected_function>().call(&screen, "Screen");
+    auto functionResult = state.globals()["Screen"]["as"].get<sol::protected_function>().call(&screen, "DerivedScreen");
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(sol::type::nil == functionResult.get_type());

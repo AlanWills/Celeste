@@ -91,7 +91,7 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Deallocate_AllocatedObject_DeallocatesObject_ResetsFlags_AndReturnsTrue)
+    TEST_METHOD(EntityAllocator_Deallocate_ObjectFromAllocator_DeallocatesObject_ResetsFlags_AndReturnsTrue)
     {
       EntityAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle = allocator.allocate();
@@ -102,7 +102,6 @@ namespace TestCeleste
 
       Assert::IsTrue(allocator.deallocate(*handle));
 
-      Assert::IsFalse(handle->isActive());
       Assert::AreEqual((size_t)0, allocator.size());
       Assert::IsFalse(allocator.isAllocated(*handle));
     }
@@ -248,7 +247,7 @@ namespace TestCeleste
 
       // Now deallocate another object
       {
-        handle2->deallocate();
+        allocator.deallocate(*handle2);
 
         int count = 0;
         for (const MockComponent& component : allocator)
@@ -294,7 +293,7 @@ namespace TestCeleste
 
       // Now deallocate another object
       {
-        handle2->deallocate();
+        allocator.deallocate(*handle2);
 
         int count = 0;
         for (const MockComponent& component : allocator)
@@ -332,7 +331,7 @@ namespace TestCeleste
 
       // 2 allocated objects
       {
-        handle1->deallocate();
+        allocator.deallocate(*handle1);
 
         observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
 
@@ -374,7 +373,7 @@ namespace TestCeleste
 
       // 2 allocated objects
       {
-        handle1->deallocate();
+        allocator.deallocate(*handle1);
 
         observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
 
@@ -484,7 +483,7 @@ namespace TestCeleste
 
       // 2 allocated objects
       {
-        handle1->deallocate();
+        allocator.deallocate(*handle1);
 
         observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent& component) -> bool { return true; });
 
@@ -529,7 +528,7 @@ namespace TestCeleste
 
       // 2 allocated objects
       {
-        handle1->deallocate();
+        allocator.deallocate(*handle1);
 
         Assert::IsFalse(allocator.isAllocated(*handle1));
 
@@ -654,7 +653,7 @@ namespace TestCeleste
 
       // Now deallocator another
       {
-        handle2->deallocate();
+        allocator.deallocate(*handle2);
 
         std::vector<std::reference_wrapper<MockComponent>> foundObjects;
         allocator.findAll([](const MockComponent&) { return true; }, foundObjects);
@@ -691,7 +690,7 @@ namespace TestCeleste
 
       // Now deallocate another another
       {
-        handle2->deallocate();
+        allocator.deallocate(*handle2);
 
         std::vector<std::reference_wrapper<MockComponent>> foundObjects;
         allocator.findAll([](const MockComponent&) { return true; }, foundObjects);
@@ -791,7 +790,7 @@ namespace TestCeleste
 
       // Now deallocate another
       {
-        handle2->deallocate();
+        allocator.deallocate(*handle2);
 
         std::vector<std::reference_wrapper<const MockComponent>> foundObjects;
         allocatorRef.findAll([](const MockComponent&) { return true; }, foundObjects);
@@ -831,7 +830,7 @@ namespace TestCeleste
 
       // Now deallocate another
       {
-        handle2->deallocate();
+        allocator.deallocate(*handle2);
 
         std::vector<std::reference_wrapper<const MockComponent>> foundObjects;
         allocatorRef.findAll([](const MockComponent&) { return true; }, foundObjects);

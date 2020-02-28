@@ -230,12 +230,9 @@ namespace Celeste
   template <typename T>
   void EntityAllocator<T>::deallocateAll()
   {
-    for (const auto& allocator : m_allocators)
+    for (T& object : *this)
     {
-      for (T& object : *allocator)
-      {
-        object.deallocate();
-      }
+      object.deallocate();
     }
   }
 

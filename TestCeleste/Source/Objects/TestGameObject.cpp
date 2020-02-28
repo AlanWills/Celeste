@@ -31,7 +31,7 @@ namespace TestCeleste
       Assert::AreEqual((StringId)0, gameObject.getName());
       Assert::AreEqual((StringId)0, gameObject.getTag());
       Assert::AreEqual((size_t)0, gameObject.getChildCount());
-      Assert::IsNull(gameObject.getTransform());
+      Assert::IsNotNull(gameObject.getTransform());
     }
 
 #pragma endregion
@@ -275,15 +275,6 @@ namespace TestCeleste
 #pragma region Get Parent Transform Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_GetParentTransform_WithNullTransform_ReturnsNull)
-    {
-      GameObject gameObject;
-
-      Assert::IsNull(gameObject.getTransform());
-      Assert::IsNull(gameObject.getParentTransform());
-    }
-
-    //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetParentTransform_WithNullTransformParent_ReturnsNull)
     {
       GameObject gameObject;
@@ -306,16 +297,6 @@ namespace TestCeleste
 
       Assert::AreEqual(parent.get(), gameObject.getTransform()->getParent());
       Assert::AreEqual(parent.get(), gameObject.getParentTransform());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_GetConstParentTransform_WithNullTransform_ReturnsConstNull)
-    {
-      GameObject gameObject;
-      const GameObject& cgameObject = gameObject;
-
-      Assert::IsNull(cgameObject.getTransform());
-      Assert::IsNull(cgameObject.getParentTransform());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -350,17 +331,6 @@ namespace TestCeleste
 #pragma region Set Parent Transform Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_SetParentTransform_WithNullTransform_InputtingTransform_DoesNothing)
-    {
-      GameObject gameObject;
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-
-      Assert::IsNull(gameObject.getTransform());
-
-      gameObject.setParentTransform(transform.get());
-    }
-
-    //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetParentTransform_InputtingTransform_SetsTransformParentToInput)
     {
       GameObject parent;
@@ -381,15 +351,6 @@ namespace TestCeleste
 #pragma endregion
 
 #pragma region Get Parent Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_GetParent_WithNullTransform_ReturnsNull)
-    {
-      GameObject gameObject;
-
-      Assert::IsNull(gameObject.getTransform());
-      Assert::IsNull(gameObject.getParent());
-    }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetParent_WithNullTransformParent_ReturnsNull)
@@ -413,15 +374,6 @@ namespace TestCeleste
       Assert::AreEqual(parent.get(), gameObject.getParentTransform());
       Assert::IsTrue(&parentGameObject == parent->getGameObject());
       Assert::IsTrue(&parentGameObject == gameObject.getParent());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_GetConstParent_WithNullTransform_ReturnsConstNull)
-    {
-      GameObject gameObject;
-
-      Assert::IsNull(gameObject.getTransform());
-      Assert::IsNull(static_cast<const GameObject&>(gameObject).getParent());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -451,17 +403,6 @@ namespace TestCeleste
 #pragma endregion
 
 #pragma region Set Parent Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_SetParent_WithNullTransform_InputtingGameObject_DoesNothing)
-    {
-      GameObject parent;
-      GameObject gameObject;
-
-      Assert::IsNull(gameObject.getTransform());
-
-      gameObject.setParent(&parent);
-    }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_SetParent_InputtingNullGameObject_DoesNothing)
@@ -503,15 +444,6 @@ namespace TestCeleste
 #pragma region Get Child Count Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_GetChildCount_NoTransform_ReturnsZero)
-    {
-      GameObject gameObject;
-
-      Assert::IsNull(gameObject.getTransform());
-      Assert::AreEqual((size_t)0, gameObject.getChildCount());
-    }
-
-    //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetChildCount_NoChildren_ReturnsZero)
     {
       GameObject gameObject;
@@ -539,15 +471,6 @@ namespace TestCeleste
 #pragma endregion
 
 #pragma region Get Child Transform Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_GetChildTransform_NoTransform_ReturnsNullTransform)
-    {
-      GameObject gameObject;
-
-      Assert::IsNull(gameObject.getTransform());
-      Assert::IsNull(gameObject.getChildTransform(0));
-    }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetChildTransform_NoChildren_ReturnsNullTransform)
@@ -581,15 +504,6 @@ namespace TestCeleste
 #pragma region Get Child GameObject Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_GetChildGameObject_NoTransform_ReturnsNullGameObject)
-    {
-      GameObject gameObject;
-
-      Assert::IsNull(gameObject.getTransform());
-      Assert::IsNull(gameObject.getChildGameObject(0));
-    }
-
-    //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_GetChildGameObject_NoChildren_ReturnsNullGameObject)
     {
       GameObject gameObject;
@@ -621,15 +535,6 @@ namespace TestCeleste
 #pragma region Find Child Game Object Tests
 
 #pragma region String Id Input
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindChildGameObject_StringId_NoTransform_ReturnsNull)
-    {
-      GameObject gameObject;
-
-      Assert::IsNull(gameObject.getTransform());
-      Assert::IsNull(gameObject.findChildGameObject(internString("Test")));
-    }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_FindChildGameObject_StringId_NoChildren_ReturnsNull)
@@ -687,15 +592,6 @@ namespace TestCeleste
 #pragma region String Input
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_FindChildGameObject_String_NoTransform_ReturnsNull)
-    {
-      GameObject gameObject;
-
-      Assert::IsNull(gameObject.getTransform());
-      Assert::IsNull(gameObject.findChildGameObject("Test"));
-    }
-
-    //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_FindChildGameObject_String_NoChildren_ReturnsNull)
     {
       GameObject gameObject;
@@ -751,22 +647,6 @@ namespace TestCeleste
 #pragma endregion
 
 #pragma region For Each Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_ForEach_WithNullTransform_PerformsNoIteration)
-    {
-      GameObject gameObject;
-
-      Assert::IsNull(gameObject.getTransform());
-
-      int counter = 0;
-      for (observer_ptr<GameObject> child : gameObject)
-      {
-        ++counter;
-      }
-
-      Assert::AreEqual(0, counter);
-    }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(GameObject_ForEach_TransformHasNoChildren_PerformsNoIteration)
@@ -1359,64 +1239,6 @@ namespace TestCeleste
 
       Assert::IsNotNull(component2.get());
       AssertCel::IsActive(component2.get());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_RemoveComponent_InputtingComponentInGameObject_SetsGameObjectToNull)
-    {
-      GameObject gameObject;
-      AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
-
-      Assert::IsNotNull(component.get());
-      AssertCel::IsActive(component.get());
-      Assert::AreEqual(&gameObject, component.get()->getGameObject());
-      AssertCel::HasComponent<MockComponent>(gameObject);
-
-      gameObject.removeComponent(component.get());
-
-      Assert::IsNotNull(component.get());
-      AssertCel::IsActive(component.get());
-      Assert::AreEqual(&gameObject, component.get()->getGameObject());
-      AssertCel::DoesNotHaveComponent<MockComponent>(gameObject);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_RemoveComponent_InputtingScriptInGameObject_SetsGameObjectToNull)
-    {
-      GameObject gameObject;
-      AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
-      gameObject.update(0);   // Make sure it's added
-
-      Assert::IsNotNull(script.get());
-      AssertCel::IsActive(script.get());
-      Assert::AreEqual(&gameObject, script.get()->getGameObject());
-      AssertCel::HasComponent<MockScript>(gameObject);
-
-      gameObject.removeComponent(script.get());
-
-      Assert::IsNotNull(script.get());
-      AssertCel::IsActive(script.get());
-      Assert::AreEqual(&gameObject, script.get()->getGameObject());
-      AssertCel::DoesNotHaveComponent<MockScript>(gameObject);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GameObject_RemoveComponent_InputtingScriptToAddInGameObject_SetsGameObjectToNull)
-    {
-      GameObject gameObject;
-      AutoDeallocator<MockScript> script = gameObject.addComponent<MockScript>();
-
-      Assert::IsNotNull(script.get());
-      AssertCel::IsActive(script.get());
-      Assert::AreEqual(&gameObject, script.get()->getGameObject());
-      AssertCel::HasComponent<MockScript>(gameObject);
-
-      gameObject.removeComponent(script.get());
-
-      Assert::IsNotNull(script.get());
-      AssertCel::IsActive(script.get());
-      Assert::AreEqual(&gameObject, script.get()->getGameObject());
-      AssertCel::DoesNotHaveComponent<MockScript>(gameObject);
     }
 
     //------------------------------------------------------------------------------------------------

@@ -165,11 +165,11 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_Deallocate_OnScreenNotFromAllocator_ReturnsTrue)
+    TEST_METHOD(Screen_Deallocate_OnScreenNotFromAllocator_ReturnsFalse)
     {
       Screen screen;
 
-      Assert::IsTrue(screen.deallocate());
+      Assert::IsFalse(screen.deallocate());
     }
 
 #pragma endregion
@@ -234,18 +234,14 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Screen_DeallocateGameObject_InputtingGameObjectFromScreen_ShouldDeallocateGameObject)
+    TEST_METHOD(Screen_DeallocateGameObject_InputtingGameObjectFromScreen_ReturnsTrue)
     {
       Screen screen;
       AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
 
       Assert::IsNotNull(gameObject.get());
       AssertCel::IsActive(gameObject.get());
-      
-      screen.deallocateGameObject(*gameObject);
-
-      Assert::IsNotNull(gameObject.get());
-      AssertCel::IsNotActive(gameObject.get());
+      Assert::IsTrue(screen.deallocateGameObject(*gameObject));
     }
 
 #pragma endregion

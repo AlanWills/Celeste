@@ -192,7 +192,6 @@ namespace TestCeleste::Resources
 
     resources.unloadAll<VertexShader>();
 
-    Assert::IsNull(shader);
     Assert::AreEqual(static_cast<StringId>(0), shader->getResourceId());
     Assert::AreEqual(static_cast<size_t>(0), resources.getVertexShaderLoader().size());
   }
@@ -225,7 +224,6 @@ namespace TestCeleste::Resources
 
     resources.unloadAll<FragmentShader>();
 
-    Assert::IsNull(shader);
     Assert::AreEqual(static_cast<StringId>(0), shader->getResourceId());
     Assert::AreEqual(static_cast<size_t>(0), resources.getFragmentShaderLoader().size());
   }
@@ -258,7 +256,6 @@ namespace TestCeleste::Resources
 
     resources.unloadAll<Font>();
 
-    Assert::IsNull(font);
     Assert::AreEqual(static_cast<StringId>(0), font->getResourceId());
     Assert::AreEqual(static_cast<size_t>(0), resources.getFontLoader().size());
   }
@@ -291,7 +288,6 @@ namespace TestCeleste::Resources
 
     resources.unloadAll<Data>();
 
-    Assert::IsNull(data);
     Assert::AreEqual(static_cast<StringId>(0), data->getResourceId());
     Assert::AreEqual(static_cast<size_t>(0), resources.getDataLoader().size());
   }
@@ -324,7 +320,6 @@ namespace TestCeleste::Resources
 
     resources.unloadAll<Sound>();
 
-    Assert::IsNull(sound);
     Assert::AreEqual(static_cast<StringId>(0), sound->getResourceId());
     Assert::AreEqual(static_cast<size_t>(0), resources.getSoundLoader().size());
   }
@@ -357,7 +352,6 @@ namespace TestCeleste::Resources
 
     resources.unloadAll<Texture2D>();
 
-    Assert::IsNull(texture);
     Assert::AreEqual(static_cast<StringId>(0), texture->getResourceId());
     Assert::AreEqual(static_cast<size_t>(0), resources.getTexture2DLoader().size());
   }
@@ -390,7 +384,6 @@ namespace TestCeleste::Resources
 
     resources.unloadAll<Prefab>();
 
-    Assert::IsNull(prefab);
     Assert::AreEqual(static_cast<StringId>(0), prefab->getResourceId());
     Assert::AreEqual(static_cast<size_t>(0), resources.getPrefabLoader().size());
   }
@@ -423,7 +416,6 @@ namespace TestCeleste::Resources
 
     resources.unloadAll<Model>();
 
-    Assert::IsNull(model);
     Assert::AreEqual(static_cast<StringId>(0), model->getResourceId());
     Assert::AreEqual(static_cast<size_t>(0), resources.getModelLoader().size());
   }
@@ -1223,11 +1215,12 @@ namespace TestCeleste::Resources
 
     Assert::IsNotNull(shader);
     Assert::AreNotEqual(static_cast<StringId>(0), shader->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(1), resources.getVertexShaderLoader().size());
 
     resources.unload<VertexShader>(TestResources::getSpriteVertexShaderRelativePath());
 
-    Assert::IsNull(shader);
     Assert::AreEqual(static_cast<StringId>(0), shader->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(0), resources.getVertexShaderLoader().size());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1273,11 +1266,12 @@ namespace TestCeleste::Resources
 
     Assert::IsNotNull(shader);
     Assert::AreNotEqual(static_cast<StringId>(0), shader->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(1), resources.getFragmentShaderLoader().size());
 
     resources.unload<FragmentShader>(TestResources::getSpriteFragmentShaderRelativePath());
 
-    Assert::IsNull(shader);
     Assert::AreEqual(static_cast<StringId>(0), shader->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(0), resources.getFragmentShaderLoader().size());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1317,17 +1311,18 @@ namespace TestCeleste::Resources
   {
     MockResourceManager resources;
 
-    Assert::AreEqual(static_cast<size_t>(0), resources.getFragmentShaderLoader().size());
+    Assert::AreEqual(static_cast<size_t>(0), resources.getTexture2DLoader().size());
 
     observer_ptr<Texture2D> texture = resources.load<Texture2D>(TestResources::getBlockPngRelativePath());
 
     Assert::IsNotNull(texture);
     Assert::AreNotEqual(static_cast<StringId>(0), texture->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(1), resources.getTexture2DLoader().size());
 
     resources.unload<Texture2D>(TestResources::getBlockPngRelativePath());
 
-    Assert::IsNull(texture);
     Assert::AreEqual(static_cast<StringId>(0), texture->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(0), resources.getTexture2DLoader().size());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1373,11 +1368,12 @@ namespace TestCeleste::Resources
 
     Assert::IsNotNull(font);
     Assert::AreNotEqual(static_cast<StringId>(0), font->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(1), resources.getFontLoader().size());
 
     resources.unload<Font>(TestResources::getArialTtfRelativePath());
 
-    Assert::IsNull(font);
     Assert::AreEqual(static_cast<StringId>(0), font->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(0), resources.getFontLoader().size());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1423,11 +1419,12 @@ namespace TestCeleste::Resources
 
     Assert::IsNotNull(sound);
     Assert::AreNotEqual(static_cast<StringId>(0), sound->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(1), resources.getSoundLoader().size());
 
     resources.unload<Sound>(TestResources::getButtonHoverWavRelativePath());
 
-    Assert::IsNull(sound);
     Assert::AreEqual(static_cast<StringId>(0), sound->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(0), resources.getSoundLoader().size());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1473,11 +1470,12 @@ namespace TestCeleste::Resources
 
     Assert::IsNotNull(data);
     Assert::AreNotEqual(static_cast<StringId>(0), data->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(1), resources.getDataLoader().size());
 
     resources.unload<Data>(AnimatorLoadingResources::getValidFullPath());
 
-    Assert::IsNull(data);
     Assert::AreEqual(static_cast<StringId>(0), data->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(0), resources.getDataLoader().size());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1523,11 +1521,12 @@ namespace TestCeleste::Resources
 
     Assert::IsNotNull(prefab);
     Assert::AreNotEqual(static_cast<StringId>(0), prefab->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(1), resources.getPrefabLoader().size());
 
     resources.unload<Prefab>(PrefabLoadingResources::getValidSingleGameObjectFullPath());
 
-    Assert::IsNull(prefab);
     Assert::AreEqual(static_cast<StringId>(0), prefab->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(0), resources.getPrefabLoader().size());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1573,11 +1572,12 @@ namespace TestCeleste::Resources
 
     Assert::IsNotNull(model);
     Assert::AreNotEqual(static_cast<StringId>(0), model->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(1), resources.getModelLoader().size());
 
     resources.unload<Model>(ModelLoadingResources::getBoxFullPath());
 
-    Assert::IsNull(model);
     Assert::AreEqual(static_cast<StringId>(0), model->getResourceId());
+    Assert::AreEqual(static_cast<size_t>(0), resources.getModelLoader().size());
   }
 
   //------------------------------------------------------------------------------------------------

@@ -49,24 +49,28 @@ namespace Celeste
     GameObject* gameObject = m_gameObject;
     m_gameObject = nullptr;
 
-    std::string name = deinternString(gameObject->getName());
-
-    // Ensure the game object is dead and reset
-    if (gameObject != nullptr)
+    // Ensure the game object is deallocated
+    if (gameObject != nullptr && gameObject->getTransform() != nullptr)
     {
+      // If the gameobject transform is nullptr it means deallocate has already been called on it
       gameObject->deallocate();
     }
     
-    m_parent = nullptr;
+    if (hasParent())
+    {
+      // Remove from parent
+      m_parent->m_children.erase(std::remove(m_parent->m_children.begin(), m_parent->m_children.end(), this));
+    }
 
     // Kill all children
     if (!m_children.empty())
     {
-      for (Transform* child : m_children)
+      // Iterate in reverse so children can remove themselves from the m_children vector
+      for (size_t i = m_children.size(); i > 0; --i)
       {
-        child->deallocate();
+        m_children[i - 1]->deallocate();
       }
-      m_children.clear();
+      ASSERT(m_children.empty());
     }
 
     m_allocator.deallocate(*this);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Objects/GameObject.h"
+#include "Events/Event.h"
 #include "sol.hpp"
 
 

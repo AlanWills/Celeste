@@ -54,14 +54,6 @@ namespace TestCeleste::Rendering
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Canvas_Constructor_SetsDimensions_ToOneVector)
-  {
-    Canvas canvas;
-
-    Assert::AreEqual(glm::vec2(1), canvas.getDimensions());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_Constructor_SetsDimensions_ToViewportDimensions)
   {
     Canvas canvas;

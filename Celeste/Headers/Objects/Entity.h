@@ -10,7 +10,7 @@ namespace Celeste
   class Entity : public Object
   {
     public:
-      CelesteDllExport Entity();
+      Entity() = default;
       virtual ~Entity() = default;
 
       virtual void handleInput() {}
@@ -20,6 +20,6 @@ namespace Celeste
       virtual void setActive(bool isActive) { m_active = isActive; }
 
     private:
-      bool m_active = false;
+      bool m_active = true;
   };
 }

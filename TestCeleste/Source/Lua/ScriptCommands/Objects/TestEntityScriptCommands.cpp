@@ -54,18 +54,6 @@ namespace TestCeleste::Lua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(EntityScriptCommands_Initialize_Adds_die_ToEntityTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["Entity"]["die"].valid());
-
-    Celeste::Lua::EntityScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["Entity"]["die"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(EntityScriptCommands_Initialize_Adds_as_ToEntityTable)
   {
     sol::state& state = LuaState::instance();
@@ -119,19 +107,19 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Entity entity;
     
-    Assert::IsFalse(entity.isActive());
-
-    auto functionResult = state.globals()["Entity"]["setActive"].get<sol::protected_function>().call(
-      entity, true);
-
-    Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(entity.isActive());
 
-    functionResult = state.globals()["Entity"]["setActive"].get<sol::protected_function>().call(
+    auto functionResult = state.globals()["Entity"]["setActive"].get<sol::protected_function>().call(
       entity, false);
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsFalse(entity.isActive());
+
+    functionResult = state.globals()["Entity"]["setActive"].get<sol::protected_function>().call(
+      entity, true);
+
+    Assert::IsTrue(functionResult.valid());
+    Assert::IsTrue(entity.isActive());
   }
 
 #pragma endregion

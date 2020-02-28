@@ -78,16 +78,6 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioSource_Constructor_AudioSourceIsNotSet)
-    {
-      MockAudioSource audioSource;
-
-      Assert::AreEqual(static_cast<ALuint>(0), audioSource.getSourceHandle_Public());
-      Assert::AreEqual(0, audioSource.getSourceBufferHandle());
-      Assert::IsFalse(alIsSource(audioSource.getSourceHandle_Public()));
-    }
-
-    //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_Constructor_AudioSetToNullHandle)
     {
       MockAudioSource audioSource;
@@ -179,19 +169,6 @@ namespace TestCeleste
 #pragma endregion
 
 #pragma region Set Looping Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioSource_SetLooping_NoAudioSourceCreated_DoesNothing)
-    {
-      MockAudioSource audio;
-
-      Assert::IsFalse(alIsSource(audio.getSourceHandle_Public()));
-      Assert::IsFalse(audio.isLooping());
-
-      audio.setLooping(true);
-
-      Assert::IsFalse(audio.isLooping());
-    }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_SetLooping_AudioSourceCreated_UpdatesLooping)
