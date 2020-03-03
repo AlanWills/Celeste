@@ -18,12 +18,12 @@ namespace Celeste::Debugging
     public:
       CelesteDllExport void update(float elapsedGameTime) override;
 
-    protected:
-      CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
-
     private:
       using Inherited = Celeste::Script;
 
+      void begin();
+
+      bool m_begun = false;
       observer_ptr<Celeste::Rendering::TextRenderer> m_textRenderer;
       float m_current;
   };

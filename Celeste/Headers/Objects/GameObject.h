@@ -22,8 +22,11 @@ namespace Celeste
 
   class GameObject : public Entity
   {
+    CUSTOM_MEMORY_DECLARATION(GameObject, CelesteDllExport);
+
     public:
       CelesteDllExport GameObject();
+      CelesteDllExport ~GameObject() override;
 
       /// Submit this gameobject for rendering into the inputted spritebatch
       CelesteDllExport void render(Rendering::SpriteBatch& spriteBatch, float lag);
@@ -45,7 +48,6 @@ namespace Celeste
 
       /// Called when a collider on the gameobject has not collided with a trigger it was in collision with last frame
       CelesteDllExport void triggerExit(Physics::Collider& collider);
-      CelesteDllExport bool deallocate();
 
       inline Transform* getTransform() { return m_transform; }
       inline const Transform* getTransform() const { return const_cast<GameObject*>(this)->getTransform(); }
@@ -82,17 +84,6 @@ namespace Celeste
       inline GameObjectIterator begin() const { return m_transform != nullptr ? m_transform->begin() : GameObjectIterator(std::vector<Transform*>::const_iterator()); }
       inline GameObjectIterator end() const { return m_transform != nullptr ? m_transform->end() : GameObjectIterator(std::vector<Transform*>::const_iterator()); }
 
-      inline Screen* getScreen() { return m_screen; }
-      inline CelesteDllExport const Screen* getScreen() const { return const_cast<GameObject*>(this)->getScreen(); }
-
-      /// Creates a game object in the same screen as this object's owner screen
-      /// Will return a null handle if this game object is not in an owner screen
-      CelesteDllExport GameObject* allocateGameObjectInScreen();
-    
-      /// Creates a game object in the same screen as this object's owner screen with the inputted transform as it's parent
-      /// Will return a null handle if this game object is not in an owner screen
-      CelesteDllExport GameObject* allocateGameObjectInScreen(Transform& parentTransform);
-    
       /// Allocates and inserts the inputted component into the components associated with this game object
       /// If the component could not be allocated, it returns a null handle and the game object remains unchanged
       template <typename T>
@@ -139,13 +130,8 @@ namespace Celeste
       /// Tag can be applied to more than one game object for identifying a type of object
       StringId m_tag = 0;
 
-      /// A reference to the screen which this game object has been placed in
-      Screen* m_screen = nullptr;
-
       std::vector<Component*> m_components;
       std::vector<Component*> m_scripts;
-      
-      friend class Screen;
   };
 
   //------------------------------------------------------------------------------------------------
@@ -153,13 +139,17 @@ namespace Celeste
   T* GameObject::addComponent()
   {
     STATIC_ASSERT((std::is_base_of<Component, T>::value), "Inputted type does not derive from component");
-    T* component = T::allocate(*this);
+    T* component = new T();
   
+#if _DEBUG
     if (component == nullptr)
     {
       ASSERT_FAIL_MSG("Component is nullptr");
       return component;
     }
+#endif
+
+    component->m_gameObject = this;
 
     if (std::is_base_of<Script, T>::value)
     {

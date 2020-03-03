@@ -34,7 +34,6 @@ namespace Celeste::Physics
       CelesteDllExport void update(float secondsPerUpdate) override;
 
     protected:
-      CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
       CelesteDllExport void onSetOffset(const glm::vec2& oldOffset, const glm::vec2& newOffset) override;
 
     private:

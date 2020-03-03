@@ -9,7 +9,6 @@ namespace Celeste::Lua
   LuaComponentManifest::LuaComponentManifest(const sol::table& componentTable) :
     m_componentTable(componentTable),
     m_onSetActiveFunc(),
-    m_onSetGameObjectFunc(),
     m_handleInputFunc(),
     m_updateFunc()
   {
@@ -19,14 +18,15 @@ namespace Celeste::Lua
   //------------------------------------------------------------------------------------------------
   void LuaComponentManifest::processCallbacks(const sol::table& componentTable)
   {
+#if _DEBUG
     if (!componentTable.valid())
     {
       ASSERT_FAIL();
       return;
     }
+#endif
 
     processCallback(componentTable, "onSetActive", m_onSetActiveFunc);
-    processCallback(componentTable, "onSetGameObject", m_onSetGameObjectFunc);
     processCallback(componentTable, "handleInput", m_handleInputFunc);
     processCallback(componentTable, "update", m_updateFunc);
   }
@@ -49,7 +49,6 @@ namespace Celeste::Lua
 
     // Set up callbacks
     luaComponent.setOnSetActiveFunc(m_onSetActiveFunc);
-    luaComponent.setOnSetGameObjectFunc(m_onSetGameObjectFunc);
     luaComponent.setHandleInputFunc(m_handleInputFunc);
     luaComponent.setUpdateFunc(m_updateFunc);
     luaComponent.setInstance(instance);

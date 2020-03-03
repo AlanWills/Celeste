@@ -40,17 +40,19 @@ namespace Celeste::UI
   }
 
   //------------------------------------------------------------------------------------------------
-  void TextBox::onSetGameObject(GameObject& gameObject)
+  void TextBox::begin()
   {
-    Inherited::onSetGameObject(gameObject);
+    m_begun = true;
 
-    m_textRenderer = gameObject.findComponent<TextRenderer>();
+    m_textRenderer = getGameObject()->findComponent<TextRenderer>();
 
-    if (m_textRenderer == nullptr || gameObject.getScreen() == nullptr)
+#if _DEBUG
+    if (m_textRenderer == nullptr)
     {
       ASSERT_FAIL();
       return;
     }
+#endif
 
     if (m_textRenderer->getLineCount() == 0)
     {
@@ -60,6 +62,17 @@ namespace Celeste::UI
 
     setLineIndex(0);
     setLetterIndex(0);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void TextBox::update(float elapsedGameTime)
+  {
+    Inherited::update(elapsedGameTime);
+
+    if (!m_begun)
+    {
+      begin();
+    }
   }
 
   //------------------------------------------------------------------------------------------------

@@ -14,22 +14,16 @@ namespace Celeste
 
   class Screen : public Entity
   {
-    COMPONENT_MEMORY(Screen)
+    CUSTOM_MEMORY_DECLARATION(Screen, CelesteDllExport)
 
     public:
       using FindGameObjectPredicate = std::function<bool(const GameObject&)>;
 
-      CelesteDllExport static Screen* allocate() { return m_componentAllocator.allocate(); }
-      CelesteDllExport static void deallocate(Screen& screen);
-
       CelesteDllExport Screen();
       Screen(const Screen&) = delete;
-      CelesteDllExport ~Screen() = default;
+      CelesteDllExport ~Screen() override;
 
       Screen& operator=(const Screen&) = delete;
-
-      CelesteDllExport bool deallocate();
-      CelesteDllExport bool deallocateGameObject(GameObject& gameObject);
 
       inline StringId getName() const { return m_name; }
       inline void setName(StringId name) { m_name = name; }
@@ -37,20 +31,12 @@ namespace Celeste
 
       CelesteDllExport void setActive(bool isActive) override;
 
-      inline EntityAllocatorIterator<const GameObject> begin() const { return m_gameObjectAllocator.cbegin(); }
-      inline EntityAllocatorIterator<const GameObject> end() const { return m_gameObjectAllocator.cend(); }
-      
       inline const Transform& getScreenRoot() const { return m_screenRoot; }
-
-      /// Allocates a new game object and sets its owner screen to be this instance
-      CelesteDllExport GameObject* allocateGameObject();
-
-      /// Allocates a new game object and sets its owner screen and transform parent to be this instance and the inputted transform
-      CelesteDllExport GameObject* allocateGameObject(Transform& parentTransform);
+      inline Transform& getScreenRoot() { return m_screenRoot; }
 
       //------------------------------------------------------------------------------------------------
       /// Find Game Object
-      GameObject* findGameObject(const FindGameObjectPredicate& predicate) { return m_gameObjectAllocator.find(predicate); }
+      GameObject* findGameObject(const FindGameObjectPredicate& predicate) { return nullptr; }
       const GameObject* findGameObject(const FindGameObjectPredicate& predicate) const { return const_cast<Screen*>(this)->findGameObject(predicate); }
 
       //------------------------------------------------------------------------------------------------
@@ -69,7 +55,7 @@ namespace Celeste
 
       //------------------------------------------------------------------------------------------------
       /// Find Game Objects
-      inline void findGameObjects(const FindGameObjectPredicate& predicate, std::vector<std::reference_wrapper<GameObject>>& foundGameObjects) { m_gameObjectAllocator.findAll(predicate, foundGameObjects); }
+      inline void findGameObjects(const FindGameObjectPredicate& predicate, std::vector<std::reference_wrapper<GameObject>>& foundGameObjects) {}
       std::vector<std::reference_wrapper<GameObject>> findGameObjects(const FindGameObjectPredicate& predicate)
       {
         std::vector<std::reference_wrapper<GameObject>> foundGO;
@@ -77,7 +63,7 @@ namespace Celeste
         return foundGO;
       }
 
-      inline void findGameObjects(const FindGameObjectPredicate& predicate, std::vector<std::reference_wrapper<const GameObject>>& foundGameObjects) const { m_gameObjectAllocator.findAll(predicate, foundGameObjects); }
+      inline void findGameObjects(const FindGameObjectPredicate& predicate, std::vector<std::reference_wrapper<const GameObject>>& foundGameObjects) const {}
       std::vector<std::reference_wrapper<const GameObject>> findGameObjects(const FindGameObjectPredicate& predicate) const
       {
         std::vector<std::reference_wrapper<const GameObject>> foundGO;
@@ -120,9 +106,6 @@ namespace Celeste
 
     private:
       using Inherited = Entity;
-      using GameObjectAllocator = EntityAllocator<GameObject>;
-
-      GameObjectAllocator m_gameObjectAllocator;
 
       StringId m_name;
       Transform m_screenRoot;

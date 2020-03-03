@@ -18,7 +18,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  observer_ptr<GameObject> PrefabDataConverter::allocateGameObject(Screen& screen) const
+  observer_ptr<GameObject> PrefabDataConverter::allocateGameObject() const
   {
 #if _DEBUG
     if (m_prefab == nullptr)
@@ -29,7 +29,7 @@ namespace Celeste
 #endif
 
     // Can add overloading of name, tag, position here if we want to
-    return getPrefab()->instantiate(screen);
+    return getPrefab()->instantiate();
   }
 
   //------------------------------------------------------------------------------------------------

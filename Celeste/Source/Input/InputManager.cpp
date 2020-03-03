@@ -16,7 +16,7 @@ namespace Celeste::Input
   //------------------------------------------------------------------------------------------------
   InputManager::~InputManager()
   {
-    KeyboardActivator::m_componentAllocator.deallocateAll();
+    KeyboardActivator::m_allocator.deallocateAll();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ namespace Celeste::Input
     updateMousePosition();
     m_mouse.handleInput();
 
-    KeyboardActivator::m_componentAllocator.handleInput();
+    KeyboardActivator::m_allocator.handleInput();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ namespace Celeste::Input
   {
     Inherited::update(elapsedGameTime);
 
-    KeyboardActivator::m_componentAllocator.update(elapsedGameTime);
+    KeyboardActivator::m_allocator.update(elapsedGameTime);
   }
 
   //------------------------------------------------------------------------------------------------

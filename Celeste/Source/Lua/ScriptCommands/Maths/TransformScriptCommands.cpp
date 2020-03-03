@@ -21,7 +21,6 @@ namespace Celeste::Lua::Maths::TransformScriptCommands
     registerUserType<Transform>(
       Transform::type_name(),
       sol::base_classes, sol::bases<Object>(),
-      "allocate", sol::factories(&Transform::allocate),
       "translate", &Internals::translate_TwoFloatsOverload);
   }
 }

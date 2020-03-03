@@ -6,15 +6,39 @@
 
 namespace Celeste
 {
+  CUSTOM_MEMORY_CREATION(GameObject, 100);
+
   //------------------------------------------------------------------------------------------------
   GameObject::GameObject() :
-    m_transform(),
+    m_transform(new Transform(*this)),
     m_name(0),
-    m_tag(0),
-    m_screen()
+    m_tag(0)
   {
-    ASSERT(Transform::canAllocate());
-    m_transform = Transform::allocate(*this);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  GameObject::~GameObject()
+  {
+    // Iterate in reverse so components can remove themselves from the m_components vector
+    for (Component* component : m_components)
+    {
+      delete component;
+    }
+
+    // Iterate in reverse so scripts can remove themselves from the m_scripts vector
+    for (Component* script : m_scripts)
+    {
+      delete script;
+    }
+
+    Transform* transform = m_transform;
+    m_transform = nullptr;
+
+    if (transform != nullptr && transform->getGameObject() != nullptr)
+    {
+      // If the transform is nullptr it means it's already been deleted
+      delete transform;
+    }
   }
 
   //------------------------------------------------------------------------------------------------
@@ -210,45 +234,6 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  bool GameObject::deallocate()
-  {
-    // Iterate in reverse so components can remove themselves from the m_components vector
-    for (size_t i = m_components.size(); i > 0; --i)
-    {
-      m_components[i - 1]->deallocate();
-    }
-
-    // Iterate in reverse so scripts can remove themselves from the m_scripts vector
-    for (size_t i = m_scripts.size(); i > 0; --i)
-    {
-      m_scripts[i - 1]->deallocate();
-    }
-
-    Transform* transform = m_transform;
-    m_transform = nullptr;
-
-    if (transform != nullptr && transform->getGameObject() != nullptr)
-    {
-      // If the transform's gameobject is nullptr, it means deallocate has already been called on it
-      transform->deallocate();
-    }
-
-    if (m_screen == nullptr)
-    {
-      ASSERT_FAIL();
-      return false;
-    }
-
-    if (!m_screen->deallocateGameObject(*this))
-    {
-      ASSERT_FAIL();
-      return false;
-    }
-
-    return true;
-  }
-
-  //------------------------------------------------------------------------------------------------
   GameObject* GameObject::findChildGameObject(StringId name)
   { 
     for (GameObject* gameObject : *this)
@@ -260,18 +245,6 @@ namespace Celeste
     }
 
     return nullptr;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  GameObject* GameObject::allocateGameObjectInScreen()
-  {
-    return m_screen != nullptr ? m_screen->allocateGameObject() : nullptr;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  GameObject* GameObject::allocateGameObjectInScreen(Transform& parentTransform)
-  {
-    return m_screen != nullptr ? m_screen->allocateGameObject(parentTransform) : nullptr;
   }
 
   //------------------------------------------------------------------------------------------------

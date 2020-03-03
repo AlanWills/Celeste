@@ -35,7 +35,7 @@ namespace Celeste::ScreenLoader
       return observer_ptr<Screen>();
     }
 
-    observer_ptr<Screen> screen = Screen::allocate();
+    observer_ptr<Screen> screen = new Screen();
     screenData.setValues(*screen);
 
     return screen;

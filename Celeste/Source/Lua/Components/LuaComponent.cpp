@@ -5,23 +5,14 @@
 
 namespace Celeste::Lua
 {
-  COMPONENT_MEMORY_CREATION(LuaComponent, 100)
-  COMPONENT_MEMBER_DEFINITION(LuaComponent)
+  CUSTOM_MEMORY_CREATION(LuaComponent, 100)
 
   //------------------------------------------------------------------------------------------------
   LuaComponent::LuaComponent() :
-    m_onSetGameObjectFunc(),
+    m_onSetActiveFunc(),
     m_handleInputFunc(),
     m_updateFunc()
   {
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void LuaComponent::setInstance(const sol::table& instance)
-  {
-    m_instance = instance;
-
-    onSetGameObject(*getGameObject());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -32,17 +23,6 @@ namespace Celeste::Lua
     if (m_onSetActiveFunc.valid())
     {
       m_onSetActiveFunc(m_instance, active);
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void LuaComponent::onSetGameObject(GameObject& gameObject)
-  {
-    Inherited::onSetGameObject(gameObject);
-
-    if (m_onSetGameObjectFunc.valid())
-    {
-      m_onSetGameObjectFunc(m_instance, gameObject);
     }
   }
 
@@ -73,7 +53,6 @@ namespace Celeste::Lua
   {
     m_instance = sol::nil;
     m_onSetActiveFunc = sol::nil;
-    m_onSetGameObjectFunc = sol::nil;
     m_handleInputFunc = sol::nil;
     m_updateFunc = sol::nil;
   }

@@ -27,7 +27,7 @@ namespace CelesteTestUtils
       void handleInput() override { Component::handleInput(); m_handleInputCalled = true; }
       void update(float elapsedGameTime) override { Component::update(elapsedGameTime); m_updateCalled = true; }
 
-      static Celeste::EntityAllocator<MockComponent>& getAllocator() { return m_componentAllocator; }
+      static Celeste::EntityAllocator<MockComponent>& getAllocator() { return m_allocator; }
 
     protected:
       void onSetGameObject(Celeste::GameObject& parent) override { m_onSetGameObjectCalled = true; }

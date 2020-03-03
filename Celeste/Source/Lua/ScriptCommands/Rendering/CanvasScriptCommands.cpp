@@ -55,7 +55,6 @@ namespace Celeste::Lua::Rendering::CanvasScriptCommands
     registerUserType<Canvas>(
       "Canvas",
       sol::base_classes, sol::bases<Component, Entity, Object>(),
-      "allocate", sol::factories(&Canvas::allocate),
       "getProjectionMode", &Internals::getProjectionMode,
       "setProjectionMode", &Internals::setProjectionMode,
       "getDimensions", &Canvas::getDimensions,

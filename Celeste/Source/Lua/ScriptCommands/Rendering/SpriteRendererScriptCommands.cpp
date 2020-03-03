@@ -32,8 +32,7 @@ namespace Celeste::Lua::Rendering::SpriteRendererScriptCommands
   void initialize()
   {
     registerUserType<SpriteRenderer>(
-      "SpriteRenderer",
-      "allocate", sol::factories(&SpriteRenderer::allocate),
+      SpriteRenderer::type_name(),
       "setTexture", sol::overload(&Internals::setTexture_HandleOverload, &Internals::setTexture_StringOverload),
       "setColour", &Internals::setColour_ThreeFloatsOverload);
   }

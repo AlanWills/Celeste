@@ -61,7 +61,6 @@ namespace Celeste::Lua::Physics::EllipseColliderScriptCommands
   {
     registerUserType<EllipseCollider>(
       "EllipseCollider",
-      "allocate", sol::factories(&EllipseCollider::allocate),
       "getDimensions", &EllipseCollider::getDimensions,
       "setDimensions", sol::overload(
         &Internals::setDimensions_SingleRadius,

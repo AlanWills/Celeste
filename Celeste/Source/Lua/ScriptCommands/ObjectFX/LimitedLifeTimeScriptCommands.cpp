@@ -24,7 +24,6 @@ namespace Celeste::Lua::LimitedLifeTimeScriptCommands
   {
     registerUserType<LimitedLifeTime>(
       "LimitedLifeTime",
-      "allocate", sol::factories(&LimitedLifeTime::allocate),
       "setLifeTime", &LimitedLifeTime::setLifeTime,
       "subscribeOnDeathCallback", &Internals::subscribeOnDeathCallback);
   }

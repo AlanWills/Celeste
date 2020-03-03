@@ -25,12 +25,14 @@ namespace Celeste::UI
       inline float getProgress() const { return m_progress; }
       CelesteDllExport void setProgress(float progress);
 
-    protected:
-      CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
+      CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Script;
 
+      void begin();
+
+      bool m_begun = false;
       observer_ptr<Rendering::SpriteRenderer> m_spriteRenderer;
 
       float m_progress;

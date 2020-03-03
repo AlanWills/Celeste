@@ -94,8 +94,7 @@ namespace Celeste::Lua::Input::KeyboardActivatorScriptCommands
     using KeyboardActivator = Celeste::Input::KeyboardActivator;
 
     registerUserType<KeyboardActivator>(
-      "KeyboardActivator",
-      "allocate", sol::factories(&KeyboardActivator::allocate),
+      KeyboardActivator::type_name(),
       "getActivationKey", &Internals::getActivationKey,
       "setActivationKey", &Internals::setActivationKey,
       "getDeactivationKey", &Internals::getDeactivationKey,

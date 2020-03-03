@@ -18,12 +18,13 @@ namespace Celeste
   {
     public:
       static constexpr const char* const type_name() { return "Transform"; }
-      CelesteDllExport static bool canAllocate(int count = 1) { return m_allocator.canAllocate(count); }
-      CelesteDllExport static Transform* allocate(GameObject& gameObject);
-      CelesteDllExport static void deallocate(Transform& transform);
-      CelesteDllExport void deallocate();
-
+      
       CelesteDllExport Transform();
+      CelesteDllExport Transform(GameObject& gameObject);
+      CelesteDllExport ~Transform() override;
+
+      void* operator new(size_t);
+      void operator delete(void*);
 
       inline bool hasParent() const { return m_parent != nullptr; }
       CelesteDllExport void setParent(Transform* parent);
@@ -106,8 +107,8 @@ namespace Celeste
       inline glm::vec3 getInverseScale() const { return glm::vec3(1 / m_scale.x, 1 / m_scale.y, 1 / m_scale.z); }
 
     private:
-      using Alloc = PoolAllocator<Transform>;
-      static Alloc m_allocator;
+      using Allocator = PoolAllocator<Transform>;
+      static Allocator m_allocator;
 
       GameObject* m_gameObject;
       Transform* m_parent;

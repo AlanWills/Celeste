@@ -23,8 +23,7 @@ namespace Celeste::Lua::Animation::AnimatorScriptCommands
     using Animator = Celeste::Animation::Animator;
 
     registerUserType<Animator>(
-      "Animator",
-      "allocate", sol::factories(&Animator::allocate),
+      Animator::type_name(),
       "getSpriteSheetDimensions", &Animator::getSpriteSheetDimensions,
       "setSpriteSheetDimensions", &Animator::setSpriteSheetDimensions,
       "getSecondsPerFrame", &Animator::getSecondsPerFrame,

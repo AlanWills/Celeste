@@ -819,6 +819,9 @@
     <ClInclude Include="Headers\CelesteDllExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\UtilityMacros\CustomMemoryMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Time\Clock.cpp">

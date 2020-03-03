@@ -28,7 +28,6 @@ namespace Celeste::Lua::UI::StackPanelScriptCommands
     sol::state& state = Lua::LuaState::instance();
     registerUserType<StackPanel>(
       StackPanel::type_name(),
-      "allocate", sol::factories(&StackPanel::allocate),
       "addChild", &Internals::addChild,
       "removeChild", &Internals::removeChild,
       "layout", &StackPanel::layout);

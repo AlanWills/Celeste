@@ -54,8 +54,7 @@ namespace Celeste
           using AudioSource = Celeste::Audio::AudioSource;
 
           registerUserType<AudioSource>(
-            "AudioSource",
-            "allocate", sol::factories(&AudioSource::allocate),
+            AudioSource::type_name(),
             "getSound", &AudioSource::getSound,
             "setSound", &Internals::setSound,
             "getAudioType", &Internals::getAudioType,

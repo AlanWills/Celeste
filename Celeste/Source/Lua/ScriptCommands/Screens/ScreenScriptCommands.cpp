@@ -26,18 +26,6 @@ namespace Celeste::Lua::ScreenScriptCommands
     }
 
     //------------------------------------------------------------------------------------------------
-    observer_ptr<GameObject> allocateGameObject_NoParent(Screen& screen)
-    {
-      return screen.allocateGameObject();
-    }
-
-    //------------------------------------------------------------------------------------------------
-    observer_ptr<GameObject> allocateGameObject_WithParent(Screen& screen, Transform& transform)
-    {
-      return screen.allocateGameObject(transform);
-    }
-
-    //------------------------------------------------------------------------------------------------
     observer_ptr<GameObject> findGameObject_StringOverload(Screen& screen, const std::string& gameObjectName)
     {
       return screen.findGameObject(gameObjectName);
@@ -58,8 +46,6 @@ namespace Celeste::Lua::ScreenScriptCommands
       sol::base_classes, sol::bases<Entity, Object>(),
       "load", sol::factories(Internals::load),
       "getName", &Internals::getName,
-      "allocateGameObject", sol::overload(&Internals::allocateGameObject_NoParent, &Internals::allocateGameObject_WithParent),
-      "deallocateGameObject", &Screen::deallocateGameObject,
       "findGameObject", sol::overload(&Internals::findGameObject_StringOverload, &Internals::findGameObject_StringIdOverload));
   }
 }

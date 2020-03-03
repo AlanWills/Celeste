@@ -39,12 +39,6 @@ namespace Celeste::Lua::GameObjectScriptCommands
     }
 
     //------------------------------------------------------------------------------------------------
-    observer_ptr<Screen> getScreen(GameObject& gameObject)
-    {
-      return gameObject.getScreen();
-    }
-
-    //------------------------------------------------------------------------------------------------
     observer_ptr<GameObject> getParent(GameObject& gameObject)
     {
       return gameObject.getParent();
@@ -79,7 +73,6 @@ namespace Celeste::Lua::GameObjectScriptCommands
       "setName", &Internals::setName_String,
       "shouldRender", &Internals::shouldRender,
       "setShouldRender", &Internals::setShouldRender,
-      "getScreen", &Internals::getScreen,
       "getParent", &Internals::getParent,
       "setParent", &GameObject::setParent,
       "getTransform", &Internals::getTransform,

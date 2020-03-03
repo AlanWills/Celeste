@@ -25,7 +25,7 @@ namespace Celeste
 
       if (m_triggerMode == TriggerMode::kOnce)
       {
-        deallocate();
+        delete this;
       }
     }
   }

@@ -59,23 +59,23 @@ namespace Celeste::Input
   //------------------------------------------------------------------------------------------------
   void KeyboardVisibility::setTarget(StringId targetName)
   {
-#if _DEBUG
-    if (getGameObject() == nullptr || getGameObject()->getScreen() == nullptr)
-    {
-      ASSERT_FAIL();
-      return;
-    }
-#endif
-
-    if (targetName == static_cast<StringId>(0))
-    {
-      setTarget(nullptr);
-    }
-    else
-    {
-      observer_ptr<GameObject> target = getGameObject()->getScreen()->findGameObject(targetName);
-      ASSERT_NOT_NULL(target);
-      setTarget(target);
-    }
+//#if _DEBUG
+//    if (getGameObject() == nullptr || getGameObject()->getScreen() == nullptr)
+//    {
+//      ASSERT_FAIL();
+//      return;
+//    }
+//#endif
+//
+//    if (targetName == static_cast<StringId>(0))
+//    {
+//      setTarget(nullptr);
+//    }
+//    else
+//    {
+//      observer_ptr<GameObject> target = getGameObject()->getScreen()->findGameObject(targetName);
+//      ASSERT_NOT_NULL(target);
+//      setTarget(target);
+//    }
   }
 }

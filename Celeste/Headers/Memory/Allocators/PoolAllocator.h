@@ -131,7 +131,7 @@ namespace Celeste
 
     ++m_size;
     m_allocated[allocationIndex] = true;
-    return new (m_pool + allocationIndex) T();
+    return ::new (m_pool + allocationIndex) T();
   }
 
   //------------------------------------------------------------------------------------------------

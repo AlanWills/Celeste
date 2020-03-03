@@ -17,19 +17,33 @@ namespace Celeste::UI
   }
 
   //------------------------------------------------------------------------------------------------
-  void ProgressBar::onSetGameObject(GameObject& gameObject)
+  void ProgressBar::begin()
   {
-    Inherited::onSetGameObject(gameObject);
+    m_begun = true;
 
-    m_spriteRenderer = gameObject.findComponent<Rendering::SpriteRenderer>();
+    m_spriteRenderer = getGameObject()->findComponent<Rendering::SpriteRenderer>();
+
+#if _DEBUG
     if (m_spriteRenderer == nullptr)
     {
       ASSERT_FAIL();
       return;
     }
+#endif
 
     m_spriteRenderer->getScissorRectangle().setDimensions(0, m_spriteRenderer->getDimensions().y);
     m_spriteRenderer->getScissorRectangle().setCentre(-m_spriteRenderer->getDimensions().x * 0.5f, 0);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void ProgressBar::update(float elapsedGameTime)
+  {
+    Inherited::update(elapsedGameTime);
+
+    if (!m_begun)
+    {
+      begin();
+    }
   }
 
   //------------------------------------------------------------------------------------------------

@@ -17,14 +17,6 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void RectangleCollider::onSetGameObject(GameObject& gameObject)
-  {
-    Inherited::onSetGameObject(gameObject);
-
-    sync();
-  }
-
-  //------------------------------------------------------------------------------------------------
   void RectangleCollider::update(GLfloat secondsPerUpdate)
   {
     Inherited::update(secondsPerUpdate);

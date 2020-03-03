@@ -14,7 +14,6 @@ namespace Celeste::Lua
       CelesteDllExport LuaComponentManifest(const sol::table& componentTable);
 
       inline const sol::function& getOnSetActiveFunc() const { return m_onSetActiveFunc; }
-      inline const sol::function& getOnSetGameObjectFunc() const { return m_onSetGameObjectFunc; }
       inline const sol::function& getHandleInputFunc() const { return m_handleInputFunc; }
       inline const sol::function& getUpdateFunc() const { return m_updateFunc; }
 
@@ -26,7 +25,6 @@ namespace Celeste::Lua
 
       sol::table m_componentTable;
       sol::function m_onSetActiveFunc;
-      sol::function m_onSetGameObjectFunc;
       sol::function m_handleInputFunc;
       sol::function m_updateFunc;
   };

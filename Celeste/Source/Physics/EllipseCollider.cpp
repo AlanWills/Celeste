@@ -16,14 +16,6 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void EllipseCollider::onSetGameObject(GameObject& gameObject)
-  {
-    Inherited::onSetGameObject(gameObject);
-
-    sync();
-  }
-
-  //------------------------------------------------------------------------------------------------
   void EllipseCollider::update(float secondsPerUpdate)
   {
     Inherited::update(secondsPerUpdate);

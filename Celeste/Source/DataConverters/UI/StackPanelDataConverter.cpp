@@ -26,15 +26,6 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void StackPanelDataConverter::doSetValues(UI::StackPanel& stackPanel) const
   {
-#if _DEBUG
-    observer_ptr<Screen> screen = stackPanel.getGameObject()->getScreen();
-    if (screen == nullptr)
-    {
-      ASSERT_FAIL();
-      return;
-    }
-#endif
-
     stackPanel.setOrientation(getOrientation());
     stackPanel.setVerticalAlignment(getVerticalAlignment());
     stackPanel.setHorizontalAlignment(getHorizontalAlignment());

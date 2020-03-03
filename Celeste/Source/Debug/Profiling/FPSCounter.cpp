@@ -15,11 +15,11 @@ namespace Celeste::Debugging
   }
 
   //------------------------------------------------------------------------------------------------
-  void FPSCounter::onSetGameObject(GameObject& gameObject)
+  void FPSCounter::begin()
   {
-    Inherited::onSetGameObject(gameObject);
+    m_begun = true;
 
-    m_textRenderer = gameObject.findComponent<Celeste::Rendering::TextRenderer>();
+    m_textRenderer = getGameObject()->findComponent<Celeste::Rendering::TextRenderer>();
     ASSERT(m_textRenderer != nullptr);
   }
 

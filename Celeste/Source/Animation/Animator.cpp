@@ -12,9 +12,8 @@ namespace Celeste::Animation
     Animator::Animator() :
     m_spriteSheetDimensions(1),
     m_currentFrame(0),
-    m_currentFrameDirty(false),
+    m_currentFrameDirty(true),
     m_spriteRenderer(),
-    m_begun(false),
     m_playImmediately(true),
     m_loop(true),
     m_playing(false),
@@ -22,24 +21,6 @@ namespace Celeste::Animation
     m_secondsPerFrame(0.1f),
     m_name(0)
   {
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void Animator::onSetGameObject(GameObject& gameObject)
-  {
-    Inherited::onSetGameObject(gameObject);
-
-    m_spriteRenderer = gameObject.findComponent<Rendering::SpriteRenderer>();
-    if (m_spriteRenderer == nullptr)
-    {
-      ASSERT_FAIL();
-      return;
-    }
-
-    // Tell this animation that it is going to have to recalculate the texture origin
-    // This is to avoid a bug where the first frame is the whole texture if we set the
-    // sprite sheet dimensions after adding the component
-    m_currentFrameDirty = true;
   }
 
   //------------------------------------------------------------------------------------------------
@@ -65,6 +46,9 @@ namespace Celeste::Animation
   void Animator::begin()
   {
     m_begun = true;
+
+    m_spriteRenderer = getGameObject()->findComponent<Rendering::SpriteRenderer>();
+    ASSERT(m_spriteRenderer != nullptr);
 
     if (m_playImmediately)
     {

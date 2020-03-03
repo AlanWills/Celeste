@@ -58,8 +58,6 @@ namespace Celeste::Animation
       CelesteDllExport void update(GLfloat secondsPerUpdate) override;
 
     protected:
-      CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
-
       inline size_t getCurrentFrame() const { return m_currentFrame; }
       inline void setCurrentFrame(size_t newFrame) { m_currentFrame = newFrame; }
 
@@ -80,7 +78,7 @@ namespace Celeste::Animation
 
       observer_ptr<Rendering::SpriteRenderer> m_spriteRenderer;
 
-      bool m_begun;
+      bool m_begun = false;
       bool m_playImmediately;
       bool m_playing;
       bool m_loop;

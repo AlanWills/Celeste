@@ -27,7 +27,6 @@ namespace Celeste::Lua::UI::SliderScriptCommands
     registerUserType<Slider>(
       Slider::type_name(),
       sol::base_classes, sol::bases<Celeste::Script, Celeste::Component, Celeste::Entity, Celeste::Object>(),
-      "allocate", sol::factories(&Slider::allocate),
       "setCurrentValue", &Slider::setCurrentValue,
       "subscribeOnValueChangedCallback", &Internals::subscribeOnValueChangedCallback);
   }

@@ -75,19 +75,19 @@ namespace Celeste
         CelesteDllExport void update(float secondsPerUpdate) override;
 
       protected:
-        CelesteDllExport void onSetGameObject(GameObject& parent) override;
-
         inline ButtonState getButtonState() const { return m_state; }
         inline void setButtonState(ButtonState state) { m_state = state; }
 
       private:
         using Inherited = Script;
 
+        void begin();
         void onEnter();
         void onLeave();
         void onLeftMouseButtonDown();
         void onLeftMouseButtonUp();
 
+        bool m_begun = false;
         float m_clickTimer = 0;
         ButtonState m_state = ButtonState::kIdle;
 

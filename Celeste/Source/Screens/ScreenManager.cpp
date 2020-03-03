@@ -32,7 +32,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   ScreenManager::~ScreenManager()
   {
-    Screen::m_componentAllocator.deallocateAll();
+    Screen::m_allocator.deallocateAll();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ namespace Celeste
 
     getWindow()->handleInput();
     
-    Screen::m_componentAllocator.handleInput();
+    Screen::m_allocator.handleInput();
   }
   
   //------------------------------------------------------------------------------------------------
@@ -50,25 +50,25 @@ namespace Celeste
   {
     Inherited::update(elapsedGameTime);
 
-    Screen::m_componentAllocator.update(elapsedGameTime);
+    Screen::m_allocator.update(elapsedGameTime);
   }
 
   //------------------------------------------------------------------------------------------------
   EntityAllocatorIterator<const Screen> ScreenManager::begin() const
   {
-    return Screen::m_componentAllocator.cbegin();
+    return Screen::m_allocator.cbegin();
   }
 
   //------------------------------------------------------------------------------------------------
   EntityAllocatorIterator<const Screen> ScreenManager::end() const
   {
-    return Screen::m_componentAllocator.cend();
+    return Screen::m_allocator.cend();
   }
 
   //------------------------------------------------------------------------------------------------
   observer_ptr<Screen> ScreenManager::findScreen(StringId name)
   {
-    return Screen::m_componentAllocator.find([&name](const Screen& screen) -> bool
+    return Screen::m_allocator.find([&name](const Screen& screen) -> bool
     {
       return screen.getName() == name;
     });

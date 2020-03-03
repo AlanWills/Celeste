@@ -51,12 +51,12 @@ namespace Celeste::Input
 
       CelesteDllExport void handleInput() override;
 
-    protected:
-      CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
-
     private:
       using Inherited = Script;
 
+      void begin();
+
+      bool m_begun = false;
       observer_ptr<Physics::RigidBody2D> m_rigidBody2D;
 
       int m_decreaseXLinearVelocityKey;

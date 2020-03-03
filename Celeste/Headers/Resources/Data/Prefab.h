@@ -28,7 +28,7 @@ namespace Celeste::Resources
       Prefab& operator=(const Prefab&) = delete;
 
       inline const GameObjectDataConverters& getGameObjects() const { return m_gameObjects->getItems(); }
-      CelesteDllExport observer_ptr<GameObject> instantiate(Screen& screen) const;
+      CelesteDllExport observer_ptr<GameObject> instantiate() const;
 
     protected:
       CelesteDllExport bool doLoadFromFile(const Path& path) override;

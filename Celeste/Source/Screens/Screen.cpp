@@ -7,17 +7,17 @@
 namespace Celeste
 {
   //------------------------------------------------------------------------------------------------
-  // Declare static variables
-  COMPONENT_MEMORY_CREATION(Screen, 10)
+  CUSTOM_MEMORY_CREATION(Screen, 10)
 
   //------------------------------------------------------------------------------------------------
   Screen::Screen() :
     m_name(0),
-    m_gameObjectAllocator(30),
-    m_screenRoot(),
     m_gameObjectQueue()
   {
   }
+
+  //------------------------------------------------------------------------------------------------
+  Screen::~Screen() = default;
 
   //------------------------------------------------------------------------------------------------
   void Screen::handleInput()
@@ -98,33 +98,6 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Screen::deallocate(Screen& screen)
-  {
-    if (m_componentAllocator.isAllocated(screen))
-    {
-      screen.deallocate();
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  bool Screen::deallocate()
-  {
-    // This also deallocates the game objects
-    // Call this here rather than die, so that objects are not instantly killed when a screen dies
-    // This allows us to kill screens using events
-    m_gameObjectAllocator.deallocateAll();
-
-    ASSERT(m_gameObjectQueue.empty());
-    return m_componentAllocator.deallocate(*this);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  bool Screen::deallocateGameObject(GameObject& gameObject)
-  {
-    return m_gameObjectAllocator.deallocate(gameObject);
-  }
-  
-  //------------------------------------------------------------------------------------------------
   void Screen::setActive(bool isActive)
   {
     Inherited::setActive(isActive);
@@ -133,27 +106,6 @@ namespace Celeste
     {
       transform->getGameObject()->setActive(isActive);
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  GameObject* Screen::allocateGameObject()
-  {
-    GameObject* gameObject = m_gameObjectAllocator.allocate();
-    gameObject->getTransform()->setParent(&m_screenRoot);
-    gameObject->m_screen = this;
-    
-    return gameObject;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  GameObject* Screen::allocateGameObject(Transform& parentTransform)
-  {
-    GameObject* gameObject = allocateGameObject();
-
-    ASSERT(gameObject->getTransform() != nullptr);
-    gameObject->getTransform()->setParent(&parentTransform);
-
-    return gameObject;
   }
 
   //------------------------------------------------------------------------------------------------

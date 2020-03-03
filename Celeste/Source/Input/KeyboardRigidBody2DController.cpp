@@ -25,9 +25,9 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void KeyboardRigidBody2DController::onSetGameObject(GameObject& gameObject)
+  void KeyboardRigidBody2DController::begin()
   {
-    Inherited::onSetGameObject(gameObject);
+    m_begun = true;
 
     m_rigidBody2D = getGameObject()->findComponent<Physics::RigidBody2D>();
     ASSERT(m_rigidBody2D != nullptr);
@@ -37,6 +37,11 @@ namespace Celeste::Input
   void KeyboardRigidBody2DController::handleInput()
   {
     Inherited::handleInput();
+
+    if (!m_begun)
+    {
+      begin();
+    }
 
 #if _DEBUG
     if (m_rigidBody2D == nullptr)

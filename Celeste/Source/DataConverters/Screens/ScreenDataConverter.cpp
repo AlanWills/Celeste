@@ -138,7 +138,7 @@ namespace Celeste
 
     for (const auto& gameObjectConverter : getGameObjects())
     {
-      gameObjectConverter->allocateGameObject(screen);
+      gameObjectConverter->allocateGameObject(screen.getScreenRoot());
     }
   }
 }

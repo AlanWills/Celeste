@@ -25,7 +25,8 @@ namespace Celeste
 
       GameObjectDataConverter& operator=(const GameObjectDataConverter&) = delete;
 
-      CelesteDllExport virtual GameObject* allocateGameObject(Screen& screen) const;
+      CelesteDllExport virtual GameObject* allocateGameObject() const;
+      CelesteDllExport GameObject* allocateGameObject(Transform& transform) const;
 
       inline const std::string& getName() const { return m_name.getValue(); }
       inline const std::string& getTag() const { return m_tag.getValue(); }

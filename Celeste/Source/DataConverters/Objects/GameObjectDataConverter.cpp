@@ -47,7 +47,7 @@ namespace Celeste
     // Components do name lookup and require these objects to all be created
     for (const auto& childGameObjectDataConverter : getChildGameObjects())
     {
-      GameObject* childGameObject = childGameObjectDataConverter->allocateGameObject(*gameObject.getScreen());
+      GameObject* childGameObject = childGameObjectDataConverter->allocateGameObject(*gameObject.getTransform());
       childGameObject->setParent(&gameObject);
     }
 
@@ -74,7 +74,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  GameObject* GameObjectDataConverter::allocateGameObject(Screen& screen) const
+  GameObject* GameObjectDataConverter::allocateGameObject() const
   {
     if (!isDataLoadedCorrectly())
     {
@@ -82,8 +82,17 @@ namespace Celeste
       return nullptr;
     }
 
-    GameObject* gameObject = screen.allocateGameObject();
+    GameObject* gameObject = new GameObject();
     setValues(*gameObject);
+
+    return gameObject;
+  }
+
+  //------------------------------------------------------------------------------------------------
+  GameObject* GameObjectDataConverter::allocateGameObject(Transform& transform) const
+  {
+    GameObject* gameObject = allocateGameObject();
+    gameObject->setParentTransform(&transform);
 
     return gameObject;
   }

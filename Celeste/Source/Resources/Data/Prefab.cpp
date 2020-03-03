@@ -51,7 +51,7 @@ namespace Celeste::Resources
   }
 
   //------------------------------------------------------------------------------------------------
-  observer_ptr<GameObject> Prefab::instantiate(Screen& screen) const
+  observer_ptr<GameObject> Prefab::instantiate() const
   {
     // Can only have one root game object
     if (getGameObjects().size() != static_cast<size_t>(1))
@@ -60,6 +60,6 @@ namespace Celeste::Resources
       return observer_ptr<GameObject>();
     }
 
-    return getGameObjects()[0]->allocateGameObject(screen);
+    return getGameObjects()[0]->allocateGameObject();
   }
 }

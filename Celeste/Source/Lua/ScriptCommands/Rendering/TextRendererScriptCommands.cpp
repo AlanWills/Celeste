@@ -9,8 +9,7 @@ namespace Celeste::Lua::Rendering::TextRendererScriptCommands
   void initialize()
   {
     registerUserType<Celeste::Rendering::TextRenderer>(
-      "TextRenderer",
-      "allocate", sol::factories(&Celeste::Rendering::TextRenderer::allocate),
+      Celeste::Rendering::TextRenderer::type_name(),
       "setText", &Celeste::Rendering::TextRenderer::setText);
   }
 }

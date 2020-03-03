@@ -26,17 +26,23 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void MouseInteractionHandler::onSetGameObject(GameObject& gameObject)
+  void MouseInteractionHandler::begin()
   {
-    Inherited::onSetGameObject(gameObject);
+    m_begun = true;
 
     m_collider = getGameObject()->findComponent<Physics::Collider>();
+    ASSERT(m_collider != nullptr);
   }
 
   //------------------------------------------------------------------------------------------------
   void MouseInteractionHandler::handleInput()
   {
     Inherited::handleInput();
+
+    if (!m_begun)
+    {
+      begin();
+    }
 
 #if _DEBUG
     if (m_collider == nullptr)

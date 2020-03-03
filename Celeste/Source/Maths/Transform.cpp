@@ -5,8 +5,7 @@
 namespace Celeste
 {
   //------------------------------------------------------------------------------------------------
-  // Initialize static variables
-  Transform::Alloc Transform::m_allocator(500);
+  Transform::Allocator Transform::m_allocator(500);
 
   //------------------------------------------------------------------------------------------------
   Transform::Transform() :
@@ -19,26 +18,17 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  Transform* Transform::allocate(GameObject& gameObject)
+  Transform::Transform(GameObject& gameObject) :
+    m_gameObject(&gameObject),
+    m_parent(nullptr),
+    m_rotation(0),
+    m_translation(glm::zero<glm::vec3>()),
+    m_scale(glm::one<glm::vec3>())
   {
-    ASSERT(m_allocator.canAllocate(1));
-    Transform* transform = m_allocator.allocate();
-    transform->m_gameObject = &gameObject;
-
-    return transform;
   }
 
   //------------------------------------------------------------------------------------------------
-  void Transform::deallocate(Transform& transform)
-  {
-    if (m_allocator.isAllocated(transform))
-    {
-      transform.deallocate();
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void Transform::deallocate()
+  Transform::~Transform()
   {
     // Reset the transform values when we deallocate
     setRotation(0);
@@ -49,11 +39,11 @@ namespace Celeste
     GameObject* gameObject = m_gameObject;
     m_gameObject = nullptr;
 
-    // Ensure the game object is deallocated
+    // Ensure the game object is deleted
     if (gameObject != nullptr && gameObject->getTransform() != nullptr)
     {
-      // If the gameobject transform is nullptr it means deallocate has already been called on it
-      gameObject->deallocate();
+      // If the gameobject is nullptr it means it's already been deleted
+      delete gameObject;
     }
     
     if (hasParent())
@@ -68,12 +58,29 @@ namespace Celeste
       // Iterate in reverse so children can remove themselves from the m_children vector
       for (size_t i = m_children.size(); i > 0; --i)
       {
-        m_children[i - 1]->deallocate();
+        delete m_children[i - 1];
       }
       ASSERT(m_children.empty());
     }
+  }
 
-    m_allocator.deallocate(*this);
+  //------------------------------------------------------------------------------------------------
+  void* Transform::operator new(size_t)
+  {
+    ASSERT(m_allocator.canAllocate(1));
+    return m_allocator.allocate();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Transform::operator delete(void* memory)
+  {
+    Transform& transform = *static_cast<Transform*>(memory);
+    ASSERT(m_allocator.isAllocated(transform));
+
+    if (m_allocator.isAllocated(transform))
+    {
+      m_allocator.deallocate(transform);
+    }
   }
 
   //------------------------------------------------------------------------------------------------

@@ -12,7 +12,7 @@ namespace Celeste::Rendering
   //------------------------------------------------------------------------------------------------
   RenderManager::~RenderManager()
   {
-    Canvas::m_componentAllocator.deallocateAll();
+    Canvas::m_allocator.deallocateAll();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ namespace Celeste::Rendering
   {
     Inherited::handleInput();
 
-    Canvas::m_componentAllocator.handleInput();
+    Canvas::m_allocator.handleInput();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -28,14 +28,14 @@ namespace Celeste::Rendering
   {
     Inherited::update(elapsedGameTime);
 
-    Canvas::m_componentAllocator.update(elapsedGameTime);
+    Canvas::m_allocator.update(elapsedGameTime);
   }
 
   //------------------------------------------------------------------------------------------------
   void RenderManager::render(float lag)
   {
     std::vector<std::reference_wrapper<Canvas>> canvasses;
-    for (Canvas& renderer : Canvas::m_componentAllocator)
+    for (Canvas& renderer : Canvas::m_allocator)
     {
       if (renderer.isActive())
       {

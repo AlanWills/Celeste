@@ -53,14 +53,15 @@ namespace Celeste
         CelesteDllExport void handleInput() override;
 
       protected:
-        CelesteDllExport void onSetGameObject(GameObject& gameObject) override;
-
         inline observer_ptr<Physics::Collider> getCollider() const { return m_collider; }
         inline bool isMouseOver() const { return m_isMouseOver; }
 
       private:
         using Inherited = Component;
 
+        void begin();
+
+        bool m_begun = false;
         observer_ptr<Physics::Collider> m_collider;
         bool m_isMouseOver;
         std::array<bool, 3> m_mouseButtonPressed;

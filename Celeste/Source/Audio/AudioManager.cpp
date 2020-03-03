@@ -22,7 +22,7 @@ namespace Celeste::Audio
   //------------------------------------------------------------------------------------------------
   AudioManager::~AudioManager()
   {
-    AudioSource::m_componentAllocator.deallocateAll();
+    AudioSource::m_allocator.deallocateAll();
 
     // Terminate the OpenAL state
     OpenALState::terminate();
@@ -33,7 +33,7 @@ namespace Celeste::Audio
   {
     Inherited::handleInput();
 
-    AudioSource::m_componentAllocator.handleInput();
+    AudioSource::m_allocator.handleInput();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ namespace Celeste::Audio
   {
     Inherited::update(elapsedGameTime);
 
-    AudioSource::m_componentAllocator.update(elapsedGameTime);
+    AudioSource::m_allocator.update(elapsedGameTime);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ namespace Celeste::Audio
     m_masterVolume = glm::clamp<float>(volume, 0, 1);
 
     // Iterate through all allocated audio sources
-    for (AudioSource& audio : AudioSource::m_componentAllocator)
+    for (AudioSource& audio : AudioSource::m_allocator)
     {
       ASSERT(alIsSource(audio.m_sourceHandle));
       alSourcef(audio.m_sourceHandle, AL_GAIN, m_masterVolume * (audio.getAudioType() == AudioType::kMusic ? m_musicVolume : m_sfxVolume) * audio.getVolume());
@@ -63,7 +63,7 @@ namespace Celeste::Audio
     m_musicVolume = glm::clamp<float>(volume, 0, 1);
 
     // Iterate through all allocated music sources
-    for (AudioSource& audio : AudioSource::m_componentAllocator)
+    for (AudioSource& audio : AudioSource::m_allocator)
     {
       if (audio.getAudioType() == AudioType::kMusic)
       {
@@ -79,7 +79,7 @@ namespace Celeste::Audio
     m_sfxVolume = glm::clamp<float>(volume, 0, 1);
 
     // Iterate through all allocated sfx sources
-    for (AudioSource& audio : AudioSource::m_componentAllocator)
+    for (AudioSource& audio : AudioSource::m_allocator)
     {
       if (audio.getAudioType() == AudioType::kSFX)
       {

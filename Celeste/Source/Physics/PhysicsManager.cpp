@@ -18,9 +18,9 @@ namespace Celeste::Physics
   //------------------------------------------------------------------------------------------------
   PhysicsManager::~PhysicsManager()
   {
-    RigidBody2D::m_componentAllocator.deallocateAll();
-    RectangleCollider::m_componentAllocator.deallocateAll();
-    EllipseCollider::m_componentAllocator.deallocateAll();
+    RigidBody2D::m_allocator.deallocateAll();
+    RectangleCollider::m_allocator.deallocateAll();
+    EllipseCollider::m_allocator.deallocateAll();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -28,9 +28,9 @@ namespace Celeste::Physics
   {
     Inherited::handleInput();
 
-    RigidBody2D::m_componentAllocator.handleInput();
-    RectangleCollider::m_componentAllocator.handleInput();
-    EllipseCollider::m_componentAllocator.handleInput();
+    RigidBody2D::m_allocator.handleInput();
+    RectangleCollider::m_allocator.handleInput();
+    EllipseCollider::m_allocator.handleInput();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -38,8 +38,8 @@ namespace Celeste::Physics
   {
     Inherited::update(elapsedGameTime);
 
-    RectangleCollider::m_componentAllocator.update(elapsedGameTime);
-    EllipseCollider::m_componentAllocator.update(elapsedGameTime);
+    RectangleCollider::m_allocator.update(elapsedGameTime);
+    EllipseCollider::m_allocator.update(elapsedGameTime);
 
     if (!m_simulatedBodies.empty())
     {
@@ -73,18 +73,18 @@ namespace Celeste::Physics
       // But can use last frames collisions to work out exits/entries too
       // Will avoid quadratic algorithm
 
-      for (RectangleCollider& collider : RectangleCollider::m_componentAllocator)
+      for (RectangleCollider& collider : RectangleCollider::m_allocator)
       {
         doCollision(body, collider);
       }
 
-      for (EllipseCollider& collider : EllipseCollider::m_componentAllocator)
+      for (EllipseCollider& collider : EllipseCollider::m_allocator)
       {
         doCollision(body, collider);
       }
     }
 
-    RigidBody2D::m_componentAllocator.update(elapsedGameTime);
+    RigidBody2D::m_allocator.update(elapsedGameTime);
   }
 
   //------------------------------------------------------------------------------------------------

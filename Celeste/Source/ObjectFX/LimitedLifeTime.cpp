@@ -38,7 +38,7 @@ namespace Celeste
 
       if (gameObject != nullptr)
       {
-        getGameObject()->deallocate();
+        delete getGameObject();
       }
     }
   }
@@ -53,7 +53,7 @@ namespace Celeste
 
       if (gameObject != nullptr)
       {
-        getGameObject()->deallocate();
+        delete getGameObject();
       }
     }
   }

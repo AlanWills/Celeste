@@ -354,6 +354,7 @@
     <ClInclude Include="Headers\UtilityHeaders\ScriptCommandHeaders.h" />
     <ClInclude Include="Headers\UtilityMacros\ComponentDataConverterMacros.h" />
     <ClInclude Include="Headers\UtilityMacros\ComponentMacros.h" />
+    <ClInclude Include="Headers\UtilityMacros\CustomMemoryMacros.h" />
     <ClInclude Include="Headers\UtilityMacros\ScriptableObjectMacros.h" />
     <ClInclude Include="Headers\Utils\ToString.h" />
     <ClInclude Include="Headers\Viewport\ViewportEnums.h" />
