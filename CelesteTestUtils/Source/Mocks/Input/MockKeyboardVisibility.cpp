@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockKeyboardVisibility, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockKeyboardVisibility, 10);
 
   MockKeyboardVisibility::MockKeyboardVisibility() = default;
 }

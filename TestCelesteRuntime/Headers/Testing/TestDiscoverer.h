@@ -23,7 +23,7 @@ namespace TestCelesteRuntime
   {
     class TestDiscoverer : public Celeste::Script
     {
-      DECLARE_SCRIPT(TestDiscoverer, TestCERuntimeDllExport)
+      DECLARE_UNMANAGED_COMPONENT(TestDiscoverer, TestCERuntimeDllExport)
 
       public:
         std::unique_ptr<tinyxml2::XMLDocument> executeTests();

@@ -10,7 +10,7 @@ using namespace Celeste::Resources;
 
 namespace Celeste::Rendering
 {
-  REGISTER_SCRIPT(TextRenderer, 20)
+  REGISTER_UNMANAGED_COMPONENT(TextRenderer, 20)
 
   //------------------------------------------------------------------------------------------------
   TextRenderer::TextRenderer() :

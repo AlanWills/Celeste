@@ -13,7 +13,7 @@ namespace Celeste::Debugging
 {
   class FPSCounter : public Script
   {
-    DECLARE_SCRIPT(FPSCounter, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(FPSCounter, CelesteDllExport)
 
     public:
       CelesteDllExport void update(float elapsedGameTime) override;

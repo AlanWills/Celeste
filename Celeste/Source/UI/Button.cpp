@@ -20,7 +20,7 @@ namespace Celeste
 
   namespace UI
   {
-    REGISTER_SCRIPT(Button, 10)
+    REGISTER_UNMANAGED_COMPONENT(Button, 10)
 
     //------------------------------------------------------------------------------------------------
     Button::Button()

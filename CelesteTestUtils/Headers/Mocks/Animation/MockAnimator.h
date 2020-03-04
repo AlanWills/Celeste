@@ -8,7 +8,7 @@ namespace CelesteTestUtils
 {
   class MockAnimator : public Celeste::Animation::Animator
   {
-    DECLARE_SCRIPT(MockAnimator, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockAnimator, CelesteTestUtilsDllExport)
 
     public:      
       size_t getCurrentFrame_Public() const { return getCurrentFrame(); }

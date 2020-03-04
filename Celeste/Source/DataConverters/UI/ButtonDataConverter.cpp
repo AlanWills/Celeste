@@ -6,7 +6,7 @@
 
 namespace Celeste
 {
-  REGISTER_COMPONENT_DATA_CONVERTER(ButtonDataConverter)
+  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(ButtonDataConverter)
 
   const char* const ButtonDataConverter::DEFAULT_TEXTURE_ATTRIBUTE_NAME("default_texture");
   const char* const ButtonDataConverter::HIGHLIGHTED_TEXTURE_ATTRIBUTE_NAME("highlighted_texture");

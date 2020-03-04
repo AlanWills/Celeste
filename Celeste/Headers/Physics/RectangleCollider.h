@@ -14,7 +14,7 @@ namespace Celeste::Physics
 {
   class RectangleCollider : public Collider
   {
-    DECLARE_COMPONENT(RectangleCollider, PhysicsManager, CelesteDllExport)
+    DECLARE_MANAGED_COMPONENT(RectangleCollider, PhysicsManager, CelesteDllExport)
 
     public:
       using Collider::intersects;

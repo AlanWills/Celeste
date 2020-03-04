@@ -18,7 +18,7 @@ namespace Celeste
 {
   class KeyboardRigidBody2DControllerDataConverter : public ComponentDataConverter
   {
-    DECLARE_COMPONENT_DATA_CONVERTER(KeyboardRigidBody2DControllerDataConverter, Input::KeyboardRigidBody2DController, CelesteDllExport)
+    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(KeyboardRigidBody2DControllerDataConverter, Input::KeyboardRigidBody2DController, CelesteDllExport)
 
     public:
       inline int getDecreaseXLinearVelocityKey() const { return m_decreaseXLinearVelocityKey.getValue().m_key; }

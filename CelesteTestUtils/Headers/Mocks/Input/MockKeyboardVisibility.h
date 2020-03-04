@@ -8,6 +8,6 @@ namespace CelesteTestUtils
 {
   class MockKeyboardVisibility : public Celeste::Input::KeyboardVisibility
   {
-    DECLARE_SCRIPT(MockKeyboardVisibility, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockKeyboardVisibility, CelesteTestUtilsDllExport)
   };
 }

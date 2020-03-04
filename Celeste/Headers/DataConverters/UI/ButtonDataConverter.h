@@ -16,7 +16,7 @@ namespace Celeste
 {
   class ButtonDataConverter : public ComponentDataConverter
   {
-    DECLARE_COMPONENT_DATA_CONVERTER(ButtonDataConverter, UI::Button, CelesteDllExport)
+    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(ButtonDataConverter, UI::Button, CelesteDllExport)
 
     public:
       using CallbackDataConverters = typename XML::DataConverterListElement<CallbackDataConverter>::Items;

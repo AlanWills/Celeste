@@ -19,7 +19,7 @@ namespace Celeste
   class Component : public Entity
   {
     public:
-      CelesteDllExport Component();
+      CelesteDllExport Component(GameObject& gameObject);
       CelesteDllExport ~Component() override;
 
       virtual void collisionEnter(Physics::Collider& collider) { }
@@ -39,7 +39,5 @@ namespace Celeste
       using Inherited = Entity;
 
       GameObject* m_gameObject = nullptr;
-
-      friend class GameObject;
   };
 }

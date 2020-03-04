@@ -6,7 +6,8 @@
 namespace Celeste
 {
   //------------------------------------------------------------------------------------------------
-  Component::Component()
+  Component::Component(GameObject& gameObject) :
+    m_gameObject(&gameObject)
   {
   }
 

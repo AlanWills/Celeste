@@ -9,6 +9,6 @@ namespace CelesteTestUtils
 {
   class MockEllipseCollider : public Celeste::Physics::EllipseCollider
   {
-    DECLARE_SCRIPT(MockEllipseCollider, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockEllipseCollider, CelesteTestUtilsDllExport)
   };
 }

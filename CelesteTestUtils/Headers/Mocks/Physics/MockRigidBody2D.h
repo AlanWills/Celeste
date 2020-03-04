@@ -9,6 +9,6 @@ namespace CelesteTestUtils
 {
   class MockRigidBody2D : public Celeste::Physics::RigidBody2D
   {
-    DECLARE_SCRIPT(MockRigidBody2D, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockRigidBody2D, CelesteTestUtilsDllExport)
   };
 }

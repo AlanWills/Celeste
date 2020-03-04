@@ -15,7 +15,7 @@ namespace CelesteTestUtils
 {
   class MockCollider : public Celeste::Physics::Collider
   {
-    DECLARE_SCRIPT(MockCollider, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockCollider, CelesteTestUtilsDllExport)
 
     public:
       glm::vec2 getCentre() const { return glm::vec2(); }

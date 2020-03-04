@@ -1,27 +1,35 @@
 #pragma once
 
+#include "Templates/ComponentTypeTraits.h"
 #include "UtilityMacros/CustomMemoryMacros.h"
 
   //------------------------------------------------------------------------------------------------
 #define COMPONENT_MEMBER_DECLARATION(ComponentType, DllExport) \
   public: \
-    DllExport ComponentType(); \
+    DllExport ComponentType(GameObject& gameObject); \
     \
   private: \
+    using Inherited = Component; \
+    \
     static bool m_registered; \
     static bool m_bindingsRegistered;
 
   //------------------------------------------------------------------------------------------------
-#define DECLARE_COMPONENT(ComponentType, Manager, DllExport) \
+#define DECLARE_MANAGED_COMPONENT(ComponentType, Manager, DllExport) \
+  public: \
+    static constexpr bool isManaged() { return true; } \
+    \
   private: \
     CUSTOM_MEMORY_DECLARATION(ComponentType, DllExport) \
     COMPONENT_MEMBER_DECLARATION(ComponentType, DllExport); \
-  \
-  private: \
+    \
     friend class Manager;
 
   //------------------------------------------------------------------------------------------------
-#define DECLARE_SCRIPT(ComponentType, DllExport) \
+#define DECLARE_UNMANAGED_COMPONENT(ComponentType, DllExport) \
+  public: \
+    static constexpr bool isManaged() { return false; } \
+    \
   private: \
     CUSTOM_MEMORY_DECLARATION(ComponentType, DllExport) \
     COMPONENT_MEMBER_DECLARATION(ComponentType, DllExport)
@@ -40,13 +48,13 @@
 #endif
 
 //------------------------------------------------------------------------------------------------
-#define REGISTER_COMPONENT(ComponentType, PoolSize) \
+#define REGISTER_MANAGED_COMPONENT(ComponentType, PoolSize) \
   CUSTOM_MEMORY_CREATION(ComponentType, PoolSize) \
   ADD_COMPONENT_TO_REGISTRY(ComponentType) \
   BINDINGS_GENERATION(ComponentType)
 
 //------------------------------------------------------------------------------------------------
-#define REGISTER_SCRIPT(ComponentType, PoolSize) \
+#define REGISTER_UNMANAGED_COMPONENT(ComponentType, PoolSize) \
   CUSTOM_MEMORY_CREATION(ComponentType, PoolSize) \
   ADD_COMPONENT_TO_REGISTRY(ComponentType) \
   BINDINGS_GENERATION(ComponentType)

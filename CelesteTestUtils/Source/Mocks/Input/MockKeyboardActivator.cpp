@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockKeyboardActivator, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockKeyboardActivator, 10);
 
   MockKeyboardActivator::MockKeyboardActivator() = default;
 }

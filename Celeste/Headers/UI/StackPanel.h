@@ -14,7 +14,7 @@ namespace Celeste::UI
 {
   class StackPanel : public Script
   {
-    DECLARE_SCRIPT(StackPanel, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(StackPanel, CelesteDllExport)
 
     public:
       template <typename ...Children>

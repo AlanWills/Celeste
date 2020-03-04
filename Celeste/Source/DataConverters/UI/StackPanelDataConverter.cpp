@@ -6,7 +6,7 @@
 
 namespace Celeste
 {
-  REGISTER_COMPONENT_DATA_CONVERTER(StackPanelDataConverter)
+  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(StackPanelDataConverter)
 
   const char* const StackPanelDataConverter::ORIENTATION_ATTRIBUTE_NAME("orientation");
   const char* const StackPanelDataConverter::HORIZONTAL_ALIGNMENT_ATTRIBUTE_NAME("horizontal_alignment");

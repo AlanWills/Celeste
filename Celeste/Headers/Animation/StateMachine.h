@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "AnimationState.h"
 
 
 namespace Celeste::Animation
 {
-  class StateMachine : public Script
+  class StateMachine : public Component
   {
-    DECLARE_SCRIPT(StateMachine, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(StateMachine, CelesteDllExport)
 
     protected:
       using States = std::vector<AnimationState>;

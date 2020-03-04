@@ -15,7 +15,7 @@ namespace Celeste
   {
     class Canvas : public Component
     {
-      DECLARE_COMPONENT(Canvas, RenderManager, CelesteDllExport)
+      DECLARE_MANAGED_COMPONENT(Canvas, RenderManager, CelesteDllExport)
 
       public:
         const glm::vec2& getDimensions() const { return m_camera.getViewportDimensions(); }

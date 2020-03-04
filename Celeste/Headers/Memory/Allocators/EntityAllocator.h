@@ -28,7 +28,8 @@ namespace Celeste
 
       /// Allocates and returns a handle using the templated allocator.
       /// The component will have had initialize already called on it.
-      observer_ptr<T> allocate();
+      template <typename ...Args>
+      observer_ptr<T> allocate(Args&&... args);
 
       /// Free the memory reserved in the templated allocator for reuse.
       /// die will be called on the object if it hasn't already.
@@ -146,7 +147,8 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  observer_ptr<T> EntityAllocator<T>::allocate()
+  template <typename ...Args>
+  observer_ptr<T> EntityAllocator<T>::allocate(Args&&... args)
   {
     // Find an allocator with space
     observer_ptr<typename Celeste::PoolAllocator<T>> chosenAllocator = nullptr;
@@ -166,7 +168,7 @@ namespace Celeste
       chosenAllocator = (*allocWithSpace).get();
     }
 
-    return chosenAllocator->allocate();
+    return chosenAllocator->allocate(std::forward<Args>(args)...);
   }
 
   //------------------------------------------------------------------------------------------------

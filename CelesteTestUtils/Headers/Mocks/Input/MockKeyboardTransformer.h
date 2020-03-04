@@ -8,7 +8,7 @@ namespace CelesteTestUtils
 {
   class MockKeyboardTransformer : public Celeste::Input::KeyboardTransformer
   {
-    DECLARE_SCRIPT(MockKeyboardTransformer, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockKeyboardTransformer, CelesteTestUtilsDllExport)
 
     public:
       const glm::vec2& getDirectionVector_Public() const { return getDirectionVector(); }

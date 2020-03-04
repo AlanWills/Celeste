@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockRigidBody2D, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockRigidBody2D, 10);
 
   MockRigidBody2D::MockRigidBody2D() = default;
 }

@@ -6,10 +6,11 @@ using namespace Celeste::Resources;
 
 namespace Celeste::Animation
 {
-  REGISTER_SCRIPT(Animator, 10)
+  REGISTER_UNMANAGED_COMPONENT(Animator, 10)
 
-    //------------------------------------------------------------------------------------------------
-    Animator::Animator() :
+  //------------------------------------------------------------------------------------------------
+  Animator::Animator(GameObject& gameObject) :
+    Inherited(gameObject),
     m_spriteSheetDimensions(1),
     m_currentFrame(0),
     m_currentFrameDirty(true),

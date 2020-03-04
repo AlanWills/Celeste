@@ -6,7 +6,7 @@
 
 namespace Celeste::Input
 {
-  REGISTER_SCRIPT(KeyboardRigidBody2DController, 10)
+  REGISTER_UNMANAGED_COMPONENT(KeyboardRigidBody2DController, 10)
 
   //------------------------------------------------------------------------------------------------
   KeyboardRigidBody2DController::KeyboardRigidBody2DController() :

@@ -41,7 +41,7 @@ namespace Celeste
   {
     class Button : public Script
     {
-      DECLARE_SCRIPT(Button, CelesteDllExport)
+      DECLARE_UNMANAGED_COMPONENT(Button, CelesteDllExport)
 
       public:
         using GameObjectClickCallback = std::function<void(GameObject&)>;

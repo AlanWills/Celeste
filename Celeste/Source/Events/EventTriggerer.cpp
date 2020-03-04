@@ -4,7 +4,7 @@
 
 namespace Celeste
 {
-  REGISTER_SCRIPT(EventTriggerer, 10)
+  REGISTER_UNMANAGED_COMPONENT(EventTriggerer, 10)
 
   //------------------------------------------------------------------------------------------------
   EventTriggerer::EventTriggerer() :

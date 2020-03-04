@@ -5,7 +5,7 @@
 
 namespace Celeste
 {
-  REGISTER_SCRIPT(LoadResourcesAsyncScript, 1)
+  REGISTER_UNMANAGED_COMPONENT(LoadResourcesAsyncScript, 1)
 
   //------------------------------------------------------------------------------------------------
   LoadResourcesAsyncScript::LoadResourcesAsyncScript()

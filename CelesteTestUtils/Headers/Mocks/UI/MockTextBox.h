@@ -8,7 +8,7 @@ namespace CelesteTestUtils
 {
   class MockTextBox : public Celeste::UI::TextBox
   {
-    DECLARE_SCRIPT(MockTextBox, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockTextBox, CelesteTestUtilsDllExport)
 
     public:
       ~MockTextBox() override;

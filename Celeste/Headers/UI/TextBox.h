@@ -13,7 +13,7 @@ namespace Celeste::UI
 {
   class TextBox : public Script
   {
-    DECLARE_SCRIPT(TextBox, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(TextBox, CelesteDllExport)
 
     public:
       CelesteDllExport ~TextBox() override;

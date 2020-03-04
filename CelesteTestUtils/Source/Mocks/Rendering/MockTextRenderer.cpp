@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockTextRenderer, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockTextRenderer, 10);
 
   MockTextRenderer::MockTextRenderer() = default;
 }

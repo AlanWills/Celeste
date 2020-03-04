@@ -10,7 +10,7 @@ namespace Celeste::Lua
 
   class LuaComponent : public Script
   {
-    DECLARE_SCRIPT(LuaComponent, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(LuaComponent, CelesteDllExport)
 
     public:
       const sol::table& getInstance() const { return m_instance; }

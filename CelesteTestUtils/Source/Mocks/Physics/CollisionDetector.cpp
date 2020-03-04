@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(CollisionDetector, 4)
+  REGISTER_UNMANAGED_COMPONENT(CollisionDetector, 4)
 
   //------------------------------------------------------------------------------------------------
   CollisionDetector::CollisionDetector() :

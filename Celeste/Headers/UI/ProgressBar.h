@@ -13,7 +13,7 @@ namespace Celeste::UI
 {
   class ProgressBar : public Script
   {
-    DECLARE_SCRIPT(ProgressBar, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(ProgressBar, CelesteDllExport)
 
     public:
       inline float getMin() const { return m_min; }

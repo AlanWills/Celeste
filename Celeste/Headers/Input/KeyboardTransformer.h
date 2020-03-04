@@ -8,7 +8,7 @@ namespace Celeste::Input
 {
   class KeyboardTransformer : public Script
   {
-    DECLARE_SCRIPT(KeyboardTransformer, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(KeyboardTransformer, CelesteDllExport)
 
     public:
       inline int getTranslateLeftKey() const { return m_translateLeftKey; }

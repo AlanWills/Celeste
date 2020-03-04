@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockButton, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockButton, 10);
 
   MockButton::MockButton() = default;
 }

@@ -5,7 +5,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockTextBox, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockTextBox, 10);
 
   //------------------------------------------------------------------------------------------------
   MockTextBox::MockTextBox() = default;

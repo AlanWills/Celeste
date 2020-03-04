@@ -8,7 +8,7 @@ namespace Celeste::Physics
 {
   class EllipseCollider : public Collider
   {
-    DECLARE_COMPONENT(EllipseCollider, PhysicsManager, CelesteDllExport)
+    DECLARE_MANAGED_COMPONENT(EllipseCollider, PhysicsManager, CelesteDllExport)
 
     public:
       using Collider::intersects;

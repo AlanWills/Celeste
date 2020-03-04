@@ -8,7 +8,7 @@ namespace Celeste::Settings
 {
   class GameSettings : public ScriptableObject
   {
-    DECLARE_SCRIPTABLE_OBJECT(GameSettings, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENTABLE_OBJECT(GameSettings, CelesteDllExport)
 
     public:
       inline float getMasterVolume() const { return m_masterVolume.getValue(); }

@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockSpriteRenderer, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockSpriteRenderer, 10);
 
   //------------------------------------------------------------------------------------------------
   MockSpriteRenderer::MockSpriteRenderer() :

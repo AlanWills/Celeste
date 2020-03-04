@@ -8,6 +8,6 @@ namespace CelesteTestUtils
 {
   class MockLoadResourcesAsyncScript : public Celeste::LoadResourcesAsyncScript
   {
-    DECLARE_SCRIPT(MockLoadResourcesAsyncScript, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockLoadResourcesAsyncScript, CelesteTestUtilsDllExport)
   };
 }

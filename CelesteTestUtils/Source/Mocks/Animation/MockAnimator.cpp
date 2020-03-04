@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockAnimator, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockAnimator, 10);
 
   MockAnimator::MockAnimator() = default;
 }

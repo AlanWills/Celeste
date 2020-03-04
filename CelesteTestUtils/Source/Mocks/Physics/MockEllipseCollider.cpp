@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockEllipseCollider, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockEllipseCollider, 10);
 
   MockEllipseCollider::MockEllipseCollider() = default;
 }

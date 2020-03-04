@@ -8,7 +8,7 @@ namespace CelesteTestUtils
 {
   class MockScript : public Celeste::Script
   {
-    DECLARE_SCRIPT(MockScript, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockScript, CelesteTestUtilsDllExport)
 
     public:
       bool handleInputCalled() const { return m_handleInputCalled; }

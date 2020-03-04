@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "Resources/2D/Texture2D.h"
 #include "Resources/ResourceManager.h"
 #include "Rendering/SpriteRenderer.h"
@@ -9,9 +9,9 @@
 
 namespace Celeste::Animation
 {
-  class Animator : public Script
+  class Animator : public Component
   {
-    DECLARE_SCRIPT(Animator, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(Animator, CelesteDllExport)
 
     public:
       inline const glm::uvec2 getSpriteSheetDimensions() { return m_spriteSheetDimensions; }

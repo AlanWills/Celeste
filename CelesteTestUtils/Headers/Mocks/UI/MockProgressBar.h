@@ -8,6 +8,6 @@ namespace CelesteTestUtils
 {
   class MockProgressBar : public Celeste::UI::ProgressBar
   {
-    DECLARE_SCRIPT(MockProgressBar, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockProgressBar, CelesteTestUtilsDllExport)
   };
 }

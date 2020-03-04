@@ -9,7 +9,7 @@ namespace CelesteTestUtils
 {
   class MockComponentDataConverter : public Celeste::ComponentDataConverter
   {
-    DECLARE_COMPONENT_DATA_CONVERTER(MockComponentDataConverter, MockComponent, CelesteTestUtilsDllExport)
+    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(MockComponentDataConverter, MockComponent, CelesteTestUtilsDllExport)
 
     public:
       bool isDoConvertFromXMLCalled() const { return m_doConvertFromXMLCalled; }

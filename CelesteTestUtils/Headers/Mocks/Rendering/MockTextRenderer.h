@@ -8,7 +8,7 @@ namespace CelesteTestUtils
 {
   class MockTextRenderer : public Celeste::Rendering::TextRenderer
   {
-    DECLARE_SCRIPT(MockTextRenderer, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockTextRenderer, CelesteTestUtilsDllExport)
 
     public:
       float getXPosition_Public(float halfLineWidth) const

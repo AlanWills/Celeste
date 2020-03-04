@@ -11,7 +11,7 @@ namespace Celeste::Input
 {
   class KeyboardVisibility : public Script
   {
-    DECLARE_SCRIPT(KeyboardVisibility, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(KeyboardVisibility, CelesteDllExport)
 
     public:
       inline int getVisibilityKey() const { return m_visibilityKey; }

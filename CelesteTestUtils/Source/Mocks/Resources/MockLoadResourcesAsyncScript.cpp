@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockLoadResourcesAsyncScript, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockLoadResourcesAsyncScript, 10);
 
   MockLoadResourcesAsyncScript::MockLoadResourcesAsyncScript() = default;
 }

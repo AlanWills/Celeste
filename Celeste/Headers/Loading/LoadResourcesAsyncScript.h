@@ -10,7 +10,7 @@ namespace Celeste
 {
   class LoadResourcesAsyncScript : public Script
   {
-    DECLARE_SCRIPT(LoadResourcesAsyncScript, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(LoadResourcesAsyncScript, CelesteDllExport)
 
     public:
       const Event<>& getLoadCompleteEvent() const { return m_loadComplete; }

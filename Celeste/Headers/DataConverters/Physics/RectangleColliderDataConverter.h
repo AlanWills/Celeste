@@ -15,7 +15,7 @@ namespace Celeste
 {
   class RectangleColliderDataConverter : public ComponentDataConverter
   {
-    DECLARE_COMPONENT_DATA_CONVERTER(RectangleColliderDataConverter, Physics::RectangleCollider, CelesteDllExport)
+    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(RectangleColliderDataConverter, Physics::RectangleCollider, CelesteDllExport)
 
     public:
       inline bool getIsTrigger() const { return m_isTrigger.getValue(); }

@@ -2,7 +2,7 @@
 
 #include "Entity.h"
 #include "UID/StringId.h"
-#include "Script.h"
+#include "Component.h"
 #include "Rendering/SpriteBatch.h"
 #include "Maths/Transform.h"
 #include "Memory/Iterators/GameObjectIterator.h"
@@ -108,7 +108,7 @@ namespace Celeste
 
       CelesteDllExport Component* removeComponent(Component* component);
 
-      inline size_t getComponentCount() const { return m_components.size() + m_scripts.size(); }
+      inline size_t getComponentCount() const { return getManagedComponentCount() + getUnmanagedComponentCount(); }
       CelesteDllExport Component* getComponent(size_t index);
       CelesteDllExport const Component* getConstComponent(size_t index) const { return const_cast<GameObject*>(this)->getComponent(index); }
 
@@ -116,8 +116,8 @@ namespace Celeste
       CelesteDllExport void update(GLfloat elapsedGameTime);
 
     protected:
-      inline size_t component_count() const { return m_components.size(); }
-      inline size_t script_count() const { return m_scripts.size(); }
+      inline size_t getManagedComponentCount() const { return m_managedComponents.size(); }
+      inline size_t getUnmanagedComponentCount() const { return m_unmanagedComponents.size(); }
 
     private:
       using Inherited = Entity;
@@ -130,8 +130,8 @@ namespace Celeste
       /// Tag can be applied to more than one game object for identifying a type of object
       StringId m_tag = 0;
 
-      std::vector<Component*> m_components;
-      std::vector<Component*> m_scripts;
+      std::vector<Component*> m_managedComponents;
+      std::vector<Component*> m_unmanagedComponents;
   };
 
   //------------------------------------------------------------------------------------------------
@@ -139,7 +139,7 @@ namespace Celeste
   T* GameObject::addComponent()
   {
     STATIC_ASSERT((std::is_base_of<Component, T>::value), "Inputted type does not derive from component");
-    T* component = new T();
+    T* component = new T(*this);
   
 #if _DEBUG
     if (component == nullptr)
@@ -149,15 +149,13 @@ namespace Celeste
     }
 #endif
 
-    component->m_gameObject = this;
-
-    if (std::is_base_of<Script, T>::value)
+    if (Celeste::is_managed_component<T>::value)
     {
-      m_scripts.push_back(component);
+      m_managedComponents.push_back(component);
     }
     else
     {
-      m_components.push_back(component);
+      m_unmanagedComponents.push_back(component);
     }
 
     return component;
@@ -169,23 +167,23 @@ namespace Celeste
   {
     STATIC_ASSERT((std::is_base_of<Component, T>::value), "Inputted argument does not have component has an ancestor.");
 
-    if (std::is_base_of<Script, T>())
+    if (Celeste::is_managed_component<T>::value)
     {
-      for (Component* script : m_scripts)
+      for (Component* managedComponent : m_managedComponents)
       {
-        if (dynamic_cast<T*>(script) != nullptr)
+        if (dynamic_cast<T*>(managedComponent) != nullptr)
         {
-          return reinterpret_cast<T*>(script);
+          return reinterpret_cast<T*>(managedComponent);
         }
       }
     }
     else
     {
-      for (Component* component : m_components)
+      for (Component* unmanagedComponent : m_unmanagedComponents)
       {
-        if (dynamic_cast<T*>(component) != nullptr)
+        if (dynamic_cast<T*>(unmanagedComponent) != nullptr)
         {
-          return reinterpret_cast<T*>(component);
+          return reinterpret_cast<T*>(unmanagedComponent);
         }
       }
     }
@@ -199,25 +197,25 @@ namespace Celeste
   {
     STATIC_ASSERT((std::is_base_of<Component, T>::value), "Inputted argument does not have component has an ancestor.");
 
-    if (std::is_base_of<Script, T>::value)
+    if (Celeste::is_managed_component<T>::value)
     {
-      for (Component* script : m_scripts)
+      for (Component* managedComponent : m_managedComponents)
       {
-        if (dynamic_cast<T*>(script) != nullptr && 
-            componentPredicate(reinterpret_cast<T*>(script)))
+        if (dynamic_cast<T*>(managedComponent) != nullptr &&
+          componentPredicate(reinterpret_cast<T*>(managedComponent)))
         {
-          return reinterpret_cast<T*>(script);
+          return reinterpret_cast<T*>(managedComponent);
         }
       }
     }
     else
     {
-      for (Component* component : m_components)
+      for (Component* unmanagedComponent : m_unmanagedComponents)
       {
-        if (dynamic_cast<T*>(component) != nullptr &&
-            componentPredicate(reinterpret_cast<T*>(component)))
+        if (dynamic_cast<T*>(unmanagedComponent) != nullptr &&
+          componentPredicate(reinterpret_cast<T*>(unmanagedComponent)))
         {
-          return reinterpret_cast<T*>(component);
+          return reinterpret_cast<T*>(unmanagedComponent);
         }
       }
     }
@@ -229,11 +227,11 @@ namespace Celeste
   template <typename T>
   bool GameObject::hasComponent() const
   {
-    if (std::is_base_of<Script, T>())
+    if (Celeste::is_managed_component<T>::value)
     {
-      for (Component* script : m_scripts)
+      for (Component* managedComponent : m_managedComponents)
       {
-        if (dynamic_cast<T*>(script) != nullptr)
+        if (dynamic_cast<T*>(managedComponent) != nullptr)
         {
           return true;
         }
@@ -241,9 +239,9 @@ namespace Celeste
     }
     else
     {
-      for (Component* component : m_components)
+      for (Component* unmanagedComponents : m_unmanagedComponents)
       {
-        if (dynamic_cast<T*>(component) != nullptr)
+        if (dynamic_cast<T*>(unmanagedComponents) != nullptr)
         {
           return true;
         }

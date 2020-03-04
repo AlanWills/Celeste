@@ -8,7 +8,7 @@ namespace Celeste::Rendering
 {
   class ModelRenderer : public Script
   {
-    DECLARE_SCRIPT(ModelRenderer, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(ModelRenderer, CelesteDllExport)
 
     public:
       CelesteDllExport void render(const Resources::Program& shaderProgram) const;

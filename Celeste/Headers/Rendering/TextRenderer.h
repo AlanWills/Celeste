@@ -11,7 +11,7 @@ namespace Celeste::Rendering
   // A class which is responsible for rendering text in a specific font
   class TextRenderer : public Renderer
   {
-    DECLARE_SCRIPT(TextRenderer, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(TextRenderer, CelesteDllExport)
 
     public:
       CelesteDllExport void render(const Resources::Program& shaderProgram, const glm::mat4& viewModelMatrix) const override;

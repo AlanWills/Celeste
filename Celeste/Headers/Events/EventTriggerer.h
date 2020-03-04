@@ -9,7 +9,7 @@ namespace Celeste
 {
   class EventTriggerer : public Script
   {
-    DECLARE_SCRIPT(EventTriggerer, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(EventTriggerer, CelesteDllExport)
 
     public:
       using GameObjectEvent = Event<GameObject&>;

@@ -7,7 +7,7 @@ using namespace Celeste::XML;
 
 namespace Celeste::Settings
 {
-  REGISTER_SCRIPTABLE_OBJECT(GameSettings)
+  REGISTER_UNMANAGED_COMPONENTABLE_OBJECT(GameSettings)
 
   //------------------------------------------------------------------------------------------------
   GameSettings::GameSettings() :

@@ -9,7 +9,7 @@ using namespace Celeste::Rendering;
 
 namespace Celeste::UI
 {
-  REGISTER_COMPONENT(TextBox, 10);
+  REGISTER_MANAGED_COMPONENT(TextBox, 10);
 
   //------------------------------------------------------------------------------------------------
   TextBox::TextBox() :

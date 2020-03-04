@@ -9,7 +9,7 @@ using namespace Celeste::Rendering;
 
 namespace Celeste
 {
-  REGISTER_COMPONENT_DATA_CONVERTER(SpriteRendererDataConverter)
+  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(SpriteRendererDataConverter)
 
   const char* const SpriteRendererDataConverter::SPRITE_ATTRIBUTE_NAME("sprite");
   const char* const SpriteRendererDataConverter::SIZE_ATTRIBUTE_NAME("size");

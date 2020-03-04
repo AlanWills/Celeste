@@ -7,7 +7,7 @@
 
 namespace Celeste
 {
-  REGISTER_COMPONENT_DATA_CONVERTER(LimitedLifeTimeDataConverter)
+  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(LimitedLifeTimeDataConverter)
 
   const char* const LimitedLifeTimeDataConverter::LIFE_TIME_ATTRIBUTE_NAME("lifetime");
   const char* const LimitedLifeTimeDataConverter::TRIGGER_KEY_ATTRIBUTE_NAME("trigger_key");

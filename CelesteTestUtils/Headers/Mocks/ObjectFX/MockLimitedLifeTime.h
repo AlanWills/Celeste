@@ -8,6 +8,6 @@ namespace CelesteTestUtils
 {
   class MockLimitedLifeTime : public Celeste::LimitedLifeTime
   {
-    DECLARE_SCRIPT(MockLimitedLifeTime, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockLimitedLifeTime, CelesteTestUtilsDllExport)
   };
 }

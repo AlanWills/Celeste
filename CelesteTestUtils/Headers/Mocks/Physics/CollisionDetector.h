@@ -8,7 +8,7 @@ namespace CelesteTestUtils
 {
   class CollisionDetector : public Celeste::Script
   {
-    DECLARE_SCRIPT(CollisionDetector, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(CollisionDetector, CelesteTestUtilsDllExport)
 
     public:
       bool triggerEnterCalled() const { return m_triggerEnterCount > 0; }

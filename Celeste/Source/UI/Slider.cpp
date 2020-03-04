@@ -11,7 +11,7 @@ using namespace Celeste::Input;
 
 namespace Celeste::UI
 {
-  REGISTER_COMPONENT(Slider, 4)
+  REGISTER_MANAGED_COMPONENT(Slider, 4)
 
   //------------------------------------------------------------------------------------------------
   Slider::Slider() :

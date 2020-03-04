@@ -22,7 +22,7 @@ namespace Celeste
 
     class MouseInteractionHandler : public Script
     {
-      DECLARE_SCRIPT(MouseInteractionHandler, CelesteDllExport)
+      DECLARE_UNMANAGED_COMPONENT(MouseInteractionHandler, CelesteDllExport)
 
       public:
         /// An event that will be called when the mouse first enters the parent's collider

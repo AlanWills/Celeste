@@ -8,7 +8,7 @@ namespace Celeste::UI
 {
   class Slider : public Script
   {
-    DECLARE_SCRIPT(Slider, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(Slider, CelesteDllExport)
 
   public:
     using ValueChangedEvent = Event<GameObject&, float>;

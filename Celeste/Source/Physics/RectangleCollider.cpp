@@ -7,7 +7,7 @@
 
 namespace Celeste::Physics
 {
-  REGISTER_COMPONENT(RectangleCollider, 50)
+  REGISTER_MANAGED_COMPONENT(RectangleCollider, 50)
 
   //------------------------------------------------------------------------------------------------
   RectangleCollider::RectangleCollider() :

@@ -235,6 +235,7 @@
     <ClInclude Include="Headers\Media\VideoSettings.h" />
     <ClInclude Include="Headers\Memory\ObserverPtr.h" />
     <ClInclude Include="Headers\Networking\NetworkUtils.h" />
+    <ClInclude Include="Headers\Templates\ComponentTypeTraits.h" />
     <ClInclude Include="Headers\Threads\ThreadPool.h" />
     <ClInclude Include="Headers\UtilityHeaders\CallbackHeaders.h" />
     <ClInclude Include="Headers\UtilityHeaders\ComponentHeaders.h" />
@@ -426,7 +427,6 @@
     <ClInclude Include="Headers\Objects\Component.h" />
     <ClInclude Include="Headers\Objects\GameObject.h" />
     <ClInclude Include="Headers\Objects\Object.h" />
-    <ClInclude Include="Headers\Objects\Script.h" />
     <ClInclude Include="Headers\UtilityHeaders\ALHeaders.h" />
     <ClInclude Include="Headers\UtilityHeaders\GLHeaders.h" />
     <ClInclude Include="Headers\Physics\Collider.h" />

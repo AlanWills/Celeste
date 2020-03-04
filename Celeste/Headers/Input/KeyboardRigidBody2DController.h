@@ -14,7 +14,7 @@ namespace Celeste::Input
 {
   class KeyboardRigidBody2DController : public Script
   {
-    DECLARE_SCRIPT(KeyboardRigidBody2DController, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(KeyboardRigidBody2DController, CelesteDllExport)
 
     public:
       inline int getDecreaseXLinearVelocityKey() const { return m_decreaseXLinearVelocityKey; }

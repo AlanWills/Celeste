@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockComponent, 10)
+  REGISTER_UNMANAGED_COMPONENT(MockComponent, 10)
 
   //------------------------------------------------------------------------------------------------
   MockComponent::MockComponent() :

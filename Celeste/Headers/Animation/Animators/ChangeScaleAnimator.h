@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "glm/glm.hpp"
 
 
 namespace Celeste::Animators
 {
-  class ChangeScaleAnimator : public Script
+  class ChangeScaleAnimator : public Component
   {
-    DECLARE_SCRIPT(ChangeScaleAnimator, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(ChangeScaleAnimator, CelesteDllExport)
 
     public:
       inline float getTime() const { return m_time; }
@@ -20,8 +20,6 @@ namespace Celeste::Animators
       CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
-      using Inherited = Script;
-
       void reset();
 
       float m_time;

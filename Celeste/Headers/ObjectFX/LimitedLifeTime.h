@@ -8,7 +8,7 @@ namespace Celeste
 {
   class LimitedLifeTime : public Script
   {
-    DECLARE_SCRIPT(LimitedLifeTime, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(LimitedLifeTime, CelesteDllExport)
 
     public:
       using DeathEvent = Event<GameObject&>;

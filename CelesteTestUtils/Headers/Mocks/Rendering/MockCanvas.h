@@ -8,6 +8,6 @@ namespace CelesteTestUtils
 {
   class MockCanvas : public Celeste::Rendering::Canvas
   {
-    DECLARE_SCRIPT(MockCanvas, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockCanvas, CelesteTestUtilsDllExport)
   };
 }

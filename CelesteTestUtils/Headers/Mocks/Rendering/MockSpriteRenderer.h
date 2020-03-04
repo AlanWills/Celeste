@@ -8,7 +8,7 @@ namespace CelesteTestUtils
 {
   class MockSpriteRenderer : public Celeste::Rendering::SpriteRenderer
   {
-    DECLARE_SCRIPT(MockSpriteRenderer, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockSpriteRenderer, CelesteTestUtilsDllExport)
 
     public:
       void render(const Celeste::Resources::Program& program, const glm::mat4& viewModelMatrix) const override

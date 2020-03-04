@@ -10,7 +10,7 @@ namespace Celeste
 
   class OpacityLerperDataConverter : public ComponentDataConverter
   {
-    DECLARE_COMPONENT_DATA_CONVERTER(OpacityLerperDataConverter, OpacityLerper, CelesteDllExport)
+    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(OpacityLerperDataConverter, OpacityLerper, CelesteDllExport)
 
     public:
       inline float getMaxOpacity() const { return m_maxOpacity.getValue(); }

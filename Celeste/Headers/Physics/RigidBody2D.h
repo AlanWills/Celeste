@@ -8,7 +8,7 @@ namespace Celeste::Physics
 {
   class RigidBody2D : public Component
   {
-    DECLARE_COMPONENT(RigidBody2D, PhysicsManager, CelesteDllExport)
+    DECLARE_MANAGED_COMPONENT(RigidBody2D, PhysicsManager, CelesteDllExport)
 
     public:
       inline const glm::vec2& getLinearVelocity() const { return m_linearVelocity; }

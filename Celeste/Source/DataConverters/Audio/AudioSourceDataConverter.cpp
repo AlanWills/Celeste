@@ -7,7 +7,7 @@ using namespace Celeste::Audio;
 
 namespace Celeste
 {
-  REGISTER_COMPONENT_DATA_CONVERTER(AudioSourceDataConverter)
+  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(AudioSourceDataConverter)
 
   const char* const AudioSourceDataConverter::SOUND_PATH_ATTRIBUTE_NAME("sound");
   const char* const AudioSourceDataConverter::IS_PLAYING_ATTRIBUTE_NAME("is_playing");

@@ -11,7 +11,7 @@
 
 namespace Celeste::Rendering
 {
-  REGISTER_COMPONENT(Canvas, 10)
+  REGISTER_MANAGED_COMPONENT(Canvas, 10)
 
   //------------------------------------------------------------------------------------------------
   Canvas::Canvas() :

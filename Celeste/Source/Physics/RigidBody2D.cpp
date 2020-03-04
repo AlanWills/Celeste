@@ -4,7 +4,7 @@
 
 namespace Celeste::Physics
 {
-  REGISTER_COMPONENT(RigidBody2D, 50)
+  REGISTER_MANAGED_COMPONENT(RigidBody2D, 50)
 
   //------------------------------------------------------------------------------------------------
   RigidBody2D::RigidBody2D() :

@@ -10,7 +10,7 @@ namespace Celeste::Audio
 {
   class AudioSource : public Component
   {
-    DECLARE_COMPONENT(AudioSource, AudioManager, CelesteDllExport)
+    DECLARE_MANAGED_COMPONENT(AudioSource, AudioManager, CelesteDllExport)
 
     public:
       CelesteDllExport ~AudioSource();

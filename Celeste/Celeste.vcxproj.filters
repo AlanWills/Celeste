@@ -135,9 +135,6 @@
     <ClInclude Include="Headers\Input\Mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Objects\Script.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\GraphicalFX\OpacityLerper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -820,6 +817,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\UtilityMacros\CustomMemoryMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Templates\ComponentTypeTraits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

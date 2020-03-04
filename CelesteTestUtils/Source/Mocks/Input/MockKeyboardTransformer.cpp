@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockKeyboardTransformer, 10)
+  REGISTER_UNMANAGED_COMPONENT(MockKeyboardTransformer, 10)
 
     MockKeyboardTransformer::MockKeyboardTransformer() = default;
 }

@@ -8,7 +8,7 @@ namespace CelesteTestUtils
 {
   class MockComponent : public Celeste::Component
   {
-    DECLARE_SCRIPT(MockComponent, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockComponent, CelesteTestUtilsDllExport)
 
     public:
       void setGameObject_Public(Celeste::GameObject& gameObject) { setGameObject(gameObject); }

@@ -12,7 +12,7 @@ namespace Celeste
 
   class OpacityLerper : public Script
   {
-    DECLARE_SCRIPT(OpacityLerper, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(OpacityLerper, CelesteDllExport)
 
     public:
       inline float getMinOpacity() const { return m_minOpacity; }

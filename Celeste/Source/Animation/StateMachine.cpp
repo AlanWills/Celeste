@@ -4,10 +4,11 @@
 
 namespace Celeste::Animation
 {
-  REGISTER_SCRIPT(StateMachine, 10)
+  REGISTER_UNMANAGED_COMPONENT(StateMachine, 10)
 
   //------------------------------------------------------------------------------------------------
-  StateMachine::StateMachine() :
+  StateMachine::StateMachine(GameObject& gameObject) :
+    Inherited(gameObject),
     m_currentAnimStateIndex(0)
   {
   }

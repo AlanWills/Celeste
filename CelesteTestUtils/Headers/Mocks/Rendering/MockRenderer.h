@@ -8,7 +8,7 @@ namespace CelesteTestUtils
 {
   class MockRenderer : public Celeste::Rendering::Renderer
   {
-    DECLARE_SCRIPT(MockRenderer, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockRenderer, CelesteTestUtilsDllExport)
 
     public:
       void render(const Celeste::Resources::Program& program, const glm::mat4& viewModelMatrix) const override { m_renderCalled = true; }

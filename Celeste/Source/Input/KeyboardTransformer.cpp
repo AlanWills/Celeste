@@ -5,7 +5,7 @@
 
 namespace Celeste::Input
 {
-  REGISTER_SCRIPT(KeyboardTransformer, 10)
+  REGISTER_UNMANAGED_COMPONENT(KeyboardTransformer, 10)
 
   //------------------------------------------------------------------------------------------------
   KeyboardTransformer::KeyboardTransformer() :

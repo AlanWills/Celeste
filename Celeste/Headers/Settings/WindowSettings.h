@@ -14,7 +14,7 @@ namespace Celeste
   {
     class WindowSettings : public ScriptableObject
     {
-      DECLARE_SCRIPTABLE_OBJECT(WindowSettings, CelesteDllExport)
+      DECLARE_UNMANAGED_COMPONENTABLE_OBJECT(WindowSettings, CelesteDllExport)
 
       public:
         const std::string& getWindowTitle() const { return m_windowTitle.getValue(); }

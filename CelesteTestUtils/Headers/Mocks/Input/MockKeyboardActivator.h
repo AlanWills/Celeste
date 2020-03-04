@@ -8,6 +8,6 @@ namespace CelesteTestUtils
 {
   class MockKeyboardActivator : public Celeste::Input::KeyboardActivator
   {
-    DECLARE_SCRIPT(MockKeyboardActivator, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockKeyboardActivator, CelesteTestUtilsDllExport)
   };
 }

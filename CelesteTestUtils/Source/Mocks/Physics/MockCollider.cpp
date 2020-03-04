@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockCollider, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockCollider, 10);
 
   //------------------------------------------------------------------------------------------------
   MockCollider::MockCollider() :

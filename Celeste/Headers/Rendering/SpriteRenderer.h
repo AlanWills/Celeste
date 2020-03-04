@@ -22,7 +22,7 @@ namespace Celeste::Rendering
   // A class which is responsible for rendering a texture using the sprite shader
   class SpriteRenderer : public Renderer
   {
-    DECLARE_SCRIPT(SpriteRenderer, CelesteDllExport)
+    DECLARE_UNMANAGED_COMPONENT(SpriteRenderer, CelesteDllExport)
 
     public:
       CelesteDllExport void render(const Resources::Program& shaderProgram, const glm::mat4& viewModelMatrix) const override;

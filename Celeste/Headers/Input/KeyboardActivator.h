@@ -10,7 +10,7 @@ namespace Celeste::Input
 {
   class KeyboardActivator : public Component
   {
-    DECLARE_COMPONENT(KeyboardActivator, InputManager, CelesteDllExport)
+    DECLARE_MANAGED_COMPONENT(KeyboardActivator, InputManager, CelesteDllExport)
 
     public:
       inline int getActivationKey() const { return m_activationKey; }

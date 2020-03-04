@@ -6,7 +6,7 @@
 
 namespace Celeste::Input
 {
-  REGISTER_SCRIPT(MouseInteractionHandler, 10)
+  REGISTER_UNMANAGED_COMPONENT(MouseInteractionHandler, 10)
 
   //------------------------------------------------------------------------------------------------
   MouseInteractionHandler::MouseInteractionHandler() :

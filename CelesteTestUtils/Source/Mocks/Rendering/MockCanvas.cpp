@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockCanvas, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockCanvas, 10);
 
   MockCanvas::MockCanvas() = default;
 }

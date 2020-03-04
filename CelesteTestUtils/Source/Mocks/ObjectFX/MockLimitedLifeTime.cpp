@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockLimitedLifeTime, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockLimitedLifeTime, 10);
 
   MockLimitedLifeTime::MockLimitedLifeTime() = default;
 }

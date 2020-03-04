@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_SCRIPT(MockProgressBar, 10);
+  REGISTER_UNMANAGED_COMPONENT(MockProgressBar, 10);
 
   MockProgressBar::MockProgressBar() = default;
 }

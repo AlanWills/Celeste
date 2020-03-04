@@ -7,7 +7,7 @@ using namespace Celeste::Rendering;
 
 namespace Celeste::UI
 {
-  REGISTER_COMPONENT(StackPanel, 10)
+  REGISTER_MANAGED_COMPONENT(StackPanel, 10)
 
   //------------------------------------------------------------------------------------------------
   StackPanel::StackPanel() :

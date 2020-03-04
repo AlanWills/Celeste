@@ -5,7 +5,7 @@
 
 namespace Celeste
 {
-  REGISTER_SCRIPT(LimitedLifeTime, 10)
+  REGISTER_UNMANAGED_COMPONENT(LimitedLifeTime, 10)
 
   //------------------------------------------------------------------------------------------------
   LimitedLifeTime::LimitedLifeTime() :

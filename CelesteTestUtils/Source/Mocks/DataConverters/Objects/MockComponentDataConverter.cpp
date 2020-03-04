@@ -4,7 +4,7 @@
 
 namespace CelesteTestUtils
 {
-  REGISTER_COMPONENT_DATA_CONVERTER(MockComponentDataConverter)
+  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(MockComponentDataConverter)
 
   //------------------------------------------------------------------------------------------------
   MockComponentDataConverter::MockComponentDataConverter() :

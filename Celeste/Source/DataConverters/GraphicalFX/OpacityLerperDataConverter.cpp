@@ -5,7 +5,7 @@
 
 namespace Celeste
 {
-  REGISTER_COMPONENT_DATA_CONVERTER(OpacityLerperDataConverter)
+  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(OpacityLerperDataConverter)
 
   const char* const OpacityLerperDataConverter::MAX_OPACITY_ATTRIBUTE_NAME("max");
   const char* const OpacityLerperDataConverter::MIN_OPACITY_ATTRIBUTE_NAME("min");

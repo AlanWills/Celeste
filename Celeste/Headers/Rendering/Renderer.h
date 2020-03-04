@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "Maths/Rectangle.h"
 
 
@@ -11,7 +11,7 @@ namespace Celeste::Resources
 
 namespace Celeste::Rendering
 {
-  class Renderer : public Script
+  class Renderer : public Component
   {
     public:
       CelesteDllExport Renderer();

@@ -28,7 +28,7 @@ namespace TestCelesteRuntime
 {
   namespace Testing
   {
-    REGISTER_SCRIPT(TestDiscoverer, 1)
+    REGISTER_UNMANAGED_COMPONENT(TestDiscoverer, 1)
 
     //------------------------------------------------------------------------------------------------
     TestDiscoverer::TestDiscoverer() :

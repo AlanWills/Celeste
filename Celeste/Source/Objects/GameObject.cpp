@@ -19,16 +19,16 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   GameObject::~GameObject()
   {
-    // Iterate in reverse so components can remove themselves from the m_components vector
-    for (Component* component : m_components)
+    // Iterate in reverse so components can remove themselves from the m_managedComponents vector
+    for (size_t i = m_managedComponents.size(); i > 0; --i)
     {
-      delete component;
+      delete m_managedComponents[i];
     }
 
-    // Iterate in reverse so scripts can remove themselves from the m_scripts vector
-    for (Component* script : m_scripts)
+    // Iterate in reverse so components can remove themselves from the m_unmanagedComponents vector
+    for (size_t i = m_unmanagedComponents.size(); i > 0; --i)
     {
-      delete script;
+      delete m_unmanagedComponents[i];
     }
 
     Transform* transform = m_transform;
@@ -44,7 +44,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void GameObject::collisionEnter(Physics::Collider& collider)
   {
-    for (Component* component : m_components)
+    for (Component* component : m_managedComponents)
     {
       if (component->isActive())
       {
@@ -52,11 +52,11 @@ namespace Celeste
       }
     }
 
-    for (Component* script : m_scripts)
+    for (Component* component : m_unmanagedComponents)
     {
-      if (script->isActive())
+      if (component->isActive())
       {
-        script->collisionEnter(collider);
+        component->collisionEnter(collider);
       }
     }
   }
@@ -64,7 +64,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void GameObject::collision(Physics::Collider& collider)
   {
-    for (Component* component : m_components)
+    for (Component* component : m_managedComponents)
     {
       if (component->isActive())
       {
@@ -72,11 +72,11 @@ namespace Celeste
       }
     }
 
-    for (Component* script : m_scripts)
+    for (Component* component : m_unmanagedComponents)
     {
-      if (script->isActive())
+      if (component->isActive())
       {
-        script->collision(collider);
+        component->collision(collider);
       }
     }
   }
@@ -84,7 +84,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void GameObject::collisionExit(Physics::Collider& collider)
   {
-    for (Component* component : m_components)
+    for (Component* component : m_managedComponents)
     {
       if (component->isActive())
       {
@@ -92,11 +92,11 @@ namespace Celeste
       }
     }
 
-    for (Component* script : m_scripts)
+    for (Component* component : m_unmanagedComponents)
     {
-      if (script->isActive())
+      if (component->isActive())
       {
-        script->collisionExit(collider);
+        component->collisionExit(collider);
       }
     }
   }
@@ -104,7 +104,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void GameObject::triggerEnter(Physics::Collider& collider)
   {
-    for (Component* component : m_components)
+    for (Component* component : m_managedComponents)
     {
       if (component->isActive())
       {
@@ -112,11 +112,11 @@ namespace Celeste
       }
     }
 
-    for (Component* script : m_scripts)
+    for (Component* component : m_unmanagedComponents)
     {
-      if (script->isActive())
+      if (component->isActive())
       {
-        script->triggerEnter(collider);
+        component->triggerEnter(collider);
       }
     }
   }
@@ -124,7 +124,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void GameObject::trigger(Physics::Collider& collider)
   {
-    for (Component* component : m_components)
+    for (Component* component : m_managedComponents)
     {
       if (component->isActive())
       {
@@ -132,11 +132,11 @@ namespace Celeste
       }
     }
     
-    for (Component* script : m_scripts)
+    for (Component* component : m_unmanagedComponents)
     {
-      if (script->isActive())
+      if (component->isActive())
       {
-        script->trigger(collider);
+        component->trigger(collider);
       }
     }
   }
@@ -144,7 +144,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void GameObject::triggerExit(Physics::Collider& collider)
   {
-    for (Component* component : m_components)
+    for (Component* component : m_managedComponents)
     {
       if (component->isActive())
       {
@@ -152,11 +152,11 @@ namespace Celeste
       }
     }
 
-    for (Component* script : m_scripts)
+    for (Component* component : m_unmanagedComponents)
     {
-      if (script->isActive())
+      if (component->isActive())
       {
-        script->triggerExit(collider);
+        component->triggerExit(collider);
       }
     }
   }
@@ -167,11 +167,11 @@ namespace Celeste
     Inherited::handleInput();
 
     // Act on a copy so we can remove components during the handle input step
-    for (Component* script : std::vector<Component*>(m_scripts))
+    for (Component* component : std::vector<Component*>(m_unmanagedComponents))
     {
-      if (script->isActive())
+      if (component->isActive())
       {
-        script->handleInput();
+        component->handleInput();
       }
     }
   }
@@ -182,11 +182,11 @@ namespace Celeste
     Inherited::update(elapsedGameTime);
 
     // Act on a copy so we can remove components during the update step
-    for (Component* script : std::vector<Component*>(m_scripts))
+    for (Component* component : std::vector<Component*>(m_unmanagedComponents))
     {
-      if (script->isActive())
+      if (component->isActive())
       {
-        script->update(elapsedGameTime);
+        component->update(elapsedGameTime);
       }
     }
   }
@@ -196,14 +196,14 @@ namespace Celeste
   {
     Inherited::setActive(isActive);
 
-    for (Component* component : m_components)
+    for (Component* component : m_managedComponents)
     {
       component->setActive(isActive);
     }
 
-    for (Component* script : m_scripts)
+    for (Component* component : m_unmanagedComponents)
     {
-      script->setActive(isActive);
+      component->setActive(isActive);
     }
   }
 
@@ -251,13 +251,13 @@ namespace Celeste
   Component* GameObject::getComponent(size_t index)
   {
     ASSERT(index < getComponentCount());
-    if (index < m_components.size())
+    if (index < m_managedComponents.size())
     {
-      return m_components[index];
+      return m_managedComponents[index];
     }
-    else if (index < (m_components.size() + m_scripts.size()))
+    else if (index < (m_managedComponents.size() + m_unmanagedComponents.size()))
     {
-      return m_scripts[index - m_components.size()];
+      return m_unmanagedComponents[index - m_managedComponents.size()];
     }
 
     return nullptr;
@@ -275,15 +275,15 @@ namespace Celeste
     }
 #endif
     
-    if (auto componentIt = std::find(m_components.begin(), m_components.end(), component); componentIt != m_components.end())
+    if (auto componentIt = std::find(m_managedComponents.begin(), m_managedComponents.end(), component); componentIt != m_managedComponents.end())
     {
       component->setActive(false);
-      m_components.erase(componentIt);
+      m_managedComponents.erase(componentIt);
     }
-    else if (auto scriptIt = std::find(m_scripts.begin(), m_scripts.end(), component); scriptIt != m_scripts.end())
+    else if (auto componentIt = std::find(m_unmanagedComponents.begin(), m_unmanagedComponents.end(), component); componentIt != m_unmanagedComponents.end())
     {
       component->setActive(false);
-      m_scripts.erase(scriptIt);
+      m_unmanagedComponents.erase(componentIt);
     }
 #if _DEBUG
     else

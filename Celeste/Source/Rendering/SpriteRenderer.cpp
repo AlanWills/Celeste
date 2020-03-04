@@ -8,7 +8,7 @@ using namespace Celeste::Resources;
 
 namespace Celeste::Rendering
 {
-  REGISTER_SCRIPT(SpriteRenderer, 50)
+  REGISTER_UNMANAGED_COMPONENT(SpriteRenderer, 50)
 
   //------------------------------------------------------------------------------------------------
   SpriteRenderer::SpriteRenderer() :
