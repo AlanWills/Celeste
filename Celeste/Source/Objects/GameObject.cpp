@@ -22,13 +22,13 @@ namespace Celeste
     // Iterate in reverse so components can remove themselves from the m_managedComponents vector
     for (size_t i = m_managedComponents.size(); i > 0; --i)
     {
-      delete m_managedComponents[i];
+      delete m_managedComponents[i - 1];
     }
 
     // Iterate in reverse so components can remove themselves from the m_unmanagedComponents vector
     for (size_t i = m_unmanagedComponents.size(); i > 0; --i)
     {
-      delete m_unmanagedComponents[i];
+      delete m_unmanagedComponents[i - 1];
     }
 
     Transform* transform = m_transform;

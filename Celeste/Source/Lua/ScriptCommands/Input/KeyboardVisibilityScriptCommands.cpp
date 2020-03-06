@@ -80,12 +80,6 @@ namespace Celeste::Lua::Input::KeyboardVisibilityScriptCommands
 
       visibility.setInputMode(inputMode);
     }
-
-    //------------------------------------------------------------------------------------------------
-    void setTarget_String(Celeste::Input::KeyboardVisibility& visibility, const std::string& targetName)
-    {
-      visibility.setTarget(targetName);
-    }
   }
 
   //------------------------------------------------------------------------------------------------
@@ -101,8 +95,6 @@ namespace Celeste::Lua::Input::KeyboardVisibilityScriptCommands
       "getInvisibilityKey", &Internals::getInvisibilityKey,
       "setInvisibilityKey", &Internals::setInvisibilityKey,
       "getInputMode", &Internals::getInputMode,
-      "setInputMode", &Internals::setInputMode,
-      "getTarget", &KeyboardVisibility::getTarget,
-      "setTarget", &Internals::setTarget_String);
+      "setInputMode", &Internals::setInputMode);
   }
 }

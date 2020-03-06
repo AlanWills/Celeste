@@ -22,13 +22,6 @@ LuaComponentDataConverter.register("KeyboardVisibility",
             ["Type"] = "string",
             ["Default Value"] = "Toggle",
             ["Is Reference"] = true,
-        },
-        ["Target"] = 
-        {
-            ["Name"] = "target",
-            ["Type"] = "string",
-            ["Is Reference"] = true,
-            ["Is Required"] = true
         }
     },
 
@@ -36,6 +29,5 @@ LuaComponentDataConverter.register("KeyboardVisibility",
         visibility:setVisibilityKey(converter:findAttribute("visibility_key"):asString())
         visibility:setInvisibilityKey(converter:findAttribute("invisibility_key"):asString())
         visibility:setInputMode(converter:findAttribute("input_mode"):asString())
-        visibility:setTarget(converter:findAttribute("target"):asString())
     end
 })

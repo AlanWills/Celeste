@@ -23,11 +23,6 @@ namespace Celeste::Input
       inline InputMode getInputMode() const { return m_inputMode; }
       inline void setInputMode(InputMode inputMode) { m_inputMode = inputMode; }
 
-      inline observer_ptr<GameObject> getTarget() const { return m_target; }
-      inline void setTarget(observer_ptr<GameObject> target) { m_target = target; }
-      void setTarget(const std::string& targetName) { setTarget(internString(targetName)); }
-      CelesteDllExport void setTarget(StringId targetName);
-
       CelesteDllExport void handleInput() override;
 
     private:
@@ -36,6 +31,5 @@ namespace Celeste::Input
       int m_visibilityKey;
       int m_invisibilityKey;
       InputMode m_inputMode;
-      observer_ptr<GameObject> m_target;
   };
 }

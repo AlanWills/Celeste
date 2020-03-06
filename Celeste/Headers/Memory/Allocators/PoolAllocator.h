@@ -154,8 +154,6 @@ namespace Celeste
 #endif
 
     size_t poolIndex = &item - m_pool;
-
-    //item.~T();
     m_allocated[poolIndex] = false;
     m_size--;
     m_hint = poolIndex;

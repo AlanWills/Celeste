@@ -13,8 +13,7 @@ namespace Celeste::Input
     Inherited(gameObject),
     m_activationKey(GLFW_KEY_UNKNOWN),
     m_deactivationKey(GLFW_KEY_UNKNOWN),
-    m_inputMode(InputMode::kToggle),
-    m_target()
+    m_inputMode(InputMode::kToggle)
   {
   }
 
@@ -23,24 +22,28 @@ namespace Celeste::Input
   {
     Inherited::handleInput();
 
-    if ((m_activationKey < 0 && m_deactivationKey < 0) || m_target == nullptr)
+    //ASSERT_FAIL_MSG("TODO - this won't work cos the script will be disabled when we disable it.");
+
+#if _DEBUG
+    if (m_activationKey < 0 && m_deactivationKey < 0)
     {
       ASSERT_FAIL();
       return;
     }
+#endif
 
     if (m_inputMode == InputMode::kContinuous && m_activationKey > 0)
     {
-      m_target->setActive(isKeyPressed(m_activationKey));
+      getGameObject()->setActive(isKeyPressed(m_activationKey));
     }
     else if (m_inputMode == InputMode::kToggle)
     {
-      if (m_target->isActive())
+      if (getGameObject()->isActive())
       {
         if (m_deactivationKey >= 0 && isKeyTapped(m_deactivationKey))
         {
           // Deactivate the gameobject and all other components/scripts but keep this one active
-          m_target->setActive(false);
+          getGameObject()->setActive(false);
         }
       }
       else
@@ -48,33 +51,9 @@ namespace Celeste::Input
         if (m_activationKey >= 0 && isKeyTapped(m_activationKey))
         {
           // Activate the gameobject and all other components/scripts
-          m_target->setActive(true);
+          getGameObject()->setActive(true);
         }
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void KeyboardActivator::setTarget(StringId targetName)
-  {
-//#if _DEBUG
-//    if (getGameObject() == nullptr || getGameObject()->getScreen() == nullptr)
-//    {
-//      ASSERT_FAIL();
-//      return;
-//    }
-//#endif
-//
-//    if (targetName == static_cast<StringId>(0))
-//    {
-//      // If we have set the name to the empty string/name we clear the target
-//      setTarget(nullptr);
-//    }
-//    else
-//    {
-//      observer_ptr<GameObject> target = getGameObject()->getScreen()->findGameObject(targetName);
-//      ASSERT_NOT_NULL(target);
-//      setTarget(target);
-//    }
   }
 }

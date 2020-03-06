@@ -80,12 +80,6 @@ namespace Celeste::Lua::Input::KeyboardActivatorScriptCommands
 
       activator.setInputMode(inputMode);
     }
-
-    //------------------------------------------------------------------------------------------------
-    void setTarget_String(Celeste::Input::KeyboardActivator& activator, const std::string& name)
-    {
-      activator.setTarget(name);
-    }
   }
 
   //------------------------------------------------------------------------------------------------
@@ -100,8 +94,6 @@ namespace Celeste::Lua::Input::KeyboardActivatorScriptCommands
       "getDeactivationKey", &Internals::getDeactivationKey,
       "setDeactivationKey", &Internals::setDeactivationKey,
       "getInputMode", &Internals::getInputMode,
-      "setInputMode", &Internals::setInputMode,
-      "getTarget", &KeyboardActivator::getTarget,
-      "setTarget", &Internals::setTarget_String);
+      "setInputMode", &Internals::setInputMode);
   }
 }
