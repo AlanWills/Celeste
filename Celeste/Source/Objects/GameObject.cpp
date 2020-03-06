@@ -264,14 +264,14 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  Component* GameObject::removeComponent(Component* component)
+  void GameObject::removeComponent(Component* component)
   {
 #if _DEBUG
     if (component == nullptr || 
         this != component->getGameObject())
     {
       ASSERT_FAIL();
-      return component;
+      return;
     }
 #endif
     
@@ -291,7 +291,5 @@ namespace Celeste
       ASSERT_FAIL();
     }
 #endif
-
-    return component;
   }
 }

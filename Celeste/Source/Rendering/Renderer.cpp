@@ -5,7 +5,8 @@
 namespace Celeste::Rendering
 {
   //------------------------------------------------------------------------------------------------
-  Renderer::Renderer() :
+  Renderer::Renderer(GameObject& gameObject) :
+    Inherited(gameObject),
     m_origin(0.5f),
     m_colour(1, 1, 1, 1),
     m_scissorRectangle()

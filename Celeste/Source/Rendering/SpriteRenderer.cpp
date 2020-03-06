@@ -11,7 +11,8 @@ namespace Celeste::Rendering
   REGISTER_UNMANAGED_COMPONENT(SpriteRenderer, 50)
 
   //------------------------------------------------------------------------------------------------
-  SpriteRenderer::SpriteRenderer() :
+  SpriteRenderer::SpriteRenderer(GameObject& gameObject) :
+    Inherited(gameObject),
     m_texture(nullptr),
     m_dimensions(),
     m_preserveAspectRatio(false)

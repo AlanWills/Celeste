@@ -38,7 +38,7 @@ namespace Celeste
     Inherited::doConvertFromXML(prefabElement);
 
     m_prefab = Resources::getResourceManager().load<Resources::Prefab>(getPath());
-    ASSERT(m_prefab != nullptr);
+    ASSERT_NOT_NULL(m_prefab);
 
     return m_prefab != nullptr;
   }

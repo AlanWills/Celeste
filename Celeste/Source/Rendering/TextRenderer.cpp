@@ -13,7 +13,8 @@ namespace Celeste::Rendering
   REGISTER_UNMANAGED_COMPONENT(TextRenderer, 20)
 
   //------------------------------------------------------------------------------------------------
-  TextRenderer::TextRenderer() :
+  TextRenderer::TextRenderer(GameObject& gameObject) :
+    Inherited(gameObject),
     m_font(),
     m_lines(),
     m_dimensions()

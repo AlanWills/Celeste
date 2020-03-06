@@ -9,8 +9,9 @@ namespace Celeste::Input
   REGISTER_UNMANAGED_COMPONENT(KeyboardRigidBody2DController, 10)
 
   //------------------------------------------------------------------------------------------------
-  KeyboardRigidBody2DController::KeyboardRigidBody2DController() :
-    m_rigidBody2D(),
+  KeyboardRigidBody2DController::KeyboardRigidBody2DController(GameObject& gameObject) :
+    Inherited(gameObject),
+    m_rigidBody2D(gameObject.findComponent<Physics::RigidBody2D>()),
     m_decreaseXLinearVelocityKey(-1),
     m_increaseXLinearVelocityKey(-1),
     m_decreaseYLinearVelocityKey(-1),
@@ -25,23 +26,9 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void KeyboardRigidBody2DController::begin()
-  {
-    m_begun = true;
-
-    m_rigidBody2D = getGameObject()->findComponent<Physics::RigidBody2D>();
-    ASSERT(m_rigidBody2D != nullptr);
-  }
-
-  //------------------------------------------------------------------------------------------------
   void KeyboardRigidBody2DController::handleInput()
   {
     Inherited::handleInput();
-
-    if (!m_begun)
-    {
-      begin();
-    }
 
 #if _DEBUG
     if (m_rigidBody2D == nullptr)

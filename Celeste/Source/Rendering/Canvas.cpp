@@ -14,7 +14,8 @@ namespace Celeste::Rendering
   REGISTER_MANAGED_COMPONENT(Canvas, 10)
 
   //------------------------------------------------------------------------------------------------
-  Canvas::Canvas() :
+  Canvas::Canvas(GameObject& gameObject) :
+    Inherited(gameObject),
     m_spriteBatch(),
     m_camera(),
     m_gameObjectQueue()

@@ -14,7 +14,8 @@ namespace Celeste::UI
   REGISTER_MANAGED_COMPONENT(Slider, 4)
 
   //------------------------------------------------------------------------------------------------
-  Slider::Slider() :
+  Slider::Slider(GameObject& gameObject) :
+    Inherited(gameObject),
     m_sliderClicked(false),
     m_min(0),
     m_max(1),

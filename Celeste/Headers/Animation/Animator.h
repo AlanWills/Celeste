@@ -69,7 +69,6 @@ namespace Celeste::Animation
     private:
       using Inherited = Component;
 
-      void begin();
       void setTextureToIndex(size_t index);
 
       glm::uvec2 m_spriteSheetDimensions;
@@ -78,7 +77,6 @@ namespace Celeste::Animation
 
       observer_ptr<Rendering::SpriteRenderer> m_spriteRenderer;
 
-      bool m_begun = false;
       bool m_playImmediately;
       bool m_playing;
       bool m_loop;

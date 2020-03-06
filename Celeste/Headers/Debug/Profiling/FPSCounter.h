@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CelesteDllExport.h"
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 
 
 namespace Celeste::Rendering
@@ -11,7 +11,7 @@ namespace Celeste::Rendering
 
 namespace Celeste::Debugging
 {
-  class FPSCounter : public Script
+  class FPSCounter : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(FPSCounter, CelesteDllExport)
 
@@ -19,11 +19,8 @@ namespace Celeste::Debugging
       CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
-      using Inherited = Celeste::Script;
+      using Inherited = Celeste::Component;
 
-      void begin();
-
-      bool m_begun = false;
       observer_ptr<Celeste::Rendering::TextRenderer> m_textRenderer;
       float m_current;
   };

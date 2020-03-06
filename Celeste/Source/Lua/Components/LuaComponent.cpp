@@ -8,7 +8,8 @@ namespace Celeste::Lua
   CUSTOM_MEMORY_CREATION(LuaComponent, 100)
 
   //------------------------------------------------------------------------------------------------
-  LuaComponent::LuaComponent() :
+  LuaComponent::LuaComponent(GameObject& gameObject) :
+    Inherited(gameObject),
     m_onSetActiveFunc(),
     m_handleInputFunc(),
     m_updateFunc()

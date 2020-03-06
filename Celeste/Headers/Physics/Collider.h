@@ -22,7 +22,9 @@ namespace Celeste::Physics
   class Collider : public Component
   {
     public:
-      CelesteDllExport Collider();
+      CelesteDllExport Collider(GameObject& gameObject);
+
+      static constexpr bool isManaged() { return true; }
 
       virtual glm::vec2 getCentre() const = 0;
 

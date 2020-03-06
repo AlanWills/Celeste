@@ -14,7 +14,9 @@ namespace Celeste::Rendering
   class Renderer : public Component
   {
     public:
-      CelesteDllExport Renderer();
+      CelesteDllExport Renderer(GameObject& gameObject);
+
+      static constexpr bool isManaged() { return false; }
 
       virtual void render(const Resources::Program& shaderProgram, const glm::mat4& viewModelMatrix) const = 0;
 
@@ -41,7 +43,7 @@ namespace Celeste::Rendering
       CelesteDllExport glm::vec2 getScaledDimensions() const;
 
     private:
-      using Inherited = Script;
+      using Inherited = Component;
 
       glm::vec2 m_origin;
       glm::vec4 m_colour;

@@ -7,7 +7,8 @@ namespace Celeste::Physics
   REGISTER_MANAGED_COMPONENT(RigidBody2D, 50)
 
   //------------------------------------------------------------------------------------------------
-  RigidBody2D::RigidBody2D() :
+  RigidBody2D::RigidBody2D(GameObject& gameObject) :
+    Inherited(gameObject),
     m_linearVelocity(0),
     m_minLinearVelocity(-FLT_MAX, -FLT_MAX),
     m_maxLinearVelocity(FLT_MAX, FLT_MAX),

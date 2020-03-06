@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "InputEnums.h"
 #include "Maths/MathsEnums.h"
 
@@ -12,7 +12,7 @@ namespace Celeste::Physics
 
 namespace Celeste::Input
 {
-  class KeyboardRigidBody2DController : public Script
+  class KeyboardRigidBody2DController : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(KeyboardRigidBody2DController, CelesteDllExport)
 
@@ -52,11 +52,8 @@ namespace Celeste::Input
       CelesteDllExport void handleInput() override;
 
     private:
-      using Inherited = Script;
+      using Inherited = Component;
 
-      void begin();
-
-      bool m_begun = false;
       observer_ptr<Physics::RigidBody2D> m_rigidBody2D;
 
       int m_decreaseXLinearVelocityKey;

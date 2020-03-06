@@ -10,7 +10,8 @@ namespace Celeste
   REGISTER_UNMANAGED_COMPONENT(OpacityLerper, 10)
 
   //------------------------------------------------------------------------------------------------
-  OpacityLerper::OpacityLerper() :
+  OpacityLerper::OpacityLerper(GameObject& gameObject) :
+    Inherited(gameObject),
     m_minOpacity(0),
     m_maxOpacity(1),
     m_lerpUpTime(1),
@@ -28,18 +29,12 @@ namespace Celeste
     Inherited::update(elapsedGameTime);
 
 #if _DEBUG
-    if (getGameObject() == nullptr)
-    {
-      ASSERT_FAIL();
-      return;
-    }
-#endif
-
     if (!getGameObject()->hasComponent<Renderer>())
     {
       ASSERT_FAIL();
       return;
     }
+#endif
 
     observer_ptr<Renderer> renderer = getGameObject()->findComponent<Renderer>();
     float currentOpacity = renderer->getOpacity();

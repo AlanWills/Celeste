@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "Resources/3D/Model.h"
 
 
 namespace Celeste::Rendering
 {
-  class ModelRenderer : public Script
+  class ModelRenderer : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(ModelRenderer, CelesteDllExport)
 
@@ -18,7 +18,7 @@ namespace Celeste::Rendering
       inline observer_ptr<Resources::Model> getModel() const { return m_model; }
 
     private:
-      using Inherited = Script;
+      using Inherited = Component;
 
       observer_ptr<Resources::Model> m_model;
   };

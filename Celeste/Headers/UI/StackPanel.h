@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "LayoutEnums.h"
 #include "glm/glm.hpp"
 
@@ -12,7 +12,7 @@ namespace Celeste::Rendering
 
 namespace Celeste::UI
 {
-  class StackPanel : public Script
+  class StackPanel : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(StackPanel, CelesteDllExport)
 
@@ -51,7 +51,7 @@ namespace Celeste::UI
       CelesteDllExport void layout() const;
 
     private:
-      using Inherited = Script;
+      using Inherited = Component;
 
       static glm::vec2 getVisibleDimensions(observer_ptr<Rendering::Renderer> renderer);
 

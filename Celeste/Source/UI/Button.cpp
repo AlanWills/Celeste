@@ -23,7 +23,12 @@ namespace Celeste
     REGISTER_UNMANAGED_COMPONENT(Button, 10)
 
     //------------------------------------------------------------------------------------------------
-    Button::Button()
+    Button::Button(GameObject& gameObject) :
+      Inherited(gameObject),
+      m_spriteRenderer(gameObject.findComponent<Rendering::SpriteRenderer>()),
+      m_mouseInteraction(gameObject.findComponent<MouseInteractionHandler>()),
+      m_collider(gameObject.findComponent<Physics::RectangleCollider>()),
+      m_audio(gameObject.findComponent<Audio::AudioSource>())
     {
       setDefaultTexture(ButtonDataConverter::getDefaultTextureDefaultPath());
       ASSERT_NOT_NULL(m_defaultTexture);
@@ -39,25 +44,16 @@ namespace Celeste
 
       setClickedSound(ButtonDataConverter::getClickedSoundDefaultPath());
       ASSERT_NOT_NULL(m_clickedSound);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    void Button::begin()
-    {
-      m_begun = true;
 
       // Set the default texture on the sprite renderer for this button
-      m_spriteRenderer = getGameObject()->findComponent<SpriteRenderer>();
       ASSERT_NOT_NULL(m_spriteRenderer);
       m_spriteRenderer->setTexture(m_defaultTexture);
 
       // Set up the collider so that it can respond to mouse interaction
-      m_collider = getGameObject()->findComponent<RectangleCollider>();
       ASSERT_NOT_NULL(m_collider);
       m_collider->setDimensions(m_spriteRenderer->getDimensions());
 
       // Set up the events for mouse interaction
-      m_mouseInteraction = getGameObject()->findComponent<MouseInteractionHandler>();
       ASSERT_NOT_NULL(m_mouseInteraction);
       m_mouseInteraction->getOnEnterEvent().subscribe([this](GameObject&) -> void { onEnter(); });
       m_mouseInteraction->getOnLeaveEvent().subscribe([this](GameObject&) -> void { onLeave(); });
@@ -65,10 +61,9 @@ namespace Celeste
       m_mouseInteraction->getOnLeftButtonUpEvent().subscribe([this](GameObject&) -> void { onLeftMouseButtonUp(); });
 
       // Set up the audio source for this button
-      m_audio = getGameObject()->findComponent<AudioSource>();
       if (m_audio != nullptr)
       {
-          m_audio->setAudioType(AudioType::kSFX);
+        m_audio->setAudioType(AudioType::kSFX);
       }
     }
 
@@ -76,11 +71,6 @@ namespace Celeste
     void Button::update(float secondsPerUpdate)
     {
       Inherited::update(secondsPerUpdate);
-
-      if (!m_begun)
-      {
-        begin();
-      }
 
       m_clickTimer += secondsPerUpdate;
 

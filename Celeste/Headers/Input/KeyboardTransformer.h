@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "glm/glm.hpp"
 
 
 namespace Celeste::Input
 {
-  class KeyboardTransformer : public Script
+  class KeyboardTransformer : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(KeyboardTransformer, CelesteDllExport)
 
@@ -42,7 +42,7 @@ namespace Celeste::Input
       inline void setRotationDelta(float delta) { m_deltaRotation = delta; }
 
     private:
-      using Inherited = Script;
+      using Inherited = Component;
 
       glm::vec2 m_directionVector;
       float m_deltaRotation;

@@ -14,7 +14,7 @@ namespace Celeste::Animation
     m_spriteSheetDimensions(1),
     m_currentFrame(0),
     m_currentFrameDirty(true),
-    m_spriteRenderer(),
+    m_spriteRenderer(gameObject.findComponent<Rendering::SpriteRenderer>()),
     m_playImmediately(true),
     m_loop(true),
     m_playing(false),
@@ -22,6 +22,16 @@ namespace Celeste::Animation
     m_secondsPerFrame(0.1f),
     m_name(0)
   {
+    ASSERT_NOT_NULL(m_spriteRenderer);
+
+    if (m_playImmediately)
+    {
+      play();
+    }
+    else
+    {
+      stop();
+    }
   }
 
   //------------------------------------------------------------------------------------------------
@@ -44,24 +54,6 @@ namespace Celeste::Animation
   }
 
   //------------------------------------------------------------------------------------------------
-  void Animator::begin()
-  {
-    m_begun = true;
-
-    m_spriteRenderer = getGameObject()->findComponent<Rendering::SpriteRenderer>();
-    ASSERT(m_spriteRenderer != nullptr);
-
-    if (m_playImmediately)
-    {
-      play();
-    }
-    else
-    {
-      stop();
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
   void Animator::update(GLfloat secondsPerUpdate)
   {
     Inherited::update(secondsPerUpdate);
@@ -73,11 +65,6 @@ namespace Celeste::Animation
       return;
     }
 #endif
-
-    if (!m_begun)
-    {
-      begin();
-    }
 
     if (m_playing)
     {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "InputEnums.h"
 #include "UID/StringId.h"
 
@@ -9,7 +9,7 @@
 
 namespace Celeste::Input
 {
-  class KeyboardVisibility : public Script
+  class KeyboardVisibility : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(KeyboardVisibility, CelesteDllExport)
 
@@ -31,7 +31,7 @@ namespace Celeste::Input
       CelesteDllExport void handleInput() override;
 
     private:
-      using Inherited = Script;
+      using Inherited = Component;
 
       int m_visibilityKey;
       int m_invisibilityKey;

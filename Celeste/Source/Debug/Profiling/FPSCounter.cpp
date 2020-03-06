@@ -8,19 +8,12 @@ namespace Celeste::Debugging
   REGISTER_UNMANAGED_COMPONENT(FPSCounter, 1)
 
   //------------------------------------------------------------------------------------------------
-  FPSCounter::FPSCounter() :
-    m_textRenderer(),
+  FPSCounter::FPSCounter(GameObject& gameObject) :
+    Inherited(gameObject),
+    m_textRenderer(gameObject.findComponent<Celeste::Rendering::TextRenderer>()),
     m_current(0)
   {
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void FPSCounter::begin()
-  {
-    m_begun = true;
-
-    m_textRenderer = getGameObject()->findComponent<Celeste::Rendering::TextRenderer>();
-    ASSERT(m_textRenderer != nullptr);
+    ASSERT_NOT_NULL(m_textRenderer);
   }
 
   //------------------------------------------------------------------------------------------------

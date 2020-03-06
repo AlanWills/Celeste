@@ -10,7 +10,8 @@ namespace Celeste::UI
   REGISTER_MANAGED_COMPONENT(StackPanel, 10)
 
   //------------------------------------------------------------------------------------------------
-  StackPanel::StackPanel() :
+  StackPanel::StackPanel(GameObject& gameObject) :
+    Inherited(gameObject),
     m_orientation(Orientation::kVertical),
     m_horizontalAlignment(HorizontalAlignment::kCentre),
     m_verticalAlignment(VerticalAlignment::kCentre),
@@ -21,6 +22,7 @@ namespace Celeste::UI
   //------------------------------------------------------------------------------------------------
   void StackPanel::addChildren(GameObject& gameObject)
   {
+#if _DEBUG
     if (!gameObject.hasComponent<Renderer>())
     {
       // We use the objects renderer to calculate the dimensions of an object for layout, so any object added to this must have one
@@ -34,13 +36,10 @@ namespace Celeste::UI
       ASSERT_FAIL();
       return;
     }
+#endif
 
     ASSERT_NOT_NULL(getGameObject());
-    if (getGameObject() != nullptr)
-    {
-      gameObject.setParent(getGameObject());
-    }
-
+    gameObject.setParent(getGameObject());
     m_children.push_back(&gameObject);
     layout();
   }

@@ -6,11 +6,9 @@
   //------------------------------------------------------------------------------------------------
 #define COMPONENT_MEMBER_DECLARATION(ComponentType, DllExport) \
   public: \
-    DllExport ComponentType(GameObject& gameObject); \
+    DllExport ComponentType(Celeste::GameObject& gameObject); \
     \
   private: \
-    using Inherited = Component; \
-    \
     static bool m_registered; \
     static bool m_bindingsRegistered;
 

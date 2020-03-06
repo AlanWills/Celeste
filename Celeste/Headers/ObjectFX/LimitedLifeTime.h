@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "Events/Event.h"
 
 
 namespace Celeste
 {
-  class LimitedLifeTime : public Script
+  class LimitedLifeTime : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(LimitedLifeTime, CelesteDllExport)
 
@@ -32,7 +32,7 @@ namespace Celeste
       CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
-      using Inherited = Script;
+      using Inherited = Component;
 
       void onKeyUp(int key);
 

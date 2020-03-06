@@ -8,7 +8,8 @@ namespace Celeste::Input
   REGISTER_UNMANAGED_COMPONENT(KeyboardTransformer, 10)
 
   //------------------------------------------------------------------------------------------------
-  KeyboardTransformer::KeyboardTransformer() :
+  KeyboardTransformer::KeyboardTransformer(GameObject& gameObject) :
+    Inherited(gameObject),
     m_translateLeftKey(GLFW_KEY_A),
     m_translateRightKey(GLFW_KEY_D),
     m_translateUpKey(GLFW_KEY_W),

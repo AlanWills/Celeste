@@ -106,7 +106,7 @@ namespace Celeste
       template <typename T>
       bool hasComponent() const;
 
-      CelesteDllExport Component* removeComponent(Component* component);
+      CelesteDllExport void removeComponent(Component* component);
 
       inline size_t getComponentCount() const { return getManagedComponentCount() + getUnmanagedComponentCount(); }
       CelesteDllExport Component* getComponent(size_t index);

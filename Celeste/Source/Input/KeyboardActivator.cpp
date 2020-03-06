@@ -8,8 +8,9 @@ namespace Celeste::Input
 {
   REGISTER_MANAGED_COMPONENT(KeyboardActivator, 10)
 
-    //------------------------------------------------------------------------------------------------
-    KeyboardActivator::KeyboardActivator() :
+  //------------------------------------------------------------------------------------------------
+  KeyboardActivator::KeyboardActivator(GameObject& gameObject) :
+    Inherited(gameObject),
     m_activationKey(GLFW_KEY_UNKNOWN),
     m_deactivationKey(GLFW_KEY_UNKNOWN),
     m_inputMode(InputMode::kToggle),

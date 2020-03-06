@@ -122,8 +122,8 @@ namespace Celeste::Resources
     }
 
     // If we have room left in the pool we just allocate a new entry
-    T* item = m_pool.allocate();
-    ASSERT(item != nullptr);
+    T* item = new (m_pool.allocate()) T();
+    ASSERT_NOT_NULL(item);
 
     // Pass the full file path into the load function so resources can also obtain the file they are being loaded from
     if (!item->loadFromFile(fullPath.getFilePath()))

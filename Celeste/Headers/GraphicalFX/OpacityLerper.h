@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 
 
 namespace Celeste
@@ -10,7 +10,7 @@ namespace Celeste
     class Renderer;
   }
 
-  class OpacityLerper : public Script
+  class OpacityLerper : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(OpacityLerper, CelesteDllExport)
 
@@ -39,7 +39,7 @@ namespace Celeste
       CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
-      using Inherited = Script;
+      using Inherited = Component;
 
       float m_minOpacity;
       float m_maxOpacity;

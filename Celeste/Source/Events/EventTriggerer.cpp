@@ -7,7 +7,8 @@ namespace Celeste
   REGISTER_UNMANAGED_COMPONENT(EventTriggerer, 10)
 
   //------------------------------------------------------------------------------------------------
-  EventTriggerer::EventTriggerer() :
+  EventTriggerer::EventTriggerer(GameObject& gameObject) :
+    Inherited(gameObject),
     m_triggerMode(TriggerMode::kOnce),
     m_condition(nullptr),
     m_event()
@@ -25,7 +26,7 @@ namespace Celeste
 
       if (m_triggerMode == TriggerMode::kOnce)
       {
-        delete this;
+        getGameObject()->removeComponent(this);
       }
     }
   }

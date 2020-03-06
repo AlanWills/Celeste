@@ -11,8 +11,9 @@ namespace Celeste::Input
 {
   REGISTER_UNMANAGED_COMPONENT(KeyboardVisibility, 10)
 
-    //------------------------------------------------------------------------------------------------
-    KeyboardVisibility::KeyboardVisibility() :
+  //------------------------------------------------------------------------------------------------
+  KeyboardVisibility::KeyboardVisibility(GameObject& gameObject) :
+    Inherited(gameObject),
     m_visibilityKey(GLFW_KEY_UNKNOWN),
     m_invisibilityKey(GLFW_KEY_UNKNOWN),
     m_inputMode(InputMode::kToggle),

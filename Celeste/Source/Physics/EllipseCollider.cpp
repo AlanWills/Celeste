@@ -9,7 +9,8 @@ namespace Celeste::Physics
   REGISTER_MANAGED_COMPONENT(EllipseCollider, 10)
 
   //------------------------------------------------------------------------------------------------
-  EllipseCollider::EllipseCollider() :
+  EllipseCollider::EllipseCollider(GameObject& gameObject) :
+    Inherited(gameObject),
     m_unscaledDimensions(),
     m_ellipse()
   {

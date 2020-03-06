@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CelesteDllExport.h"
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 
 
 namespace Celeste::Rendering
@@ -11,7 +11,7 @@ namespace Celeste::Rendering
 
 namespace Celeste::UI
 {
-  class ProgressBar : public Script
+  class ProgressBar : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(ProgressBar, CelesteDllExport)
 
@@ -25,14 +25,9 @@ namespace Celeste::UI
       inline float getProgress() const { return m_progress; }
       CelesteDllExport void setProgress(float progress);
 
-      CelesteDllExport void update(float elapsedGameTime) override;
-
     private:
-      using Inherited = Script;
+      using Inherited = Component;
 
-      void begin();
-
-      bool m_begun = false;
       observer_ptr<Rendering::SpriteRenderer> m_spriteRenderer;
 
       float m_progress;

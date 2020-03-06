@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "Events/Event.h"
 
 
 namespace Celeste::UI
 {
-  class Slider : public Script
+  class Slider : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(Slider, CelesteDllExport)
 
@@ -34,7 +34,7 @@ namespace Celeste::UI
     CelesteDllExport void handleInput() override;
 
   private:
-    using Inherited = Script;
+    using Inherited = Component;
 
     bool m_sliderClicked;
     float m_min;

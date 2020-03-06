@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CelesteDllExport.h"
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 
 #include <functional>
 
@@ -39,7 +39,7 @@ namespace Celeste
 
   namespace UI
   {
-    class Button : public Script
+    class Button : public Component
     {
       DECLARE_UNMANAGED_COMPONENT(Button, CelesteDllExport)
 
@@ -79,15 +79,13 @@ namespace Celeste
         inline void setButtonState(ButtonState state) { m_state = state; }
 
       private:
-        using Inherited = Script;
+        using Inherited = Component;
 
-        void begin();
         void onEnter();
         void onLeave();
         void onLeftMouseButtonDown();
         void onLeftMouseButtonUp();
 
-        bool m_begun = false;
         float m_clickTimer = 0;
         ButtonState m_state = ButtonState::kIdle;
 

@@ -9,8 +9,9 @@ namespace Celeste::Input
   REGISTER_UNMANAGED_COMPONENT(MouseInteractionHandler, 10)
 
   //------------------------------------------------------------------------------------------------
-  MouseInteractionHandler::MouseInteractionHandler() :
-    m_collider(),
+  MouseInteractionHandler::MouseInteractionHandler(GameObject& gameObject) :
+    Inherited(gameObject),
+    m_collider(gameObject.findComponent<Physics::Collider>()),
     m_isMouseOver(false),
     m_mouseButtonPressed{ },
     m_onEnter(),
@@ -22,27 +23,14 @@ namespace Celeste::Input
     m_onRightButtonDown(),
     m_onRightButtonUp()
   {
+    ASSERT_NOT_NULL(m_collider);
     m_mouseButtonPressed.fill(false);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void MouseInteractionHandler::begin()
-  {
-    m_begun = true;
-
-    m_collider = getGameObject()->findComponent<Physics::Collider>();
-    ASSERT(m_collider != nullptr);
   }
 
   //------------------------------------------------------------------------------------------------
   void MouseInteractionHandler::handleInput()
   {
     Inherited::handleInput();
-
-    if (!m_begun)
-    {
-      begin();
-    }
 
 #if _DEBUG
     if (m_collider == nullptr)

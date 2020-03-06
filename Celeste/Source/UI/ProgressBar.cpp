@@ -8,21 +8,13 @@ namespace Celeste::UI
   REGISTER_MANAGED_COMPONENT(ProgressBar, 4)
 
   //------------------------------------------------------------------------------------------------
-  ProgressBar::ProgressBar() :
-    m_spriteRenderer(),
+  ProgressBar::ProgressBar(GameObject& gameObject) :
+    Inherited(gameObject),
+    m_spriteRenderer(gameObject.findComponent<Rendering::SpriteRenderer>()),
     m_progress(0),
     m_min(0),
     m_max(100)
   {
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void ProgressBar::begin()
-  {
-    m_begun = true;
-
-    m_spriteRenderer = getGameObject()->findComponent<Rendering::SpriteRenderer>();
-
 #if _DEBUG
     if (m_spriteRenderer == nullptr)
     {
@@ -33,17 +25,6 @@ namespace Celeste::UI
 
     m_spriteRenderer->getScissorRectangle().setDimensions(0, m_spriteRenderer->getDimensions().y);
     m_spriteRenderer->getScissorRectangle().setCentre(-m_spriteRenderer->getDimensions().x * 0.5f, 0);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void ProgressBar::update(float elapsedGameTime)
-  {
-    Inherited::update(elapsedGameTime);
-
-    if (!m_begun)
-    {
-      begin();
-    }
   }
 
   //------------------------------------------------------------------------------------------------

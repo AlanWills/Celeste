@@ -8,7 +8,8 @@ namespace Celeste
   REGISTER_UNMANAGED_COMPONENT(LoadResourcesAsyncScript, 1)
 
   //------------------------------------------------------------------------------------------------
-  LoadResourcesAsyncScript::LoadResourcesAsyncScript()
+  LoadResourcesAsyncScript::LoadResourcesAsyncScript(GameObject& gameObject) :
+    Inherited(gameObject)
   {
   }
 

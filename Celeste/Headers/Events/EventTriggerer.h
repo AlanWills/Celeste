@@ -1,13 +1,13 @@
 #pragma once
 
 #include "CelesteDllExport.h"
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "Event.h"
 
 
 namespace Celeste
 {
-  class EventTriggerer : public Script
+  class EventTriggerer : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(EventTriggerer, CelesteDllExport)
 
@@ -30,7 +30,7 @@ namespace Celeste
       CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
-      using Inherited = Script;
+      using Inherited = Component;
       using GameObjectEvent = Event<GameObject&>;
 
       TriggerMode m_triggerMode;

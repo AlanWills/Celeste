@@ -53,7 +53,7 @@ namespace Celeste::Lua::Input::MouseInteractionHandlerScriptCommands
   {
     registerUserType<MouseInteractionHandler>(
       "MouseInteractionHandler",
-      sol::base_classes, sol::bases<Script, Component, Entity, Object>(),
+      sol::base_classes, sol::bases<Component, Entity, Object>(),
       "subscribeOnLeftButtonUpCallback", &Internals::subscribeOnLeftButtonClickedCallback,
       "subscribeOnRightButtonUpCallback", &Internals::subscribeOnRightButtonClickedCallback,
       "subscribeOnEnterCallback", &Internals::subscribeOnEnterCallback,

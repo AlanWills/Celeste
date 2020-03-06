@@ -95,7 +95,7 @@ namespace Celeste::Lua::Input::KeyboardVisibilityScriptCommands
 
     registerUserType<KeyboardVisibility>(
       "KeyboardVisibility",
-      sol::base_classes, sol::bases<Script, Component, Entity, Object>(),
+      sol::base_classes, sol::bases<Component, Entity, Object>(),
       "getVisibilityKey", &Internals::getVisibilityKey,
       "setVisibilityKey", &Internals::setVisibilityKey,
       "getInvisibilityKey", &Internals::getInvisibilityKey,

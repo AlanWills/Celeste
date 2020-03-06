@@ -8,7 +8,8 @@ namespace Celeste
   REGISTER_UNMANAGED_COMPONENT(LimitedLifeTime, 10)
 
   //------------------------------------------------------------------------------------------------
-  LimitedLifeTime::LimitedLifeTime() :
+  LimitedLifeTime::LimitedLifeTime(GameObject& gameObject) :
+    Inherited(gameObject),
     m_onDeathEvent()
   {
     m_keyUpEvent = Input::getKeyboard().getKeyReleasedEvent().subscribe(

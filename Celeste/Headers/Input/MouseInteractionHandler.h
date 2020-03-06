@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "Events/Event.h"
 
 #include <array>
@@ -20,7 +20,7 @@ namespace Celeste
     using GameObjectEvent = Event<GameObject&>;
     using GameObjectClickCallback = std::function<void(GameObject&)>;
 
-    class MouseInteractionHandler : public Script
+    class MouseInteractionHandler : public Component
     {
       DECLARE_UNMANAGED_COMPONENT(MouseInteractionHandler, CelesteDllExport)
 
@@ -59,9 +59,6 @@ namespace Celeste
       private:
         using Inherited = Component;
 
-        void begin();
-
-        bool m_begun = false;
         observer_ptr<Physics::Collider> m_collider;
         bool m_isMouseOver;
         std::array<bool, 3> m_mouseButtonPressed;

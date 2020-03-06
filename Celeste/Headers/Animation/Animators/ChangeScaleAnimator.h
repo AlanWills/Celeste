@@ -20,6 +20,8 @@ namespace Celeste::Animators
       CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
+      using Inherited = Component;
+
       void reset();
 
       float m_time;

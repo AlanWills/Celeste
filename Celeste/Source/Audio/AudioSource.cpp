@@ -13,7 +13,8 @@ namespace Celeste::Audio
   REGISTER_MANAGED_COMPONENT(AudioSource, 10)
 
   //------------------------------------------------------------------------------------------------
-  AudioSource::AudioSource()
+  AudioSource::AudioSource(GameObject& gameObject) :
+    Inherited(gameObject)
   {
     // Clear the error state
     alGetError();

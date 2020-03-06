@@ -1,14 +1,14 @@
 #pragma once
 
 #include "UtilityHeaders/LuaHeaders.h"
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 
 
 namespace Celeste::Lua
 {
   class LuaComponentManifest;
 
-  class LuaComponent : public Script
+  class LuaComponent : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(LuaComponent, CelesteDllExport)
 
@@ -30,7 +30,7 @@ namespace Celeste::Lua
       CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
-      using Inherited = Script;
+      using Inherited = Component;
 
       void resetCallbacks();
 

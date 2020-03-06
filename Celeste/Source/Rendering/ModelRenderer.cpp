@@ -10,7 +10,8 @@ namespace Celeste::Rendering
   REGISTER_UNMANAGED_COMPONENT(ModelRenderer, 10)
 
   //------------------------------------------------------------------------------------------------
-  ModelRenderer::ModelRenderer() :
+  ModelRenderer::ModelRenderer(GameObject& gameObject) :
+    Inherited(gameObject),
     m_model(nullptr)
   {
   }

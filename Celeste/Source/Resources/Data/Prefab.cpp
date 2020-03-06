@@ -31,7 +31,7 @@ namespace Celeste::Resources
       return false;
     }
 
-    ASSERT(m_gameObjects != nullptr);
+    ASSERT_NOT_NULL(m_gameObjects);
     if (!XML::hasChildElement(root, m_gameObjects->getElementName()))
     {
       ASSERT_FAIL();

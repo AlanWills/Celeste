@@ -177,7 +177,7 @@ namespace Celeste
 
       int width, height, nrComponents;
       unsigned char *data = SOIL_load_image(path.c_str(), &width, &height, &nrComponents, 0);
-      ASSERT(data != nullptr);
+      ASSERT_NOT_NULL(data);
 
       if (data != nullptr)
       {

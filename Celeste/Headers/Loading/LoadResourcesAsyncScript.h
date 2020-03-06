@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 #include "Events/Event.h"
 
 #include <thread>
@@ -8,7 +8,7 @@
 
 namespace Celeste
 {
-  class LoadResourcesAsyncScript : public Script
+  class LoadResourcesAsyncScript : public Component
   {
     DECLARE_UNMANAGED_COMPONENT(LoadResourcesAsyncScript, CelesteDllExport)
 
@@ -18,7 +18,7 @@ namespace Celeste
       CelesteDllExport void update(float secondsPerUpdate) override;
 
     private:
-      using Inherited = Script;
+      using Inherited = Component;
 
       Event<> m_loadComplete;
   };

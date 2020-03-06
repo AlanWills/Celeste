@@ -24,8 +24,7 @@ namespace Celeste
 
       inline bool canAllocate(size_t count) const { return m_capacity - m_size >= count; }
 
-      template <typename ...Args>
-      T* allocate(Args&&... args);
+      T* allocate();
 
       bool deallocate(T& item);
       void deallocateAll();
@@ -111,8 +110,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  template <typename ...Args>
-  T* PoolAllocator<T>::allocate(Args&&... args)
+  T* PoolAllocator<T>::allocate()
   {
 #if _DEBUG
     if (!canAllocate(1))
@@ -134,7 +132,7 @@ namespace Celeste
 
     ++m_size;
     m_allocated[allocationIndex] = true;
-    return ::new (m_pool + allocationIndex) T(std::forward<Args>(args)...);
+    return m_pool + allocationIndex;
   }
 
   //------------------------------------------------------------------------------------------------
@@ -157,7 +155,7 @@ namespace Celeste
 
     size_t poolIndex = &item - m_pool;
 
-    item.~T();
+    //item.~T();
     m_allocated[poolIndex] = false;
     m_size--;
     m_hint = poolIndex;

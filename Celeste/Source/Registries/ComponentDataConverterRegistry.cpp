@@ -68,7 +68,7 @@ namespace Celeste
     std::unique_ptr<ComponentDataConverter> converter(nullptr);
     getConverter(componentName, converter);
 
-    ASSERT(converter.get() != nullptr);
+    ASSERT_NOT_NULL(converter.get());
     if (!converter->convertFromXML(componentElement))
     {
       ASSERT_FAIL();

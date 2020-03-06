@@ -10,7 +10,8 @@ namespace Celeste::Physics
   REGISTER_MANAGED_COMPONENT(RectangleCollider, 50)
 
   //------------------------------------------------------------------------------------------------
-  RectangleCollider::RectangleCollider() :
+  RectangleCollider::RectangleCollider(GameObject& gameObject) :
+    Inherited(gameObject),
     m_rectangle(),
     m_dimensions()
   {

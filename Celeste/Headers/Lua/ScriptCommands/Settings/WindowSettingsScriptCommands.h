@@ -5,16 +5,7 @@
 #include <string>
 
 
-namespace Celeste
+namespace Celeste::Lua::Settings::WindowSettingsScriptCommands
 {
-  namespace Lua
-  {
-    namespace Settings
-    {
-      namespace WindowSettingsScriptCommands
-      {
-        CelesteDllExport void initialize();
-      }
-    }
-  }
+  CelesteDllExport void initialize();
 }

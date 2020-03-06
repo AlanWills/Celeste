@@ -12,8 +12,9 @@ namespace Celeste::UI
   REGISTER_MANAGED_COMPONENT(TextBox, 10);
 
   //------------------------------------------------------------------------------------------------
-  TextBox::TextBox() :
-    m_textRenderer(),
+  TextBox::TextBox(GameObject& gameObject) :
+    Inherited(gameObject),
+    m_textRenderer(gameObject.findComponent<Rendering::TextRenderer>()),
     m_textInputtedEventHandle(0),
     m_keyPressedEventHandle(0),
     m_lineIndex(0),
@@ -30,21 +31,6 @@ namespace Celeste::UI
       {
         onKeyPressedCallback(key);
       });
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TextBox::~TextBox()
-  {
-    getKeyboard().getTextInputtedEvent().unsubscribe(m_textInputtedEventHandle);
-    getKeyboard().getKeyPressedEvent().unsubscribe(m_keyPressedEventHandle);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextBox::begin()
-  {
-    m_begun = true;
-
-    m_textRenderer = getGameObject()->findComponent<TextRenderer>();
 
 #if _DEBUG
     if (m_textRenderer == nullptr)
@@ -65,14 +51,10 @@ namespace Celeste::UI
   }
 
   //------------------------------------------------------------------------------------------------
-  void TextBox::update(float elapsedGameTime)
+  TextBox::~TextBox()
   {
-    Inherited::update(elapsedGameTime);
-
-    if (!m_begun)
-    {
-      begin();
-    }
+    getKeyboard().getTextInputtedEvent().unsubscribe(m_textInputtedEventHandle);
+    getKeyboard().getKeyPressedEvent().unsubscribe(m_keyPressedEventHandle);
   }
 
   //------------------------------------------------------------------------------------------------
