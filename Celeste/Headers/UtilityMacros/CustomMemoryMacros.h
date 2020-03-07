@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Memory/Allocators/EntityAllocator.h"
+
 //------------------------------------------------------------------------------------------------
 #define CUSTOM_MEMORY_DECLARATION(Type, DllExport) \
   public: \

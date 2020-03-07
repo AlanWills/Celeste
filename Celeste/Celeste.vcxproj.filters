@@ -657,12 +657,6 @@
     <ClInclude Include="Headers\OpenGL\ManagedGLBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Registries\RegistryAllocator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Registries\DefaultRegistryAllocator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\UtilityHeaders\ComponentHeaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -769,9 +763,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Lua\ScriptCommands\UI\SliderScriptCommands.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Lua\Components\LuaComponentManifestRegistryAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Memory\ObserverPtr.h">
@@ -1359,9 +1350,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Lua\ScriptCommands\UI\SliderScriptCommands.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Lua\Components\LuaComponentManifestRegistryAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Lua\ScriptCommands\Resources\Shaders\ShaderScriptCommands.cpp">

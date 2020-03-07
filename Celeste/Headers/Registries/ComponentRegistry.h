@@ -2,7 +2,6 @@
 
 #include "CelesteDllExport.h"
 #include "Reflection/Type.h"
-#include "RegistryAllocator.h"
 #include "Memory/ObserverPtr.h"
 
 #include <functional>
@@ -22,11 +21,11 @@ namespace Celeste
   class CelesteDllExport ComponentRegistry
   {
     public:
-      typedef std::function<void(const std::string&, const Path& filePath)> BindingCallback;
+      using BindingCallback = std::function<void(const std::string&, const Path& filePath)>;
 
     private:
-      // Probably don't need to worry about the shared_ptr, but what the hell
-      using ComponentMap = std::unordered_map<std::string, std::unique_ptr<RegistryAllocator>>;
+      using ComponentCreationFunction = std::function<observer_ptr<Component>(GameObject&)>;
+      using ComponentMap = std::unordered_map<std::string, ComponentCreationFunction>;
       using ComponentBindingStorageValue = std::unique_ptr<Reflection::ITypeInfo>;
       using ComponentBindingStorage = std::vector<ComponentBindingStorageValue>;
 
@@ -36,9 +35,9 @@ namespace Celeste
       ComponentRegistry(const ComponentRegistry&) = delete;
       ComponentRegistry& operator=(const ComponentRegistry&) = delete;
 
-      template <typename TComponent, typename TAllocator = DefaultRegistryAllocator<TComponent>>
+      template <typename TComponent>
       static bool registerComponent();
-      static bool registerComponent(const std::string& name, std::unique_ptr<RegistryAllocator>&& allocator);
+      static bool registerComponent(const std::string& name, const ComponentCreationFunction& creationFunction);
 
   #if _DEBUG
       template <typename T>
@@ -53,7 +52,7 @@ namespace Celeste
       static bool hasComponent() { return hasComponent(T::type_name()); }
       static bool hasComponent(const std::string& name) { return getComponents().find(name) != getComponents().end(); }
 
-      static observer_ptr<Component> allocateComponent(const std::string& componentName, GameObject& gameObject);
+      static observer_ptr<Component> createComponent(const std::string& componentName, GameObject& gameObject);
 
   #if _DEBUG
       static void generateAllBindings(const Directory& destinationDirectory, const BindingCallback& onBindingGenerated);
@@ -78,10 +77,10 @@ namespace Celeste
 };
 
 //------------------------------------------------------------------------------------------------
-template <typename TComponent, typename TAllocator>
+template <typename TComponent>
 bool ComponentRegistry::registerComponent()
 {
-  return registerComponent(TComponent::type_name(), std::unique_ptr<RegistryAllocator>(new TAllocator()));
+  return registerComponent(TComponent::type_name());
 }
 
 #if _DEBUG

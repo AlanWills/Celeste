@@ -34,7 +34,7 @@
 
   //------------------------------------------------------------------------------------------------
 #define ADD_COMPONENT_TO_REGISTRY(ComponentType) \
-  bool ComponentType::m_registered = ComponentRegistry::registerComponent(ComponentType::type_name(), std::unique_ptr<RegistryAllocator>(new DefaultRegistryAllocator<ComponentType>()));
+  bool ComponentType::m_registered = ComponentRegistry::registerComponent(ComponentType::type_name(), [](GameObject& gameObject) { return gameObject.addComponent<ComponentType>(); });
 
   //------------------------------------------------------------------------------------------------
 #if _DEBUG

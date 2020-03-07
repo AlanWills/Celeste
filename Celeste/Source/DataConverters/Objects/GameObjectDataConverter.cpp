@@ -54,7 +54,7 @@ namespace Celeste
     for (ComponentDataConverter* converter : getComponents())
     {
       // Allocate the appropriate component
-      Component* component = ComponentRegistry::allocateComponent(converter->getElementName(), gameObject);
+      Component* component = ComponentRegistry::createComponent(converter->getElementName(), gameObject);
       if (component == nullptr)
       {
         ASSERT_FAIL();

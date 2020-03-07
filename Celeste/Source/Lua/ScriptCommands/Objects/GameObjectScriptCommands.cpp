@@ -54,7 +54,7 @@ namespace Celeste::Lua::GameObjectScriptCommands
     //------------------------------------------------------------------------------------------------
     sol::object addComponent(GameObject& gameObject, const std::string& componentName)
     {
-      return sol::make_object(LuaState::instance(), ComponentRegistry::allocateComponent(componentName, gameObject));
+      return sol::make_object(LuaState::instance(), ComponentRegistry::createComponent(componentName, gameObject));
     }
 
     //------------------------------------------------------------------------------------------------

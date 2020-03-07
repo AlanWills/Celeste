@@ -1,4 +1,5 @@
 #include "Objects/GameObject.h"
+#include "Rendering/SpriteBatch.h"
 #include "Rendering/SpriteRenderer.h"
 #include "Rendering/TextRenderer.h"
 

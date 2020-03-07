@@ -38,22 +38,28 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void SceneManager::handleInputGameObjectHierarchy(GameObject& gameObject)
   {
-    gameObject.handleInput();
-
-    for (size_t i = 0; i < gameObject.getChildCount(); ++i)
+    if (gameObject.isActive())
     {
-      handleInputGameObjectHierarchy(*gameObject.getChild(i));
+      gameObject.handleInput();
+
+      for (size_t i = 0; i < gameObject.getChildCount(); ++i)
+      {
+        handleInputGameObjectHierarchy(*gameObject.getChild(i));
+      }
     }
   }
 
   //------------------------------------------------------------------------------------------------
   void SceneManager::updateGameObjectHierarchy(GameObject& gameObject, float elapsedGameTime)
   {
-    gameObject.update(elapsedGameTime);
-
-    for (size_t i = 0; i < gameObject.getChildCount(); ++i)
+    if (gameObject.isActive())
     {
-      updateGameObjectHierarchy(*gameObject.getChild(i), elapsedGameTime);
+      gameObject.update(elapsedGameTime);
+
+      for (size_t i = 0; i < gameObject.getChildCount(); ++i)
+      {
+        updateGameObjectHierarchy(*gameObject.getChild(i), elapsedGameTime);
+      }
     }
   }
 

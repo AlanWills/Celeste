@@ -1,6 +1,5 @@
 #include "Lua/LuaState.h"
 #include "Lua/Components/LuaComponentManifestRegistry.h"
-#include "Lua/Components/LuaComponentManifestRegistryAllocator.h"
 #include "Lua/Components/LuaComponent.h"
 #include "Registries/ComponentRegistry.h"
 
@@ -39,7 +38,7 @@ namespace Celeste::Lua
     }
 
     getInstance().m_manifests.insert(std::make_pair(componentName, LuaComponentManifest(componentTable)));
-    ComponentRegistry::registerComponent(componentName, std::make_unique<LuaComponentManifestRegistryAllocator>());
+    ComponentRegistry::registerComponent(componentName, [componentName](GameObject& gameObject) { return LuaComponentManifestRegistry::createComponent(componentName, gameObject); });
   }
 
   //------------------------------------------------------------------------------------------------
@@ -53,7 +52,7 @@ namespace Celeste::Lua
   }
 
   //------------------------------------------------------------------------------------------------
-  observer_ptr<LuaComponent> LuaComponentManifestRegistry::allocateComponent(const std::string& componentName, GameObject& gameObject)
+  observer_ptr<LuaComponent> LuaComponentManifestRegistry::createComponent(const std::string& componentName, GameObject& gameObject)
   {
     if (!hasComponent(componentName))
     {

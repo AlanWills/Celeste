@@ -23,7 +23,7 @@ namespace Celeste
         CelesteDllExport static void registerComponent(const std::string& componentName, sol::table componentTable);
         CelesteDllExport static void deregisterComponent(const std::string& componentName);
         CelesteDllExport static bool hasComponent(const std::string& componentName) { return getInstance().m_manifests.find(componentName) != getInstance().m_manifests.end(); }
-        CelesteDllExport static observer_ptr<LuaComponent> allocateComponent(const std::string& componentName, GameObject& gameObject);
+        CelesteDllExport static observer_ptr<LuaComponent> createComponent(const std::string& componentName, GameObject& gameObject);
 
       private:
         using LuaComponentManifests = std::unordered_map<std::string, LuaComponentManifest>;

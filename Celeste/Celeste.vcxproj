@@ -222,7 +222,6 @@
     <ClInclude Include="Headers\Debug\Profiling\IProfiler.h" />
     <ClInclude Include="Headers\Debug\Profile.h" />
     <ClInclude Include="Headers\Events\TriggerMode.h" />
-    <ClInclude Include="Headers\Lua\Components\LuaComponentManifestRegistryAllocator.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Events\EventScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Events\EventTriggererScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Input\MouseInteractionHandlerScriptCommands.h" />
@@ -319,8 +318,6 @@
     <ClInclude Include="Headers\Reflection\ReflectionUtils.h" />
     <ClInclude Include="Headers\Reflection\Type.h" />
     <ClInclude Include="Headers\Reflection\TypeTraits.h" />
-    <ClInclude Include="Headers\Registries\DefaultRegistryAllocator.h" />
-    <ClInclude Include="Headers\Registries\RegistryAllocator.h" />
     <ClInclude Include="Headers\Registries\ScriptableObjectRegistry.h" />
     <ClInclude Include="Headers\Rendering\Canvas.h" />
     <ClInclude Include="Headers\Rendering\ModelRenderer.h" />
@@ -504,7 +501,6 @@
     <ClCompile Include="Source\Lua\Components\LuaComponent.cpp" />
     <ClCompile Include="Source\Lua\Components\LuaComponentManifest.cpp" />
     <ClCompile Include="Source\Lua\Components\LuaComponentManifestRegistry.cpp" />
-    <ClCompile Include="Source\Lua\Components\LuaComponentManifestRegistryAllocator.cpp" />
     <ClCompile Include="Source\Lua\DataConverters\LuaComponentDataConverter.cpp" />
     <ClCompile Include="Source\Lua\DataConverters\LuaComponentDataConverterRegistry.cpp" />
     <ClCompile Include="Source\Lua\LuaState.cpp" />

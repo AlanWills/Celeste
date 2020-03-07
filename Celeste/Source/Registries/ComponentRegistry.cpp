@@ -28,16 +28,15 @@ namespace Celeste
 #endif
 
   //------------------------------------------------------------------------------------------------
-  bool ComponentRegistry::registerComponent(const std::string& name, std::unique_ptr<RegistryAllocator>&& allocator)
+  bool ComponentRegistry::registerComponent(const std::string& name, const ComponentCreationFunction& creationFunction)
   {
-    if (!hasComponent(name) && allocator.get() != nullptr)
+    if (!hasComponent(name))
     {
-      getComponents().emplace(name, allocator.release());
+      getComponents().emplace(name, creationFunction);
       return true;
     }
 
     ASSERT_FAIL();
-    allocator.reset(nullptr);
     return false;
   }
 
@@ -53,7 +52,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  observer_ptr<Component> ComponentRegistry::allocateComponent(const std::string& componentName, GameObject& gameObject)
+  observer_ptr<Component> ComponentRegistry::createComponent(const std::string& componentName, GameObject& gameObject)
   {
     if (componentName.empty() || !hasComponent(componentName))
     {
@@ -61,7 +60,7 @@ namespace Celeste
       return observer_ptr<Component>();
     }
 
-    return getComponents()[componentName]->allocate(componentName, gameObject);
+    return getComponents()[componentName](gameObject);
   }
 
 #if _DEBUG

@@ -57,7 +57,7 @@ namespace Celeste
       return observer_ptr<Component>();
     }
 
-    observer_ptr<Component> component = ComponentRegistry::allocateComponent(componentName, gameObject);
+    observer_ptr<Component> component = ComponentRegistry::createComponent(componentName, gameObject);
     if (component == nullptr)
     {
       ASSERT_FAIL();

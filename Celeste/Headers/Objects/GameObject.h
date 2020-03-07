@@ -2,10 +2,9 @@
 
 #include "Entity.h"
 #include "UID/StringId.h"
-#include "Component.h"
-#include "Rendering/SpriteBatch.h"
 #include "Maths/Transform.h"
 #include "Memory/Iterators/GameObjectIterator.h"
+#include "UtilityMacros/CustomMemoryMacros.h"
 
 #include <vector>
 #include <functional>
@@ -13,9 +12,16 @@
 
 namespace Celeste
 {
+  class Component;
+
   namespace Physics
   {
     class Collider;
+  }
+
+  namespace Rendering
+  {
+    class SpriteBatch;
   }
 
   class GameObject : public Entity
