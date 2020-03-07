@@ -2,7 +2,6 @@
 #include "UtilityHeaders/ComponentHeaders.h"
 #include "Input/InputManager.h"
 #include "Rendering/Renderer.h"
-#include "Screens/Screen.h"
 
 using namespace Celeste::Rendering;
 

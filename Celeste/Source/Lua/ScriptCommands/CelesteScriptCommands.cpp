@@ -3,7 +3,7 @@
 #include "Lua/ScriptCommands/Audio/AudioScriptCommands.h"
 #include "Lua/ScriptCommands/Events/EventScriptCommands.h"
 #include "Lua/ScriptCommands/Resources/ResourcesScriptCommands.h"
-#include "Lua/ScriptCommands/Screens/ScreenScriptCommands.h"
+#include "Lua/ScriptCommands/Scene/SceneScriptCommands.h"
 #include "Lua/ScriptCommands/Maths/MathsScriptCommands.h"
 #include "Lua/ScriptCommands/Media/VideoScriptCommands.h"
 #include "Lua/ScriptCommands/Physics/PhysicsScriptCommands.h"
@@ -28,13 +28,13 @@ namespace Celeste::Lua::CelesteScriptCommands
     Lua::LuaState::appendToLuaPackagePath(Path(Celeste::Resources::getResourcesDirectory(), "Scripts", "?.lua;"));
 
     // Now initialize all lua scripts and API
-    Lua::CoreScriptCommands::initialize();
+    Lua::Core::ScriptCommands::initialize();
     Lua::Maths::ScriptCommands::initialize();
     Lua::XML::XMLScriptCommands::initialize();
-    Lua::ObjectScriptCommands::initialize();
+    Lua::Objects::ScriptCommands::initialize();
     Lua::Resources::ScriptCommands::initialize();
-    Lua::ScreenScriptCommands::initialize();
-    Lua::DataConverterScriptCommands::initialize();
+    Lua::Scene::ScriptCommands::initialize();
+    Lua::DataConverters::ScriptCommands::initialize();
     Lua::Audio::AudioScriptCommands::initialize();
     Lua::Media::VideoScriptCommands::initialize();
     Lua::Physics::ScriptCommands::initialize();

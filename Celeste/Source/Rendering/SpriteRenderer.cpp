@@ -1,5 +1,4 @@
 #include "Rendering/SpriteRenderer.h"
-#include "Screens/ScreenManager.h"
 #include "Resources/ResourceManager.h"
 #include "UtilityHeaders/ComponentHeaders.h"
 

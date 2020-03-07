@@ -236,6 +236,7 @@
     <ClInclude Include="Headers\Media\VideoSettings.h" />
     <ClInclude Include="Headers\Memory\ObserverPtr.h" />
     <ClInclude Include="Headers\Networking\NetworkUtils.h" />
+    <ClInclude Include="Headers\Scene\SceneManager.h" />
     <ClInclude Include="Headers\Templates\ComponentTypeTraits.h" />
     <ClInclude Include="Headers\Threads\ThreadPool.h" />
     <ClInclude Include="Headers\UtilityHeaders\CallbackHeaders.h" />
@@ -296,7 +297,7 @@
     <ClInclude Include="Headers\Lua\ScriptCommands\Resources\Shaders\FragmentShaderScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Resources\Shaders\ShaderScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Resources\Shaders\VertexShaderScriptCommands.h" />
-    <ClInclude Include="Headers\Lua\ScriptCommands\Screens\ScreenScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Scene\SceneScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Objects\ScriptableObjectScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Settings\GameSettingsScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Settings\WindowSettingsScriptCommands.h" />
@@ -378,11 +379,11 @@
     <ClInclude Include="Headers\DataConverters\Objects\ObjectDataConverter.h" />
     <ClInclude Include="Headers\DataConverters\Rendering\SpriteRendererDataConverter.h" />
     <ClInclude Include="Headers\DataConverters\Rendering\TextRendererDataConverter.h" />
-    <ClInclude Include="Headers\DataConverters\Screens\ScreenDataConverter.h" />
+    <ClInclude Include="Headers\DataConverters\Scene\SceneDataConverter.h" />
     <ClInclude Include="Headers\DataConverters\UI\ButtonDataConverter.h" />
     <ClInclude Include="Headers\DataConverters\UI\StackPanelDataConverter.h" />
     <ClInclude Include="Headers\Physics\SimulatedBody.h" />
-    <ClInclude Include="Headers\Screens\Loading\ScreenLoader.h" />
+    <ClInclude Include="Headers\Scene\SceneLoader.h" />
     <ClInclude Include="Headers\Templates\ChooseClass.h" />
     <ClInclude Include="Headers\XML\ChildXMLElementWalker.h" />
     <ClInclude Include="Headers\XML\tinyxml2_ext.h" />
@@ -452,9 +453,7 @@
     <ClInclude Include="Headers\Resources\Shaders\Shader.h" />
     <ClInclude Include="Headers\Resources\Shaders\VertexShader.h" />
     <ClInclude Include="Headers\Resources\2D\Texture2D.h" />
-    <ClInclude Include="Headers\Screens\Screen.h" />
-    <ClInclude Include="Headers\Screens\ScreenManager.h" />
-    <ClInclude Include="Headers\Screens\ScreenUtils.h" />
+    <ClInclude Include="Headers\Scene\SceneUtils.h" />
     <ClInclude Include="Headers\Settings\GameSettings.h" />
     <ClInclude Include="Headers\UID\StringId.h" />
     <ClInclude Include="Headers\Time\Clock.h" />
@@ -548,7 +547,7 @@
     <ClCompile Include="Source\Lua\ScriptCommands\Resources\Shaders\FragmentShaderScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Resources\Shaders\ShaderScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Resources\Shaders\VertexShaderScriptCommands.cpp" />
-    <ClCompile Include="Source\Lua\ScriptCommands\Screens\ScreenScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Scene\SceneScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\ScriptableObjectScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Settings\GameSettingsScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\UI\ProgressBarScriptCommands.cpp" />
@@ -577,7 +576,7 @@
     <ClCompile Include="Source\DataConverters\Objects\GameObjectDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Rendering\SpriteRendererDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Rendering\TextRendererDataConverter.cpp" />
-    <ClCompile Include="Source\DataConverters\Screens\ScreenDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Scene\SceneDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\tinyxml2_ext.cpp" />
     <ClCompile Include="Source\DataConverters\UI\ButtonDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\UI\SliderDataConverter.cpp" />
@@ -636,10 +635,9 @@
     <ClCompile Include="Source\Resources\Shaders\Program.cpp" />
     <ClCompile Include="Source\Resources\Shaders\Shader.cpp" />
     <ClCompile Include="Source\Resources\2D\Texture2D.cpp" />
-    <ClCompile Include="Source\Screens\Loading\ScreenLoader.cpp" />
-    <ClCompile Include="Source\Screens\Screen.cpp" />
-    <ClCompile Include="Source\Screens\ScreenManager.cpp" />
-    <ClCompile Include="Source\Screens\ScreenUtils.cpp" />
+    <ClCompile Include="Source\Scene\SceneLoader.cpp" />
+    <ClCompile Include="Source\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\Scene\SceneUtils.cpp" />
     <ClCompile Include="Source\Deserialization\AudioDeserializers.cpp" />
     <ClCompile Include="Source\Serialization\InputSerializers.cpp" />
     <ClCompile Include="Source\Deserialization\MathsDeserializers.cpp" />

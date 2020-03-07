@@ -1,6 +1,5 @@
 #include "DataConverters/Rendering/SpriteRendererDataConverter.h"
 #include "Resources/ResourceManager.h"
-#include "Screens/ScreenUtils.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Rendering/SpriteRenderer.h"
 

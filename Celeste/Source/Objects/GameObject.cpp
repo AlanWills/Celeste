@@ -1,5 +1,4 @@
 #include "Objects/GameObject.h"
-#include "Screens/Screen.h"
 #include "Rendering/SpriteRenderer.h"
 #include "Rendering/TextRenderer.h"
 
@@ -231,38 +230,6 @@ namespace Celeste
         spriteBatch.render(*textRenderer, worldTranslation, worldRotation, worldScale);
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  GameObject* GameObject::find(const FindGameObjectPredicate& predicate)
-  {
-    for (auto& gameObject : m_allocator)
-    {
-      if (predicate(gameObject))
-      {
-        return &gameObject;
-      }
-    }
-
-    return nullptr;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  GameObject* GameObject::findWithTag(StringId tag)
-  {
-    return find([tag](const GameObject& gameObject)
-      {
-        return gameObject.getTag() == tag;
-      });
-  }
-
-  //------------------------------------------------------------------------------------------------
-  GameObject* GameObject::find(StringId name)
-  {
-    return find([name](const GameObject& gameObject)
-      {
-        return gameObject.getName() == name;
-      });
   }
 
   //------------------------------------------------------------------------------------------------

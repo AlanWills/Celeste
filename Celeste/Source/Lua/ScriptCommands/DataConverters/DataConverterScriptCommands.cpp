@@ -5,8 +5,10 @@
 
 #include "DataConverters/DataConverter.h"
 
+using DataConverter = Celeste::DataConverter;
 
-namespace Celeste::Lua::DataConverterScriptCommands
+
+namespace Celeste::Lua::DataConverters::ScriptCommands
 {
   namespace Internals
   {

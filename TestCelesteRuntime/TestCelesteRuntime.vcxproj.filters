@@ -15,23 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\TestCelesteEngineRuntime.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Testing\TestDiscoverer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Lua\ScriptCommands\Testing\TestDiscovererScriptCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\TestCelesteEngineRuntimeGame.cpp">
+    <ClCompile Include="Source\Game\TestCelesteRuntimeGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TestCelesteRuntime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Scripts\Game.lua" />
     <None Include="Resources\Scripts\Tests\DataConverters\Audio\TestAudioSourceDataConverter.lua" />
-    <None Include="Resources\Data\Screens\UnitTestScreen.asset" />
     <None Include="Resources\Scripts\Tests\DataConverters\Animation\TestAnimatorDataConverter.lua" />
     <None Include="Resources\Scripts\Tests\Core\FileSystem\TestPath.lua" />
     <None Include="Resources\Scripts\Tests\DataConverters\Input\TestKeyboardActivatorDataConverter.lua" />
@@ -41,6 +40,7 @@
     <None Include="Resources\Scripts\Tests\Core\Maths\TestVec2.lua" />
     <None Include="Resources\Scripts\Tests\Core\Maths\TestUVec2.lua" />
     <None Include="Resources\Scripts\Tests\Objects\TestGameObject.lua" />
+    <None Include="Resources\Data\Scenes\UnitTestScene.scene" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Testing\TestDiscoverer.h">
@@ -49,10 +49,10 @@
     <ClInclude Include="Headers\Lua\ScriptCommands\Testing\TestDiscovererScriptCommands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Game\TestCelesteEngineRuntimeGame.h">
+    <ClInclude Include="Headers\TestCERuntimeDllExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\TestCERuntimeDllExport.h">
+    <ClInclude Include="Headers\Game\TestCelesteRuntimeGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

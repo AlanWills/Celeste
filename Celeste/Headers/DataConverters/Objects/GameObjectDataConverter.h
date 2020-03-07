@@ -9,7 +9,6 @@
 namespace Celeste
 {
   class ComponentDataConverter;
-  class Screen;
 
   class GameObjectDataConverter : public EntityDataConverter<GameObject>
   {
@@ -25,8 +24,8 @@ namespace Celeste
 
       GameObjectDataConverter& operator=(const GameObjectDataConverter&) = delete;
 
-      CelesteDllExport virtual GameObject* allocateGameObject() const;
-      CelesteDllExport GameObject* allocateGameObject(Transform& transform) const;
+      CelesteDllExport virtual GameObject* instantiate() const;
+      CelesteDllExport GameObject* instantiate(Transform& transform) const;
 
       inline const std::string& getName() const { return m_name.getValue(); }
       inline const std::string& getTag() const { return m_tag.getValue(); }

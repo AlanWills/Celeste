@@ -563,7 +563,7 @@ local TestKeyboardVisibilityDataConverter = { }
 	-- SetValues Tests
 	------------------------------------------------------------------------------------------------
 	function TestKeyboardVisibilityDataConverter.setValues_SetsVisibilityKeyToAttributeValue()
-        local screen = TestKeyboardVisibilityDataConverter.Screen
+        local screen = TestKeyboardVisibilityDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local keyboardVisibility = gameObject:addComponent("KeyboardVisibility")
 
@@ -583,7 +583,7 @@ local TestKeyboardVisibilityDataConverter = { }
 	
 	------------------------------------------------------------------------------------------------
 	function TestKeyboardVisibilityDataConverter.setValues_SetsInvisibilityKeyToAttributeValue()
-		local screen = TestKeyboardVisibilityDataConverter.Screen
+		local screen = TestKeyboardVisibilityDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local keyboardVisibility = gameObject:addComponent("KeyboardVisibility")
 
@@ -603,7 +603,7 @@ local TestKeyboardVisibilityDataConverter = { }
 	
 	------------------------------------------------------------------------------------------------
 	function TestKeyboardVisibilityDataConverter.setValues_SetsInputModeToAttributeValue()
-		local screen = TestKeyboardVisibilityDataConverter.Screen
+		local screen = TestKeyboardVisibilityDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local keyboardVisibility = gameObject:addComponent("KeyboardVisibility")
 
@@ -623,7 +623,7 @@ local TestKeyboardVisibilityDataConverter = { }
 	
 	------------------------------------------------------------------------------------------------
 	function TestKeyboardVisibilityDataConverter.setValues_SetsTargetToAttributeValue()
-		local screen = TestKeyboardVisibilityDataConverter.Screen
+		local screen = TestKeyboardVisibilityDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local keyboardVisibility = gameObject:addComponent("KeyboardVisibility")
 

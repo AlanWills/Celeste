@@ -60,6 +60,6 @@ namespace Celeste::Resources
       return observer_ptr<GameObject>();
     }
 
-    return getGameObjects()[0]->allocateGameObject();
+    return getGameObjects()[0]->instantiate();
   }
 }

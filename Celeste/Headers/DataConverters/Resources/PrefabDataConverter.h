@@ -19,7 +19,7 @@ namespace Celeste
       inline const Path& getPath() const { return m_path.getValue(); }
 
       inline observer_ptr<const Resources::Prefab> getPrefab() const { return m_prefab; }
-      CelesteDllExport observer_ptr<GameObject> allocateGameObject() const override;
+      CelesteDllExport observer_ptr<GameObject> instantiate() const override;
 
       CelesteDllExport static const char* const PATH_ATTRIBUTE_NAME;
 

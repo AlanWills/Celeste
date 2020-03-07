@@ -2,8 +2,9 @@
 #include "Lua/ScriptCommands/ScriptCommandUtils.h"
 
 #include "Registries/ComponentRegistry.h"
-#include "Screens/Screen.h"
 #include "Rendering/Renderer.h"
+#include "Scene/SceneUtils.h"
+#include "Scene/SceneManager.h"
 
 
 namespace Celeste::Lua::GameObjectScriptCommands
@@ -65,13 +66,13 @@ namespace Celeste::Lua::GameObjectScriptCommands
     //------------------------------------------------------------------------------------------------
     observer_ptr<GameObject> findGameObject_StringOverload(const std::string& childName)
     {
-      return GameObject::find(childName);
+      return getSceneManager().find(childName);
     }
 
     //------------------------------------------------------------------------------------------------
     observer_ptr<GameObject> findGameObject_StringIdOverload(StringId childName)
     {
-      return GameObject::find(childName);
+      return getSceneManager().find(childName);
     }
   }
 

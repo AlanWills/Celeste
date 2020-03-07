@@ -8,7 +8,7 @@
 #include "Objects/Object.h"
 
 
-namespace Celeste::Lua::ObjectScriptCommands
+namespace Celeste::Lua::Objects::ScriptCommands
 {
   //------------------------------------------------------------------------------------------------
   void initialize()

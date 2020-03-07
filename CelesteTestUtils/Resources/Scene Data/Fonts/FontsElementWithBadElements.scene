@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene name="Test">
+  <Resources>
+    <Fonts>
+      <Font>Test\Path.ttf</Font>
+      <Font>Test\Path\Two.ttf</Font>
+      <Font>Three.ttf</Font>
+      <Font_>Four.ttf</Font_>
+      <Texture>AnotherFont.ttf</Texture>
+    </Fonts>
+  </Resources>
+</Scene>

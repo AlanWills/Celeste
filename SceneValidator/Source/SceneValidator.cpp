@@ -20,7 +20,7 @@ int main(int argc, char** argv)
   std::cout << "Using resource directory " << pathToResourcesDirectory.c_str() << std::endl;
 
   std::vector<File> files;
-  directory.findFiles(files, ".screen", true);
+  directory.findFiles(files, ".scene", true);
 
   std::cout << std::to_string(files.size()) << " scene files found" << std::endl;
 

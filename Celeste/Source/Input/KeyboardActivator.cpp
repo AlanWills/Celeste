@@ -1,7 +1,6 @@
 #include "Input/KeyboardActivator.h"
 #include "Input/InputManager.h"
 #include "UtilityHeaders/ComponentHeaders.h"
-#include "Screens/Screen.h"
 
 
 namespace Celeste::Input

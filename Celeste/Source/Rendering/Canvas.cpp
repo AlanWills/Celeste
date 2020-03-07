@@ -1,9 +1,8 @@
 #include "Rendering/Canvas.h"
 #include "UtilityHeaders/ComponentHeaders.h"
 #include "Viewport/Camera.h"
-#include "Screens/ScreenUtils.h"
-#include "Screens/Screen.h"
 #include "Physics/Collider.h"
+#include "Scene/SceneUtils.h"
 #include "Rendering/Renderer.h"
 
 #include <stack>

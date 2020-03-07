@@ -117,9 +117,6 @@
     <ClInclude Include="Headers\Mocks\DataConverters\Objects\MockComponentDataConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Resources\Screens\ScreenLoadingResources.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Resources\Objects\GameObjectLoadingResources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -330,6 +327,9 @@
     <ClInclude Include="Headers\CelesteTestUtilsDllExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\Resources\Scene\SceneLoadingResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mocks\Objects\MockComponent.cpp">
@@ -369,9 +369,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Resources\Objects\GameObjectLoadingResources.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resources\Screens\ScreenLoadingResources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Resources\Rendering\SpriteRendererLoadingResources.cpp">
@@ -500,6 +497,9 @@
     <ClCompile Include="Source\AutoDeallocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Resources\Scene\SceneLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Scripts\LuaAssert.lua" />
@@ -517,7 +517,7 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="Resources\Scripts\EmptyModule.lua" />
-    <None Include="Resources\Screen Data\EmptyScreen.screen" />
+    <None Include="Resources\Scene Data\EmptyScreen.scene" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resources\AudioSource Data\Invalid.xml" />
@@ -565,33 +565,6 @@
     <Xml Include="Resources\Canvas Data\Invalid.xml" />
     <Xml Include="Resources\StackPanel Data\Valid.xml" />
     <Xml Include="Resources\Animator Data\Invalid.xml" />
-    <Xml Include="Resources\Screen Data\NoResourcesElement.screen" />
-    <Xml Include="Resources\Screen Data\EmptyFile.screen" />
-    <Xml Include="Resources\Screen Data\VertexShaders\VertexShadersElementWithBadElements.screen" />
-    <Xml Include="Resources\Screen Data\VertexShaders\VertexShadersElement.screen" />
-    <Xml Include="Resources\Screen Data\VertexShaders\NoVertexShadersElement.screen" />
-    <Xml Include="Resources\Screen Data\Textures\TexturesElementWithBadElements.screen" />
-    <Xml Include="Resources\Screen Data\Textures\TexturesElement.screen" />
-    <Xml Include="Resources\Screen Data\Textures\NoTexturesElement.screen" />
-    <Xml Include="Resources\Screen Data\Sounds\SoundsElementWithBadElements.screen" />
-    <Xml Include="Resources\Screen Data\Sounds\SoundsElement.screen" />
-    <Xml Include="Resources\Screen Data\Sounds\NoSoundsElement.screen" />
-    <Xml Include="Resources\Screen Data\Prefabs\PrefabWithParent.screen" />
-    <Xml Include="Resources\Screen Data\Prefabs\GameObjectsElement.screen" />
-    <Xml Include="Resources\Screen Data\Name\NoNameAttribute.screen" />
-    <Xml Include="Resources\Screen Data\Name\NameAttribute.screen" />
-    <Xml Include="Resources\Screen Data\GameObjects\NoGameObjectsElement.screen" />
-    <Xml Include="Resources\Screen Data\GameObjects\GameObjectsElementWithBadElements.screen" />
-    <Xml Include="Resources\Screen Data\GameObjects\GameObjectsElement.screen" />
-    <Xml Include="Resources\Screen Data\FragmentShaders\NoFragmentShadersElement.screen" />
-    <Xml Include="Resources\Screen Data\FragmentShaders\FragmentShadersElementWithBadElements.screen" />
-    <Xml Include="Resources\Screen Data\FragmentShaders\FragmentShadersElement.screen" />
-    <Xml Include="Resources\Screen Data\Fonts\NoFontsElement.screen" />
-    <Xml Include="Resources\Screen Data\Fonts\FontsElementWithBadElements.screen" />
-    <Xml Include="Resources\Screen Data\Fonts\FontsElement.screen" />
-    <Xml Include="Resources\Screen Data\Data\NoDataElement.screen" />
-    <Xml Include="Resources\Screen Data\Data\DataElementWithBadElements.screen" />
-    <Xml Include="Resources\Screen Data\Data\DataElement.screen" />
     <Xml Include="Resources\Prefab Data\Empty.prefab" />
     <Xml Include="Resources\Prefab Data\Invalid.prefab" />
     <Xml Include="Resources\Prefab Data\NoGameObjectsElement.prefab" />
@@ -603,6 +576,33 @@
     <Xml Include="Resources\GameSettings Data\Valid.asset" />
     <Xml Include="Resources\WindowSettings Data\Invalid.asset" />
     <Xml Include="Resources\WindowSettings Data\Valid.asset" />
+    <Xml Include="Resources\Scene Data\EmptyFile.scene" />
+    <Xml Include="Resources\Scene Data\NoResourcesElement.scene" />
+    <Xml Include="Resources\Scene Data\VertexShaders\NoVertexShadersElement.scene" />
+    <Xml Include="Resources\Scene Data\VertexShaders\VertexShadersElement.scene" />
+    <Xml Include="Resources\Scene Data\VertexShaders\VertexShadersElementWithBadElements.scene" />
+    <Xml Include="Resources\Scene Data\Textures\NoTexturesElement.scene" />
+    <Xml Include="Resources\Scene Data\Textures\TexturesElement.scene" />
+    <Xml Include="Resources\Scene Data\Textures\TexturesElementWithBadElements.scene" />
+    <Xml Include="Resources\Scene Data\Sounds\NoSoundsElement.scene" />
+    <Xml Include="Resources\Scene Data\Sounds\SoundsElement.scene" />
+    <Xml Include="Resources\Scene Data\Sounds\SoundsElementWithBadElements.scene" />
+    <Xml Include="Resources\Scene Data\Prefabs\GameObjectsElement.scene" />
+    <Xml Include="Resources\Scene Data\Prefabs\PrefabWithParent.scene" />
+    <Xml Include="Resources\Scene Data\Name\NameAttribute.scene" />
+    <Xml Include="Resources\Scene Data\Name\NoNameAttribute.scene" />
+    <Xml Include="Resources\Scene Data\GameObjects\GameObjectsElement.scene" />
+    <Xml Include="Resources\Scene Data\GameObjects\GameObjectsElementWithBadElements.scene" />
+    <Xml Include="Resources\Scene Data\GameObjects\NoGameObjectsElement.scene" />
+    <Xml Include="Resources\Scene Data\FragmentShaders\FragmentShadersElement.scene" />
+    <Xml Include="Resources\Scene Data\FragmentShaders\FragmentShadersElementWithBadElements.scene" />
+    <Xml Include="Resources\Scene Data\FragmentShaders\NoFragmentShadersElement.scene" />
+    <Xml Include="Resources\Scene Data\Fonts\FontsElement.scene" />
+    <Xml Include="Resources\Scene Data\Fonts\FontsElementWithBadElements.scene" />
+    <Xml Include="Resources\Scene Data\Fonts\NoFontsElement.scene" />
+    <Xml Include="Resources\Scene Data\Data\DataElement.scene" />
+    <Xml Include="Resources\Scene Data\Data\DataElementWithBadElements.scene" />
+    <Xml Include="Resources\Scene Data\Data\NoDataElement.scene" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\Audio\SFX\ButtonClicked.wav">

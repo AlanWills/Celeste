@@ -1,7 +1,7 @@
 #include "DataConverters/UI/StackPanelDataConverter.h"
 #include "Registries/ComponentDataConverterRegistry.h"
-#include "Screens/Screen.h"
 #include "UI/StackPanel.h"
+#include "Objects/GameObject.h"
 
 
 namespace Celeste

@@ -1,11 +1,11 @@
--- Load the Screen
-local screenPath = path.combine(Resources.getResourcesDirectory(), "Data", "Screens", "UnitTestScreen.asset")
-local screen = Screen.load(screenPath)
+-- Load the Scene
+local screenPath = path.combine(Resources.getResourcesDirectory(), "Data", "Scenes", "UnitTestScene.asset")
+local screen = Scene.load(screenPath)
 
-log("Loaded Screen")
+log("Loaded Scene")
 
 if (screen == nil) then
-    log("Screen could not be loaded")
+    log("Scene could not be loaded")
     exit()
     return
 end

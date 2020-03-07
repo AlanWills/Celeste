@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Screen name="Test">
-  <GameObjects>
-    <GameObject name="Parent" position="0.5%"/>
-    <Prefab path="Prefab Data\ValidSingleGameObject.xml" parent="Parent"/>
-  </GameObjects>
-</Screen>

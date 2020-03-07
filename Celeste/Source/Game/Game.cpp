@@ -19,8 +19,9 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   Game::Game() :
     m_resourceManager(Path(Directory::getExecutingAppDirectory(), "Resources")),
-    m_screenManager(),
-    m_inputManager(m_screenManager.getWindow()->getGLWindow()),
+    m_sceneManager(),
+    m_window(),
+    m_inputManager(m_window.getGLWindow()),
     m_physicsManager(),
     m_renderManager(),
     m_audioManager(),
@@ -38,9 +39,15 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  ScreenManager& Game::getScreenManager()
+  SceneManager& Game::getSceneManager()
   {
-    return m_current->m_screenManager;
+    return m_current->m_sceneManager;
+  }
+
+  //------------------------------------------------------------------------------------------------
+  OpenGLWindow& Game::getWindow()
+  {
+    return m_current->m_window;
   }
 
   //------------------------------------------------------------------------------------------------
@@ -76,7 +83,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void Game::initialize()
   {
-    glfwSetWindowCloseCallback(getWindow()->getGLWindow(), &Game::windowCloseFunc);
+    glfwSetWindowCloseCallback(m_window.getGLWindow(), &Game::windowCloseFunc);
 
     Lua::CelesteScriptCommands::initialize();
 
@@ -172,7 +179,7 @@ namespace Celeste
       // Render
       render(0);
 
-      glfwSwapBuffers(m_screenManager.getWindow()->getGLWindow());
+      glfwSwapBuffers(m_window.getGLWindow());
     }
 
     onExit();
@@ -190,10 +197,10 @@ namespace Celeste
     {
       m_inputManager.handleInput();
     }
-
-    if (m_screenManager.isActive())
+    
+    if (m_sceneManager.isActive())
     {
-      m_screenManager.handleInput();
+      m_sceneManager.handleInput();
     }
 
     if (m_physicsManager.isActive())
@@ -213,7 +220,7 @@ namespace Celeste
 
     if (m_inputManager.getKeyboard().isKeyTapped(GLFW_KEY_ESCAPE))
     {
-      glfwSetWindowShouldClose(m_screenManager.getWindow()->getGLWindow(), GL_TRUE);
+      glfwSetWindowShouldClose(m_window.getGLWindow(), GL_TRUE);
     }
   }
 
@@ -225,9 +232,9 @@ namespace Celeste
       m_inputManager.update(elapsedGameTime);
     }
 
-    if (m_screenManager.isActive())
+    if (m_sceneManager.isActive())
     {
-      m_screenManager.update(elapsedGameTime);
+      m_sceneManager.update(elapsedGameTime);
     }
 
     if (m_physicsManager.isActive())
@@ -261,9 +268,9 @@ namespace Celeste
     {
       m_current->m_running = false;
 
-      if (getWindow() && getWindow()->getGLWindow())
+      if (getWindow().getGLWindow())
       {
-        glfwSetWindowShouldClose(getWindow()->getGLWindow(), GL_TRUE);
+        glfwSetWindowShouldClose(getWindow().getGLWindow(), GL_TRUE);
       }
     }
   }

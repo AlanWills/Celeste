@@ -1,6 +1,5 @@
 #include "Loading/LoadResourcesAsyncScript.h"
 #include "UtilityHeaders/ComponentHeaders.h"
-#include "Screens/ScreenManager.h"
 
 
 namespace Celeste

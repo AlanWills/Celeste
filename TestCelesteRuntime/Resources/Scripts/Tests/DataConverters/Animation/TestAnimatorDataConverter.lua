@@ -776,7 +776,7 @@ local TestAnimatorDataConverter = { }
 	-- SetValues Tests
 	------------------------------------------------------------------------------------------------
 	function TestAnimatorDataConverter.setValues_SetsSpriteSheetDimensionsToAttributeValue()
-		local screen = TestAnimatorDataConverter.Screen
+		local screen = TestAnimatorDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local animator = gameObject:addComponent("Animator")
 
@@ -799,7 +799,7 @@ local TestAnimatorDataConverter = { }
 
     ------------------------------------------------------------------------------------------------
 	function TestAnimatorDataConverter.setValues_SetsLoopingToAttributeValue()
-		local screen = TestAnimatorDataConverter.Screen
+		local screen = TestAnimatorDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local animator = gameObject:addComponent("Animator")
 
@@ -819,7 +819,7 @@ local TestAnimatorDataConverter = { }
 
     ------------------------------------------------------------------------------------------------
 	function TestAnimatorDataConverter.setValues_SetsSecondsPerFrameToAttributeValue()
-		local screen = TestAnimatorDataConverter.Screen
+		local screen = TestAnimatorDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local animator = gameObject:addComponent("Animator")
 
@@ -839,7 +839,7 @@ local TestAnimatorDataConverter = { }
 
     ------------------------------------------------------------------------------------------------
 	function TestAnimatorDataConverter.setValues_SetsPlayImmediatelyToAttributeValue()
-		local screen = TestAnimatorDataConverter.Screen
+		local screen = TestAnimatorDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local animator = gameObject:addComponent("Animator")
 

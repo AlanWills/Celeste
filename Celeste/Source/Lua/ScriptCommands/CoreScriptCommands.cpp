@@ -4,7 +4,7 @@
 #include "Debug/Assert.h"
 
 
-namespace Celeste::Lua::CoreScriptCommands
+namespace Celeste::Lua::Core::ScriptCommands
 {
   namespace Internals
   {

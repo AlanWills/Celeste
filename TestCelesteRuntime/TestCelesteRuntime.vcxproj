@@ -202,7 +202,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Data\Screens\UnitTestScreen.asset" />
+    <None Include="Resources\Data\Scenes\UnitTestScene.scene" />
     <None Include="Resources\Scripts\Game.lua" />
     <None Include="Resources\Scripts\Tests\Core\FileSystem\TestPath.lua" />
     <None Include="Resources\Scripts\Tests\Core\Maths\TestUVec2.lua" />

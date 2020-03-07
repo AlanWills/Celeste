@@ -1,8 +1,7 @@
 #include "DataConverters/Objects/GameObjectDataConverter.h"
 #include "DataConverters/Objects/ComponentDataConverter.h"
 #include "DataConverters/Resources/PrefabDataConverter.h"
-#include "Screens/ScreenUtils.h"
-#include "Screens/Screen.h"
+#include "Scene/SceneUtils.h"
 #include "Registries/ComponentRegistry.h"
 #include "Lua/Components/LuaComponentManifestRegistry.h"
 #include "Objects/GameObject.h"
@@ -47,7 +46,7 @@ namespace Celeste
     // Components do name lookup and require these objects to all be created
     for (const auto& childGameObjectDataConverter : getChildGameObjects())
     {
-      GameObject* childGameObject = childGameObjectDataConverter->allocateGameObject(*gameObject.getTransform());
+      GameObject* childGameObject = childGameObjectDataConverter->instantiate(*gameObject.getTransform());
       childGameObject->setParent(&gameObject);
     }
 
@@ -74,7 +73,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  GameObject* GameObjectDataConverter::allocateGameObject() const
+  GameObject* GameObjectDataConverter::instantiate() const
   {
     if (!isDataLoadedCorrectly())
     {
@@ -89,9 +88,9 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  GameObject* GameObjectDataConverter::allocateGameObject(Transform& transform) const
+  GameObject* GameObjectDataConverter::instantiate(Transform& transform) const
   {
-    GameObject* gameObject = allocateGameObject();
+    GameObject* gameObject = instantiate();
     gameObject->setParentTransform(&transform);
 
     return gameObject;

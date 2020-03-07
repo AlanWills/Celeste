@@ -1,7 +1,8 @@
 #include "Settings/WindowSettings.h"
 #include "Registries/ScriptableObjectRegistry.h"
-#include "Screens/ScreenManager.h"
 #include "Resources/ResourceUtils.h"
+#include "Scene/SceneUtils.h"
+#include "Viewport/OpenGLWindow.h"
 
 
 namespace Celeste
@@ -23,16 +24,16 @@ namespace Celeste
     //------------------------------------------------------------------------------------------------
     void WindowSettings::apply() const
     {
-      OpenGLWindow* window = getScreenManager().getWindow();
-      window->setTitle(getWindowTitle());
-      window->setIcon(Path(Resources::getResourcesDirectory(), getWindowIcon()).as_string());
-      window->setWindowMode(isWindowed() ? OpenGLWindow::WindowMode::kWindowed : OpenGLWindow::WindowMode::kFullScreen);
+      OpenGLWindow& window = getWindow();
+      window.setTitle(getWindowTitle());
+      window.setIcon(Path(Resources::getResourcesDirectory(), getWindowIcon()).as_string());
+      window.setWindowMode(isWindowed() ? OpenGLWindow::WindowMode::kWindowed : OpenGLWindow::WindowMode::kFullScreen);
       
       // Set window dimensions after we set window mode because the order matters
       const glm::vec2& resolution = getResolution();
       if (resolution != glm::zero<glm::vec2>())
       {
-        window->setWindowDimensions(resolution);
+        window.setWindowDimensions(resolution);
       }
     }
   }

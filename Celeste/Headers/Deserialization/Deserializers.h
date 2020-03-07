@@ -2,7 +2,7 @@
 
 #include "tinyxml2.h"
 #include "XML/XMLEnums.h"
-#include "Screens/ScreenUtils.h"
+#include "Scene/SceneUtils.h"
 #include "FileSystem/Path.h"
 #include "Debug/Assert.h"
 

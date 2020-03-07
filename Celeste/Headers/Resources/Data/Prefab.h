@@ -8,7 +8,6 @@
 namespace Celeste
 {
   class GameObject;
-  class Screen;
 }
 
 namespace Celeste::Resources

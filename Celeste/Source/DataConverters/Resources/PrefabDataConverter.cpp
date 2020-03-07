@@ -18,7 +18,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  observer_ptr<GameObject> PrefabDataConverter::allocateGameObject() const
+  observer_ptr<GameObject> PrefabDataConverter::instantiate() const
   {
 #if _DEBUG
     if (m_prefab == nullptr)

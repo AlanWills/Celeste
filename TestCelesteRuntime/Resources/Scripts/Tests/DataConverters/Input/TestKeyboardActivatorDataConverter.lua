@@ -563,7 +563,7 @@ local TestKeyboardActivatorDataConverter = { }
 	-- SetValues Tests
 	------------------------------------------------------------------------------------------------
 	function TestKeyboardActivatorDataConverter.setValues_SetsActivationKeyToAttributeValue()
-        local screen = TestKeyboardActivatorDataConverter.Screen
+        local screen = TestKeyboardActivatorDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local keyboardActivator = gameObject:addComponent("KeyboardActivator")
 
@@ -583,7 +583,7 @@ local TestKeyboardActivatorDataConverter = { }
 	
 	------------------------------------------------------------------------------------------------
 	function TestKeyboardActivatorDataConverter.setValues_SetsDeactivationKeyToAttributeValue()
-		local screen = TestKeyboardActivatorDataConverter.Screen
+		local screen = TestKeyboardActivatorDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local keyboardActivator = gameObject:addComponent("KeyboardActivator")
 
@@ -603,7 +603,7 @@ local TestKeyboardActivatorDataConverter = { }
 	
 	------------------------------------------------------------------------------------------------
 	function TestKeyboardActivatorDataConverter.setValues_SetsInputModeToAttributeValue()
-		local screen = TestKeyboardActivatorDataConverter.Screen
+		local screen = TestKeyboardActivatorDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local keyboardActivator = gameObject:addComponent("KeyboardActivator")
 
@@ -623,7 +623,7 @@ local TestKeyboardActivatorDataConverter = { }
 	
 	------------------------------------------------------------------------------------------------
 	function TestKeyboardActivatorDataConverter.setValues_SetsTargetToAttributeValue()
-		local screen = TestKeyboardActivatorDataConverter.Screen
+		local screen = TestKeyboardActivatorDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local keyboardActivator = gameObject:addComponent("KeyboardActivator")
 

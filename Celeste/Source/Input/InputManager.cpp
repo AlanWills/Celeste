@@ -47,7 +47,7 @@ namespace Celeste::Input
   {
     // Update mouse position
     double x = 0, y = 0;
-    glfwGetCursorPos(getWindow()->getGLWindow(), &x, &y);
+    glfwGetCursorPos(getWindow().getGLWindow(), &x, &y);
 
     m_mouse.getTransform().setTranslation(static_cast<float>(x), getViewportDimensions().y - static_cast<float>(y));
   }

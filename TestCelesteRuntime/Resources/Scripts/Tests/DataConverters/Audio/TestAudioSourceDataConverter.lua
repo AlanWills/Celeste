@@ -693,7 +693,7 @@ local TestAudioSourceDataConverter = { }
 	-- SetValues Tests
 	------------------------------------------------------------------------------------------------
 	function TestAudioSourceDataConverter.setValues_SetsSoundToAttributeValue()
-        local screen = TestAudioSourceDataConverter.Screen
+        local screen = TestAudioSourceDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local audioSource = gameObject:addComponent("AudioSource")
 
@@ -713,7 +713,7 @@ local TestAudioSourceDataConverter = { }
 	
 	------------------------------------------------------------------------------------------------
 	function TestAudioSourceDataConverter.setValues_SetsLoopingToAttributeValue()
-		local screen = TestAudioSourceDataConverter.Screen
+		local screen = TestAudioSourceDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local audioSource = gameObject:addComponent("AudioSource")
 
@@ -733,7 +733,7 @@ local TestAudioSourceDataConverter = { }
 	
 	------------------------------------------------------------------------------------------------
 	function TestAudioSourceDataConverter.setValues_SetsVolumeToAttributeValue()
-		local screen = TestAudioSourceDataConverter.Screen
+		local screen = TestAudioSourceDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local audioSource = gameObject:addComponent("AudioSource")
 
@@ -753,7 +753,7 @@ local TestAudioSourceDataConverter = { }
 	
 	------------------------------------------------------------------------------------------------
 	function TestAudioSourceDataConverter.setValues_SetsAudioTypeToAttributeValue()
-		local screen = TestAudioSourceDataConverter.Screen
+		local screen = TestAudioSourceDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local audioSource = gameObject:addComponent("AudioSource")
 
@@ -773,7 +773,7 @@ local TestAudioSourceDataConverter = { }
 	
 	------------------------------------------------------------------------------------------------
 	function TestAudioSourceDataConverter.setValues_IfIsPlayingTrue_PlaysAudioSource()
-		local screen = TestAudioSourceDataConverter.Screen
+		local screen = TestAudioSourceDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local audioSource = gameObject:addComponent("AudioSource")
 

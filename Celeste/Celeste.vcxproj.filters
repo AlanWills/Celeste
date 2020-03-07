@@ -78,12 +78,6 @@
     <ClInclude Include="Headers\Input\MouseInteractionHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Screens\Screen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Screens\ScreenManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Rendering\TextRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -154,9 +148,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Maths\Matrix.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Screens\ScreenUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Memory\Allocators\AlignedAllocator.h">
@@ -240,13 +231,7 @@
     <ClInclude Include="Headers\Physics\SimulatedBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Screens\Loading\ScreenLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\DataConverters\Rendering\SpriteRendererDataConverter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\DataConverters\Screens\ScreenDataConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\DataConverters\GraphicalFX\OpacityLerperDataConverter.h">
@@ -588,9 +573,6 @@
     <ClInclude Include="Headers\Lua\ScriptCommands\Objects\GameObjectScriptCommands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Lua\ScriptCommands\Screens\ScreenScriptCommands.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Lua\ScriptCommands\Resources\ResourcesScriptCommands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -822,6 +804,21 @@
     <ClInclude Include="Headers\Events\TriggerMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\Lua\ScriptCommands\Scene\SceneScriptCommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Scene\SceneLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Scene\SceneUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\DataConverters\Scene\SceneDataConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Scene\SceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Time\Clock.cpp">
@@ -875,12 +872,6 @@
     <ClCompile Include="Source\Physics\RigidBody2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Screens\Screen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Screens\ScreenManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Viewport\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -930,9 +921,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Maths\Matrix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Screens\ScreenUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\UI\TextBox.cpp">
@@ -986,16 +974,10 @@
     <ClCompile Include="Source\Rendering\TextRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Screens\Loading\ScreenLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\DataConverters\Rendering\SpriteRendererDataConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\DataConverters\Objects\GameObjectDataConverter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\DataConverters\Screens\ScreenDataConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\DataConverters\GraphicalFX\OpacityLerperDataConverter.cpp">
@@ -1244,9 +1226,6 @@
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\GameObjectScriptCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Lua\ScriptCommands\Screens\ScreenScriptCommands.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Lua\ScriptCommands\Resources\ResourcesScriptCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1398,6 +1377,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Events\TriggerMode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Lua\ScriptCommands\Scene\SceneScriptCommands.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\SceneLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\SceneUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DataConverters\Scene\SceneDataConverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

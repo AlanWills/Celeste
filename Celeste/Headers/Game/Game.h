@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Resources/ResourceManager.h"
-#include "Screens/ScreenManager.h"
+#include "Scene/SceneManager.h"
+#include "Viewport/OpenGLWindow.h"
 #include "Input/InputManager.h"
 #include "Physics/PhysicsManager.h"
 #include "Rendering/RenderManager.h"
@@ -39,7 +40,8 @@ namespace Celeste
       inline bool isRunning() const { return m_running; }
 
       CelesteDllExport static ResourceManager& getResourceManager();
-      CelesteDllExport static ScreenManager& getScreenManager();
+      CelesteDllExport static SceneManager& getSceneManager();
+      CelesteDllExport static OpenGLWindow& getWindow();
       CelesteDllExport static InputManager& getInputManager();
       CelesteDllExport static PhysicsManager& getPhysicsManager();
       CelesteDllExport static RenderManager& getRenderManager();
@@ -68,7 +70,8 @@ namespace Celeste
       static observer_ptr<Game> m_current;
 
       ResourceManager m_resourceManager;
-      ScreenManager m_screenManager;
+      SceneManager m_sceneManager;
+      OpenGLWindow m_window;
       InputManager m_inputManager;
       PhysicsManager m_physicsManager;
       RenderManager m_renderManager;

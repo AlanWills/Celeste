@@ -2,6 +2,7 @@
 #include "Input/InputManager.h"
 #include "Resources/2D/RawImageLoader.h"
 #include "UtilityHeaders/GLHeaders.h"
+#include "OpenGL/GL.h"
 #include "Debug/Assert.h"
 
 
@@ -20,6 +21,11 @@ namespace Celeste
     m_viewportDimensions(1),
     m_viewportDimensionsChanged()
   {
+    if (!GL::glfw_initialize())
+    {
+      ASSERT_FAIL();
+    }
+
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
@@ -30,6 +36,13 @@ namespace Celeste
     }
 
     initWindow(windowMode);
+
+    // It's important that GLEW is initialized after the window is created (I have literally no fucking idea why, 
+    // but it's been a pain to figure this out, so just trust me)
+    if (!GL::glew_initialize())
+    {
+      ASSERT_FAIL();
+    }
   }
 
   //------------------------------------------------------------------------------------------------

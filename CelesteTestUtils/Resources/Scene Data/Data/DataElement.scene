@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene name="Test">
+  <Resources>
+    <Data>
+      <Data>File1.xml</Data>
+      <Data>Another\File.xml</Data>
+      <Data>File3.xml</Data>
+    </Data>
+  </Resources>
+</Scene>

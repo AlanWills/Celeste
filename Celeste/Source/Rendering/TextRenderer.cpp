@@ -1,6 +1,5 @@
 #include "Rendering/TextRenderer.h"
 #include "UtilityHeaders/ComponentHeaders.h"
-#include "Screens/ScreenManager.h"
 #include "Resources/ResourceManager.h"
 #include "Input/InputManager.h"
 #include "Utils/StringUtils.h"

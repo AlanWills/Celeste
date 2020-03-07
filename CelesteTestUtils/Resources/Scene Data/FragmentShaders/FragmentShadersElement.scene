@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene name="Test">
+  <Resources>
+    <FragmentShaders>
+      <FragmentShader>Shader1.frag</FragmentShader>
+      <FragmentShader>Another\Shader.frag</FragmentShader>
+      <FragmentShader>Shader3.frag</FragmentShader>
+    </FragmentShaders>
+  </Resources>
+</Scene>

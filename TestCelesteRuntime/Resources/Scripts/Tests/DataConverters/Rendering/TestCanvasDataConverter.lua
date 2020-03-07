@@ -375,7 +375,7 @@ local TestCanvasDataConverter = { }
 	-- SetValues Tests
   ------------------------------------------------------------------------------------------------
 	function TestCanvasDataConverter.setValues_SetsProjectionModeToAttributeValue()
-		local screen = TestCanvasDataConverter.Screen
+		local screen = TestCanvasDataConverter.Scene
     local gameObject = screen:allocateGameObject()
 		local canvas = gameObject:addComponent("Canvas")
 
@@ -395,7 +395,7 @@ local TestCanvasDataConverter = { }
 
 	------------------------------------------------------------------------------------------------
 	function TestCanvasDataConverter.setValues_SetsDimensionsToAttributeValue()
-		local screen = TestCanvasDataConverter.Screen
+		local screen = TestCanvasDataConverter.Scene
     local gameObject = screen:allocateGameObject()
 		local canvas = gameObject:addComponent("Canvas")
 

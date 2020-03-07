@@ -599,7 +599,7 @@ local TestEllipseColliderDataConverter = { }
 	-- SetValues Tests
 	------------------------------------------------------------------------------------------------
 	function TestEllipseColliderDataConverter.setValues_SetsDimensionsToAttributeValue()
-		local screen = TestEllipseColliderDataConverter.Screen
+		local screen = TestEllipseColliderDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local collider = gameObject:addComponent("EllipseCollider")
 
@@ -620,7 +620,7 @@ local TestEllipseColliderDataConverter = { }
 
     ------------------------------------------------------------------------------------------------
 	function TestEllipseColliderDataConverter.setValues_SetsIsTriggerToAttributeValue()
-		local screen = TestEllipseColliderDataConverter.Screen
+		local screen = TestEllipseColliderDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local collider = gameObject:addComponent("EllipseCollider")
 
@@ -641,7 +641,7 @@ local TestEllipseColliderDataConverter = { }
     ------------------------------------------------------------------------------------------------
 	function TestEllipseColliderDataConverter.setValues_SetsOffsetToAttributeValue()
 		
-		local screen = TestEllipseColliderDataConverter.Screen
+		local screen = TestEllipseColliderDataConverter.Scene
         local gameObject = screen:allocateGameObject()
 		local collider = gameObject:addComponent("EllipseCollider")
 

@@ -1,8 +1,9 @@
 #include "Input/Mouse.h"
-#include "Screens/ScreenManager.h"
 #include "Resources/2D/RawImageLoader.h"
 #include "Resources/ResourceManager.h"
 #include "FileSystem/Path.h"
+#include "Scene/SceneUtils.h"
+#include "Viewport/OpenGLWindow.h"
 
 using namespace Celeste::Resources;
 
@@ -98,7 +99,7 @@ namespace Celeste::Input
     image.pixels = loader.getData();
 
     m_cursor = glfwCreateCursor(&image, static_cast<int>(cursorHotSpot.x), static_cast<int>(cursorHotSpot.y));
-    glfwSetCursor(getWindow()->getGLWindow(), m_cursor);
+    glfwSetCursor(getWindow().getGLWindow(), m_cursor);
   }
 
   //------------------------------------------------------------------------------------------------
