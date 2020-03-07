@@ -50,9 +50,9 @@ namespace TestCeleste
   TEST_METHOD(Transform_GetGameObject_GameObjectSet_ReturnsCorrectGameObjectHandle)
   {
     GameObject gameObject;
-    AutoDeallocator<Transform> transform = Transform::allocate(gameObject);
+    Transform transform(gameObject);
 
-    Assert::AreEqual(&gameObject, transform->getGameObject());
+    Assert::AreEqual(&gameObject, transform.getGameObject());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -67,9 +67,9 @@ namespace TestCeleste
   TEST_METHOD(Transform_GetConstGameObject_GameObjectSet_ReturnsCorrectConstGameObjectHandle)
   {
     GameObject gameObject;
-    AutoDeallocator<Transform> transform = Transform::allocate(gameObject);
+    Transform transform(gameObject);
 
-    Assert::AreEqual(&gameObject, transform->getGameObject());
+    Assert::AreEqual(&gameObject, transform.getGameObject());
   }
 
 #pragma endregion
@@ -144,20 +144,21 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_SetParent_InputtingHandleEqualToCurrentParent_DoesNothing)
     {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
+      GameObject gameObject1, gameObject2;
+      Transform transform(gameObject1);
+      Transform parent(gameObject2);
 
-      Assert::IsNull(transform->getParent());
+      Assert::IsNull(transform.getParent());
 
-      transform->setParent(parent.get());
+      transform.setParent(&parent);
 
-      Assert::AreEqual(parent.get(), transform->getParent());
-      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::AreEqual(&parent, transform.getParent());
+      Assert::AreEqual((size_t)1, parent.getChildCount());
 
-      transform->setParent(parent.get());
+      transform.setParent(&parent);
 
-      Assert::AreEqual(parent.get(), transform->getParent());
-      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::AreEqual(&parent, transform.getParent());
+      Assert::AreEqual((size_t)1, parent.getChildCount());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -175,59 +176,63 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_SetParent_NoParent_SettingParent_AddsTransformToParentChildren)
     {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
+      GameObject gameObject1, gameObject2;
+      Transform transform(gameObject1);
+      Transform parent(gameObject2);
 
-      Assert::IsNull(transform->getParent());
-      Assert::AreEqual((size_t)0, parent->getChildCount());
+      Assert::IsNull(transform.getParent());
+      Assert::AreEqual((size_t)0, parent.getChildCount());
 
-      transform->setParent(parent.get());
+      transform.setParent(&parent);
 
-      Assert::AreEqual(parent.get(), transform->getParent());
-      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::AreEqual(&parent, transform.getParent());
+      Assert::AreEqual((size_t)1, parent.getChildCount());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_SetParent_Parent_SettingParent_RemovesTransformFromOldParentChildren_AddsTransformToParentChildren)
     {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
+      GameObject gameObject1, gameObject2;
+      Transform transform(gameObject1);
+      Transform parent(gameObject2);
 
-      Assert::IsNull(transform->getParent());
-      Assert::AreEqual((size_t)0, parent->getChildCount());
+      Assert::IsNull(transform.getParent());
+      Assert::AreEqual((size_t)0, parent.getChildCount());
 
-      transform->setParent(parent.get());
+      transform.setParent(&parent);
 
-      Assert::AreEqual(parent.get(), transform->getParent());
-      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::AreEqual(&parent, transform.getParent());
+      Assert::AreEqual((size_t)1, parent.getChildCount());
 
-      AutoDeallocator<Transform> parent2 = Transform::allocate(GameObject());
+      GameObject gameObject3;
+      Transform parent2(gameObject3);
 
-      transform->setParent(parent2.get());
+      transform.setParent(&parent2);
 
-      Assert::AreEqual(parent2.get(), transform->getParent());
-      Assert::AreEqual((size_t)0, parent->getChildCount());
-      Assert::AreEqual((size_t)1, parent2->getChildCount());
+      Assert::AreEqual(&parent2, transform.getParent());
+      Assert::AreEqual((size_t)0, parent.getChildCount());
+      Assert::AreEqual((size_t)1, parent2.getChildCount());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_SetParent_Parent_SettingToNull_RemovesTransformFromOldParentChildren)
     {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
+      GameObject gameObject1, gameObject2;
+      Transform transform(gameObject1);
+      Transform parent(gameObject2);
 
-      Assert::IsNull(transform->getParent());
-      Assert::AreEqual((size_t)0, parent->getChildCount());
+      Assert::IsNull(transform.getParent());
+      Assert::AreEqual((size_t)0, parent.getChildCount());
 
-      transform->setParent(parent.get());
+      transform.setParent(&parent);
 
-      Assert::AreEqual(parent.get(), transform->getParent());
-      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::AreEqual(&parent, transform.getParent());
+      Assert::AreEqual((size_t)1, parent.getChildCount());
 
-      transform->setParent(nullptr);
+      transform.setParent(nullptr);
 
-      Assert::IsNull(transform->getParent());
-      Assert::AreEqual((size_t)0, parent->getChildCount());
+      Assert::IsNull(transform.getParent());
+      Assert::AreEqual((size_t)0, parent.getChildCount());
     }
 
 #pragma endregion
@@ -249,24 +254,26 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetChildTransform_NonConst_IndexGreaterThanOrEqualToChildCount_ReturnsNullTransformHandle)
     {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-      transform->setParent(parent.get());
+      GameObject gameObject1, gameObject2;
+      Transform transform(gameObject1);
+      Transform parent(gameObject2);
+      transform.setParent(&parent);
 
-      Assert::AreEqual((size_t)1, parent->getChildCount());
-      Assert::IsNull(parent->getChildTransform(parent->getChildCount()));
-      Assert::IsNull(parent->getChildTransform(10));
+      Assert::AreEqual((size_t)1, parent.getChildCount());
+      Assert::IsNull(parent.getChildTransform(parent.getChildCount()));
+      Assert::IsNull(parent.getChildTransform(10));
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetChildTransform_NonConst_IndexLessThanChildCount_ReturnsChildTransformHandle)
     {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-      transform->setParent(parent.get());
+      GameObject gameObject1, gameObject2;
+      Transform transform(gameObject1);
+      Transform parent(gameObject2);
+      transform.setParent(&parent);
 
-      Assert::AreEqual((size_t)1, parent->getChildCount());
-      Assert::AreEqual(transform.get(), parent->getChildTransform(0));
+      Assert::AreEqual((size_t)1, parent.getChildCount());
+      Assert::AreEqual(&transform, parent.getChildTransform(0));
     }
 
 #pragma endregion
@@ -286,24 +293,26 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetChildTransform_Const_IndexGreaterThanOrEqualToChildCount_ReturnsNullConstTransformHandle)
     {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-      transform->setParent(parent.get());
+      GameObject gameObject1, gameObject2;
+      Transform transform(gameObject1);
+      Transform parent(gameObject2);
+      transform.setParent(&parent);
 
-      Assert::AreEqual((size_t)1, parent->getChildCount());
-      Assert::IsNull(static_cast<const Transform*>(parent.get())->getChildTransform(parent->getChildCount()));
-      Assert::IsNull(static_cast<const Transform*>(parent.get())->getChildTransform(10));
+      Assert::AreEqual((size_t)1, parent.getChildCount());
+      Assert::IsNull(static_cast<const Transform*>(&parent)->getChildTransform(parent.getChildCount()));
+      Assert::IsNull(static_cast<const Transform*>(&parent)->getChildTransform(10));
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetChildTransform_Const_IndexLessThanChildCount_ReturnsChildConstTransformHandle)
     {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-      transform->setParent(parent.get());
+      GameObject gameObject1, gameObject2;
+      Transform transform(gameObject1);
+      Transform parent(gameObject2);
+      transform.setParent(&parent);
 
-      Assert::AreEqual((size_t)1, parent->getChildCount());
-      Assert::AreEqual(static_cast<const Transform*>(transform.get()), static_cast<const Transform*>(parent.get())->getChildTransform(0));
+      Assert::AreEqual((size_t)1, parent.getChildCount());
+      Assert::AreEqual(static_cast<const Transform*>(&transform), static_cast<const Transform*>(&parent)->getChildTransform(0));
     }
 
 #pragma endregion
@@ -327,25 +336,26 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetChildGameObject_NonConst_IndexGreaterThanOrEqualToChildCount_ReturnsNullGameObjectHandle)
     {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-      transform->setParent(parent.get());
+      GameObject gameObject1, gameObject2;
+      Transform transform(gameObject1);
+      Transform parent(gameObject2);
+      transform.setParent(&parent);
 
-      Assert::AreEqual((size_t)1, parent->getChildCount());
-      Assert::IsNull(parent->getChildGameObject(parent->getChildCount()));
-      Assert::IsNull(parent->getChildGameObject(10));
+      Assert::AreEqual((size_t)1, parent.getChildCount());
+      Assert::IsNull(parent.getChildGameObject(parent.getChildCount()));
+      Assert::IsNull(parent.getChildGameObject(10));
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetChildGameObject_NonConst_IndexLessThanChildCount_ReturnsChildTransformsGameObjectHandle)
     {
       GameObject gameObject;
-      AutoDeallocator<Transform> transform = Transform::allocate(gameObject);
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-      transform->setParent(parent.get());
+      Transform transform(gameObject);
+      Transform parent(gameObject);
+      transform.setParent(&parent);
 
-      Assert::AreEqual((size_t)1, parent->getChildCount());
-      Assert::AreEqual(transform->getGameObject(), parent->getChildGameObject(0));
+      Assert::AreEqual((size_t)1, parent.getChildCount());
+      Assert::AreEqual(transform.getGameObject(), parent.getChildGameObject(0));
     }
 
 #pragma endregion
@@ -365,25 +375,26 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetChildGameObject_Const_IndexGreaterThanOrEqualToChildCount_ReturnsNullConstGameObjectHandle)
     {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-      transform->setParent(parent.get());
+      GameObject gameObject1, gameObject2;
+      Transform transform(gameObject1);
+      Transform parent(gameObject2);
+      transform.setParent(&parent);
 
-      Assert::AreEqual((size_t)1, parent->getChildCount());
-      Assert::IsNull(static_cast<const Transform*>(parent.get())->getChildGameObject(parent->getChildCount()));
-      Assert::IsNull(static_cast<const Transform*>(parent.get())->getChildGameObject(10));
+      Assert::AreEqual((size_t)1, parent.getChildCount());
+      Assert::IsNull(static_cast<const Transform*>(&parent)->getChildGameObject(parent.getChildCount()));
+      Assert::IsNull(static_cast<const Transform*>(&parent)->getChildGameObject(10));
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetChildGameObject_Const_IndexLessThanChildCount_ReturnsChildTransformsConstcnGameObjectHandle)
     {
       GameObject gameObject;
-      AutoDeallocator<Transform> transform = Transform::allocate(gameObject);
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-      transform->setParent(parent.get());
+      Transform transform(gameObject);
+      Transform parent(gameObject);
+      transform.setParent(&parent);
 
-      Assert::AreEqual((size_t)1, parent->getChildCount());
-      Assert::AreEqual(static_cast<const GameObject*>(transform->getGameObject()), static_cast<const Transform*>(parent.get())->getChildGameObject(0));
+      Assert::AreEqual((size_t)1, parent.getChildCount());
+      Assert::AreEqual(static_cast<const GameObject*>(transform.getGameObject()), static_cast<const Transform*>(&parent)->getChildGameObject(0));
     }
 
 #pragma endregion
@@ -411,25 +422,26 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_Foreach_WithChildren_IteratesOverChildren)
     {
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> child1 = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> child2 = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> child3 = Transform::allocate(GameObject());
+      GameObject gameObject1, gameObject2, gameObject3, gameObject4;
+      Transform parent(gameObject1);
+      Transform child1(gameObject2);
+      Transform child2(gameObject3);
+      Transform child3(gameObject4);
 
-      child1->setParent(parent.get());
-      child2->setParent(parent.get());
-      child3->setParent(parent.get());
+      child1.setParent(&parent);
+      child2.setParent(&parent);
+      child3.setParent(&parent);
 
       std::vector<observer_ptr<Transform>> children;
-      for (observer_ptr<Transform> child : *parent.get())
+      for (observer_ptr<Transform> child : *&parent)
       {
         children.push_back(child);
       }
 
       Assert::AreEqual((size_t)3, children.size());
-      Assert::AreEqual(children[0], child1.get());
-      Assert::AreEqual(children[1], child2.get());
-      Assert::AreEqual(children[2], child3.get());
+      Assert::AreEqual(children[0], &child1);
+      Assert::AreEqual(children[1], &child2);
+      Assert::AreEqual(children[2], &child3);
     }
 
 #pragma endregion
@@ -1070,146 +1082,26 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Can Allocate Tests
+#pragma region Destructor Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_CanAllocate_ShouldReturnTrue)
+    TEST_METHOD(Transform_Destructor_WithParent_RemovesTransformFromParentChildren)
     {
-      Assert::IsTrue(Transform::canAllocate(0));
-      Assert::IsTrue(Transform::canAllocate(1));
-      Assert::IsTrue(Transform::canAllocate(10));
-    }
+      GameObject gameObject1, gameObject2;
+      Transform parent(gameObject2);
+      {
+        Transform transform(gameObject1);
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_CanAllocate_ShouldReturnFalse)
-    {
-      Assert::IsFalse(Transform::canAllocate(3010000000));
-      Assert::IsFalse(Transform::canAllocate(60000000));
-    }
+        Assert::IsNull(transform.getParent());
+        Assert::AreEqual((size_t)0, parent.getChildCount());
 
-#pragma endregion
+        transform.setParent(&parent);
 
-#pragma region Allocate Tests
+        Assert::AreEqual(&parent, transform.getParent());
+        Assert::AreEqual((size_t)1, parent.getChildCount());
+      }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Allocate_WithSpaceLeft_ReturnsAllocatedTransformHandle)
-    {
-      AutoDeallocator<Transform> handle = Transform::allocate(GameObject());
-
-      Assert::IsNotNull(handle.get());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Allocate_WithAllocatedHandle_SetsGameObjectToInput)
-    {
-      GameObject gameObject;
-      AutoDeallocator<Transform> handle = Transform::allocate(gameObject);
-
-      Assert::IsTrue(&gameObject == handle->getGameObject());
-    }
-
-#pragma endregion
-
-#pragma region Deallocate Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Deallocate_ResetsAllTransformValues)
-    {
-      AutoDeallocator<Transform> handle = Transform::allocate(GameObject());
-      const Transform* hPtr = handle.get();
-
-      handle->setRotation(2);
-      handle->setScale(glm::vec3());
-      handle->setTranslation(glm::vec3(1, 1, 1));
-      handle->deallocate();
-
-      Assert::AreEqual(0.0f, hPtr->getRotation());
-      Assert::IsTrue(glm::vec3() == hPtr->getTranslation());
-      Assert::IsTrue(glm::vec3(1, 1, 1) == hPtr->getScale());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Deallocate_WithDeallocatedGameObject_SetsGameObjectToNullptr)
-    {
-      GameObject gameObject;
-      GameObject* gameObjectPtr = &gameObject;
-
-      AutoDeallocator<Transform> handle = Transform::allocate(gameObject);
-      gameObject.deallocate();
-
-      Assert::AreEqual(gameObjectPtr, handle->getGameObject());
-
-      handle->deallocate();
-
-      Assert::IsNull(handle->getGameObject());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Deallocate_WithAllocatedGameObject_SetsGameObjectToNullptr)
-    {
-      GameObject gameObject;
-      GameObject* gameObjectPtr = &gameObject;
-
-      AutoDeallocator<Transform> handle = Transform::allocate(gameObject);
-
-      Assert::AreEqual(gameObjectPtr, handle->getGameObject());
-
-      handle->deallocate();
-
-      Assert::IsNull(handle->getGameObject());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Deallocate_WithoutChildren_KeepsChildrenEmpty)
-    {
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-      const Transform* tPtr = parent.get();
-
-      Assert::AreEqual((size_t)0, parent->getChildCount());
-
-      parent->deallocate();
-
-      Assert::AreEqual((size_t)0, tPtr->getChildCount());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Deallocate_WithChildren_DeallocatesAllChildren_AndEmptiesChildrenList)
-    {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-      const Transform* tPtr = parent.get();
-
-      Assert::IsNull(transform->getParent());
-      Assert::AreEqual((size_t)0, parent->getChildCount());
-
-      transform->setParent(parent.get());
-
-      Assert::AreEqual(parent.get(), transform->getParent());
-      Assert::AreEqual((size_t)1, parent->getChildCount());
-
-      parent->deallocate();
-
-      Assert::AreEqual((size_t)0, tPtr->getChildCount());
-      Assert::IsNull(tPtr->getParent());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Deallocate_WithParent_RemovesTransformFromParentChildren)
-    {
-      AutoDeallocator<Transform> transform = Transform::allocate(GameObject());
-      AutoDeallocator<Transform> parent = Transform::allocate(GameObject());
-
-      Assert::IsNull(transform->getParent());
-      Assert::AreEqual((size_t)0, parent->getChildCount());
-
-      transform->setParent(parent.get());
-
-      Assert::AreEqual(parent.get(), transform->getParent());
-      Assert::AreEqual((size_t)1, parent->getChildCount());
-
-      transform->deallocate();
-
-      Assert::AreEqual((size_t)0, parent->getChildCount());
+      Assert::AreEqual((size_t)0, parent.getChildCount());
     }
 
 #pragma endregion

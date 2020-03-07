@@ -5,11 +5,9 @@
 
 namespace CelesteTestUtils
 {
-
-class MockKeyboard : public Celeste::Input::Keyboard
-{
-  public:
-    GLboolean getLatestKeyState(int key) { return getLatestKeys()[key]; }
-};
-
+  class MockKeyboard : public Celeste::Input::Keyboard
+  {
+    public:
+      GLboolean getLatestKeyState(int key) { return getLatestKeys()[key]; }
+  };
 }

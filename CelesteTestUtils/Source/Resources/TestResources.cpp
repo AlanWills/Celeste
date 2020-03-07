@@ -24,7 +24,7 @@
 #include "Resources/Resources/Data/PrefabLoadingResources.h"
 #include "Resources/Resources/Models/ModelLoadingResources.h"
 
-#include "Resources/Screens/ScreenLoadingResources.h"
+#include "Resources/Scene/SceneLoadingResources.h"
 
 #include "Resources/Settings/GameSettingsLoadingResources.h"
 #include "Resources/Settings/WindowSettingsLoadingResources.h"
@@ -104,7 +104,7 @@ namespace CelesteTestUtils
 
     PrefabLoadingResources::addAllResourcesToLua();
     ModelLoadingResources::addAllResourcesToLua();
-    ScreenLoadingResources::addAllResourcesToLua();
+    SceneLoadingResources::addAllResourcesToLua();
 
     // Settings
     GameSettingsLoadingResources::addAllResourcesToLua();
@@ -167,7 +167,7 @@ namespace CelesteTestUtils
 
     PrefabLoadingResources::unloadAllResources();
     ModelLoadingResources::unloadAllResources();
-    ScreenLoadingResources::unloadAllResources();
+    SceneLoadingResources::unloadAllResources();
 
     // Settings
     GameSettingsLoadingResources::unloadAllResources();

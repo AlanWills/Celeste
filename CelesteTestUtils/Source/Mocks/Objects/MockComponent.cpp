@@ -7,8 +7,8 @@ namespace CelesteTestUtils
   REGISTER_UNMANAGED_COMPONENT(MockComponent, 10)
 
   //------------------------------------------------------------------------------------------------
-  MockComponent::MockComponent() :
-    m_onSetGameObjectCalled(false),
+  MockComponent::MockComponent(GameObject& gameObject) :
+    Inherited(gameObject),
     m_handleInputCalled(false),
     m_updateCalled(false)
   {

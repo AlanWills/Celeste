@@ -76,7 +76,7 @@ namespace TestCeleste
     {
       AudioManager manager;
       GameObject object;
-      AutoDeallocator<AudioSource> audio = AudioSource::allocate(object);
+      observer_ptr<AudioSource> audio = object.addComponent<AudioSource>();
 
       Assert::AreEqual(1.0f, manager.getMasterVolume());
       Assert::AreEqual(1.0f, audio->getVolume());
@@ -124,7 +124,7 @@ namespace TestCeleste
     {
       AudioManager manager;
       GameObject object;
-      AutoDeallocator<AudioSource> audio = AudioSource::allocate(object);
+      observer_ptr<AudioSource> audio = object.addComponent<AudioSource>();
       audio->setAudioType(AudioType::kMusic);
 
       Assert::IsTrue(audio->getAudioType() == AudioType::kMusic);
@@ -174,7 +174,7 @@ namespace TestCeleste
     {
       AudioManager manager;
       GameObject object;
-      AutoDeallocator<AudioSource> audio = AudioSource::allocate(object);
+      observer_ptr<AudioSource> audio = object.addComponent<AudioSource>();
       audio->setAudioType(AudioType::kSFX);
 
       Assert::IsTrue(audio->getAudioType() == AudioType::kSFX);

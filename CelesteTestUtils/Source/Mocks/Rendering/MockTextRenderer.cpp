@@ -6,5 +6,8 @@ namespace CelesteTestUtils
 {
   REGISTER_UNMANAGED_COMPONENT(MockTextRenderer, 10);
 
-  MockTextRenderer::MockTextRenderer() = default;
+  MockTextRenderer::MockTextRenderer(GameObject& gameObject) :
+    Inherited(gameObject)
+  {
+  }
 }

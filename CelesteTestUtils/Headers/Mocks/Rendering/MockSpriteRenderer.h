@@ -20,6 +20,8 @@ namespace CelesteTestUtils
       bool isRenderCalled() const { return m_renderCalled; }
 
     private:
+      using Inherited = Celeste::Rendering::SpriteRenderer;
+
       mutable bool m_renderCalled;
   };
 }

@@ -18,5 +18,8 @@ namespace CelesteTestUtils
 
       float getCurrentSecondsPerFrame_Public() const { return getCurrentSecondsPerFrame(); }
       void setCurrentSecondsPerFrame_Public(float currentScondsPerFrame) { setCurrentSecondsPerFrame(currentScondsPerFrame); }
+
+    private:
+      using Inherited = Celeste::Animation::Animator;
   };
 }

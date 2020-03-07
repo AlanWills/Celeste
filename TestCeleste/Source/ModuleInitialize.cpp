@@ -26,7 +26,7 @@ namespace TestCeleste
     
     Lua::LuaState::appendToLuaPackagePath(Path(Resources::getResourcesDirectory(), "Scripts", "?.lua;"));
 
-    getWindow()->setViewportDimensions(100, 100);
+    getWindow().setViewportDimensions(100, 100);
   }
 
   //------------------------------------------------------------------------------------------------

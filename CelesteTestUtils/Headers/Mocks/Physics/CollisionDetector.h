@@ -1,12 +1,12 @@
 #pragma once
 
 #include "CelesteTestUtilsDllExport.h"
-#include "Objects/Script.h"
+#include "Objects/Component.h"
 
 
 namespace CelesteTestUtils
 {
-  class CollisionDetector : public Celeste::Script
+  class CollisionDetector : public Celeste::Component
   {
     DECLARE_UNMANAGED_COMPONENT(CollisionDetector, CelesteTestUtilsDllExport)
 
@@ -47,7 +47,7 @@ namespace CelesteTestUtils
       void collisionExit(Celeste::Physics::Collider& collider) override { ++m_collisionExitCount; }
 
     private:
-      using Inherited = Celeste::Script;
+      using Inherited = Celeste::Component;
 
       size_t m_triggerEnterCount;
       size_t m_triggerCount;

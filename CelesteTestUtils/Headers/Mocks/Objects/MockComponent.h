@@ -11,15 +11,11 @@ namespace CelesteTestUtils
     DECLARE_UNMANAGED_COMPONENT(MockComponent, CelesteTestUtilsDllExport)
 
     public:
-      void setGameObject_Public(Celeste::GameObject& gameObject) { setGameObject(gameObject); }
-      bool onSetGameObjectCalled() const { return m_onSetGameObjectCalled; }
-
       bool handleInputCalled() const { return m_handleInputCalled; }
       bool updateCalled() const { return m_updateCalled; }
 
       void reset()
       {
-        m_onSetGameObjectCalled = false;
         m_handleInputCalled = false;
         m_updateCalled = false;
       }
@@ -29,11 +25,9 @@ namespace CelesteTestUtils
 
       static Celeste::EntityAllocator<MockComponent>& getAllocator() { return m_allocator; }
 
-    protected:
-      void onSetGameObject(Celeste::GameObject& parent) override { m_onSetGameObjectCalled = true; }
-
     private:
-      bool m_onSetGameObjectCalled;
+      using Inherited = Celeste::Component;
+
       bool m_handleInputCalled;
       bool m_updateCalled;
   };

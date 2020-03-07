@@ -7,7 +7,8 @@ namespace CelesteTestUtils
   REGISTER_UNMANAGED_COMPONENT(MockRenderer, 10);
 
   //------------------------------------------------------------------------------------------------
-  MockRenderer::MockRenderer() :
+  MockRenderer::MockRenderer(GameObject& gameObject) :
+    Inherited(gameObject),
     m_renderCalled(false)
   {
   }

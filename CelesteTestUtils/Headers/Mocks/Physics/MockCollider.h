@@ -39,6 +39,8 @@ namespace CelesteTestUtils
       }
 
     private:
+      using Inherited = Celeste::Physics::Collider;
+
       bool m_onSetOffSetCalled;
   };
 }

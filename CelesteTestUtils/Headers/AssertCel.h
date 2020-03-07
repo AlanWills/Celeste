@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CppUnitTest.h"
-#include "AutoDeallocator.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

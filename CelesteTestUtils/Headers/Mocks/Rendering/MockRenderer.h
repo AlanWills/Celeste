@@ -19,6 +19,8 @@ namespace CelesteTestUtils
       bool isRenderCalled() const { return m_renderCalled; }
 
     private:
+      using Inherited = Celeste::Rendering::Renderer;
+
       mutable bool m_renderCalled;
       glm::vec2 m_dimensions;
   };

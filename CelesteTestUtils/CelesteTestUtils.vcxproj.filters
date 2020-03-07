@@ -33,13 +33,7 @@
     <ClInclude Include="Headers\Mocks\Objects\MockObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Mocks\Objects\MockScript.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Mocks\Physics\MockCollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Mocks\Physics\MockRigidBody2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Mocks\Rendering\MockRenderer.h">
@@ -69,9 +63,6 @@
     <ClInclude Include="Headers\Mocks\Resources\Shaders\MockVertexShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Mocks\Resources\MockLoadResourcesAsyncScript.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Mocks\Resources\MockResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -94,9 +85,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\AutoALDeallocator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\AutoDeallocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\AutoGLDeallocator.h">
@@ -252,18 +240,6 @@
     <ClInclude Include="Headers\Resources\Resources\Models\ModelLoadingResources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Mocks\Input\MockKeyboardVisibility.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Mocks\Input\MockKeyboardActivator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Mocks\Physics\MockEllipseCollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Mocks\Rendering\MockCanvas.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Mocks\Objects\MockEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -306,12 +282,6 @@
     <ClInclude Include="Headers\Utils\XMLUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Utils\ScreenXMLUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Mocks\ObjectFX\MockLimitedLifeTime.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Utils\InputUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -319,9 +289,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\AssertSpecialization\FileSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Mocks\UI\MockProgressBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\CelesteTestUtilsDllExport.h">
@@ -335,13 +302,7 @@
     <ClCompile Include="Source\Mocks\Objects\MockComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mocks\Objects\MockScript.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Mocks\Physics\MockCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mocks\Physics\MockRigidBody2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mocks\Rendering\MockRenderer.cpp">
@@ -351,9 +312,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mocks\Rendering\MockTextRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mocks\Resources\MockLoadResourcesAsyncScript.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mocks\UI\MockButton.cpp">
@@ -437,18 +395,6 @@
     <ClCompile Include="Source\Resources\TestResources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mocks\Input\MockKeyboardVisibility.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mocks\Input\MockKeyboardActivator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mocks\Physics\MockEllipseCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mocks\Rendering\MockCanvas.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Resources\Animation\AnimatorLoadingResources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -476,12 +422,6 @@
     <ClCompile Include="Source\Utils\XMLUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utils\ScreenXMLUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mocks\ObjectFX\MockLimitedLifeTime.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\KeyboardTextInputtedEventUnsubscriber.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -489,12 +429,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utils\InputUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mocks\UI\MockProgressBar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AutoDeallocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Resources\Scene\SceneLoadingResources.cpp">

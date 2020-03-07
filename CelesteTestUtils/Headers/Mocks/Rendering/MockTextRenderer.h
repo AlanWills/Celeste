@@ -20,5 +20,8 @@ namespace CelesteTestUtils
       {
         return getYPosition(halfMaxWidth);
       }
+
+    private:
+      using Inherited = Celeste::Rendering::TextRenderer;
   };
 }

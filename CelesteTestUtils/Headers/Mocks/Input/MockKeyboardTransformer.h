@@ -16,5 +16,8 @@ namespace CelesteTestUtils
 
       const float getRotationDelta_Public() const { return getRotationDelta(); }
       void setRotationDelta_Public(float delta) { setRotationDelta(delta); }
+
+    private:
+      using Inherited = Celeste::Input::KeyboardTransformer;
   };
 }

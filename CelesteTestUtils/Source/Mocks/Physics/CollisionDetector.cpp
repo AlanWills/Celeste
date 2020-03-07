@@ -7,7 +7,8 @@ namespace CelesteTestUtils
   REGISTER_UNMANAGED_COMPONENT(CollisionDetector, 4)
 
   //------------------------------------------------------------------------------------------------
-  CollisionDetector::CollisionDetector() :
+  CollisionDetector::CollisionDetector(GameObject& gameObject) :
+    Inherited(gameObject),
     m_triggerEnterCount(0),
     m_triggerCount(0),
     m_triggerExitCount(0),

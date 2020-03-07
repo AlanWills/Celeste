@@ -144,7 +144,6 @@
     <ClInclude Include="Headers\AssertCel.h" />
     <ClInclude Include="Headers\AssertSpecialization\FileSystem.h" />
     <ClInclude Include="Headers\AutoALDeallocator.h" />
-    <ClInclude Include="Headers\AutoDeallocator.h" />
     <ClInclude Include="Headers\AutoGLDeallocator.h" />
     <ClInclude Include="Headers\CelesteUnitTest.h" />
     <ClInclude Include="Headers\CelesteTestUtilsDllExport.h" />
@@ -155,16 +154,10 @@
     <ClInclude Include="Headers\Mocks\DataConverters\Input\MockKeyboardTransformerDataConverter.h" />
     <ClInclude Include="Headers\Mocks\DataConverters\Objects\MockEntityDataConverter.h" />
     <ClInclude Include="Headers\Mocks\DataConverters\Physics\MockRigidBody2DDataConverter.h" />
-    <ClInclude Include="Headers\Mocks\Input\MockKeyboardActivator.h" />
-    <ClInclude Include="Headers\Mocks\Input\MockKeyboardVisibility.h" />
-    <ClInclude Include="Headers\Mocks\ObjectFX\MockLimitedLifeTime.h" />
     <ClInclude Include="Headers\Mocks\Objects\MockEntity.h" />
-    <ClInclude Include="Headers\Mocks\Physics\MockEllipseCollider.h" />
-    <ClInclude Include="Headers\Mocks\Rendering\MockCanvas.h" />
     <ClInclude Include="Headers\Mocks\Resources\3D\MockModel.h" />
     <ClInclude Include="Headers\Mocks\Resources\Audio\MockSound.h" />
     <ClInclude Include="Headers\Mocks\Resources\Data\MockPrefab.h" />
-    <ClInclude Include="Headers\Mocks\UI\MockProgressBar.h" />
     <ClInclude Include="Headers\Mocks\XML\Attributes\MockAttribute.h" />
     <ClInclude Include="Headers\Mocks\DataConverters\Audio\MockAudioSourceDataConverter.h" />
     <ClInclude Include="Headers\Mocks\DataConverters\Callbacks\MockCallbackDataConverter.h" />
@@ -192,11 +185,9 @@
     <ClInclude Include="Headers\Mocks\Objects\MockComponent.h" />
     <ClInclude Include="Headers\Mocks\Objects\MockGameObject.h" />
     <ClInclude Include="Headers\Mocks\Objects\MockObject.h" />
-    <ClInclude Include="Headers\Mocks\Objects\MockScript.h" />
     <ClInclude Include="Headers\Mocks\Objects\MockScriptableObject.h" />
     <ClInclude Include="Headers\Mocks\Physics\CollisionDetector.h" />
     <ClInclude Include="Headers\Mocks\Physics\MockCollider.h" />
-    <ClInclude Include="Headers\Mocks\Physics\MockRigidBody2D.h" />
     <ClInclude Include="Headers\Mocks\Rendering\MockRenderer.h" />
     <ClInclude Include="Headers\Mocks\Rendering\MockSpriteBatch.h" />
     <ClInclude Include="Headers\Mocks\Rendering\MockSpriteRenderer.h" />
@@ -204,7 +195,6 @@
     <ClInclude Include="Headers\Mocks\Resources\Fonts\MockFont.h" />
     <ClInclude Include="Headers\Mocks\Resources\Fonts\MockFontInstance.h" />
     <ClInclude Include="Headers\Mocks\Resources\Data\MockData.h" />
-    <ClInclude Include="Headers\Mocks\Resources\MockLoadResourcesAsyncScript.h" />
     <ClInclude Include="Headers\Mocks\Resources\MockResource.h" />
     <ClInclude Include="Headers\Mocks\Resources\MockResourceLoader.h" />
     <ClInclude Include="Headers\Mocks\Resources\MockResourceManager.h" />
@@ -243,36 +233,25 @@
     <ClInclude Include="Headers\UtilityHeaders\UnitTestHeaders.h" />
     <ClInclude Include="Headers\Utils\GameObjectXMLUtils.h" />
     <ClInclude Include="Headers\Utils\InputUtils.h" />
-    <ClInclude Include="Headers\Utils\ScreenXMLUtils.h" />
     <ClInclude Include="Headers\Utils\XMLUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Headers\Mocks\DataConverters\Physics\MockRectangleColliderDataConverter.h" />
     <ClCompile Include="Source\ALUnitTest.cpp" />
     <ClCompile Include="Source\AssertCel.cpp" />
-    <ClCompile Include="Source\AutoDeallocator.cpp" />
     <ClCompile Include="Source\CelesteUnitTest.cpp" />
     <ClCompile Include="Source\KeyboardTextInputtedEventUnsubscriber.cpp" />
     <ClCompile Include="Source\Mocks\Animation\MockAnimator.cpp" />
     <ClCompile Include="Source\Mocks\DataConverters\Objects\MockComponentDataConverter.cpp" />
-    <ClCompile Include="Source\Mocks\Input\MockKeyboardActivator.cpp" />
     <ClCompile Include="Source\Mocks\Input\MockKeyboardTransformer.cpp" />
-    <ClCompile Include="Source\Mocks\Input\MockKeyboardVisibility.cpp" />
-    <ClCompile Include="Source\Mocks\ObjectFX\MockLimitedLifeTime.cpp" />
     <ClCompile Include="Source\Mocks\Objects\MockComponent.cpp" />
-    <ClCompile Include="Source\Mocks\Objects\MockScript.cpp" />
     <ClCompile Include="Source\Mocks\Objects\MockScriptableObject.cpp" />
     <ClCompile Include="Source\Mocks\Physics\CollisionDetector.cpp" />
     <ClCompile Include="Source\Mocks\Physics\MockCollider.cpp" />
-    <ClCompile Include="Source\Mocks\Physics\MockEllipseCollider.cpp" />
-    <ClCompile Include="Source\Mocks\Physics\MockRigidBody2D.cpp" />
-    <ClCompile Include="Source\Mocks\Rendering\MockCanvas.cpp" />
     <ClCompile Include="Source\Mocks\Rendering\MockRenderer.cpp" />
     <ClCompile Include="Source\Mocks\Rendering\MockSpriteRenderer.cpp" />
     <ClCompile Include="Source\Mocks\Rendering\MockTextRenderer.cpp" />
-    <ClCompile Include="Source\Mocks\Resources\MockLoadResourcesAsyncScript.cpp" />
     <ClCompile Include="Source\Mocks\UI\MockButton.cpp" />
-    <ClCompile Include="Source\Mocks\UI\MockProgressBar.cpp" />
     <ClCompile Include="Source\Mocks\UI\MockTextBox.cpp" />
     <ClCompile Include="Source\Resources\Animation\AnimatorLoadingResources.cpp" />
     <ClCompile Include="Source\Resources\Audio\AudioSourceLoadingResources.cpp" />
@@ -301,7 +280,6 @@
     <ClCompile Include="Source\Resources\UI\StackPanelLoadingResources.cpp" />
     <ClCompile Include="Source\Utils\GameObjectXMLUtils.cpp" />
     <ClCompile Include="Source\Utils\InputUtils.cpp" />
-    <ClCompile Include="Source\Utils\ScreenXMLUtils.cpp" />
     <ClCompile Include="Source\Utils\XMLUtils.cpp" />
   </ItemGroup>
   <ItemGroup>

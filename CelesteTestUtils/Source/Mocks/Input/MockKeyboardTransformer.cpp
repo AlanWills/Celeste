@@ -6,5 +6,8 @@ namespace CelesteTestUtils
 {
   REGISTER_UNMANAGED_COMPONENT(MockKeyboardTransformer, 10)
 
-    MockKeyboardTransformer::MockKeyboardTransformer() = default;
+  MockKeyboardTransformer::MockKeyboardTransformer(GameObject& gameObject) :
+    Inherited(gameObject)
+  {
+  }
 }

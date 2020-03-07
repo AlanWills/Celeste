@@ -8,12 +8,8 @@ namespace CelesteTestUtils
   REGISTER_UNMANAGED_COMPONENT(MockTextBox, 10);
 
   //------------------------------------------------------------------------------------------------
-  MockTextBox::MockTextBox() = default;
-
-  //------------------------------------------------------------------------------------------------
-  MockTextBox::~MockTextBox()
+  MockTextBox::MockTextBox(GameObject& gameObject) :
+    Inherited(gameObject)
   {
-    Input::getKeyboard().getTextInputtedEvent().unsubscribe(getTextInputtedEventHandle());
-    Input::getKeyboard().getKeyPressedEvent().unsubscribe(getKeyPressedEventHandle());
   }
 }

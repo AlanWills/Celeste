@@ -11,9 +11,10 @@ namespace CelesteTestUtils
     DECLARE_UNMANAGED_COMPONENT(MockTextBox, CelesteTestUtilsDllExport)
 
     public:
-      ~MockTextBox() override;
-
       Celeste::StringId getTextInputtedEventHandle_Public() const { return getTextInputtedEventHandle(); }
       Celeste::StringId getKeyPressedEventHandle_Public() const { return getKeyPressedEventHandle(); }
+
+    private:
+      using Inherited = Celeste::UI::TextBox;
   };
 }
