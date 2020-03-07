@@ -7,7 +7,6 @@ namespace Celeste
   using namespace Resources;
 
   const char* const SceneDataConverter::SCENE_ELEMENT_NAME("Scene");
-  const char* const SceneDataConverter::NAME_ATTRIBUTE_NAME("name");
   const char* const SceneDataConverter::PRELOADABLE_FONTS_ELEMENT_NAME("Fonts");
   const char* const SceneDataConverter::PRELOADABLE_FONT_ELEMENT_NAME("Font");
   const char* const SceneDataConverter::PRELOADABLE_VERTEX_SHADERS_ELEMENT_NAME("VertexShaders");
@@ -24,7 +23,6 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   SceneDataConverter::SceneDataConverter(const std::string& elementName) :
     Inherited(elementName),
-    m_name(createReferenceAttribute<std::string>(NAME_ATTRIBUTE_NAME, "", DeserializationRequirement::kRequired)),
     m_fonts(createListElement<std::string>(PRELOADABLE_FONTS_ELEMENT_NAME, XML::ChildElementName(PRELOADABLE_FONT_ELEMENT_NAME))),
     m_vertexShaders(createListElement<std::string>(PRELOADABLE_VERTEX_SHADERS_ELEMENT_NAME, XML::ChildElementName(PRELOADABLE_VERTEX_SHADER_ELEMENT_NAME))),
     m_fragmentShaders(createListElement<std::string>(PRELOADABLE_FRAGMENT_SHADERS_ELEMENT_NAME, XML::ChildElementName(PRELOADABLE_FRAGMENT_SHADER_ELEMENT_NAME))),

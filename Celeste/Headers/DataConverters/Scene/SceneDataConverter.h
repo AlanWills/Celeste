@@ -20,7 +20,6 @@ namespace Celeste
 
       CelesteDllExport void instantiate() const;
 
-      inline const std::string& getName() const { return m_name.getValue(); }
       inline const std::vector<std::string>& getPreloadableFonts() const { return m_fonts.getChildren(); }
       inline const std::vector<std::string>& getPreloadableVertexShaders() const { return m_vertexShaders.getChildren(); }
       inline const std::vector<std::string>& getPreloadableFragmentShaders() const { return m_fragmentShaders.getChildren(); }
@@ -30,7 +29,6 @@ namespace Celeste
       inline const GameObjectDataConverters& getGameObjects() const { return m_gameObjects.getItems(); }
       
       CelesteDllExport static const char* const SCENE_ELEMENT_NAME;
-      CelesteDllExport static const char* const NAME_ATTRIBUTE_NAME;
       CelesteDllExport static const char* const PRELOADABLE_FONTS_ELEMENT_NAME;
       CelesteDllExport static const char* const PRELOADABLE_FONT_ELEMENT_NAME;
       CelesteDllExport static const char* const PRELOADABLE_VERTEX_SHADERS_ELEMENT_NAME;
@@ -52,7 +50,6 @@ namespace Celeste
 
       bool tryConvertResources(const tinyxml2::XMLElement* screenElement);
 
-      XML::ReferenceAttribute<std::string>& m_name;
       XML::ListElement<std::string>& m_fonts;
       XML::ListElement<std::string>& m_vertexShaders;
       XML::ListElement<std::string>& m_fragmentShaders;
