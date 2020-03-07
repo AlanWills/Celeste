@@ -3,7 +3,7 @@
 #include "CelesteDllExport.h"
 
 
-namespace Celeste::Lua::LimitedLifeTimeScriptCommands
+namespace Celeste::Lua::Events::EventTriggererScriptCommands
 {
   CelesteDllExport void initialize();
 }

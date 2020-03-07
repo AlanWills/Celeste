@@ -3,7 +3,7 @@
 #include "CelesteDllExport.h"
 
 
-namespace Celeste::Lua::ObjectFXScriptCommands
+namespace Celeste::Lua::Events::ScriptCommands
 {
   CelesteDllExport void initialize();
 }

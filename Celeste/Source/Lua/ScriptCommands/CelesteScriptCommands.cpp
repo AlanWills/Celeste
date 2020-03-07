@@ -1,6 +1,7 @@
 #include "Lua/ScriptCommands/CelesteScriptCommands.h"
 #include "Lua/ScriptCommands/CoreScriptCommands.h"
 #include "Lua/ScriptCommands/Audio/AudioScriptCommands.h"
+#include "Lua/ScriptCommands/Events/EventScriptCommands.h"
 #include "Lua/ScriptCommands/Resources/ResourcesScriptCommands.h"
 #include "Lua/ScriptCommands/Screens/ScreenScriptCommands.h"
 #include "Lua/ScriptCommands/Maths/MathsScriptCommands.h"
@@ -8,7 +9,6 @@
 #include "Lua/ScriptCommands/Physics/PhysicsScriptCommands.h"
 #include "Lua/ScriptCommands/Rendering/RenderingScriptCommands.h"
 #include "Lua/ScriptCommands/Input/InputScriptCommands.h"
-#include "Lua/ScriptCommands/ObjectFX/ObjectFXScriptCommands.h"
 #include "Lua/ScriptCommands/Objects/ObjectScriptCommands.h"
 #include "Lua/ScriptCommands/DataConverters/DataConverterScriptCommands.h"
 #include "Lua/ScriptCommands/UI/UIScriptCommands.h"
@@ -41,7 +41,7 @@ namespace Celeste::Lua::CelesteScriptCommands
     Lua::Rendering::ScriptCommands::initialize();
     Lua::Input::ScriptCommands::initialize();
     Lua::UI::ScriptCommands::initialize();
-    Lua::ObjectFXScriptCommands::initialize();
+    Lua::Events::ScriptCommands::initialize();
     Lua::LuaComponentManifestRegistryScriptCommands::initialize();
   }
 }

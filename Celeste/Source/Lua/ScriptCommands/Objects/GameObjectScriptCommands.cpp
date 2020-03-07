@@ -59,7 +59,19 @@ namespace Celeste::Lua::GameObjectScriptCommands
     //------------------------------------------------------------------------------------------------
     observer_ptr<GameObject> findChildGameObject(GameObject& gameObject, const std::string& childName)
     {
-      return gameObject.findChildGameObject(childName);
+      return gameObject.findChild(childName);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    observer_ptr<GameObject> findGameObject_StringOverload(const std::string& childName)
+    {
+      return GameObject::find(childName);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    observer_ptr<GameObject> findGameObject_StringIdOverload(StringId childName)
+    {
+      return GameObject::find(childName);
     }
   }
 
@@ -80,9 +92,9 @@ namespace Celeste::Lua::GameObjectScriptCommands
       "getComponent", &GameObject::getComponent,
       "addComponent", &Internals::addComponent,
       "getChildCount", &GameObject::getChildCount,
-      "getChildTransform", &GameObject::getChildTransform,
-      "getChildGameObject", &GameObject::getChildGameObject,
-      "findChildGameObject", &Internals::findChildGameObject);
+      "getChild", &GameObject::getChild,
+      "findChild", &Internals::findChildGameObject,
+      "find", sol::overload(&Internals::findGameObject_StringOverload, Internals::findGameObject_StringIdOverload));
 
     LuaState::requireModule("Objects.GameObject");
   }

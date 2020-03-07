@@ -20,8 +20,7 @@ namespace Celeste
   template <typename T>
   bool deserialize(const std::string& text, T& output)
   {
-    STATIC_ASSERT_FAIL("Provide template specialization of deserialize for this type");
-    return false;
+    return Celeste::from_string<T>(text, output);
   }
 
   //------------------------------------------------------------------------------------------------

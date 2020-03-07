@@ -221,11 +221,12 @@
     <ClInclude Include="Headers\Debug\Log.h" />
     <ClInclude Include="Headers\Debug\Profiling\IProfiler.h" />
     <ClInclude Include="Headers\Debug\Profile.h" />
+    <ClInclude Include="Headers\Events\TriggerMode.h" />
     <ClInclude Include="Headers\Lua\Components\LuaComponentManifestRegistryAllocator.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Events\EventScriptCommands.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Events\EventTriggererScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Input\MouseInteractionHandlerScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Maths\TransformScriptCommands.h" />
-    <ClInclude Include="Headers\Lua\ScriptCommands\ObjectFX\LimitedLifeTimeScriptCommands.h" />
-    <ClInclude Include="Headers\Lua\ScriptCommands\ObjectFX\ObjectFXScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Rendering\SpriteRendererScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Rendering\TextRendererScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\UI\ProgressBarScriptCommands.h" />
@@ -423,7 +424,6 @@
     <ClInclude Include="Headers\Memory\Allocators\EntityAllocator.h" />
     <ClInclude Include="Headers\Memory\Allocators\DoubleBufferAllocator.h" />
     <ClInclude Include="Headers\Memory\Allocators\PoolAllocator.h" />
-    <ClInclude Include="Headers\ObjectFX\LimitedLifeTime.h" />
     <ClInclude Include="Headers\Objects\Component.h" />
     <ClInclude Include="Headers\Objects\GameObject.h" />
     <ClInclude Include="Headers\Objects\Object.h" />
@@ -498,6 +498,7 @@
     <ClCompile Include="Source\Deserialization\Deserializers.cpp" />
     <ClCompile Include="Source\Deserialization\InputDeserializers.cpp" />
     <ClCompile Include="Source\Deserialization\ViewportDeserializers.cpp" />
+    <ClCompile Include="Source\Events\TriggerMode.cpp" />
     <ClCompile Include="Source\Input\InputEnums.cpp" />
     <ClCompile Include="Source\Input\Key.cpp" />
     <ClCompile Include="Source\Input\Utils\GlfwKeyConverter.cpp" />
@@ -515,6 +516,8 @@
     <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\Objects\ComponentDataConverterScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\DataConverterScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\LuaComponentDataConverterScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Events\EventScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Events\EventTriggererScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Input\InputScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Input\KeyboardActivatorScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Input\KeyboardVisibilityScriptCommands.cpp" />
@@ -525,8 +528,6 @@
     <ClCompile Include="Source\Lua\ScriptCommands\Maths\VectorScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Maths\MathsScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Media\VideoScriptCommands.cpp" />
-    <ClCompile Include="Source\Lua\ScriptCommands\ObjectFX\LimitedLifeTimeScriptCommands.cpp" />
-    <ClCompile Include="Source\Lua\ScriptCommands\ObjectFX\ObjectFXScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\ComponentScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\EntityScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\GameObjectScriptCommands.cpp" />
@@ -573,7 +574,6 @@
     <ClCompile Include="Source\Registries\ComponentDataConverterRegistry.cpp" />
     <ClCompile Include="Source\DataConverters\DataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\GraphicalFX\OpacityLerperDataConverter.cpp" />
-    <ClCompile Include="Source\DataConverters\ObjectFX\LimitedLifeTimeDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Objects\GameObjectDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Rendering\SpriteRendererDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Rendering\TextRendererDataConverter.cpp" />
@@ -604,7 +604,6 @@
     <ClCompile Include="Source\Maths\Rectangle.cpp" />
     <ClCompile Include="Source\Maths\Transform.cpp" />
     <ClCompile Include="Source\Memory\AlignedAllocator.cpp" />
-    <ClCompile Include="Source\ObjectFX\LimitedLifeTime.cpp" />
     <ClCompile Include="Source\Objects\Component.cpp" />
     <ClCompile Include="Source\Objects\GameObject.cpp" />
     <ClCompile Include="Source\Physics\Collider.cpp" />
@@ -683,6 +682,7 @@
       </SubType>
     </None>
     <None Include="Resources\Scripts\DataConverters\DataConverters.lua" />
+    <None Include="Resources\Scripts\DataConverters\Events\EventTriggererDataConverter.lua" />
     <None Include="Resources\Scripts\DataConverters\Input\KeyboardActivatorDataConverter.lua" />
     <None Include="Resources\Scripts\DataConverters\Input\KeyboardVisibilityDataConverter.lua" />
     <None Include="Resources\Scripts\DataConverters\Physics\EllipseColliderDataConverter.lua" />

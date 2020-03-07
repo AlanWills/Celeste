@@ -24,18 +24,6 @@ namespace Celeste::Lua::ScreenScriptCommands
     {
       return deinternString(screen.getName());
     }
-
-    //------------------------------------------------------------------------------------------------
-    observer_ptr<GameObject> findGameObject_StringOverload(Screen& screen, const std::string& gameObjectName)
-    {
-      return screen.findGameObject(gameObjectName);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    observer_ptr<GameObject> findGameObject_StringIdOverload(Screen& screen, StringId gameObjectName)
-    {
-      return screen.findGameObject(gameObjectName);
-    }
   }
 
   //------------------------------------------------------------------------------------------------
@@ -45,7 +33,6 @@ namespace Celeste::Lua::ScreenScriptCommands
       "Screen",
       sol::base_classes, sol::bases<Entity, Object>(),
       "load", sol::factories(Internals::load),
-      "getName", &Internals::getName,
-      "findGameObject", sol::overload(&Internals::findGameObject_StringOverload, &Internals::findGameObject_StringIdOverload));
+      "getName", &Internals::getName);
   }
 }

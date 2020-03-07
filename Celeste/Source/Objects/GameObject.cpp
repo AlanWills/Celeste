@@ -234,7 +234,39 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  GameObject* GameObject::findChildGameObject(StringId name)
+  GameObject* GameObject::find(const FindGameObjectPredicate& predicate)
+  {
+    for (auto& gameObject : m_allocator)
+    {
+      if (predicate(gameObject))
+      {
+        return &gameObject;
+      }
+    }
+
+    return nullptr;
+  }
+
+  //------------------------------------------------------------------------------------------------
+  GameObject* GameObject::findWithTag(StringId tag)
+  {
+    return find([tag](const GameObject& gameObject)
+      {
+        return gameObject.getTag() == tag;
+      });
+  }
+
+  //------------------------------------------------------------------------------------------------
+  GameObject* GameObject::find(StringId name)
+  {
+    return find([name](const GameObject& gameObject)
+      {
+        return gameObject.getName() == name;
+      });
+  }
+
+  //------------------------------------------------------------------------------------------------
+  GameObject* GameObject::findChild(StringId name)
   { 
     for (GameObject* gameObject : *this)
     {

@@ -16,12 +16,12 @@ function GameObject.findComponent(go, componentName)
 end
 
 ----------------------------------------------------------------------------------------
-function GameObject.findChildGameObject(go, childName)
+function GameObject.findChild(go, childName)
     local i = 0
     local childCount = go:getChildCount()
     
     while i < childCount do
-        local child = go:getChildGameObject(i)
+        local child = go:getChild(i)
         if child:getName() == childName then
             return child
         end
@@ -34,7 +34,7 @@ end
 
 ----------------------------------------------------------------------------------------
 function GameObject.setupChildLeftButtonUpCallback(parent, childName, callback, extraArgs)
-    local button = parent:findChildGameObject(childName)
+    local button = parent:findChild(childName)
     local buttonInteractionHandler = button:findComponent("MouseInteractionHandler")
     buttonInteractionHandler:subscribeOnLeftButtonUpCallback(callback, extraArgs or nil)
 end

@@ -34,27 +34,27 @@ local TestGameObject = { }
     
 	-- Find Child Game Object Tests
     ------------------------------------------------------------------------------------------------
-    function TestGameObject.findChildGameObject_InputtingNilGameObject_ReturnsNil()
+    function TestGameObject.findChild_InputtingNilGameObject_ReturnsNil()
         CelesteAssert.fail()
     end
 
     ------------------------------------------------------------------------------------------------
-    function TestGameObject.findChildGameObject_InputtingEmptyChildName_ReturnsNil()
+    function TestGameObject.findChild_InputtingEmptyChildName_ReturnsNil()
         CelesteAssert.fail()
     end
 	
     ------------------------------------------------------------------------------------------------
-    function TestGameObject.findChildGameObject_InputtingNonExistentChildName_ReturnsNil()
+    function TestGameObject.findChild_InputtingNonExistentChildName_ReturnsNil()
         CelesteAssert.fail()
     end
 		
     ------------------------------------------------------------------------------------------------
-    function TestGameObject.findChildGameObject_InputtingExistentChildName_ReturnsCorrectGameObjectHandle()
+    function TestGameObject.findChild_InputtingExistentChildName_ReturnsCorrectGameObjectHandle()
         CelesteAssert.fail()
     end
 	
     ------------------------------------------------------------------------------------------------
-    function TestGameObject.findChildGameObject_InputtingExistentChildName_ReturnsFirstMatchingGameObjectHandle()
+    function TestGameObject.findChild_InputtingExistentChildName_ReturnsFirstMatchingGameObjectHandle()
         CelesteAssert.fail()
     end
 	

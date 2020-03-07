@@ -25,6 +25,8 @@ namespace Celeste
     CUSTOM_MEMORY_DECLARATION(GameObject, CelesteDllExport);
 
     public:
+      using FindGameObjectPredicate = std::function<bool(const GameObject&)>;
+      
       CelesteDllExport GameObject();
       CelesteDllExport ~GameObject() override;
 
@@ -75,11 +77,16 @@ namespace Celeste
       inline StringId getTag() const { return m_tag; }
 
       inline size_t getChildCount() const { return m_transform != nullptr ? m_transform->getChildCount() : 0; }
-      inline Transform* getChildTransform(size_t index) { return m_transform != nullptr ? m_transform->getChildTransform(index) : nullptr; }
-      inline GameObject* getChildGameObject(size_t index) { return m_transform != nullptr ? m_transform->getChildGameObject(index) : nullptr; }
+      inline GameObject* getChild(size_t index) { return m_transform != nullptr ? m_transform->getChildGameObject(index) : nullptr; }
     
-      CelesteDllExport GameObject* findChildGameObject(StringId name);
-      GameObject* findChildGameObject(const std::string& name) { return findChildGameObject(internString(name)); }
+      CelesteDllExport GameObject* findChild(StringId name);
+      GameObject* findChild(const std::string& name) { return findChild(internString(name)); }
+
+      static GameObject* find(const FindGameObjectPredicate& predicate);
+      static GameObject* find(StringId name);
+      static GameObject* find(const std::string& name) { return find(internString(name)); }
+      static CelesteDllExport GameObject* findWithTag(StringId tag);
+      static GameObject* findWithTag(const std::string& tag) { return findWithTag(internString(tag)); }
 
       inline GameObjectIterator begin() const { return m_transform != nullptr ? m_transform->begin() : GameObjectIterator(std::vector<Transform*>::const_iterator()); }
       inline GameObjectIterator end() const { return m_transform != nullptr ? m_transform->end() : GameObjectIterator(std::vector<Transform*>::const_iterator()); }

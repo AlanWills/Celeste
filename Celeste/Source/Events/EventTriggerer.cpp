@@ -1,17 +1,18 @@
 #include "Events/EventTriggerer.h"
 #include "UtilityHeaders/ComponentHeaders.h"
+#include "Input/InputUtils.h"
+#include "Input/Keyboard.h"
 
 
-namespace Celeste
+namespace Celeste::Events
 {
   REGISTER_UNMANAGED_COMPONENT(EventTriggerer, 10)
 
   //------------------------------------------------------------------------------------------------
   EventTriggerer::EventTriggerer(GameObject& gameObject) :
     Inherited(gameObject),
-    m_triggerMode(TriggerMode::kOnce),
-    m_condition(nullptr),
-    m_event()
+    m_event(),
+    m_triggerCondition(nullptr)
   {
   }
 
@@ -20,14 +21,27 @@ namespace Celeste
   {
     Inherited::update(elapsedGameTime);
 
-    if (m_condition && m_condition(*getGameObject()))
-    {
-      m_event.invoke(*getGameObject());
+    m_currentTriggerTimer += elapsedGameTime;
 
-      if (m_triggerMode == TriggerMode::kOnce)
-      {
-        getGameObject()->removeComponent(this);
-      }
+    if ((m_triggerCondition && m_triggerCondition(*getGameObject())) ||
+        Input::getKeyboard().isKeyTapped(m_triggerKey) ||
+        (m_currentTriggerTimer >= m_triggerDelay))
+    {
+      invokeEvent();
     }
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void EventTriggerer::invokeEvent()
+  {
+    m_currentTriggerTimer = 0;
+
+    GameObject* gameObject = getGameObject();
+    if (m_triggerMode == TriggerMode::kOnce)
+    {
+      gameObject->removeComponent(this);
+    }
+
+    m_event.invoke(*gameObject);
   }
 }

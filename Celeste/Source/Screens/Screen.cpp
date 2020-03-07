@@ -107,42 +107,4 @@ namespace Celeste
       transform->getGameObject()->setActive(isActive);
     }
   }
-
-  //------------------------------------------------------------------------------------------------
-  GameObject* Screen::findGameObjectWithTag(StringId tag)
-  {
-    return findGameObject([tag](const GameObject& gameObject)
-    {
-      return gameObject.getTag() == tag;
-    });
-  }
-
-  //------------------------------------------------------------------------------------------------
-  GameObject* Screen::findGameObject(StringId name)
-  {
-    return findGameObject([name](const GameObject& gameObject)
-    {
-      return gameObject.getName() == name;
-    });
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void Screen::findGameObjectsWithTag(StringId tag, std::vector<std::reference_wrapper<GameObject>>& foundGameObjects)
-  {
-    findGameObjects(
-      [tag](const GameObject& gameObject)
-      {
-        return gameObject.getTag() == tag;
-      }, foundGameObjects);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void Screen::findGameObjectsWithTag(StringId tag, std::vector<std::reference_wrapper<const GameObject>>& foundGameObjects) const
-  {
-    findGameObjects(
-      [tag](const GameObject& gameObject)
-    {
-      return gameObject.getTag() == tag;
-    }, foundGameObjects);
-  }
 }
