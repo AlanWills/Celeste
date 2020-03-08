@@ -36,10 +36,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(RigidBody2DLoadingResources::getValidFullPath());
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<RigidBody2D*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<RigidBody2D*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -508,16 +508,10 @@ namespace TestCeleste
 #pragma region Set Values Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(RigidBody2DDataConverter_SetValues_InputtingNullRigidBody2D_DoesNothing)
-  {
-    RigidBody2DDataConverter converter;
-    converter.setValues(RigidBody2D());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(RigidBody2DDataConverter_SetValues_InputtingRigidBody2D_DataNotLoadedCorrectly_DoesNothing)
   {
-    RigidBody2D rigidBody;
+    GameObject gameObject;
+    RigidBody2D rigidBody(gameObject);
     rigidBody.setLinearVelocity(1, 2);
     rigidBody.setAngularVelocity(0.3f);
 
@@ -534,7 +528,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(RigidBody2DDataConverter_SetValues_InputtingRigidBody2D_DataLoadedCorrectly_ChangesRigidBody2DToMatchData)
   {
-    RigidBody2D rigidBody;
+    GameObject gameObject;
+    RigidBody2D rigidBody(gameObject);
     rigidBody.setLinearVelocity(1, 2);
     rigidBody.setAngularVelocity(0.3f);
 

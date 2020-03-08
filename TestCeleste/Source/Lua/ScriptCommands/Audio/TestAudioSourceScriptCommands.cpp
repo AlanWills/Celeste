@@ -199,7 +199,8 @@ namespace TestCeleste::Lua::Audio::AudioSourceScriptCommands
     Celeste::Lua::Audio::AudioSourceScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
-    AudioSource audioSource;
+    GameObject gameObject;
+    AudioSource audioSource(gameObject);
     audioSource.setAudioType(AudioType::kMusic);
 
     Assert::IsTrue(AudioType::kMusic == audioSource.getAudioType());
@@ -216,7 +217,8 @@ namespace TestCeleste::Lua::Audio::AudioSourceScriptCommands
     Celeste::Lua::Audio::AudioSourceScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
-    AudioSource audioSource;
+    GameObject gameObject;
+    AudioSource audioSource(gameObject);
     audioSource.setAudioType(AudioType::kSFX);
 
     Assert::IsTrue(AudioType::kSFX == audioSource.getAudioType());
@@ -319,7 +321,8 @@ namespace TestCeleste::Lua::Audio::AudioSourceScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    AudioSource audioSource;
+    GameObject gameObject;
+    AudioSource audioSource(gameObject);
     auto functionResult = state.globals()["AudioSource"]["as"].get<sol::protected_function>().call(&audioSource, "Object");
 
     Assert::IsTrue(functionResult.valid());
@@ -333,7 +336,8 @@ namespace TestCeleste::Lua::Audio::AudioSourceScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    AudioSource audioSource;
+    GameObject gameObject;
+    AudioSource audioSource(gameObject);
     auto functionResult = state.globals()["AudioSource"]["as"].get<sol::protected_function>().call(&audioSource, "AudioSource");
 
     Assert::IsTrue(functionResult.valid());
@@ -350,7 +354,8 @@ namespace TestCeleste::Lua::Audio::AudioSourceScriptCommands
     class MockAudioSource : public Celeste::Audio::AudioSource {};
     state.new_usertype<MockAudioSource>("MockAudioSource");
 
-    AudioSource audioSource;
+    GameObject gameObject;
+    AudioSource audioSource(gameObject);
     auto functionResult = state.globals()["AudioSource"]["as"].get<sol::protected_function>().call(&audioSource, "MockAudioSource");
 
     Assert::IsTrue(functionResult.valid());
@@ -369,7 +374,8 @@ namespace TestCeleste::Lua::Audio::AudioSourceScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    AudioSource audioSource;
+    GameObject gameObject;
+    AudioSource audioSource(gameObject);
     auto functionResult = state.globals()["AudioSource"]["as"].get<sol::protected_function>().call(&audioSource, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());

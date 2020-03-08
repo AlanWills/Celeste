@@ -76,15 +76,15 @@ namespace TestCeleste
     {
       AudioManager manager;
       GameObject object;
-      observer_ptr<AudioSource> audio = object.addComponent<AudioSource>();
+      observer_ptr<AudioSource> audioSource = object.addComponent<AudioSource>();
 
       Assert::AreEqual(1.0f, manager.getMasterVolume());
-      Assert::AreEqual(1.0f, audio->getVolume());
+      Assert::AreEqual(1.0f, audioSource->getVolume());
 
       manager.setMasterVolume(0.5f);
 
       // Keep this volume the same - internally the volume will be changed
-      Assert::AreEqual(1.0f, audio->getVolume());
+      Assert::AreEqual(1.0f, audioSource->getVolume());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -124,17 +124,17 @@ namespace TestCeleste
     {
       AudioManager manager;
       GameObject object;
-      observer_ptr<AudioSource> audio = object.addComponent<AudioSource>();
-      audio->setAudioType(AudioType::kMusic);
+      observer_ptr<AudioSource> audioSource = object.addComponent<AudioSource>();
+      audioSource->setAudioType(AudioType::kMusic);
 
-      Assert::IsTrue(audio->getAudioType() == AudioType::kMusic);
+      Assert::IsTrue(audioSource->getAudioType() == AudioType::kMusic);
       Assert::AreEqual(1.0f, manager.getMusicVolume());
-      Assert::AreEqual(1.0f, audio->getVolume());
+      Assert::AreEqual(1.0f, audioSource->getVolume());
 
       manager.setMusicVolume(0.5f);
 
       // Keep this volume the same - internally the volume will be changed
-      Assert::AreEqual(1.0f, audio->getVolume());
+      Assert::AreEqual(1.0f, audioSource->getVolume());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -174,17 +174,17 @@ namespace TestCeleste
     {
       AudioManager manager;
       GameObject object;
-      observer_ptr<AudioSource> audio = object.addComponent<AudioSource>();
-      audio->setAudioType(AudioType::kSFX);
+      observer_ptr<AudioSource> audioSource = object.addComponent<AudioSource>();
+      audioSource->setAudioType(AudioType::kSFX);
 
-      Assert::IsTrue(audio->getAudioType() == AudioType::kSFX);
+      Assert::IsTrue(audioSource->getAudioType() == AudioType::kSFX);
       Assert::AreEqual(1.0f, manager.getSFXVolume());
-      Assert::AreEqual(1.0f, audio->getVolume());
+      Assert::AreEqual(1.0f, audioSource->getVolume());
 
       manager.setSFXVolume(0.5f);
 
       // Keep this volume the same - internally the volume will be changed
-      Assert::AreEqual(1.0f, audio->getVolume());
+      Assert::AreEqual(1.0f, audioSource->getVolume());
     }
 
     //------------------------------------------------------------------------------------------------

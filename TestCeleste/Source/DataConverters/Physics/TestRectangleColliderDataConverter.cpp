@@ -34,10 +34,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(RectangleColliderLoadingResources::getValidFullPath());
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<RectangleCollider*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<RectangleCollider*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -337,16 +337,10 @@ namespace TestCeleste
 #pragma region Set Values Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(RectangleColliderDataConverter_SetValues_InputtingNullRectangleCollider_DoesNothing)
-  {
-    RectangleColliderDataConverter converter;
-    converter.setValues(RectangleCollider());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(RectangleColliderDataConverter_SetValues_InputtingRectangleCollider_DataNotLoadedCorrectly_DoesNothing)
   {
-    RectangleCollider collider;
+    GameObject gameObject;
+    RectangleCollider collider(gameObject);
     collider.setColliderType(Physics::ColliderType::kTrigger);
     collider.setOffset(0.1f, 0.2f);
 
@@ -363,9 +357,11 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(RectangleColliderDataConverter_SetValues_InputtingRectangleCollider_DataLoadedCorrectly_ChangesRectangleColliderToMatchData)
   {
-    RectangleCollider collider;
-    Assert::IsTrue(collider.getColliderType() == ColliderType::kCollider);
+    GameObject gameObject;
+    RectangleCollider collider(gameObject);
     collider.setOffset(0.1f, 0.2f);
+
+    Assert::IsTrue(collider.getColliderType() == ColliderType::kCollider);
 
     RectangleColliderDataConverter converter;
     converter.convertFromXML(getResourceManager().load<Data>(RectangleColliderLoadingResources::getValidFullPath())->getDocumentRoot());

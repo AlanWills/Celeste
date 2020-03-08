@@ -7,7 +7,6 @@
 
 #include "Mocks/Objects/MockComponent.h"
 
-#include "Screens/Screen.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -136,7 +135,8 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    MockComponent mockComponent;
+    GameObject gameObject;
+    MockComponent mockComponent(gameObject);
     Component* component = static_cast<Component*>(&mockComponent);
     auto functionResult = state.globals()["Component"]["as"].get<sol::protected_function>().call(component, "Object");
 
@@ -151,7 +151,8 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    MockComponent mockComponent;
+    GameObject gameObject;
+    MockComponent mockComponent(gameObject);
     Component* component = static_cast<Component*>(&mockComponent);
     auto functionResult = state.globals()["Component"]["as"].get<sol::protected_function>().call(component, "Component");
 
@@ -169,7 +170,8 @@ namespace TestCeleste::Lua::ScriptCommands
     class DerivedComponent : public MockComponent {};
     state.new_usertype<DerivedComponent>("DerivedComponent");
 
-    MockComponent mockComponent;
+    GameObject gameObject;
+    MockComponent mockComponent(gameObject);
     Component* component = static_cast<Component*>(&mockComponent);
     auto functionResult = state.globals()["Component"]["as"].get<sol::protected_function>().call(component, "DerivedComponent");
 
@@ -189,7 +191,8 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    MockComponent mockComponent;
+    GameObject gameObject;
+    MockComponent mockComponent(gameObject);
     Component* component = static_cast<Component*>(&mockComponent);
     auto functionResult = state.globals()["Component"]["as"].get<sol::protected_function>().call(component, "UnrelatedType");
 

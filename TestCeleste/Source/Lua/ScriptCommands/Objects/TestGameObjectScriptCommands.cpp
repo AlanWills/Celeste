@@ -5,11 +5,9 @@
 #include "Lua/LuaState.h"
 
 #include "Registries/ComponentRegistry.h"
-#include "Registries/DefaultRegistryAllocator.h"
-#include "Screens/Screen.h"
 #include "Mocks/Objects/MockComponent.h"
 #include "Mocks/Rendering/MockRenderer.h"
-#include "Mocks/Objects/MockGameObject.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -18,15 +16,6 @@ using namespace Celeste;
 
 namespace TestCeleste::Lua::ScriptCommands
 {
-  class MockComponentRegistryAllocator : public RegistryAllocator 
-  { 
-    public: 
-      observer_ptr<Component> allocate(const std::string& componentName, GameObject& gameObject) const override 
-      {
-        return gameObject.addComponent<MockComponent>();
-      } 
-  };
-
   CELESTE_TEST_CLASS(TestGameObjectScriptCommands)
 
   //------------------------------------------------------------------------------------------------
@@ -200,27 +189,15 @@ namespace TestCeleste::Lua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_Initialize_Adds_getChildTransform_ToGameObjectTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["GameObject"]["getChildTransform"].valid());
-
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["GameObject"]["getChildTransform"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_Initialize_Adds_getChildGameObject_ToGameObjectTable)
   {
     sol::state& state = LuaState::instance();
 
-    Assert::IsFalse(state.globals()["GameObject"]["getChildGameObject"].valid());
+    Assert::IsFalse(state.globals()["GameObject"]["getChild"].valid());
 
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Assert::IsTrue(state.globals()["GameObject"]["getChildGameObject"].valid());
+    Assert::IsTrue(state.globals()["GameObject"]["getChild"].valid());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -228,11 +205,11 @@ namespace TestCeleste::Lua::ScriptCommands
   {
     sol::state& state = LuaState::instance();
 
-    Assert::IsFalse(state.globals()["GameObject"]["findChildGameObject"].valid());
+    Assert::IsFalse(state.globals()["GameObject"]["findChild"].valid());
 
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Assert::IsTrue(state.globals()["GameObject"]["findChildGameObject"].valid());
+    Assert::IsTrue(state.globals()["GameObject"]["findChild"].valid());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -257,14 +234,13 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    gameObject->setName("");
+    GameObject gameObject;
+    gameObject.setName("");
 
-    Assert::AreEqual(internString(""), gameObject->getName());
+    Assert::AreEqual(internString(""), gameObject.getName());
 
     auto functionResult = state.globals()["GameObject"]["getName"].get<sol::protected_function>().call(
-      *gameObject);
+      gameObject);
 
     Assert::IsTrue(functionResult.valid());
     Assert::AreEqual("", functionResult.get<std::string>().c_str());
@@ -276,14 +252,13 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    gameObject->setName("Test");
+    GameObject gameObject;
+    gameObject.setName("Test");
 
-    Assert::AreEqual(internString("Test"), gameObject->getName());
+    Assert::AreEqual(internString("Test"), gameObject.getName());
 
     auto functionResult = state.globals()["GameObject"]["getName"].get<sol::protected_function>().call(
-      *gameObject);
+      gameObject);
 
     Assert::IsTrue(functionResult.valid());
     Assert::AreEqual("Test", functionResult.get<std::string>().c_str());
@@ -299,23 +274,22 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    gameObject->setName("Test");
+    GameObject gameObject;
+    gameObject.setName("Test");
 
-    Assert::AreEqual(internString("Test"), gameObject->getName());
+    Assert::AreEqual(internString("Test"), gameObject.getName());
 
     auto functionResult = state.globals()["GameObject"]["setName"].get<sol::protected_function>().call(
-      *gameObject, "");
+      gameObject, "");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(internString(""), gameObject->getName());
+    Assert::AreEqual(internString(""), gameObject.getName());
 
     functionResult = state.globals()["GameObject"]["setName"].get<sol::protected_function>().call(
-      *gameObject, "");
+      gameObject, "");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(internString(""), gameObject->getName());
+    Assert::AreEqual(internString(""), gameObject.getName());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -324,22 +298,21 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
+    GameObject gameObject;
 
-    Assert::AreEqual(internString(""), gameObject->getName());
+    Assert::AreEqual(internString(""), gameObject.getName());
 
     auto functionResult = state.globals()["GameObject"]["setName"].get<sol::protected_function>().call(
-      *gameObject, "Test");
+      gameObject, "Test");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(internString("Test"), gameObject->getName());
+    Assert::AreEqual(internString("Test"), gameObject.getName());
 
     functionResult = state.globals()["GameObject"]["setName"].get<sol::protected_function>().call(
-      *gameObject, "Test2");
+      gameObject, "Test2");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(internString("Test2"), gameObject->getName());
+    Assert::AreEqual(internString("Test2"), gameObject.getName());
   }
 
 #pragma endregion
@@ -352,14 +325,13 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<MockRenderer> renderer = gameObject->addComponent<MockRenderer>();
+    GameObject gameObject;
+    observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
     renderer->setActive(false);
 
     AssertCel::IsNotActive(*renderer);
 
-    auto functionResult = state["GameObject"]["shouldRender"].get<sol::protected_function>().call(*gameObject);
+    auto functionResult = state["GameObject"]["shouldRender"].get<sol::protected_function>().call(gameObject);
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsFalse(functionResult.get<bool>());
@@ -368,7 +340,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     AssertCel::IsActive(*renderer);
 
-    functionResult = state["GameObject"]["shouldRender"].get<sol::protected_function>().call(*gameObject);
+    functionResult = state["GameObject"]["shouldRender"].get<sol::protected_function>().call(gameObject);
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(functionResult.get<bool>());
@@ -384,62 +356,23 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<MockRenderer> renderer = gameObject->addComponent<MockRenderer>();
+    GameObject gameObject;
+    observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
     renderer->setActive(false);
 
     AssertCel::IsNotActive(*renderer);
 
     auto functionResult = state.globals()["GameObject"]["setShouldRender"].get<sol::protected_function>().call(
-      *gameObject, true);
+      gameObject, true);
 
     Assert::IsTrue(functionResult.valid());
     AssertCel::IsActive(*renderer);
 
     functionResult = state.globals()["GameObject"]["setShouldRender"].get<sol::protected_function>().call(
-      *gameObject, false);
+      gameObject, false);
 
     Assert::IsTrue(functionResult.valid());
     AssertCel::IsNotActive(*renderer);
-  }
-
-#pragma endregion
-
-#pragma region Get Screen Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_getScreen_ScreenNull_ReturnsNullHandle)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    GameObject gameObject;
-
-    Assert::IsNull(gameObject.getScreen());
-
-    auto functionResult = state.globals()["GameObject"]["getScreen"].get<sol::protected_function>().call(gameObject);
-
-    Assert::IsTrue(functionResult.valid());
-    Assert::IsNull(functionResult.get<Screen*>());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_getScreen_ScreenNotNull_ReturnsCorrectHandle)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-
-    Assert::IsTrue(&screen == gameObject->getScreen());
-
-    auto functionResult = state.globals()["GameObject"]["getScreen"].get<sol::protected_function>().call(
-      *gameObject);
-
-    Assert::IsTrue(functionResult.valid());
-    Assert::IsTrue(&screen == functionResult.get<Screen*>());
   }
 
 #pragma endregion
@@ -452,13 +385,12 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
+    GameObject gameObject;
 
-    Assert::IsNull(gameObject->getParent());
+    Assert::IsNull(gameObject.getParent());
 
     auto functionResult = state.globals()["GameObject"]["getParent"].get<sol::protected_function>().call(
-      *gameObject);
+      gameObject);
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsNull(functionResult.get<GameObject*>());
@@ -470,15 +402,14 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
     GameObject parent;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    gameObject->setParent(&parent);
+    GameObject gameObject;
+    gameObject.setParent(&parent);
 
-    Assert::IsTrue(&parent == gameObject->getParent());
+    Assert::IsTrue(&parent == gameObject.getParent());
 
     auto functionResult = state.globals()["GameObject"]["getParent"].get<sol::protected_function>().call(
-      *gameObject);
+      gameObject);
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(&parent == functionResult.get<GameObject*>());
@@ -494,16 +425,15 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
+    GameObject gameObject;
 
-    Assert::IsNull(gameObject->getParent());
+    Assert::IsNull(gameObject.getParent());
 
     auto functionResult = state.globals()["GameObject"]["setParent"].get<sol::protected_function>().call(
-      *gameObject, nullptr);
+      gameObject, nullptr);
 
     Assert::IsTrue(functionResult.valid());
-    Assert::IsNull(gameObject->getParent());
+    Assert::IsNull(gameObject.getParent());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -512,18 +442,16 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> parent = screen.allocateGameObject();
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    gameObject->setParent(parent.get());
+    GameObject parent, gameObject;
+    gameObject.setParent(&parent);
 
-    Assert::AreEqual(parent.get(), gameObject->getParent());
+    Assert::AreEqual(&parent, gameObject.getParent());
 
     auto functionResult = state.globals()["GameObject"]["setParent"].get<sol::protected_function>().call(
-      *gameObject, nullptr);
+      gameObject, nullptr);
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(parent.get(), gameObject->getParent());
+    Assert::AreEqual(&parent, gameObject.getParent());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -532,17 +460,15 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<GameObject> newParent = screen.allocateGameObject();
+    GameObject gameObject, newParent;
 
-    Assert::IsNull(gameObject->getParent());
+    Assert::IsNull(gameObject.getParent());
 
     auto functionResult = state.globals()["GameObject"]["setParent"].get<sol::protected_function>().call(
-      *gameObject, newParent.get());
+      gameObject, newParent);
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(newParent.get(), gameObject->getParent());
+    Assert::AreEqual(&newParent, gameObject.getParent());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -551,19 +477,16 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<GameObject> oldParent = screen.allocateGameObject();
-    AutoDeallocator<GameObject> newParent = screen.allocateGameObject();
-    gameObject->setParent(oldParent.get());
+    GameObject gameObject, oldParent, newParent;
+    gameObject.setParent(&oldParent);
 
-    Assert::AreEqual(oldParent.get(), gameObject->getParent());
+    Assert::AreEqual(&oldParent, gameObject.getParent());
 
     auto functionResult = state.globals()["GameObject"]["setParent"].get<sol::protected_function>().call(
-      *gameObject, newParent.get());
+      gameObject, newParent);
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(newParent.get(), gameObject->getParent());
+    Assert::AreEqual(&newParent, gameObject.getParent());
   }
 
 #pragma endregion
@@ -596,13 +519,12 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
+    GameObject gameObject;
 
     Assert::IsFalse(ComponentRegistry::hasComponent<MockComponent>());
 
     auto functionResult = state.globals()["GameObject"]["addComponent"].get<sol::protected_function>().call(
-      *gameObject, MockComponent::type_name());
+      gameObject, MockComponent::type_name());
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsNull(functionResult.get<Component*>());
@@ -615,15 +537,14 @@ namespace TestCeleste::Lua::ScriptCommands
     Celeste::Lua::GameObjectScriptCommands::initialize();
     Celeste::Lua::registerUserType<MockComponent>("MockComponent");
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    ComponentRegistry::registerComponent(MockComponent::type_name(), std::unique_ptr<RegistryAllocator>(new MockComponentRegistryAllocator()));
+    GameObject gameObject;
+    ComponentRegistry::registerComponent<MockComponent>();
 
     Assert::IsTrue(ComponentRegistry::hasComponent<MockComponent>());
     Assert::IsTrue(state.globals()["MockComponent"]);
 
     auto functionResult = state.globals()["GameObject"]["addComponent"].get<sol::protected_function>().call(
-      *gameObject, MockComponent::type_name());
+      gameObject, MockComponent::type_name());
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsNotNull(functionResult.get<MockComponent*>());
@@ -635,15 +556,14 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    ComponentRegistry::registerComponent(MockComponent::type_name(), std::unique_ptr<RegistryAllocator>(new MockComponentRegistryAllocator()));
+    GameObject gameObject;
+    ComponentRegistry::registerComponent<MockComponent>();
 
     Assert::IsTrue(ComponentRegistry::hasComponent<MockComponent>());
     Assert::IsFalse(state.globals()["MockComponentHandle"]);
 
     auto functionResult = state.globals()["GameObject"]["addComponent"].get<sol::protected_function>().call(
-      *gameObject, MockComponent::type_name());
+      gameObject, MockComponent::type_name());
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsNotNull(functionResult.get<Component*>());
@@ -655,17 +575,16 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    ComponentRegistry::registerComponent(MockComponent::type_name(), std::unique_ptr<RegistryAllocator>(new MockComponentRegistryAllocator()));
+    GameObject gameObject;
+    ComponentRegistry::registerComponent<MockComponent>();
 
     Assert::IsTrue(ComponentRegistry::hasComponent<MockComponent>());
 
     auto functionResult = state.globals()["GameObject"]["addComponent"].get<sol::protected_function>().call(
-      *gameObject, MockComponent::type_name());
+      gameObject, MockComponent::type_name());
 
     Assert::IsTrue(functionResult.valid());
-    AssertCel::HasComponent<MockComponent>(gameObject.get());
+    AssertCel::HasComponent<MockComponent>(gameObject);
   }
 
 #pragma endregion
@@ -693,8 +612,8 @@ namespace TestCeleste::Lua::ScriptCommands
   {
     GameObject gameObject;
 
-    AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
-    AutoDeallocator<MockComponent> component2 = gameObject.addComponent<MockComponent>();
+    observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
+    observer_ptr<MockComponent> component2 = gameObject.addComponent<MockComponent>();
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -726,7 +645,7 @@ namespace TestCeleste::Lua::ScriptCommands
     Assert::IsTrue(result.valid());
     Assert::IsNull(result.get<Component*>());
 
-    AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
+    observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
 
     Assert::AreEqual(static_cast<size_t>(1), gameObject.getComponentCount());
 
@@ -741,8 +660,8 @@ namespace TestCeleste::Lua::ScriptCommands
   {
     GameObject gameObject;
 
-    AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
-    AutoDeallocator<MockComponent> component2 = gameObject.addComponent<MockComponent>();
+    observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
+    observer_ptr<MockComponent> component2 = gameObject.addComponent<MockComponent>();
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -752,12 +671,12 @@ namespace TestCeleste::Lua::ScriptCommands
     auto result = state.globals()["GameObject"]["getComponent"].get<sol::protected_function>().call(gameObject, 0);
 
     Assert::IsTrue(result.valid());
-    Assert::IsTrue(component.get() == result.get<Component*>());
+    Assert::IsTrue(component == result.get<Component*>());
 
     result = state.globals()["GameObject"]["getComponent"].get<sol::protected_function>().call(gameObject, 1);
 
     Assert::IsTrue(result.valid());
-    Assert::IsTrue(component2.get() == result.get<Component*>());
+    Assert::IsTrue(component2 == result.get<Component*>());
   }
 
 #pragma endregion
@@ -919,63 +838,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
 #pragma endregion
 
-#pragma region Get Child Transform Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_getChildTransform_NoChildren_ReturnsNullHandle)
-  {
-    GameObject gameObject;
-
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    Assert::AreEqual(static_cast<size_t>(0), gameObject.getChildCount());
-
-    auto result = state.globals()["GameObject"]["getChildTransform"].get<sol::protected_function>().call(gameObject, 0);
-
-    Assert::IsTrue(result.valid());
-    Assert::IsNull(result.get<Transform*>());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_getChildTransform_InputtingInvalidIndex_ReturnsNullHandle)
-  {
-    GameObject gameObject;
-    GameObject child1;
-    child1.setParent(&gameObject);
-
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    Assert::AreEqual(static_cast<size_t>(1), gameObject.getChildCount());
-
-    auto result = state.globals()["GameObject"]["getChildTransform"].get<sol::protected_function>().call(gameObject, 1);
-
-    Assert::IsTrue(result.valid());
-    Assert::IsNull(result.get<Transform*>());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_getChildTransform_InputtingValidIndex_ReturnsCorrectTransformHandle)
-  {
-    GameObject gameObject;
-    GameObject child1;
-    child1.setParent(&gameObject);
-
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    Assert::AreEqual(static_cast<size_t>(1), gameObject.getChildCount());
-
-    auto result = state.globals()["GameObject"]["getChildTransform"].get<sol::protected_function>().call(gameObject, 0);
-
-    Assert::IsTrue(result.valid());
-    Assert::AreEqual(child1.getTransform(), result.get<Transform*>());
-  }
-
-#pragma endregion
-
-#pragma region Get Child GameObject Tests
+#pragma region Get Child Tests
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_getChildGameObject_NoChildren_ReturnsNullHandle)
@@ -987,7 +850,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::AreEqual(static_cast<size_t>(0), gameObject.getChildCount());
 
-    auto result = state.globals()["GameObject"]["getChildGameObject"].get<sol::protected_function>().call(gameObject, 0);
+    auto result = state.globals()["GameObject"]["getChild"].get<sol::protected_function>().call(gameObject, 0);
 
     Assert::IsTrue(result.valid());
     Assert::IsNull(result.get<GameObject*>());
@@ -1005,7 +868,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::AreEqual(static_cast<size_t>(1), gameObject.getChildCount());
 
-    auto result = state.globals()["GameObject"]["getChildGameObject"].get<sol::protected_function>().call(gameObject, 1);
+    auto result = state.globals()["GameObject"]["getChild"].get<sol::protected_function>().call(gameObject, 1);
 
     Assert::IsTrue(result.valid());
     Assert::IsNull(result.get<GameObject*>());
@@ -1023,7 +886,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::AreEqual(static_cast<size_t>(1), gameObject.getChildCount());
 
-    auto result = state.globals()["GameObject"]["getChildGameObject"].get<sol::protected_function>().call(gameObject, 0);
+    auto result = state.globals()["GameObject"]["getChild"].get<sol::protected_function>().call(gameObject, 0);
 
     Assert::IsTrue(result.valid());
     Assert::IsTrue(&child1 == result.get<GameObject*>());
@@ -1031,7 +894,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
 #pragma endregion
 
-#pragma region Find Child GameObject Tests
+#pragma region Find Child Tests
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_findChildGameObject_NoChildren_ReturnsNullHandle)
@@ -1043,7 +906,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::AreEqual(static_cast<size_t>(0), gameObject.getChildCount());
 
-    auto result = state.globals()["GameObject"]["findChildGameObject"].get<sol::protected_function>().call(gameObject, "Child");
+    auto result = state.globals()["GameObject"]["findChild"].get<sol::protected_function>().call(gameObject, "Child");
 
     Assert::IsTrue(result.valid());
     Assert::IsNull(result.get<GameObject*>());
@@ -1060,9 +923,9 @@ namespace TestCeleste::Lua::ScriptCommands
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
     Assert::AreEqual(static_cast<size_t>(1), gameObject.getChildCount());
-    Assert::IsNull(gameObject.findChildGameObject("Child"));
+    Assert::IsNull(gameObject.findChild("Child"));
 
-    auto result = state.globals()["GameObject"]["findChildGameObject"].get<sol::protected_function>().call(gameObject, "Child");
+    auto result = state.globals()["GameObject"]["findChild"].get<sol::protected_function>().call(gameObject, "Child");
 
     Assert::IsTrue(result.valid());
     Assert::IsNull(result.get<GameObject*>());
@@ -1080,9 +943,9 @@ namespace TestCeleste::Lua::ScriptCommands
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
     Assert::AreEqual(static_cast<size_t>(1), gameObject.getChildCount());
-    Assert::IsTrue(&child == gameObject.findChildGameObject("Child"));
+    Assert::IsTrue(&child == gameObject.findChild("Child"));
 
-    auto result = state.globals()["GameObject"]["findChildGameObject"].get<sol::protected_function>().call(gameObject, "Child");
+    auto result = state.globals()["GameObject"]["findChild"].get<sol::protected_function>().call(gameObject, "Child");
 
     Assert::IsTrue(result.valid());
     Assert::IsTrue(&child == result.get<GameObject*>());
@@ -1103,9 +966,9 @@ namespace TestCeleste::Lua::ScriptCommands
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
     Assert::AreEqual(static_cast<size_t>(2), gameObject.getChildCount());
-    Assert::IsTrue(&child == gameObject.findChildGameObject("Child"));
+    Assert::IsTrue(&child == gameObject.findChild("Child"));
 
-    auto result = state.globals()["GameObject"]["findChildGameObject"].get<sol::protected_function>().call(gameObject, "Child");
+    auto result = state.globals()["GameObject"]["findChild"].get<sol::protected_function>().call(gameObject, "Child");
 
     Assert::IsTrue(result.valid());
     Assert::IsTrue(&child == result.get<GameObject*>());
@@ -1150,9 +1013,9 @@ namespace TestCeleste::Lua::ScriptCommands
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
-    state.new_usertype<MockGameObject>("MockGameObject");
+    state.new_usertype<GameObject>("GameObject");
 
-    auto functionResult = state.globals()["GameObject"]["as"].get<sol::protected_function>().call(nullptr, "MockGameObject");
+    auto functionResult = state.globals()["GameObject"]["as"].get<sol::protected_function>().call(nullptr, "GameObject");
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(sol::type::nil == functionResult.get_type());
@@ -1228,10 +1091,10 @@ namespace TestCeleste::Lua::ScriptCommands
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
-    state.new_usertype<MockGameObject>("MockGameObject");
+    state.new_usertype<GameObject>("GameObject");
     
     GameObject gameObject;
-    auto functionResult = state.globals()["GameObject"]["as"].get<sol::protected_function>().call(&gameObject, "MockGameObject");
+    auto functionResult = state.globals()["GameObject"]["as"].get<sol::protected_function>().call(&gameObject, "GameObject");
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(sol::type::nil == functionResult.get_type());

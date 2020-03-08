@@ -34,10 +34,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(KeyboardTransformerLoadingResources::getValidFullPath());
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<KeyboardTransformer*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<KeyboardTransformer*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -692,51 +692,46 @@ namespace TestCeleste
 #pragma region Set Values Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardTransformerDataConverter_SetValues_InputtingNullKeyboardTransformer_DoesNothing)
-  {
-    KeyboardTransformerDataConverter converter;
-    converter.setValues(KeyboardTransformer());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(KeyboardTransformerDataConverter_SetValues_InputtingKeyboardTransformer_DataNotLoadedCorrectly_DoesNothing)
   {
-    KeyboardTransformer translator;
-    translator.setTranslateLeftKey(GLFW_KEY_A);
-    translator.setTranslationSpeed(0.3f);
+    GameObject gameObject;
+    KeyboardTransformer keyboardTransformer(gameObject);
+    keyboardTransformer.setTranslateLeftKey(GLFW_KEY_A);
+    keyboardTransformer.setTranslationSpeed(0.3f);
 
     KeyboardTransformerDataConverter converter;
 
     Assert::IsFalse(converter.isDataLoadedCorrectly());
 
-    converter.setValues(translator);
+    converter.setValues(keyboardTransformer);
 
-    Assert::AreEqual(GLFW_KEY_A, translator.getTranslateLeftKey());
-    Assert::AreEqual(0.3f, translator.getTranslationSpeed());
+    Assert::AreEqual(GLFW_KEY_A, keyboardTransformer.getTranslateLeftKey());
+    Assert::AreEqual(0.3f, keyboardTransformer.getTranslationSpeed());
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(KeyboardTransformerDataConverter_SetValues_InputtingKeyboardTransformer_DataLoadedCorrectly_ChangesKeyboardTransformerToMatchData)
   {
-    KeyboardTransformer translator;
-    translator.setTranslateLeftKey(GLFW_KEY_A);
-    translator.setTranslationSpeed(0.3f);
+    GameObject gameObject;
+    KeyboardTransformer keyboardTransformer(gameObject);
+    keyboardTransformer.setTranslateLeftKey(GLFW_KEY_A);
+    keyboardTransformer.setTranslationSpeed(0.3f);
 
     KeyboardTransformerDataConverter converter;
     converter.convertFromXML(getResourceManager().load<Data>(KeyboardTransformerLoadingResources::getValidFullPath())->getDocumentRoot());
 
     Assert::IsTrue(converter.isDataLoadedCorrectly());
 
-    converter.setValues(translator);
+    converter.setValues(keyboardTransformer);
 
-    Assert::AreEqual(GLFW_KEY_A, translator.getTranslateLeftKey());
-    Assert::AreEqual(GLFW_KEY_B, translator.getTranslateRightKey());
-    Assert::AreEqual(GLFW_KEY_C, translator.getTranslateUpKey());
-    Assert::AreEqual(GLFW_KEY_D, translator.getTranslateDownKey());
-    Assert::AreEqual(GLFW_KEY_E, translator.getRotateLeftKey());
-    Assert::AreEqual(GLFW_KEY_F, translator.getRotateRightKey());
-    Assert::AreEqual(4.0f, translator.getTranslationSpeed());
-    Assert::AreEqual(0.5f, translator.getRotationSpeed());
+    Assert::AreEqual(GLFW_KEY_A, keyboardTransformer.getTranslateLeftKey());
+    Assert::AreEqual(GLFW_KEY_B, keyboardTransformer.getTranslateRightKey());
+    Assert::AreEqual(GLFW_KEY_C, keyboardTransformer.getTranslateUpKey());
+    Assert::AreEqual(GLFW_KEY_D, keyboardTransformer.getTranslateDownKey());
+    Assert::AreEqual(GLFW_KEY_E, keyboardTransformer.getRotateLeftKey());
+    Assert::AreEqual(GLFW_KEY_F, keyboardTransformer.getRotateRightKey());
+    Assert::AreEqual(4.0f, keyboardTransformer.getTranslationSpeed());
+    Assert::AreEqual(0.5f, keyboardTransformer.getRotationSpeed());
   }
 
 #pragma endregion

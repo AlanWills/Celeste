@@ -112,7 +112,7 @@ namespace TestCeleste
 
       AutoALDeallocator deallocator(sound.getAudioHandle());
 
-      //Assert::IsFalse(alIsBuffer(audio.getAudioHandle()));
+      //Assert::IsFalse(alIsBuffer(audioSource.getAudioHandle()));
       Assert::AreEqual(static_cast<ALuint>(AL_NONE), sound.getAudioHandle());
     }
 

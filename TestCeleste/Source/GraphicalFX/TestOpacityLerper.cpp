@@ -27,10 +27,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
 
-    AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(OpacityLerper::type_name(), gameObject);
+    observer_ptr<Component> component = ComponentRegistry::createComponent(OpacityLerper::type_name(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<OpacityLerper*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<OpacityLerper*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -41,15 +41,16 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Constructor_SetsValuesToDefault)
     {
-      OpacityLerper lerper;
+      GameObject gameObject;
+      OpacityLerper opacityLerper(gameObject);
 
-      Assert::AreEqual(0.0f, lerper.getMinOpacity());
-      Assert::AreEqual(1.0f, lerper.getMaxOpacity());
-      Assert::AreEqual(1.0f, lerper.getLerpUpTime());
-      Assert::AreEqual(1.0f, lerper.getLerpDownTime());
-      Assert::AreEqual(0.0f, lerper.getMaxOpacityWaitTime());
-      Assert::AreEqual(0.0f, lerper.getMinOpacityWaitTime());
-      Assert::IsFalse(lerper.isLerpingUp());
+      Assert::AreEqual(0.0f, opacityLerper.getMinOpacity());
+      Assert::AreEqual(1.0f, opacityLerper.getMaxOpacity());
+      Assert::AreEqual(1.0f, opacityLerper.getLerpUpTime());
+      Assert::AreEqual(1.0f, opacityLerper.getLerpDownTime());
+      Assert::AreEqual(0.0f, opacityLerper.getMaxOpacityWaitTime());
+      Assert::AreEqual(0.0f, opacityLerper.getMinOpacityWaitTime());
+      Assert::IsFalse(opacityLerper.isLerpingUp());
     }
 
 #pragma endregion
@@ -57,41 +58,30 @@ namespace TestCeleste
 #pragma region Update Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(OpacityLerper_Update_WithNoParent_DoesNotThrow)
-    {
-      OpacityLerper lerper;
-
-      Assert::IsNull(lerper.getGameObject());
-
-      // Check doesnt throw
-      lerper.update(0);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(OpacityLerper_Update_WithParentButNoRenderer_DoesNotThrow)
+    TEST_METHOD(OpacityLerper_Update_WithGameObejctButNoRenderer_DoesNotThrow)
     {
       GameObject gameObject;
-      AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
+      OpacityLerper opacityLerper(gameObject);
 
-      Assert::IsNotNull(lerper->getGameObject());
+      Assert::IsNotNull(opacityLerper.getGameObject());
       Assert::IsFalse(gameObject.hasComponent<Renderer>());
 
       // Check doesnt throw
-      lerper->update(0);
+      opacityLerper.update(0);
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Update_LerpingUp_LerpUpTimeIsZero_IncreasesOpacityToMaxImmediately)
     {
       GameObject gameObject;
-      AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
-      AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
+      observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+      observer_ptr<OpacityLerper> opacityLerper = gameObject.addComponent<OpacityLerper>();
 
       renderer->setOpacity(0);
-      lerper->setLerpingUp(true);
-      lerper->setMaxOpacity(1.0f);
-      lerper->setLerpUpTime(0);
-      lerper->update(0);
+      opacityLerper->setLerpingUp(true);
+      opacityLerper->setMaxOpacity(1.0f);
+      opacityLerper->setLerpUpTime(0);
+      opacityLerper->update(0);
 
       Assert::AreEqual(1.0f, renderer->getOpacity());
     }
@@ -100,67 +90,67 @@ namespace TestCeleste
     TEST_METHOD(OpacityLerper_Update_LerpingUp_WithNoWaitTime_IncreasesOpacityToMax_ThenLerpsDown)
     {
       GameObject gameObject;
-      AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
-      AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
+      observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+      observer_ptr<OpacityLerper> opacityLerper = gameObject.addComponent<OpacityLerper>();
 
-      lerper->setLerpingUp(true);
-      lerper->setMaxOpacity(1.0f);
+      opacityLerper->setLerpingUp(true);
+      opacityLerper->setMaxOpacity(1.0f);
       renderer->setOpacity(0.5f);
       
-      Assert::IsNotNull(lerper->getGameObject());
+      Assert::IsNotNull(opacityLerper->getGameObject());
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
-      Assert::IsTrue(lerper->isLerpingUp());
+      Assert::IsTrue(opacityLerper->isLerpingUp());
 
-      lerper->update(0.5f);
+      opacityLerper->update(0.5f);
 
       Assert::AreEqual(1.0f, renderer->getOpacity());
-      Assert::IsFalse(lerper->isLerpingUp());
+      Assert::IsFalse(opacityLerper->isLerpingUp());
 
-      lerper->update(0.5f);
+      opacityLerper->update(0.5f);
 
       Assert::AreEqual(0.5f, renderer->getOpacity());
-      Assert::IsFalse(lerper->isLerpingUp());
+      Assert::IsFalse(opacityLerper->isLerpingUp());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Update_LerpingUp_WithWaitTime_IncreasesOpacityToMax_ThenWaits_ThenLerpsDown)
     {
       GameObject gameObject;
-      AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
-      AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
+      observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+      observer_ptr<OpacityLerper> opacityLerper = gameObject.addComponent<OpacityLerper>();
 
-      lerper->setLerpingUp(true);
-      lerper->setMaxOpacity(1.0f);
-      lerper->setMaxOpacityWaitTime(1);
+      opacityLerper->setLerpingUp(true);
+      opacityLerper->setMaxOpacity(1.0f);
+      opacityLerper->setMaxOpacityWaitTime(1);
       renderer->setOpacity(0.5f);
 
-      Assert::IsNotNull(lerper->getGameObject());
+      Assert::IsNotNull(opacityLerper->getGameObject());
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
-      Assert::IsTrue(lerper->isLerpingUp());
+      Assert::IsTrue(opacityLerper->isLerpingUp());
 
-      lerper->update(0.5f);
-
-      Assert::AreEqual(1.0f, renderer->getOpacity());
-      Assert::IsTrue(lerper->isLerpingUp());
-
-      lerper->update(0.2f);
+      opacityLerper->update(0.5f);
 
       Assert::AreEqual(1.0f, renderer->getOpacity());
-      Assert::IsTrue(lerper->isLerpingUp());
+      Assert::IsTrue(opacityLerper->isLerpingUp());
+
+      opacityLerper->update(0.2f);
+
+      Assert::AreEqual(1.0f, renderer->getOpacity());
+      Assert::IsTrue(opacityLerper->isLerpingUp());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Update_LerpingDown_LerpDownTimeIsZero_DecreasesOpacityToMinImmediately)
     {
       GameObject gameObject;
-      AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
-      AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
+      observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+      observer_ptr<OpacityLerper> opacityLerper = gameObject.addComponent<OpacityLerper>();
 
       renderer->setOpacity(1.0f);
-      lerper->setLerpingUp(false);
-      lerper->setMinOpacity(0.0f);
-      lerper->setLerpDownTime(0);
-      lerper->update(0);
+      opacityLerper->setLerpingUp(false);
+      opacityLerper->setMinOpacity(0.0f);
+      opacityLerper->setLerpDownTime(0);
+      opacityLerper->update(0);
 
       Assert::AreEqual(0.0f, renderer->getOpacity());
     }
@@ -169,53 +159,53 @@ namespace TestCeleste
     TEST_METHOD(OpacityLerper_Update_LerpingDown_WithNoWaitTime_DecreasesOpacityToMin_ThenLerpsUp)
     {
       GameObject gameObject;
-      AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
-      AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
+      observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+      observer_ptr<OpacityLerper> opacityLerper = gameObject.addComponent<OpacityLerper>();
 
-      lerper->setLerpingUp(false);
-      lerper->setMinOpacity(0);
+      opacityLerper->setLerpingUp(false);
+      opacityLerper->setMinOpacity(0);
       renderer->setOpacity(0.5f);
       
-      Assert::IsNotNull(lerper->getGameObject());
+      Assert::IsNotNull(opacityLerper->getGameObject());
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
-      Assert::IsFalse(lerper->isLerpingUp());
+      Assert::IsFalse(opacityLerper->isLerpingUp());
 
-      lerper->update(0.5f);
+      opacityLerper->update(0.5f);
 
       Assert::AreEqual(0.0f, renderer->getOpacity());
-      Assert::IsTrue(lerper->isLerpingUp());
+      Assert::IsTrue(opacityLerper->isLerpingUp());
 
-      lerper->update(0.5f);
+      opacityLerper->update(0.5f);
 
       Assert::AreEqual(0.5f, renderer->getOpacity());
-      Assert::IsTrue(lerper->isLerpingUp());
+      Assert::IsTrue(opacityLerper->isLerpingUp());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(OpacityLerper_Update_LerpingDown_WithNoWaitTime_DecreasesOpacityToMin_ThenWaits_ThenLerpsUp)
     {
       GameObject gameObject;
-      AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
-      AutoDeallocator<OpacityLerper> lerper = gameObject.addComponent<OpacityLerper>();
+      observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+      observer_ptr<OpacityLerper> opacityLerper = gameObject.addComponent<OpacityLerper>();
 
-      lerper->setLerpingUp(false);
-      lerper->setMinOpacity(0);
-      lerper->setMinOpacityWaitTime(1);
+      opacityLerper->setLerpingUp(false);
+      opacityLerper->setMinOpacity(0);
+      opacityLerper->setMinOpacityWaitTime(1);
       renderer->setOpacity(0.5f);
 
-      Assert::IsNotNull(lerper->getGameObject());
+      Assert::IsNotNull(opacityLerper->getGameObject());
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
-      Assert::IsFalse(lerper->isLerpingUp());
+      Assert::IsFalse(opacityLerper->isLerpingUp());
 
-      lerper->update(0.5f);
-
-      Assert::AreEqual(0.0f, renderer->getOpacity());
-      Assert::IsFalse(lerper->isLerpingUp());
-
-      lerper->update(0.2f);
+      opacityLerper->update(0.5f);
 
       Assert::AreEqual(0.0f, renderer->getOpacity());
-      Assert::IsFalse(lerper->isLerpingUp());
+      Assert::IsFalse(opacityLerper->isLerpingUp());
+
+      opacityLerper->update(0.2f);
+
+      Assert::AreEqual(0.0f, renderer->getOpacity());
+      Assert::IsFalse(opacityLerper->isLerpingUp());
     }
 
 #pragma endregion

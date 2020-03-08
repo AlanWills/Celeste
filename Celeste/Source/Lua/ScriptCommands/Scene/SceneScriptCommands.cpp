@@ -8,9 +8,9 @@ namespace Celeste::Lua::Scene::ScriptCommands
   namespace Internals
   {
     //------------------------------------------------------------------------------------------------
-    void load(const std::string& screenPath)
+    bool load(const std::string& screenPath)
     {
-      return SceneLoader::load(screenPath);
+      return std::get<0>(SceneLoader::load(screenPath));
     }
   }
 

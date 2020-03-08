@@ -89,7 +89,8 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::UI::SliderScriptCommands::initialize();
 
-    Slider slider;
+    GameObject gameObject;
+    Slider slider(gameObject);
     slider.setMin(0);
 
     auto result = state[Slider::type_name()]["setCurrentValue"].get<sol::protected_function>().call(slider, -1);
@@ -104,7 +105,8 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::UI::SliderScriptCommands::initialize();
 
-    Slider slider;
+    GameObject gameObject;
+    Slider slider(gameObject);
     slider.setMax(100);
 
     auto result = state[Slider::type_name()]["setCurrentValue"].get<sol::protected_function>().call(slider, 200);
@@ -119,7 +121,8 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::UI::SliderScriptCommands::initialize();
 
-    Slider slider;
+    GameObject gameObject;
+    Slider slider(gameObject);
     slider.setMin(0);
     slider.setMax(100);
 
@@ -141,7 +144,8 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
     Celeste::Lua::UI::SliderScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
-    Slider slider;
+    GameObject gameObject;
+    Slider slider(gameObject);
 
     Assert::AreEqual(static_cast<size_t>(0), slider.getValueChangedEvent().getSubscriberCount());
 
@@ -243,7 +247,8 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    Slider slider;
+    GameObject gameObject;
+    Slider slider(gameObject);
     auto functionResult = state.globals()["Slider"]["as"].get<sol::protected_function>().call(&slider, "Object");
 
     Assert::IsTrue(functionResult.valid());
@@ -257,7 +262,8 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    Slider slider;
+    GameObject gameObject;
+    Slider slider(gameObject);
     auto functionResult = state.globals()["Slider"]["as"].get<sol::protected_function>().call(&slider, "Slider");
 
     Assert::IsTrue(functionResult.valid());
@@ -274,7 +280,8 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
     class MockSlider : public Celeste::UI::Slider {};
     state.new_usertype<MockSlider>("MockSlider");
 
-    Slider slider;
+    GameObject gameObject;
+    Slider slider(gameObject);
     auto functionResult = state.globals()["Slider"]["as"].get<sol::protected_function>().call(&slider, "MockSlider");
 
     Assert::IsTrue(functionResult.valid());
@@ -293,7 +300,8 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    Slider slider;
+    GameObject gameObject;
+    Slider slider(gameObject);
     auto functionResult = state.globals()["Slider"]["as"].get<sol::protected_function>().call(&slider, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());

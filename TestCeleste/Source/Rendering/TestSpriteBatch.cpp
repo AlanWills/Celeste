@@ -3,6 +3,9 @@
 #include "Mocks/Rendering/MockSpriteBatch.h"
 #include "Mocks/Rendering/MockRenderer.h"
 
+#include "Objects/GameObject.h"
+
+using namespace Celeste;
 using namespace Celeste::Rendering;
 
 
@@ -15,7 +18,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteBatch_Render_MatrixInput_AddsRendererAndMatrixToList)
   {
-    MockRenderer renderer;
+    GameObject gameObject;
+    MockRenderer renderer(gameObject);
     MockSpriteBatch spriteBatch;
 
     Assert::AreEqual((size_t)0, spriteBatch.renderers_size_Public());
@@ -28,7 +32,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteBatch_Render_Translation_Rotation_Scale_Input_AddsRendererAndMatrixToList)
   {
-    MockRenderer renderer;
+    GameObject gameObject;
+    MockRenderer renderer(gameObject);
     MockSpriteBatch spriteBatch;
 
     Assert::AreEqual((size_t)0, spriteBatch.renderers_size_Public());

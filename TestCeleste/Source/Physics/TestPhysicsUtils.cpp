@@ -35,9 +35,12 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsUtils_AddSimulatedBody_Collider_AddsSimulatedBodyToPhysicsManager)
   {
+    GameObject gameObject;
+    RectangleCollider collider(gameObject);
+
     Assert::AreEqual((size_t)0, getPhysicsManager().getSimulatedBodiesSize());
 
-    addSimulatedBody(RectangleCollider());
+    addSimulatedBody(collider);
 
     Assert::AreEqual((size_t)1, getPhysicsManager().getSimulatedBodiesSize());
   }
@@ -45,9 +48,12 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsUtils_AddSimulatedBody_RigidBody_AddsSimulatedBodyToPhysicsManager)
   {
+    GameObject gameObject;
+    RigidBody2D rigidBody2D(gameObject);
+
     Assert::AreEqual((size_t)0, getPhysicsManager().getSimulatedBodiesSize());
 
-    addSimulatedBody(RigidBody2D());
+    addSimulatedBody(rigidBody2D);
 
     Assert::AreEqual((size_t)1, getPhysicsManager().getSimulatedBodiesSize());
   }
@@ -55,9 +61,13 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsUtils_AddSimulatedBody_ColliderAndRigidBody_AddsSimulatedBodyToPhysicsManager)
   {
+    GameObject gameObject;
+    RectangleCollider collider(gameObject);
+    RigidBody2D rigidBody2D(gameObject);
+
     Assert::AreEqual((size_t)0, getPhysicsManager().getSimulatedBodiesSize());
 
-    addSimulatedBody(RectangleCollider(), RigidBody2D());
+    addSimulatedBody(collider, rigidBody2D);
 
     Assert::AreEqual((size_t)1, getPhysicsManager().getSimulatedBodiesSize());
   }
@@ -69,11 +79,13 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsUtils_ClearSimulatedBodies_RemovesAllSimulatedBodies_FromPhysicsManager)
   {
-    RectangleCollider collider;
+    GameObject gameObject;
+    RectangleCollider collider(gameObject);
+    RigidBody2D rigidBody2D(gameObject);
 
     Assert::AreEqual((size_t)0, getPhysicsManager().getSimulatedBodiesSize());
 
-    addSimulatedBody(collider, RigidBody2D());
+    addSimulatedBody(collider, rigidBody2D);
 
     Assert::AreEqual((size_t)1, getPhysicsManager().getSimulatedBodiesSize());
 

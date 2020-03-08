@@ -7,9 +7,7 @@
 
 #include "Rendering/TextRenderer.h"
 #include "Resources/Resources/Data/PrefabLoadingResources.h"
-
-#include "Mocks/Resources/Data/MockPrefab.h"
-#include "Screens/Screen.h"
+#include "Resources/Data/Prefab.h"
 
 #include "AssertCel.h"
 
@@ -66,76 +64,50 @@ namespace TestCeleste::Lua::ScriptCommands
 #pragma region Instantiate Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(PrefabScriptCommands_instantiate_PrefabNotLoaded_ReturnsNullGameObjectHandle)
+  TEST_METHOD(PrefabScriptCommands_instantiate_PrefabNotLoaded_ReturnsNullGameObject)
   {
     Prefab prefab;
-    Screen screen;
 
     Celeste::Lua::Resources::PrefabScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     Assert::AreEqual(static_cast<StringId>(0), prefab.getResourceId());
 
-    sol::protected_function_result result = state["Prefab"]["instantiate"].get<sol::protected_function>().call(prefab, screen);
+    sol::protected_function_result result = state["Prefab"]["instantiate"].get<sol::protected_function>().call(prefab);
 
     Assert::IsTrue(result.valid());
     Assert::IsNull(result.get<observer_ptr<GameObject>>());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(PrefabScriptCommands_instantiate_InputtingScreen_ReturnsNonNullGameObjectHandle)
+  TEST_METHOD(PrefabScriptCommands_instantiate_ReturnsNonNullGameObject)
   {
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getValidSingleGameObjectFullPath());
-    Screen screen;
 
     Celeste::Lua::Resources::PrefabScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     Assert::AreNotEqual(static_cast<StringId>(0), prefab.getResourceId());
 
-    sol::protected_function_result result = state["Prefab"]["instantiate"].get<sol::protected_function>().call(prefab, screen);
+    sol::protected_function_result result = state["Prefab"]["instantiate"].get<sol::protected_function>().call(prefab);
 
     Assert::IsTrue(result.valid());
     Assert::IsNotNull(result.get<observer_ptr<GameObject>>());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(PrefabScriptCommands_instantiate_InputtingScreen_AddsGameObjectToScreen)
+  TEST_METHOD(PrefabScriptCommands_instantiate_InstantiatesGameObjectValuesCorrectly)
   {
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getValidSingleGameObjectFullPath());
-    Screen screen;
 
     Celeste::Lua::Resources::PrefabScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     Assert::AreNotEqual(static_cast<StringId>(0), prefab.getResourceId());
 
-    sol::protected_function_result result = state["Prefab"]["instantiate"].get<sol::protected_function>().call(prefab, screen);
-
-    Assert::IsTrue(result.valid());
-
-    observer_ptr<GameObject> gameObject = result.get<observer_ptr<GameObject>>();
-
-    Assert::IsNotNull(gameObject);
-    Assert::IsNotNull(screen.findGameObject(gameObject->getName()));
-    Assert::AreEqual(gameObject, screen.findGameObject(gameObject->getName()));
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(PrefabScriptCommands_instantiate_InputtingScreen_InstantiatesGameObjectValuesCorrectly)
-  {
-    Prefab prefab;
-    prefab.loadFromFile(PrefabLoadingResources::getValidSingleGameObjectFullPath());
-    Screen screen;
-
-    Celeste::Lua::Resources::PrefabScriptCommands::initialize();
-    sol::state& state = LuaState::instance();
-
-    Assert::AreNotEqual(static_cast<StringId>(0), prefab.getResourceId());
-
-    sol::protected_function_result result = state["Prefab"]["instantiate"].get<sol::protected_function>().call(prefab, screen);
+    sol::protected_function_result result = state["Prefab"]["instantiate"].get<sol::protected_function>().call(prefab);
 
     Assert::IsTrue(result.valid());
 

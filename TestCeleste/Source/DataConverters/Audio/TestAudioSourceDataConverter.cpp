@@ -35,10 +35,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(AudioSourceLoadingResources::getValidFullPath());
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<AudioSource*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<AudioSource*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -474,36 +474,31 @@ namespace TestCeleste
 #pragma region Set Values Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(AudioSourceDataConverter_SetValues_InputtingNullAudioSource_DoesNothing)
-  {
-    AudioSourceDataConverter converter;
-    converter.setValues(AudioSource());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioSourceDataConverter_SetValues_InputtingAudioSource_DataNotLoadedCorrectly_DoesNothing)
   {
-    AudioSource audio;
-    audio.setVolume(0.4f);
-    audio.setLooping(true);
+    GameObject gameObject;
+    AudioSource audioSource(gameObject);
+    audioSource.setVolume(0.4f);
+    audioSource.setLooping(true);
 
     AudioSourceDataConverter converter;
 
     Assert::IsFalse(converter.isDataLoadedCorrectly());
 
-    converter.setValues(audio);
+    converter.setValues(audioSource);
 
-    Assert::AreEqual(0.4f, audio.getVolume());
-    Assert::IsTrue(audio.isLooping());
+    Assert::AreEqual(0.4f, audioSource.getVolume());
+    Assert::IsTrue(audioSource.isLooping());
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioSourceDataConverter_SetValues_InputtingAudioSource_DataLoadedCorrectly_ChangesAudioSourceToMatchData)
   {
-    AudioSource audio;
-    audio.setVolume(0.4f);
-    audio.setLooping(true);
-    audio.setAudioType(Audio::AudioType::kSFX);
+    GameObject gameObject;
+    AudioSource audioSource(gameObject);
+    audioSource.setVolume(0.4f);
+    audioSource.setLooping(true);
+    audioSource.setAudioType(Audio::AudioType::kSFX);
 
     // Valid.xml
     // <AudioSource sound="SFX\ButtonHover.wav" is_playing="true" is_looping="true" volume="0.5" audio_type="Music"/>
@@ -513,25 +508,26 @@ namespace TestCeleste
 
     Assert::IsTrue(converter.isDataLoadedCorrectly());
 
-    converter.setValues(audio);
+    converter.setValues(audioSource);
 
-    Assert::IsNotNull(audio.getSound());
-    Assert::IsTrue(getResourceManager().load<Sound>(TestResources::getButtonHoverWavRelativePath()) == audio.getSound());
-    Assert::IsTrue(audio.isPlaying());
-    Assert::IsTrue(audio.isLooping());
-    Assert::AreEqual(0.5f, audio.getVolume());
-    Assert::IsTrue(audio.getAudioType() == Audio::AudioType::kMusic);
+    Assert::IsNotNull(audioSource.getSound());
+    Assert::IsTrue(getResourceManager().load<Sound>(TestResources::getButtonHoverWavRelativePath()) == audioSource.getSound());
+    Assert::IsTrue(audioSource.isPlaying());
+    Assert::IsTrue(audioSource.isLooping());
+    Assert::AreEqual(0.5f, audioSource.getVolume());
+    Assert::IsTrue(audioSource.getAudioType() == Audio::AudioType::kMusic);
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioSourceDataConverter_SetValues_DoesNotSetSoundIfPathIsEmpty)
   {
-    AudioSource audio;
-    audio.setVolume(0.4f);
-    audio.setLooping(true);
-    audio.setSound(TestResources::getButtonHoverWavRelativePath());
+    GameObject gameObject;
+    AudioSource audioSource(gameObject);
+    audioSource.setVolume(0.4f);
+    audioSource.setLooping(true);
+    audioSource.setSound(TestResources::getButtonHoverWavRelativePath());
 
-    Assert::IsNotNull(audio.getSound());
+    Assert::IsNotNull(audioSource.getSound());
 
     AudioSourceDataConverter converter;
     XMLDocument document;
@@ -542,10 +538,10 @@ namespace TestCeleste
     Assert::IsNull(element->FindAttribute(AudioSourceDataConverter::SOUND_PATH_ATTRIBUTE_NAME));
     Assert::IsTrue(converter.isDataLoadedCorrectly());
 
-    converter.setValues(audio);
+    converter.setValues(audioSource);
 
-    Assert::IsNotNull(audio.getSound());
-    Assert::IsTrue(getResourceManager().load<Sound>(TestResources::getButtonHoverWavRelativePath()) == audio.getSound());
+    Assert::IsNotNull(audioSource.getSound());
+    Assert::IsTrue(getResourceManager().load<Sound>(TestResources::getButtonHoverWavRelativePath()) == audioSource.getSound());
   }
 
 #pragma endregion

@@ -5,10 +5,8 @@
 #include "Lua/ScriptCommands/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
-#include "Mocks/Input/MockKeyboardVisibility.h"
-
+#include "Input/KeyboardVisibility.h"
 #include "Input/Utils/GlfwKeyConverter.h"
-#include "Screens/Screen.h"
 
 #include "AssertCel.h"
 
@@ -24,8 +22,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
 
 #pragma region Initialize Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibilityScriptCommands_Initialize_Adds_KeyboardVisibilityUserType_ToGlobalTable)
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardVisibilityScriptCommands_Initialize_Adds_KeyboardVisibilityUserType_ToGlobalTable)
   {
     sol::state& state = LuaState::instance();
 
@@ -121,30 +119,6 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardVisibilityScriptCommands_Initialize_Adds_getTarget_ToKeyboardVisibilityTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["KeyboardVisibility"]["getTarget"].valid());
-
-    Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["KeyboardVisibility"]["getTarget"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardVisibilityScriptCommands_Initialize_Adds_setTarget_ToKeyboardVisibilityTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["KeyboardVisibility"]["setTarget"].valid());
-
-    Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["KeyboardVisibility"]["setTarget"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(KeyboardVisibilityScriptCommands_Initialize_Adds_as_ToKeyboardVisibilityTable)
   {
     sol::state& state = LuaState::instance();
@@ -166,7 +140,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setVisibilityKey(GLFW_KEY_UNKNOWN);
 
     Assert::AreEqual(GLFW_KEY_UNKNOWN, keyboardVisibility.getVisibilityKey());
@@ -183,7 +158,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setVisibilityKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardVisibility.getVisibilityKey());
@@ -204,7 +180,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setVisibilityKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardVisibility.getVisibilityKey());
@@ -221,7 +198,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setVisibilityKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardVisibility.getVisibilityKey());
@@ -238,7 +216,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setVisibilityKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardVisibility.getVisibilityKey());
@@ -260,7 +239,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setInvisibilityKey(GLFW_KEY_UNKNOWN);
 
     Assert::AreEqual(GLFW_KEY_UNKNOWN, keyboardVisibility.getInvisibilityKey());
@@ -277,7 +257,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setInvisibilityKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardVisibility.getInvisibilityKey());
@@ -298,7 +279,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setInvisibilityKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardVisibility.getInvisibilityKey());
@@ -315,7 +297,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setInvisibilityKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardVisibility.getInvisibilityKey());
@@ -332,7 +315,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setInvisibilityKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardVisibility.getInvisibilityKey());
@@ -354,7 +338,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setInputMode(InputMode::kToggle);
 
     Assert::IsTrue(keyboardVisibility.getInputMode() == InputMode::kToggle);
@@ -371,7 +356,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setInputMode(InputMode::kContinuous);
 
     Assert::IsTrue(keyboardVisibility.getInputMode() == InputMode::kContinuous);
@@ -392,7 +378,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setInputMode(InputMode::kToggle);
 
     Assert::IsTrue(keyboardVisibility.getInputMode() == InputMode::kToggle);
@@ -409,7 +396,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setInputMode(InputMode::kToggle);
 
     Assert::IsTrue(keyboardVisibility.getInputMode() == InputMode::kToggle);
@@ -426,7 +414,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     keyboardVisibility.setInputMode(InputMode::kToggle);
 
     Assert::IsTrue(keyboardVisibility.getInputMode() == InputMode::kToggle);
@@ -435,114 +424,6 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
 
     Assert::IsTrue(result.valid());
     Assert::IsTrue(keyboardVisibility.getInputMode() == InputMode::kContinuous);
-  }
-
-#pragma endregion
-
-#pragma region Get Target Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardVisibilityScriptCommands_GetTarget_TargetNull_ReturnsNullHandle)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
-
-    KeyboardVisibility keyboardVisibility;
-    keyboardVisibility.setTarget(nullptr);
-
-    Assert::IsNull(keyboardVisibility.getTarget());
-
-    auto result = state["KeyboardVisibility"]["getTarget"].call(keyboardVisibility);
-
-    Assert::IsTrue(result.valid());
-    Assert::IsNull(result.get<GameObject*>());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardVisibilityScriptCommands_GetTarget_TargetNotNull_ReturnsCorrectGameObjectHandle)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
-
-    GameObject gameObject;
-
-    KeyboardVisibility keyboardVisibility;
-    keyboardVisibility.setTarget(&gameObject);
-
-    Assert::IsTrue(&gameObject == keyboardVisibility.getTarget());
-
-    auto result = state["KeyboardVisibility"]["getTarget"].call(keyboardVisibility);
-
-    Assert::IsTrue(result.valid());
-    Assert::IsTrue(&gameObject == result.get<GameObject*>());
-  }
-
-#pragma endregion
-
-#pragma region Set Target Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardVisibilityScriptCommands_SetTarget_EmptyString_SetsTargetToNull)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
-
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-
-    observer_ptr<KeyboardVisibility> keyboardVisibility = gameObject->addComponent<KeyboardVisibility>();
-    keyboardVisibility->setTarget(gameObject.get());
-
-    Assert::IsTrue(gameObject.get() == keyboardVisibility->getTarget());
-
-    auto result = state["KeyboardVisibility"]["setTarget"].call(*keyboardVisibility, "");
-
-    Assert::IsTrue(result.valid());
-    Assert::IsNull(keyboardVisibility->getTarget());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardVisibilityScriptCommands_SetTarget_NonExistentGameObjectName_SetsTargetToNull)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
-
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-
-    observer_ptr<KeyboardVisibility> keyboardVisibility = gameObject->addComponent<KeyboardVisibility>();
-    keyboardVisibility->setTarget(gameObject.get());
-
-    Assert::IsTrue(gameObject.get() == keyboardVisibility->getTarget());
-    Assert::IsNull(screen.findGameObject("WubbaLubbaDubDub"));
-
-    auto result = state["KeyboardVisibility"]["setTarget"].call(*keyboardVisibility, "WubbaLubbaDubDub");
-
-    Assert::IsTrue(result.valid());
-    Assert::IsNull(keyboardVisibility->getTarget());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardVisibilityScriptCommands_SetTarget_ExistentGameObjectName_SetsTargetToCorrectGameObject)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
-
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<GameObject> target = screen.allocateGameObject();
-    target->setName("Target");
-
-    observer_ptr<KeyboardVisibility> keyboardVisibility = gameObject->addComponent<KeyboardVisibility>();
-    keyboardVisibility->setTarget(gameObject.get());
-
-    Assert::IsTrue(gameObject.get() == keyboardVisibility->getTarget());
-    Assert::IsTrue(target.get() == screen.findGameObject("Target"));
-
-    auto result = state["KeyboardVisibility"]["setTarget"].call(*keyboardVisibility, "Target");
-
-    Assert::IsTrue(result.valid());
-    Assert::AreEqual(target.get(), keyboardVisibility->getTarget());
   }
 
 #pragma endregion
@@ -637,7 +518,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     auto functionResult = state.globals()["KeyboardVisibility"]["as"].get<sol::protected_function>().call(&keyboardVisibility, "Object");
 
     Assert::IsTrue(functionResult.valid());
@@ -651,7 +533,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     auto functionResult = state.globals()["KeyboardVisibility"]["as"].get<sol::protected_function>().call(&keyboardVisibility, "KeyboardVisibility");
 
     Assert::IsTrue(functionResult.valid());
@@ -668,7 +551,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
     class MockKeyboardVisibility : public Celeste::Input::KeyboardVisibility {};
     state.new_usertype<MockKeyboardVisibility>("MockKeyboardVisibility");
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     auto functionResult = state.globals()["KeyboardVisibility"]["as"].get<sol::protected_function>().call(&keyboardVisibility, "MockKeyboardVisibility");
 
     Assert::IsTrue(functionResult.valid());
@@ -687,7 +571,8 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    KeyboardVisibility keyboardVisibility;
+    GameObject gameObject;
+    KeyboardVisibility keyboardVisibility(gameObject);
     auto functionResult = state.globals()["KeyboardVisibility"]["as"].get<sol::protected_function>().call(&keyboardVisibility, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());

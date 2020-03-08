@@ -5,7 +5,7 @@
 #include "Lua/ScriptCommands/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
-#include "Mocks/UI/MockProgressBar.h"
+#include "UI/ProgressBar.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -90,7 +90,8 @@ namespace TestCeleste::Lua::UI::ProgressBarScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::UI::ProgressBarScriptCommands::initialize();
 
-    ProgressBar progressBar;
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
     progressBar.setProgress(0.25f);
 
     Assert::AreEqual(0.25f, progressBar.getProgress());
@@ -111,7 +112,8 @@ namespace TestCeleste::Lua::UI::ProgressBarScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::UI::ProgressBarScriptCommands::initialize();
 
-    ProgressBar progressBar;
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
     progressBar.setMin(0);
     progressBar.setProgress(0.25f);
 
@@ -130,7 +132,8 @@ namespace TestCeleste::Lua::UI::ProgressBarScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::UI::ProgressBarScriptCommands::initialize();
 
-    ProgressBar progressBar;
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
     progressBar.setMax(1);
     progressBar.setProgress(0.25f);
 
@@ -149,7 +152,8 @@ namespace TestCeleste::Lua::UI::ProgressBarScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::UI::ProgressBarScriptCommands::initialize();
 
-    ProgressBar progressBar;
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
     progressBar.setMin(0);
     progressBar.setMax(1);
     progressBar.setProgress(0.25f);
@@ -256,7 +260,8 @@ namespace TestCeleste::Lua::UI::ProgressBarScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    ProgressBar progressBar;
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
     auto functionResult = state.globals()["ProgressBar"]["as"].get<sol::protected_function>().call(&progressBar, "Object");
 
     Assert::IsTrue(functionResult.valid());
@@ -270,7 +275,8 @@ namespace TestCeleste::Lua::UI::ProgressBarScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    ProgressBar progressBar;
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
     auto functionResult = state.globals()["ProgressBar"]["as"].get<sol::protected_function>().call(&progressBar, "ProgressBar");
 
     Assert::IsTrue(functionResult.valid());
@@ -287,7 +293,8 @@ namespace TestCeleste::Lua::UI::ProgressBarScriptCommands
     class MockProgressBar : public Celeste::UI::ProgressBar {};
     state.new_usertype<MockProgressBar>("MockProgressBar");
 
-    ProgressBar progressBar;
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
     auto functionResult = state.globals()["ProgressBar"]["as"].get<sol::protected_function>().call(&progressBar, "MockProgressBar");
 
     Assert::IsTrue(functionResult.valid());
@@ -306,7 +313,8 @@ namespace TestCeleste::Lua::UI::ProgressBarScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    ProgressBar progressBar;
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
     auto functionResult = state.globals()["ProgressBar"]["as"].get<sol::protected_function>().call(&progressBar, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());

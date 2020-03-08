@@ -19,7 +19,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StackPanel_Constructor_SetsValuesToDefault)
   {
-    StackPanel stackPanel;
+    GameObject gameObject;
+    StackPanel stackPanel(gameObject);
 
     Assert::IsTrue(Orientation::kVertical == stackPanel.getOrientation());
     Assert::IsTrue(UI::HorizontalAlignment::kCentre == stackPanel.getHorizontalAlignment());
@@ -41,10 +42,10 @@ namespace TestCeleste
     {
       GameObject gameObject;
 
-      AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(StackPanel::type_name(), gameObject);
+      observer_ptr<Component> component = ComponentRegistry::createComponent(StackPanel::type_name(), gameObject);
 
-      Assert::IsNotNull(component.get());
-      Assert::IsNotNull(dynamic_cast<StackPanel*>(component.get()));
+      Assert::IsNotNull(component);
+      Assert::IsNotNull(dynamic_cast<StackPanel*>(component));
       Assert::AreEqual(&gameObject, component->getGameObject());
     }
 
@@ -55,13 +56,14 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(StackPanel_AddChildren_ChildHasNoRenderer_DoesNotAddChildToStackPanel)
     {
-      StackPanel stackPanel;
       GameObject gameObject;
+      StackPanel stackPanel(gameObject);
+      GameObject child;
 
       Assert::IsNull(gameObject.findComponent<Renderer>());
       Assert::AreEqual(static_cast<size_t>(0), stackPanel.childCount());
 
-      stackPanel.addChildren(gameObject);
+      stackPanel.addChildren(child);
 
       Assert::AreEqual(static_cast<size_t>(0), stackPanel.childCount());
     }
@@ -70,8 +72,8 @@ namespace TestCeleste
     TEST_METHOD(StackPanel_AddChildren_ChildHasRenderer_NoParent_AddsChildToStackPanelOnly)
     {
       GameObject gameObject;
-      StackPanel stackPanel;
-      AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<MockSpriteRenderer>();
+      StackPanel stackPanel(gameObject);
+      observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<MockSpriteRenderer>();
 
       Assert::IsNotNull(gameObject.findComponent<SpriteRenderer>());
 
@@ -85,8 +87,8 @@ namespace TestCeleste
     {
       GameObject parent;
       GameObject gameObject;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
 
       Assert::IsNotNull(stackPanel->getGameObject());
       Assert::IsNotNull(gameObject.findComponent<SpriteRenderer>());
@@ -103,8 +105,8 @@ namespace TestCeleste
     {
       // Shouldnt be able to add stack panel game object to itself
       GameObject parent;
-      AutoDeallocator<SpriteRenderer> renderer = parent.addComponent<SpriteRenderer>();
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<SpriteRenderer> renderer = parent.addComponent<SpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
 
       stackPanel->addChildren(parent);
 
@@ -123,9 +125,9 @@ namespace TestCeleste
       GameObject gameObject1;
       GameObject gameObject2;
       GameObject gameObject3;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<SpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<SpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<SpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<SpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
 
       Assert::AreEqual(static_cast<size_t>(0), stackPanel->childCount());
 
@@ -144,9 +146,9 @@ namespace TestCeleste
       GameObject parent;
       GameObject gameObject1;
       GameObject gameObject2;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<SpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<SpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<SpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<SpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
 
       Assert::AreEqual(static_cast<size_t>(0), stackPanel->childCount());
 
@@ -166,13 +168,14 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(StackPanel_RemoveChildren_ChildNotAddedToStackPanel_DoesNothing)
     {
-      StackPanel stackPanel;
       GameObject gameObject;
+      StackPanel stackPanel(gameObject);
+      GameObject child;
 
-      Assert::IsNull(gameObject.findComponent<Renderer>());
+      Assert::IsNull(child.findComponent<Renderer>());
       Assert::AreEqual(static_cast<size_t>(0), stackPanel.childCount());
 
-      stackPanel.removeChildren(gameObject);
+      stackPanel.removeChildren(child);
 
       Assert::AreEqual(static_cast<size_t>(0), stackPanel.childCount());
     }
@@ -183,9 +186,9 @@ namespace TestCeleste
       GameObject parent;
       GameObject gameObject1;
       GameObject gameObject2;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<SpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<SpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<SpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<SpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
 
       Assert::AreEqual(static_cast<size_t>(0), stackPanel->childCount());
 
@@ -207,9 +210,9 @@ namespace TestCeleste
       GameObject parent;
       GameObject gameObject1;
       GameObject gameObject2;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
 
       renderer1->setDimensions(100, 100);
       renderer2->setDimensions(100, 100);
@@ -232,14 +235,15 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(StackPanel_RemoveMultipleChildren_ChildNotAddedToStackPanel_DoesNothing)
     {
-      StackPanel stackPanel;
       GameObject gameObject;
-      GameObject gameObject2;
+      StackPanel stackPanel(gameObject);
+      GameObject child;
+      GameObject child2;
 
       Assert::IsNull(gameObject.findComponent<Renderer>());
       Assert::AreEqual(static_cast<size_t>(0), stackPanel.childCount());
 
-      stackPanel.removeChildren(gameObject, gameObject2);
+      stackPanel.removeChildren(child, child2);
 
       Assert::AreEqual(static_cast<size_t>(0), stackPanel.childCount());
     }
@@ -251,10 +255,10 @@ namespace TestCeleste
       GameObject gameObject1;
       GameObject gameObject2;
       GameObject gameObject3;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<SpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<SpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<SpriteRenderer> renderer3 = gameObject3.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<SpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<SpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<SpriteRenderer> renderer3 = gameObject3.addComponent<MockSpriteRenderer>();
 
       Assert::AreEqual(static_cast<size_t>(0), stackPanel->childCount());
 
@@ -278,10 +282,10 @@ namespace TestCeleste
       GameObject gameObject1;
       GameObject gameObject2;
       GameObject gameObject3;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer3 = gameObject3.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer3 = gameObject3.addComponent<MockSpriteRenderer>();
 
       renderer1->setDimensions(100, 100);
       renderer2->setDimensions(100, 100);
@@ -308,9 +312,9 @@ namespace TestCeleste
       GameObject parent;
       GameObject gameObject1;
       GameObject gameObject2;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<SpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<SpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<SpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<SpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
 
       Assert::AreEqual(static_cast<size_t>(0), stackPanel->childCount());
 
@@ -329,7 +333,7 @@ namespace TestCeleste
     TEST_METHOD(StackPanel_ClearChildren_WithChildren_RemovesChildrenFromStackPanel)
     {
       GameObject parent;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
 
       Assert::AreEqual(static_cast<size_t>(0), stackPanel->childCount());
 
@@ -348,9 +352,9 @@ namespace TestCeleste
       GameObject parent;
       GameObject gameObject1;
       GameObject gameObject2;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
 
       stackPanel->setOrientation(Orientation::kHorizontal);
       stackPanel->setHorizontalAlignment(UI::HorizontalAlignment::kLeft);
@@ -386,9 +390,9 @@ namespace TestCeleste
       GameObject parent;
       GameObject gameObject1;
       GameObject gameObject2;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
 
       stackPanel->setOrientation(Orientation::kHorizontal);
       stackPanel->setHorizontalAlignment(UI::HorizontalAlignment::kCentre);
@@ -424,9 +428,9 @@ namespace TestCeleste
       GameObject parent;
       GameObject gameObject1;
       GameObject gameObject2;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
 
       stackPanel->setOrientation(Orientation::kHorizontal);
       stackPanel->setHorizontalAlignment(UI::HorizontalAlignment::kRight);
@@ -460,7 +464,7 @@ namespace TestCeleste
     TEST_METHOD(StackPanel_Layout_Horizontal_NoChildren)
     {
       GameObject parent;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
       stackPanel->setOrientation(Orientation::kHorizontal);
       stackPanel->setHorizontalAlignment(UI::HorizontalAlignment::kLeft);
 
@@ -480,9 +484,9 @@ namespace TestCeleste
       gameObject1.getTransform()->setTranslation(100, 0);
       gameObject2.getTransform()->setTranslation(200, 0);
 
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
       renderer1->setActive(false);
       renderer2->setActive(false);
 
@@ -515,9 +519,9 @@ namespace TestCeleste
       gameObject1.getTransform()->setTranslation(100, 0);
       gameObject2.getTransform()->setTranslation(200, 0);
 
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
       renderer1->setActive(false);
 
       stackPanel->setOrientation(Orientation::kHorizontal);
@@ -544,9 +548,9 @@ namespace TestCeleste
       GameObject parent;
       GameObject gameObject1;
       GameObject gameObject2;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
 
       stackPanel->setOrientation(Orientation::kVertical);
       stackPanel->setVerticalAlignment(UI::VerticalAlignment::kTop);
@@ -582,9 +586,9 @@ namespace TestCeleste
       GameObject parent;
       GameObject gameObject1;
       GameObject gameObject2;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
 
       stackPanel->setOrientation(Orientation::kVertical);
       stackPanel->setVerticalAlignment(UI::VerticalAlignment::kCentre);
@@ -620,9 +624,9 @@ namespace TestCeleste
       GameObject parent;
       GameObject gameObject1;
       GameObject gameObject2;
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
 
       stackPanel->setOrientation(Orientation::kVertical);
       stackPanel->setVerticalAlignment(UI::VerticalAlignment::kBottom);
@@ -657,7 +661,7 @@ namespace TestCeleste
     {
       GameObject parent;
       
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
       stackPanel->setOrientation(Orientation::kVertical);
       stackPanel->setVerticalAlignment(UI::VerticalAlignment::kBottom);
 
@@ -677,9 +681,9 @@ namespace TestCeleste
       gameObject1.getTransform()->setTranslation(0, 100);
       gameObject2.getTransform()->setTranslation(0, 200);
 
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
       renderer1->setActive(false);
       renderer2->setActive(false);
 
@@ -710,11 +714,11 @@ namespace TestCeleste
       GameObject gameObject1;
       GameObject gameObject2;
 
-      AutoDeallocator<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
-      AutoDeallocator<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer1 = gameObject1.addComponent<MockSpriteRenderer>();
+      observer_ptr<MockSpriteRenderer> renderer2 = gameObject2.addComponent<MockSpriteRenderer>();
       renderer1->setActive(false);
 
-      AutoDeallocator<StackPanel> stackPanel = parent.addComponent<StackPanel>();
+      observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
       stackPanel->setOrientation(Orientation::kVertical);
       stackPanel->setVerticalAlignment(UI::VerticalAlignment::kBottom);
 

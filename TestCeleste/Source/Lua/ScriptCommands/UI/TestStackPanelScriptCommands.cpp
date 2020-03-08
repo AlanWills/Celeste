@@ -103,7 +103,7 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
     GameObject gameObject;
     GameObject child;
 
-    AutoDeallocator<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
+    observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::UI::StackPanelScriptCommands::initialize();
@@ -121,8 +121,8 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
   TEST_METHOD(StackPanelScriptCommands_addChild_InputtingGameObjectWithRenderer_AddsChild)
   {
     GameObject gameObject, child;
-    AutoDeallocator<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
-    AutoDeallocator<MockRenderer> renderer = child.addComponent<MockRenderer>();
+    observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
+    observer_ptr<MockRenderer> renderer = child.addComponent<MockRenderer>();
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::UI::StackPanelScriptCommands::initialize();
@@ -144,8 +144,8 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
   TEST_METHOD(StackPanelScriptCommands_removeChild_InputtingGameObjectNotInStackPanel_DoesNothing)
   {
     GameObject gameObject, child, child2;
-    AutoDeallocator<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
-    AutoDeallocator<MockRenderer> renderer = child.addComponent<MockRenderer>();
+    observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
+    observer_ptr<MockRenderer> renderer = child.addComponent<MockRenderer>();
     stackPanel->addChildren(child);
 
     sol::state& state = LuaState::instance();
@@ -153,7 +153,7 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
 
     Assert::AreEqual(static_cast<size_t>(1), stackPanel->childCount());
 
-    auto result = state[StackPanel::type_name()]["removeChild"].get<sol::protected_function>().call(*stackPanel.get(), child2);
+    auto result = state[StackPanel::type_name()]["removeChild"].get<sol::protected_function>().call(*stackPanel, child2);
 
     Assert::IsTrue(result.valid());
     Assert::AreEqual(static_cast<size_t>(1), stackPanel->childCount());
@@ -163,8 +163,8 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
   TEST_METHOD(StackPanelScriptCommands_removeChild_InputtingGameObjectInStackPanel_RemovesChild)
   {
     GameObject gameObject, child;
-    AutoDeallocator<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
-    AutoDeallocator<MockRenderer> renderer = child.addComponent<MockRenderer>();
+    observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
+    observer_ptr<MockRenderer> renderer = child.addComponent<MockRenderer>();
     stackPanel->addChildren(child);
 
     sol::state& state = LuaState::instance();
@@ -172,7 +172,7 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
 
     Assert::AreEqual(static_cast<size_t>(1), stackPanel->childCount());
 
-    auto result = state[StackPanel::type_name()]["removeChild"].get<sol::protected_function>().call(*stackPanel.get(), child);
+    auto result = state[StackPanel::type_name()]["removeChild"].get<sol::protected_function>().call(*stackPanel, child);
 
     Assert::IsTrue(result.valid());
     Assert::AreEqual(static_cast<size_t>(0), stackPanel->childCount());
@@ -185,9 +185,9 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
     GameObject child;
     GameObject child2;
 
-    AutoDeallocator<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
-    AutoDeallocator<MockRenderer> renderer = child.addComponent<MockRenderer>();
-    AutoDeallocator<MockRenderer> renderer2 = child2.addComponent<MockRenderer>();
+    observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
+    observer_ptr<MockRenderer> renderer = child.addComponent<MockRenderer>();
+    observer_ptr<MockRenderer> renderer2 = child2.addComponent<MockRenderer>();
     stackPanel->addChildren(child, child2);
 
     sol::state& state = LuaState::instance();
@@ -196,7 +196,7 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
     Assert::AreEqual(static_cast<size_t>(2), stackPanel->childCount());
     Assert::AreNotEqual(glm::vec3(), child2.getTransform()->getTranslation());
 
-    auto result = state[StackPanel::type_name()]["removeChild"].get<sol::protected_function>().call(*stackPanel.get(), child);
+    auto result = state[StackPanel::type_name()]["removeChild"].get<sol::protected_function>().call(*stackPanel, child);
 
     Assert::IsTrue(result.valid());
     Assert::AreEqual(glm::vec3(), child2.getTransform()->getTranslation());
@@ -211,8 +211,8 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
   {
     GameObject gameObject;
     GameObject child;
-    AutoDeallocator<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
-    AutoDeallocator<MockRenderer> renderer = child.addComponent<MockRenderer>();
+    observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
+    observer_ptr<MockRenderer> renderer = child.addComponent<MockRenderer>();
     renderer->setDimensions(glm::vec2(100, 200));
     stackPanel->addChildren(child);
     stackPanel->setOrientation(Celeste::UI::Orientation::kVertical);
@@ -223,7 +223,7 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::UI::StackPanelScriptCommands::initialize();
 
-    auto result = state[StackPanel::type_name()]["layout"].get<sol::protected_function>().call(*stackPanel.get());
+    auto result = state[StackPanel::type_name()]["layout"].get<sol::protected_function>().call(*stackPanel);
 
     Assert::IsTrue(result.valid());
     Assert::AreEqual(glm::vec3(), child.getTransform()->getTranslation());
@@ -321,7 +321,8 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    StackPanel stackPanel;
+    GameObject gameObject;
+    StackPanel stackPanel(gameObject);
     auto functionResult = state.globals()["StackPanel"]["as"].get<sol::protected_function>().call(&stackPanel, "Object");
 
     Assert::IsTrue(functionResult.valid());
@@ -335,7 +336,8 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    StackPanel stackPanel;
+    GameObject gameObject;
+    StackPanel stackPanel(gameObject);
     auto functionResult = state.globals()["StackPanel"]["as"].get<sol::protected_function>().call(&stackPanel, "StackPanel");
 
     Assert::IsTrue(functionResult.valid());
@@ -352,7 +354,8 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
     class MockStackPanel : public Celeste::UI::StackPanel {};
     state.new_usertype<MockStackPanel>("MockStackPanel");
 
-    StackPanel stackPanel;
+    GameObject gameObject;
+    StackPanel stackPanel(gameObject);
     auto functionResult = state.globals()["StackPanel"]["as"].get<sol::protected_function>().call(&stackPanel, "MockStackPanel");
 
     Assert::IsTrue(functionResult.valid());
@@ -371,7 +374,8 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    StackPanel stackPanel;
+    GameObject gameObject;
+    StackPanel stackPanel(gameObject);
     auto functionResult = state.globals()["StackPanel"]["as"].get<sol::protected_function>().call(&stackPanel, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());

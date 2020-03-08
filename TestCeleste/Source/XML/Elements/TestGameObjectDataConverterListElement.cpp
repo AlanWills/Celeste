@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "XML/Elements/DataConverterListElement.h"
-#include "Mocks/DataConverters/Objects/MockGameObjectDataConverter.h"
+#include "DataConverters/Objects/GameObjectDataConverter.h"
 #include "DataConverters/Resources/PrefabDataConverter.h"
 #include "Resources/Resources/Data/PrefabLoadingResources.h"
 #include "Utils/GameObjectXMLUtils.h"
@@ -531,8 +531,8 @@ namespace TestCeleste::XML
   TEST_METHOD(GameObjectDataConverterListElement_ForeachIteration_NonEmptyList_IteratesOverCorrectElements)
   {
     GameObjectDataConverterListElement ele = createListElement();
-    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new MockGameObjectDataConverter("GameObject"));
-    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new MockGameObjectDataConverter("GameObject"));
+    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new GameObjectDataConverter("GameObject"));
+    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new GameObjectDataConverter("GameObject"));
 
     size_t index = 0;
     for (GameObjectDataConverter* converter : *ele)
@@ -551,8 +551,8 @@ namespace TestCeleste::XML
   TEST_METHOD(GameObjectDataConverterListElement_Clear_ClearsAllElementsFromList)
   {
     GameObjectDataConverterListElement ele = createListElement();
-    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new MockGameObjectDataConverter("GameObject"));
-    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new MockGameObjectDataConverter("GameObject"));
+    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new GameObjectDataConverter("GameObject"));
+    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new GameObjectDataConverter("GameObject"));
 
     Assert::AreEqual(static_cast<size_t>(2), ele->getItems().size());
 
@@ -619,8 +619,8 @@ namespace TestCeleste::XML
 
     Assert::IsTrue(ele->convertFromXML(element));
 
-    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new MockGameObjectDataConverter("GameObject"));
-    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new MockGameObjectDataConverter("GameObject"));
+    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new GameObjectDataConverter("GameObject"));
+    const_cast<std::vector<GameObjectDataConverter*>&>(ele->getItems()).push_back(new GameObjectDataConverter("GameObject"));
 
     Assert::AreEqual(static_cast<size_t>(2), ele->getItems().size());
 

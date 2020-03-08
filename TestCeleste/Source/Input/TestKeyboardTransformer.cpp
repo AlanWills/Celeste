@@ -42,10 +42,10 @@ namespace TestCeleste
     {
       GameObject gameObject;
 
-      AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(KeyboardTransformer::type_name(), gameObject);
+      observer_ptr<Component> component = ComponentRegistry::createComponent(KeyboardTransformer::type_name(), gameObject);
 
-      Assert::IsNotNull(component.get());
-      Assert::IsNotNull(dynamic_cast<KeyboardTransformer*>(component.get()));
+      Assert::IsNotNull(component);
+      Assert::IsNotNull(dynamic_cast<KeyboardTransformer*>(component));
       Assert::IsTrue(&gameObject == component->getGameObject());
     }
 
@@ -56,17 +56,18 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_Constructor_SetsDefaultValues)
     {
-      MockKeyboardTransformer kmScript;
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
       
-      Assert::AreEqual(GLFW_KEY_A, kmScript.getTranslateLeftKey());
-      Assert::AreEqual(GLFW_KEY_D, kmScript.getTranslateRightKey());
-      Assert::AreEqual(GLFW_KEY_W, kmScript.getTranslateUpKey());
-      Assert::AreEqual(GLFW_KEY_S, kmScript.getTranslateDownKey());
-      Assert::AreEqual(GLFW_KEY_Q, kmScript.getRotateLeftKey());
-      Assert::AreEqual(GLFW_KEY_E, kmScript.getRotateRightKey());
-      Assert::AreEqual(1.0f, kmScript.getTranslationSpeed());
-      Assert::AreEqual(0.01f, kmScript.getRotationSpeed());
-      Assert::IsNull(kmScript.getTransform());
+      Assert::AreEqual(GLFW_KEY_A, keyboardTransformer.getTranslateLeftKey());
+      Assert::AreEqual(GLFW_KEY_D, keyboardTransformer.getTranslateRightKey());
+      Assert::AreEqual(GLFW_KEY_W, keyboardTransformer.getTranslateUpKey());
+      Assert::AreEqual(GLFW_KEY_S, keyboardTransformer.getTranslateDownKey());
+      Assert::AreEqual(GLFW_KEY_Q, keyboardTransformer.getRotateLeftKey());
+      Assert::AreEqual(GLFW_KEY_E, keyboardTransformer.getRotateRightKey());
+      Assert::AreEqual(1.0f, keyboardTransformer.getTranslationSpeed());
+      Assert::AreEqual(0.01f, keyboardTransformer.getRotationSpeed());
+      Assert::IsNull(keyboardTransformer.getTransform());
     }
 
 #pragma endregion
@@ -76,217 +77,232 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_ResetsDirectionVector)
     {
-      MockKeyboardTransformer kmScript;
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
 
-      kmScript.setDirectionVector_Public(glm::vec2(1, -1));
-      kmScript.handleInput();
+      keyboardTransformer.setDirectionVector_Public(glm::vec2(1, -1));
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(glm::vec2(), kmScript.getDirectionVector_Public());
+      Assert::AreEqual(glm::vec2(), keyboardTransformer.getDirectionVector_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithDefaultTranslateLeftKeyPressed_ShouldRaiseLeftMovement)
     {
-      MockKeyboardTransformer kmScript;
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
 
       // Simulate a key down event
-      getKeyboard().setKeyPressed(kmScript.getTranslateLeftKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getTranslateLeftKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(glm::vec2(-1, 0), kmScript.getDirectionVector_Public());
+      Assert::AreEqual(glm::vec2(-1, 0), keyboardTransformer.getDirectionVector_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithCustomTranslateLeftKeyPressed_ShouldRaiseLeftMovement)
     {
-      MockKeyboardTransformer kmScript;
-      kmScript.setTranslateLeftKey(GLFW_KEY_U);
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
+      keyboardTransformer.setTranslateLeftKey(GLFW_KEY_U);
 
       // Simulate a key down event
-      getKeyboard().setKeyPressed(kmScript.getTranslateLeftKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getTranslateLeftKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(glm::vec2(-1, 0), kmScript.getDirectionVector_Public());
+      Assert::AreEqual(glm::vec2(-1, 0), keyboardTransformer.getDirectionVector_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithDefaultTranslateUpKeyPressed_ShouldRaiseUpMovement)
     {
-      MockKeyboardTransformer kmScript;
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
 
       // Simulate a key down event
-      getKeyboard().setKeyPressed(kmScript.getTranslateUpKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getTranslateUpKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(glm::vec2(0, 1), kmScript.getDirectionVector_Public());
+      Assert::AreEqual(glm::vec2(0, 1), keyboardTransformer.getDirectionVector_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithCustomTranslateUpKeyPressed_ShouldRaiseUpMovement)
     {
-      MockKeyboardTransformer kmScript;
-      kmScript.setTranslateUpKey(GLFW_KEY_U);
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
+      keyboardTransformer.setTranslateUpKey(GLFW_KEY_U);
 
       // Simulate a key down event
-      getKeyboard().setKeyPressed(kmScript.getTranslateUpKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getTranslateUpKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(glm::vec2(0, 1), kmScript.getDirectionVector_Public());
+      Assert::AreEqual(glm::vec2(0, 1), keyboardTransformer.getDirectionVector_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithDefaultTranslateRightKeyPressed_ShouldRaiseRightMovement)
     {
-      MockKeyboardTransformer kmScript;
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
 
       // Simulate a key down
-      getKeyboard().setKeyPressed(kmScript.getTranslateRightKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getTranslateRightKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(glm::vec2(1, 0), kmScript.getDirectionVector_Public());
+      Assert::AreEqual(glm::vec2(1, 0), keyboardTransformer.getDirectionVector_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithCustomTranslateRightKeyPressed_ShouldRaiseRightMovement)
     {
-      MockKeyboardTransformer kmScript;
-      kmScript.setTranslateRightKey(GLFW_KEY_U);
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
+      keyboardTransformer.setTranslateRightKey(GLFW_KEY_U);
 
       // Simulate a key down
-      getKeyboard().setKeyPressed(kmScript.getTranslateRightKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getTranslateRightKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(glm::vec2(1, 0), kmScript.getDirectionVector_Public());
+      Assert::AreEqual(glm::vec2(1, 0), keyboardTransformer.getDirectionVector_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithDefaultTranslateDownKeyPressed_ShouldRaiseDownMovement)
     {
-      MockKeyboardTransformer kmScript;
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
 
       // Simulate a key down event
-      getKeyboard().setKeyPressed(kmScript.getTranslateDownKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getTranslateDownKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(glm::vec2(0, -1), kmScript.getDirectionVector_Public());
+      Assert::AreEqual(glm::vec2(0, -1), keyboardTransformer.getDirectionVector_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithCustomTranslateDownKeyPressed_ShouldRaiseDownMovement)
     {
-      MockKeyboardTransformer kmScript;
-      kmScript.setTranslateDownKey(GLFW_KEY_U);
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
+      keyboardTransformer.setTranslateDownKey(GLFW_KEY_U);
 
       // Simulate a key down event
-      getKeyboard().setKeyPressed(kmScript.getTranslateDownKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getTranslateDownKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(glm::vec2(0, -1), kmScript.getDirectionVector_Public());
+      Assert::AreEqual(glm::vec2(0, -1), keyboardTransformer.getDirectionVector_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithDefaultRotateLeftKeyPressed_ShouldCauseLeftRotation)
     {
-      MockKeyboardTransformer kmScript;
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
 
       // Simulate a key down event
-      getKeyboard().setKeyPressed(kmScript.getRotateLeftKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getRotateLeftKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(-1.0f, kmScript.getRotationDelta_Public());
+      Assert::AreEqual(-1.0f, keyboardTransformer.getRotationDelta_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithCustomRotateLeftKeyPressed_ShouldCauseLeftRotation)
     {
-      MockKeyboardTransformer kmScript;
-      kmScript.setRotateLeftKey(GLFW_KEY_U);
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
+      keyboardTransformer.setRotateLeftKey(GLFW_KEY_U);
 
       // Simulate a key down event
-      getKeyboard().setKeyPressed(kmScript.getRotateLeftKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getRotateLeftKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(-1.0f, kmScript.getRotationDelta_Public());
+      Assert::AreEqual(-1.0f, keyboardTransformer.getRotationDelta_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithDefaultRotateRightKeyPressed_ShouldCauseRightRotation)
     {
-      MockKeyboardTransformer kmScript;
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
 
       // Simulate a key down event
-      getKeyboard().setKeyPressed(kmScript.getRotateRightKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getRotateRightKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(1.0f, kmScript.getRotationDelta_Public());
+      Assert::AreEqual(1.0f, keyboardTransformer.getRotationDelta_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithCustomRotateRightKeyPressed_ShouldCauseRightRotation)
     {
-      MockKeyboardTransformer kmScript;
-      kmScript.setRotateRightKey(GLFW_KEY_U);
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
+      keyboardTransformer.setRotateRightKey(GLFW_KEY_U);
 
       // Simulate a key down event
-      getKeyboard().setKeyPressed(kmScript.getRotateRightKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getRotateRightKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(1.0f, kmScript.getRotationDelta_Public());
+      Assert::AreEqual(1.0f, keyboardTransformer.getRotationDelta_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithMultipleTranslationKeysDownInSameAxis_Sum)
     {
-      MockKeyboardTransformer kmScript;
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
 
       // Simulate keys down
-      getKeyboard().setKeyPressed(kmScript.getTranslateDownKey());
-      getKeyboard().setKeyPressed(kmScript.getTranslateUpKey());
-      getKeyboard().setKeyPressed(kmScript.getTranslateLeftKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getTranslateDownKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getTranslateUpKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getTranslateLeftKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(glm::vec2(-1, 0), kmScript.getDirectionVector_Public());
+      Assert::AreEqual(glm::vec2(-1, 0), keyboardTransformer.getDirectionVector_Public());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_HandleInput_WithMultipleRotationKeysDown_Sum)
     {
-      MockKeyboardTransformer kmScript;
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
 
       // Simulate keys down
-      getKeyboard().setKeyPressed(kmScript.getRotateLeftKey());
-      getKeyboard().setKeyPressed(kmScript.getRotateRightKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getRotateLeftKey());
+      getKeyboard().setKeyPressed(keyboardTransformer.getRotateRightKey());
       getKeyboard().handleInput();
 
-      kmScript.handleInput();
+      keyboardTransformer.handleInput();
 
-      Assert::AreEqual(0.0f, kmScript.getRotationDelta_Public());
+      Assert::AreEqual(0.0f, keyboardTransformer.getRotationDelta_Public());
     }
 
 #pragma endregion
@@ -296,11 +312,12 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_Update_WithNullTransform_DoesNotThrow)
     {
-      MockKeyboardTransformer kmScript;
+      GameObject gameObject;
+      MockKeyboardTransformer keyboardTransformer(gameObject);
 
-      Assert::IsNull(kmScript.getTransform());
+      Assert::IsNull(keyboardTransformer.getTransform());
 
-      kmScript.update(0);
+      keyboardTransformer.update(0);
     }
 
     //------------------------------------------------------------------------------------------------
@@ -308,13 +325,13 @@ namespace TestCeleste
     {
       GameObject gameObject;
 
-      AutoDeallocator<MockKeyboardTransformer> kmScript = gameObject.addComponent<MockKeyboardTransformer>();
-      kmScript->setRotationSpeed(2);
+      observer_ptr<MockKeyboardTransformer> keyboardTransformer = gameObject.addComponent<MockKeyboardTransformer>();
+      keyboardTransformer->setRotationSpeed(2);
 
-      Assert::IsNotNull(kmScript->getTransform());
+      Assert::IsNotNull(keyboardTransformer->getTransform());
 
-      kmScript->setRotationDelta_Public(1);
-      kmScript->update(2);
+      keyboardTransformer->setRotationDelta_Public(1);
+      keyboardTransformer->update(2);
 
       Assert::AreEqual(4.0f, gameObject.getTransform()->getRotation());
     }
@@ -325,13 +342,13 @@ namespace TestCeleste
       GameObject gameObject;
       gameObject.getTransform()->setRotation(glm::half_pi<float>());  // Rotate the transform local space to show that the movement is locally
 
-      AutoDeallocator<MockKeyboardTransformer> kmScript = gameObject.addComponent<MockKeyboardTransformer>();
-      kmScript->setTranslationSpeed(2);
+      observer_ptr<MockKeyboardTransformer> keyboardTransformer = gameObject.addComponent<MockKeyboardTransformer>();
+      keyboardTransformer->setTranslationSpeed(2);
 
-      Assert::IsNotNull(kmScript->getTransform());
+      Assert::IsNotNull(keyboardTransformer->getTransform());
 
-      kmScript->setDirectionVector_Public(glm::vec2(0.5f, -1));
-      kmScript->update(2);
+      keyboardTransformer->setDirectionVector_Public(glm::vec2(0.5f, -1));
+      keyboardTransformer->update(2);
 
       AssertExt::AreAlmostEqual(glm::vec3(-4, -2, 0), gameObject.getTransform()->getTranslation(), 0.0001f);
     }

@@ -2,6 +2,7 @@
 
 #include "Memory/Allocators/PoolAllocator.h"
 #include "Mocks/Objects/MockComponent.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
 #include <vector>
@@ -162,7 +163,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(PoolAllocator_DeallocateElementNotFromPool_DoesNothingAndReturnsFalse)
     {
-      MockComponent object;
+      GameObject gameObject;
+      MockComponent object(gameObject);
       PoolAllocator<MockComponent> pool(1024);
       
       Assert::IsFalse(pool.contains(object));

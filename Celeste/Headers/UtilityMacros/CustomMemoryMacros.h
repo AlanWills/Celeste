@@ -7,8 +7,8 @@
   public: \
     static constexpr const char* const type_name() { return #Type; } \
     \
-    void* operator new(size_t); \
-    void operator delete(void*); \
+    DllExport void* operator new(size_t); \
+    DllExport void operator delete(void*); \
     \
   private: \
     using Allocator = Celeste::EntityAllocator<Type>; \

@@ -17,57 +17,57 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioTypeDeserializer_InputtingMusic_ReturnsTrue)
     {
-      AudioType audio = Audio::AudioType::kSFX;
+      AudioType audioSource = Audio::AudioType::kSFX;
 
-      Assert::IsTrue(deserialize("Music", audio));
+      Assert::IsTrue(deserialize("Music", audioSource));
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioTypeDeserializer_InputtingMusic_SetsOutputTokWorld)
     {
-      AudioType audio = Audio::AudioType::kSFX;
-      deserialize("Music", audio);
+      AudioType audioSource = Audio::AudioType::kSFX;
+      deserialize("Music", audioSource);
 
-      Assert::IsTrue(audio == AudioType::kMusic);
+      Assert::IsTrue(audioSource == AudioType::kMusic);
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioTypeDeserializer_InputtingSFX_ReturnsTrue)
     {
-      AudioType audio = Audio::AudioType::kMusic;
+      AudioType audioSource = Audio::AudioType::kMusic;
 
-      Assert::IsTrue(deserialize("SFX", audio));
+      Assert::IsTrue(deserialize("SFX", audioSource));
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioTypeDeserializer_InputtingSFX_SetsOutputTokGUI)
     {
-      AudioType audio = Audio::AudioType::kMusic;
-      deserialize("SFX", audio);
+      AudioType audioSource = Audio::AudioType::kMusic;
+      deserialize("SFX", audioSource);
 
-      Assert::IsTrue(audio == AudioType::kSFX);
+      Assert::IsTrue(audioSource == AudioType::kSFX);
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioTypeDeserializer_InputtingInvalidText_ReturnsFalse)
     {
-      AudioType audio = Audio::AudioType::kMusic;
+      AudioType audioSource = Audio::AudioType::kMusic;
 
-      Assert::IsFalse(deserialize("", audio));
-      Assert::IsFalse(deserialize("adhiasd", audio));
+      Assert::IsFalse(deserialize("", audioSource));
+      Assert::IsFalse(deserialize("adhiasd", audioSource));
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioTypeDeserializer_InputtingInvalidText_DoesNotChangeOutput)
     {
-      AudioType audio = Audio::AudioType::kMusic;
-      deserialize("", audio);
+      AudioType audioSource = Audio::AudioType::kMusic;
+      deserialize("", audioSource);
 
-      Assert::IsTrue(audio == AudioType::kMusic);
+      Assert::IsTrue(audioSource == AudioType::kMusic);
 
-      deserialize("wjdankjds", audio);
+      deserialize("wjdankjds", audioSource);
 
-      Assert::IsTrue(audio == AudioType::kMusic);
+      Assert::IsTrue(audioSource == AudioType::kMusic);
     }
 
 #pragma endregion

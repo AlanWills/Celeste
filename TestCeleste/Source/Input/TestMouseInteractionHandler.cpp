@@ -43,10 +43,10 @@ namespace TestCeleste
     {
       GameObject gameObject;
 
-      AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(MouseInteractionHandler::type_name(), gameObject);
+      observer_ptr<Component> component = ComponentRegistry::createComponent(MouseInteractionHandler::type_name(), gameObject);
 
-      Assert::IsNotNull(component.get());
-      Assert::IsNotNull(dynamic_cast<MouseInteractionHandler*>(component.get()));
+      Assert::IsNotNull(component);
+      Assert::IsNotNull(dynamic_cast<MouseInteractionHandler*>(component));
       Assert::IsTrue(&gameObject == component->getGameObject());
     }
 
@@ -57,7 +57,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(MouseInteractionHandler_HandleInput_WithNoCollider_DoesNotThrow)
     {
-      MouseInteractionHandler handler;
+      GameObject gameObject;
+      MouseInteractionHandler handler(gameObject);
       handler.handleInput();
     }
 
@@ -65,8 +66,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_MouseNotOverLastFrame_MouseOverThisFrame_TriggersOnEnter)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnEnterEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -80,8 +81,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_MouseOverLastFrame_MouseNotOverThisFrame_TriggersOnLeave)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnLeaveEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -104,8 +105,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_MouseOverThisFrameAndLeftMouseButtonDown_TriggersOnLeftButtonDown)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnLeftButtonDownEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -124,8 +125,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_MouseNotOverThisFrameAndLeftMouseButtonDown_DoesNotTriggerOnLeftButtonDown)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnLeftButtonDownEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setDimensions(glm::vec2(100, 100));
@@ -143,8 +144,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_MouseOverThisFrameAndLeftMouseButtonUp_DoesNotTriggerOnLeftButtonDown)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnLeftButtonDownEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setDimensions(glm::vec2(100, 100));
@@ -165,8 +166,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_ClickedLastFrameAndLeftMouseButtonUpOverCollider_TriggersOnLeftButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnLeftButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -190,8 +191,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_ClickedLastFrameAndLeftMouseButtonUpNotOverCollider_DoesNotTriggerOnLeftButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnLeftButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -217,8 +218,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_ClickedLastFrameAndLeftMouseButtonNotUp_DoesNotTriggerOnLeftButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnLeftButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -241,8 +242,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_NotClickedLastFrameAndLeftMouseButtonUp_DoesNotTriggerOnLeftButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnLeftButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       simulateMouseButtonPressed(MouseButton::kLeft);
@@ -267,8 +268,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_MouseOverThisFrameAndMiddleMouseButtonDown_TriggersOnMiddleButtonDown)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnMiddleButtonDownEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -287,8 +288,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_MouseNotOverThisFrameAndMiddleMouseButtonDown_DoesNotTriggerOnMiddleButtonDown)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnMiddleButtonDownEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setDimensions(glm::vec2(100, 100));
@@ -306,8 +307,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_MouseOverThisFrameAndMiddleMouseButtonUp_DoesNotTriggerOnMiddleButtonDown)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnMiddleButtonDownEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setDimensions(glm::vec2(100, 100));
@@ -328,8 +329,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_ClickedLastFrameAndMiddleMouseButtonUpOverCollider_TriggersOnMiddleButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnMiddleButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -353,8 +354,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_ClickedLastFrameAndMiddleMouseButtonUpNotOverCollider_DoesNotTriggerOnMiddleButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnMiddleButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -380,8 +381,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_ClickedLastFrameAndMiddleMouseButtonDown_DoesNotTriggerOnMiddleButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnMiddleButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -404,8 +405,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_NotClickedLastFrameAndMiddleMouseButtonUp_DoesNotTriggerOnMiddleButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnMiddleButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       simulateMouseButtonPressed(MouseButton::kMiddle);
@@ -430,8 +431,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_MouseOverThisFrameAndRightMouseButtonDown_TriggersOnRightButtonDown)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnRightButtonDownEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -450,8 +451,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_MouseNotOverThisFrameAndRightMouseButtonDown_DoesNotTriggerOnRightButtonDown)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnRightButtonDownEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setDimensions(glm::vec2(100, 100));
@@ -469,8 +470,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_MouseOverThisFrameAndRightMouseButtonUp_DoesNotTriggerOnRightButtonDown)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnRightButtonDownEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setDimensions(glm::vec2(100, 100));
@@ -491,8 +492,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_ClickedLastFrameAndRightMouseButtonUpOverCollider_TriggersOnRightButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnRightButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -516,8 +517,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_ClickedLastFrameAndRightMouseButtonUpNotOverCollider_DoesNotTriggerOnRightButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnRightButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -543,8 +544,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_ClickedLastFrameAndRightMouseButtonUp_DoesNotTriggerOnRightButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnRightButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       collider->setHitByRay(true);
@@ -567,8 +568,8 @@ namespace TestCeleste
     TEST_METHOD(MouseInteractionHandler_HandleInput_NotClickedLastFrameAndRightMouseButtonUp_DoesNotTriggerOnRightButtonUp)
     {
       GameObject gameObject;
-      AutoDeallocator<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-      AutoDeallocator<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
+      observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+      observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
 
       handler->getOnRightButtonUpEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
       simulateMouseButtonPressed(MouseButton::kMiddle);

@@ -67,7 +67,9 @@ namespace TestCeleste
 
     Assert::AreEqual((size_t)0, manager.getSimulatedBodiesSize());
 
-    manager.addSimulatedBody(RectangleCollider());
+    GameObject gameObject;
+    RectangleCollider rectangleCollider(gameObject);
+    manager.addSimulatedBody(rectangleCollider);
 
     Assert::AreEqual((size_t)1, manager.getSimulatedBodiesSize());
   }
@@ -78,8 +80,10 @@ namespace TestCeleste
     PhysicsManager manager;
 
     Assert::AreEqual((size_t)0, manager.getSimulatedBodiesSize());
-
-    manager.addSimulatedBody(RigidBody2D());
+    
+    GameObject gameObject;
+    RigidBody2D rigidBody2D(gameObject);
+    manager.addSimulatedBody(rigidBody2D);
 
     Assert::AreEqual((size_t)1, manager.getSimulatedBodiesSize());
   }
@@ -91,7 +95,10 @@ namespace TestCeleste
 
     Assert::AreEqual((size_t)0, manager.getSimulatedBodiesSize());
 
-    manager.addSimulatedBody(RectangleCollider(), RigidBody2D());
+    GameObject gameObject;
+    RectangleCollider rectangleCollider(gameObject);
+    RigidBody2D rigidBody2D(gameObject);
+    manager.addSimulatedBody(rectangleCollider, rigidBody2D);
 
     Assert::AreEqual((size_t)1, manager.getSimulatedBodiesSize());
   }
@@ -103,7 +110,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_ClearSimulatedBodies_RemovesAllSimulatedBodies_FromPhysicsManager)
   {
-    RectangleCollider collider;
+    GameObject gameObject;
+    RectangleCollider collider(gameObject);
     PhysicsManager manager;
 
     Assert::AreEqual((size_t)0, manager.getSimulatedBodiesSize());
@@ -124,7 +132,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyWithInactiveRigidBody_DoesNotSimulateGravity)
   {
-    RigidBody2D rigidBody;
+    GameObject gameObject;
+    RigidBody2D rigidBody(gameObject);
     rigidBody.setActive(false);
 
     AssertCel::IsNotActive(rigidBody);
@@ -144,7 +153,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyWithActiveRigidBody_UpdatesLinearVelocityToSimulateGravity)
   {
-    RigidBody2D rigidBody;
+    GameObject gameObject;
+    RigidBody2D rigidBody(gameObject);
 
     AssertCel::IsActive(rigidBody);
     Assert::AreEqual(0.0f, rigidBody.getLinearVelocity().y);
@@ -164,19 +174,20 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyWithInactiveCollider_DoesNotPerformCollisions)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setActive(false);
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
     
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
-    AssertCel::IsNotActive(rectangleCollider.get());
+    AssertCel::IsNotActive(rectangleCollider);
     Assert::AreEqual(glm::vec2(100, 200), rectangleCollider->getDimensions());
     Assert::AreEqual((size_t)0, getPhysicsManager().getSimulatedBodiesSize());
 
@@ -194,20 +205,21 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyDoesNotPerformCollisionsWithInactiveColliders)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
     otherCollider->setActive(false);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
-    AssertCel::IsActive(rectangleCollider.get());
-    AssertCel::IsNotActive(otherCollider.get());
+    AssertCel::IsActive(rectangleCollider);
+    AssertCel::IsNotActive(otherCollider);
     Assert::AreEqual(glm::vec2(100, 200), rectangleCollider->getDimensions());
     Assert::AreEqual((size_t)0, getPhysicsManager().getSimulatedBodiesSize());
 
@@ -225,15 +237,15 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyDoesNotPerformCollisionsWithItself)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
     Assert::IsTrue(rectangleCollider->intersects(*rectangleCollider));
-    AssertCel::IsActive(rectangleCollider.get());
+    AssertCel::IsActive(rectangleCollider);
     Assert::AreEqual(glm::vec2(100, 200), rectangleCollider->getDimensions());
     Assert::AreEqual((size_t)0, getPhysicsManager().getSimulatedBodiesSize());
 
@@ -251,14 +263,15 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithTriggerForFirstTime_CallsTriggerEnter)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
     
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
     otherCollider->setColliderType(Physics::ColliderType::kTrigger);
 
@@ -280,14 +293,15 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithTriggerNotForFirstTime_DoesNotCallTriggerEnter)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
     otherCollider->setColliderType(Physics::ColliderType::kTrigger);
 
@@ -317,14 +331,15 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithTrigger_CallsTrigger)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
     otherCollider->setColliderType(Physics::ColliderType::kTrigger);
 
@@ -354,18 +369,20 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithMultipleTriggers_CallsTriggerForEveryTriggerItCollidesWith)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
     otherCollider->setColliderType(Physics::ColliderType::kTrigger);
 
-    AutoDeallocator<RectangleCollider> otherCollider2 = RectangleCollider::allocate(GameObject());
+    GameObject other2;
+    observer_ptr<RectangleCollider> otherCollider2 = other2.addComponent<RectangleCollider>();
     otherCollider2->setDimensions(50, 50);
     otherCollider2->setColliderType(Physics::ColliderType::kTrigger);
 
@@ -391,14 +408,15 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithCollider_NoRigidBody_DoesNotThrow)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
@@ -419,14 +437,15 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithColliderForFirstTime_CallsCollisionEnter)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
@@ -447,14 +466,15 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithColliderNotForFirstTime_DoesNotCallCollisionEnter)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
@@ -483,14 +503,15 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithCollider_CallsCollision)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
@@ -519,17 +540,19 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithMultipleColliders_CallsCollisionForEveryColliderItCollidesWith)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
-    AutoDeallocator<RectangleCollider> otherCollider2 = RectangleCollider::allocate(GameObject());
+    GameObject other2;
+    observer_ptr<RectangleCollider> otherCollider2 = other2.addComponent<RectangleCollider>();
     otherCollider2->setDimensions(50, 50);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
@@ -559,17 +582,18 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyCollidesWithCollider_BodyIsTrigger_DoesNotAffectRigidBody)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
     rigidBody->setLinearVelocity(10, 20);
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
     rectangleCollider->setColliderType(Physics::ColliderType::kTrigger);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
@@ -594,16 +618,17 @@ namespace TestCeleste
   {
     GameObject gameObject;
     gameObject.getTransform()->setTranslation(50, 0);
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
     rigidBody->setLinearVelocity(-10, 0);
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
@@ -628,16 +653,17 @@ namespace TestCeleste
   {
     GameObject gameObject;
     gameObject.getTransform()->setTranslation(0, -50);
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
     rigidBody->setLinearVelocity(0, 10);
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
@@ -662,16 +688,17 @@ namespace TestCeleste
   {
     GameObject gameObject;
     gameObject.getTransform()->setTranslation(-50, 0);
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
     rigidBody->setLinearVelocity(10, 0);
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
@@ -696,16 +723,17 @@ namespace TestCeleste
   {
     GameObject gameObject;
     gameObject.getTransform()->setTranslation(0, 50);
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
     rigidBody->setLinearVelocity(0, -10);
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
@@ -729,14 +757,15 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyDoesNotCollideWithTrigger_ButDidLastFrame_CallsTriggerExit)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
     otherCollider->setColliderType(Physics::ColliderType::kTrigger);
 
@@ -774,14 +803,15 @@ namespace TestCeleste
   {
     GameObject gameObject;
     gameObject.getTransform()->setTranslation(500, 500);
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
     otherCollider->setColliderType(Physics::ColliderType::kTrigger);
 
@@ -813,14 +843,15 @@ namespace TestCeleste
   TEST_METHOD(PhysicsManager_Update_SimulatedBodyDoesNotCollideWithCollider_ButDidLastFrame_CallsCollisionExit)
   {
     GameObject gameObject;
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
     Assert::IsTrue(rectangleCollider->intersects(*otherCollider));
@@ -857,14 +888,15 @@ namespace TestCeleste
   {
     GameObject gameObject;
     gameObject.getTransform()->setTranslation(500, 500);
-    AutoDeallocator<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<CollisionDetector> detector = gameObject.addComponent<CollisionDetector>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 200);
 
     // Add scripts & components
     gameObject.update(0);
 
-    AutoDeallocator<RectangleCollider> otherCollider = RectangleCollider::allocate(GameObject());
+    GameObject other;
+    observer_ptr<RectangleCollider> otherCollider = other.addComponent<RectangleCollider>();
     otherCollider->setDimensions(50, 50);
 
     Assert::IsFalse(rectangleCollider->intersects(*otherCollider));

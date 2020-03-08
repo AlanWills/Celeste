@@ -980,7 +980,8 @@ namespace TestCeleste::Lua
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponentDataConverter_DoSetValues_NoCallback_DoesNoLuaInteraction)
   {
-    MockComponent component;
+    GameObject gameObject;
+    MockComponent component(gameObject);
     LuaComponentDataConverter converter(LuaState::instance().create_table(), "Test");
 
     // Just check this doesn't throw
@@ -990,12 +991,13 @@ namespace TestCeleste::Lua
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponentDataConverter_DoSetValues_WithCallback_ForNonLuaRegisteredComponent_CallsCallbackWithComponentPtr)
   {
-    class TempComponent : public MockComponent {};
+    class TempComponent : public MockComponent { public: TempComponent(GameObject& gameObject) : MockComponent(gameObject) {} };
 
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Child");
 
-    TempComponent component;
+    GameObject gameObject;
+    TempComponent component(gameObject);
     sol::table table = LuaState::instance().create_table();
     table["SetValues"] = [](LuaComponentDataConverter*, sol::object object) -> void
     {
@@ -1027,7 +1029,8 @@ namespace TestCeleste::Lua
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Child");
 
-    MockComponent component;
+    GameObject gameObject;
+    MockComponent component(gameObject);
     sol::table table = LuaState::instance().create_table();
     table["SetValues"] = [](LuaComponentDataConverter*, sol::object object) -> void
     {

@@ -190,9 +190,9 @@ namespace TestCeleste
   {
     GameObject gameObject;
 
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(nullptr, gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(nullptr, gameObject);
 
-    Assert::IsNull(component.get());
+    Assert::IsNull(component);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -204,9 +204,9 @@ namespace TestCeleste
 
     Assert::IsFalse(ComponentRegistry::hasComponent("WubbaLubbaDubDub"));
 
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(element, gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(element, gameObject);
 
-    Assert::IsNull(component.get());
+    Assert::IsNull(component);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -221,9 +221,9 @@ namespace TestCeleste
     Assert::IsFalse(ComponentDataConverterRegistry::hasCustomConverter<MockComponentDataConverter>());
     AssertCel::DoesNotHaveComponent<MockComponent>(gameObject);
 
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(element, gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(element, gameObject);
 
-    Assert::IsNotNull(component.get());
+    Assert::IsNotNull(component);
     AssertCel::HasComponent<MockComponent>(gameObject);
     Assert::IsTrue(&gameObject == component->getGameObject());
     AssertCel::IsNotActive(*component);
@@ -242,9 +242,9 @@ namespace TestCeleste
     Assert::IsTrue(ComponentDataConverterRegistry::hasCustomConverter<MockComponentDataConverter>());
     AssertCel::DoesNotHaveComponent<MockComponent>(gameObject);
 
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(element, gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(element, gameObject);
 
-    Assert::IsNotNull(component.get());
+    Assert::IsNotNull(component);
     AssertCel::HasComponent<MockComponent>(gameObject);
     Assert::IsTrue(&gameObject == component->getGameObject());
     AssertCel::IsNotActive(*component);

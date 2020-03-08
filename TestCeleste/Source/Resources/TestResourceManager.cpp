@@ -996,18 +996,18 @@ namespace TestCeleste::Resources
   TEST_METHOD(ResourceManager_LoadSound_WithNonExistentFilePath_ReturnsNullHandle)
   {
     ResourceManager resourceManager(TestResources::getResourcesDirectory());
-    observer_ptr<Sound> audio = resourceManager.load<Sound>("ThisShouldntExist.wav");
+    observer_ptr<Sound> audioSource = resourceManager.load<Sound>("ThisShouldntExist.wav");
 
-    Assert::IsNull(audio);
+    Assert::IsNull(audioSource);
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ResourceManager_LoadSound_WithExistentFilePath_ReturnsResourceHandle)
   {
     ResourceManager resourceManager(TestResources::getResourcesDirectory());
-    observer_ptr<Sound> audio = resourceManager.load<Sound>(TestResources::getButtonHoverWavRelativePath());
+    observer_ptr<Sound> audioSource = resourceManager.load<Sound>(TestResources::getButtonHoverWavRelativePath());
 
-    Assert::IsNotNull(audio);
+    Assert::IsNotNull(audioSource);
   }
 
   //------------------------------------------------------------------------------------------------

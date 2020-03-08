@@ -3,6 +3,7 @@
 #include "Memory/Allocators/EntityAllocator.h"
 #include "Memory/Allocators/PoolAllocator.h"
 #include "Mocks/Objects/MockComponent.h"
+#include "Objects/GameObject.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -82,7 +83,8 @@ namespace TestCeleste
     TEST_METHOD(EntityAllocator_Deallocate_ObjectNotFromAllocator_DoesNothingAndReturnsFalse)
     {
       EntityAllocator<MockComponent> allocator(1);
-      MockComponent component;
+      GameObject gameObject;
+      MockComponent component(gameObject);
 
       Assert::IsTrue(component.isActive());
       Assert::IsFalse(allocator.contains(component));
@@ -907,7 +909,8 @@ namespace TestCeleste
     TEST_METHOD(EntityAllocator_Contains_InputtingObjectNotFromEntityAllocator_ReturnsFalse)
     {
       EntityAllocator<MockComponent> allocator(3);
-      MockComponent component;
+      GameObject gameObject;
+      MockComponent component(gameObject);
 
       Assert::IsFalse(allocator.contains(component));
     }

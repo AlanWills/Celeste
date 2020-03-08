@@ -1,6 +1,7 @@
 #include "Lua/ScriptCommands/DataConverters/Objects/ComponentDataConverterScriptCommands.h"
 #include "Lua/LuaState.h"
 #include "DataConverters/Objects/ComponentDataConverter.h"
+#include "Objects/GameObject.h"
 
 #include "Mocks/Objects/MockComponent.h"
 #include "UtilityHeaders/UnitTestHeaders.h"
@@ -63,7 +64,8 @@ namespace TestCeleste::Lua::ComponentDataConverterScriptCommands
     Celeste::Lua::Objects::ComponentDataConverterScriptCommands::initialize();
 
     ComponentDataConverter converter("Component");
-    MockComponent mockComponent;
+    GameObject gameObject;
+    MockComponent mockComponent(gameObject);
     Component& component = static_cast<Component&>(mockComponent);
 
     auto result = state.globals()["ComponentDataConverter"]["setValues"].get<sol::protected_function>().call(converter, component);

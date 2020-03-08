@@ -4,6 +4,8 @@
 #include "Lua/Components/LuaComponent.h"
 #include "Lua/Components/LuaComponentManifest.h"
 
+#include "Objects/GameObject.h"
+
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -17,12 +19,10 @@ namespace TestCeleste::Lua
   //------------------------------------------------------------------------------------------------
   std::string resetScript = R"(
   onSetActiveCalled = false
-  onSetGameObjectCalled = false
   handleInputCalled = false
   updateCalled = false
 
   onSetActive = nil
-  onSetGameObject = nil
   handleInput = nil
   update = nil
   )";
@@ -33,15 +33,6 @@ namespace TestCeleste::Lua
 
     function onSetActive(component, isActive)
       onSetActiveCalled = true
-    end
-    )";
-
-  //------------------------------------------------------------------------------------------------
-  std::string onSetGameObjectScript = R"(
-    onSetGameObjectCalled = false
-
-    function onSetGameObject(component, isActive)
-      onSetGameObjectCalled = true
     end
     )";
 
@@ -80,23 +71,17 @@ namespace TestCeleste::Lua
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponent_Constructor_SetsOnSetActiveFunc_ToEmptyFunc)
   {
-    LuaComponent luaComponent;
+    GameObject gameObject;
+    LuaComponent luaComponent(gameObject);
 
     Assert::IsFalse(luaComponent.getOnSetActiveFunc().valid());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_Constructor_SetsOnSetGameObjectFunc_ToEmptyFunc)
-  {
-    LuaComponent luaComponent;
-
-    Assert::IsFalse(luaComponent.getOnSetGameObjectFunc().valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponent_Constructor_SetsHandleInputFunc_ToEmptyFunc)
   {
-    LuaComponent luaComponent;
+    GameObject gameObject;
+    LuaComponent luaComponent(gameObject);
 
     Assert::IsFalse(luaComponent.getHandleInputFunc().valid());
   }
@@ -104,7 +89,8 @@ namespace TestCeleste::Lua
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponent_Constructor_SetsUpdateFunc_ToEmptyFunc)
   {
-    LuaComponent luaComponent;
+    GameObject gameObject;
+    LuaComponent luaComponent(gameObject);
 
     Assert::IsFalse(luaComponent.getUpdateFunc().valid());
   }
@@ -116,7 +102,8 @@ namespace TestCeleste::Lua
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponent_SetActive_WithNoSetActiveFunction_DoesNothing)
   {
-    LuaComponent luaComponent;
+    GameObject gameObject;
+    LuaComponent luaComponent(gameObject);
 
     Assert::IsFalse(luaComponent.getOnSetActiveFunc().valid());
 
@@ -137,7 +124,8 @@ namespace TestCeleste::Lua
     Assert::IsTrue(state.safe_script(onSetActiveScript).valid());
     Assert::IsFalse(state["onSetActiveCalled"]);
 
-    LuaComponent luaComponent;
+    GameObject gameObject;
+    LuaComponent luaComponent(gameObject);
     luaComponent.setOnSetActiveFunc(state["onSetActive"]);
 
     Assert::IsTrue(luaComponent.getOnSetActiveFunc().valid());
@@ -159,7 +147,8 @@ namespace TestCeleste::Lua
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponent_HandleInput_WithNoHandleInputFunction_DoesNothing)
   {
-    LuaComponent luaComponent;
+    GameObject gameObject;
+    LuaComponent luaComponent(gameObject);
 
     Assert::IsFalse(luaComponent.getHandleInputFunc().valid());
 
@@ -174,7 +163,8 @@ namespace TestCeleste::Lua
     Assert::IsTrue(state.safe_script(handleInputScript).valid());
     Assert::IsFalse(state["handleInputCalled"]);
 
-    LuaComponent luaComponent;
+    GameObject gameObject;
+    LuaComponent luaComponent(gameObject);
     luaComponent.setHandleInputFunc(state["handleInput"]);
 
     Assert::IsTrue(luaComponent.getHandleInputFunc().valid());
@@ -191,7 +181,8 @@ namespace TestCeleste::Lua
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponent_Update_WithNoUpdateFunction_DoesNothing)
   {
-    LuaComponent luaComponent;
+    GameObject gameObject;
+    LuaComponent luaComponent(gameObject);
 
     Assert::IsFalse(luaComponent.getUpdateFunc().valid());
 
@@ -206,7 +197,8 @@ namespace TestCeleste::Lua
     Assert::IsTrue(state.safe_script(updateScript).valid());
     Assert::IsFalse(state["updateCalled"]);
 
-    LuaComponent luaComponent;
+    GameObject gameObject;
+    LuaComponent luaComponent(gameObject);
     luaComponent.setUpdateFunc(state["update"]);
 
     Assert::IsTrue(luaComponent.getUpdateFunc().valid());

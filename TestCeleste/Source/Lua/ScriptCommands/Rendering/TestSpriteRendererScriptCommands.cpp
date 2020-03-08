@@ -90,7 +90,8 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteRendererScriptCommands_setTexture_TextureOverload_InputtingNullptrTexture_SetsTextureToNullptr)
   {
-    SpriteRenderer spriteRenderer;
+    GameObject gameObject;
+    SpriteRenderer spriteRenderer(gameObject);
     observer_ptr<Resources::Texture2D> texture = Resources::getResourceManager().load<Resources::Texture2D>(TestResources::getBlockPngRelativePath());
     spriteRenderer.setTexture(texture);
 
@@ -108,7 +109,8 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteRendererScriptCommands_setTexture_TextureHandleOverload_InputtingNonNullTextureHandle_SetsTextureToInputtedValue)
   {
-    SpriteRenderer spriteRenderer;
+    GameObject gameObject;
+    SpriteRenderer spriteRenderer(gameObject);
 
     Assert::IsNull(spriteRenderer.getTexture());
 
@@ -129,7 +131,8 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteRendererScriptCommands_setTexture_StringOverload_InputtingInvalidPath_SetsTextureToNullptr)
   {
-    SpriteRenderer spriteRenderer;
+    GameObject gameObject;
+    SpriteRenderer spriteRenderer(gameObject);
     observer_ptr<Resources::Texture2D> texture = Resources::getResourceManager().load<Resources::Texture2D>(TestResources::getBlockPngRelativePath());
     spriteRenderer.setTexture(texture);
 
@@ -147,7 +150,8 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteRendererScriptCommands_setTexture_StringOverload_InputtingValidPathToInvalidTexture_SetsTextureToNullptr)
   {
-    SpriteRenderer spriteRenderer;
+    GameObject gameObject;
+    SpriteRenderer spriteRenderer(gameObject);
     observer_ptr<Resources::Texture2D> texture = Resources::getResourceManager().load<Resources::Texture2D>(TestResources::getBlockPngRelativePath());
     spriteRenderer.setTexture(texture);
 
@@ -165,7 +169,8 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteRendererScriptCommands_setTexture_StringOverload_InputtingValidRelativePathToValidTexture_SetsTextureToCorrectValue)
   {
-    SpriteRenderer spriteRenderer;
+    GameObject gameObject;
+    SpriteRenderer spriteRenderer(gameObject);
 
     Assert::IsNull(spriteRenderer.getTexture());
 
@@ -182,7 +187,8 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteRendererScriptCommands_setTexture_StringOverload_InputtingFullPathToValidTexture_SetsTextureToCorrectValue)
   {
-    SpriteRenderer spriteRenderer;
+    GameObject gameObject;
+    SpriteRenderer spriteRenderer(gameObject);
 
     Assert::IsNull(spriteRenderer.getTexture());
 
@@ -205,7 +211,8 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteRendererScriptCommands_setColour_InputtingThreeFloats_UpdatesSpriteRendererColour)
   {
-    SpriteRenderer spriteRenderer;
+    GameObject gameObject;
+    SpriteRenderer spriteRenderer(gameObject);
     spriteRenderer.setColour(0.5f, 0.5f, 0.5f, 0.5f);
 
     Assert::AreEqual(glm::vec4(0.5f, 0.5f, 0.5f, 0.5f), spriteRenderer.getColour());
@@ -311,7 +318,8 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    SpriteRenderer spriteRenderer;
+    GameObject gameObject;
+    SpriteRenderer spriteRenderer(gameObject);
     auto functionResult = state.globals()["SpriteRenderer"]["as"].get<sol::protected_function>().call(&spriteRenderer, "Object");
 
     Assert::IsTrue(functionResult.valid());
@@ -325,7 +333,8 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    SpriteRenderer spriteRenderer;
+    GameObject gameObject;
+    SpriteRenderer spriteRenderer(gameObject);
     auto functionResult = state.globals()["SpriteRenderer"]["as"].get<sol::protected_function>().call(&spriteRenderer, "SpriteRenderer");
 
     Assert::IsTrue(functionResult.valid());
@@ -342,7 +351,8 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
     class MockSpriteRenderer : public Celeste::Rendering::SpriteRenderer {};
     state.new_usertype<MockSpriteRenderer>("MockSpriteRenderer");
 
-    SpriteRenderer spriteRenderer;
+    GameObject gameObject;
+    SpriteRenderer spriteRenderer(gameObject);
     auto functionResult = state.globals()["SpriteRenderer"]["as"].get<sol::protected_function>().call(&spriteRenderer, "MockSpriteRenderer");
 
     Assert::IsTrue(functionResult.valid());
@@ -361,7 +371,8 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    SpriteRenderer spriteRenderer;
+    GameObject gameObject;
+    SpriteRenderer spriteRenderer(gameObject);
     auto functionResult = state.globals()["SpriteRenderer"]["as"].get<sol::protected_function>().call(&spriteRenderer, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());

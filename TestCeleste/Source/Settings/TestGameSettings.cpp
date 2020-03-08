@@ -24,21 +24,21 @@ namespace TestCeleste::Settings
   //------------------------------------------------------------------------------------------------
   void TestGameSettings::testInitialize()
   {
-    Audio::AudioManager& audioManager = Audio::getAudioManager();
+    Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 
-    originalMasterVolume = audioManager.getMasterVolume();
-    originalMusicVolume = audioManager.getMusicVolume();
-    originalSFXVolume = audioManager.getSFXVolume();
+    originalMasterVolume = audioSourceManager.getMasterVolume();
+    originalMusicVolume = audioSourceManager.getMusicVolume();
+    originalSFXVolume = audioSourceManager.getSFXVolume();
   }
 
   //------------------------------------------------------------------------------------------------
   void TestGameSettings::testCleanup()
   {
-    Audio::AudioManager& audioManager = Audio::getAudioManager();
+    Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 
-    audioManager.setMasterVolume(originalMasterVolume);
-    audioManager.setMusicVolume(originalMusicVolume);
-    audioManager.setSFXVolume(originalSFXVolume);
+    audioSourceManager.setMasterVolume(originalMasterVolume);
+    audioSourceManager.setMusicVolume(originalMusicVolume);
+    audioSourceManager.setSFXVolume(originalSFXVolume);
   }
 
 #pragma region Constructor Tests
@@ -193,14 +193,14 @@ namespace TestCeleste::Settings
     std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
     settings->setMasterVolume(0.5f);
 
-    Audio::AudioManager& audioManager = Audio::getAudioManager();
-    audioManager.setMasterVolume(0.25f);
+    Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
+    audioSourceManager.setMasterVolume(0.25f);
 
-    Assert::AreEqual(0.25f, audioManager.getMasterVolume());
+    Assert::AreEqual(0.25f, audioSourceManager.getMasterVolume());
 
     settings->apply();
 
-    Assert::AreEqual(0.5f, audioManager.getMasterVolume());
+    Assert::AreEqual(0.5f, audioSourceManager.getMasterVolume());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -209,14 +209,14 @@ namespace TestCeleste::Settings
     std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
     settings->setMusicVolume(0.5f);
 
-    Audio::AudioManager& audioManager = Audio::getAudioManager();
-    audioManager.setMusicVolume(0.25f);
+    Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
+    audioSourceManager.setMusicVolume(0.25f);
 
-    Assert::AreEqual(0.25f, audioManager.getMusicVolume());
+    Assert::AreEqual(0.25f, audioSourceManager.getMusicVolume());
 
     settings->apply();
 
-    Assert::AreEqual(0.5f, audioManager.getMusicVolume());
+    Assert::AreEqual(0.5f, audioSourceManager.getMusicVolume());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -225,14 +225,14 @@ namespace TestCeleste::Settings
     std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
     settings->setSFXVolume(0.5f);
 
-    Audio::AudioManager& audioManager = Audio::getAudioManager();
-    audioManager.setSFXVolume(0.25f);
+    Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
+    audioSourceManager.setSFXVolume(0.25f);
 
-    Assert::AreEqual(0.25f, audioManager.getSFXVolume());
+    Assert::AreEqual(0.25f, audioSourceManager.getSFXVolume());
 
     settings->apply();
 
-    Assert::AreEqual(0.5f, audioManager.getSFXVolume());
+    Assert::AreEqual(0.5f, audioSourceManager.getSFXVolume());
   }
 
 #pragma endregion

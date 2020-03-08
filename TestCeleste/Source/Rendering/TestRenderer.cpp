@@ -1,6 +1,8 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
-
+#include "Objects/GameObject.h"
 #include "Mocks/Rendering/MockRenderer.h"
+
+using namespace Celeste;
 
 
 namespace TestCeleste
@@ -12,7 +14,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Renderer_Constructor_SetsColourToWhite)
   {
-    MockRenderer renderer;
+    GameObject gameObject;
+    MockRenderer renderer(gameObject);
 
     Assert::AreEqual(glm::vec4(1), renderer.getColour());
   }
@@ -20,7 +23,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Renderer_Constructor_SetsOriginTo_ZeroPointFive_ZeroPointFive)
   {
-    MockRenderer renderer;
+    GameObject gameObject;
+    MockRenderer renderer(gameObject);
 
     Assert::AreEqual(glm::vec2(0.5f), renderer.getOrigin());
   }
@@ -28,7 +32,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Renderer_Constructor_SetsScissorRectangleToEmptyRectangle)
   {
-    MockRenderer renderer;
+    GameObject gameObject;
+    MockRenderer renderer(gameObject);
 
     Assert::AreEqual(glm::vec2(), renderer.getScissorRectangle().getDimensions());
     Assert::AreEqual(glm::vec2(), renderer.getScissorRectangle().getCentre());
@@ -41,7 +46,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Renderer_SetColour_InputtingThreeFloats_UpdatesRGBValues)
   {
-    MockRenderer renderer;
+    GameObject gameObject;
+    MockRenderer renderer(gameObject);
     renderer.setColour(0.2f, 0.2f, 0.2f, 0.2f);
 
     Assert::AreEqual(glm::vec4(0.2f, 0.2f, 0.2f, 0.2f), renderer.getColour());
@@ -56,7 +62,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Renderer_SetColour_InputtingThreeFloats_KeepsAlphaTheSame)
   {
-    MockRenderer renderer;
+    GameObject gameObject;
+    MockRenderer renderer(gameObject);
     renderer.setColour(0.2f, 0.2f, 0.2f, 0.2f);
 
     Assert::AreEqual(0.2f, renderer.getColour().a);
@@ -73,7 +80,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Renderer_SetOpacity_ChangesColourAlphaValue)
   {
-    MockRenderer renderer;
+    GameObject gameObject;
+    MockRenderer renderer(gameObject);
 
     float current = renderer.getOpacity();
     renderer.setOpacity((current + 1) * 0.5f);

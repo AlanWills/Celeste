@@ -80,7 +80,7 @@ namespace Celeste
 template <typename TComponent>
 bool ComponentRegistry::registerComponent()
 {
-  return registerComponent(TComponent::type_name());
+  return registerComponent(TComponent::type_name(), [](GameObject& gameObject) { return gameObject.addComponent<TComponent>(); });
 }
 
 #if _DEBUG

@@ -4,7 +4,6 @@
 #include "Resources/UI/StackPanelLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "UI/StackPanel.h"
-#include "Screens/Screen.h"
 #include "Mocks/Rendering/MockRenderer.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "AssertCel.h"
@@ -30,10 +29,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(StackPanelLoadingResources::getValidRelativePath());
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<StackPanel*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<StackPanel*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -390,9 +389,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StackPanelDataConverter_SetValues_InputtingStackPanel_DataNotLoadedCorrectly_DoesNothing)
   {
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<StackPanel> stackPanel = gameObject->addComponent<StackPanel>();
+    GameObject gameObject;
+    observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
     stackPanel->setPadding(5);
     stackPanel->setOrientation(Orientation::kHorizontal);
 
@@ -412,9 +410,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StackPanelDataConverter_SetValues_InputtingStackPanel_DataLoadedCorrectly_ChangesButtonToMatchData)
   {
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<StackPanel> stackPanel = gameObject->addComponent<StackPanel>();
+    GameObject gameObject;
+    observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
     stackPanel->setPadding(5);
     stackPanel->setOrientation(Orientation::kHorizontal);
 
@@ -436,15 +433,12 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StackPanelDataConverter_SetValues_InputtingStackPanel_DataLoadedCorrectly_AddsChildrenCorrectly)
   {
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<GameObject> child = screen.allocateGameObject();
-    AutoDeallocator<MockRenderer> renderer = child->addComponent<MockRenderer>();
-    AutoDeallocator<GameObject> child2 = screen.allocateGameObject();
-    AutoDeallocator<MockRenderer> renderer2 = child2->addComponent<MockRenderer>();
-    AutoDeallocator<StackPanel> stackPanel = gameObject->addComponent<StackPanel>();
-    child->setParent(gameObject.get());
-    child2->setParent(gameObject.get());
+    GameObject gameObject, child, child2;
+    observer_ptr<MockRenderer> renderer = child.addComponent<MockRenderer>();
+    observer_ptr<MockRenderer> renderer2 = child2.addComponent<MockRenderer>();
+    observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
+    child.setParent(&gameObject);
+    child2.setParent(&gameObject);
     stackPanel->setPadding(5);
     stackPanel->setOrientation(Orientation::kHorizontal);
 

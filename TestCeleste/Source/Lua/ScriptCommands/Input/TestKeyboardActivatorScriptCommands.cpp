@@ -5,10 +5,8 @@
 #include "Lua/ScriptCommands/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
-#include "Mocks/Input/MockKeyboardActivator.h"
-
+#include "Input/KeyboardActivator.h"
 #include "Input/Utils/GlfwKeyConverter.h"
-#include "Screens/Screen.h"
 
 #include "AssertCel.h"
 
@@ -120,30 +118,6 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardActivatorScriptCommands_Initialize_Adds_getTarget_ToKeyboardActivatorTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["KeyboardActivator"]["getTarget"].valid());
-
-    Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["KeyboardActivator"]["getTarget"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardActivatorScriptCommands_Initialize_Adds_setTarget_ToKeyboardActivatorTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["KeyboardActivator"]["setTarget"].valid());
-
-    Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["KeyboardActivator"]["setTarget"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(KeyboardActivatorScriptCommands_Initialize_Adds_as_ToKeyboardActivatorTable)
   {
     sol::state& state = LuaState::instance();
@@ -165,7 +139,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setActivationKey(GLFW_KEY_UNKNOWN);
 
     Assert::AreEqual(GLFW_KEY_UNKNOWN, keyboardActivator.getActivationKey());
@@ -182,7 +157,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setActivationKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardActivator.getActivationKey());
@@ -203,7 +179,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setActivationKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardActivator.getActivationKey());
@@ -220,7 +197,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setActivationKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardActivator.getActivationKey());
@@ -237,7 +215,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setActivationKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardActivator.getActivationKey());
@@ -259,7 +238,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setDeactivationKey(GLFW_KEY_UNKNOWN);
 
     Assert::AreEqual(GLFW_KEY_UNKNOWN, keyboardActivator.getDeactivationKey());
@@ -276,7 +256,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setDeactivationKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardActivator.getDeactivationKey());
@@ -297,7 +278,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setDeactivationKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardActivator.getDeactivationKey());
@@ -314,7 +296,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setDeactivationKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardActivator.getDeactivationKey());
@@ -331,7 +314,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setDeactivationKey(GLFW_KEY_A);
 
     Assert::AreEqual(GLFW_KEY_A, keyboardActivator.getDeactivationKey());
@@ -353,7 +337,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setInputMode(InputMode::kToggle);
 
     Assert::IsTrue(keyboardActivator.getInputMode() == InputMode::kToggle);
@@ -370,7 +355,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setInputMode(InputMode::kContinuous);
 
     Assert::IsTrue(keyboardActivator.getInputMode() == InputMode::kContinuous);
@@ -391,7 +377,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setInputMode(InputMode::kToggle);
 
     Assert::IsTrue(keyboardActivator.getInputMode() == InputMode::kToggle);
@@ -408,7 +395,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setInputMode(InputMode::kToggle);
 
     Assert::IsTrue(keyboardActivator.getInputMode() == InputMode::kToggle);
@@ -425,7 +413,8 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
 
-    KeyboardActivator keyboardActivator;
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
     keyboardActivator.setInputMode(InputMode::kToggle);
 
     Assert::IsTrue(keyboardActivator.getInputMode() == InputMode::kToggle);
@@ -434,114 +423,6 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
 
     Assert::IsTrue(result.valid());
     Assert::IsTrue(keyboardActivator.getInputMode() == InputMode::kContinuous);
-  }
-
-#pragma endregion
-
-#pragma region Get Target Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardActivatorScriptCommands_GetTarget_TargetNull_ReturnsNullHandle)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
-
-    KeyboardActivator keyboardActivator;
-    keyboardActivator.setTarget(nullptr);
-
-    Assert::IsNull(keyboardActivator.getTarget());
-
-    auto result = state["KeyboardActivator"]["getTarget"].call(keyboardActivator);
-
-    Assert::IsTrue(result.valid());
-    Assert::IsNull(result.get<GameObject*>());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardActivatorScriptCommands_GetTarget_TargetNotNull_ReturnsCorrectGameObjectHandle)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
-
-    GameObject gameObject;
-
-    KeyboardActivator keyboardActivator;
-    keyboardActivator.setTarget(&gameObject);
-
-    Assert::IsTrue(&gameObject == keyboardActivator.getTarget());
-
-    auto result = state["KeyboardActivator"]["getTarget"].call(keyboardActivator);
-
-    Assert::IsTrue(result.valid());
-    Assert::IsTrue(&gameObject == result.get<GameObject*>());
-  }
-
-#pragma endregion
-
-#pragma region Set Target Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardActivatorScriptCommands_SetTarget_EmptyString_SetsTargetToNull)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
-
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-
-    observer_ptr<KeyboardActivator> keyboardActivator = gameObject->addComponent<KeyboardActivator>();
-    keyboardActivator->setTarget(gameObject.get());
-
-    Assert::IsTrue(gameObject.get() == keyboardActivator->getTarget());
-
-    auto result = state["KeyboardActivator"]["setTarget"].call(*keyboardActivator, "");
-
-    Assert::IsTrue(result.valid());
-    Assert::IsNull(keyboardActivator->getTarget());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardActivatorScriptCommands_SetTarget_NonExistentGameObjectName_SetsTargetToNull)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
-
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-
-    observer_ptr<KeyboardActivator> keyboardActivator = gameObject->addComponent<KeyboardActivator>();
-    keyboardActivator->setTarget(gameObject.get());
-
-    Assert::IsTrue(gameObject.get() == keyboardActivator->getTarget());
-    Assert::IsNull(screen.findGameObject("WubbaLubbaDubDub"));
-
-    auto result = state["KeyboardActivator"]["setTarget"].call(*keyboardActivator, "WubbaLubbaDubDub");
-
-    Assert::IsTrue(result.valid());
-    Assert::IsNull(keyboardActivator->getTarget());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardActivatorScriptCommands_SetTarget_ExistentGameObjectName_SetsTargetToCorrectGameObject)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
-
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<GameObject> target = screen.allocateGameObject();
-    target->setName("Target");
-
-    observer_ptr<KeyboardActivator> keyboardActivator = gameObject->addComponent<KeyboardActivator>();
-    keyboardActivator->setTarget(gameObject.get());
-
-    Assert::IsTrue(gameObject.get() == keyboardActivator->getTarget());
-    Assert::IsTrue(target.get() == screen.findGameObject("Target"));
-
-    auto result = state["KeyboardActivator"]["setTarget"].call(*keyboardActivator, "Target");
-
-    Assert::IsTrue(result.valid());
-    Assert::IsTrue(target.get() == keyboardActivator->getTarget());
   }
 
 #pragma endregion
@@ -636,11 +517,12 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    KeyboardActivator audioSource;
-    auto functionResult = state.globals()["KeyboardActivator"]["as"].get<sol::protected_function>().call(&audioSource, "Object");
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
+    auto functionResult = state.globals()["KeyboardActivator"]["as"].get<sol::protected_function>().call(&keyboardActivator, "Object");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::IsTrue(&audioSource == functionResult.get<Object*>());
+    Assert::IsTrue(&keyboardActivator == functionResult.get<Object*>());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -650,11 +532,12 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    KeyboardActivator audioSource;
-    auto functionResult = state.globals()["KeyboardActivator"]["as"].get<sol::protected_function>().call(&audioSource, "KeyboardActivator");
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
+    auto functionResult = state.globals()["KeyboardActivator"]["as"].get<sol::protected_function>().call(&keyboardActivator, "KeyboardActivator");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::IsTrue(&audioSource == functionResult.get<KeyboardActivator*>());
+    Assert::IsTrue(&keyboardActivator == functionResult.get<KeyboardActivator*>());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -667,8 +550,9 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
     class MockKeyboardActivator : public Celeste::Input::KeyboardActivator {};
     state.new_usertype<MockKeyboardActivator>("MockKeyboardActivator");
 
-    KeyboardActivator audioSource;
-    auto functionResult = state.globals()["KeyboardActivator"]["as"].get<sol::protected_function>().call(&audioSource, "MockKeyboardActivator");
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
+    auto functionResult = state.globals()["KeyboardActivator"]["as"].get<sol::protected_function>().call(&keyboardActivator, "MockKeyboardActivator");
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(sol::type::nil == functionResult.get_type());
@@ -686,8 +570,9 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    KeyboardActivator audioSource;
-    auto functionResult = state.globals()["KeyboardActivator"]["as"].get<sol::protected_function>().call(&audioSource, "UnrelatedType");
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
+    auto functionResult = state.globals()["KeyboardActivator"]["as"].get<sol::protected_function>().call(&keyboardActivator, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(sol::type::nil == functionResult.get_type());

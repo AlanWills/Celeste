@@ -2,7 +2,6 @@
 
 #include "Resources/Data/Prefab.h"
 #include "Resources/Resources/Data/PrefabLoadingResources.h"
-#include "Screens/Screen.h"
 #include "Rendering/TextRenderer.h"
 #include "Rendering/SpriteRenderer.h"
 #include "DataConverters/Objects/GameObjectDataConverter.h"
@@ -190,32 +189,29 @@ namespace TestCeleste::Resources
 #pragma region Instantiate Tests
 
   //----------------------------------------------------------------------------------------------------------
-  TEST_METHOD(Prefab_Instantiate_DataNotLoaded_ReturnsNullHandle)
+  TEST_METHOD(Prefab_Instantiate_DataNotLoaded_ReturnsNullptr)
   {
-    Screen screen;
     Prefab prefab;
 
     Assert::AreEqual(static_cast<StringId>(0), prefab.getResourceId());
-    Assert::IsNull(prefab.instantiate(screen));
+    Assert::IsNull(prefab.instantiate());
   }
 
   //----------------------------------------------------------------------------------------------------------
-  TEST_METHOD(Prefab_Instantiate_MultipleParentGameObjects_ReturnsNullHandle)
+  TEST_METHOD(Prefab_Instantiate_MultipleParentGameObjects_ReturnsNullptr)
   {
-    Screen screen;
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getTwoParentGameObjectsFullPath());
 
     Assert::AreNotEqual(static_cast<StringId>(0), prefab.getResourceId());
     Assert::IsFalse(prefab.getGameObjects().empty());
     Assert::AreEqual(static_cast<size_t>(2), prefab.getGameObjects().size());
-    Assert::IsNull(prefab.instantiate(screen));
+    Assert::IsNull(prefab.instantiate());
   }
 
   //----------------------------------------------------------------------------------------------------------
   TEST_METHOD(Prefab_Instantiate_ReturnsParentGameObject)
   {
-    Screen screen;
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getValidSingleGameObjectFullPath());
 
@@ -223,7 +219,7 @@ namespace TestCeleste::Resources
     Assert::IsFalse(prefab.getGameObjects().empty());
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects().size());
 
-    AutoDeallocator<GameObject> gameObject = prefab.instantiate(screen);
+    std::unique_ptr<GameObject> gameObject(prefab.instantiate());
 
     Assert::IsNotNull(gameObject.get());
 
@@ -233,7 +229,6 @@ namespace TestCeleste::Resources
   //----------------------------------------------------------------------------------------------------------
   TEST_METHOD(Prefab_Instantiate_SetsUpTransformHierarchyCorrectly)
   {
-    Screen screen;
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getValidMultipleGameObjectsFullPath());
 
@@ -242,7 +237,7 @@ namespace TestCeleste::Resources
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects().size());
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects()[0]->getChildGameObjects().size());
 
-    AutoDeallocator<GameObject> gameObject = prefab.instantiate(screen);
+    std::unique_ptr<GameObject> gameObject(prefab.instantiate());
 
     Assert::IsNotNull(gameObject.get());
   }
@@ -253,7 +248,6 @@ namespace TestCeleste::Resources
     // This test is for a bug I found once with prefab transform resolution
     // Multiple children referencing the same parent caused problems
 
-    Screen screen;
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getValidMultipleChildrenForSingleParentFullPath());
 
@@ -261,18 +255,17 @@ namespace TestCeleste::Resources
     Assert::IsFalse(prefab.getGameObjects().empty());
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects().size());
 
-    AutoDeallocator<GameObject> gameObject = prefab.instantiate(screen);
+    std::unique_ptr<GameObject> gameObject(prefab.instantiate());
 
     Assert::IsNotNull(gameObject.get());
     Assert::AreEqual(static_cast<size_t>(2), gameObject->getChildCount());
-    Assert::AreEqual(internString("Child1"), gameObject->getChildTransform(0)->getGameObject()->getName());
-    Assert::AreEqual(internString("Child2"), gameObject->getChildTransform(1)->getGameObject()->getName());
+    Assert::AreEqual(internString("Child1"), gameObject->getChild(0)->getName());
+    Assert::AreEqual(internString("Child2"), gameObject->getChild(1)->getName());
   }
 
   //----------------------------------------------------------------------------------------------------------
   TEST_METHOD(Prefab_Instantiate_SetsGameObjectsDataCorrectly)
   {
-    Screen screen;
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getValidMultipleGameObjectsFullPath());
 
@@ -281,7 +274,7 @@ namespace TestCeleste::Resources
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects().size());
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects()[0]->getChildGameObjects().size());
 
-    AutoDeallocator<GameObject> gameObject = prefab.instantiate(screen);
+    std::unique_ptr<GameObject> gameObject(prefab.instantiate());
 
     Assert::IsNotNull(gameObject.get());
     AssertCel::HasComponent<Rendering::SpriteRenderer>(gameObject.get());

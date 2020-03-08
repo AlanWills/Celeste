@@ -17,7 +17,8 @@ namespace TestCeleste::Animation
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AnimationState_Constructor_SetsValuesToDefault)
   {
-    Animator animator;
+    GameObject gameObject;
+    Animator animator(gameObject);
     AnimationState animState(animator);
 
     Assert::IsTrue(animState.getTransitions().empty());
@@ -28,41 +29,44 @@ namespace TestCeleste::Animation
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AnimationState_StartAnimation_ResetsAndPlaysAnimation)
   {
-    MockAnimator animation;
-    AnimationState animState(animation);
+    GameObject gameObject;
+    MockAnimator animator(gameObject);
+    AnimationState animState(animator);
 
-    animation.setCurrentSecondsPerFrame_Public(1);
-    animation.setCurrentFrame_Public(1);
-    animation.setPlaying_Public(false);
+    animator.setCurrentSecondsPerFrame_Public(1);
+    animator.setCurrentFrame_Public(1);
+    animator.setPlaying_Public(false);
 
     animState.startAnimation();
 
-    Assert::AreEqual(0.0f, animation.getCurrentSecondsPerFrame_Public());
-    Assert::AreEqual((size_t)0, animation.getCurrentFrame_Public());
-    Assert::IsTrue(animation.isPlaying());
+    Assert::AreEqual(0.0f, animator.getCurrentSecondsPerFrame_Public());
+    Assert::AreEqual((size_t)0, animator.getCurrentFrame_Public());
+    Assert::IsTrue(animator.isPlaying());
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AnimationState_StopAnimation_ResetsAndStopsAnimation)
   {
-    MockAnimator animation;
-    AnimationState animState(animation);
+    GameObject gameObject;
+    MockAnimator animator(gameObject);
+    AnimationState animState(animator);
 
-    animation.setCurrentSecondsPerFrame_Public(1);
-    animation.setCurrentFrame_Public(1);
-    animation.setPlaying_Public(true);
+    animator.setCurrentSecondsPerFrame_Public(1);
+    animator.setCurrentFrame_Public(1);
+    animator.setPlaying_Public(true);
 
     animState.stopAnimation();
 
-    Assert::AreEqual(0.0f, animation.getCurrentSecondsPerFrame_Public());
-    Assert::AreEqual((size_t)0, animation.getCurrentFrame_Public());
-    Assert::IsFalse(animation.isPlaying());
+    Assert::AreEqual(0.0f, animator.getCurrentSecondsPerFrame_Public());
+    Assert::AreEqual((size_t)0, animator.getCurrentFrame_Public());
+    Assert::IsFalse(animator.isPlaying());
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AnimationState_AddTransitionToSelf_DoesNotAddTransition)
   {
-    MockAnimator animator;
+    GameObject gameObject;
+    MockAnimator animator(gameObject);
     AnimationState animState1(animator);
 
     animState1.addTransition(animState1, []() -> bool { return false; });
@@ -73,7 +77,8 @@ namespace TestCeleste::Animation
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AnimationState_AddTransitionToAnotherState_AddsTransition)
   {
-    MockAnimator animator;
+    GameObject gameObject;
+    MockAnimator animator(gameObject);
     AnimationState animState1(animator);
     AnimationState animState2(animator);
 

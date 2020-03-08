@@ -24,11 +24,11 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     void TestWindowSettings::testInitialize()
     {
-      OpenGLWindow* window = getWindow();
+      OpenGLWindow& window = getWindow();
 
-      originalWindowTitle = window->getTitle();
-      originalResolution = window->getViewportDimensions();
-      originalWindowed = window->getWindowMode() == OpenGLWindow::WindowMode::kWindowed;
+      originalWindowTitle = window.getTitle();
+      originalResolution = window.getViewportDimensions();
+      originalWindowed = window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed;
     }
 
     //------------------------------------------------------------------------------------------------
@@ -40,11 +40,11 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     void TestWindowSettings::resetWindow()
     {
-      OpenGLWindow* window = getWindow();
+      OpenGLWindow& window = getWindow();
 
-      window->setTitle(originalWindowTitle);
-      window->setViewportDimensions(originalResolution);
-      window->setWindowMode(originalWindowed ? OpenGLWindow::WindowMode::kWindowed : OpenGLWindow::WindowMode::kFullScreen);
+      window.setTitle(originalWindowTitle);
+      window.setViewportDimensions(originalResolution);
+      window.setWindowMode(originalWindowed ? OpenGLWindow::WindowMode::kWindowed : OpenGLWindow::WindowMode::kFullScreen);
     }
 
 #pragma region Constructor Tests
@@ -93,13 +93,13 @@ namespace TestCeleste
         std::unique_ptr<WindowSettings> settings = ScriptableObject::create<WindowSettings>("");
         settings->setWindowTitle(originalWindowTitle + "Test");
 
-        OpenGLWindow * window = getWindow();
+        OpenGLWindow& window = getWindow();
 
-        Assert::AreEqual(originalWindowTitle, window->getTitle());
+        Assert::AreEqual(originalWindowTitle, window.getTitle());
 
         settings->apply();
 
-        Assert::AreEqual(originalWindowTitle + "Test", window->getTitle());
+        Assert::AreEqual(originalWindowTitle + "Test", window.getTitle());
       }
     }
 
@@ -111,13 +111,13 @@ namespace TestCeleste
         std::unique_ptr<WindowSettings> settings = ScriptableObject::create<WindowSettings>("");
         settings->setResolution(originalResolution + glm::vec2(100, 200));
 
-        OpenGLWindow * window = getWindow();
+        OpenGLWindow& window = getWindow();
 
-        Assert::AreEqual(originalResolution, window->getViewportDimensions());
+        Assert::AreEqual(originalResolution, window.getViewportDimensions());
 
         settings->apply();
 
-        Assert::AreEqual(originalResolution + glm::vec2(100, 200), window->getViewportDimensions());
+        Assert::AreEqual(originalResolution + glm::vec2(100, 200), window.getViewportDimensions());
       }
     }
 
@@ -129,13 +129,13 @@ namespace TestCeleste
         std::unique_ptr<WindowSettings> settings = ScriptableObject::create<WindowSettings>("");
         settings->setWindowed(!originalWindowed);
 
-        OpenGLWindow* window = getWindow();
+        OpenGLWindow& window = getWindow();
 
-        Assert::AreEqual(originalWindowed, window->getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
+        Assert::AreEqual(originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
 
         settings->apply();
 
-        Assert::AreEqual(!originalWindowed, window->getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
+        Assert::AreEqual(!originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
       }
     }
 

@@ -4,7 +4,6 @@
 #include "Input/InputManager.h"
 #include "Registries/ComponentRegistry.h"
 #include "Objects/GameObject.h"
-#include "Screens/Screen.h"
 #include "Objects/Component.h"
 #include "Utils/InputUtils.h"
 #include "AssertCel.h"
@@ -17,457 +16,262 @@ namespace TestCeleste
 {
   CELESTE_TEST_CLASS(TestKeyboardActivator)
 
-    //------------------------------------------------------------------------------------------------
-    void TestKeyboardActivator::testInitialize()
-    {
-      // Flush the keyboard to avoid carrying over any changes we make in tests
-      getKeyboard().flush();
-    }
+  //------------------------------------------------------------------------------------------------
+  void TestKeyboardActivator::testInitialize()
+  {
+    // Flush the keyboard to avoid carrying over any changes we make in tests
+    getKeyboard().flush();
+  }
 
-    //------------------------------------------------------------------------------------------------
-    void TestKeyboardActivator::testCleanup()
-    {
-      // Flush the keyboard to avoid carrying over any changes we make in tests
-      getKeyboard().flush();
-    }
+  //------------------------------------------------------------------------------------------------
+  void TestKeyboardActivator::testCleanup()
+  {
+    // Flush the keyboard to avoid carrying over any changes we make in tests
+    getKeyboard().flush();
+  }
 
 #pragma region Registration Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_IsRegisteredWithComponentRegistry)
-    {
-      Assert::IsTrue(ComponentRegistry::hasComponent<KeyboardActivator>());
-    }
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_IsRegisteredWithComponentRegistry)
+  {
+    Assert::IsTrue(ComponentRegistry::hasComponent<KeyboardActivator>());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_IsAllocatableFromComponentRegistry)
-    {
-      GameObject gameObject;
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_IsAllocatableFromComponentRegistry)
+  {
+    GameObject gameObject;
 
-      AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(KeyboardActivator::type_name(), gameObject);
+    observer_ptr<Component> component = ComponentRegistry::createComponent(KeyboardActivator::type_name(), gameObject);
 
-      Assert::IsNotNull(component.get());
-      Assert::IsNotNull(dynamic_cast<KeyboardActivator*>(component.get()));
-      Assert::IsTrue(&gameObject == component->getGameObject());
-    }
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<KeyboardActivator*>(component));
+    Assert::IsTrue(&gameObject == component->getGameObject());
+  }
 
 #pragma endregion
 
 #pragma region Constructor Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_Constructor_SetsActivationKeyTo_GLFW_KEY_UNKNOWN)
-    {
-      KeyboardActivator kvScript;
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_Constructor_SetsActivationKeyTo_GLFW_KEY_UNKNOWN)
+  {
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
 
-      Assert::AreEqual(GLFW_KEY_UNKNOWN, kvScript.getActivationKey());
-    }
+    Assert::AreEqual(GLFW_KEY_UNKNOWN, keyboardActivator.getActivationKey());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_Constructor_SetsDeactivationKeyTo_GLFW_KEY_UNKNOWN)
-    {
-      KeyboardActivator kvScript;
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_Constructor_SetsDeactivationKeyTo_GLFW_KEY_UNKNOWN)
+  {
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
 
-      Assert::AreEqual(GLFW_KEY_UNKNOWN, kvScript.getDeactivationKey());
-    }
+    Assert::AreEqual(GLFW_KEY_UNKNOWN, keyboardActivator.getDeactivationKey());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_Constructor_SetsInputModeToToggle)
-    {
-      KeyboardActivator kvScript;
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_Constructor_SetsInputModeToToggle)
+  {
+    GameObject gameObject;
+    KeyboardActivator keyboardActivator(gameObject);
 
-      Assert::IsTrue(kvScript.getInputMode() == InputMode::kToggle);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_Constructor_SetsTargetToNull)
-    {
-      KeyboardActivator kvScript;
-
-      Assert::IsNull(kvScript.getTarget());
-    }
+    Assert::IsTrue(keyboardActivator.getInputMode() == InputMode::kToggle);
+  }
 
 #pragma endregion
 
 #pragma region Handle Input Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_HandleInput_NullTarget_DoesNothing)
-    {
-      KeyboardActivator activation;
-      activation.setActivationKey(GLFW_KEY_A);
-      activation.setDeactivationKey(GLFW_KEY_D);
-
-      Assert::IsTrue(activation.getActivationKey() > -1);
-      Assert::IsTrue(activation.getDeactivationKey() > -1);
-      Assert::IsNull(activation.getTarget());
-
-      activation.handleInput();
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_HandleInput_ActivationKeyAndDeactivationKeyLessThanZero_DoesNothing)
-    {
-      GameObject gameObject;
-      GameObject target;
-      AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
-      activation->setTarget(&target);
-
-      Assert::IsTrue(&target == activation->getTarget());
-      Assert::IsTrue(activation->getActivationKey() < 0);
-      Assert::IsTrue(activation->getDeactivationKey() < 0);
-      AssertCel::IsActive(target);
-
-      activation->handleInput();
-
-      AssertCel::IsActive(target);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_HandleInput_Toggle_ActivationKeyLessThanZero_DoesNothing)
-    {
-      GameObject gameObject;
-      GameObject target;
-      target.setActive(false);
-      AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
-      activation->setDeactivationKey(GLFW_KEY_D);
-      activation->setInputMode(InputMode::kToggle);
-      activation->setTarget(&target);
-
-      Assert::IsTrue(&target == activation->getTarget());
-      Assert::IsTrue(activation->getActivationKey() < 0);
-      Assert::AreEqual(GLFW_KEY_D, activation->getDeactivationKey());
-      Assert::IsTrue(activation->getInputMode() == InputMode::kToggle);
-      AssertCel::IsNotActive(target);
-
-      activation->handleInput();
-
-      AssertCel::IsNotActive(target);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_HandleInput_Toggle_ActivationKeySet_ActivatesTarget)
-    {
-      GameObject gameObject;
-      GameObject target;
-      target.setActive(false);
-      AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
-      activation->setActivationKey(GLFW_KEY_D);
-      activation->setInputMode(InputMode::kToggle);
-      activation->setTarget(&target);
-
-      Assert::IsTrue(&target == activation->getTarget());
-      Assert::AreEqual(GLFW_KEY_D, activation->getActivationKey());
-      Assert::IsTrue(activation->getInputMode() == InputMode::kToggle);
-      AssertCel::IsNotActive(target);
-
-      simulateKeyTapped(GLFW_KEY_D);
-
-      Assert::IsTrue(isKeyTapped(GLFW_KEY_D));
-
-      activation->handleInput();
-
-      AssertCel::IsActive(target);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_HandleInput_Toggle_DeactivationKeyLessThanZero_DoesNotDeactivateTarget)
-    {
-      GameObject gameObject;
-      GameObject target;
-      target.setActive(true);
-      AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
-      activation->setActivationKey(GLFW_KEY_D);
-      activation->setInputMode(InputMode::kToggle);
-      activation->setTarget(&target);
-
-      Assert::IsTrue(&target == activation->getTarget());
-      Assert::IsTrue(activation->getDeactivationKey() < 0);
-      Assert::AreEqual(GLFW_KEY_D, activation->getActivationKey());
-      Assert::IsTrue(activation->getInputMode() == InputMode::kToggle);
-      AssertCel::IsActive(target);
-
-      activation->handleInput();
-
-      AssertCel::IsActive(target);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_HandleInput_Toggle_DeactivationKeySet_DeactivatesTarget)
-    {
-      GameObject gameObject;
-      GameObject target;
-      target.setActive(true);
-      AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
-      activation->setDeactivationKey(GLFW_KEY_D);
-      activation->setInputMode(InputMode::kToggle);
-      activation->setTarget(&target);
-
-      Assert::IsTrue(&target == activation->getTarget());
-      Assert::AreEqual(GLFW_KEY_D, activation->getDeactivationKey());
-      Assert::IsTrue(activation->getInputMode() == InputMode::kToggle);
-      AssertCel::IsActive(target);
-
-      simulateKeyTapped(GLFW_KEY_D);
-
-      Assert::IsTrue(isKeyTapped(GLFW_KEY_D));
-
-      activation->handleInput();
-
-      AssertCel::IsNotActive(target);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_HandleInput_ToggleMode_ActivationAndDeactivationKeysSet_InvertsTargetsActiveFlagWhenKeysPressed)
-    {
-      GameObject gameObject;
-      GameObject target;
-      target.setActive(false);
-      AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
-      activation->setActivationKey(GLFW_KEY_D);
-      activation->setDeactivationKey(GLFW_KEY_A);
-      activation->setInputMode(InputMode::kToggle);
-      activation->setTarget(&target);
-
-      Assert::IsTrue(&target == activation->getTarget());
-      Assert::AreEqual(GLFW_KEY_D, activation->getActivationKey());
-      Assert::AreEqual(GLFW_KEY_A, activation->getDeactivationKey());
-      Assert::IsTrue(activation->getInputMode() == InputMode::kToggle);
-      AssertCel::IsNotActive(target);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_HandleInput_ActivationKeyAndDeactivationKeyLessThanZero_DoesNothing)
+  {
+    GameObject gameObject;
+    observer_ptr<KeyboardActivator> keyboardActivator = gameObject.addComponent<KeyboardActivator>();
+
+    Assert::IsTrue(keyboardActivator->getActivationKey() < 0);
+    Assert::IsTrue(keyboardActivator->getDeactivationKey() < 0);
+    AssertCel::IsActive(gameObject);
+
+    keyboardActivator->handleInput();
+
+    AssertCel::IsActive(gameObject);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_HandleInput_Toggle_ActivationKeyLessThanZero_DoesNothing)
+  {
+    GameObject gameObject;
+    gameObject.setActive(false);
+    observer_ptr<KeyboardActivator> keyboardActivator = gameObject.addComponent<KeyboardActivator>();
+    keyboardActivator->setDeactivationKey(GLFW_KEY_D);
+    keyboardActivator->setInputMode(InputMode::kToggle);
 
-      simulateKeyTapped(GLFW_KEY_D);
+    Assert::IsTrue(keyboardActivator->getActivationKey() < 0);
+    Assert::AreEqual(GLFW_KEY_D, keyboardActivator->getDeactivationKey());
+    Assert::IsTrue(keyboardActivator->getInputMode() == InputMode::kToggle);
+    AssertCel::IsNotActive(gameObject);
 
-      Assert::IsTrue(isKeyTapped(GLFW_KEY_D));
+    keyboardActivator->handleInput();
 
-      activation->handleInput();
+    AssertCel::IsNotActive(gameObject);
+  }
 
-      AssertCel::IsActive(target);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_HandleInput_Toggle_ActivationKeySet_ActivatesGameObject)
+  {
+    GameObject gameObject;
+    gameObject.setActive(false);
+    observer_ptr<KeyboardActivator> keyboardActivator = gameObject.addComponent<KeyboardActivator>();
+    keyboardActivator->setActivationKey(GLFW_KEY_D);
+    keyboardActivator->setInputMode(InputMode::kToggle);
 
-      simulateKeyTapped(GLFW_KEY_A);
+    Assert::AreEqual(GLFW_KEY_D, keyboardActivator->getActivationKey());
+    Assert::IsTrue(keyboardActivator->getInputMode() == InputMode::kToggle);
+    AssertCel::IsNotActive(gameObject);
 
-      Assert::IsTrue(isKeyTapped(GLFW_KEY_A));
+    simulateKeyTapped(GLFW_KEY_D);
 
-      activation->handleInput();
+    Assert::IsTrue(isKeyTapped(GLFW_KEY_D));
 
-      AssertCel::IsNotActive(target);
-    }
+    keyboardActivator->handleInput();
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_HandleInput_Continuous_ActivationKeyNotSet_DoesNotActivateTarget)
-    {
-      GameObject gameObject;
-      GameObject target;
-      target.setActive(false);
-      AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
-      activation->setInputMode(InputMode::kContinuous);
-      activation->setDeactivationKey(GLFW_KEY_A);
-      activation->setTarget(&target);
+    AssertCel::IsActive(gameObject);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_HandleInput_Toggle_DeactivationKeyLessThanZero_DoesNotDeactivateGameObject)
+  {
+    GameObject gameObject;
+    gameObject.setActive(true);
+    observer_ptr<KeyboardActivator> keyboardActivator = gameObject.addComponent<KeyboardActivator>();
+    keyboardActivator->setActivationKey(GLFW_KEY_D);
+    keyboardActivator->setInputMode(InputMode::kToggle);
 
-      Assert::IsTrue(&target == activation->getTarget());
-      AssertCel::IsNotActive(target);
-      Assert::IsTrue(activation->getActivationKey() < 0);
-      Assert::AreEqual(GLFW_KEY_A, activation->getDeactivationKey());
+    Assert::IsTrue(keyboardActivator->getDeactivationKey() < 0);
+    Assert::AreEqual(GLFW_KEY_D, keyboardActivator->getActivationKey());
+    Assert::IsTrue(keyboardActivator->getInputMode() == InputMode::kToggle);
+    AssertCel::IsActive(gameObject);
 
-      activation->handleInput();
+    keyboardActivator->handleInput();
 
-      AssertCel::IsNotActive(target);
-    }
+    AssertCel::IsActive(gameObject);
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_HandleInput_Continuous_ActivationKeySetAndDown_ActivatesTarget)
-    {
-      GameObject gameObject;
-      GameObject target;
-      target.setActive(false);
-      AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
-      activation->setInputMode(InputMode::kContinuous);
-      activation->setActivationKey(GLFW_KEY_A);
-      activation->setTarget(&target);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_HandleInput_Toggle_DeactivationKeySet_DeactivatesGameObject)
+  {
+    GameObject gameObject;
+    gameObject.setActive(true);
+    observer_ptr<KeyboardActivator> keyboardActivator = gameObject.addComponent<KeyboardActivator>();
+    keyboardActivator->setDeactivationKey(GLFW_KEY_D);
+    keyboardActivator->setInputMode(InputMode::kToggle);
 
-      Assert::IsTrue(&target == activation->getTarget());
-      AssertCel::IsNotActive(target);
-      Assert::AreEqual(GLFW_KEY_A, activation->getActivationKey());
-      Assert::IsTrue(activation->getInputMode() == InputMode::kContinuous);
+    Assert::AreEqual(GLFW_KEY_D, keyboardActivator->getDeactivationKey());
+    Assert::IsTrue(keyboardActivator->getInputMode() == InputMode::kToggle);
+    AssertCel::IsActive(gameObject);
 
-      simulateKeyPressed(GLFW_KEY_A);
+    simulateKeyTapped(GLFW_KEY_D);
 
-      Assert::IsTrue(isKeyPressed(GLFW_KEY_A));
+    Assert::IsTrue(isKeyTapped(GLFW_KEY_D));
 
-      activation->handleInput();
+    keyboardActivator->handleInput();
 
-      AssertCel::IsActive(target);
-    }
+    AssertCel::IsNotActive(gameObject);
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_HandleInput_Continuous_ActivationKeySetAndNotDown_DeactivatesTarget)
-    {
-      GameObject gameObject;
-      GameObject target;
-      target.setActive(true);
-      AutoDeallocator<KeyboardActivator> activation = gameObject.addComponent<KeyboardActivator>();
-      activation->setInputMode(InputMode::kContinuous);
-      activation->setActivationKey(GLFW_KEY_A);
-      activation->setTarget(&target);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_HandleInput_ToggleMode_ActivationAndDeactivationKeysSet_InvertsGameObjectsActiveFlagWhenKeysPressed)
+  {
+    GameObject gameObject;
+    gameObject.setActive(false);
+    observer_ptr<KeyboardActivator> keyboardActivator = gameObject.addComponent<KeyboardActivator>();
+    keyboardActivator->setActivationKey(GLFW_KEY_D);
+    keyboardActivator->setDeactivationKey(GLFW_KEY_A);
+    keyboardActivator->setInputMode(InputMode::kToggle);
 
-      Assert::IsTrue(&target == activation->getTarget());
-      AssertCel::IsActive(target);
-      Assert::AreEqual(GLFW_KEY_A, activation->getActivationKey());
-      Assert::IsTrue(activation->getInputMode() == InputMode::kContinuous);
-      Assert::IsFalse(isKeyPressed(GLFW_KEY_A));
+    Assert::AreEqual(GLFW_KEY_D, keyboardActivator->getActivationKey());
+    Assert::AreEqual(GLFW_KEY_A, keyboardActivator->getDeactivationKey());
+    Assert::IsTrue(keyboardActivator->getInputMode() == InputMode::kToggle);
+    AssertCel::IsNotActive(gameObject);
 
-      activation->handleInput();
+    simulateKeyTapped(GLFW_KEY_D);
 
-      AssertCel::IsNotActive(target);
-    }
+    Assert::IsTrue(isKeyTapped(GLFW_KEY_D));
 
-#pragma endregion
+    keyboardActivator->handleInput();
 
-#pragma region Set Target Tests
+    AssertCel::IsActive(gameObject);
 
-#pragma region Game Object Overload
+    simulateKeyTapped(GLFW_KEY_A);
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_SetTarget_SetsTargetToInputtedGameObject)
-    {
-      GameObject target1;
-      GameObject target2;
+    Assert::IsTrue(isKeyTapped(GLFW_KEY_A));
 
-      KeyboardActivator activator;
+    keyboardActivator->handleInput();
 
-      Assert::IsNull(activator.getTarget());
+    AssertCel::IsNotActive(gameObject);
+  }
 
-      activator.setTarget(&target1);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_HandleInput_Continuous_ActivationKeyNotSet_DoesNotActivateGameObject)
+  {
+    GameObject gameObject;
+    gameObject.setActive(false);
+    observer_ptr<KeyboardActivator> keyboardActivator = gameObject.addComponent<KeyboardActivator>();
+    keyboardActivator->setInputMode(InputMode::kContinuous);
+    keyboardActivator->setDeactivationKey(GLFW_KEY_A);
 
-      Assert::IsTrue(&target1 == activator.getTarget());
+    AssertCel::IsNotActive(gameObject);
+    Assert::IsTrue(keyboardActivator->getActivationKey() < 0);
+    Assert::AreEqual(GLFW_KEY_A, keyboardActivator->getDeactivationKey());
 
-      activator.setTarget(&target2);
+    keyboardActivator->handleInput();
 
-      Assert::IsTrue(&target2 == activator.getTarget());
+    AssertCel::IsNotActive(gameObject);
+  }
 
-      activator.setTarget(nullptr);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_HandleInput_Continuous_ActivationKeySetAndDown_ActivatesGameObject)
+  {
+    GameObject gameObject;
+    gameObject.setActive(false);
+    observer_ptr<KeyboardActivator> keyboardActivator = gameObject.addComponent<KeyboardActivator>();
+    keyboardActivator->setInputMode(InputMode::kContinuous);
+    keyboardActivator->setActivationKey(GLFW_KEY_A);
 
-      Assert::IsNull(activator.getTarget());
-    }
+    AssertCel::IsNotActive(gameObject);
+    Assert::AreEqual(GLFW_KEY_A, keyboardActivator->getActivationKey());
+    Assert::IsTrue(keyboardActivator->getInputMode() == InputMode::kContinuous);
 
-#pragma endregion
+    simulateKeyPressed(GLFW_KEY_A);
 
-#pragma region String Overload
+    Assert::IsTrue(isKeyPressed(GLFW_KEY_A));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_SetTarget_EmptyString_SetsTargetToNull)
-    {
-      Screen screen;
-      GameObject target1;
-      
-      AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-      AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();
-      activator->setTarget(&target1);
+    keyboardActivator->handleInput();
 
-      Assert::IsTrue(&target1 == activator->getTarget());
+    AssertCel::IsActive(gameObject);
+  }
 
-      activator->setTarget("");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(KeyboardActivator_HandleInput_Continuous_ActivationKeySetAndNotDown_DeactivatesGameObject)
+  {
+    GameObject gameObject;
+    gameObject.setActive(true);
+    observer_ptr<KeyboardActivator> keyboardActivator = gameObject.addComponent<KeyboardActivator>();
+    keyboardActivator->setInputMode(InputMode::kContinuous);
+    keyboardActivator->setActivationKey(GLFW_KEY_A);
 
-      Assert::IsNull(activator->getTarget());
-    }
+    AssertCel::IsActive(gameObject);
+    Assert::AreEqual(GLFW_KEY_A, keyboardActivator->getActivationKey());
+    Assert::IsTrue(keyboardActivator->getInputMode() == InputMode::kContinuous);
+    Assert::IsFalse(isKeyPressed(GLFW_KEY_A));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_SetTarget_NonExistentGameObjectStringName_SetsTargetToNull)
-    {
-      Screen screen;
-      GameObject target1;
+    keyboardActivator->handleInput();
 
-      AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-      AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();
-      activator->setTarget(&target1);
-
-      Assert::IsTrue(&target1 == activator->getTarget());
-      Assert::IsNull(screen.findGameObject("WubbaLubbaDubDub"));
-
-      activator->setTarget("WubbaLubbaDubDub");
-
-      Assert::IsNull(activator->getTarget());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_SetTarget_ExistentGameObjectStringName_SetsTargetToCorrectGameObject)
-    {
-      Screen screen;
-      GameObject target1;
-
-      AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-      AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();
-      activator->setTarget(&target1);
-      AutoDeallocator<GameObject> newTarget = screen.allocateGameObject();
-      newTarget->setName("NewTarget");
-
-      Assert::IsTrue(&target1 == activator->getTarget());
-      Assert::IsTrue(newTarget.get() == screen.findGameObject("NewTarget"));
-
-      activator->setTarget("NewTarget");
-
-      Assert::IsTrue(newTarget.get() == activator->getTarget());
-    }
-
-#pragma endregion
-
-#pragma region StringId Overload
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_SetTarget_ZeroStringId_SetsTargetToNull)
-    {
-      Screen screen;
-      GameObject target1;
-
-      AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-      AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();
-      activator->setTarget(&target1);
-
-      Assert::IsTrue(&target1 == activator->getTarget());
-
-      activator->setTarget(StringId(0));
-
-      Assert::IsNull(activator->getTarget());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_SetTarget_NonExistentGameObjectStringIdName_SetsTargetToNull)
-    {
-      Screen screen;
-      GameObject target1;
-
-      AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-      AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();
-      activator->setTarget(&target1);
-
-      Assert::IsTrue(&target1 == activator->getTarget());
-      Assert::IsNull(screen.findGameObject(internString("WubbaLubbaDubDub")));
-
-      activator->setTarget(internString("WubbaLubbaDubDub"));
-
-      Assert::IsNull(activator->getTarget());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardActivator_SetTarget_ExistentGameObjectStringIdName_SetsTargetToCorrectGameObject)
-    {
-      Screen screen;
-      GameObject target1;
-
-      AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-      AutoDeallocator<KeyboardActivator> activator = gameObject->addComponent<KeyboardActivator>();
-      activator->setTarget(&target1);
-      AutoDeallocator<GameObject> newTarget = screen.allocateGameObject();
-      newTarget->setName("NewTarget");
-
-      Assert::IsTrue(&target1 == activator->getTarget());
-      Assert::AreEqual(newTarget.get(), screen.findGameObject(internString("NewTarget")));
-
-      activator->setTarget(internString("NewTarget"));
-
-      Assert::AreEqual(newTarget.get(), activator->getTarget());
-    }
-
-#pragma endregion
+    AssertCel::IsNotActive(gameObject);
+  }
 
 #pragma endregion
 

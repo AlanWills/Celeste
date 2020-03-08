@@ -31,7 +31,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
 
     Assert::IsFalse(state.globals()["DataConverter"].valid());
 
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["DataConverter"].valid());
   }
@@ -43,7 +43,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
 
     Assert::IsFalse(state.globals()["DataConverter"]["findAttribute"].valid());
 
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["DataConverter"]["findAttribute"].valid());
   }
@@ -55,7 +55,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
 
     Assert::IsFalse(state.globals()["DataConverter"]["findElement"].valid());
 
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["DataConverter"]["findElement"].valid());
   }
@@ -67,7 +67,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
 
     Assert::IsFalse(state.globals()["DataConverter"]["convertFromXML"].valid());
 
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["DataConverter"]["convertFromXML"].valid());
   }
@@ -79,7 +79,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
 
     Assert::IsFalse(state.globals()["ComponentDataConverter"].valid());
 
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["ComponentDataConverter"].valid());
   }
@@ -91,7 +91,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
 
     Assert::IsFalse(state.globals()["LuaComponentDataConverter"].valid());
 
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["LuaComponentDataConverter"].valid());
   }
@@ -99,7 +99,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(DataConverterScriptCommands_Initialize_RequiresDataConvertersModule)
   {
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     // Ensure require is in the global namespace
@@ -113,7 +113,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(DataConverterScriptCommands_Initialize_RequiresAnimatorDataConverterModule)
   {
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     // Ensure require is in the global namespace
@@ -127,7 +127,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(DataConverterScriptCommands_Initialize_RequiresAudioSourceDataConverterModule)
   {
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     // Ensure require is in the global namespace
@@ -141,7 +141,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(DataConverterScriptCommands_Initialize_RequiresKeyboardActivatorDataConverterModule)
   {
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     // Ensure require is in the global namespace
@@ -155,7 +155,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(DataConverterScriptCommands_Initialize_RequiresKeyboardVisibilityDataConverterModule)
   {
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     // Ensure require is in the global namespace
@@ -169,7 +169,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(DataConverterScriptCommands_Initialize_RequiresEllipseColliderDataConverterModule)
   {
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     // Ensure require is in the global namespace
@@ -183,7 +183,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(DataConverterScriptCommands_Initialize_RequiresCanvasDataConverterModule)
   {
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     // Ensure require is in the global namespace
@@ -202,7 +202,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
   TEST_METHOD(DataConverterScriptCommands_ConvertFromXML_InputtingNonExistentFilePath_ReturnsFalse)
   {
     sol::state& state = LuaState::instance();
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
 
     MockDataConverter dataConverter;
 
@@ -213,7 +213,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
   TEST_METHOD(DataConverterScriptCommands_ConvertFromXML_InputtingExistentFilePath_ToEmptyFile_ReturnsFalse)
   {
     sol::state& state = LuaState::instance();
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
 
     Path filePath(TestResources::getTempDirectory(), "Test.xml");
     File file(filePath);
@@ -239,7 +239,7 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
   TEST_METHOD(DataConverterScriptCommands_ConvertFromXML_InputtingExistentFilePath_ToValidData_ReturnsTrue)
   {
     sol::state& state = LuaState::instance();
-    Celeste::Lua::DataConverterScriptCommands::initialize();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize();
 
     MockDataConverter dataConverter;
     Path filePath(TestResources::getTempDirectory(), "Test.xml");

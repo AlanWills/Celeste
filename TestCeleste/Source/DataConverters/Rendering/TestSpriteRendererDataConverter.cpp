@@ -4,7 +4,6 @@
 #include "Resources/Rendering/SpriteRendererLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Rendering/SpriteRenderer.h"
-#include "Screens/ScreenUtils.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "AssertCel.h"
 
@@ -36,10 +35,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(SpriteRendererLoadingResources::getValidFullPath());
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<SpriteRenderer*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<SpriteRenderer*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -654,16 +653,10 @@ namespace TestCeleste
 #pragma region Set Values Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SpriteRendererDataConverter_SetValues_InputtingNullSpriteRenderer_DoesNothing)
-  {
-    SpriteRendererDataConverter converter;
-    converter.setValues(SpriteRenderer());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteRendererDataConverter_SetValues_InputtingSpriteRenderer_DataNotLoadedCorrectly_DoesNothing)
   {
-    SpriteRenderer renderer;
+    GameObject gameObject;
+    SpriteRenderer renderer(gameObject);
     renderer.shouldPreserveAspectRatio(RatioMode::kPreserveAspectRatio);
     renderer.setColour(0.1f, 0.2f, 0.3f, 0.4f);
 
@@ -680,7 +673,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteRendererDataConverter_SetValues_InputtingSpriteRenderer_DataLoadedCorrectly_ChangesSpriteRendererToMatchData)
   {
-    SpriteRenderer renderer;
+    GameObject gameObject;
+    SpriteRenderer renderer(gameObject);
     renderer.shouldPreserveAspectRatio(RatioMode::kPreserveAspectRatio);
     renderer.setColour(0.1f, 0.2f, 0.3f, 0.4f);
 
@@ -708,7 +702,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteRendererDataConverter_SetValues_SizeNotSet_SetsSizeToTextureDimensions)
   {
-    SpriteRenderer renderer;
+    GameObject gameObject;
+    SpriteRenderer renderer(gameObject);
     SpriteRendererDataConverter converter;
     XMLDocument document;
     XMLElement* element = document.NewElement("SpriteRenderer");

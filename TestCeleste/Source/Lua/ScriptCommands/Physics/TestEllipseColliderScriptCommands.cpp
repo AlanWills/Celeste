@@ -5,7 +5,7 @@
 #include "Lua/ScriptCommands/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
-#include "Mocks/Physics/MockEllipseCollider.h"
+#include "Physics/EllipseCollider.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -220,7 +220,8 @@ namespace TestCeleste::Lua::Physics::EllipseColliderScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    EllipseCollider ellipseCollider;
+    GameObject gameObject;
+    EllipseCollider ellipseCollider(gameObject);
     auto functionResult = state.globals()["EllipseCollider"]["as"].get<sol::protected_function>().call(&ellipseCollider, "Object");
 
     Assert::IsTrue(functionResult.valid());
@@ -234,7 +235,8 @@ namespace TestCeleste::Lua::Physics::EllipseColliderScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    EllipseCollider ellipseCollider;
+    GameObject gameObject;
+    EllipseCollider ellipseCollider(gameObject);
     auto functionResult = state.globals()["EllipseCollider"]["as"].get<sol::protected_function>().call(&ellipseCollider, "EllipseCollider");
 
     Assert::IsTrue(functionResult.valid());
@@ -251,7 +253,8 @@ namespace TestCeleste::Lua::Physics::EllipseColliderScriptCommands
     class MockEllipseCollider : public Celeste::Physics::EllipseCollider {};
     state.new_usertype<MockEllipseCollider>("MockEllipseCollider");
 
-    EllipseCollider ellipseCollider;
+    GameObject gameObject;
+    EllipseCollider ellipseCollider(gameObject);
     auto functionResult = state.globals()["EllipseCollider"]["as"].get<sol::protected_function>().call(&ellipseCollider, "MockEllipseCollider");
 
     Assert::IsTrue(functionResult.valid());
@@ -270,7 +273,8 @@ namespace TestCeleste::Lua::Physics::EllipseColliderScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    EllipseCollider ellipseCollider;
+    GameObject gameObject;
+    EllipseCollider ellipseCollider(gameObject);
     auto functionResult = state.globals()["EllipseCollider"]["as"].get<sol::protected_function>().call(&ellipseCollider, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());

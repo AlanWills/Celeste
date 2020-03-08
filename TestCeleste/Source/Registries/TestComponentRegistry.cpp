@@ -1,8 +1,8 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Registries/ComponentRegistry.h"
+#include "Objects/GameObject.h"
 #include "Mocks/Objects/MockComponent.h"
-#include "Registries/DefaultRegistryAllocator.h"
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -14,12 +14,10 @@ namespace TestCeleste
   class NonRegisteredComponent : public Component 
   { 
     public: 
-      static std::string type_name() { return "NonRegistered"; } 
-  };
+      static std::string type_name() { return "NonRegistered"; }
+      static constexpr bool isManaged() { return false; }
 
-  class DummyRegistryAllocator : public RegistryAllocator 
-  { 
-    public: observer_ptr<Component> allocate(const std::string& name, GameObject& gameObject) const override { return nullptr; } 
+      NonRegisteredComponent(GameObject& gameObject) : Component(gameObject) {}
   };
 
   CELESTE_TEST_CLASS(TestComponentRegistry)
@@ -49,8 +47,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_HasComponent_InputtingComponentTypeThatDoesExist_ShouldReturnTrue)
   {
-    std::unique_ptr<RegistryAllocator> allocator(new DummyRegistryAllocator());
-    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), std::move(allocator));
+    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject& gameObject) { return nullptr; });
 
     Assert::IsTrue(ComponentRegistry::hasComponent<NonRegisteredComponent>());
   }
@@ -64,8 +61,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_HasComponent_InputtingComponentNameThatDoesExist_ShouldReturnTrue)
   {
-    std::unique_ptr<RegistryAllocator> allocator(new DummyRegistryAllocator());
-    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), std::move(allocator));
+    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject& gameObject) { return nullptr; });
 
     Assert::IsTrue(ComponentRegistry::hasComponent(NonRegisteredComponent::type_name()));
   }
@@ -77,40 +73,19 @@ namespace TestCeleste
 #pragma region String Overload
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ComponentRegistry_AddComponent_InputtingComponentStringThatDoesntExist_NullAllocator_DoesNothing_ReturnsFalse_SetsAllocatorToNullptr)
+  TEST_METHOD(ComponentRegistry_AddComponent_InputtingComponentNameThatDoesExist_DoesNothing_ReturnsFalse)
   {
-    std::unique_ptr<RegistryAllocator> allocator(nullptr);
-
-    Assert::IsFalse(ComponentRegistry::hasComponent("WubbaLubbaDubDub"));
-    Assert::IsFalse(ComponentRegistry::registerComponent("WubbaLubbaDubDub", std::move(allocator)));
-    Assert::IsNull(allocator.get());
-    Assert::IsFalse(ComponentRegistry::hasComponent("WubbaLubbaDubDub"));
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ComponentRegistry_AddComponent_InputtingComponentNameThatDoesExist_NonNullAllocator_DoesNothing_ReturnFalse_SetsAllocatorToNullptr)
-  {
-    std::unique_ptr<RegistryAllocator> allocator(new DummyRegistryAllocator());
-    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), std::move((allocator)));
+    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject&) { return nullptr; });
 
     Assert::IsTrue(ComponentRegistry::hasComponent(NonRegisteredComponent::type_name()));
-
-    // Adding the component above will set the allocator to nullptr as it is released to the registry
-    allocator.reset(new DummyRegistryAllocator());
-
-    Assert::IsNotNull(allocator.get());
-    Assert::IsFalse(ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), std::move(allocator)));
-    Assert::IsNull(allocator.get());
+    Assert::IsFalse(ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject&) { return nullptr; }));
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ComponentRegistry_AddComponent_InputtingComponentNameThatDoesntExist_NonNullAllocator_AddsComponent_ReturnsTrue_SetsAllocatorToNullptr)
+  TEST_METHOD(ComponentRegistry_AddComponent_InputtingComponentNameThatDoesntExist_AddsComponent_ReturnsTrue)
   {
-    std::unique_ptr<RegistryAllocator> allocator(new DummyRegistryAllocator());
-
     Assert::IsFalse(ComponentRegistry::hasComponent(NonRegisteredComponent::type_name()));
-    Assert::IsTrue(ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), std::move(allocator)));
-    Assert::IsNull(allocator.get());
+    Assert::IsTrue(ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject&) { return nullptr; }));
     Assert::IsTrue(ComponentRegistry::hasComponent(NonRegisteredComponent::type_name()));
   }
 
@@ -119,8 +94,6 @@ namespace TestCeleste
 #pragma endregion
 
 #pragma region Template Overload
-
-  // Use MockComponent here because of templates and it will look for an allocate function
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_AddComponent_InputtingComponentTypeThatDoesExist_DoesNothing)
@@ -135,8 +108,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_AddComponent_InputtingComponentTypeThatDoesExist_ReturnsFalse)
   {
-    std::unique_ptr<RegistryAllocator> allocator(new DummyRegistryAllocator());
-    ComponentRegistry::registerComponent(MockComponent::type_name(), std::move(allocator));
+    ComponentRegistry::registerComponent(MockComponent::type_name(), [](GameObject&) { return nullptr; });
 
     Assert::IsTrue(ComponentRegistry::hasComponent(MockComponent::type_name()));
     Assert::IsFalse(ComponentRegistry::registerComponent<MockComponent>());
@@ -163,26 +135,6 @@ namespace TestCeleste
     Assert::IsTrue(ComponentRegistry::registerComponent<MockComponent>());
   }
 
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ComponentRegistry_AddComponent_InputtingComponentTypeThatDoesntExist_CustomAllocatorType_AddsComponentWithCustomAllocator)
-  {
-    GameObject gameObject;
-
-    ComponentRegistry::deregisterComponent<MockComponent>();
-
-    Assert::IsFalse(ComponentRegistry::hasComponent(MockComponent::type_name()));
-    
-    ComponentRegistry::registerComponent<MockComponent, DummyRegistryAllocator>();
-
-    Assert::IsTrue(ComponentRegistry::hasComponent(MockComponent::type_name()));
-    
-    observer_ptr<Component> component = ComponentRegistry::allocateComponent(MockComponent::type_name(), gameObject);
-
-    // Dummy Registry Allocator will return null handle if it was called
-    // This is how we tell the custom allocator was used
-    Assert::IsNull(component);
-  }
-
 #pragma endregion
 
 #pragma region Remove Component Tests
@@ -200,7 +152,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_RemoveComponent_InputtingComponentTypeThatDoesExist_RemovesComponentFromRegistry)
   {
-    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), std::unique_ptr<RegistryAllocator>(new DummyRegistryAllocator()));
+    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject&) { return nullptr; });
     
     Assert::IsTrue(ComponentRegistry::hasComponent<NonRegisteredComponent>());
 
@@ -222,7 +174,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_RemoveComponent_InputtingComponentNameThatDoesExist_RemovesComponentFromRegistry)
   {
-    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), std::unique_ptr<RegistryAllocator>(new DummyRegistryAllocator()));
+    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject&) { return nullptr; });
 
     Assert::IsTrue(ComponentRegistry::hasComponent<NonRegisteredComponent>());
 
@@ -233,52 +185,50 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Allocate Tests
+#pragma region Create Component Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ComponentRegistry_Allocate_InputtingEmptyComponentName_ReturnsNullptr)
+  TEST_METHOD(ComponentRegistry_CreateComponent_InputtingEmptyComponentName_ReturnsNullptr)
   {
     GameObject gameObject;
 
-    Assert::IsNull(ComponentRegistry::allocateComponent("", gameObject));
+    Assert::IsNull(ComponentRegistry::createComponent("", gameObject));
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ComponentRegistry_Allocate_InputtingNonExistentComponentName_ReturnsNullptr)
+  TEST_METHOD(ComponentRegistry_CreateComponent_InputtingNonExistentComponentName_ReturnsNullptr)
   {
     GameObject gameObject;
 
     Assert::IsFalse(ComponentRegistry::hasComponent<NonRegisteredComponent>());
-    Assert::IsNull(ComponentRegistry::allocateComponent(NonRegisteredComponent::type_name(), gameObject));
+    Assert::IsNull(ComponentRegistry::createComponent(NonRegisteredComponent::type_name(), gameObject));
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ComponentRegistry_Allocate_ReturnsCorrectlyAllocatedComponentType)
+  TEST_METHOD(ComponentRegistry_CreateComponent_ReturnsCorrectlyAllocatedComponentType)
   {
     GameObject gameObject;
 
-    std::unique_ptr<RegistryAllocator> allocator(new DummyRegistryAllocator());
-    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), std::move(allocator));
+    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject& gameObject) { return gameObject.addComponent<NonRegisteredComponent>(); });
 
     Assert::IsTrue(ComponentRegistry::hasComponent<MockComponent>());
     
-    AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(MockComponent::type_name(), gameObject);
+    observer_ptr<Component> component = ComponentRegistry::createComponent(MockComponent::type_name(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<MockComponent*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<MockComponent*>(component));
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ComponentRegistry_Allocate_ReturnsComponentWithGameObjectSetToInputtedGameObject)
+  TEST_METHOD(ComponentRegistry_CreateComponent_ReturnsComponentWithGameObjectSetToInputtedGameObject)
   {
     GameObject gameObject;
 
-    std::unique_ptr<RegistryAllocator> allocator(new DefaultRegistryAllocator<MockComponent>());
-    ComponentRegistry::registerComponent(MockComponent::type_name(), std::move(allocator));
+    ComponentRegistry::registerComponent(MockComponent::type_name(), [](GameObject& gameObject) { return gameObject.addComponent<NonRegisteredComponent>(); });
 
     Assert::IsTrue(ComponentRegistry::hasComponent<MockComponent>());
 
-    AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(MockComponent::type_name(), gameObject);
+    observer_ptr<Component> component = ComponentRegistry::createComponent(MockComponent::type_name(), gameObject);
 
     Assert::AreEqual(&gameObject, component->getGameObject());
   }

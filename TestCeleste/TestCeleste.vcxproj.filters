@@ -108,12 +108,6 @@
     <ClCompile Include="Source\Resources\Shaders\TestProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Screens\TestScreenManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Screens\TestScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\UI\TestButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -171,9 +165,6 @@
     <ClCompile Include="Source\Events\TestEventTriggerer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ObjectFX\TestLimitedLifeTime.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Memory\Iterators\TestGameObjectIterator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -219,9 +210,6 @@
     <ClCompile Include="Source\DataConverters\Objects\TestGameObjectDataConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\DataConverters\Screens\TestScreenDataConverter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\DataConverters\Objects\TestObjectDataConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -238,9 +226,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\DataConverters\TestDataConverter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\DataConverters\ObjectFX\TestLimitedLifeTimeDataConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\DataConverters\UI\TestButtonDataConverter.cpp">
@@ -501,9 +486,6 @@
     <ClCompile Include="Source\Lua\TestLuaState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Screens\Loading\TestScreenLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Lua\TestLuaComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -663,9 +645,6 @@
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\TestGameObjectScriptCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Lua\ScriptCommands\Screens\TestScreenScriptCommands.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Lua\ScriptCommands\Resources\TestResourcesScriptCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -744,25 +723,13 @@
     <ClCompile Include="Source\Debug\Profiling\TestProfiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Registries\TestDefaultRegistryAllocator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Utils\TestXMLUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utils\TestGameObjectXMLUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utils\TestScreenXMLUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\XML\Elements\TestGameObjectDataConverterListElement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Lua\ScriptCommands\ObjectFX\TestObjectFXScriptCommands.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Lua\ScriptCommands\ObjectFX\TestLimitedLifeTimeScriptCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Lua\ScriptCommands\Input\TestMouseInteractionHandlerScriptCommands.cpp">
@@ -801,9 +768,6 @@
     <ClCompile Include="Source\Lua\ScriptCommands\UI\TestSliderScriptCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Lua\Components\TestLuaComponentManifestRegistryAllocator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Serialization\TestUIntSerializers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -826,6 +790,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Memory\Iterators\TestPoolAllocatorIterator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DataConverters\Scene\TestSceneDataConverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Lua\ScriptCommands\Scene\TestSceneScriptCommands.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\TestSceneLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -36,10 +36,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(TextRendererLoadingResources::getValidNoLinesFullPath());
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<TextRenderer*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<TextRenderer*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -567,16 +567,10 @@ namespace TestCeleste
 #pragma region Set Values Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(TextRendererDataConverter_SetValues_InputtingNullTextRenderer_DoesNothing)
-  {
-    TextRendererDataConverter converter;
-    converter.setValues(TextRenderer());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(TextRendererDataConverter_SetValues_InputtingTextRenderer_DataNotLoadedCorrectly_DoesNothing)
   {
-    TextRenderer renderer;
+    GameObject gameObject;
+    TextRenderer renderer(gameObject);
     renderer.setColour(0.1f, 0.2f, 0.3f, 0.4f);
     renderer.setHorizontalAlignment(HorizontalAlignment::kLeft);
 
@@ -593,7 +587,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(TextRendererDataConverter_SetValues_InputtingTextRenderer_DataLoadedCorrectly_ChangesTextRendererToMatchData)
   {
-    TextRenderer renderer;
+    GameObject gameObject;
+    TextRenderer renderer(gameObject);
     renderer.setColour(0.1f, 0.2f, 0.3f, 0.4f);
     renderer.setHorizontalAlignment(HorizontalAlignment::kLeft);
 
@@ -615,8 +610,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(TextRendererDataConverter_SetValues_InputtingTextRenderer_DataLoadedCorrectlyWithLines_ChangesTextRendererToMatchData)
   {
-    TextRenderer renderer;
-
+    GameObject gameObject;
+    TextRenderer renderer(gameObject);
     TextRendererDataConverter converter;
     converter.convertFromXML(getResourceManager().load<Data>(TextRendererLoadingResources::getValidWithLinesFullPath())->getDocumentRoot());
 

@@ -4,8 +4,8 @@
 #include "Lua/ScriptCommands/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
-#include "Screens/Screen.h"
 #include "Input/MouseInteractionHandler.h"
+
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -115,7 +115,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::function function;
     GameObject gameObject;
-    AutoDeallocator<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
 
     Assert::IsFalse(function.valid());
     Assert::AreEqual(static_cast<size_t>(0), mouseInteractionHandler->getOnLeftButtonUpEvent().getSubscriberCount());
@@ -134,7 +134,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::function function = state["MouseInteractionHandler"]["subscribeOnLeftButtonUpCallback"].get<sol::function>();
     GameObject gameObject;
-    AutoDeallocator<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
 
     Assert::IsTrue(function.valid());
     Assert::AreEqual(static_cast<size_t>(0), mouseInteractionHandler->getOnLeftButtonUpEvent().getSubscriberCount());
@@ -158,7 +158,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::function function;
     GameObject gameObject;
-    AutoDeallocator<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
 
     Assert::IsFalse(function.valid());
     Assert::AreEqual(static_cast<size_t>(0), mouseInteractionHandler->getOnRightButtonUpEvent().getSubscriberCount());
@@ -177,7 +177,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::function function = state["MouseInteractionHandler"]["subscribeOnRightButtonUpCallback"].get<sol::function>();
     GameObject gameObject;
-    AutoDeallocator<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
 
     Assert::IsTrue(function.valid());
     Assert::AreEqual(static_cast<size_t>(0), mouseInteractionHandler->getOnRightButtonUpEvent().getSubscriberCount());
@@ -201,7 +201,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::function function;
     GameObject gameObject;
-    AutoDeallocator<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
 
     Assert::IsFalse(function.valid());
     Assert::AreEqual(static_cast<size_t>(0), mouseInteractionHandler->getOnEnterEvent().getSubscriberCount());
@@ -220,7 +220,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::function function = state["MouseInteractionHandler"]["subscribeOnEnterCallback"].get<sol::function>();
     GameObject gameObject;
-    AutoDeallocator<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
 
     Assert::IsTrue(function.valid());
     Assert::AreEqual(static_cast<size_t>(0), mouseInteractionHandler->getOnEnterEvent().getSubscriberCount());
@@ -246,7 +246,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::function function;
     GameObject gameObject;
-    AutoDeallocator<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
 
     Assert::IsFalse(function.valid());
     Assert::AreEqual(static_cast<size_t>(0), mouseInteractionHandler->getOnLeaveEvent().getSubscriberCount());
@@ -265,7 +265,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::function function = state["MouseInteractionHandler"]["subscribeOnLeaveCallback"].get<sol::function>();
     GameObject gameObject;
-    AutoDeallocator<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
 
     Assert::IsTrue(function.valid());
     Assert::AreEqual(static_cast<size_t>(0), mouseInteractionHandler->getOnLeaveEvent().getSubscriberCount());
@@ -371,7 +371,8 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    MouseInteractionHandler mouseInteractionHandler;
+    GameObject gameObject;
+    MouseInteractionHandler mouseInteractionHandler(gameObject);
     auto functionResult = state.globals()["MouseInteractionHandler"]["as"].get<sol::protected_function>().call(&mouseInteractionHandler, "Object");
 
     Assert::IsTrue(functionResult.valid());
@@ -385,7 +386,8 @@ namespace TestCeleste::Lua::ScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    MouseInteractionHandler mouseInteractionHandler;
+    GameObject gameObject;
+    MouseInteractionHandler mouseInteractionHandler(gameObject);
     auto functionResult = state.globals()["MouseInteractionHandler"]["as"].get<sol::protected_function>().call(&mouseInteractionHandler, "MouseInteractionHandler");
 
     Assert::IsTrue(functionResult.valid());
@@ -402,7 +404,8 @@ namespace TestCeleste::Lua::ScriptCommands
     class MockMouseInteractionHandler : public Celeste::Input::MouseInteractionHandler {};
     state.new_usertype<MockMouseInteractionHandler>("MockMouseInteractionHandler");
 
-    MouseInteractionHandler mouseInteractionHandler;
+    GameObject gameObject;
+    MouseInteractionHandler mouseInteractionHandler(gameObject);
     auto functionResult = state.globals()["MouseInteractionHandler"]["as"].get<sol::protected_function>().call(&mouseInteractionHandler, "MockMouseInteractionHandler");
 
     Assert::IsTrue(functionResult.valid());
@@ -421,7 +424,8 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    MouseInteractionHandler mouseInteractionHandler;
+    GameObject gameObject;
+    MouseInteractionHandler mouseInteractionHandler(gameObject);
     auto functionResult = state.globals()["MouseInteractionHandler"]["as"].get<sol::protected_function>().call(&mouseInteractionHandler, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());

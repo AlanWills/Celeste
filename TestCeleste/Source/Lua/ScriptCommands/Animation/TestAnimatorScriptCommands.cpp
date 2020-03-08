@@ -243,7 +243,8 @@ namespace TestCeleste::Lua::Animation::AnimatorScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    Animator animator;
+    GameObject gameObject;
+    Animator animator(gameObject);
     auto functionResult = state.globals()["Animator"]["as"].get<sol::protected_function>().call(&animator, "Object");
 
     Assert::IsTrue(functionResult.valid());
@@ -257,7 +258,8 @@ namespace TestCeleste::Lua::Animation::AnimatorScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    Animator animator;
+    GameObject gameObject;
+    Animator animator(gameObject);
     auto functionResult = state.globals()["Animator"]["as"].get<sol::protected_function>().call(&animator, "Animator");
 
     Assert::IsTrue(functionResult.valid());
@@ -274,7 +276,8 @@ namespace TestCeleste::Lua::Animation::AnimatorScriptCommands
     class MockAnimator : public Celeste::Animation::Animator {};
     state.new_usertype<MockAnimator>("MockAnimator");
 
-    Animator animator;
+    GameObject gameObject;
+    Animator animator(gameObject);
     auto functionResult = state.globals()["Animator"]["as"].get<sol::protected_function>().call(&animator, "MockAnimator");
 
     Assert::IsTrue(functionResult.valid());
@@ -293,7 +296,8 @@ namespace TestCeleste::Lua::Animation::AnimatorScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    Animator animator;
+    GameObject gameObject;
+    Animator animator(gameObject);
     auto functionResult = state.globals()["Animator"]["as"].get<sol::protected_function>().call(&animator, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());

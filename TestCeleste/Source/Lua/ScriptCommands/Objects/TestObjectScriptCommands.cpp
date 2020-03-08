@@ -24,7 +24,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsFalse(state.globals()["Object"].valid());
 
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["Object"].valid());
   }
@@ -36,7 +36,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsFalse(state.globals()["Object"]["as"].valid());
 
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["Object"]["as"].valid());
   }
@@ -48,7 +48,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsFalse(state.globals()["ScriptableObject"].valid());
 
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["ScriptableObject"].valid());
   }
@@ -60,7 +60,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsFalse(state.globals()["Entity"].valid());
 
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["Entity"].valid());
   }
@@ -72,7 +72,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsFalse(state.globals()["Component"].valid());
 
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["Component"].valid());
   }
@@ -84,7 +84,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsFalse(state.globals()["GameObject"].valid());
 
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     Assert::IsTrue(state.globals()["GameObject"].valid());
   }
@@ -97,7 +97,7 @@ namespace TestCeleste::Lua::ScriptCommands
   TEST_METHOD(ObjectScriptCommands_Object_as_InputtingNull_CastingToBaseType_ReturnsNil)
   {
     Celeste::Lua::registerUserType<Object>("Object");
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
 
@@ -112,7 +112,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ObjectScriptCommands_Object_as_InputtingNull_CastingToObjectType_ReturnsNil)
   {
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
 
@@ -125,7 +125,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ObjectScriptCommands_Object_as_InputtingNull_CastingToDerivedType_ReturnsNil)
   {
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
 
@@ -141,7 +141,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ObjectScriptCommands_Object_as_InputtingNull_CastingToUnrelatedType_ReturnsNil)
   {
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
 
@@ -159,7 +159,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ObjectScriptCommands_ObjectHandle_as_InputtingNullObjectHandle_CastingToNonExistentType_ReturnsNil)
   {
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
 
@@ -175,7 +175,7 @@ namespace TestCeleste::Lua::ScriptCommands
   TEST_METHOD(ObjectScriptCommands_Object_as_InputtingNonNullObject_CastingToBaseType_ReturnsCorrectPtr)
   {
     Celeste::Lua::registerUserType<Object>("Object");
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
 
@@ -191,7 +191,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ObjectScriptCommands_Object_as_InputtingNonNullObject_CastingToObjectType_ReturnsCorrectPtr)
   {
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
 
@@ -205,7 +205,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ObjectScriptCommands_Object_as_InputtingNonNullObject_CastingToDerivedType_ReturnsNil)
   {
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
 
@@ -222,7 +222,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ObjectScriptCommands_Object_as_InputtingNonNullObject_CastingToUnrelatedType_ReturnsNil)
   {
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
 
@@ -241,7 +241,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ObjectScriptCommands_Object_as_InputtingNonNullObject_CastingToNonExistentType_ReturnsNil)
   {
-    Celeste::Lua::ObjectScriptCommands::initialize();
+    Celeste::Lua::Objects::ScriptCommands::initialize();
 
     sol::state& state = LuaState::instance();
 

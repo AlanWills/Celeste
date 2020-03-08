@@ -28,10 +28,10 @@ namespace TestCeleste
     XMLDocument document;
     XMLElement* element = document.NewElement("TextBox");
 
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(element, gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(element, gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<UI::TextBox*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<UI::TextBox*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 

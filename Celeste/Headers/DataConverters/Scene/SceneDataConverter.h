@@ -8,6 +8,8 @@
 
 namespace Celeste
 {
+  class SceneManager;
+
   class SceneDataConverter : public DataConverter
   {
     private:
@@ -18,7 +20,7 @@ namespace Celeste
       SceneDataConverter(const SceneDataConverter&) = delete;
       SceneDataConverter& operator=(const SceneDataConverter&) = delete;
 
-      CelesteDllExport void instantiate() const;
+      CelesteDllExport std::vector<GameObject*> instantiate() const;
 
       inline const std::vector<std::string>& getPreloadableFonts() const { return m_fonts.getChildren(); }
       inline const std::vector<std::string>& getPreloadableVertexShaders() const { return m_vertexShaders.getChildren(); }

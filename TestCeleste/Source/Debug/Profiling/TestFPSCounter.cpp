@@ -18,7 +18,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(FPSCounter_Update_TextRendererNull_DoesNothing)
   {
-    FPSCounter fpsCounter;
+    GameObject gameObject;
+    FPSCounter fpsCounter(gameObject);
     
     // This shouldn't throw
     fpsCounter.update(1);
@@ -28,9 +29,9 @@ namespace TestCeleste
   TEST_METHOD(FPSCounter_Update_LessThanHalfASecondPassed_DoesNotChangeTextRenderer)
   {
     GameObject gameObject;
-    AutoDeallocator<Celeste::Rendering::TextRenderer> renderer = gameObject.addComponent<Celeste::Rendering::TextRenderer>();
+    observer_ptr<Celeste::Rendering::TextRenderer> renderer = gameObject.addComponent<Celeste::Rendering::TextRenderer>();
     renderer->addLine("Text");
-    AutoDeallocator<FPSCounter> fpsCounter = gameObject.addComponent<FPSCounter>();
+    observer_ptr<FPSCounter> fpsCounter = gameObject.addComponent<FPSCounter>();
 
     Assert::AreEqual(static_cast<size_t>(1), renderer->getLineCount());
     Assert::AreEqual("Text", renderer->getLine(0).c_str());
@@ -45,9 +46,9 @@ namespace TestCeleste
   TEST_METHOD(FPSCounter_Update_AtLeastHalfASecondPassed_UpdatesTextRendererWithCorrectText)
   {
     GameObject gameObject;
-    AutoDeallocator<Celeste::Rendering::TextRenderer> renderer = gameObject.addComponent<Celeste::Rendering::TextRenderer>();
+    observer_ptr<Celeste::Rendering::TextRenderer> renderer = gameObject.addComponent<Celeste::Rendering::TextRenderer>();
     renderer->addLine("Text");
-    AutoDeallocator<FPSCounter> fpsCounter = gameObject.addComponent<FPSCounter>();
+    observer_ptr<FPSCounter> fpsCounter = gameObject.addComponent<FPSCounter>();
 
     Assert::AreEqual(static_cast<size_t>(1), renderer->getLineCount());
     Assert::AreEqual("Text", renderer->getLine(0).c_str());

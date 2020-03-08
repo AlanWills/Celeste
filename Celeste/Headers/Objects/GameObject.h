@@ -66,7 +66,7 @@ namespace Celeste
         return transform != nullptr ? transform->getGameObject() : nullptr;
       }
       inline CelesteDllExport const GameObject* getParent() const { return const_cast<GameObject*>(this)->getParent(); }
-      inline void setParent(GameObject* gameObject) { if (gameObject != nullptr) { setParentTransform(gameObject->getTransform()); } }
+      inline void setParent(GameObject* gameObject) { setParentTransform(gameObject != nullptr ? gameObject->getTransform() : nullptr); }
 
       CelesteDllExport void setActive(bool isActive) override;
 
@@ -111,16 +111,12 @@ namespace Celeste
 
       CelesteDllExport void removeComponent(Component* component);
 
-      inline size_t getComponentCount() const { return getManagedComponentCount() + getUnmanagedComponentCount(); }
+      inline size_t getComponentCount() const { return m_unmanagedComponents.size() + m_managedComponents.size(); }
       CelesteDllExport Component* getComponent(size_t index);
       CelesteDllExport const Component* getConstComponent(size_t index) const { return const_cast<GameObject*>(this)->getComponent(index); }
 
       CelesteDllExport void handleInput();
       CelesteDllExport void update(GLfloat elapsedGameTime);
-
-    protected:
-      inline size_t getManagedComponentCount() const { return m_managedComponents.size(); }
-      inline size_t getUnmanagedComponentCount() const { return m_unmanagedComponents.size(); }
 
     private:
       using Inherited = Entity;

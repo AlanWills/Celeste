@@ -282,18 +282,6 @@ namespace TestCeleste
 #pragma region Set Values Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(EntityDataConverter_SetValues_InputtingNullEntity_DoesNothing)
-  {
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Entity");
-    MockEntityDataConverter converter("Entity");
-
-    Assert::IsTrue(converter.convertFromXML(element));
-
-    converter.setValues(MockEntity());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(EntityDataConverter_SetValues_NonNullEntity_ButDataNotConvertedCorrectly_DoesNothing)
   {
     MockEntity entity;

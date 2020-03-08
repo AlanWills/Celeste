@@ -34,10 +34,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(OpacityLerperLoadingResources::getValidFullPath());
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<OpacityLerper*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<OpacityLerper*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -546,38 +546,33 @@ namespace TestCeleste
 #pragma region Set Values Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(OpacityLerperDataConverter_SetValues_InputtingNullOpacityLerper_DoesNothing)
-  {
-    OpacityLerperDataConverter converter;
-    converter.setValues(OpacityLerper());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(OpacityLerperDataConverter_SetValues_InputtingOpacityLerper_DataNotLoadedCorrectly_DoesNothing)
   {
-    OpacityLerper lerper;
-    lerper.setLerpingUp(false);
-    lerper.setMaxOpacity(0.5f);
-    lerper.setMinOpacity(0.1f);
+    GameObject gameObject;
+    OpacityLerper opacityLerper(gameObject);
+    opacityLerper.setLerpingUp(false);
+    opacityLerper.setMaxOpacity(0.5f);
+    opacityLerper.setMinOpacity(0.1f);
 
     OpacityLerperDataConverter converter;
 
     Assert::IsFalse(converter.isDataLoadedCorrectly());
 
-    converter.setValues(lerper);
+    converter.setValues(opacityLerper);
 
-    Assert::IsFalse(lerper.isLerpingUp());
-    Assert::AreEqual(0.5f, lerper.getMaxOpacity());
-    Assert::AreEqual(0.1f, lerper.getMinOpacity());
+    Assert::IsFalse(opacityLerper.isLerpingUp());
+    Assert::AreEqual(0.5f, opacityLerper.getMaxOpacity());
+    Assert::AreEqual(0.1f, opacityLerper.getMinOpacity());
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(OpacityLerperDataConverter_SetValues_InputtingOpacityLerper_DataLoadedCorrectly_ChangesOpacityLerperToMatchData)
   {
-    OpacityLerper lerper;
-    lerper.setLerpingUp(false);
-    lerper.setMaxOpacity(0.5f);
-    lerper.setMinOpacity(0.1f);
+    GameObject gameObject;
+    OpacityLerper opacityLerper(gameObject);
+    opacityLerper.setLerpingUp(false);
+    opacityLerper.setMaxOpacity(0.5f);
+    opacityLerper.setMinOpacity(0.1f);
 
     // Valid.xml
     // <OpacityLerper min_opacity="0.1" max_opacity="0.8" lerp_up_time="0.5" lerp_down_time="1" 
@@ -588,15 +583,15 @@ namespace TestCeleste
 
     Assert::IsTrue(converter.isDataLoadedCorrectly());
 
-    converter.setValues(lerper);
+    converter.setValues(opacityLerper);
 
-    Assert::AreEqual(0.1f, lerper.getMinOpacity());
-    Assert::AreEqual(0.8f, lerper.getMaxOpacity());
-    Assert::AreEqual(0.5f, lerper.getLerpUpTime());
-    Assert::AreEqual(1.0f, lerper.getLerpDownTime());
-    Assert::AreEqual(1.5f, lerper.getMaxOpacityWaitTime());
-    Assert::AreEqual(2.5f, lerper.getMinOpacityWaitTime());
-    Assert::IsFalse(lerper.isLerpingUp());
+    Assert::AreEqual(0.1f, opacityLerper.getMinOpacity());
+    Assert::AreEqual(0.8f, opacityLerper.getMaxOpacity());
+    Assert::AreEqual(0.5f, opacityLerper.getLerpUpTime());
+    Assert::AreEqual(1.0f, opacityLerper.getLerpDownTime());
+    Assert::AreEqual(1.5f, opacityLerper.getMaxOpacityWaitTime());
+    Assert::AreEqual(2.5f, opacityLerper.getMinOpacityWaitTime());
+    Assert::IsFalse(opacityLerper.isLerpingUp());
   }
 
 #pragma endregion

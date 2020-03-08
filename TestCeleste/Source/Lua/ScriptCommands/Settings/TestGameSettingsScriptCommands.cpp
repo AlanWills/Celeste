@@ -24,21 +24,21 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
   //------------------------------------------------------------------------------------------------
   void TestGameSettingsScriptCommands::testInitialize()
   {
-    Celeste::Audio::AudioManager& audioManager = Celeste::Audio::getAudioManager();
+    Celeste::Audio::AudioManager& audioSourceManager = Celeste::Audio::getAudioManager();
 
-    originalMasterVolume = audioManager.getMasterVolume();
-    originalMusicVolume = audioManager.getMusicVolume();
-    originalSFXVolume = audioManager.getSFXVolume();
+    originalMasterVolume = audioSourceManager.getMasterVolume();
+    originalMusicVolume = audioSourceManager.getMusicVolume();
+    originalSFXVolume = audioSourceManager.getSFXVolume();
   }
 
   //------------------------------------------------------------------------------------------------
   void TestGameSettingsScriptCommands::testCleanup()
   {
-    Celeste::Audio::AudioManager& audioManager = Celeste::Audio::getAudioManager();
+    Celeste::Audio::AudioManager& audioSourceManager = Celeste::Audio::getAudioManager();
 
-    audioManager.setMasterVolume(originalMasterVolume);
-    audioManager.setMusicVolume(originalMusicVolume);
-    audioManager.setSFXVolume(originalSFXVolume);
+    audioSourceManager.setMasterVolume(originalMasterVolume);
+    audioSourceManager.setMusicVolume(originalMusicVolume);
+    audioSourceManager.setSFXVolume(originalSFXVolume);
   }
 
 #pragma region Initialize Tests
@@ -371,18 +371,18 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
   {
     sol::state& state = LuaState::instance();
     Celeste::Lua::Settings::GameSettingsScriptCommands::initialize();
-    Audio::AudioManager& audioManager = Audio::getAudioManager();
+    Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 
-    Assert::AreEqual(originalMasterVolume, audioManager.getMasterVolume());
-    Assert::AreEqual(originalMusicVolume, audioManager.getMusicVolume());
-    Assert::AreEqual(originalSFXVolume, audioManager.getSFXVolume());
+    Assert::AreEqual(originalMasterVolume, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(originalMusicVolume, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(originalSFXVolume, audioSourceManager.getSFXVolume());
 
     auto result = state["GameSettings"]["apply"]("WubbaLubbaDubDub.asset");
 
     Assert::IsTrue(result.valid());
-    Assert::AreEqual(originalMasterVolume, audioManager.getMasterVolume());
-    Assert::AreEqual(originalMusicVolume, audioManager.getMusicVolume());
-    Assert::AreEqual(originalSFXVolume, audioManager.getSFXVolume());
+    Assert::AreEqual(originalMasterVolume, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(originalMusicVolume, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(originalSFXVolume, audioSourceManager.getSFXVolume());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -390,18 +390,18 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
   {
     sol::state& state = LuaState::instance();
     Celeste::Lua::Settings::GameSettingsScriptCommands::initialize();
-    Audio::AudioManager& audioManager = Audio::getAudioManager();
+    Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 
-    Assert::AreEqual(originalMasterVolume, audioManager.getMasterVolume());
-    Assert::AreEqual(originalMusicVolume, audioManager.getMusicVolume());
-    Assert::AreEqual(originalSFXVolume, audioManager.getSFXVolume());
+    Assert::AreEqual(originalMasterVolume, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(originalMusicVolume, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(originalSFXVolume, audioSourceManager.getSFXVolume());
 
     auto result = state["GameSettings"]["apply"](Path(TestResources::getResourcesDirectory(), "WubbaLubbaDubDub.asset").as_string());
 
     Assert::IsTrue(result.valid());
-    Assert::AreEqual(originalMasterVolume, audioManager.getMasterVolume());
-    Assert::AreEqual(originalMusicVolume, audioManager.getMusicVolume());
-    Assert::AreEqual(originalSFXVolume, audioManager.getSFXVolume());
+    Assert::AreEqual(originalMasterVolume, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(originalMusicVolume, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(originalSFXVolume, audioSourceManager.getSFXVolume());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -409,19 +409,19 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
   {
     sol::state& state = LuaState::instance();
     Celeste::Lua::Settings::GameSettingsScriptCommands::initialize();
-    Audio::AudioManager& audioManager = Audio::getAudioManager();
+    Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 
     FileAssert::FileExists(Path(TestResources::getResourcesDirectory(), GameSettingsLoadingResources::getInvalidRelativePath()).as_string());
-    Assert::AreEqual(originalMasterVolume, audioManager.getMasterVolume());
-    Assert::AreEqual(originalMusicVolume, audioManager.getMusicVolume());
-    Assert::AreEqual(originalSFXVolume, audioManager.getSFXVolume());
+    Assert::AreEqual(originalMasterVolume, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(originalMusicVolume, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(originalSFXVolume, audioSourceManager.getSFXVolume());
 
     auto result = state["GameSettings"]["apply"](GameSettingsLoadingResources::getInvalidRelativePath());
 
     Assert::IsTrue(result.valid());
-    Assert::AreEqual(originalMasterVolume, audioManager.getMasterVolume());
-    Assert::AreEqual(originalMusicVolume, audioManager.getMusicVolume());
-    Assert::AreEqual(originalSFXVolume, audioManager.getSFXVolume());
+    Assert::AreEqual(originalMasterVolume, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(originalMusicVolume, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(originalSFXVolume, audioSourceManager.getSFXVolume());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -429,19 +429,19 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
   {
     sol::state& state = LuaState::instance();
     Celeste::Lua::Settings::GameSettingsScriptCommands::initialize();
-    Audio::AudioManager& audioManager = Audio::getAudioManager();
+    Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 
     FileAssert::FileExists(GameSettingsLoadingResources::getInvalidFullPath().as_string());
-    Assert::AreEqual(originalMasterVolume, audioManager.getMasterVolume());
-    Assert::AreEqual(originalMusicVolume, audioManager.getMusicVolume());
-    Assert::AreEqual(originalSFXVolume, audioManager.getSFXVolume());
+    Assert::AreEqual(originalMasterVolume, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(originalMusicVolume, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(originalSFXVolume, audioSourceManager.getSFXVolume());
 
     auto result = state["GameSettings"]["apply"](GameSettingsLoadingResources::getInvalidFullPath().as_string());
 
     Assert::IsTrue(result.valid());
-    Assert::AreEqual(originalMasterVolume, audioManager.getMasterVolume());
-    Assert::AreEqual(originalMusicVolume, audioManager.getMusicVolume());
-    Assert::AreEqual(originalSFXVolume, audioManager.getSFXVolume());
+    Assert::AreEqual(originalMasterVolume, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(originalMusicVolume, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(originalSFXVolume, audioSourceManager.getSFXVolume());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -449,19 +449,19 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
   {
     sol::state& state = LuaState::instance();
     Celeste::Lua::Settings::GameSettingsScriptCommands::initialize();
-    Audio::AudioManager& audioManager = Audio::getAudioManager();
+    Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 
     FileAssert::FileExists(Path(TestResources::getResourcesDirectory(), GameSettingsLoadingResources::getValidRelativePath()).as_string());
-    Assert::AreEqual(originalMasterVolume, audioManager.getMasterVolume());
-    Assert::AreEqual(originalMusicVolume, audioManager.getMusicVolume());
-    Assert::AreEqual(originalSFXVolume, audioManager.getSFXVolume());
+    Assert::AreEqual(originalMasterVolume, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(originalMusicVolume, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(originalSFXVolume, audioSourceManager.getSFXVolume());
 
     auto result = state["GameSettings"]["apply"](GameSettingsLoadingResources::getValidRelativePath());
 
     Assert::IsTrue(result.valid());
-    Assert::AreEqual(0.6f, audioManager.getMasterVolume());
-    Assert::AreEqual(0.5f, audioManager.getMusicVolume());
-    Assert::AreEqual(0.4f, audioManager.getSFXVolume());
+    Assert::AreEqual(0.6f, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(0.5f, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(0.4f, audioSourceManager.getSFXVolume());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -469,19 +469,19 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
   {
     sol::state& state = LuaState::instance();
     Celeste::Lua::Settings::GameSettingsScriptCommands::initialize();
-    Audio::AudioManager& audioManager = Audio::getAudioManager();
+    Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 
     FileAssert::FileExists(GameSettingsLoadingResources::getValidFullPath().as_string());
-    Assert::AreEqual(originalMasterVolume, audioManager.getMasterVolume());
-    Assert::AreEqual(originalMusicVolume, audioManager.getMusicVolume());
-    Assert::AreEqual(originalSFXVolume, audioManager.getSFXVolume());
+    Assert::AreEqual(originalMasterVolume, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(originalMusicVolume, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(originalSFXVolume, audioSourceManager.getSFXVolume());
 
     auto result = state["GameSettings"]["apply"](GameSettingsLoadingResources::getValidFullPath().as_string());
 
     Assert::IsTrue(result.valid());
-    Assert::AreEqual(0.6f, audioManager.getMasterVolume());
-    Assert::AreEqual(0.5f, audioManager.getMusicVolume());
-    Assert::AreEqual(0.4f, audioManager.getSFXVolume());
+    Assert::AreEqual(0.6f, audioSourceManager.getMasterVolume());
+    Assert::AreEqual(0.5f, audioSourceManager.getMusicVolume());
+    Assert::AreEqual(0.4f, audioSourceManager.getSFXVolume());
   }
 
 #pragma endregion

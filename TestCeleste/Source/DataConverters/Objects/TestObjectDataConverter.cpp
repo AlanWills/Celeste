@@ -154,18 +154,6 @@ namespace TestCeleste
 #pragma region Set Values Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ObjectDataConverter_SetValues_InputtingNullObject_DoesNothing)
-  {
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Object");
-    MockObjectDataConverter converter("Object");
-    
-    Assert::IsTrue(converter.convertFromXML(element));
-
-    converter.setValues(MockObject());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(ObjectDataConverter_SetValues_NonNullObject_ButDataNotConvertedCorrectly_DoesNotCallDoSetValues)
   {
     MockObject object;

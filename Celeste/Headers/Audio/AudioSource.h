@@ -13,7 +13,7 @@ namespace Celeste::Audio
     DECLARE_MANAGED_COMPONENT(AudioSource, AudioManager, CelesteDllExport)
 
     public:
-      CelesteDllExport ~AudioSource();
+      CelesteDllExport ~AudioSource() override;
 
       inline observer_ptr<const Resources::Sound> getSound() const { return m_sound; }
       CelesteDllExport void setSound(const Path& wavFilePath);

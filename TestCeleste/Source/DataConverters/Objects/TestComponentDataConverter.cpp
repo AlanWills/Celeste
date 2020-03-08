@@ -60,8 +60,10 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentDataConverter_SetValues_GameObjectNull_SetsComponentToConverterActiveState)
   {
-    MockComponent component;
+    GameObject gameObject;
+    MockComponent component(gameObject);
     component.setActive(false);
+
     MockComponentDataConverter converter;
     XMLDocument document;
     XMLElement* element = document.NewElement("Component");
@@ -91,14 +93,14 @@ namespace TestCeleste
     Assert::IsTrue(converter.getIsActive());
     AssertCel::IsNotActive(gameObject);
 
-    AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
+    observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
 
     Assert::IsNotNull(component->getGameObject());
-    AssertCel::IsActive(component.get());
+    AssertCel::IsActive(component);
 
     converter.setValues(*component);
     
-    AssertCel::IsActive(component.get());
+    AssertCel::IsActive(component);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -115,15 +117,15 @@ namespace TestCeleste
     Assert::IsFalse(converter.getIsActive());
     AssertCel::IsNotActive(gameObject);
 
-    AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
+    observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
     component->setActive(false);
 
     Assert::IsNotNull(component->getGameObject());
-    AssertCel::IsNotActive(component.get());
+    AssertCel::IsNotActive(component);
 
     converter.setValues(*component);
 
-    AssertCel::IsNotActive(component.get());
+    AssertCel::IsNotActive(component);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -139,14 +141,14 @@ namespace TestCeleste
     Assert::IsFalse(converter.getIsActive());
     AssertCel::IsActive(gameObject);
 
-    AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
+    observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
     component->setActive(false);
 
-    AssertCel::IsNotActive(component.get());
+    AssertCel::IsNotActive(component);
 
     converter.setValues(*component);
 
-    AssertCel::IsNotActive(component.get());
+    AssertCel::IsNotActive(component);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -162,13 +164,13 @@ namespace TestCeleste
     Assert::IsTrue(converter.getIsActive());
     AssertCel::IsActive(gameObject);
 
-    AutoDeallocator<MockComponent> component = gameObject.addComponent<MockComponent>();
+    observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
 
-    AssertCel::IsActive(component.get());
+    AssertCel::IsActive(component);
 
     converter.setValues(*component);
 
-    AssertCel::IsActive(component.get());
+    AssertCel::IsActive(component);
   }
 
 #pragma endregion

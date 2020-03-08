@@ -77,7 +77,9 @@ namespace TestCeleste::Lua::Rendering::TextRendererScriptCommands
   {
     Celeste::Lua::Rendering::TextRendererScriptCommands::initialize();
     sol::state& state = LuaState::instance();
-    TextRenderer textRenderer;
+
+    GameObject gameObject;
+    TextRenderer textRenderer(gameObject);
     textRenderer.addLine("Test");
 
     Assert::AreEqual(static_cast<size_t>(1), textRenderer.getLineCount());
@@ -94,7 +96,9 @@ namespace TestCeleste::Lua::Rendering::TextRendererScriptCommands
   {
     Celeste::Lua::Rendering::TextRendererScriptCommands::initialize();
     sol::state& state = LuaState::instance();
-    TextRenderer textRenderer;
+    
+    GameObject gameObject;
+    TextRenderer textRenderer(gameObject);
     textRenderer.addLine("Test");
 
     Assert::AreEqual(static_cast<size_t>(1), textRenderer.getLineCount());
@@ -112,7 +116,9 @@ namespace TestCeleste::Lua::Rendering::TextRendererScriptCommands
   {
     Celeste::Lua::Rendering::TextRendererScriptCommands::initialize();
     sol::state& state = LuaState::instance();
-    TextRenderer textRenderer;
+    
+    GameObject gameObject;
+    TextRenderer textRenderer(gameObject);
     textRenderer.addLine("Text");
 
     Assert::AreEqual(static_cast<size_t>(1), textRenderer.getLineCount());
@@ -218,7 +224,8 @@ namespace TestCeleste::Lua::Rendering::TextRendererScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    TextRenderer textRenderer;
+    GameObject gameObject;
+    TextRenderer textRenderer(gameObject);
     auto functionResult = state.globals()["TextRenderer"]["as"].get<sol::protected_function>().call(&textRenderer, "Object");
 
     Assert::IsTrue(functionResult.valid());
@@ -232,7 +239,8 @@ namespace TestCeleste::Lua::Rendering::TextRendererScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    TextRenderer textRenderer;
+    GameObject gameObject;
+    TextRenderer textRenderer(gameObject);
     auto functionResult = state.globals()["TextRenderer"]["as"].get<sol::protected_function>().call(&textRenderer, "TextRenderer");
 
     Assert::IsTrue(functionResult.valid());
@@ -249,7 +257,8 @@ namespace TestCeleste::Lua::Rendering::TextRendererScriptCommands
     class MockTextRenderer : public Celeste::Rendering::TextRenderer {};
     state.new_usertype<MockTextRenderer>("MockTextRenderer");
 
-    TextRenderer textRenderer;
+    GameObject gameObject;
+    TextRenderer textRenderer(gameObject);
     auto functionResult = state.globals()["TextRenderer"]["as"].get<sol::protected_function>().call(&textRenderer, "MockTextRenderer");
 
     Assert::IsTrue(functionResult.valid());
@@ -268,7 +277,8 @@ namespace TestCeleste::Lua::Rendering::TextRendererScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    TextRenderer textRenderer;
+    GameObject gameObject;
+    TextRenderer textRenderer(gameObject);
     auto functionResult = state.globals()["TextRenderer"]["as"].get<sol::protected_function>().call(&textRenderer, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());

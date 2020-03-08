@@ -1,8 +1,8 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
-#include "Mocks/Resources/MockLoadResourcesAsyncScript.h"
-#include "Screens/Screen.h"
-#include "Screens/ScreenManager.h"
+#include "Loading/LoadResourcesAsyncScript.h"
+#include "Objects/GameObject.h"
+
 #include "AssertCel.h"
 
 using namespace Celeste;
@@ -14,78 +14,65 @@ namespace TestCeleste
 
 #pragma region Update Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LoadResourcesAsyncScript_OnTimeComplete_WithNoGameObject_DoesNotThrow)
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(LoadResourcesAsyncScript_OnTimeComplete_WithGameObjectButNoOwnerScreen_DoesNotThrow)
+  {
+    GameObject gameObject;
+    observer_ptr<LoadResourcesAsyncScript> resourceLoader = gameObject.addComponent<LoadResourcesAsyncScript>();
+    resourceLoader->update(1);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(LoadResourcesAsyncScript_OnTimeComplete_InvokesOnLoadCompleteEvent)
+  {
+    bool called = false;
+
+    GameObject gameObject;
+    observer_ptr<LoadResourcesAsyncScript> resourceLoader = gameObject.addComponent<LoadResourcesAsyncScript>();
+    resourceLoader->getLoadCompleteEvent().subscribe([&called]() -> void
     {
-      MockLoadResourcesAsyncScript resourceLoader;
+      called = true;
+    });
 
-      Assert::IsNull(resourceLoader.getGameObject());
+    resourceLoader->update(1);
 
-      resourceLoader.update(1);
-    }
+    Assert::IsTrue(called);
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LoadResourcesAsyncScript_OnTimeComplete_WithGameObjectButNoOwnerScreen_DoesNotThrow)
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(LoadResourcesAsyncScript_OnTimeComplete_UnsubscribesAllSubscribers)
+  {
+    bool called = false;
+
+    GameObject gameObject;
+    observer_ptr<LoadResourcesAsyncScript> resourceLoader = gameObject.addComponent<LoadResourcesAsyncScript>();
+    resourceLoader->getLoadCompleteEvent().subscribe([&called]() -> void
     {
-      GameObject gameObject;
-      AutoDeallocator<MockLoadResourcesAsyncScript> resourceLoader = gameObject.addComponent<MockLoadResourcesAsyncScript>();
-      resourceLoader->update(1);
-    }
+      called = true;
+    });
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LoadResourcesAsyncScript_OnTimeComplete_InvokesOnLoadCompleteEvent)
-    {
-      bool called = false;
+    resourceLoader->update(1);
 
-      AutoDeallocator<Screen> screen = Screen::allocate();
-      AutoDeallocator<GameObject> gameObject = screen->allocateGameObject();
-      AutoDeallocator<MockLoadResourcesAsyncScript> resourceLoader = gameObject->addComponent<MockLoadResourcesAsyncScript>();
-      resourceLoader->getLoadCompleteEvent().subscribe([&called]() -> void
-      {
-        called = true;
-      });
+    Assert::IsTrue(called);
 
-      resourceLoader->update(1);
+    called = false;
+    resourceLoader->getLoadCompleteEvent().invoke();
 
-      Assert::IsTrue(called);
-    }
+    Assert::IsFalse(called);
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LoadResourcesAsyncScript_OnTimeComplete_UnsubscribesAllSubscribers)
-    {
-      bool called = false;
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(LoadResourcesAsyncScript_OnTimeComplete_SetsIsActive)
+  {
+    GameObject gameObject;
+    observer_ptr<LoadResourcesAsyncScript> resourceLoader = gameObject.addComponent<LoadResourcesAsyncScript>();
 
-      AutoDeallocator<Screen> screen = Screen::allocate();
-      AutoDeallocator<GameObject> gameObject = screen->allocateGameObject();
-      AutoDeallocator<MockLoadResourcesAsyncScript> resourceLoader = gameObject->addComponent<MockLoadResourcesAsyncScript>();
-      resourceLoader->getLoadCompleteEvent().subscribe([&called]() -> void
-      {
-        called = true;
-      });
+    Assert::IsTrue(resourceLoader->isActive());
 
-      resourceLoader->update(1);
+    resourceLoader->update(1);
 
-      Assert::IsTrue(called);
-
-      called = false;
-      resourceLoader->getLoadCompleteEvent().invoke();
-
-      Assert::IsFalse(called);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(LoadResourcesAsyncScript_OnTimeComplete_SetsIsActive)
-    {
-      AutoDeallocator<Screen> screen = Screen::allocate();
-      AutoDeallocator<GameObject> gameObject = screen->allocateGameObject();
-      AutoDeallocator<MockLoadResourcesAsyncScript> resourceLoader = gameObject->addComponent<MockLoadResourcesAsyncScript>();
-
-      Assert::IsTrue(resourceLoader->isActive());
-
-      resourceLoader->update(1);
-
-      Assert::IsFalse(resourceLoader->isActive());
-    }
+    Assert::IsFalse(resourceLoader->isActive());
+  }
 
 #pragma endregion
 

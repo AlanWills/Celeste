@@ -1,6 +1,6 @@
 #include "Resources/ResourceManager.h"
 #include "Resources/ResourceUtils.h"
-#include "Screens/Loading/ScreenLoader.h"
+#include "Scene/SceneLoader.h"
 #include "Game/Game.h"
 #include "Debug/Assert.h"
 #include "Debug/Asserting/NullAsserter.h"
@@ -31,8 +31,7 @@ int main(int argc, char** argv)
   int errorFileCount = 0;
   for (const File& file : files)
   {
-    observer_ptr<Screen> screen = ScreenLoader::load(file.getFilePath());
-    if (screen == nullptr)
+    if (SceneLoader::load(file.getFilePath()))
     {
       ++errorFileCount;
       std::cout << file.getFilePath().c_str() << ": Failed" << std::endl;

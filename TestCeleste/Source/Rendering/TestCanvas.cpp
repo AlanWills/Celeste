@@ -6,7 +6,7 @@
 #include "Physics/RectangleCollider.h"
 #include "Physics/PhysicsManager.h"
 #include "OpenGL/GL.h"
-#include "Screens/ScreenUtils.h"
+#include "Scene/SceneUtils.h"
 #include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
@@ -23,8 +23,8 @@ namespace TestCeleste::Rendering
 
 #pragma region Registration Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Canvas_IsRegisteredWithComponentRegistry)
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(Canvas_IsRegisteredWithComponentRegistry)
   {
     Assert::IsTrue(ComponentRegistry::hasComponent<Canvas>());
   }
@@ -34,10 +34,10 @@ namespace TestCeleste::Rendering
   {
     GameObject gameObject;
 
-    AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(Canvas::type_name(), gameObject);
+    observer_ptr<Component> component = ComponentRegistry::createComponent(Canvas::type_name(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<Canvas*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<Canvas*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -48,7 +48,8 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_Constructor_SetsProjectionMode_ToPerspective)
   {
-    Canvas canvas;
+    GameObject gameObject;
+    Canvas canvas(gameObject);
 
     Assert::IsTrue(canvas.getProjectionMode() == ProjectionMode::kPerspective);
   }
@@ -56,7 +57,8 @@ namespace TestCeleste::Rendering
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Canvas_Constructor_SetsDimensions_ToViewportDimensions)
   {
-    Canvas canvas;
+    GameObject gameObject;
+    Canvas canvas(gameObject);
 
     Assert::AreEqual(getViewportDimensions(), canvas.getDimensions());
   }
@@ -70,8 +72,8 @@ namespace TestCeleste::Rendering
   {
     GameObject gameObject;
 
-    AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 100);
 
     Assert::IsFalse(rectangleCollider->isHitByRay());
@@ -88,8 +90,8 @@ namespace TestCeleste::Rendering
     GameObject gameObject;
     gameObject.setActive(false);
 
-    AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+    observer_ptr<RectangleCollider> rectangleCollider = gameObject.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 100);
 
     Assert::IsFalse(rectangleCollider->isHitByRay());
@@ -110,8 +112,8 @@ namespace TestCeleste::Rendering
     child.setParent(&gameObject);
     grandChild.setParent(&child);
 
-    AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = grandChild.addComponent<RectangleCollider>();
+    observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+    observer_ptr<RectangleCollider> rectangleCollider = grandChild.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 100);
 
     Assert::IsFalse(rectangleCollider->isHitByRay());
@@ -134,8 +136,8 @@ namespace TestCeleste::Rendering
     GameObject child;
     child.setParent(&gameObject);
 
-    AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = child.addComponent<RectangleCollider>();
+    observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+    observer_ptr<RectangleCollider> rectangleCollider = child.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 100);
 
     Assert::IsFalse(rectangleCollider->isHitByRay());
@@ -155,8 +157,8 @@ namespace TestCeleste::Rendering
     GameObject child;
     child.setParent(&gameObject);
 
-    AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = child.addComponent<RectangleCollider>();
+    observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+    observer_ptr<RectangleCollider> rectangleCollider = child.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 100);
     rectangleCollider->setActive(false);
 
@@ -178,10 +180,10 @@ namespace TestCeleste::Rendering
     GameObject child;
     child.setParent(&gameObject);
 
-    AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = child.addComponent<RectangleCollider>();
+    observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+    observer_ptr<RectangleCollider> rectangleCollider = child.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 100);
-    AutoDeallocator<Canvas> childCanvas = child.addComponent<Canvas>();
+    observer_ptr<Canvas> childCanvas = child.addComponent<Canvas>();
 
     Assert::IsFalse(rectangleCollider->isHitByRay());
     Assert::IsTrue(gameObject.isActive());
@@ -203,8 +205,8 @@ namespace TestCeleste::Rendering
     child.setParent(&gameObject);
     grandChild.setParent(&child);
 
-    AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = grandChild.addComponent<RectangleCollider>();
+    observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+    observer_ptr<RectangleCollider> rectangleCollider = grandChild.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 100);
 
     Assert::IsFalse(rectangleCollider->isHitByRay());
@@ -229,9 +231,9 @@ namespace TestCeleste::Rendering
     child.setParent(&gameObject);
     grandChild.setParent(&child);
 
-    AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-    AutoDeallocator<Canvas> childCanvas = child.addComponent<Canvas>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = grandChild.addComponent<RectangleCollider>();
+    observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+    observer_ptr<Canvas> childCanvas = child.addComponent<Canvas>();
+    observer_ptr<RectangleCollider> rectangleCollider = grandChild.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 100);
 
     Assert::IsFalse(rectangleCollider->isHitByRay());
@@ -257,8 +259,8 @@ namespace TestCeleste::Rendering
     child.setParent(&gameObject);
     grandChild.setParent(&child);
 
-    AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-    AutoDeallocator<RectangleCollider> rectangleCollider = grandChild.addComponent<RectangleCollider>();
+    observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+    observer_ptr<RectangleCollider> rectangleCollider = grandChild.addComponent<RectangleCollider>();
     rectangleCollider->setDimensions(100, 100);
 
     Assert::IsFalse(rectangleCollider->isHitByRay());
@@ -285,7 +287,7 @@ namespace TestCeleste::Rendering
     {
       GameObject gameObject;
 
-      AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
+      observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
 
       AssertCel::IsActive(gameObject);
       
@@ -300,8 +302,8 @@ namespace TestCeleste::Rendering
     {
       GameObject gameObject;
 
-      AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-      AutoDeallocator<MockSpriteRenderer> renderer = gameObject.addComponent<MockSpriteRenderer>();
+      observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+      observer_ptr<MockSpriteRenderer> renderer = gameObject.addComponent<MockSpriteRenderer>();
 
       AssertCel::IsActive(gameObject);
       AssertCel::IsActive(*renderer);
@@ -321,8 +323,8 @@ namespace TestCeleste::Rendering
       GameObject gameObject;
       gameObject.setActive(false);
 
-      AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-      AutoDeallocator<MockSpriteRenderer> renderer = gameObject.addComponent<MockSpriteRenderer>();
+      observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+      observer_ptr<MockSpriteRenderer> renderer = gameObject.addComponent<MockSpriteRenderer>();
 
       AssertCel::IsNotActive(gameObject);
       AssertCel::IsActive(*renderer);
@@ -341,8 +343,8 @@ namespace TestCeleste::Rendering
     {
       GameObject gameObject;
 
-      AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-      AutoDeallocator<MockSpriteRenderer> renderer = gameObject.addComponent<MockSpriteRenderer>();
+      observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+      observer_ptr<MockSpriteRenderer> renderer = gameObject.addComponent<MockSpriteRenderer>();
       renderer->setActive(false);
 
       AssertCel::IsActive(*canvas);
@@ -365,8 +367,8 @@ namespace TestCeleste::Rendering
       gameObject.setActive(false);
       child.setParent(&gameObject);
 
-      AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-      AutoDeallocator<MockSpriteRenderer> renderer = child.addComponent<MockSpriteRenderer>();
+      observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+      observer_ptr<MockSpriteRenderer> renderer = child.addComponent<MockSpriteRenderer>();
 
       AssertCel::IsNotActive(gameObject);
       AssertCel::HasComponent<Renderer>(child);
@@ -390,8 +392,8 @@ namespace TestCeleste::Rendering
 
       Assert::IsTrue(&gameObject == child.getParent());
 
-      AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-      AutoDeallocator<MockSpriteRenderer> renderer = child.addComponent<MockSpriteRenderer>();
+      observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+      observer_ptr<MockSpriteRenderer> renderer = child.addComponent<MockSpriteRenderer>();
 
       AssertCel::IsActive(gameObject);
       AssertCel::HasComponent<Renderer>(child);
@@ -418,8 +420,8 @@ namespace TestCeleste::Rendering
       Assert::IsTrue(&gameObject == child.getParent());
       Assert::IsTrue(&child == grandChild.getParent());
 
-      AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-      AutoDeallocator<MockSpriteRenderer> renderer = grandChild.addComponent<MockSpriteRenderer>();
+      observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+      observer_ptr<MockSpriteRenderer> renderer = grandChild.addComponent<MockSpriteRenderer>();
 
       AssertCel::IsActive(gameObject);
       AssertCel::DoesNotHaveComponent<Canvas>(child);
@@ -443,9 +445,9 @@ namespace TestCeleste::Rendering
 
       Assert::IsTrue(&gameObject == child.getParent());
 
-      AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-      AutoDeallocator<Canvas> childCanvas = child.addComponent<Canvas>();
-      AutoDeallocator<MockSpriteRenderer> renderer = child.addComponent<MockSpriteRenderer>();
+      observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+      observer_ptr<Canvas> childCanvas = child.addComponent<Canvas>();
+      observer_ptr<MockSpriteRenderer> renderer = child.addComponent<MockSpriteRenderer>();
 
       AssertCel::IsActive(gameObject);
       AssertCel::HasComponent<Canvas>(child);
@@ -472,9 +474,9 @@ namespace TestCeleste::Rendering
       Assert::IsTrue(&gameObject == child.getParent());
       Assert::IsTrue(&child == grandChild.getParent());
 
-      AutoDeallocator<Canvas> canvas = gameObject.addComponent<Canvas>();
-      AutoDeallocator<Canvas> childCanvas = child.addComponent<Canvas>();
-      AutoDeallocator<MockSpriteRenderer> renderer = grandChild.addComponent<MockSpriteRenderer>();
+      observer_ptr<Canvas> canvas = gameObject.addComponent<Canvas>();
+      observer_ptr<Canvas> childCanvas = child.addComponent<Canvas>();
+      observer_ptr<MockSpriteRenderer> renderer = grandChild.addComponent<MockSpriteRenderer>();
 
       AssertCel::IsActive(gameObject);
       AssertCel::HasComponent<Canvas>(child);

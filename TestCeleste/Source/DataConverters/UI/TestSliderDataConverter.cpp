@@ -1,7 +1,6 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/UI/MockSliderDataConverter.h"
-#include "Screens/Screen.h"
 #include "Resources/UI/SliderLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Registries/ComponentDataConverterRegistry.h"
@@ -30,12 +29,12 @@ namespace TestCeleste
   TEST_METHOD(SliderDataConverter_CheckCanBeConvertedFromXML)
   {
     GameObject gameObject;
-    AutoDeallocator<Rendering::SpriteRenderer> spriteRenderer = gameObject.addComponent<Rendering::SpriteRenderer>();
+    observer_ptr<Rendering::SpriteRenderer> spriteRenderer = gameObject.addComponent<Rendering::SpriteRenderer>();
     observer_ptr<Data> data = getResourceManager().load<Data>(SliderLoadingResources::getValidNoCallbacksFullPath());
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<Slider*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<Slider*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -107,14 +106,6 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SliderDataConverter_Constructor_SetsValueChangedCallbacks_ToEmptyList)
-  {
-    SliderDataConverter converter;
-
-    Assert::IsTrue(converter.getValueChangedCallbacks().empty());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(SliderDataConverter_Constructor_AddsMinAttribute)
   {
     const MockSliderDataConverter converter;
@@ -136,14 +127,6 @@ namespace TestCeleste
     const MockSliderDataConverter converter;
 
     Assert::IsNotNull(converter.findAttribute(SliderDataConverter::VALUE_ATTRIBUTE_NAME));
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SliderDataConverter_Constructor_AddsValueChangedCallbacksElement)
-  {
-    const MockSliderDataConverter converter;
-
-    Assert::IsNotNull(converter.findElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME));
   }
 
 #pragma endregion
@@ -345,156 +328,14 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Convert Callbacks Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SliderDataConverter_ConvertFromXML_NoCallbacksElement_DoesNothing_AndReturnsTrue)
-  {
-    SliderDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Slider");
-
-    Assert::IsNull(element->FirstChildElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME));
-    Assert::IsTrue(converter.getValueChangedCallbacks().empty());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::IsTrue(converter.getValueChangedCallbacks().empty());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SliderDataConverter_ConvertFromXML_CallbacksElement_NoCallbackElement_DoesNothing_AndReturnsTrue)
-  {
-    SliderDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Slider");
-    XMLElement* callbacks = document.NewElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME);
-    element->InsertFirstChild(callbacks);
-
-    Assert::IsNotNull(element->FirstChildElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME));
-    Assert::IsNull(callbacks->FirstChildElement(SliderDataConverter::CALLBACK_ELEMENT_NAME));
-    Assert::IsTrue(converter.getValueChangedCallbacks().empty());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::IsTrue(converter.getValueChangedCallbacks().empty());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SliderDataConverter_ConvertFromXML_CallbacksElement_CallbackElementWithNoNameAttribute_DoesNothing_AndReturnsFalse)
-  {
-    SliderDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Slider");
-    XMLElement* callbacks = document.NewElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME);
-    XMLElement* callback = document.NewElement(SliderDataConverter::CALLBACK_ELEMENT_NAME);
-    element->InsertFirstChild(callbacks);
-    callbacks->InsertFirstChild(callback);
-
-    Assert::IsNotNull(element->FirstChildElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME));
-    Assert::IsNotNull(callbacks->FirstChildElement(SliderDataConverter::CALLBACK_ELEMENT_NAME));
-    Assert::IsNull(static_cast<const XMLElement*>(callback)->FindAttribute("name"));
-    Assert::IsTrue(converter.getValueChangedCallbacks().empty());
-    Assert::IsFalse(converter.convertFromXML(element));
-    Assert::IsTrue(converter.getValueChangedCallbacks().empty());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SliderDataConverter_ConvertFromXML_CallbacksElement_CallbackElementWithNameAttribute_AddsCallback_AndReturnsTrue)
-  {
-    SliderDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Slider");
-    XMLElement* callbacks = document.NewElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME);
-    XMLElement* callback = document.NewElement(SliderDataConverter::CALLBACK_ELEMENT_NAME);
-    element->InsertFirstChild(callbacks);
-    callbacks->InsertFirstChild(callback);
-    callback->SetAttribute("name", "Test");
-
-    Assert::IsNotNull(element->FirstChildElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME));
-    Assert::IsNotNull(callbacks->FirstChildElement(SliderDataConverter::CALLBACK_ELEMENT_NAME));
-    Assert::IsNotNull(static_cast<const XMLElement*>(callback)->FindAttribute("name"));
-    Assert::IsNull(static_cast<const XMLElement*>(callback)->FindAttribute("arg"));
-    Assert::IsTrue(converter.getValueChangedCallbacks().empty());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(static_cast<size_t>(1), converter.getValueChangedCallbacks().size());
-    Assert::AreEqual("Test", converter.getValueChangedCallbacks()[0]->getName().c_str());
-    Assert::AreEqual("", converter.getValueChangedCallbacks()[0]->getArg().c_str());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SliderDataConverter_ConvertFromXML_CallbacksElement_CallbackElementWithNameAndArgsAttributes_AddsCallback_AndReturnsTrue)
-  {
-    SliderDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Slider");
-    XMLElement* callbacks = document.NewElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME);
-    XMLElement* callback = document.NewElement(SliderDataConverter::CALLBACK_ELEMENT_NAME);
-    element->InsertFirstChild(callbacks);
-    callbacks->InsertFirstChild(callback);
-    callback->SetAttribute("name", "Test");
-    callback->SetAttribute("arg", "WubbaLubbaDubDub");
-
-    Assert::IsNotNull(element->FirstChildElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME));
-    Assert::IsNotNull(callbacks->FirstChildElement(SliderDataConverter::CALLBACK_ELEMENT_NAME));
-    Assert::IsNotNull(static_cast<const XMLElement*>(callback)->FindAttribute("name"));
-    Assert::IsNotNull(static_cast<const XMLElement*>(callback)->FindAttribute("arg"));
-    Assert::IsTrue(converter.getValueChangedCallbacks().empty());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(static_cast<size_t>(1), converter.getValueChangedCallbacks().size());
-    Assert::AreEqual("Test", converter.getValueChangedCallbacks()[0]->getName().c_str());
-    Assert::AreEqual("WubbaLubbaDubDub", converter.getValueChangedCallbacks()[0]->getArg().c_str());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SliderDataConverter_ConvertFromXML_CallbacksElement_OnlyConvertsCallbackElements)
-  {
-    SliderDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Slider");
-    XMLElement* callbacks = document.NewElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME);
-    XMLElement* callback = document.NewElement(SliderDataConverter::CALLBACK_ELEMENT_NAME);
-    XMLElement* callback2 = document.NewElement("_Callback");
-    element->InsertFirstChild(callbacks);
-    callbacks->InsertFirstChild(callback);
-    callbacks->InsertFirstChild(callback);
-    callback->SetAttribute("name", "Test");
-    callback->SetAttribute("arg", "WubbaLubbaDubDub");
-    callback2->SetAttribute("name", "Test2");
-    callback2->SetAttribute("arg", "RickyTickyTappy");
-
-    Assert::IsNotNull(element->FirstChildElement(SliderDataConverter::VALUE_CHANGED_CALLBACKS_ELEMENT_NAME));
-    Assert::IsNotNull(callbacks->FirstChildElement(SliderDataConverter::CALLBACK_ELEMENT_NAME));
-    Assert::IsNotNull(static_cast<const XMLElement*>(callback)->FindAttribute("name"));
-    Assert::IsNotNull(static_cast<const XMLElement*>(callback)->FindAttribute("arg"));
-    Assert::IsTrue(converter.getValueChangedCallbacks().empty());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(static_cast<size_t>(1), converter.getValueChangedCallbacks().size());
-    Assert::AreEqual("Test", converter.getValueChangedCallbacks()[0]->getName().c_str());
-    Assert::AreEqual("WubbaLubbaDubDub", converter.getValueChangedCallbacks()[0]->getArg().c_str());
-  }
-
-#pragma endregion
-
 #pragma region Set Values Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SliderDataConverter_SetValues_InputtingNullSlider_DoesNothing)
-  {
-    observer_ptr<Data> data = getResourceManager().load<Data>(SliderLoadingResources::getValidNoCallbacksFullPath());
-
-    SliderDataConverter converter;
-    converter.convertFromXML(data->getDocumentRoot());
-
-    Assert::IsTrue(converter.isDataLoadedCorrectly());
-
-    // Check doesn't throw
-    converter.setValues(Slider());
-  }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SliderDataConverter_SetValues_InputtingSlider_DataNotLoadedCorrectly_DoesNothing)
   {
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<Rendering::SpriteRenderer> spriteRenderer = gameObject->addComponent<Rendering::SpriteRenderer>();
-    AutoDeallocator<Slider> slider = gameObject->addComponent<Slider>();
+    GameObject gameObject;
+    observer_ptr<Rendering::SpriteRenderer> spriteRenderer = gameObject.addComponent<Rendering::SpriteRenderer>();
+    observer_ptr<Slider> slider = gameObject.addComponent<Slider>();
     slider->setCurrentValue(0.5f);
 
     observer_ptr<Data> data = getResourceManager().load<Data>(SliderLoadingResources::getInvalidFullPath());
@@ -513,10 +354,9 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SliderDataConverter_SetValues_InputtingSlider_DataLoadedCorrectly_ChangesSliderToMatchData)
   {
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<Rendering::SpriteRenderer> spriteRenderer = gameObject->addComponent<Rendering::SpriteRenderer>();
-    AutoDeallocator<Slider> slider = gameObject->addComponent<Slider>();
+    GameObject gameObject;
+    observer_ptr<Rendering::SpriteRenderer> spriteRenderer = gameObject.addComponent<Rendering::SpriteRenderer>();
+    observer_ptr<Slider> slider = gameObject.addComponent<Slider>();
     slider->setCurrentValue(0.5f);
     slider->setActive(false);
 

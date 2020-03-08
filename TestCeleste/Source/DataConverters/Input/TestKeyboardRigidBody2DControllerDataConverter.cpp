@@ -35,10 +35,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<Data> data = getResourceManager().load<Data>(KeyboardRigidBody2DControllerLoadingResources::getValidFullPath());
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsTrue(dynamic_cast<KeyboardRigidBody2DController*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsTrue(dynamic_cast<KeyboardRigidBody2DController*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -815,16 +815,10 @@ namespace TestCeleste
 #pragma region Set Values Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardRigidBody2DControllerDataConverter_SetValues_InputtingNullKeyboardRigidBody2DController_DoesNothing)
-  {
-    KeyboardRigidBody2DControllerDataConverter converter;
-    converter.setValues(KeyboardRigidBody2DController());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(KeyboardRigidBody2DControllerDataConverter_SetValues_InputtingKeyboardRigidBody2DController_DataNotLoadedCorrectly_DoesNothing)
   {
-    KeyboardRigidBody2DController rigidBodyController;
+    GameObject gameObject;
+    KeyboardRigidBody2DController rigidBodyController(gameObject);
     rigidBodyController.setDecreaseAngularVelocityKey(GLFW_KEY_A);
     rigidBodyController.setLinearVelocityDelta(0.3f, 2);
 
@@ -841,7 +835,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(KeyboardRigidBody2DControllerDataConverter_SetValues_InputtingKeyboardRigidBody2DController_DataLoadedCorrectly_ChangesKeyboardRigidBody2DControllerToMatchData)
   {
-    KeyboardRigidBody2DController rigidBodyController;
+    GameObject gameObject;
+    KeyboardRigidBody2DController rigidBodyController(gameObject);
     rigidBodyController.setDecreaseAngularVelocityKey(GLFW_KEY_J);
     rigidBodyController.setLinearVelocityDelta(0.3f, 2);
 

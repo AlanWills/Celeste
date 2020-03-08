@@ -27,9 +27,6 @@
     <ClInclude Include="Headers\Mocks\Objects\MockComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Mocks\Objects\MockGameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Mocks\Objects\MockObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -157,9 +154,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Resources\UI\SliderLoadingResources.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Mocks\DataConverters\Screens\MockScreenDataConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Resources\Physics\RectangleColliderLoadingResources.h">
@@ -297,6 +291,12 @@
     <ClInclude Include="Headers\Resources\Scene\SceneLoadingResources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\Mocks\Objects\MockManagedComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Mocks\Objects\MockUnmanagedComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Mocks\Objects\MockComponent.cpp">
@@ -432,6 +432,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Resources\Scene\SceneLoadingResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Objects\MockManagedComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mocks\Objects\MockUnmanagedComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -28,10 +28,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
 
-    AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(StateMachine::type_name(), gameObject);
+    observer_ptr<Component> component = ComponentRegistry::createComponent(StateMachine::type_name(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<StateMachine*>(component.get()));
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<StateMachine*>(component));
     Assert::IsTrue(&gameObject == component->getGameObject());
   }
 
@@ -42,7 +42,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StateMachine_Constructor_SetsCurrentAnimationStateToNullptr)
   {
-    StateMachine stateMachine;
+    GameObject gameObject;
+    StateMachine stateMachine(gameObject);
 
     Assert::IsNull(stateMachine.getCurrentAnimationState());
   }
@@ -50,7 +51,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StateMachine_Constructor_SetsTransitionsToEmpty)
   {
-    StateMachine stateMachine;
+    GameObject gameObject;
+    StateMachine stateMachine(gameObject);
 
     Assert::IsTrue(stateMachine.getStates().empty());
   }
@@ -62,8 +64,9 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StateMachine_SetStartingState_ValidAnimationState_UpdatesStateMachineStartingState)
   {
-    StateMachine stateMachine;
-    Animator animator;
+    GameObject gameObject;
+    StateMachine stateMachine(gameObject);
+    Animator animator(gameObject);
     AnimationState animationState(animator);
 
     stateMachine.setStartingState(animationState);
@@ -78,10 +81,11 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StateMachine_AddStates_WithValidAnimation_AddsAnimationState)
   {
-    StateMachine stateMachine;
-    MockAnimator animation;
+    GameObject gameObject;
+    StateMachine stateMachine(gameObject);
+    Animator animator(gameObject);
 
-    stateMachine.addStates(animation);
+    stateMachine.addStates(animator);
 
     Assert::AreEqual((size_t)1, stateMachine.getStates().size());
   }
@@ -89,12 +93,13 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StateMachine_AddStates_WithNoPreviousStates_SetStateToStartingState)
   {
-    StateMachine stateMachine;
-    MockAnimator animation;
+    GameObject gameObject;
+    StateMachine stateMachine(gameObject);
+    Animator animator(gameObject);
 
     Assert::IsNull(stateMachine.getCurrentAnimationState());
 
-    stateMachine.addStates(animation);
+    stateMachine.addStates(animator);
 
     Assert::IsTrue(stateMachine.getCurrentAnimationState() == &stateMachine.getStates()[0]);
   }
@@ -106,8 +111,9 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StateMachine_AddStates_InputtingMultipleAnimators_AddsStatesForAll)
   {
-    StateMachine stateMachine;
-    MockAnimator animator;
+    GameObject gameObject;
+    StateMachine stateMachine(gameObject);
+    Animator animator(gameObject);
     AnimationState animState1(animator);
     AnimationState animState2(animator);
 
@@ -123,7 +129,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StateMachine_Update_WithNoCurrentAnimationState_DoesNotThrow)
   {
-    StateMachine stateMachine;
+    GameObject gameObject;
+    StateMachine stateMachine(gameObject);
 
     Assert::IsNull(stateMachine.getCurrentAnimationState());
 
@@ -134,8 +141,9 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(StateMachine_Update_WithAnimationStates_TransitionsToFirstStateWhereTransitionFuncPasses)
   {
-    StateMachine stateMachine;
-    MockAnimator animator;
+    GameObject gameObject;
+    StateMachine stateMachine(gameObject);
+    MockAnimator animator(gameObject);
     AnimationState animState1(animator);
     AnimationState animState2(animator);
 

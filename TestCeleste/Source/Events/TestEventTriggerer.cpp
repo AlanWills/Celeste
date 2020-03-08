@@ -7,6 +7,7 @@
 #include "AssertCel.h"
 
 using namespace Celeste;
+using namespace Celeste::Events;
 
 
 namespace TestCeleste
@@ -28,9 +29,10 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(EventTriggerer_Constructor_SetsValuesToDefault)
     {
-      EventTriggerer eventTriggerer;
+      GameObject gameObject;
+      EventTriggerer eventTriggerer(gameObject);
 
-      Assert::IsTrue(EventTriggerer::TriggerMode::kOnce == eventTriggerer.getTriggerMode());
+      Assert::IsTrue(Events::TriggerMode::kOnce == eventTriggerer.getTriggerMode());
     }
 
 #pragma endregion
@@ -40,7 +42,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(EventTriggerer_Update_WithNoConditionSet_DoesNothing)
     {
-      EventTriggerer eventTriggerer;
+      GameObject gameObject;
+      EventTriggerer eventTriggerer(gameObject);
 
       bool called = false;
       auto f = [&called](const GameObject&) -> void { called = true; };
@@ -53,11 +56,12 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(EventTriggerer_Update_ConditionFalse_DoesNotTriggerEvent)
     {
-      EventTriggerer eventTriggerer;
+      GameObject gameObject;
+      EventTriggerer eventTriggerer(gameObject);
 
       bool called = false;
       auto f = [&called](const GameObject&) -> void { called = true; };
-      eventTriggerer.setCondition([](const GameObject&) -> bool { return false; });
+      eventTriggerer.setTriggerCondition([](const GameObject&) -> bool { return false; });
       eventTriggerer.getEvent().subscribe(f);
       eventTriggerer.update(0);
 
@@ -67,11 +71,12 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(EventTriggerer_Update_ConditionTrue_TriggersEvent)
     {
-      EventTriggerer eventTriggerer;
+      GameObject gameObject;
+      EventTriggerer eventTriggerer(gameObject);
 
       bool called = false;
       auto f = [&called](const GameObject&) -> void { called = true; };
-      eventTriggerer.setCondition([](const GameObject&) -> bool { return true; });
+      eventTriggerer.setTriggerCondition([](const GameObject&) -> bool { return true; });
       eventTriggerer.getEvent().subscribe(f);
       eventTriggerer.update(0);
 
@@ -82,13 +87,13 @@ namespace TestCeleste
     TEST_METHOD(EventTriggerer_Update_ConditionTrue_TriggerModeOnce_KillsComponent)
     {
       GameObject gameObject;
-      AutoDeallocator<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
+      EventTriggerer eventTriggerer(gameObject);
 
-      Assert::IsTrue(eventTriggerer->getTriggerMode() == EventTriggerer::TriggerMode::kOnce);
+      Assert::IsTrue(eventTriggerer.getTriggerMode() == Events::TriggerMode::kOnce);
       AssertCel::HasComponent<EventTriggerer>(gameObject);
 
-      eventTriggerer->setCondition([](const GameObject&) -> bool { return true; });
-      eventTriggerer->update(0);
+      eventTriggerer.setTriggerCondition([](const GameObject&) -> bool { return true; });
+      eventTriggerer.update(0);
 
       AssertCel::DoesNotHaveComponent<EventTriggerer>(gameObject);
     }
@@ -97,14 +102,14 @@ namespace TestCeleste
     TEST_METHOD(EventTriggerer_Update_ConditionTrue_TriggerModeContinuous_DoesNotKillComponent)
     {
       GameObject gameObject;
-      AutoDeallocator<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
-      eventTriggerer->setTriggerMode(EventTriggerer::TriggerMode::kUnlimited);
+      observer_ptr<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
+      eventTriggerer->setTriggerMode(Events::TriggerMode::kUnlimited);
 
-      Assert::IsTrue(eventTriggerer->getTriggerMode() == EventTriggerer::TriggerMode::kUnlimited);
+      Assert::IsTrue(eventTriggerer->getTriggerMode() == Events::TriggerMode::kUnlimited);
 
       bool called = false;
       auto f = [&called](const GameObject&) -> void { called = true; };
-      eventTriggerer->setCondition([](const GameObject&) -> bool { return true; });
+      eventTriggerer->setTriggerCondition([](const GameObject&) -> bool { return true; });
       eventTriggerer->getEvent().subscribe(f);
       eventTriggerer->update(0);
 

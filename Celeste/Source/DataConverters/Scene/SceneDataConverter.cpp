@@ -96,7 +96,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void SceneDataConverter::instantiate() const
+  std::vector<GameObject*> SceneDataConverter::instantiate() const
   {
     ResourceManager& resourceManager = getResourceManager();
     for (const std::string& data : getPreloadableData())
@@ -129,9 +129,12 @@ namespace Celeste
       resourceManager.load<VertexShader>(vertexShader);
     }
 
+    std::vector<GameObject*> createdGameObjects;
     for (const auto& gameObjectConverter : getGameObjects())
     {
-      gameObjectConverter->instantiate();
+      createdGameObjects.push_back(gameObjectConverter->instantiate());
     }
+
+    return createdGameObjects;
   }
 }

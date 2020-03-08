@@ -272,7 +272,6 @@
     <ClCompile Include="Source\Deserialization\TestProjectionModeDeserializer.cpp" />
     <ClCompile Include="Source\Deserialization\TestUIntDeserializer.cpp" />
     <ClCompile Include="Source\Input\TestKey.cpp" />
-    <ClCompile Include="Source\Lua\Components\TestLuaComponentManifestRegistryAllocator.cpp" />
     <ClCompile Include="Source\Lua\DataConverters\TestLuaComponentDataConverter.cpp" />
     <ClCompile Include="Source\Lua\DataConverters\TestLuaComponentDataConverterRegistry.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Animation\TestAnimatorScriptCommands.cpp" />
@@ -290,8 +289,6 @@
     <ClCompile Include="Source\Lua\ScriptCommands\Maths\TestMathsScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Maths\TestVectorScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Media\TestVideoScriptCommands.cpp" />
-    <ClCompile Include="Source\Lua\ScriptCommands\ObjectFX\TestLimitedLifeTimeScriptCommands.cpp" />
-    <ClCompile Include="Source\Lua\ScriptCommands\ObjectFX\TestObjectFXScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\TestComponentScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\TestEntityScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\TestGameObjectScriptCommands.cpp" />
@@ -316,7 +313,7 @@
     <ClCompile Include="Source\Lua\ScriptCommands\TestCelesteScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\TestCoreScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Resources\TestResourcesScriptCommands.cpp" />
-    <ClCompile Include="Source\Lua\ScriptCommands\Screens\TestScreenScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Scene\TestSceneScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\TestScriptableObjectScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\TestScriptCommandUtils.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\UI\TestProgressBarScriptCommands.cpp" />
@@ -335,11 +332,10 @@
     <ClCompile Include="Source\Maths\TestMathsUtils.cpp" />
     <ClCompile Include="Source\Objects\TestEntity.cpp" />
     <ClCompile Include="Source\Reflection\TestReflectionUtils.cpp" />
-    <ClCompile Include="Source\Registries\TestDefaultRegistryAllocator.cpp" />
     <ClCompile Include="Source\Rendering\TestCanvas.cpp" />
     <ClCompile Include="Source\Rendering\TestRenderUtils.cpp" />
     <ClCompile Include="Source\Resources\TestResourceUtils.cpp" />
-    <ClCompile Include="Source\Screens\Loading\TestScreenLoader.cpp" />
+    <ClCompile Include="Source\Scene\TestSceneLoader.cpp" />
     <ClCompile Include="Source\Serialization\TestGLMUVector2Serializer.cpp" />
     <ClCompile Include="Source\Serialization\TestInputModeSerializer.cpp" />
     <ClCompile Include="Source\Serialization\TestKeySerializer.cpp" />
@@ -383,7 +379,6 @@
     <ClCompile Include="Source\Time\TestTimeUtils.cpp" />
     <ClCompile Include="Source\UI\TestLayoutEnums.cpp" />
     <ClCompile Include="Source\Utils\TestGameObjectXMLUtils.cpp" />
-    <ClCompile Include="Source\Utils\TestScreenXMLUtils.cpp" />
     <ClCompile Include="Source\Utils\TestXMLUtils.cpp" />
     <ClCompile Include="Source\Viewport\TestViewportEnums.cpp" />
     <ClCompile Include="Source\XML\Attributes\TestAttribute.cpp" />
@@ -398,13 +393,12 @@
     <ClCompile Include="Source\XML\Elements\TestGameObjectDataConverterListElement.cpp" />
     <ClCompile Include="Source\XML\Elements\TestListElement.cpp" />
     <ClCompile Include="Source\DataConverters\GraphicalFX\TestOpacityLerperDataConverter.cpp" />
-    <ClCompile Include="Source\DataConverters\ObjectFX\TestLimitedLifeTimeDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Objects\TestComponentDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Objects\TestGameObjectDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Objects\TestObjectDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Rendering\TestSpriteRendererDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Rendering\TestTextRendererDataConverter.cpp" />
-    <ClCompile Include="Source\DataConverters\Screens\TestScreenDataConverter.cpp" />
+    <ClCompile Include="Source\DataConverters\Scene\TestSceneDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\TestComponentDataConverterRegistry.cpp" />
     <ClCompile Include="Source\DataConverters\TestDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\UI\TestButtonDataConverter.cpp" />
@@ -453,7 +447,6 @@
     <ClCompile Include="Source\Memory\Allocators\TestDoubleBufferAllocator.cpp" />
     <ClCompile Include="Source\Memory\Allocators\TestPoolAllocator.cpp" />
     <ClCompile Include="Source\ModuleInitialize.cpp" />
-    <ClCompile Include="Source\ObjectFX\TestLimitedLifeTime.cpp" />
     <ClCompile Include="Source\Objects\TestComponent.cpp" />
     <ClCompile Include="Source\Objects\TestGameObject.cpp" />
     <ClCompile Include="Source\Physics\TestCollider.cpp" />
@@ -467,8 +460,6 @@
     <ClCompile Include="Source\Resources\Shaders\TestProgram.cpp" />
     <ClCompile Include="Source\Resources\TestLoadResourcesAsyncScript.cpp" />
     <ClCompile Include="Source\Resources\2D\TestRawImageLoader.cpp" />
-    <ClCompile Include="Source\Screens\TestScreen.cpp" />
-    <ClCompile Include="Source\Screens\TestScreenManager.cpp" />
     <ClCompile Include="Source\Animation\TestStateMachine.cpp" />
     <ClCompile Include="Source\Settings\TestGameSettings.cpp" />
     <ClCompile Include="Source\UI\TestButton.cpp" />

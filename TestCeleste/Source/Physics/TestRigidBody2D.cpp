@@ -28,10 +28,10 @@ namespace TestCeleste
     {
       GameObject gameObject;
 
-      AutoDeallocator<Component> component = ComponentRegistry::allocateComponent(RigidBody2D::type_name(), gameObject);
+      observer_ptr<Component> component = ComponentRegistry::createComponent(RigidBody2D::type_name(), gameObject);
 
-      Assert::IsNotNull(component.get());
-      Assert::IsNotNull(dynamic_cast<RigidBody2D*>(component.get()));
+      Assert::IsNotNull(component);
+      Assert::IsNotNull(dynamic_cast<RigidBody2D*>(component));
       Assert::AreEqual(&gameObject, component->getGameObject());
     }
 
@@ -42,7 +42,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_Constructor_SetsValuesToDefault)
     {
-      RigidBody2D rigidBody2D;
+      GameObject gameObject;
+      RigidBody2D rigidBody2D(gameObject);
       
       Assert::AreEqual(glm::vec2(), rigidBody2D.getLinearVelocity());
       Assert::AreEqual(glm::vec2(-FLT_MAX, -FLT_MAX), rigidBody2D.getMinLinearVelocity());
@@ -59,7 +60,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_Update_WithNoParent_DoesNotThrow)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
       
       rigidBody.update(1);
     }
@@ -68,7 +70,7 @@ namespace TestCeleste
     TEST_METHOD(RigidBody2D_Update_WithParentAndNonZeroLinearVelocity_UpdatesTransformTranslation)
     {
       GameObject gameObject;
-      AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
+      observer_ptr<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
 
       rigidBody->setLinearVelocity(glm::vec2(100, 100));
       rigidBody->update(0.5f);
@@ -81,7 +83,7 @@ namespace TestCeleste
     TEST_METHOD(RigidBody2D_Update_WithParentAndNonZeroAngularVelocity_UpdatesTransformRotation)
     {
       GameObject gameObject;
-      AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
+      observer_ptr<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
 
       rigidBody->setAngularVelocity(1);
       rigidBody->update(0.5f);
@@ -94,7 +96,7 @@ namespace TestCeleste
     TEST_METHOD(RigidBody2D_Update_WithParentAndNonZeroVelocities_UpdatesTransformTranslationAndRotation)
     {
       GameObject gameObject;
-      AutoDeallocator<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
+      observer_ptr<RigidBody2D> rigidBody = gameObject.addComponent<RigidBody2D>();
 
       rigidBody->setLinearVelocity(glm::vec2(100, 100));
       rigidBody->setAngularVelocity(glm::pi<float>());
@@ -116,7 +118,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_SetLinearVelocity_IsClampedMyMinAndMax)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
       rigidBody.setMinLinearVelocity(glm::vec2(-0.4f, 0.5f));
       rigidBody.setMaxLinearVelocity(glm::vec2(2, 0.6f));
       rigidBody.setLinearVelocity(glm::vec2(-0.9f, 0.4f));
@@ -139,7 +142,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_SetMinLinearVelocity_UpdatesMinLinearVelocity)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
 
       Assert::AreEqual(glm::vec2(-FLT_MAX, -FLT_MAX), rigidBody.getMinLinearVelocity());
 
@@ -159,7 +163,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_SetMaxLinearVelocity_UpdatesMinLinearVelocity)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
 
       Assert::AreEqual(glm::vec2(FLT_MAX, FLT_MAX), rigidBody.getMaxLinearVelocity());
 
@@ -179,7 +184,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_SetAngularVelocity_IsClampedByMinAndMax)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
       rigidBody.setMinAngularVelocity(-0.4f);
       rigidBody.setMaxAngularVelocity(2);
       rigidBody.setAngularVelocity(-0.9f);
@@ -202,7 +208,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_SetMinAngularVelocity_UpdatesMinAngularVelocity)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
 
       Assert::AreEqual(-FLT_MAX, rigidBody.getMinAngularVelocity());
 
@@ -222,7 +229,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_SetMaxAngularVelocity_UpdatesMaxAngularVelocity)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
 
       Assert::AreEqual(FLT_MAX, rigidBody.getMaxAngularVelocity());
 
@@ -242,7 +250,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_IncrementLinearVelocity_Vec2Input_AppliesLinearVelocityDelta)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
       
       Assert::AreEqual(glm::vec2(), rigidBody.getLinearVelocity());
 
@@ -258,7 +267,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_IncrementLinearVelocity_Vec2Input_IsClampedByMinAndMaxLinearVelocities)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
       rigidBody.setMinLinearVelocity(glm::vec2(-1, -0.5f));
       rigidBody.setMaxLinearVelocity(glm::vec2(1.1f, 2));
 
@@ -280,7 +290,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_IncrementLinearVelocity_DoubleFloatInput_AppliesLinearVelocityDelta)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
 
       Assert::AreEqual(glm::vec2(), rigidBody.getLinearVelocity());
 
@@ -296,7 +307,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_IncrementLinearVelocity_DoubleFloatInput_IsClampedByMinAndMaxLinearVelocities)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
       rigidBody.setMinLinearVelocity(glm::vec2(-1, -0.5f));
       rigidBody.setMaxLinearVelocity(glm::vec2(1.1f, 2));
 
@@ -322,7 +334,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_IncrementAngularVelocity_AppliesLinearVelocityDelta)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
 
       Assert::AreEqual(0.0f, rigidBody.getAngularVelocity());
 
@@ -338,7 +351,8 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(RigidBody2D_IncrementAngularVelocity_IsClampedByMinAndMaxAngularVelocities)
     {
-      RigidBody2D rigidBody;
+      GameObject gameObject;
+      RigidBody2D rigidBody(gameObject);
       rigidBody.setMinAngularVelocity(-1);
       rigidBody.setMaxAngularVelocity(2.1f);
 

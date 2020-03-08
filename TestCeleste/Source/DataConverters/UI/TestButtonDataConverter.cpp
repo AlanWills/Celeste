@@ -1,7 +1,6 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/UI/MockButtonDataConverter.h"
-#include "Screens/Screen.h"
 #include "Resources/UI/ButtonLoadingResources.h"
 #include "Input/MouseInteractionHandler.h"
 #include "Physics/RectangleCollider.h"
@@ -33,17 +32,16 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ButtonDataConverter_CheckCanBeConvertedFromXML)
   {
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<Rendering::SpriteRenderer> renderer = gameObject->addComponent<Rendering::SpriteRenderer>();
-    AutoDeallocator<RectangleCollider> collider = gameObject->addComponent<RectangleCollider>();
-    AutoDeallocator<MouseInteractionHandler> mouseInteractionHandler = gameObject->addComponent<MouseInteractionHandler>();
+    GameObject gameObject;
+    observer_ptr<Rendering::SpriteRenderer> renderer = gameObject.addComponent<Rendering::SpriteRenderer>();
+    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<Data> data = getResourceManager().load<Data>(ButtonLoadingResources::getValidNoCallbacksFullPath());
-    AutoDeallocator<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), *gameObject);
+    observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
-    Assert::IsNotNull(component.get());
-    Assert::IsNotNull(dynamic_cast<Button*>(component.get()));
-    Assert::AreEqual(gameObject.get(), component->getGameObject());
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<Button*>(component));
+    Assert::AreEqual(&gameObject, component->getGameObject());
   }
 
 #pragma endregion
@@ -130,14 +128,6 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_Constructor_SetsLeftClickCallbacks_ToEmptyVector)
-  {
-    ButtonDataConverter converter;
-
-    Assert::IsTrue(converter.getLeftClickCallbacks().empty());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(ButtonDataConverter_Constructor_AddsDefaultTexturePathAttribute)
   {
     const MockButtonDataConverter converter;
@@ -175,14 +165,6 @@ namespace TestCeleste
     const MockButtonDataConverter converter;
 
     Assert::IsTrue(converter.findAttribute(ButtonDataConverter::CLICKED_SOUND_ATTRIBUTE_NAME));
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_Constructor_AddsLeftClickCallbacksElement)
-  {
-    const MockButtonDataConverter converter;
-
-    Assert::IsTrue(converter.findElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME));
   }
 
 #pragma endregion
@@ -471,158 +453,16 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Convert Callbacks Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_ConvertFromXML_NoCallbacksElement_DoesNothing_AndReturnsTrue)
-  {
-    ButtonDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Button");
-
-    Assert::IsNull(element->FirstChildElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME));
-    Assert::IsTrue(converter.getLeftClickCallbacks().empty());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::IsTrue(converter.getLeftClickCallbacks().empty());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_ConvertFromXML_CallbacksElement_NoCallbackElement_DoesNothing_AndReturnsTrue)
-  {
-    ButtonDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Button");
-    XMLElement* callbacks = document.NewElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME);
-    element->InsertFirstChild(callbacks);
-
-    Assert::IsNotNull(element->FirstChildElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME));
-    Assert::IsNull(callbacks->FirstChildElement(ButtonDataConverter::CALLBACK_ELEMENT_NAME));
-    Assert::IsTrue(converter.getLeftClickCallbacks().empty());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::IsTrue(converter.getLeftClickCallbacks().empty());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_ConvertFromXML_CallbacksElement_CallbackElementWithNoNameAttribute_DoesNothing_AndReturnsFalse)
-  {
-    ButtonDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Button");
-    XMLElement* callbacks = document.NewElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME);
-    XMLElement* callback = document.NewElement(ButtonDataConverter::CALLBACK_ELEMENT_NAME);
-    element->InsertFirstChild(callbacks);
-    callbacks->InsertFirstChild(callback);
-
-    Assert::IsNotNull(element->FirstChildElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME));
-    Assert::IsNotNull(callbacks->FirstChildElement(ButtonDataConverter::CALLBACK_ELEMENT_NAME));
-    Assert::IsNull(static_cast<const XMLElement*>(callback)->FindAttribute("name"));
-    Assert::IsTrue(converter.getLeftClickCallbacks().empty());
-    Assert::IsFalse(converter.convertFromXML(element));
-    Assert::IsTrue(converter.getLeftClickCallbacks().empty());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_ConvertFromXML_CallbacksElement_CallbackElementWithNameAttribute_AddsCallback_AndReturnsTrue)
-  {
-    ButtonDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Button");
-    XMLElement* callbacks = document.NewElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME);
-    XMLElement* callback = document.NewElement(ButtonDataConverter::CALLBACK_ELEMENT_NAME);
-    element->InsertFirstChild(callbacks);
-    callbacks->InsertFirstChild(callback);
-    callback->SetAttribute("name", "Test");
-
-    Assert::IsNotNull(element->FirstChildElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME));
-    Assert::IsNotNull(callbacks->FirstChildElement(ButtonDataConverter::CALLBACK_ELEMENT_NAME));
-    Assert::IsNotNull(static_cast<const XMLElement*>(callback)->FindAttribute("name"));
-    Assert::IsNull(static_cast<const XMLElement*>(callback)->FindAttribute("arg"));
-    Assert::IsTrue(converter.getLeftClickCallbacks().empty());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(static_cast<size_t>(1), converter.getLeftClickCallbacks().size());
-    Assert::AreEqual("Test", converter.getLeftClickCallbacks()[0]->getName().c_str());
-    Assert::AreEqual("", converter.getLeftClickCallbacks()[0]->getArg().c_str());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_ConvertFromXML_CallbacksElement_CallbackElementWithNameAndArgsAttributes_AddsCallback_AndReturnsTrue)
-  {
-    ButtonDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Button");
-    XMLElement* callbacks = document.NewElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME);
-    XMLElement* callback = document.NewElement(ButtonDataConverter::CALLBACK_ELEMENT_NAME);
-    element->InsertFirstChild(callbacks);
-    callbacks->InsertFirstChild(callback);
-    callback->SetAttribute("name", "Test");
-    callback->SetAttribute("arg", "WubbaLubbaDubDub");
-
-    Assert::IsNotNull(element->FirstChildElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME));
-    Assert::IsNotNull(callbacks->FirstChildElement(ButtonDataConverter::CALLBACK_ELEMENT_NAME));
-    Assert::IsNotNull(static_cast<const XMLElement*>(callback)->FindAttribute("name"));
-    Assert::IsNotNull(static_cast<const XMLElement*>(callback)->FindAttribute("arg"));
-    Assert::IsTrue(converter.getLeftClickCallbacks().empty());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(static_cast<size_t>(1), converter.getLeftClickCallbacks().size());
-    Assert::AreEqual("Test", converter.getLeftClickCallbacks()[0]->getName().c_str());
-    Assert::AreEqual("WubbaLubbaDubDub", converter.getLeftClickCallbacks()[0]->getArg().c_str());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_ConvertFromXML_CallbacksElement_OnlyConvertsCallbackElements)
-  {
-    ButtonDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("Button");
-    XMLElement* callbacks = document.NewElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME);
-    XMLElement* callback = document.NewElement(ButtonDataConverter::CALLBACK_ELEMENT_NAME);
-    XMLElement* callback2 = document.NewElement("_Callback");
-    element->InsertFirstChild(callbacks);
-    callbacks->InsertFirstChild(callback);
-    callbacks->InsertFirstChild(callback);
-    callback->SetAttribute("name", "Test");
-    callback->SetAttribute("arg", "WubbaLubbaDubDub");
-    callback2->SetAttribute("name", "Test2");
-    callback2->SetAttribute("arg", "RickyTickyTappy");
-
-    Assert::IsNotNull(element->FirstChildElement(ButtonDataConverter::LEFT_CLICK_CALLBACKS_ELEMENT_NAME));
-    Assert::IsNotNull(callbacks->FirstChildElement(ButtonDataConverter::CALLBACK_ELEMENT_NAME));
-    Assert::IsNotNull(static_cast<const XMLElement*>(callback)->FindAttribute("name"));
-    Assert::IsNotNull(static_cast<const XMLElement*>(callback)->FindAttribute("arg"));
-    Assert::IsTrue(converter.getLeftClickCallbacks().empty());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(static_cast<size_t>(1), converter.getLeftClickCallbacks().size());
-    Assert::AreEqual("Test", converter.getLeftClickCallbacks()[0]->getName().c_str());
-    Assert::AreEqual("WubbaLubbaDubDub", converter.getLeftClickCallbacks()[0]->getArg().c_str());
-  }
-
-#pragma endregion
-
 #pragma region Set Values Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_SetValues_InputtingNullButton_DoesNothing)
-  {
-    observer_ptr<Data> data = getResourceManager().load<Data>(ButtonLoadingResources::getValidNoCallbacksFullPath());
-
-    ButtonDataConverter converter;
-    converter.convertFromXML(data->getDocumentRoot());
-
-    Assert::IsTrue(converter.isDataLoadedCorrectly());
-
-    // Check doesn't throw
-    converter.setValues(Button());
-  }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ButtonDataConverter_SetValues_InputtingButton_DataNotLoadedCorrectly_DoesNothing)
   {
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<Rendering::SpriteRenderer> renderer = gameObject->addComponent<Rendering::SpriteRenderer>();
-    AutoDeallocator<RectangleCollider> collider = gameObject->addComponent<RectangleCollider>();
-    AutoDeallocator<MouseInteractionHandler> mouseInteractionHandler = gameObject->addComponent<MouseInteractionHandler>();
-    AutoDeallocator<Button> button = gameObject->addComponent<Button>();
+    GameObject gameObject;
+    observer_ptr<Rendering::SpriteRenderer> renderer = gameObject.addComponent<Rendering::SpriteRenderer>();
+    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<Button> button = gameObject.addComponent<Button>();
 
     observer_ptr<Data> data = getResourceManager().load<Data>(ButtonLoadingResources::getInvalidFullPath());
 
@@ -639,12 +479,11 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ButtonDataConverter_SetValues_InputtingButton_DataLoadedCorrectly_ChangesButtonToMatchData)
   {
-    Screen screen;
-    AutoDeallocator<GameObject> gameObject = screen.allocateGameObject();
-    AutoDeallocator<Rendering::SpriteRenderer> renderer = gameObject->addComponent<Rendering::SpriteRenderer>();
-    AutoDeallocator<RectangleCollider> collider = gameObject->addComponent<RectangleCollider>();
-    AutoDeallocator<MouseInteractionHandler> mouseInteractionHandler = gameObject->addComponent<MouseInteractionHandler>();
-    AutoDeallocator<Button> button = gameObject->addComponent<Button>();
+    GameObject gameObject;
+    observer_ptr<Rendering::SpriteRenderer> renderer = gameObject.addComponent<Rendering::SpriteRenderer>();
+    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<Button> button = gameObject.addComponent<Button>();
     button->setActive(false);
 
     observer_ptr<Data> data = getResourceManager().load<Data>(ButtonLoadingResources::getValidWithCallbacksFullPath());

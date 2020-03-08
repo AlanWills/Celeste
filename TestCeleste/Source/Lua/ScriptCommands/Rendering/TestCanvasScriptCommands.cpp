@@ -5,7 +5,7 @@
 #include "Lua/ScriptCommands/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
-#include "Mocks/Rendering/MockCanvas.h"
+#include "Rendering/Canvas.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -20,8 +20,8 @@ namespace TestCeleste::Lua::Rendering::CanvasScriptCommands
 
 #pragma region Initialize Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(CanvasScriptCommands_Initialize_Adds_CanvasUserType_ToGlobalTable)
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(CanvasScriptCommands_Initialize_Adds_CanvasUserType_ToGlobalTable)
   {
     sol::state& state = LuaState::instance();
 
@@ -196,11 +196,12 @@ namespace TestCeleste::Lua::Rendering::CanvasScriptCommands
 
     Assert::IsTrue(state["Object"].valid());
 
-    Canvas audioSource;
-    auto functionResult = state.globals()["Canvas"]["as"].get<sol::protected_function>().call(&audioSource, "Object");
+    GameObject gameObject;
+    Canvas canvas(gameObject);
+    auto functionResult = state.globals()["Canvas"]["as"].get<sol::protected_function>().call(&canvas, "Object");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::IsTrue(&audioSource == functionResult.get<Object*>());
+    Assert::IsTrue(&canvas == functionResult.get<Object*>());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -210,11 +211,12 @@ namespace TestCeleste::Lua::Rendering::CanvasScriptCommands
 
     sol::state& state = LuaState::instance();
 
-    Canvas audioSource;
-    auto functionResult = state.globals()["Canvas"]["as"].get<sol::protected_function>().call(&audioSource, "Canvas");
+    GameObject gameObject;
+    Canvas canvas(gameObject);
+    auto functionResult = state.globals()["Canvas"]["as"].get<sol::protected_function>().call(&canvas, "Canvas");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::IsTrue(&audioSource == functionResult.get<Canvas*>());
+    Assert::IsTrue(&canvas == functionResult.get<Canvas*>());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -227,8 +229,9 @@ namespace TestCeleste::Lua::Rendering::CanvasScriptCommands
     class MockCanvas : public Celeste::Rendering::Canvas {};
     state.new_usertype<MockCanvas>("MockCanvas");
 
-    Canvas audioSource;
-    auto functionResult = state.globals()["Canvas"]["as"].get<sol::protected_function>().call(&audioSource, "MockCanvas");
+    GameObject gameObject;
+    Canvas canvas(gameObject);
+    auto functionResult = state.globals()["Canvas"]["as"].get<sol::protected_function>().call(&canvas, "MockCanvas");
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(sol::type::nil == functionResult.get_type());
@@ -246,8 +249,9 @@ namespace TestCeleste::Lua::Rendering::CanvasScriptCommands
 
     Assert::IsTrue(state.globals()["UnrelatedType"]);
 
-    Canvas audioSource;
-    auto functionResult = state.globals()["Canvas"]["as"].get<sol::protected_function>().call(&audioSource, "UnrelatedType");
+    GameObject gameObject;
+    Canvas canvas(gameObject);
+    auto functionResult = state.globals()["Canvas"]["as"].get<sol::protected_function>().call(&canvas, "UnrelatedType");
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(sol::type::nil == functionResult.get_type());

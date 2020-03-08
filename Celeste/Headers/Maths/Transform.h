@@ -23,8 +23,8 @@ namespace Celeste
       CelesteDllExport Transform(GameObject& gameObject);
       CelesteDllExport ~Transform() override;
 
-      void* operator new(size_t);
-      void operator delete(void*);
+      CelesteDllExport void* operator new(size_t);
+      CelesteDllExport void operator delete(void*);
 
       inline bool hasParent() const { return m_parent != nullptr; }
       CelesteDllExport void setParent(Transform* parent);
