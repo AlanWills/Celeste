@@ -11,7 +11,7 @@
 namespace Celeste
 {
   template <typename T>
-  class EntityAllocatorIterator : std::iterator<std::forward_iterator_tag, T>
+  class ResizeableAllocatorIterator : std::iterator<std::forward_iterator_tag, T>
   {
     private:
       using Iterator = typename choose_class<
@@ -25,19 +25,19 @@ namespace Celeste
         typename PoolAllocator<typename std::remove_const<T>::type>*>::type;
 
     public:
-      EntityAllocatorIterator(typename Iterator allocatorEndIt, PoolAllocatorIterator<T> entityEndIt);
-      EntityAllocatorIterator(typename Iterator allocatorIt, typename Iterator allocatorEndIt);
-      EntityAllocatorIterator(const EntityAllocatorIterator<T>&) = default;
-      EntityAllocatorIterator(EntityAllocatorIterator<T>&&) = default;
+      ResizeableAllocatorIterator(typename Iterator allocatorEndIt, PoolAllocatorIterator<T> entityEndIt);
+      ResizeableAllocatorIterator(typename Iterator allocatorIt, typename Iterator allocatorEndIt);
+      ResizeableAllocatorIterator(const ResizeableAllocatorIterator<T>&) = default;
+      ResizeableAllocatorIterator(ResizeableAllocatorIterator<T>&&) = default;
       
-      EntityAllocatorIterator<T>& operator=(const EntityAllocatorIterator<T>&) = default;
-      EntityAllocatorIterator<T>& operator=(EntityAllocatorIterator<T>&&) = default;
+      ResizeableAllocatorIterator<T>& operator=(const ResizeableAllocatorIterator<T>&) = default;
+      ResizeableAllocatorIterator<T>& operator=(ResizeableAllocatorIterator<T>&&) = default;
 
-      EntityAllocatorIterator& operator++();
-      EntityAllocatorIterator operator++(int);
+      ResizeableAllocatorIterator& operator++();
+      ResizeableAllocatorIterator operator++(int);
 
-      inline bool operator==(const EntityAllocatorIterator<T>& other) const { return m_entityIt.get() == other.get(); }
-      inline bool operator!=(const EntityAllocatorIterator<T>& other) const { return !(*this == other); }
+      inline bool operator==(const ResizeableAllocatorIterator<T>& other) const { return m_entityIt.get() == other.get(); }
+      inline bool operator!=(const ResizeableAllocatorIterator<T>& other) const { return !(*this == other); }
 
       inline T& operator*() const { return *m_entityIt; }
       inline T* get() const { return m_entityIt.get(); }
@@ -67,7 +67,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  EntityAllocatorIterator<T>::EntityAllocatorIterator(
+  ResizeableAllocatorIterator<T>::ResizeableAllocatorIterator(
     typename Iterator allocatorIt,
     typename Iterator allocatorEndIt)
     : m_allocatorIt(allocatorIt),
@@ -75,13 +75,12 @@ namespace Celeste
       m_entityIt(static_cast<AllocatorType>((*m_allocatorIt).get())->begin()),
       m_entityEndIt(static_cast<AllocatorType>((*m_allocatorIt).get())->end())
   {
-    STATIC_ASSERT((std::is_base_of<Entity, T>::value), "Inputted type is not derived from Entity");
     advance();
   }
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  EntityAllocatorIterator<T>::EntityAllocatorIterator(
+  ResizeableAllocatorIterator<T>::ResizeableAllocatorIterator(
     typename Iterator allocatorEndIt, 
     PoolAllocatorIterator<T> entityEndIt)
     : m_allocatorIt(allocatorEndIt),
@@ -89,12 +88,11 @@ namespace Celeste
       m_entityIt(entityEndIt),
       m_entityEndIt(entityEndIt)
   {
-    STATIC_ASSERT((std::is_base_of<Entity, T>::value), "Inputted type is not derived from Entity");
   }
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  EntityAllocatorIterator<T>& EntityAllocatorIterator<T>::operator++()
+  ResizeableAllocatorIterator<T>& ResizeableAllocatorIterator<T>::operator++()
   {
     next();
     advance();
@@ -103,10 +101,10 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  EntityAllocatorIterator<T> EntityAllocatorIterator<T>::operator++(int)
+  ResizeableAllocatorIterator<T> ResizeableAllocatorIterator<T>::operator++(int)
   {
     next();
     advance();
-    return EntityAllocatorIterator<T>(*this);
+    return ResizeableAllocatorIterator<T>(*this);
   }
 }

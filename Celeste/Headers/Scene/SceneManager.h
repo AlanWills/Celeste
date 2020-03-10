@@ -3,7 +3,7 @@
 #include "Objects/Entity.h"
 #include "Memory/ObserverPtr.h"
 #include "UID/StringId.h"
-#include "Memory/Iterators/EntityAllocatorIterator.h"
+#include "Memory/Iterators/ResizeableAllocatorIterator.h"
 
 #include <functional>
 

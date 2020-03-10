@@ -4,6 +4,7 @@
 #include "Physics/EllipseCollider.h"
 #include "Physics/Collider.h"
 #include "Objects/GameObject.h"
+#include "Algorithms/EntityAlgorithms.h"
 
 
 namespace Celeste::Physics
@@ -28,9 +29,9 @@ namespace Celeste::Physics
   {
     Inherited::handleInput();
 
-    RigidBody2D::m_allocator.handleInput();
-    RectangleCollider::m_allocator.handleInput();
-    EllipseCollider::m_allocator.handleInput();
+    Algorithms::handleInput(RigidBody2D::m_allocator);
+    Algorithms::handleInput(RectangleCollider::m_allocator);
+    Algorithms::handleInput(EllipseCollider::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -38,8 +39,8 @@ namespace Celeste::Physics
   {
     Inherited::update(elapsedGameTime);
 
-    RectangleCollider::m_allocator.update(elapsedGameTime);
-    EllipseCollider::m_allocator.update(elapsedGameTime);
+    Algorithms::update(elapsedGameTime, RectangleCollider::m_allocator);
+    Algorithms::update(elapsedGameTime, EllipseCollider::m_allocator);
 
     if (!m_simulatedBodies.empty())
     {
@@ -84,7 +85,7 @@ namespace Celeste::Physics
       }
     }
 
-    RigidBody2D::m_allocator.update(elapsedGameTime);
+    Algorithms::update(elapsedGameTime, RigidBody2D::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------

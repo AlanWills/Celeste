@@ -1,6 +1,6 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
-#include "Memory/Allocators/EntityAllocator.h"
+#include "Memory/Allocators/ResizeableAllocator.h"
 #include "Memory/Allocators/PoolAllocator.h"
 #include "Mocks/Objects/MockComponent.h"
 #include "Objects/GameObject.h"
@@ -8,19 +8,18 @@
 
 using namespace Celeste;
 
-
 ARE_PTRS_EQUAL(MockComponent);
 
 namespace TestCeleste
 {
-  CELESTE_TEST_CLASS(TestEntityAllocator)
+  CELESTE_TEST_CLASS(TestResizeableAllocator)
 
 #pragma region Is Allocated Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(EntityAllocator_IsAllocated_InputtingAllocatedObject_ShouldReturnTrue)
+  TEST_METHOD(ResizeableAllocator_IsAllocated_InputtingAllocatedObject_ShouldReturnTrue)
   {
-    EntityAllocator<MockComponent> allocator(10);
+    ResizeableAllocator<MockComponent> allocator(10);
     observer_ptr<MockComponent> object = allocator.allocate();
 
     Assert::AreEqual((size_t)1, allocator.size());
@@ -28,9 +27,9 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(EntityAllocator_Allocate_InputtingUnAllocatedObject_ShouldReturnFalse)
+  TEST_METHOD(ResizeableAllocator_Allocate_InputtingUnAllocatedObject_ShouldReturnFalse)
   {
-    EntityAllocator<MockComponent> allocator(10);
+    ResizeableAllocator<MockComponent> allocator(10);
     MockComponent& object = *allocator.allocate();
 
     Assert::AreEqual((size_t)1, allocator.size());
@@ -42,11 +41,11 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(EntityAllocator_Allocate_InputtingObjectNotFromAllocator_ShouldReturnFalse)
+  TEST_METHOD(ResizeableAllocator_Allocate_InputtingObjectNotFromAllocator_ShouldReturnFalse)
   {
     GameObject gameObject;
     MockComponent object(gameObject);
-    EntityAllocator<MockComponent> allocator(10);
+    ResizeableAllocator<MockComponent> allocator(10);
 
     Assert::AreEqual((size_t)0, allocator.size());
     Assert::IsFalse(allocator.deallocate(object));
@@ -57,9 +56,9 @@ namespace TestCeleste
 #pragma region Allocate Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Allocate_WithSpaceInAllocator_ReturnsAllocatedPtr)
+    TEST_METHOD(ResizeableAllocator_Allocate_WithSpaceInAllocator_ReturnsAllocatedPtr)
     {
-      EntityAllocator<MockComponent> allocator(10);
+      ResizeableAllocator<MockComponent> allocator(10);
       observer_ptr<MockComponent> handle = allocator.allocate();
 
       Assert::IsNotNull(handle);
@@ -67,9 +66,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Allocate_WithNotEnoughSpaceInAllocator_IncreasesSize)
+    TEST_METHOD(ResizeableAllocator_Allocate_WithNotEnoughSpaceInAllocator_IncreasesSize)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       allocator.allocate();
 
       Assert::AreEqual((size_t)1, allocator.size());
@@ -81,9 +80,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Allocate_Resizing_PreservesPtrs)
+    TEST_METHOD(ResizeableAllocator_Allocate_Resizing_PreservesPtrs)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -96,9 +95,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Allocate_PreviouslyDeallocatedObject_ObjectReallocated)
+    TEST_METHOD(ResizeableAllocator_Allocate_PreviouslyDeallocatedObject_ObjectReallocated)
     {
-      EntityAllocator<MockComponent> allocator(10);
+      ResizeableAllocator<MockComponent> allocator(10);
       observer_ptr<MockComponent> handle = allocator.allocate();
 
       allocator.deallocate(*handle);
@@ -119,9 +118,9 @@ namespace TestCeleste
 #pragma region Deallocate Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Deallocate_ObjectNotFromAllocator_DoesNothingAndReturnsFalse)
+    TEST_METHOD(ResizeableAllocator_Deallocate_ObjectNotFromAllocator_DoesNothingAndReturnsFalse)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       GameObject gameObject;
       MockComponent component(gameObject);
 
@@ -132,9 +131,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Deallocate_ObjectFromAllocator_DeallocatesObject_ResetsFlags_AndReturnsTrue)
+    TEST_METHOD(ResizeableAllocator_Deallocate_ObjectFromAllocator_DeallocatesObject_ResetsFlags_AndReturnsTrue)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle = allocator.allocate();
 
       Assert::IsTrue(handle->isActive());
@@ -152,9 +151,9 @@ namespace TestCeleste
 #pragma region Size Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Size_EqualsNumberOfAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_Size_EqualsNumberOfAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       
       Assert::AreEqual((size_t)0, allocator.size());
 
@@ -181,13 +180,13 @@ namespace TestCeleste
 #pragma region Begin Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Begin_ReturnsFirstAllocatedObject)
+    TEST_METHOD(ResizeableAllocator_Begin_ReturnsFirstAllocatedObject)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
-      EntityAllocatorIterator<MockComponent> it = allocator.begin();
+      ResizeableAllocatorIterator<MockComponent> it = allocator.begin();
 
       Assert::AreSame(*handle1, *it);
 
@@ -199,32 +198,32 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_BeginOnConst_ReturnsConstFirstAllocatedObject)
+    TEST_METHOD(ResizeableAllocator_BeginOnConst_ReturnsConstFirstAllocatedObject)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
-      EntityAllocatorIterator<const MockComponent> it = (static_cast<const EntityAllocator<MockComponent>&>(allocator).begin());
+      ResizeableAllocatorIterator<const MockComponent> it = (static_cast<const ResizeableAllocator<MockComponent>&>(allocator).begin());
 
       Assert::AreSame(*handle1, *it);
 
       // Deallocate an object
       allocator.deallocate(*handle1);
-      it = (static_cast<const EntityAllocator<MockComponent>&>(allocator).begin());
+      it = (static_cast<const ResizeableAllocator<MockComponent>&>(allocator).begin());
 
       Assert::AreSame(*handle2, *it);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_CBegin_ReturnsConstFirstAllocatedObject)
+    TEST_METHOD(ResizeableAllocator_CBegin_ReturnsConstFirstAllocatedObject)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
-      EntityAllocatorIterator<const MockComponent> it = allocator.cbegin();
+      ResizeableAllocatorIterator<const MockComponent> it = allocator.cbegin();
       Assert::AreSame(*handle1, *it);
 
       // Deallocate an object
@@ -235,17 +234,17 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_begin_WithNoAllocatedObjects_Equals_end)
+    TEST_METHOD(ResizeableAllocator_begin_WithNoAllocatedObjects_Equals_end)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
 
       Assert::IsTrue(allocator.begin() == allocator.end());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_cbegin_WithNoAllocatedObjects_Equals_cend)
+    TEST_METHOD(ResizeableAllocator_cbegin_WithNoAllocatedObjects_Equals_cend)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
 
       Assert::IsTrue(allocator.cbegin() == allocator.cend());
     }
@@ -255,9 +254,9 @@ namespace TestCeleste
 #pragma region Foreach Iteration
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ForeachIteration_AllPoolAllocated_IteratesOverAllocatedObjectsOnly)
+    TEST_METHOD(ResizeableAllocator_ForeachIteration_AllPoolAllocated_IteratesOverAllocatedObjectsOnly)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -301,9 +300,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ForeachIteration_PoolResizeOccurred_IteratesOverAllocatedObjectsOnly)
+    TEST_METHOD(ResizeableAllocator_ForeachIteration_PoolResizeOccurred_IteratesOverAllocatedObjectsOnly)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -351,9 +350,9 @@ namespace TestCeleste
 #pragma region Find Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Find_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_Find_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -393,9 +392,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Find_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_Find_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(2);
+      ResizeableAllocator<MockComponent> allocator(2);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -435,9 +434,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Find_NoResizeOccurred_ShouldNotFindAnything)
+    TEST_METHOD(ResizeableAllocator_Find_NoResizeOccurred_ShouldNotFindAnything)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -446,9 +445,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Find_ResizeOccurred_ShouldNotFindAnything)
+    TEST_METHOD(ResizeableAllocator_Find_ResizeOccurred_ShouldNotFindAnything)
     {
-      EntityAllocator<MockComponent> allocator(2);
+      ResizeableAllocator<MockComponent> allocator(2);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -458,9 +457,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Find_NoResizeOccurred_ReturnsFirstMatchingObject)
+    TEST_METHOD(ResizeableAllocator_Find_NoResizeOccurred_ReturnsFirstMatchingObject)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -475,9 +474,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Find_ResizeOccurred_ReturnsFirstMatchingObject)
+    TEST_METHOD(ResizeableAllocator_Find_ResizeOccurred_ReturnsFirstMatchingObject)
     {
-      EntityAllocator<MockComponent> allocator(2);
+      ResizeableAllocator<MockComponent> allocator(2);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -500,9 +499,9 @@ namespace TestCeleste
 #pragma region Const Find Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFind_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_ConstFind_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -512,7 +511,7 @@ namespace TestCeleste
       Assert::IsTrue(allocator.isAllocated(*handle3));
 
       // Need const reference to call const functions
-      const EntityAllocator<MockComponent>& allocatorRef = allocator;
+      const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
       // All three objects allocated
       {
@@ -545,9 +544,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFind_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_ConstFind_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(2);
+      ResizeableAllocator<MockComponent> allocator(2);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -557,7 +556,7 @@ namespace TestCeleste
       Assert::IsTrue(allocator.isAllocated(*handle3));
 
       // Need a const reference to call const functions
-      const EntityAllocator<MockComponent>& allocatorRef = allocator;
+      const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
       // All three objects allocated
       {
@@ -592,44 +591,44 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFind_NoResizeOccurred_ShouldNotFindAnything)
+    TEST_METHOD(ResizeableAllocator_ConstFind_NoResizeOccurred_ShouldNotFindAnything)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
       // Need a const reference to call const functions
-      const EntityAllocator<MockComponent>& allocatorRef = allocator;
+      const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
       Assert::IsNull(allocatorRef.find([](const MockComponent& component) -> bool { return false; }));
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFind_ResizeOccurred_ShouldNotFindAnything)
+    TEST_METHOD(ResizeableAllocator_ConstFind_ResizeOccurred_ShouldNotFindAnything)
     {
-      EntityAllocator<MockComponent> allocator(2);
+      ResizeableAllocator<MockComponent> allocator(2);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
       observer_ptr<MockComponent> handle4 = allocator.allocate();
 
       // Need a const reference to call const functions
-      const EntityAllocator<MockComponent>& allocatorRef = allocator;
+      const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
       Assert::IsNull(allocatorRef.find([](const MockComponent& component) -> bool { return false; }));
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFind_NoResizeOccurred_ReturnsFirstMatchingObject)
+    TEST_METHOD(ResizeableAllocator_ConstFind_NoResizeOccurred_ReturnsFirstMatchingObject)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
       // Need a const reference to call const functions
-      const EntityAllocator<MockComponent>& allocatorRef = allocator;
+      const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
       AssertCel::IsActive(handle1);
       AssertCel::IsNotActive(handle2);
@@ -638,16 +637,16 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFind_ResizeOccurred_ReturnsFirstMatchingObject)
+    TEST_METHOD(ResizeableAllocator_ConstFind_ResizeOccurred_ReturnsFirstMatchingObject)
     {
-      EntityAllocator<MockComponent> allocator(2);
+      ResizeableAllocator<MockComponent> allocator(2);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
       observer_ptr<MockComponent> handle4 = allocator.allocate();
 
       // Need a const reference to call const functions
-      const EntityAllocator<MockComponent>& allocatorRef = allocator;
+      const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
       AssertCel::IsActive(handle1);
       AssertCel::IsNotActive(handle2);
@@ -661,9 +660,9 @@ namespace TestCeleste
 #pragma region Find All Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_FindAll_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_FindAll_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -698,9 +697,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_FindAll_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_FindAll_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -735,9 +734,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_FindAll_NoResizeOccurred_ShouldNotFindAnything)
+    TEST_METHOD(ResizeableAllocator_FindAll_NoResizeOccurred_ShouldNotFindAnything)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -749,9 +748,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_FindAll_ResizeOccurred_ShouldNotFindAnything)
+    TEST_METHOD(ResizeableAllocator_FindAll_ResizeOccurred_ShouldNotFindAnything)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -763,9 +762,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_FindAll_OnlyPoolAllocatorObjects_ShouldFindObjects)
+    TEST_METHOD(ResizeableAllocator_FindAll_OnlyPoolAllocatorObjects_ShouldFindObjects)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -777,9 +776,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_FindAll_PoolAndOverflowAllocatorObjects_ShouldFindObjects)
+    TEST_METHOD(ResizeableAllocator_FindAll_PoolAndOverflowAllocatorObjects_ShouldFindObjects)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
@@ -795,15 +794,15 @@ namespace TestCeleste
 #pragma region Const Find All Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFindAll_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_ConstFindAll_NoResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
       // Used so we can force the const version of find
-      const EntityAllocator<MockComponent>& allocatorRef = allocator;
+      const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
       // Three allocated objects
       {
@@ -835,15 +834,15 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFindAll_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_ConstFindAll_ResizeOccurred_OnlySearchesThroughAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
       // Used so we can force the const version of find
-      const EntityAllocator<MockComponent>& allocatorRef = allocator;
+      const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
       // Three allocated objects
       {
@@ -875,15 +874,15 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFindAll_ShouldNotFindAnything)
+    TEST_METHOD(ResizeableAllocator_ConstFindAll_ShouldNotFindAnything)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
       // Used so we can force the const version of find
-      const EntityAllocator<MockComponent>& allocatorRef = allocator;
+      const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
       std::vector<std::reference_wrapper<const MockComponent>> foundObjects;
       allocatorRef.findAll([](const MockComponent& c) { return false; }, foundObjects);
@@ -892,15 +891,15 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFindAll_NoResizeOccurred_ShouldFindObjects)
+    TEST_METHOD(ResizeableAllocator_ConstFindAll_NoResizeOccurred_ShouldFindObjects)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
       // Used so we can force the const version of find
-      const EntityAllocator<MockComponent>& allocatorRef = allocator;
+      const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
       std::vector<std::reference_wrapper<const MockComponent>> foundObjects;
       allocatorRef.findAll([handle1](const MockComponent& c) { return &c == handle1; }, foundObjects);
@@ -909,15 +908,15 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_ConstFindAll_ResizeOccurred_ShouldFindObjects)
+    TEST_METHOD(ResizeableAllocator_ConstFindAll_ResizeOccurred_ShouldFindObjects)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
       // Used so we can force the const version of find
-      const EntityAllocator<MockComponent>& allocatorRef = allocator;
+      const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
       std::vector<std::reference_wrapper<const MockComponent>> foundObjects;
       allocatorRef.findAll([handle1](const MockComponent& c) { return &c == handle1; }, foundObjects);
@@ -930,18 +929,18 @@ namespace TestCeleste
 #pragma region Contains Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Contains_InputtingObjectFromAllocator_ReturnsTrue)
+    TEST_METHOD(ResizeableAllocator_Contains_InputtingObjectFromAllocator_ReturnsTrue)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> component = allocator.allocate();
 
       Assert::IsTrue(allocator.contains(*component));
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Contains_InputtingObjectNotFromEntityAllocator_ReturnsFalse)
+    TEST_METHOD(ResizeableAllocator_Contains_InputtingObjectNotFromResizeableAllocator_ReturnsFalse)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       GameObject gameObject;
       MockComponent component(gameObject);
 
@@ -953,9 +952,9 @@ namespace TestCeleste
 #pragma region Handle Input Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_HandleInput_NoResizeOccurred_CallsHandleInputOnAllAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_HandleInput_NoResizeOccurred_CallsHandleInputOnAllAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
 
@@ -974,9 +973,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_HandleInput_ResizeOccurred_CallsHandleInputOnAllAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_HandleInput_ResizeOccurred_CallsHandleInputOnAllAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
 
@@ -999,9 +998,9 @@ namespace TestCeleste
 #pragma region Update Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Update_NoResizeOccurred_CallsUpdateOnAllAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_Update_NoResizeOccurred_CallsUpdateOnAllAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
 
@@ -1020,9 +1019,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_Update_ResizeOccurred_CallsUpdateOnAllAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_Update_ResizeOccurred_CallsUpdateOnAllAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       observer_ptr<MockComponent> handle2 = allocator.allocate();
 
@@ -1045,9 +1044,9 @@ namespace TestCeleste
 #pragma region Deallocate All Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_DeallocateAll_DeallocatesAllPoolAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_DeallocateAll_DeallocatesAllPoolAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(3);
+      ResizeableAllocator<MockComponent> allocator(3);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       const MockComponent* ptr1 = handle1;
 
@@ -1075,9 +1074,9 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(EntityAllocator_DeallocateAll_ResizeOccurred_DeallocatesAllPoolAllocatedObjects)
+    TEST_METHOD(ResizeableAllocator_DeallocateAll_ResizeOccurred_DeallocatesAllPoolAllocatedObjects)
     {
-      EntityAllocator<MockComponent> allocator(1);
+      ResizeableAllocator<MockComponent> allocator(1);
       observer_ptr<MockComponent> handle1 = allocator.allocate();
       const MockComponent* ptr1 = handle1;
 

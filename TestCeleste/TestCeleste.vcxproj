@@ -444,8 +444,8 @@
     <ClCompile Include="Source\XML\TestSiblingXMLElementIterator.cpp" />
     <ClCompile Include="Source\Memory\Iterators\TestGameObjectIterator.cpp" />
     <ClCompile Include="Source\Memory\Iterators\TestPoolAllocatorIterator.cpp" />
-    <ClCompile Include="Source\Memory\Allocators\TestEntityAllocator.cpp" />
-    <ClCompile Include="Source\Memory\Iterators\TestEntityAllocatorIterator.cpp" />
+    <ClCompile Include="Source\Memory\Allocators\TestResizeableAllocator.cpp" />
+    <ClCompile Include="Source\Memory\Iterators\TestResizeableAllocatorIterator.cpp" />
     <ClCompile Include="Source\Memory\Allocators\TestDoubleBufferAllocator.cpp" />
     <ClCompile Include="Source\Memory\Allocators\TestPoolAllocator.cpp" />
     <ClCompile Include="Source\ModuleInitialize.cpp" />

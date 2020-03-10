@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Memory/Allocators/EntityAllocator.h"
+#include "Memory/Allocators/ResizeableAllocator.h"
 
 //------------------------------------------------------------------------------------------------
 #define CUSTOM_MEMORY_DECLARATION(Type, DllExport) \
@@ -11,7 +11,7 @@
     DllExport void operator delete(void*); \
     \
   private: \
-    using Allocator = Celeste::EntityAllocator<Type>; \
+    using Allocator = Celeste::ResizeableAllocator<Type>; \
     static Allocator m_allocator;
 
   //------------------------------------------------------------------------------------------------

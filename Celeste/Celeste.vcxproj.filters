@@ -579,9 +579,6 @@
     <ClInclude Include="Headers\Objects\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Memory\Allocators\EntityAllocator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Lua\ScriptCommands\Objects\EntityScriptCommands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -774,9 +771,6 @@
     <ClInclude Include="Headers\Memory\Iterators\PoolAllocatorIterator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Memory\Iterators\EntityAllocatorIterator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\CelesteDllExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -808,6 +802,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Scene\SceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Memory\Allocators\ResizeableAllocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Memory\Iterators\ResizeableAllocatorIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Algorithms\EntityAlgorithms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

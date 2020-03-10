@@ -657,12 +657,6 @@
     <ClCompile Include="Source\Lua\ScriptCommands\Objects\TestEntityScriptCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Memory\Allocators\TestEntityAllocator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Memory\Iterators\TestEntityAllocatorIterator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\DataConverters\Objects\TestEntityDataConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -805,6 +799,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Lua\ScriptCommands\Events\TestEventScriptCommands.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Memory\Allocators\TestResizeableAllocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Memory\Iterators\TestResizeableAllocatorIterator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

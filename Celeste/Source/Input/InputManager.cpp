@@ -1,6 +1,7 @@
 #include "Input/InputManager.h"
 #include "Game/Game.h"
 #include "Input/KeyboardActivator.h"
+#include "Algorithms/EntityAlgorithms.h"
 
 
 namespace Celeste::Input
@@ -31,7 +32,7 @@ namespace Celeste::Input
     updateMousePosition();
     m_mouse.handleInput();
 
-    KeyboardActivator::m_allocator.handleInput();
+    Algorithms::handleInput(KeyboardActivator::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -39,7 +40,7 @@ namespace Celeste::Input
   {
     Inherited::update(elapsedGameTime);
 
-    KeyboardActivator::m_allocator.update(elapsedGameTime);
+    Algorithms::update(elapsedGameTime, KeyboardActivator::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------

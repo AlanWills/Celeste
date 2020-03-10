@@ -2,7 +2,7 @@
 
 #include "UID/StringId.h"
 #include "FileSystem/Directory.h"
-#include "Memory/Allocators/PoolAllocator.h"
+#include "Memory/Allocators/ResizeableAllocator.h"
 #include "Memory/ObserverPtr.h"
 
 #include <vector>
@@ -42,10 +42,10 @@ namespace Celeste::Resources
 
     protected:
       using Map = std::unordered_map<StringId, observer_ptr<T>>;
-      using Pool = PoolAllocator<T>;
+      using Memory = ResizeableAllocator<T>;
 
       Map m_map;
-      Pool m_pool;
+      Memory m_memory;
 
     private:
       observer_ptr<T> loadResourceFromFile(const File& fullFilePath);
@@ -57,7 +57,7 @@ namespace Celeste::Resources
   template <typename T>
   ResourceLoader<T>::ResourceLoader(size_t length, const Path& resourceDirectoryFullPath) :
     m_resourceDirectory(resourceDirectoryFullPath),
-    m_pool(length)
+    m_memory(length)
   {
   }
 
@@ -114,22 +114,15 @@ namespace Celeste::Resources
   template <typename T>
   T* ResourceLoader<T>::loadResourceFromFile(const File& fullPath)
   {
-    // Create handle object
-    if (!m_pool.canAllocate(1))
-    {
-      ASSERT_FAIL_MSG("Resource Loader pool allocator out of memory.  Consider increasing the size.");
-      return nullptr;
-    }
-
     // If we have room left in the pool we just allocate a new entry
-    T* item = new (m_pool.allocate()) T();
+    T* item = new (m_memory.allocate()) T();
     ASSERT_NOT_NULL(item);
 
     // Pass the full file path into the load function so resources can also obtain the file they are being loaded from
     if (!item->loadFromFile(fullPath.getFilePath()))
     {
       item->unload();
-      m_pool.deallocate(*item);
+      m_memory.deallocate(*item);
       item = nullptr;
     }
 
@@ -150,7 +143,7 @@ namespace Celeste::Resources
 
     // Unload and then deallocate the inputted resource
     resource.unload();
-    m_pool.deallocate(resource);
+    m_memory.deallocate(resource);
 
     // Finally, erase from map
     m_map.erase(resourceId);
@@ -195,7 +188,7 @@ namespace Celeste::Resources
   template <typename T>
   void ResourceLoader<T>::unloadAllResources()
   {
-    for (T& resource : m_pool)
+    for (T& resource : m_memory)
     {
       // Guaranteed non-null by iterator
       if (resource.getResourceId() == (StringId)0)

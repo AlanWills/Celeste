@@ -202,6 +202,7 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\Algorithms\EntityAlgorithms.h" />
     <ClInclude Include="Headers\Animation\AnimationEnums.h" />
     <ClInclude Include="Headers\Animation\Animators\ChangeScaleAnimator.h" />
     <ClInclude Include="Headers\Animation\Animators\MoveToPositionAnimator.h" />
@@ -417,9 +418,9 @@
     <ClInclude Include="Headers\Memory\Allocators\AlignedAllocator.h" />
     <ClInclude Include="Headers\XML\SiblingXMLElementIterator.h" />
     <ClInclude Include="Headers\Memory\Iterators\GameObjectIterator.h" />
-    <ClInclude Include="Headers\Memory\Iterators\EntityAllocatorIterator.h" />
+    <ClInclude Include="Headers\Memory\Iterators\ResizeableAllocatorIterator.h" />
     <ClInclude Include="Headers\Memory\Iterators\PoolAllocatorIterator.h" />
-    <ClInclude Include="Headers\Memory\Allocators\EntityAllocator.h" />
+    <ClInclude Include="Headers\Memory\Allocators\ResizeableAllocator.h" />
     <ClInclude Include="Headers\Memory\Allocators\DoubleBufferAllocator.h" />
     <ClInclude Include="Headers\Memory\Allocators\PoolAllocator.h" />
     <ClInclude Include="Headers\Objects\Component.h" />

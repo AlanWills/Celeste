@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Memory/Iterators/EntityAllocatorIterator.h"
+#include "Memory/Iterators/ResizeableAllocatorIterator.h"
 #include "Memory/Allocators/PoolAllocator.h"
 #include "Memory/ObserverPtr.h"
 #include "Debug/Assert.h"
@@ -15,44 +15,44 @@
 namespace Celeste
 {
   template <typename T>
-  class EntityAllocator
+  class ResizeableAllocator
   {
     public:
-      EntityAllocator(size_t initialCapacity);
-      EntityAllocator(EntityAllocator<T>&&) = default;
-      EntityAllocator(const EntityAllocator<T>&) = delete;
-      ~EntityAllocator() = default;
+      ResizeableAllocator(size_t initialCapacity);
+      ResizeableAllocator(ResizeableAllocator<T>&&) = default;
+      ResizeableAllocator(const ResizeableAllocator<T>&) = delete;
+      ~ResizeableAllocator() = default;
 
-      EntityAllocator<T>& operator=(const EntityAllocator<T>&) = delete;
-      EntityAllocator<T>& operator=(EntityAllocator<T>&&) = default;
+      ResizeableAllocator<T>& operator=(const ResizeableAllocator<T>&) = delete;
+      ResizeableAllocator<T>& operator=(ResizeableAllocator<T>&&) = default;
 
       observer_ptr<T> allocate();
       
       bool deallocate(T& item);
       void deallocateAll();
 
-      inline EntityAllocatorIterator<T> begin()
+      inline ResizeableAllocatorIterator<T> begin()
       {
-        return EntityAllocatorIterator<T>(m_allocators.begin(), m_allocators.end());
+        return ResizeableAllocatorIterator<T>(m_allocators.begin(), m_allocators.end());
       }
 
-      inline EntityAllocatorIterator<const T> begin() const { return cbegin(); }
+      inline ResizeableAllocatorIterator<const T> begin() const { return cbegin(); }
 
-      inline EntityAllocatorIterator<const T> cbegin() const 
+      inline ResizeableAllocatorIterator<const T> cbegin() const 
       { 
-        return EntityAllocatorIterator<const T>(m_allocators.cbegin(), m_allocators.cend());
+        return ResizeableAllocatorIterator<const T>(m_allocators.cbegin(), m_allocators.cend());
       }
 
-      inline EntityAllocatorIterator<T> end()
+      inline ResizeableAllocatorIterator<T> end()
       { 
-        return EntityAllocatorIterator<T>(m_allocators.begin(), m_allocators.back()->end());
+        return ResizeableAllocatorIterator<T>(m_allocators.begin(), m_allocators.back()->end());
       }
 
-      inline EntityAllocatorIterator<const T> end() const { return cend(); }
+      inline ResizeableAllocatorIterator<const T> end() const { return cend(); }
 
-      inline EntityAllocatorIterator<const T> cend() const 
+      inline ResizeableAllocatorIterator<const T> cend() const 
       {
-        return EntityAllocatorIterator<const T>(m_allocators.begin(), static_cast<const PoolAllocator<T>*>(m_allocators.back().get())->end());
+        return ResizeableAllocatorIterator<const T>(m_allocators.begin(), static_cast<const PoolAllocator<T>*>(m_allocators.back().get())->end());
       }
 
       bool contains(const T& entity) const;
@@ -78,7 +78,7 @@ namespace Celeste
 
       observer_ptr<const T> find(const std::function<bool(const T&)>& predicate) const
       {
-        return const_cast<EntityAllocator<T>*>(this)->find(predicate);
+        return const_cast<ResizeableAllocator<T>*>(this)->find(predicate);
       }
 
       void findAll(const std::function<bool(const T&)>& predicate, std::vector<std::reference_wrapper<T>>& foundObjects)
@@ -130,7 +130,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  EntityAllocator<T>::EntityAllocator(size_t initialCapacity) :
+  ResizeableAllocator<T>::ResizeableAllocator(size_t initialCapacity) :
     m_allocators()
   {
     m_allocators.emplace_back(std::make_unique<typename Celeste::PoolAllocator<T>>(initialCapacity));
@@ -138,7 +138,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  observer_ptr<T> EntityAllocator<T>::allocate()
+  observer_ptr<T> ResizeableAllocator<T>::allocate()
   {
     // Find an allocator with space
     observer_ptr<typename Celeste::PoolAllocator<T>> chosenAllocator = nullptr;
@@ -163,7 +163,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  bool EntityAllocator<T>::deallocate(T& item)
+  bool ResizeableAllocator<T>::deallocate(T& item)
   {
     observer_ptr<typename Celeste::PoolAllocator<T>> allocator = getAllocator(item);
     if (allocator == nullptr)
@@ -178,7 +178,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  observer_ptr<typename Celeste::PoolAllocator<T>> EntityAllocator<T>::getAllocator(T& item)
+  observer_ptr<typename Celeste::PoolAllocator<T>> ResizeableAllocator<T>::getAllocator(T& item)
   {
     for (const auto& allocator : m_allocators)
     {
@@ -194,7 +194,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  void EntityAllocator<T>::deallocateAll()
+  void ResizeableAllocator<T>::deallocateAll()
   {
     for (const auto& allocator : m_allocators)
     {
@@ -204,7 +204,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  bool EntityAllocator<T>::contains(const T& object) const
+  bool ResizeableAllocator<T>::contains(const T& object) const
   {
     for (const auto& allocator : m_allocators)
     {
@@ -219,7 +219,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  bool EntityAllocator<T>::isAllocated(const T& object) const
+  bool ResizeableAllocator<T>::isAllocated(const T& object) const
   {
     for (const auto& allocator : m_allocators)
     {

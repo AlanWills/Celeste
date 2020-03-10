@@ -4,8 +4,7 @@
 
 namespace Celeste
 {
-  //------------------------------------------------------------------------------------------------
-  Transform::Allocator Transform::m_allocator(500);
+  CUSTOM_MEMORY_CREATION(Transform, 100);
 
   //------------------------------------------------------------------------------------------------
   Transform::Transform() :
@@ -34,25 +33,6 @@ namespace Celeste
     {
       // Remove from parent
       m_parent->m_children.erase(std::remove(m_parent->m_children.begin(), m_parent->m_children.end(), this));
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void* Transform::operator new(size_t)
-  {
-    ASSERT(m_allocator.canAllocate(1));
-    return m_allocator.allocate();
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void Transform::operator delete(void* memory)
-  {
-    Transform& transform = *static_cast<Transform*>(memory);
-    ASSERT(m_allocator.isAllocated(transform));
-
-    if (m_allocator.isAllocated(transform))
-    {
-      m_allocator.deallocate(transform);
     }
   }
 

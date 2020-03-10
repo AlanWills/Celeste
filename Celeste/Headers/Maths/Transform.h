@@ -5,6 +5,7 @@
 #include "Matrix.h"
 #include "Objects/Object.h"
 #include "Memory/Allocators/PoolAllocator.h"
+#include "UtilityMacros/CustomMemoryMacros.h"
 
 #include <vector>
 
@@ -16,14 +17,11 @@ namespace Celeste
   /// A class representing a transformation in 3D space with various utility functions for manipulation and hierarchy.
   class Transform : public Object
   {
+    CUSTOM_MEMORY_DECLARATION(Transform, CelesteDllExport);
+
     public:
-      static constexpr const char* const type_name() { return "Transform"; }
-      
       CelesteDllExport Transform();
       CelesteDllExport ~Transform() override;
-
-      CelesteDllExport void* operator new(size_t);
-      CelesteDllExport void operator delete(void*);
 
       inline bool hasParent() const { return m_parent != nullptr; }
       CelesteDllExport void setParent(Transform* parent);
@@ -106,9 +104,6 @@ namespace Celeste
       inline glm::vec3 getInverseScale() const { return glm::vec3(1 / m_scale.x, 1 / m_scale.y, 1 / m_scale.z); }
 
     private:
-      using Allocator = PoolAllocator<Transform>;
-      static Allocator m_allocator;
-
       Transform(GameObject& gameObject);
 
       GameObject* m_gameObject;
