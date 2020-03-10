@@ -271,6 +271,7 @@
     <ClCompile Include="Source\Deserialization\TestKeyDeserialization.cpp" />
     <ClCompile Include="Source\Deserialization\TestProjectionModeDeserializer.cpp" />
     <ClCompile Include="Source\Deserialization\TestUIntDeserializer.cpp" />
+    <ClCompile Include="Source\Events\TestTriggerMode.cpp" />
     <ClCompile Include="Source\Input\TestKey.cpp" />
     <ClCompile Include="Source\Lua\DataConverters\TestLuaComponentDataConverter.cpp" />
     <ClCompile Include="Source\Lua\DataConverters\TestLuaComponentDataConverterRegistry.cpp" />
@@ -280,6 +281,7 @@
     <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\TestComponentDataConverterScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\TestDataConverterScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\TestLuaComponentDataConverterScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Events\TestEventScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Input\TestInputScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Input\TestKeyboardActivatorScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Input\TestKeyboardVisibilityScriptCommands.cpp" />

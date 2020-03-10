@@ -39,7 +39,7 @@ namespace TestCeleste
 #pragma region Get GameObject Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Transform_GetGameObject_NoGameObjectSet_ReturnsNullGameObjectHandle)
+  TEST_METHOD(Transform_GetGameObject_NoGameObjectSet_ReturnsNullGameObjectPtr)
   {
     Transform transform;
 
@@ -47,16 +47,15 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Transform_GetGameObject_GameObjectSet_ReturnsCorrectGameObjectHandle)
+  TEST_METHOD(Transform_GetGameObject_GameObjectSet_ReturnsCorrectGameObjectPtr)
   {
     GameObject gameObject;
-    Transform transform(gameObject);
 
-    Assert::AreEqual(&gameObject, transform.getGameObject());
+    Assert::AreEqual(&gameObject, gameObject.getTransform()->getGameObject());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Transform_GetConstGameObject_NoGameObjectSet_ReturnsConstNullGameObjectHandle)
+  TEST_METHOD(Transform_GetConstGameObject_NoGameObjectSet_ReturnsConstNullGameObjectPtr)
   {
     Transform transform;
 
@@ -64,12 +63,11 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Transform_GetConstGameObject_GameObjectSet_ReturnsCorrectConstGameObjectHandle)
+  TEST_METHOD(Transform_GetConstGameObject_GameObjectSet_ReturnsCorrectConstGameObjectPtr)
   {
-    GameObject gameObject;
-    Transform transform(gameObject);
+    const GameObject gameObject;
 
-    Assert::AreEqual(&gameObject, transform.getGameObject());
+    Assert::AreEqual(&gameObject, gameObject.getTransform()->getGameObject());
   }
 
 #pragma endregion
@@ -77,7 +75,7 @@ namespace TestCeleste
 #pragma region Get Parent Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Transform_GetParent_NoParentSet_ReturnsNullTransformHandle)
+  TEST_METHOD(Transform_GetParent_NoParentSet_ReturnsNullTransformPtr)
   {
     Transform transform;
 
@@ -85,7 +83,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Transform_GetParent_ParentSet_ReturnsCorrectTransformHandle)
+  TEST_METHOD(Transform_GetParent_ParentSet_ReturnsCorrectTransformPtr)
   {
     Transform parent;
     Transform transform;
@@ -95,7 +93,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Transform_GetConstParent_NoParentSet_ReturnsConstNullTransformHandle)
+  TEST_METHOD(Transform_GetConstParent_NoParentSet_ReturnsConstNullTransformPtr)
   {
     Transform transform;
 
@@ -103,7 +101,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Transform_GetConstParent_ParentSet_ReturnsCorrectConstTransformHandle)
+  TEST_METHOD(Transform_GetConstParent_ParentSet_ReturnsCorrectConstTransformPtr)
   {
     Transform parent;
     Transform transform;
@@ -117,7 +115,7 @@ namespace TestCeleste
 #pragma region Set Parent Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_SetParent_InputtingHandleToSameTransform_DoesNotSetParent)
+    TEST_METHOD(Transform_SetParent_InputtingPtrToSameTransform_DoesNotSetParent)
     {
       Transform transform;
 
@@ -129,35 +127,36 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_SetParent_InputtingHandleToDifferentTransform_DoesSetParent)
+    TEST_METHOD(Transform_SetParent_InputtingPtrToDifferentTransform_DoesSetParent)
     {
-      Transform transform;
-      Transform parent;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      Assert::IsNull(transform.getParent());
+      Assert::IsNull(transform->getParent());
 
-      transform.setParent(&parent);
+      transform->setParent(parent);
 
-      Assert::AreEqual(&parent, transform.getParent());
+      Assert::AreEqual(parent, transform->getParent());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_SetParent_InputtingHandleEqualToCurrentParent_DoesNothing)
+    TEST_METHOD(Transform_SetParent_InputtingPtrEqualToCurrentParent_DoesNothing)
     {
-      GameObject gameObject1, gameObject2;
-      Transform transform(gameObject1);
-      Transform parent(gameObject2);
+      GameObject gameObject, parent;
+      Transform* gameObjectTransform = gameObject.getTransform();
+      Transform* parentTransform = parent.getTransform();
 
-      Assert::IsNull(transform.getParent());
+      Assert::IsNull(gameObjectTransform->getParent());
 
-      transform.setParent(&parent);
+      gameObjectTransform->setParent(parentTransform);
 
-      Assert::AreEqual(&parent, transform.getParent());
+      Assert::AreEqual(parentTransform, gameObjectTransform->getParent());
       Assert::AreEqual((size_t)1, parent.getChildCount());
 
-      transform.setParent(&parent);
+      gameObjectTransform->setParent(parentTransform);
 
-      Assert::AreEqual(&parent, transform.getParent());
+      Assert::AreEqual(parentTransform, gameObjectTransform->getParent());
       Assert::AreEqual((size_t)1, parent.getChildCount());
     }
 
@@ -177,62 +176,62 @@ namespace TestCeleste
     TEST_METHOD(Transform_SetParent_NoParent_SettingParent_AddsTransformToParentChildren)
     {
       GameObject gameObject1, gameObject2;
-      Transform transform(gameObject1);
-      Transform parent(gameObject2);
+      Transform* transform = gameObject1.getTransform();
+      Transform* parent = gameObject2.getTransform();
 
-      Assert::IsNull(transform.getParent());
-      Assert::AreEqual((size_t)0, parent.getChildCount());
+      Assert::IsNull(transform->getParent());
+      Assert::AreEqual((size_t)0, parent->getChildCount());
 
-      transform.setParent(&parent);
+      transform->setParent(parent);
 
-      Assert::AreEqual(&parent, transform.getParent());
-      Assert::AreEqual((size_t)1, parent.getChildCount());
+      Assert::AreEqual(parent, transform->getParent());
+      Assert::AreEqual((size_t)1, parent->getChildCount());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_SetParent_Parent_SettingParent_RemovesTransformFromOldParentChildren_AddsTransformToParentChildren)
     {
       GameObject gameObject1, gameObject2;
-      Transform transform(gameObject1);
-      Transform parent(gameObject2);
+      Transform* transform = gameObject1.getTransform();
+      Transform* parent = gameObject2.getTransform();
 
-      Assert::IsNull(transform.getParent());
-      Assert::AreEqual((size_t)0, parent.getChildCount());
+      Assert::IsNull(transform->getParent());
+      Assert::AreEqual((size_t)0, parent->getChildCount());
 
-      transform.setParent(&parent);
+      transform->setParent(parent);
 
-      Assert::AreEqual(&parent, transform.getParent());
-      Assert::AreEqual((size_t)1, parent.getChildCount());
+      Assert::AreEqual(parent, transform->getParent());
+      Assert::AreEqual((size_t)1, parent->getChildCount());
 
       GameObject gameObject3;
-      Transform parent2(gameObject3);
+      Transform* parent2 = gameObject3.getTransform();
 
-      transform.setParent(&parent2);
+      transform->setParent(parent2);
 
-      Assert::AreEqual(&parent2, transform.getParent());
-      Assert::AreEqual((size_t)0, parent.getChildCount());
-      Assert::AreEqual((size_t)1, parent2.getChildCount());
+      Assert::AreEqual(parent2, transform->getParent());
+      Assert::AreEqual((size_t)0, parent->getChildCount());
+      Assert::AreEqual((size_t)1, parent2->getChildCount());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_SetParent_Parent_SettingToNull_RemovesTransformFromOldParentChildren)
     {
       GameObject gameObject1, gameObject2;
-      Transform transform(gameObject1);
-      Transform parent(gameObject2);
+      Transform* transform = gameObject1.getTransform();
+      Transform* parent = gameObject2.getTransform();
 
-      Assert::IsNull(transform.getParent());
-      Assert::AreEqual((size_t)0, parent.getChildCount());
+      Assert::IsNull(transform->getParent());
+      Assert::AreEqual((size_t)0, parent->getChildCount());
 
-      transform.setParent(&parent);
+      transform->setParent(parent);
 
-      Assert::AreEqual(&parent, transform.getParent());
-      Assert::AreEqual((size_t)1, parent.getChildCount());
+      Assert::AreEqual(parent, transform->getParent());
+      Assert::AreEqual((size_t)1, parent->getChildCount());
 
-      transform.setParent(nullptr);
+      transform->setParent(nullptr);
 
-      Assert::IsNull(transform.getParent());
-      Assert::AreEqual((size_t)0, parent.getChildCount());
+      Assert::IsNull(transform->getParent());
+      Assert::AreEqual((size_t)0, parent->getChildCount());
     }
 
 #pragma endregion
@@ -242,7 +241,7 @@ namespace TestCeleste
 #pragma region Non Const
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildTransform_NonConst_NoChildren_ReturnsNullTransformHandle)
+    TEST_METHOD(Transform_GetChildTransform_NonConst_NoChildren_ReturnsNullTransformPtr)
     {
       Transform transform;
 
@@ -252,28 +251,28 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildTransform_NonConst_IndexGreaterThanOrEqualToChildCount_ReturnsNullTransformHandle)
+    TEST_METHOD(Transform_GetChildTransform_NonConst_IndexGreaterThanOrEqualToChildCount_ReturnsNullTransformPtr)
     {
       GameObject gameObject1, gameObject2;
-      Transform transform(gameObject1);
-      Transform parent(gameObject2);
-      transform.setParent(&parent);
+      Transform* transform = gameObject1.getTransform();
+      Transform* parent = gameObject2.getTransform();
+      transform->setParent(parent);
 
-      Assert::AreEqual((size_t)1, parent.getChildCount());
-      Assert::IsNull(parent.getChildTransform(parent.getChildCount()));
-      Assert::IsNull(parent.getChildTransform(10));
+      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::IsNull(parent->getChildTransform(parent->getChildCount()));
+      Assert::IsNull(parent->getChildTransform(10));
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildTransform_NonConst_IndexLessThanChildCount_ReturnsChildTransformHandle)
+    TEST_METHOD(Transform_GetChildTransform_NonConst_IndexLessThanChildCount_ReturnsChildTransformPtr)
     {
       GameObject gameObject1, gameObject2;
-      Transform transform(gameObject1);
-      Transform parent(gameObject2);
-      transform.setParent(&parent);
+      Transform* transform = gameObject1.getTransform();
+      Transform* parent = gameObject2.getTransform();
+      transform->setParent(parent);
 
-      Assert::AreEqual((size_t)1, parent.getChildCount());
-      Assert::AreEqual(&transform, parent.getChildTransform(0));
+      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::AreEqual(transform, parent->getChildTransform(0));
     }
 
 #pragma endregion
@@ -281,7 +280,7 @@ namespace TestCeleste
 #pragma region Const
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildTransform_Const_NoChildren_ReturnsNullConstTransformHandle)
+    TEST_METHOD(Transform_GetChildTransform_Const_NoChildren_ReturnsNullConstTransformPtr)
     {
       const Transform transform;
 
@@ -291,28 +290,28 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildTransform_Const_IndexGreaterThanOrEqualToChildCount_ReturnsNullConstTransformHandle)
+    TEST_METHOD(Transform_GetChildTransform_Const_IndexGreaterThanOrEqualToChildCount_ReturnsNullConstTransformPtr)
     {
       GameObject gameObject1, gameObject2;
-      Transform transform(gameObject1);
-      Transform parent(gameObject2);
-      transform.setParent(&parent);
+      Transform* transform = gameObject1.getTransform();
+      Transform* parent = gameObject2.getTransform();
+      transform->setParent(parent);
 
-      Assert::AreEqual((size_t)1, parent.getChildCount());
-      Assert::IsNull(static_cast<const Transform*>(&parent)->getChildTransform(parent.getChildCount()));
-      Assert::IsNull(static_cast<const Transform*>(&parent)->getChildTransform(10));
+      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::IsNull(static_cast<const Transform*>(parent)->getChildTransform(parent->getChildCount()));
+      Assert::IsNull(static_cast<const Transform*>(parent)->getChildTransform(10));
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildTransform_Const_IndexLessThanChildCount_ReturnsChildConstTransformHandle)
+    TEST_METHOD(Transform_GetChildTransform_Const_IndexLessThanChildCount_ReturnsChildConstTransformPtr)
     {
       GameObject gameObject1, gameObject2;
-      Transform transform(gameObject1);
-      Transform parent(gameObject2);
-      transform.setParent(&parent);
+      Transform* transform = gameObject1.getTransform();
+      Transform* parent = gameObject2.getTransform();
+      transform->setParent(parent);
 
-      Assert::AreEqual((size_t)1, parent.getChildCount());
-      Assert::AreEqual(static_cast<const Transform*>(&transform), static_cast<const Transform*>(&parent)->getChildTransform(0));
+      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::AreEqual(static_cast<const Transform*>(transform), static_cast<const Transform*>(parent)->getChildTransform(0));
     }
 
 #pragma endregion
@@ -324,7 +323,7 @@ namespace TestCeleste
 #pragma region Non Const
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildGameObject_NonConst_NoChildren_ReturnsNullGameObjectHandle)
+    TEST_METHOD(Transform_GetChildGameObject_NonConst_NoChildren_ReturnsNullGameObjectPtr)
     {
       Transform transform;
 
@@ -334,28 +333,28 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildGameObject_NonConst_IndexGreaterThanOrEqualToChildCount_ReturnsNullGameObjectHandle)
+    TEST_METHOD(Transform_GetChildGameObject_NonConst_IndexGreaterThanOrEqualToChildCount_ReturnsNullGameObjectPtr)
     {
       GameObject gameObject1, gameObject2;
-      Transform transform(gameObject1);
-      Transform parent(gameObject2);
-      transform.setParent(&parent);
+      Transform* transform = gameObject1.getTransform();
+      Transform* parent = gameObject2.getTransform();
+      transform->setParent(parent);
 
-      Assert::AreEqual((size_t)1, parent.getChildCount());
-      Assert::IsNull(parent.getChildGameObject(parent.getChildCount()));
-      Assert::IsNull(parent.getChildGameObject(10));
+      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::IsNull(parent->getChildGameObject(parent->getChildCount()));
+      Assert::IsNull(parent->getChildGameObject(10));
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildGameObject_NonConst_IndexLessThanChildCount_ReturnsChildTransformsGameObjectHandle)
+    TEST_METHOD(Transform_GetChildGameObject_NonConst_IndexLessThanChildCount_ReturnsChildTransformsGameObjectPtr)
     {
-      GameObject gameObject;
-      Transform transform(gameObject);
-      Transform parent(gameObject);
-      transform.setParent(&parent);
+      GameObject gameObject1, gameObject2;
+      Transform* transform = gameObject1.getTransform();
+      Transform* parent = gameObject2.getTransform();
+      transform->setParent(parent);
 
-      Assert::AreEqual((size_t)1, parent.getChildCount());
-      Assert::AreEqual(transform.getGameObject(), parent.getChildGameObject(0));
+      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::AreEqual(transform->getGameObject(), parent->getChildGameObject(0));
     }
 
 #pragma endregion
@@ -363,7 +362,7 @@ namespace TestCeleste
 #pragma region Const
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildGameObject_Const_NoChildren_ReturnsNullConstGameObjectHandle)
+    TEST_METHOD(Transform_GetChildGameObject_Const_NoChildren_ReturnsNullConstGameObjectPtr)
     {
       const Transform transform;
 
@@ -373,28 +372,28 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildGameObject_Const_IndexGreaterThanOrEqualToChildCount_ReturnsNullConstGameObjectHandle)
+    TEST_METHOD(Transform_GetChildGameObject_Const_IndexGreaterThanOrEqualToChildCount_ReturnsNullConstGameObjectPtr)
     {
       GameObject gameObject1, gameObject2;
-      Transform transform(gameObject1);
-      Transform parent(gameObject2);
-      transform.setParent(&parent);
+      Transform* transform = gameObject1.getTransform();
+      Transform* parent = gameObject2.getTransform();
+      transform->setParent(parent);
 
-      Assert::AreEqual((size_t)1, parent.getChildCount());
-      Assert::IsNull(static_cast<const Transform*>(&parent)->getChildGameObject(parent.getChildCount()));
-      Assert::IsNull(static_cast<const Transform*>(&parent)->getChildGameObject(10));
+      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::IsNull(static_cast<const Transform*>(parent)->getChildGameObject(parent->getChildCount()));
+      Assert::IsNull(static_cast<const Transform*>(parent)->getChildGameObject(10));
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_GetChildGameObject_Const_IndexLessThanChildCount_ReturnsChildTransformsConstcnGameObjectHandle)
+    TEST_METHOD(Transform_GetChildGameObject_Const_IndexLessThanChildCount_ReturnsChildTransformsConstcnGameObjectPtr)
     {
-      GameObject gameObject;
-      Transform transform(gameObject);
-      Transform parent(gameObject);
-      transform.setParent(&parent);
+      GameObject gameObject1, gameObject2;
+      Transform* transform = gameObject1.getTransform();
+      Transform* parent = gameObject2.getTransform();
+      transform->setParent(parent);
 
-      Assert::AreEqual((size_t)1, parent.getChildCount());
-      Assert::AreEqual(static_cast<const GameObject*>(transform.getGameObject()), static_cast<const Transform*>(&parent)->getChildGameObject(0));
+      Assert::AreEqual((size_t)1, parent->getChildCount());
+      Assert::AreEqual(static_cast<const GameObject*>(transform->getGameObject()), static_cast<const Transform*>(parent)->getChildGameObject(0));
     }
 
 #pragma endregion
@@ -423,25 +422,25 @@ namespace TestCeleste
     TEST_METHOD(Transform_Foreach_WithChildren_IteratesOverChildren)
     {
       GameObject gameObject1, gameObject2, gameObject3, gameObject4;
-      Transform parent(gameObject1);
-      Transform child1(gameObject2);
-      Transform child2(gameObject3);
-      Transform child3(gameObject4);
+      Transform* parent = gameObject1.getTransform();
+      Transform* child1 = gameObject2.getTransform();
+      Transform* child2 = gameObject3.getTransform();
+      Transform* child3 = gameObject4.getTransform();
 
-      child1.setParent(&parent);
-      child2.setParent(&parent);
-      child3.setParent(&parent);
+      child1->setParent(parent);
+      child2->setParent(parent);
+      child3->setParent(parent);
 
       std::vector<observer_ptr<Transform>> children;
-      for (observer_ptr<Transform> child : *&parent)
+      for (observer_ptr<Transform> child : *parent)
       {
         children.push_back(child);
       }
 
       Assert::AreEqual((size_t)3, children.size());
-      Assert::AreEqual(children[0], &child1);
-      Assert::AreEqual(children[1], &child2);
-      Assert::AreEqual(children[2], &child3);
+      Assert::AreEqual(children[0], child1);
+      Assert::AreEqual(children[1], child2);
+      Assert::AreEqual(children[2], child3);
     }
 
 #pragma endregion
@@ -577,11 +576,13 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_HasParent_ShouldReturnTrue)
     {
-      Transform transform, transform2;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      transform.setParent(&transform2);
+      transform->setParent(parent);
 
-      Assert::IsTrue(transform.hasParent());
+      Assert::IsTrue(transform->hasParent());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -694,14 +695,15 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetWorldRotation_WithParent)
     {
-      Transform transform, transform2;
-      Transform* txPtr = &transform2;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      transform2.setRotation(glm::half_pi<float>());
-      transform.setRotation(glm::half_pi<float>());
-      transform.setParent(txPtr);
+      parent->setRotation(glm::half_pi<float>());
+      transform->setRotation(glm::half_pi<float>());
+      transform->setParent(parent);
 
-      Assert::AreEqual(glm::pi<float>(), transform.getWorldRotation());
+      Assert::AreEqual(glm::pi<float>(), transform->getWorldRotation());
     }
 
 #pragma endregion
@@ -726,21 +728,22 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_SetWorldRotation_WithParent)
     {
-      Transform transform, transform2;
-      Transform* txPtr = &transform2;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      transform2.setRotation(1);
-      transform.setParent(txPtr);
+      parent->setRotation(1);
+      transform->setParent(parent);
 
-      transform.setWorldRotation(1.5f);
+      transform->setWorldRotation(1.5f);
 
-      Assert::AreEqual(0.5f, transform.getRotation());
-      Assert::AreEqual(1.5f, transform.getWorldRotation());
+      Assert::AreEqual(0.5f, transform->getRotation());
+      Assert::AreEqual(1.5f, transform->getWorldRotation());
 
-      transform.setWorldRotation(-1.0f);
+      transform->setWorldRotation(-1.0f);
 
-      Assert::AreEqual(-2.0f, transform.getRotation());
-      Assert::AreEqual(-1.0f, transform.getWorldRotation());
+      Assert::AreEqual(-2.0f, transform->getRotation());
+      Assert::AreEqual(-1.0f, transform->getWorldRotation());
     }
 
 #pragma endregion
@@ -760,15 +763,16 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetInverseWorldRotation_WithParent)
     {
-      Transform transform, transform2;
-      Transform* txPtr = &transform2;
+      GameObject gameObject, gameObject2;
+      Transform* transform = gameObject.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
-      transform2.setRotation(glm::half_pi<float>());
-      transform.setRotation(glm::half_pi<float>());
-      transform.setParent(txPtr);
+      transform2->setRotation(glm::half_pi<float>());
+      transform->setRotation(glm::half_pi<float>());
+      transform->setParent(transform2);
 
-      Assert::AreEqual(txPtr, transform.getParent());
-      Assert::AreEqual(-glm::pi<float>(), transform.getInverseWorldRotation());
+      Assert::AreEqual(transform2, transform->getParent());
+      Assert::AreEqual(-glm::pi<float>(), transform->getInverseWorldRotation());
     }
 
 #pragma endregion
@@ -787,14 +791,15 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetWorldTranslation_WithParent)
     {
-      Transform transform, transform2;
-      Transform* txPtr = &transform2;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      transform2.setTranslation(glm::vec3(-0.5f, 2, -1));
-      transform.setTranslation(glm::vec3(1.5f, -2.5f, 1));
-      transform.setParent(txPtr);
+      parent->setTranslation(glm::vec3(-0.5f, 2, -1));
+      transform->setTranslation(glm::vec3(1.5f, -2.5f, 1));
+      transform->setParent(parent);
 
-      Assert::IsTrue(glm::vec3(1, -0.5f, 0) == transform.getWorldTranslation());
+      Assert::IsTrue(glm::vec3(1, -0.5f, 0) == transform->getWorldTranslation());
     }
 
 #pragma endregion
@@ -829,29 +834,30 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_SetWorldTranslation_WithParent)
     {
-      Transform transform, transform2;
-      Transform* txPtr = &transform2;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      transform2.setTranslation(glm::vec3(-0.5f, 2, -1));
-      transform.setParent(txPtr);
+      parent->setTranslation(glm::vec3(-0.5f, 2, -1));
+      transform->setParent(parent);
 
-      Assert::IsTrue(glm::vec3() == transform.getTranslation());
-      Assert::IsTrue(glm::vec3(-0.5f, 2, -1) == transform.getWorldTranslation());
+      Assert::IsTrue(glm::vec3() == transform->getTranslation());
+      Assert::IsTrue(glm::vec3(-0.5f, 2, -1) == transform->getWorldTranslation());
 
-      transform.setWorldTranslation(glm::vec2(2, -1.5f));
+      transform->setWorldTranslation(glm::vec2(2, -1.5f));
 
-      Assert::IsTrue(glm::vec3(2.5f, -3.5f, 1.0f) == transform.getTranslation());
-      Assert::IsTrue(glm::vec3(2, -1.5f, 0) == transform.getWorldTranslation());
+      Assert::IsTrue(glm::vec3(2.5f, -3.5f, 1.0f) == transform->getTranslation());
+      Assert::IsTrue(glm::vec3(2, -1.5f, 0) == transform->getWorldTranslation());
 
-      transform.setWorldTranslation(-0.15f, 1, -1);
+      transform->setWorldTranslation(-0.15f, 1, -1);
 
-      Assert::IsTrue(glm::vec3(0.35f, -1, 0) == transform.getTranslation());
-      Assert::IsTrue(glm::vec3(-0.15f, 1, -1) == transform.getWorldTranslation());
+      Assert::IsTrue(glm::vec3(0.35f, -1, 0) == transform->getTranslation());
+      Assert::IsTrue(glm::vec3(-0.15f, 1, -1) == transform->getWorldTranslation());
 
-      transform.setWorldTranslation(glm::vec3(-1, 0, 1));
+      transform->setWorldTranslation(glm::vec3(-1, 0, 1));
 
-      Assert::IsTrue(glm::vec3(-0.5f, -2, 2) == transform.getTranslation());
-      Assert::IsTrue(glm::vec3(-1, 0, 1) == transform.getWorldTranslation());
+      Assert::IsTrue(glm::vec3(-0.5f, -2, 2) == transform->getTranslation());
+      Assert::IsTrue(glm::vec3(-1, 0, 1) == transform->getWorldTranslation());
     }
 
 #pragma endregion
@@ -871,15 +877,16 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetInverseWorldTranslation_WithParent)
     {
-      Transform transform, parent;
-      Transform* parentPtr = &parent;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      parent.setTranslation(glm::vec3(-0.5f, 2, -1));
-      transform.setTranslation(glm::vec3(1.5f, -2.5f, 1));
-      transform.setParent(&parent);
+      parent->setTranslation(glm::vec3(-0.5f, 2, -1));
+      transform->setTranslation(glm::vec3(1.5f, -2.5f, 1));
+      transform->setParent(parent);
 
-      Assert::AreEqual(&parent, transform.getParent());
-      Assert::AreEqual(glm::vec3(-1, 0.5f, 0), transform.getInverseWorldTranslation());
+      Assert::AreEqual(parent, transform->getParent());
+      Assert::AreEqual(glm::vec3(-1, 0.5f, 0), transform->getInverseWorldTranslation());
     }
 
 #pragma endregion
@@ -898,14 +905,15 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetWorldScale_WithParent)
     {
-      Transform transform, transform2;
-      Transform* txPtr = &transform2;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      transform2.setScale(glm::vec3(0.5f, 2, -1));
-      transform.setScale(glm::vec3(2, -0.25f, -1));
-      transform.setParent(txPtr);
+      parent->setScale(glm::vec3(0.5f, 2, -1));
+      transform->setScale(glm::vec3(2, -0.25f, -1));
+      transform->setParent(parent);
 
-      Assert::IsTrue(glm::vec3(1, -0.5f, 1) == transform.getWorldScale());
+      Assert::IsTrue(glm::vec3(1, -0.5f, 1) == transform->getWorldScale());
     }
 
 #pragma endregion
@@ -940,31 +948,32 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_SetWorldScale_WithParent)
     {
-      Transform transform, transform2;
-      Transform* txPtr = &transform2;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      transform2.setScale(glm::vec3(0.5f, 2, -1));
-      transform.setParent(txPtr);
+      parent->setScale(glm::vec3(0.5f, 2, -1));
+      transform->setParent(parent);
 
-      transform.setWorldScale(0, 0);
+      transform->setWorldScale(0, 0);
 
-      Assert::IsTrue(glm::vec3(0, 0, -1) == transform.getScale());
-      Assert::IsTrue(glm::vec3(0, 0, 1) == transform.getWorldScale());
+      Assert::IsTrue(glm::vec3(0, 0, -1) == transform->getScale());
+      Assert::IsTrue(glm::vec3(0, 0, 1) == transform->getWorldScale());
 
-      transform.setWorldScale(glm::vec2(2, -1.5f));
+      transform->setWorldScale(glm::vec2(2, -1.5f));
 
-      Assert::IsTrue(glm::vec3(4, -0.75f, -1) == transform.getScale());
-      Assert::IsTrue(glm::vec3(2, -1.5f, 1) == transform.getWorldScale());
+      Assert::IsTrue(glm::vec3(4, -0.75f, -1) == transform->getScale());
+      Assert::IsTrue(glm::vec3(2, -1.5f, 1) == transform->getWorldScale());
 
-      transform.setWorldScale(-0.25f, 1, -1);
+      transform->setWorldScale(-0.25f, 1, -1);
 
-      Assert::IsTrue(glm::vec3(-0.5f, 0.5f, 1) == transform.getScale());
-      Assert::IsTrue(glm::vec3(-0.25f, 1, -1) == transform.getWorldScale());
+      Assert::IsTrue(glm::vec3(-0.5f, 0.5f, 1) == transform->getScale());
+      Assert::IsTrue(glm::vec3(-0.25f, 1, -1) == transform->getWorldScale());
 
-      transform.setWorldScale(glm::vec3(-1, 0, 1));
+      transform->setWorldScale(glm::vec3(-1, 0, 1));
 
-      Assert::IsTrue(glm::vec3(-2, 0, -1) == transform.getScale());
-      Assert::IsTrue(glm::vec3(-1, 0, 1) == transform.getWorldScale());
+      Assert::IsTrue(glm::vec3(-2, 0, -1) == transform->getScale());
+      Assert::IsTrue(glm::vec3(-1, 0, 1) == transform->getWorldScale());
     }
 
 #pragma endregion
@@ -984,14 +993,15 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetInverseWorldScale_WithParent)
     {
-      Transform transform, parent;
-      Transform* parentPtr = &parent;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      parent.setScale(glm::vec3(0.5f, 2, -1));
-      transform.setScale(glm::vec3(2, -0.25f, -1));
-      transform.setParent(&parent);
+      parent->setScale(glm::vec3(0.5f, 2, -1));
+      transform->setScale(glm::vec3(2, -0.25f, -1));
+      transform->setParent(parent);
 
-      Assert::AreEqual(glm::vec3(1, -2, 1), transform.getInverseWorldScale());
+      Assert::AreEqual(glm::vec3(1, -2, 1), transform->getInverseWorldScale());
     }
 
 #pragma endregion
@@ -1017,24 +1027,25 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetWorldMatrix_WithParent)
     {
-      Transform transform, transform2;
-      Transform* txPtr = &transform2;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      transform2.setRotation(glm::half_pi<float>());
-      transform2.setTranslation(glm::vec3(-0.25f, -2, -1));
-      transform2.setScale(glm::vec3(5, 1, -1));
+      parent->setRotation(glm::half_pi<float>());
+      parent->setTranslation(glm::vec3(-0.25f, -2, -1));
+      parent->setScale(glm::vec3(5, 1, -1));
 
-      transform.setRotation(glm::half_pi<float>());
-      transform.setTranslation(glm::vec3(2, -1, 1));
-      transform.setScale(glm::vec3(0.5f, 0.25f, 1));
-      transform.setParent(txPtr);
+      transform->setRotation(glm::half_pi<float>());
+      transform->setTranslation(glm::vec3(2, -1, 1));
+      transform->setScale(glm::vec3(0.5f, 0.25f, 1));
+      transform->setParent(parent);
 
       glm::mat4 expected;
       expected[3] = glm::vec4(1.75f, -3, 0, 1);
       expected = glm::rotate(expected, -glm::pi<float>(), glm::vec3(0, 0, 1));
       expected = glm::scale(expected, glm::vec3(2.5f, 0.25f, -1));
 
-      Assert::IsTrue(expected == transform.getWorldMatrix());
+      Assert::IsTrue(expected == transform->getWorldMatrix());
     }
 
 #pragma endregion
@@ -1060,24 +1071,25 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_GetInverseWorldMatrix_WithParent)
     {
-      Transform transform, parent;
-      Transform* parentPtr = &parent;
+      GameObject transformGameObject, parentGameObject;
+      Transform* parent = parentGameObject.getTransform();
+      Transform* transform = transformGameObject.getTransform();
 
-      parent.setRotation(glm::half_pi<float>());
-      parent.setTranslation(glm::vec3(-0.25f, -2, -1));
-      parent.setScale(glm::vec3(5, 1, -1));
+      parent->setRotation(glm::half_pi<float>());
+      parent->setTranslation(glm::vec3(-0.25f, -2, -1));
+      parent->setScale(glm::vec3(5, 1, -1));
 
-      transform.setRotation(glm::half_pi<float>());
-      transform.setTranslation(glm::vec3(2, -1, 1));
-      transform.setScale(glm::vec3(0.5f, 0.25f, 1));
-      transform.setParent(&parent);
+      transform->setRotation(glm::half_pi<float>());
+      transform->setTranslation(glm::vec3(2, -1, 1));
+      transform->setScale(glm::vec3(0.5f, 0.25f, 1));
+      transform->setParent(parent);
 
-      glm::mat4 expected = glm::inverse(transform.getWorldMatrix());
+      glm::mat4 expected = glm::inverse(transform->getWorldMatrix());
 
-      Assert::AreEqual(&parent, transform.getParent());
-      AssertExt::AreAlmostEqual(expected, transform.getInverseWorldMatrix());
-      AssertExt::AreAlmostEqual(glm::mat4(), transform.getInverseWorldMatrix() * transform.getWorldMatrix());
-      AssertExt::AreAlmostEqual(glm::mat4(), transform.getWorldMatrix() * transform.getInverseWorldMatrix());
+      Assert::AreEqual(parent, transform->getParent());
+      AssertExt::AreAlmostEqual(expected, transform->getInverseWorldMatrix());
+      AssertExt::AreAlmostEqual(glm::mat4(), transform->getInverseWorldMatrix() * transform->getWorldMatrix());
+      AssertExt::AreAlmostEqual(glm::mat4(), transform->getWorldMatrix() * transform->getInverseWorldMatrix());
     }
 
 #pragma endregion
@@ -1087,10 +1099,9 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_Destructor_WithParent_RemovesTransformFromParentChildren)
     {
-      GameObject gameObject1, gameObject2;
-      Transform parent(gameObject2);
+      Transform parent;
       {
-        Transform transform(gameObject1);
+        Transform transform;
 
         Assert::IsNull(transform.getParent());
         Assert::AreEqual((size_t)0, parent.getChildCount());

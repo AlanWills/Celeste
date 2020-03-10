@@ -20,7 +20,6 @@ namespace Celeste
       static constexpr const char* const type_name() { return "Transform"; }
       
       CelesteDllExport Transform();
-      CelesteDllExport Transform(GameObject& gameObject);
       CelesteDllExport ~Transform() override;
 
       CelesteDllExport void* operator new(size_t);
@@ -110,6 +109,8 @@ namespace Celeste
       using Allocator = PoolAllocator<Transform>;
       static Allocator m_allocator;
 
+      Transform(GameObject& gameObject);
+
       GameObject* m_gameObject;
       Transform* m_parent;
       std::vector<Transform*> m_children;
@@ -117,5 +118,7 @@ namespace Celeste
       float m_rotation;
       glm::vec3 m_translation;
       glm::vec3 m_scale;
+
+      friend class GameObject;
   };
 }

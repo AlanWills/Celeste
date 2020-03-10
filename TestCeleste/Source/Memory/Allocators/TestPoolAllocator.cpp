@@ -92,6 +92,45 @@ namespace TestCeleste
 
 #pragma endregion
 
+#pragma region Is Allocated Tests
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(PoolAllocator_IsAllocated_InputtingAllocatedObject_ShouldReturnTrue)
+    {
+      PoolAllocator<MockComponent> pool(1024);
+      observer_ptr<MockComponent> object = pool.allocate();
+
+      Assert::AreEqual((size_t)1, pool.size());
+      Assert::IsTrue(pool.isAllocated(*object));
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(PoolAllocator_Allocate_InputtingUnAllocatedObject_ShouldReturnFalse)
+    {
+      PoolAllocator<MockComponent> pool(1024);
+      MockComponent& object = *pool.allocate();
+
+      Assert::AreEqual((size_t)1, pool.size());
+
+      pool.deallocate(object);
+
+      Assert::AreEqual((size_t)0, pool.size());
+      Assert::IsFalse(pool.deallocate(object));
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(PoolAllocator_Allocate_InputtingObjectNotFromAllocator_ShouldReturnFalse)
+    {
+      GameObject gameObject;
+      MockComponent object(gameObject);
+      PoolAllocator<MockComponent> pool(1024);
+
+      Assert::AreEqual((size_t)0, pool.size());
+      Assert::IsFalse(pool.deallocate(object));
+    }
+
+#pragma endregion
+
 #pragma region Allocate Tests
 
     //------------------------------------------------------------------------------------------------

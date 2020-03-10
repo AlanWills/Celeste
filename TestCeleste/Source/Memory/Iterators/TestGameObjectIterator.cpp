@@ -18,13 +18,13 @@ namespace TestCeleste
     {
       GameObject gameObject1;
       GameObject gameObject2;
-      Transform transform1(gameObject1);
-      Transform transform2(gameObject2);
+      Transform* transform1 = gameObject1.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
       std::vector<Transform*> transforms
       {
-        &transform1,
-        &transform2
+        transform1,
+        transform2
       };
 
       Assert::AreEqual(&gameObject1, *GameObjectIterator(transforms.begin()));
@@ -40,13 +40,13 @@ namespace TestCeleste
     {
       GameObject gameObject1;
       GameObject gameObject2;
-      Transform transform1(gameObject1);
-      Transform transform2(gameObject2);
+      Transform* transform1 = gameObject1.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
       std::vector<Transform*> transforms
       {
-        &transform1,
-        &transform2
+        transform1,
+        transform2
       };
 
       GameObjectIterator it(transforms.begin());
@@ -67,13 +67,13 @@ namespace TestCeleste
     {
       GameObject gameObject1;
       GameObject gameObject2;
-      Transform transform1(gameObject1);
-      Transform transform2(gameObject2);
+      Transform* transform1 = gameObject1.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
       std::vector<Transform*> transforms
       {
-        &transform1,
-        &transform2
+        transform1,
+        transform2
       };
 
       Assert::IsTrue(GameObjectIterator(transforms.begin()) == GameObjectIterator(transforms.begin()));
@@ -85,13 +85,13 @@ namespace TestCeleste
     {
       GameObject gameObject1;
       GameObject gameObject2;
-      Transform transform1(gameObject1);
-      Transform transform2(gameObject2);
+      Transform* transform1 = gameObject1.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
       std::vector<Transform*> transforms
       {
-        &transform1,
-        &transform2
+        transform1,
+        transform2
       };
 
       Assert::IsFalse(GameObjectIterator(transforms.begin()) == GameObjectIterator(transforms.begin() + 1));
@@ -103,8 +103,8 @@ namespace TestCeleste
     {
       GameObject gameObject1;
       GameObject gameObject2;
-      Transform transform1(gameObject1);
-      Transform transform2(gameObject2);
+      Transform* transform1 = gameObject1.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
       std::vector<Transform*> transforms
       {
@@ -122,13 +122,13 @@ namespace TestCeleste
     {
       GameObject gameObject1;
       GameObject gameObject2;
-      Transform transform1(gameObject1);
-      Transform transform2(gameObject2);
+      Transform* transform1 = gameObject1.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
       std::vector<Transform*> transforms
       {
-        &transform1,
-        &transform2
+        transform1,
+        transform2
       };
 
       GameObjectIterator it(transforms.begin());
@@ -143,13 +143,13 @@ namespace TestCeleste
     {
       GameObject gameObject1;
       GameObject gameObject2;
-      Transform transform1(gameObject1);
-      Transform transform2(gameObject2);
+      Transform* transform1 = gameObject1.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
       std::vector<Transform*> transforms
       {
-        &transform1,
-        &transform2
+        transform1,
+        transform2
       };
 
       GameObjectIterator it(transforms.begin());
@@ -170,13 +170,13 @@ namespace TestCeleste
     {
       GameObject gameObject1;
       GameObject gameObject2;
-      Transform transform1(gameObject1);
-      Transform transform2(gameObject2);
+      Transform* transform1 = gameObject1.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
       std::vector<Transform*> transforms
       {
-        &transform1,
-        &transform2
+        transform1,
+        transform2
       };
 
       Assert::IsTrue(GameObjectIterator(transforms.begin()) != GameObjectIterator(transforms.begin() + 1));
@@ -188,13 +188,13 @@ namespace TestCeleste
     {
       GameObject gameObject1;
       GameObject gameObject2;
-      Transform transform1(gameObject1);
-      Transform transform2(gameObject2);
+      Transform* transform1 = gameObject1.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
       std::vector<Transform*> transforms
       {
-        &transform1,
-        &transform2
+        transform1,
+        transform2
       };
 
       Assert::IsFalse(GameObjectIterator(transforms.begin()) != GameObjectIterator(transforms.begin()));
@@ -206,13 +206,13 @@ namespace TestCeleste
     {
       GameObject gameObject1;
       GameObject gameObject2;
-      Transform transform1(gameObject1);
-      Transform transform2(gameObject2);
+      Transform* transform1 = gameObject1.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
       std::vector<Transform*> transforms
       {
-        &transform1,
-        &transform2
+        transform1,
+        transform2
       };
 
       GameObjectIterator it(transforms.begin());
@@ -227,13 +227,13 @@ namespace TestCeleste
     {
       GameObject gameObject1;
       GameObject gameObject2;
-      Transform transform1(gameObject1);
-      Transform transform2(gameObject2);
+      Transform* transform1 = gameObject1.getTransform();
+      Transform* transform2 = gameObject2.getTransform();
 
       std::vector<Transform*> transforms
       {
-        &transform1,
-        &transform2
+        transform1,
+        transform2
       };
 
       GameObjectIterator it(transforms.begin());

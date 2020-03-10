@@ -8,41 +8,35 @@
 using LuaState = Celeste::Lua::LuaState;
 
 
-namespace TestCeleste
+namespace TestCeleste::Lua::Physics
 {
-  namespace Lua
+  CELESTE_TEST_CLASS(TestPhysicsScriptCommands)
+
+  //------------------------------------------------------------------------------------------------
+  void TestPhysicsScriptCommands::testInitialize()
   {
-    namespace Physics
-    {
-      CELESTE_TEST_CLASS(TestPhysicsScriptCommands)
+    LuaState::instance().new_usertype<Celeste::Component>("Component");
+  }
 
-      //------------------------------------------------------------------------------------------------
-      void TestPhysicsScriptCommands::testInitialize()
-      {
-        LuaState::instance().new_usertype<Celeste::Component>("Component");
-      }
-
-      //------------------------------------------------------------------------------------------------
-      void TestPhysicsScriptCommands::testCleanup()
-      {
-        LuaState::instance().new_usertype<Celeste::Component>("Component");
-      }
+  //------------------------------------------------------------------------------------------------
+  void TestPhysicsScriptCommands::testCleanup()
+  {
+    LuaState::instance().new_usertype<Celeste::Component>("Component");
+  }
 
 #pragma region Initialize Tests
 
-      //------------------------------------------------------------------------------------------------
-      TEST_METHOD(PhysicsScriptCommands_Initialize_InitializesEllipseColliderScriptCommands)
-      {
-        Assert::IsFalse(LuaState::instance().globals()["EllipseCollider"].valid());
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(PhysicsScriptCommands_Initialize_InitializesEllipseColliderScriptCommands)
+  {
+    Assert::IsFalse(LuaState::instance().globals()["EllipseCollider"].valid());
 
-        Celeste::Lua::Physics::ScriptCommands::initialize();
+    Celeste::Lua::Physics::ScriptCommands::initialize();
 
-        Assert::IsTrue(LuaState::instance().globals()["EllipseCollider"].valid());
-      }
+    Assert::IsTrue(LuaState::instance().globals()["EllipseCollider"].valid());
+  }
 
 #pragma endregion
 
-      };
-    }
-  }
+  };
 }

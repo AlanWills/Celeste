@@ -53,11 +53,11 @@ namespace Celeste
       /// Called when a collider on the gameobject has not collided with a trigger it was in collision with last frame
       CelesteDllExport void triggerExit(Physics::Collider& collider);
 
-      inline Transform* getTransform() { return m_transform; }
-      inline const Transform* getTransform() const { return const_cast<GameObject*>(this)->getTransform(); }
+      inline observer_ptr<Transform> getTransform() { return m_transform.get(); }
+      inline observer_ptr<const Transform> getTransform() const { return const_cast<GameObject*>(this)->getTransform(); }
 
-      inline Transform* getParentTransform() { return m_transform != nullptr ? m_transform->getParent() : nullptr; }
-      inline const Transform* getParentTransform() const { return const_cast<GameObject*>(this)->getParentTransform(); }
+      inline observer_ptr<Transform> getParentTransform() { return m_transform != nullptr ? m_transform->getParent() : nullptr; }
+      inline observer_ptr<const Transform> getParentTransform() const { return const_cast<GameObject*>(this)->getParentTransform(); }
       inline void setParentTransform(Transform* transform) { if (m_transform != nullptr) { m_transform->setParent(transform); } }
     
       inline CelesteDllExport GameObject* getParent()
@@ -121,7 +121,7 @@ namespace Celeste
     private:
       using Inherited = Entity;
 
-      Transform* m_transform = nullptr;
+      std::unique_ptr<Transform> m_transform;
 
       /// Name should be a unique identifier
       StringId m_name = 0;

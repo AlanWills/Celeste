@@ -30,6 +30,18 @@ namespace TestCeleste::Lua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
+  TEST_METHOD(EntityScriptCommands_Initialize_Adds_destroy_ToEntityTable)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state.globals()["Entity"]["destroy"].valid());
+
+    Celeste::Lua::EntityScriptCommands::initialize();
+
+    Assert::IsTrue(state.globals()["Entity"]["destroy"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
   TEST_METHOD(EntityScriptCommands_Initialize_AddsisActive_ToEntityTable)
   {
     sol::state& state = LuaState::instance();

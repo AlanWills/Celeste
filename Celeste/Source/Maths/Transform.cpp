@@ -30,37 +30,10 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   Transform::~Transform()
   {
-    // Reset the transform values when we deallocate
-    setRotation(0);
-    setTranslation(glm::zero<glm::vec3>());
-    setScale(glm::one<glm::vec3>());
-
-    // Set the gameobject to be null so the gameobject knows the transform has been deallocated
-    GameObject* gameObject = m_gameObject;
-    m_gameObject = nullptr;
-
-    // Ensure the game object is deleted
-    if (gameObject != nullptr && gameObject->getTransform() != nullptr)
-    {
-      // If the gameobject is nullptr it means it's already been deleted
-      delete gameObject;
-    }
-    
     if (hasParent())
     {
       // Remove from parent
       m_parent->m_children.erase(std::remove(m_parent->m_children.begin(), m_parent->m_children.end(), this));
-    }
-
-    // Kill all children
-    if (!m_children.empty())
-    {
-      // Iterate in reverse so children can remove themselves from the m_children vector
-      for (size_t i = m_children.size(); i > 0; --i)
-      {
-        delete m_children[i - 1];
-      }
-      ASSERT(m_children.empty());
     }
   }
 

@@ -15,6 +15,45 @@ namespace TestCeleste
 {
   CELESTE_TEST_CLASS(TestEntityAllocator)
 
+#pragma region Is Allocated Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(EntityAllocator_IsAllocated_InputtingAllocatedObject_ShouldReturnTrue)
+  {
+    EntityAllocator<MockComponent> allocator(10);
+    observer_ptr<MockComponent> object = allocator.allocate();
+
+    Assert::AreEqual((size_t)1, allocator.size());
+    Assert::IsTrue(allocator.isAllocated(*object));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(EntityAllocator_Allocate_InputtingUnAllocatedObject_ShouldReturnFalse)
+  {
+    EntityAllocator<MockComponent> allocator(10);
+    MockComponent& object = *allocator.allocate();
+
+    Assert::AreEqual((size_t)1, allocator.size());
+
+    allocator.deallocate(object);
+
+    Assert::AreEqual((size_t)0, allocator.size());
+    Assert::IsFalse(allocator.deallocate(object));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(EntityAllocator_Allocate_InputtingObjectNotFromAllocator_ShouldReturnFalse)
+  {
+    GameObject gameObject;
+    MockComponent object(gameObject);
+    EntityAllocator<MockComponent> allocator(10);
+
+    Assert::AreEqual((size_t)0, allocator.size());
+    Assert::IsFalse(allocator.deallocate(object));
+  }
+
+#pragma endregion
+
 #pragma region Allocate Tests
 
     //------------------------------------------------------------------------------------------------
@@ -589,16 +628,13 @@ namespace TestCeleste
       observer_ptr<MockComponent> handle2 = allocator.allocate();
       observer_ptr<MockComponent> handle3 = allocator.allocate();
 
-      handle2->setActive(false);
-      handle3->setActive(false);
-
       // Need a const reference to call const functions
       const EntityAllocator<MockComponent>& allocatorRef = allocator;
 
       AssertCel::IsActive(handle1);
       AssertCel::IsNotActive(handle2);
       AssertCel::IsNotActive(handle3);
-      Assert::AreEqual(static_cast<const MockComponent*>(handle2), allocatorRef.find([](const MockComponent& component) -> bool { return !component.isActive(); }));
+      Assert::AreEqual(static_cast<const MockComponent*>(handle2), allocatorRef.find([handle1](const MockComponent& component) -> bool { return &component != handle1; }));
     }
 
     //------------------------------------------------------------------------------------------------
@@ -610,9 +646,6 @@ namespace TestCeleste
       observer_ptr<MockComponent> handle3 = allocator.allocate();
       observer_ptr<MockComponent> handle4 = allocator.allocate();
 
-      handle2->setActive(false);
-      handle4->setActive(false);
-
       // Need a const reference to call const functions
       const EntityAllocator<MockComponent>& allocatorRef = allocator;
 
@@ -620,7 +653,7 @@ namespace TestCeleste
       AssertCel::IsNotActive(handle2);
       AssertCel::IsActive(handle3);
       AssertCel::IsNotActive(handle4);
-      Assert::AreEqual(static_cast<const MockComponent*>(handle2), allocatorRef.find([](const MockComponent& component) -> bool { return !component.isActive(); }));
+      Assert::AreEqual(static_cast<const MockComponent*>(handle2), allocatorRef.find([handle1](const MockComponent& component) -> bool { return &component != handle1; }));
     }
 
 #pragma endregion

@@ -122,9 +122,6 @@ namespace Celeste
           });
       }
 
-      void handleInput();
-      void update(float elapsedGameTime);
-
     private:
       observer_ptr<PoolAllocator<T>> getAllocator(T& item);
 
@@ -137,7 +134,6 @@ namespace Celeste
     m_allocators()
   {
     m_allocators.emplace_back(std::make_unique<typename Celeste::PoolAllocator<T>>(initialCapacity));
-    STATIC_ASSERT((std::is_base_of<Entity, T>::value), "Inputted type is not derived from Entity");
   }
 
   //------------------------------------------------------------------------------------------------
@@ -194,32 +190,6 @@ namespace Celeste
 
     ASSERT_FAIL();
     return nullptr;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  template <typename T>
-  void EntityAllocator<T>::handleInput()
-  {
-    for (T& object : *this)
-    {
-      if (object.isActive())
-      {
-        object.handleInput();
-      }
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  template <typename T>
-  void EntityAllocator<T>::update(float elapsedGameTime)
-  {
-    for (T& object : *this)
-    {
-      if (object.isActive())
-      {
-        object.update(elapsedGameTime);
-      }
-    }
   }
 
   //------------------------------------------------------------------------------------------------
