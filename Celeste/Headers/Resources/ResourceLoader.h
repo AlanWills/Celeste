@@ -37,7 +37,6 @@ namespace Celeste::Resources
       inline const Path& getResourceDirectoryPath() const { return m_resourceDirectory.getDirectoryPath(); }
       inline void setResourceDirectoryPath(const Path& path) { m_resourceDirectory = Directory(path); }
 
-      /// The number of elements in the map
       inline size_t size() const { return m_map.size(); }
 
     protected:
@@ -114,7 +113,6 @@ namespace Celeste::Resources
   template <typename T>
   T* ResourceLoader<T>::loadResourceFromFile(const File& fullPath)
   {
-    // If we have room left in the pool we just allocate a new entry
     T* item = new (m_memory.allocate()) T();
     ASSERT_NOT_NULL(item);
 

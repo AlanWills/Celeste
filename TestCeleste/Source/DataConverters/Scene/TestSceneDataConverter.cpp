@@ -1664,7 +1664,7 @@ namespace TestCeleste
     Assert::IsFalse(converter.isDataLoadedCorrectly());
 
     // Check does not throw
-    converter.instantiate();
+    AutoDestroyer destroyer = converter.instantiate();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1677,7 +1677,7 @@ namespace TestCeleste
     Assert::IsTrue(converter.convertFromXML(element));
 
     // Check does not throw
-    converter.instantiate();
+    AutoDestroyer destroyer = converter.instantiate();
   }
 
 #pragma region GameObject Instantiation

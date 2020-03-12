@@ -85,6 +85,6 @@ namespace Celeste::Lua::Events::EventTriggererScriptCommands
       "setTriggerKey", &Internals::setTriggerKey,
       "getTriggerMode", &Internals::getTriggerMode,
       "setTriggerMode", &Internals::setTriggerMode,
-      "subscribeOnEventTriggered", &Internals::subscribeOnEventTriggeredCallback);
+      "subscribeOnEventTriggeredCallback", &Internals::subscribeOnEventTriggeredCallback);
   }
 }

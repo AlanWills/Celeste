@@ -24,8 +24,8 @@ namespace Celeste
       SceneManager(const SceneManager&) = delete;
       SceneManager& operator=(const SceneManager&) = delete;
 
-      void handleInput() override;
-      void update(float elapsedGameTime) override;
+      CelesteDllExport void handleInput() override;
+      CelesteDllExport void update(float elapsedGameTime) override;
 
       CelesteDllExport observer_ptr<GameObject> find(const FindGameObjectPredicate& predicate);
       CelesteDllExport observer_ptr<GameObject> find(StringId name);

@@ -17,7 +17,7 @@ namespace CelesteTestUtils
       ~MockResourceLoader() { }
 
       const Map& getMap() const { return m_map; }
-      const Pool& getPool() const { return m_pool; }
+      const Memory& getMemory() const { return m_memory; }
 
       bool inMapRelative(const Path& relativePath) { return getMap().end() != getMap().find(internString(Path(getResourceDirectoryPath(), relativePath).as_string())); }
 

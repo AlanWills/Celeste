@@ -220,6 +220,7 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Algorithms\TestEntityAlgorithms.cpp" />
     <ClCompile Include="Source\Animation\Animators\TestChangeScaleAnimator.cpp" />
     <ClCompile Include="Source\Animation\Animators\TestMoveToPositionAnimator.cpp" />
     <ClCompile Include="Source\Animation\TestAnimationState.cpp" />
@@ -282,6 +283,7 @@
     <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\TestDataConverterScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\DataConverters\TestLuaComponentDataConverterScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Events\TestEventScriptCommands.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Events\TestEventTriggererScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Input\TestInputScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Input\TestKeyboardActivatorScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Input\TestKeyboardVisibilityScriptCommands.cpp" />
@@ -338,6 +340,7 @@
     <ClCompile Include="Source\Rendering\TestRenderUtils.cpp" />
     <ClCompile Include="Source\Resources\TestResourceUtils.cpp" />
     <ClCompile Include="Source\Scene\TestSceneLoader.cpp" />
+    <ClCompile Include="Source\Scene\TestSceneManager.cpp" />
     <ClCompile Include="Source\Serialization\TestGLMUVector2Serializer.cpp" />
     <ClCompile Include="Source\Serialization\TestInputModeSerializer.cpp" />
     <ClCompile Include="Source\Serialization\TestKeySerializer.cpp" />

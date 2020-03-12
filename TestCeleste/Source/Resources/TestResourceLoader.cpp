@@ -17,13 +17,12 @@ namespace TestCeleste::Resources
 #pragma region Constructor Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ResourceLoader_Constructor_InputtingLength_AllocatesMemoryForResources)
+  TEST_METHOD(ResourceLoader_Constructor_CreatesEmptyLoader)
   {
     MockResourceLoader<MockResource> loader(10);
 
     Assert::AreEqual((size_t)0, loader.size());
-    Assert::AreEqual((size_t)0, loader.getPool().size());
-    Assert::AreEqual((size_t)10, loader.getPool().capacity());
+    Assert::AreEqual((size_t)0, loader.getMemory().size());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -350,7 +349,7 @@ namespace TestCeleste::Resources
     loader.loadAllResources(".txt");
 
     Assert::IsTrue(loader.getMap().empty());
-    Assert::AreEqual((size_t)0, loader.getPool().size());
+    Assert::AreEqual((size_t)0, loader.getMemory().size());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -360,7 +359,7 @@ namespace TestCeleste::Resources
     loader.loadAllResources(".txt");
 
     Assert::AreEqual((size_t)2, loader.getMap().size());
-    Assert::AreEqual((size_t)2, loader.getPool().size());
+    Assert::AreEqual((size_t)2, loader.getMemory().size());
   }
 
 #pragma endregion
@@ -452,7 +451,7 @@ namespace TestCeleste::Resources
     loader.loadAllResources(".txt");
 
     Assert::AreEqual((size_t)2, loader.size());
-    Assert::AreEqual((size_t)2, loader.getPool().size());
+    Assert::AreEqual((size_t)2, loader.getMemory().size());
 
     loader.setResourceDirectoryPath(TestResources::getMoreMockResourcesDirectory());
 
@@ -461,7 +460,7 @@ namespace TestCeleste::Resources
     loader.unloadResource(Path(UPDIR_STRING, "Mock Resources", "Nested", "Mock2.txt"));
 
     Assert::AreEqual((size_t)0, loader.size());
-    Assert::AreEqual((size_t)0, loader.getPool().size());
+    Assert::AreEqual((size_t)0, loader.getMemory().size());
   }
 
 #pragma endregion
@@ -475,7 +474,7 @@ namespace TestCeleste::Resources
     loader.unloadAllResources();
 
     Assert::IsTrue(loader.getMap().empty());
-    Assert::AreEqual((size_t)0, loader.getPool().size());
+    Assert::AreEqual((size_t)0, loader.getMemory().size());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -485,12 +484,12 @@ namespace TestCeleste::Resources
     loader.loadAllResources(".txt");
 
     Assert::AreNotEqual((size_t)0, loader.size());
-    Assert::AreNotEqual((size_t)0, loader.getPool().size());
+    Assert::AreNotEqual((size_t)0, loader.getMemory().size());
 
     loader.unloadAllResources();
 
     Assert::AreEqual((size_t)0, loader.size());
-    Assert::AreEqual((size_t)0, loader.getPool().size());
+    Assert::AreEqual((size_t)0, loader.getMemory().size());
   }
 
 #pragma endregion
@@ -505,13 +504,13 @@ namespace TestCeleste::Resources
     loader.loadAllResources(".txt");
 
     Assert::AreEqual((size_t)2, loader.size());
-    Assert::AreEqual((size_t)2, loader.getPool().size());
+    Assert::AreEqual((size_t)2, loader.getMemory().size());
 
     loader.setResourceDirectoryPath(TestResources::getMoreMockResourcesDirectory());
     loader.loadAllResources(".txt");
 
     Assert::AreEqual((size_t)4, loader.size());
-    Assert::AreEqual((size_t)4, loader.getPool().size());
+    Assert::AreEqual((size_t)4, loader.getMemory().size());
 
     // New resources
     Assert::IsTrue(loader.inMapRelative("Mock1.txt"));
