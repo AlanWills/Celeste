@@ -32,18 +32,6 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SliderScriptCommands_Initialize_Adds_allocate_ToSliderTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state[Slider::type_name()]["allocate"].valid());
-
-    Celeste::Lua::UI::SliderScriptCommands::initialize();
-
-    Assert::IsTrue(state[Slider::type_name()]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(SliderScriptCommands_Initialize_Adds_setCurrentValue_ToSliderTable)
   {
     sol::state& state = LuaState::instance();

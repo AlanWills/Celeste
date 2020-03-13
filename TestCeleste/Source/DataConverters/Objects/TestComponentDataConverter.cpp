@@ -71,7 +71,6 @@ namespace TestCeleste
 
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::IsTrue(converter.getIsActive());
-    Assert::IsNull(component.getGameObject());
     AssertCel::IsNotActive(component);
 
     converter.setValues(component);

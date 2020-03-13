@@ -34,18 +34,6 @@ namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SpriteRendererScriptCommands_Initialize_Adds_allocate_ToSpriteRendererTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["SpriteRenderer"]["allocate"].valid());
-
-    Celeste::Lua::Rendering::SpriteRendererScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["SpriteRenderer"]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(SpriteRendererScriptCommands_Initialize_Adds_setTexture_ToSpriteRendererTable)
   {
     sol::state& state = LuaState::instance();

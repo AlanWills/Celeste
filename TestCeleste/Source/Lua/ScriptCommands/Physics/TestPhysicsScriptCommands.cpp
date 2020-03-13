@@ -1,11 +1,13 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Lua/ScriptCommands/Physics/PhysicsScriptCommands.h"
+#include "Lua/ScriptCommands/Objects/ComponentScriptCommands.h"
 #include "Lua/LuaState.h"
 
 #include "Objects/Component.h"
 
 using LuaState = Celeste::Lua::LuaState;
+using namespace Celeste;
 
 
 namespace TestCeleste::Lua::Physics
@@ -15,13 +17,7 @@ namespace TestCeleste::Lua::Physics
   //------------------------------------------------------------------------------------------------
   void TestPhysicsScriptCommands::testInitialize()
   {
-    LuaState::instance().new_usertype<Celeste::Component>("Component");
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TestPhysicsScriptCommands::testCleanup()
-  {
-    LuaState::instance().new_usertype<Celeste::Component>("Component");
+    Celeste::Lua::ComponentScriptCommands::initialize();
   }
 
 #pragma region Initialize Tests

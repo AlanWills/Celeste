@@ -63,7 +63,37 @@ namespace CelesteTestUtils
     std::unordered_set<std::string> ignoredGlobals
     {
       "package",
-      "require"
+      "require",
+      "type",
+      "rawlen",
+      "pairs",
+      "rawset",
+      "load",
+      "_G",
+      "pcall",
+      "base",
+      "next",
+      "dofile",
+      "table",
+      "math",
+      "error",
+      "rawget",
+      "os",
+      "setmetatable",
+      "collectgarbage",
+      "assert",
+      "loadfile",
+      "_VERSION",
+      "tonumber",
+      "xpcall",
+      "ipairs",
+      "select",
+      "string",
+      "getmetatable",
+      "rawequal",
+      "print",
+      "tostring",
+      "base",
     };
 
     sol::state& state = Lua::LuaState::instance();

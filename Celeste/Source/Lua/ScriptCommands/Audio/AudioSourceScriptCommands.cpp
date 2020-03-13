@@ -9,65 +9,57 @@ using AudioType = Celeste::Audio::AudioType;
 using AudioSource = Celeste::Audio::AudioSource;
 
 
-namespace Celeste
+namespace Celeste::Lua::Audio::AudioSourceScriptCommands
 {
-  namespace Lua
+  namespace Internals
   {
-    namespace Audio
+    //------------------------------------------------------------------------------------------------
+    std::string getAudioType(const Celeste::Audio::AudioSource& audioSource)
     {
-      namespace AudioSourceScriptCommands
-      {
-        namespace Internals
-        {
-          //------------------------------------------------------------------------------------------------
-          std::string getAudioType(const Celeste::Audio::AudioSource& audioSource)
-          {
-            std::string output;
-            serialize(audioSource.getAudioType(), output);
+      std::string output;
+      serialize(audioSource.getAudioType(), output);
 
-            return std::move(output);
-          }
-
-          //------------------------------------------------------------------------------------------------
-          void setSound(AudioSource& audioSource, const std::string& soundStr)
-          {
-            audioSource.setSound(soundStr);
-          }
-
-          //------------------------------------------------------------------------------------------------
-          void setAudioType(AudioSource& audioSource, const std::string& audioTypeStr)
-          {
-            AudioType audioType = AudioType::kMusic;
-            if (!Celeste::deserialize<AudioType>(audioTypeStr, audioType))
-            {
-              ASSERT_FAIL();
-              return;
-            }
-
-            audioSource.setAudioType(audioType);
-          }
-        }
-
-        //------------------------------------------------------------------------------------------------
-        void initialize()
-        {
-          using AudioSource = Celeste::Audio::AudioSource;
-
-          registerUserType<AudioSource>(
-            AudioSource::type_name(),
-            "getSound", &AudioSource::getSound,
-            "setSound", &Internals::setSound,
-            "getAudioType", &Internals::getAudioType,
-            "setAudioType", &Internals::setAudioType,
-            "getVolume", &AudioSource::getVolume,
-            "setVolume", &AudioSource::setVolume,
-            "isLooping", &AudioSource::isLooping,
-            "setLooping", &AudioSource::setLooping,
-            "isPlaying", &AudioSource::isLooping,
-            "play", &AudioSource::play,
-            "stop", &AudioSource::stop);
-        }
-      }
+      return std::move(output);
     }
+
+    //------------------------------------------------------------------------------------------------
+    void setSound(AudioSource& audioSource, const std::string& soundStr)
+    {
+      audioSource.setSound(soundStr);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    void setAudioType(AudioSource& audioSource, const std::string& audioTypeStr)
+    {
+      AudioType audioType = AudioType::kMusic;
+      if (!Celeste::deserialize<AudioType>(audioTypeStr, audioType))
+      {
+        ASSERT_FAIL();
+        return;
+      }
+
+      audioSource.setAudioType(audioType);
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void initialize()
+  {
+    using AudioSource = Celeste::Audio::AudioSource;
+
+    registerUserType<AudioSource>(
+      AudioSource::type_name(),
+      sol::base_classes, sol::bases<Component, Entity, Object>(),
+      "getSound", &AudioSource::getSound,
+      "setSound", &Internals::setSound,
+      "getAudioType", &Internals::getAudioType,
+      "setAudioType", &Internals::setAudioType,
+      "getVolume", &AudioSource::getVolume,
+      "setVolume", &AudioSource::setVolume,
+      "isLooping", &AudioSource::isLooping,
+      "setLooping", &AudioSource::setLooping,
+      "isPlaying", &AudioSource::isLooping,
+      "play", &AudioSource::play,
+      "stop", &AudioSource::stop);
   }
 }

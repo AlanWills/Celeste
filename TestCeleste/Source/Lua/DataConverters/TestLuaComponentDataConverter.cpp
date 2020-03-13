@@ -1008,7 +1008,7 @@ namespace TestCeleste::Lua
 
     LuaComponentDataConverter converter(table, "Test");
     LuaState::instance().globals()["called"] = false;
-    Celeste::Lua::registerUserType<Component>("Component");
+    Celeste::Lua::registerUserType<Component>("Component", sol::base_classes, sol::bases<Entity, Object>());
 
     Assert::IsTrue(LuaState::instance().globals()["Component"].valid());
     Assert::IsFalse(LuaState::instance().globals()["TempComponent"].valid());
@@ -1041,8 +1041,8 @@ namespace TestCeleste::Lua
 
     LuaComponentDataConverter converter(table, "MockComponent");
     LuaState::instance().globals()["called"] = false;
-    Celeste::Lua::registerUserType<Component>("Component");
-    Celeste::Lua::registerUserType<MockComponent>("MockComponent");
+    Celeste::Lua::registerUserType<Component>("Component", sol::base_classes, sol::bases<Entity, Object>());
+    Celeste::Lua::registerUserType<MockComponent>("MockComponent", sol::base_classes, sol::bases<Component, Entity, Object>());
 
     Assert::IsTrue(LuaState::instance().globals()["Component"].valid());
     Assert::IsTrue(LuaState::instance().globals()["MockComponent"].valid());

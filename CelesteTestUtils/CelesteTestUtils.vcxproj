@@ -162,7 +162,6 @@
     <ClInclude Include="Headers\Mocks\Resources\Data\MockPrefab.h" />
     <ClInclude Include="Headers\Mocks\XML\Attributes\MockAttribute.h" />
     <ClInclude Include="Headers\Mocks\DataConverters\Audio\MockAudioSourceDataConverter.h" />
-    <ClInclude Include="Headers\Mocks\DataConverters\Callbacks\MockCallbackDataConverter.h" />
     <ClInclude Include="Headers\Mocks\XML\Elements\MockElement.h" />
     <ClInclude Include="Headers\Mocks\DataConverters\GraphicalFX\MockOpacityLerperDataConverter.h" />
     <ClInclude Include="Headers\Mocks\DataConverters\MockDataConverter.h" />

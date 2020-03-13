@@ -107,11 +107,16 @@ namespace Celeste::Lua
   void registerUserType(const std::string& name, Args&& ... args)
   {
     sol::state& state = LuaState::instance();
-    state.new_usertype<Class>(
-      name, 
-      std::forward<Args>(args)...,
-      "__as", &Celeste::Lua::Internals::template __as<Class>,
-      "as", &Celeste::Lua::Internals::template as<Class>);
+    ASSERT(!state[name].valid());
+
+    if (!state[name].valid())
+    {
+      state.new_usertype<Class>(
+        name,
+        std::forward<Args>(args)...,
+        "__as", &Celeste::Lua::Internals::template __as<Class>,
+        "as", &Celeste::Lua::Internals::template as<Class>);
+    }
   }
 
   //------------------------------------------------------------------------------------------------
@@ -119,12 +124,17 @@ namespace Celeste::Lua
   void registerScriptableObjectUserType(const std::string& name, Args&& ... args)
   {
     sol::state& state = LuaState::instance();
-    state.new_usertype<Class>(
-      name,
-      "create", sol::factories(&createScriptableObject<Class>),
-      "load", sol::factories(&loadScriptableObject<Class>),
-      "save", &saveScriptableObject<Class>,
-      std::forward<Args>(args)...);
+    ASSERT(!state[name].valid());
+    
+    if (!state[name].valid())
+    {
+      state.new_usertype<Class>(
+        name,
+        "create", sol::factories(&createScriptableObject<Class>),
+        "load", sol::factories(&loadScriptableObject<Class>),
+        "save", &saveScriptableObject<Class>,
+        std::forward<Args>(args)...);
+    }
   }
 
   //------------------------------------------------------------------------------------------------

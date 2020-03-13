@@ -237,9 +237,6 @@
     <ClCompile Include="Source\DataConverters\Rendering\TestTextRendererDataConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\DataConverters\Callbacks\TestCallbackDataConverter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\XML\Elements\TestElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -33,18 +33,6 @@ namespace TestCeleste::Lua::Rendering::TextRendererScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(TextRendererScriptCommands_Initialize_Adds_allocate_ToTextRendererTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["TextRenderer"]["allocate"].valid());
-
-    Celeste::Lua::Rendering::TextRendererScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["TextRenderer"]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(TextRendererScriptCommands_Initialize_Adds_setText_ToTextRendererTable)
   {
     sol::state& state = LuaState::instance();

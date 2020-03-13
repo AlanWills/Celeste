@@ -34,18 +34,6 @@ namespace TestCeleste::Lua::Audio::AudioSourceScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(AudioSourceScriptCommands_Initialize_Adds_allocate_ToAudioSourceTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["AudioSource"]["allocate"].valid());
-
-    Celeste::Lua::Audio::AudioSourceScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["AudioSource"]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioSourceScriptCommands_Initialize_Adds_getSound_ToAudioSourceTable)
   {
     sol::state& state = LuaState::instance();

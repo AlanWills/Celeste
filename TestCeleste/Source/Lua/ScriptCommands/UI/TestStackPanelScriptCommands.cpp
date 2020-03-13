@@ -34,18 +34,6 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(StackPanelScriptCommands_Initialize_Adds_allocate_ToStackPanelTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state[StackPanel::type_name()]["allocate"].valid());
-
-    Celeste::Lua::UI::StackPanelScriptCommands::initialize();
-
-    Assert::IsTrue(state[StackPanel::type_name()]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(StackPanelScriptCommands_Initialize_Adds_addChild_ToStackPanelTable)
   {
     sol::state& state = LuaState::instance();

@@ -55,6 +55,7 @@ namespace TestCeleste
   TEST_METHOD(Button_Constructor_SetsButtonStateTo_kIdle)
   {
     GameObject gameObject;
+    setUpButtonComponents(gameObject);
     MockButton button(gameObject);
 
     Assert::IsTrue(button.getButtonState_Public() == Button::ButtonState::kIdle);
@@ -64,6 +65,7 @@ namespace TestCeleste
   TEST_METHOD(Button_Constructor_LoadsResources)
   {
     GameObject gameObject;
+    setUpButtonComponents(gameObject);
     MockButton button(gameObject);
 
     const char* error = alutGetErrorString(alutGetError());
@@ -229,6 +231,7 @@ namespace TestCeleste
   TEST_METHOD(Button_SubscribeLeftClickCallback_WithNullMouseInteractionHandler_DoesNothing)
   {
     GameObject gameObject;
+    setUpButtonComponents(gameObject);
     MockButton button(gameObject);
     button.subscribeLeftClickCallback([](GameObject& gameObject) -> void { });
   }

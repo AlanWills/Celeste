@@ -60,12 +60,12 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Animator_Constructor_SetsPlayImmediatelyToTrue)
+    TEST_METHOD(Animator_Constructor_SetsPlayImmediatelyToFalse)
     {
       GameObject gameObject;
       MockAnimator animator(gameObject);
 
-      Assert::IsTrue(animator.getPlayImmediately());
+      Assert::IsFalse(animator.getPlayImmediately());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -142,30 +142,6 @@ namespace TestCeleste
 
       Assert::AreEqual(static_cast<size_t>(20), animator.getFrameCount());
     }
-
-#pragma region Set Game Object Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Animator_SetGameObject_NoSpriteRendererInParent_DoesNotPlayAnimation)
-    {
-      GameObject gameObject;
-      MockAnimator animator(gameObject);
-
-      Assert::IsNotNull(animator.getGameObject());
-      Assert::IsFalse(animator.isPlaying());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Animator_SetGameObject_SpriteRendererInParent_DoesNotPlayAnimation)
-    {
-      GameObject gameObject;
-      observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
-      MockAnimator animator(gameObject);
-
-      Assert::IsFalse(animator.isPlaying());
-    }
-
-#pragma endregion
 
 #pragma region Set Sprite Sheet Dimensions Tests
 

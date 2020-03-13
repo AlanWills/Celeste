@@ -34,18 +34,6 @@ namespace TestCeleste::Lua::Input::KeyboardActivatorScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardActivatorScriptCommands_Initialize_Adds_allocate_ToKeyboardActivatorTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["KeyboardActivator"]["allocate"].valid());
-
-    Celeste::Lua::Input::KeyboardActivatorScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["KeyboardActivator"]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(KeyboardActivatorScriptCommands_Initialize_Adds_getActivationKey_ToKeyboardActivatorTable)
   {
     sol::state& state = LuaState::instance();

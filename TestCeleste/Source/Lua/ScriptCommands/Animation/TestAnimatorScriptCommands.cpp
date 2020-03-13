@@ -32,18 +32,6 @@ namespace TestCeleste::Lua::Animation::AnimatorScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(AnimatorScriptCommands_Initialize_Adds_allocate_ToAnimatorTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["Animator"]["allocate"].valid());
-
-    Celeste::Lua::Animation::AnimatorScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["Animator"]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(AnimatorScriptCommands_Initialize_Adds_getSpriteSheetDimensions_ToAnimatorTable)
   {
     sol::state& state = LuaState::instance();

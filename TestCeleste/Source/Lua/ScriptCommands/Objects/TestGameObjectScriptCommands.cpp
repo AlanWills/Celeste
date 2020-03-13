@@ -93,18 +93,6 @@ namespace TestCeleste::Lua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_Initialize_Adds_getScreen_ToGameObjectTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["GameObject"]["getScreen"].valid());
-
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["GameObject"]["getScreen"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_Initialize_Adds_getParent_ToGameObjectTable)
   {
     sol::state& state = LuaState::instance();
@@ -465,7 +453,7 @@ namespace TestCeleste::Lua::ScriptCommands
     Assert::IsNull(gameObject.getParent());
 
     auto functionResult = state.globals()["GameObject"]["setParent"].get<sol::protected_function>().call(
-      gameObject, newParent);
+      gameObject, &newParent);
 
     Assert::IsTrue(functionResult.valid());
     Assert::AreEqual(&newParent, gameObject.getParent());
@@ -1090,11 +1078,12 @@ namespace TestCeleste::Lua::ScriptCommands
   {
     Celeste::Lua::GameObjectScriptCommands::initialize();
 
+    class DerivedType : public GameObject {};
     sol::state& state = LuaState::instance();
-    state.new_usertype<GameObject>("GameObject");
+    state.new_usertype<DerivedType>("DerivedType", sol::base_classes, sol::bases<GameObject, Entity, Object>());
     
     GameObject gameObject;
-    auto functionResult = state.globals()["GameObject"]["as"].get<sol::protected_function>().call(&gameObject, "GameObject");
+    auto functionResult = state.globals()["GameObject"]["as"].get<sol::protected_function>().call(&gameObject, "DerivedType");
 
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(sol::type::nil == functionResult.get_type());

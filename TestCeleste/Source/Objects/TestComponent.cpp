@@ -45,7 +45,7 @@ namespace TestCeleste
     GameObject gameObject;
     
     {
-      MockComponent component(gameObject);
+      std::unique_ptr<MockComponent> component(gameObject.addComponent<MockComponent>());
 
       AssertCel::HasComponent<MockComponent>(gameObject);
     }

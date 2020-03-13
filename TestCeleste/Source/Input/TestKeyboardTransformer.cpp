@@ -67,7 +67,7 @@ namespace TestCeleste
       Assert::AreEqual(GLFW_KEY_E, keyboardTransformer.getRotateRightKey());
       Assert::AreEqual(1.0f, keyboardTransformer.getTranslationSpeed());
       Assert::AreEqual(0.01f, keyboardTransformer.getRotationSpeed());
-      Assert::IsNull(keyboardTransformer.getTransform());
+      Assert::AreEqual(gameObject.getTransform(), keyboardTransformer.getTransform());
     }
 
 #pragma endregion
@@ -308,17 +308,6 @@ namespace TestCeleste
 #pragma endregion
 
 #pragma region Update Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardTransformer_Update_WithNullTransform_DoesNotThrow)
-    {
-      GameObject gameObject;
-      MockKeyboardTransformer keyboardTransformer(gameObject);
-
-      Assert::IsNull(keyboardTransformer.getTransform());
-
-      keyboardTransformer.update(0);
-    }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(KeyboardTransformer_Update_WithTransform_AppliesRotationScaledWithTime)

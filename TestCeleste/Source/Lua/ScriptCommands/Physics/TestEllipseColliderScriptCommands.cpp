@@ -33,18 +33,6 @@ namespace TestCeleste::Lua::Physics::EllipseColliderScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(EllipseColliderScriptCommands_Initialize_Adds_allocate_ToEllipseColliderTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["EllipseCollider"]["allocate"].valid());
-
-    Celeste::Lua::Physics::EllipseColliderScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["EllipseCollider"]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(EllipseColliderScriptCommands_Initialize_Adds_getDimensions_ToEllipseColliderTable)
   {
     sol::state& state = LuaState::instance();

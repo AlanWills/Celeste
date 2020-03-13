@@ -387,7 +387,6 @@
     <ClCompile Include="Source\Utils\TestXMLUtils.cpp" />
     <ClCompile Include="Source\Viewport\TestViewportEnums.cpp" />
     <ClCompile Include="Source\XML\Attributes\TestAttribute.cpp" />
-    <ClCompile Include="Source\DataConverters\Callbacks\TestCallbackDataConverter.cpp" />
     <ClCompile Include="Source\XML\Attributes\TestDataAttribute.cpp" />
     <ClCompile Include="Source\XML\Elements\TestComponentDataConverterListElement.cpp" />
     <ClCompile Include="Source\XML\Elements\TestDataConverterListElement.cpp" />

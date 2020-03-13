@@ -34,5 +34,7 @@ namespace TestCeleste
   {
     Game::exit();
     GL::terminate();
+
+    game.reset();
   }
 }

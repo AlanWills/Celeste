@@ -1,6 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Lua/ScriptCommands/UI/UIScriptCommands.h"
+#include "Lua/ScriptCommands/Objects/ComponentScriptCommands.h"
 #include "Lua/LuaState.h"
 
 #include "UI/StackPanel.h"
@@ -8,6 +9,7 @@
 #include "UI/Slider.h"
 
 using LuaState = Celeste::Lua::LuaState;
+using namespace Celeste;
 
 
 namespace TestCeleste::Lua::UI
@@ -17,13 +19,7 @@ namespace TestCeleste::Lua::UI
   //------------------------------------------------------------------------------------------------
   void TestUIScriptCommands::testInitialize()
   {
-    LuaState::instance().new_usertype<Celeste::Component>("Component");
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TestUIScriptCommands::testCleanup()
-  {
-    LuaState::instance().new_usertype<Celeste::Component>("Component");
+    Celeste::Lua::ComponentScriptCommands::initialize();
   }
 
 #pragma region Initialize Tests

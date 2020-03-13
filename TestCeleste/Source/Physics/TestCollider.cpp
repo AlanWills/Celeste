@@ -15,12 +15,12 @@ namespace TestCeleste
 #pragma region Constructor Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Collider_DefaultConstructor_SetsTransformToNull)
+  TEST_METHOD(Collider_DefaultConstructor_SetsTransformToGameObjectTransform)
   {
     GameObject gameObject;
     MockCollider collider(gameObject);
 
-    Assert::IsNull(collider.getTransform());
+    Assert::AreEqual(gameObject.getTransform(), collider.getTransform());
   }
 
   //------------------------------------------------------------------------------------------------

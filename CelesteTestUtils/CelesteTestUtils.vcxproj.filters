@@ -147,9 +147,6 @@
     <ClInclude Include="Headers\Resources\Rendering\TextRendererLoadingResources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Mocks\DataConverters\Callbacks\MockCallbackDataConverter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Mocks\DataConverters\UI\MockSliderDataConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>

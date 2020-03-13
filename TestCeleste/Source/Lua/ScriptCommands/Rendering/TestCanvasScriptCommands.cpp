@@ -33,18 +33,6 @@ namespace TestCeleste::Lua::Rendering::CanvasScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(CanvasScriptCommands_Initialize_Adds_allocate_ToCanvasTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["Canvas"]["allocate"].valid());
-
-    Celeste::Lua::Rendering::CanvasScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["Canvas"]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(CanvasScriptCommands_Initialize_Adds_getProjectionMode_ToCanvasTable)
   {
     sol::state& state = LuaState::instance();

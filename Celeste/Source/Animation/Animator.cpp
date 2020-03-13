@@ -15,7 +15,7 @@ namespace Celeste::Animation
     m_currentFrame(0),
     m_currentFrameDirty(true),
     m_spriteRenderer(gameObject.findComponent<Rendering::SpriteRenderer>()),
-    m_playImmediately(true),
+    m_playImmediately(false),
     m_loop(true),
     m_playing(false),
     m_currentSecondsPerFrame(0),

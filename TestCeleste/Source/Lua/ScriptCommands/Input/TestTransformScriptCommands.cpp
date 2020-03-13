@@ -27,18 +27,6 @@ namespace TestCeleste::Lua::Maths::TransformScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(TransformScriptCommands_Initialize_Adds_allocate_ToTransformTable)
-  {
-    sol::state& state = Celeste::Lua::LuaState::instance();
-
-    Assert::IsFalse(state.globals()["Transform"]["allocate"].valid());
-
-    Celeste::Lua::Maths::TransformScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["Transform"]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(TransformScriptCommands_Initialize_Adds_translate_ToTransformTable)
   {
     sol::state& state = Celeste::Lua::LuaState::instance();

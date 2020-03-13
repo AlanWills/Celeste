@@ -33,18 +33,6 @@ namespace TestCeleste::Lua::UI::ProgressBarScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ProgressBarScriptCommands_Initialize_Adds_allocate_ToProgressBarTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state[ProgressBar::type_name()]["allocate"].valid());
-
-    Celeste::Lua::UI::ProgressBarScriptCommands::initialize();
-
-    Assert::IsTrue(state[ProgressBar::type_name()]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(ProgressBarScriptCommands_Initialize_Adds_getProgress_ToProgressBarTable)
   {
     sol::state& state = LuaState::instance();

@@ -35,18 +35,6 @@ namespace TestCeleste::Lua::Input::KeyboardVisibilityScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(KeyboardVisibilityScriptCommands_Initialize_Adds_allocate_ToKeyboardVisibilityTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["KeyboardVisibility"]["allocate"].valid());
-
-    Celeste::Lua::Input::KeyboardVisibilityScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["KeyboardVisibility"]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(KeyboardVisibilityScriptCommands_Initialize_Adds_getVisibilityKey_ToKeyboardVisibilityTable)
   {
     sol::state& state = LuaState::instance();

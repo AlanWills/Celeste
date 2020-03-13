@@ -32,18 +32,6 @@ namespace TestCeleste::Lua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(MouseInteractionHandlerScriptCommands_Initialize_Adds_allocate_ToMouseInteractionHandlerTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["MouseInteractionHandler"]["allocate"].valid());
-
-    Celeste::Lua::Input::MouseInteractionHandlerScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["MouseInteractionHandler"]["allocate"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(MouseInteractionHandlerScriptCommands_Initialize_Adds_subscribeOnLeftButtonUpCallback_ToMouseInteractionHandlerTable)
   {
     sol::state& state = LuaState::instance();
