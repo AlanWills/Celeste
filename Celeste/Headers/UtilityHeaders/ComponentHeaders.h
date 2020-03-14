@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Registries/ComponentRegistry.h"
 #include "Objects/GameObject.h"
+#include "Registries/ComponentRegistry.h"
 
 using namespace Celeste;

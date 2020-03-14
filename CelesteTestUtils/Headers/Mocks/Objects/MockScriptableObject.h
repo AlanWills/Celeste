@@ -8,7 +8,7 @@ namespace CelesteTestUtils
 {
   class MockScriptableObject : public Celeste::ScriptableObject
   {
-    DECLARE_UNMANAGED_COMPONENTABLE_OBJECT(MockScriptableObject, CelesteTestUtilsDllExport)
+    DECLARE_SCRIPTABLE_OBJECT(MockScriptableObject, CelesteTestUtilsDllExport)
 
     public:
       template <typename T>

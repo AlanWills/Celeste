@@ -9,7 +9,7 @@ namespace Celeste
 {
   namespace Settings
   {
-    REGISTER_UNMANAGED_COMPONENTABLE_OBJECT(WindowSettings);
+    REGISTER_SCRIPTABLE_OBJECT(WindowSettings);
 
     //------------------------------------------------------------------------------------------------
     WindowSettings::WindowSettings() :
