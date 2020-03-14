@@ -223,6 +223,7 @@
     <ClInclude Include="Headers\Debug\Profiling\IProfiler.h" />
     <ClInclude Include="Headers\Debug\Profile.h" />
     <ClInclude Include="Headers\Events\TriggerMode.h" />
+    <ClInclude Include="Headers\Lua\ScriptCommands\Animation\AnimationScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Events\EventScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Events\EventTriggererScriptCommands.h" />
     <ClInclude Include="Headers\Lua\ScriptCommands\Input\MouseInteractionHandlerScriptCommands.h" />
@@ -505,6 +506,7 @@
     <ClCompile Include="Source\Lua\DataConverters\LuaComponentDataConverter.cpp" />
     <ClCompile Include="Source\Lua\DataConverters\LuaComponentDataConverterRegistry.cpp" />
     <ClCompile Include="Source\Lua\LuaState.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Animation\AnimationScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Animation\AnimatorScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Audio\AudioScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Audio\AudioSourceScriptCommands.cpp" />

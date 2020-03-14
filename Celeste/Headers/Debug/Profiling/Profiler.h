@@ -43,11 +43,6 @@ namespace Celeste
       /// \brief Build our profiling information into a string and write it to our log
       void logProfilingBlockInfo(const std::pair<StringId, ProfilingBlock>& profilingInfo);
 
-      /// \brief We allocate a load of memory for profiling blocks rather than creating them at runtime
-      /// Since they will persist for the entirity of this object's lifespan it seemed like an allowable tradeoff
-      /// In the end, we should move this to a debug section of memory
-      PoolAllocator<ProfilingBlock> m_profilingBlockPool;
-
       /// The map we will store profiling information in
       std::unordered_map<StringId, ProfilingBlock> m_profilingInfo;
 

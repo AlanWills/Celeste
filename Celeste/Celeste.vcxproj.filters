@@ -813,6 +813,9 @@
     <ClInclude Include="Headers\Algorithms\EntityAlgorithms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\Lua\ScriptCommands\Animation\AnimationScriptCommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Time\Clock.cpp">
@@ -1383,6 +1386,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Lua\ScriptCommands\Animation\AnimationScriptCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

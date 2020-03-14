@@ -1,5 +1,6 @@
 #include "Lua/ScriptCommands/CelesteScriptCommands.h"
 #include "Lua/ScriptCommands/CoreScriptCommands.h"
+#include "Lua/ScriptCommands/Animation/AnimationScriptCommands.h"
 #include "Lua/ScriptCommands/Audio/AudioScriptCommands.h"
 #include "Lua/ScriptCommands/Events/EventScriptCommands.h"
 #include "Lua/ScriptCommands/Resources/ResourcesScriptCommands.h"
@@ -35,7 +36,8 @@ namespace Celeste::Lua::CelesteScriptCommands
     Lua::Resources::ScriptCommands::initialize();
     Lua::Scene::ScriptCommands::initialize();
     Lua::DataConverters::ScriptCommands::initialize();
-    Lua::Audio::AudioScriptCommands::initialize();
+    Lua::Animation::ScriptCommands::initialize();
+    Lua::Audio::ScriptCommands::initialize();
     Lua::Media::VideoScriptCommands::initialize();
     Lua::Physics::ScriptCommands::initialize();
     Lua::Rendering::ScriptCommands::initialize();

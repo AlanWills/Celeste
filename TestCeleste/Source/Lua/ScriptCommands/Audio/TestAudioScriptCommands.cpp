@@ -10,7 +10,6 @@
 
 using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;
-using namespace Celeste::Lua::Audio;
 
 
 namespace TestCeleste::Lua::ScriptCommands
@@ -28,7 +27,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioScriptCommands_Initialize_Adds_AudioTable_ToGlobalTable)
   {
-    AudioScriptCommands::initialize();
+    Celeste::Lua::Audio::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     Assert::IsTrue(state.globals().get_or<sol::table>("Audio", sol::nil).valid());
@@ -37,7 +36,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioScriptCommands_Initialize_Adds_getMasterVolume_ScriptCommand_ToAudioTable)
   {
-    AudioScriptCommands::initialize();
+    Celeste::Lua::Audio::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     Assert::IsTrue(state.globals()["Audio"]["getMasterVolume"].valid());
@@ -46,7 +45,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioScriptCommands_Initialize_Adds_setMasterVolume_ScriptCommand_ToAudioTable)
   {
-    AudioScriptCommands::initialize();
+    Celeste::Lua::Audio::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     Assert::IsTrue(state.globals()["Audio"]["setMasterVolume"].valid());
@@ -55,7 +54,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioScriptCommands_Initialize_Adds_getMusicVolume_ScriptCommand_ToAudioTable)
   {
-    AudioScriptCommands::initialize();
+    Celeste::Lua::Audio::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     Assert::IsTrue(state.globals()["Audio"]["getMusicVolume"].valid());
@@ -64,7 +63,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioScriptCommands_Initialize_Adds_setMusicVolume_ScriptCommand_ToAudioTable)
   {
-    AudioScriptCommands::initialize();
+    Celeste::Lua::Audio::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     Assert::IsTrue(state.globals()["Audio"]["setMusicVolume"].valid());
@@ -73,7 +72,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioScriptCommands_Initialize_Adds_getSFXVolume_ScriptCommand_ToAudioTable)
   {
-    AudioScriptCommands::initialize();
+    Celeste::Lua::Audio::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     Assert::IsTrue(state.globals()["Audio"]["getSFXVolume"].valid());
@@ -82,7 +81,7 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioScriptCommands_Initialize_Adds_setSFXVolume_ScriptCommand_ToAudioTable)
   {
-    AudioScriptCommands::initialize();
+    Celeste::Lua::Audio::ScriptCommands::initialize();
     sol::state& state = LuaState::instance();
 
     Assert::IsTrue(state.globals()["Audio"]["setSFXVolume"].valid());
@@ -93,7 +92,7 @@ namespace TestCeleste::Lua::ScriptCommands
   {
     Assert::IsFalse(LuaState::instance().globals()["Audio"]["AudioSource"].valid());
 
-    AudioScriptCommands::initialize();
+    Celeste::Lua::Audio::ScriptCommands::initialize();
 
     Assert::IsTrue(LuaState::instance().globals()["AudioSource"].valid());
   }
@@ -107,11 +106,11 @@ namespace TestCeleste::Lua::ScriptCommands
   {
     Audio::getAudioManager().setMasterVolume(0.5f);
 
-    Assert::AreEqual(0.5f, AudioScriptCommands::getMasterVolume());
+    Assert::AreEqual(0.5f, Celeste::Lua::Audio::ScriptCommands::getMasterVolume());
 
     Audio::getAudioManager().setMasterVolume(1);
 
-    Assert::AreEqual(1.0f, AudioScriptCommands::getMasterVolume());
+    Assert::AreEqual(1.0f, Celeste::Lua::Audio::ScriptCommands::getMasterVolume());
   }
 
 #pragma region
@@ -121,11 +120,11 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioScriptCommands_SetMasterVolume_SetsAudioManagerMasterVolume)
   {
-    AudioScriptCommands::setMasterVolume(0.5f);
+    Celeste::Lua::Audio::ScriptCommands::setMasterVolume(0.5f);
 
     Assert::AreEqual(0.5f, Audio::getAudioManager().getMasterVolume());
 
-    AudioScriptCommands::setMasterVolume(1.0f);
+    Celeste::Lua::Audio::ScriptCommands::setMasterVolume(1.0f);
 
     Assert::AreEqual(1.0f, Audio::getAudioManager().getMasterVolume());
   }
@@ -139,11 +138,11 @@ namespace TestCeleste::Lua::ScriptCommands
   {
     Audio::getAudioManager().setMusicVolume(0.5f);
 
-    Assert::AreEqual(0.5f, AudioScriptCommands::getMusicVolume());
+    Assert::AreEqual(0.5f, Celeste::Lua::Audio::ScriptCommands::getMusicVolume());
 
     Audio::getAudioManager().setMusicVolume(1);
 
-    Assert::AreEqual(1.0f, AudioScriptCommands::getMusicVolume());
+    Assert::AreEqual(1.0f, Celeste::Lua::Audio::ScriptCommands::getMusicVolume());
   }
 
 #pragma region
@@ -153,11 +152,11 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioScriptCommands_SetMusicVolume_SetsAudioManagerMusicVolume)
   {
-    AudioScriptCommands::setMusicVolume(0.5f);
+    Celeste::Lua::Audio::ScriptCommands::setMusicVolume(0.5f);
 
     Assert::AreEqual(0.5f, Audio::getAudioManager().getMusicVolume());
 
-    AudioScriptCommands::setMusicVolume(1.0f);
+    Celeste::Lua::Audio::ScriptCommands::setMusicVolume(1.0f);
 
     Assert::AreEqual(1.0f, Audio::getAudioManager().getMusicVolume());
   }
@@ -171,11 +170,11 @@ namespace TestCeleste::Lua::ScriptCommands
   {
     Audio::getAudioManager().setSFXVolume(0.5f);
 
-    Assert::AreEqual(0.5f, AudioScriptCommands::getSFXVolume());
+    Assert::AreEqual(0.5f, Celeste::Lua::Audio::ScriptCommands::getSFXVolume());
 
     Audio::getAudioManager().setSFXVolume(1);
 
-    Assert::AreEqual(1.0f, AudioScriptCommands::getSFXVolume());
+    Assert::AreEqual(1.0f, Celeste::Lua::Audio::ScriptCommands::getSFXVolume());
   }
 
 #pragma region
@@ -185,11 +184,11 @@ namespace TestCeleste::Lua::ScriptCommands
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(AudioScriptCommands_SetSFXVolume_SetsAudioManagerSFXVolume)
   {
-    AudioScriptCommands::setSFXVolume(0.5f);
+    Celeste::Lua::Audio::ScriptCommands::setSFXVolume(0.5f);
 
     Assert::AreEqual(0.5f, Audio::getAudioManager().getSFXVolume());
 
-    AudioScriptCommands::setSFXVolume(1.0f);
+    Celeste::Lua::Audio::ScriptCommands::setSFXVolume(1.0f);
 
     Assert::AreEqual(1.0f, Audio::getAudioManager().getSFXVolume());
   }

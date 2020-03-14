@@ -10,7 +10,6 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   Profiler::Profiler(const std::string& profilingFileFullPath) :
     m_logger(profilingFileFullPath),
-    m_profilingBlockPool(MAX_PROFILING_BLOCKS),
     m_profilingInfo(MAX_PROFILING_BLOCKS)
   {
     // We have a fixed max size so we can just reserve our map size straightaway to avoid runtime allocations
@@ -84,24 +83,9 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void Profiler::beginProfilingBlock(const std::string& profilingBlockName)
   {
-    if (!m_profilingBlockPool.canAllocate(1))
-    {
-      // If we have run out of profiling blocks to allocate we should not create a new one
-      ASSERT_FAIL_MSG("Reached max profiling block count.  Consider increasing MAX_PROFILING_BLOCKS");
-      return;
-    }
-
     m_currentBlockName = profilingBlockName;
 
     StringId blockStringId = internString(profilingBlockName);
-
-    // If we do not have a profiling block for the inputted name we must add one from our pool
-    if (m_profilingInfo.find(blockStringId) == m_profilingInfo.end())
-    {
-      // Obtain free object from pool and add it to map
-      m_profilingInfo.emplace(blockStringId, *m_profilingBlockPool.allocate());
-    }
-
     ProfilingBlock& profilingBlock = m_profilingInfo[blockStringId];
     profilingBlock.m_name = profilingBlockName;
     profilingBlock.m_startTime = std::chrono::system_clock::now();
@@ -149,6 +133,6 @@ namespace Celeste
       return nullptr;
     }
 
-    return &m_profilingInfo[blockStringId];
+    return &m_profilingInfo.at(blockStringId);
   }
 }

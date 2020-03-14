@@ -5,12 +5,14 @@
 #include "Lua/LuaState.h"
 
 #include "UI/Slider.h"
+#include "Rendering/SpriteRenderer.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using Slider = Celeste::UI::Slider;
 
 using namespace Celeste;
+using namespace Celeste::Rendering;
 
 
 namespace TestCeleste::Lua::UI::SliderScriptCommands
@@ -78,6 +80,8 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
     Celeste::Lua::UI::SliderScriptCommands::initialize();
 
     GameObject gameObject;
+    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    
     Slider slider(gameObject);
     slider.setMin(0);
 
@@ -94,6 +98,8 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
     Celeste::Lua::UI::SliderScriptCommands::initialize();
 
     GameObject gameObject;
+    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    
     Slider slider(gameObject);
     slider.setMax(100);
 
@@ -110,6 +116,8 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
     Celeste::Lua::UI::SliderScriptCommands::initialize();
 
     GameObject gameObject;
+    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    
     Slider slider(gameObject);
     slider.setMin(0);
     slider.setMax(100);

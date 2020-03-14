@@ -156,7 +156,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SceneLoader_Load_InputtingExistentFullFilePath_ValidScreenData_ReturnsTrue)
   {
-    AutoDestroyer result = SceneLoader::load(SceneLoadingResources::getDataElementFullPath());
+    AutoDestroyer result = SceneLoader::load(SceneLoadingResources::getGameObjectsElementFullPath());
     
     Assert::IsTrue(result.m_result);
     Assert::IsFalse(result.m_gameObjects.empty());
@@ -165,7 +165,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SceneLoader_Load_InputtingExistentRelativeFilePath_ValidScreenData_ReturnsTrue)
   {
-    AutoDestroyer result = SceneLoader::load(SceneLoadingResources::getDataElementRelativePath());
+    AutoDestroyer result = SceneLoader::load(SceneLoadingResources::getGameObjectsElementRelativePath());
 
     Assert::IsTrue(result.m_result);
     Assert::IsFalse(result.m_gameObjects.empty());

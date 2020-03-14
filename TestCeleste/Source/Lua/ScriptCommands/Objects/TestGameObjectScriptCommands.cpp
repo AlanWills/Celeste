@@ -425,7 +425,7 @@ namespace TestCeleste::Lua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_setParent_ParentNotNull_InputtingNullHandle_DoesNotChangeParent)
+  TEST_METHOD(GameObjectScriptCommands_setParent_ParentNotNull_InputtingNullHandle_SetsParentToNullptr)
   {
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -439,7 +439,7 @@ namespace TestCeleste::Lua::ScriptCommands
       gameObject, nullptr);
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(&parent, gameObject.getParent());
+    Assert::IsNull(gameObject.getParent());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1080,11 +1080,11 @@ namespace TestCeleste::Lua::ScriptCommands
 
     class DerivedType : public GameObject {};
     sol::state& state = LuaState::instance();
-    state.new_usertype<DerivedType>("DerivedType", sol::base_classes, sol::bases<GameObject, Entity, Object>());
+    state.new_usertype<DerivedType>("DerivedType");
     
     GameObject gameObject;
     auto functionResult = state.globals()["GameObject"]["as"].get<sol::protected_function>().call(&gameObject, "DerivedType");
-
+    
     Assert::IsTrue(functionResult.valid());
     Assert::IsTrue(sol::type::nil == functionResult.get_type());
   }

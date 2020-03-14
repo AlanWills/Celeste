@@ -6,7 +6,7 @@
 #include "Audio/AudioManager.h"
 
 
-namespace Celeste::Lua::Audio::AudioScriptCommands
+namespace Celeste::Lua::Audio::ScriptCommands
 {
   //------------------------------------------------------------------------------------------------
   void initialize()

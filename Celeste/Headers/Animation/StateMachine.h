@@ -22,7 +22,11 @@ namespace Celeste::Animation
       /// This can only occur before awake() is called - from then on, the state machine has full control
       CelesteDllExport void setStartingState(const AnimationState& animState);
 
-      inline observer_ptr<const AnimationState> getCurrentAnimationState() const { return &m_states[m_currentAnimStateIndex]; }
+      inline observer_ptr<const AnimationState> getCurrentAnimationState() const 
+      { 
+        return m_currentAnimStateIndex < m_states.size() ? &m_states[m_currentAnimStateIndex] : nullptr; 
+      }
+
       inline const States& getStates() const { return m_states; }
 
       CelesteDllExport void update(float secondsPerUpdate) override;

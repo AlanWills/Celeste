@@ -1599,7 +1599,6 @@ namespace TestCeleste
     tinyxml2::XMLElement* prefab = createPrefabElement(document, "Child2", gameObjects);
     prefab->SetAttribute(PrefabDataConverter::PATH_ATTRIBUTE_NAME, PrefabLoadingResources::getValidSingleGameObjectRelativePath().c_str());
 
-    Assert::AreEqual("Test", element->Attribute("name"));
     Assert::IsTrue(converter.getGameObjects().empty());
 
     converter.convertFromXML(element);

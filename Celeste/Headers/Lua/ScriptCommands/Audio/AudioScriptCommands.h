@@ -10,7 +10,7 @@ namespace Celeste
     class AudioManager;
   }
 
-  namespace Lua::Audio::AudioScriptCommands
+  namespace Lua::Audio::ScriptCommands
   {
     CelesteDllExport void initialize();
 

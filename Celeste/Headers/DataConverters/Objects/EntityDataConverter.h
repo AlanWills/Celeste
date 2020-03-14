@@ -15,7 +15,7 @@ namespace Celeste
       EntityDataConverter& operator=(const EntityDataConverter<T>&);
       EntityDataConverter(EntityDataConverter<T>&& rhs);
 
-      inline bool getIsActive() const { return m_isActive.getValue(); }
+      inline bool getIsActive() const { return m_isActive->getValue(); }
 
       static const char* const IS_ACTIVE_ATTRIBUTE_NAME;
 
@@ -25,7 +25,7 @@ namespace Celeste
     private:
       using Inherited = ObjectDataConverter<T>;
 
-      XML::ValueAttribute<bool>& m_isActive;
+      observer_ptr<XML::ValueAttribute<bool>> m_isActive;
   };
 
   template <typename T>
@@ -35,7 +35,7 @@ namespace Celeste
   template <typename T>
   EntityDataConverter<T>::EntityDataConverter(const std::string& elementName) :
     Inherited(elementName),
-    m_isActive(Inherited::createValueAttribute(IS_ACTIVE_ATTRIBUTE_NAME, true))
+    m_isActive(&Inherited::createValueAttribute(IS_ACTIVE_ATTRIBUTE_NAME, true))
   {
   }
 
@@ -43,7 +43,7 @@ namespace Celeste
   template <typename T>
   EntityDataConverter<T>::EntityDataConverter(const EntityDataConverter<T>& rhs) :
     Inherited(rhs),
-    m_isActive(reinterpret_cast<XML::ValueAttribute<bool>&>(*Inherited::findAttribute(IS_ACTIVE_ATTRIBUTE_NAME)))
+    m_isActive(reinterpret_cast<XML::ValueAttribute<bool>*>(Inherited::findAttribute(IS_ACTIVE_ATTRIBUTE_NAME)))
   {
   }
 
@@ -68,7 +68,7 @@ namespace Celeste
     Inherited::operator=(rhs);
     auto attribute = Inherited::findAttribute(IS_ACTIVE_ATTRIBUTE_NAME);
     ASSERT_NOT_NULL(attribute);
-    m_isActive = *reinterpret_cast<XML::ValueAttribute<bool>*>(attribute);
+    m_isActive = reinterpret_cast<XML::ValueAttribute<bool>*>(attribute);
 
     return *this;
   }

@@ -276,6 +276,7 @@
     <ClCompile Include="Source\Input\TestKey.cpp" />
     <ClCompile Include="Source\Lua\DataConverters\TestLuaComponentDataConverter.cpp" />
     <ClCompile Include="Source\Lua\DataConverters\TestLuaComponentDataConverterRegistry.cpp" />
+    <ClCompile Include="Source\Lua\ScriptCommands\Animation\TestAnimationScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Animation\TestAnimatorScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Audio\TestAudioScriptCommands.cpp" />
     <ClCompile Include="Source\Lua\ScriptCommands\Audio\TestAudioSourceScriptCommands.cpp" />

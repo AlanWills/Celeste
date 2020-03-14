@@ -249,6 +249,8 @@ namespace TestCeleste
   TEST_METHOD(Slider_SetCurrentValue_UpdatesCurrentValue)
   {
     GameObject gameObject;
+    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    
     Slider slider(gameObject);
     slider.setCurrentValue(0.5f);
 
@@ -263,6 +265,8 @@ namespace TestCeleste
   TEST_METHOD(Slider_SetCurrentValue_ClampsCurrentValueBetweenMinAndMax)
   {
     GameObject gameObject;
+    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+
     Slider slider(gameObject);
     slider.setMin(0.25f);
     slider.setMax(0.5f);
@@ -308,6 +312,8 @@ namespace TestCeleste
     float value = 0;
 
     GameObject gameObject;
+    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    
     Slider slider(gameObject);
     slider.setMin(0);
     slider.setMax(1);
@@ -333,6 +339,8 @@ namespace TestCeleste
     float value = 0;
 
     GameObject gameObject;
+    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    
     Slider slider(gameObject);
     slider.setMin(0);
     slider.setMax(1);
@@ -358,6 +366,8 @@ namespace TestCeleste
     float value = 0;
 
     GameObject gameObject;
+    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    
     Slider slider(gameObject);
     slider.setMin(0);
     slider.setMax(1);

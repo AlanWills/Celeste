@@ -434,13 +434,9 @@ namespace TestCeleste
 
     AssertCel::IsNotActive(textBox);
     Assert::AreNotEqual((StringId)0, textBox->getKeyPressedEventHandle_Public());
-    Assert::AreEqual((size_t)0, rendering->getLineCount());
 
     Input::keyCallback(nullptr, GLFW_KEY_ENTER, 0, GLFW_PRESS, 0);
-
-    Assert::AreEqual((size_t)0, rendering->getLineCount());
-
-    rendering->addLine("Hello");
+    rendering->setLine(0, "Hello");
 
     Assert::AreEqual((size_t)1, rendering->getLineCount());
     Assert::AreEqual("Hello", rendering->getLine(0).c_str());
@@ -1083,7 +1079,7 @@ namespace TestCeleste
     observer_ptr<MockTextRenderer> rendering = gameObject.addComponent<MockTextRenderer>();
 
     {
-      observer_ptr<MockTextBox> textBox = gameObject.addComponent<MockTextBox>();
+      std::unique_ptr<MockTextBox> textBox(gameObject.addComponent<MockTextBox>());
       rendering->removeLine(0);
 
       Assert::AreNotEqual((StringId)0, textBox->getTextInputtedEventHandle_Public());
@@ -1100,7 +1096,7 @@ namespace TestCeleste
     observer_ptr<MockTextRenderer> rendering = gameObject.addComponent<MockTextRenderer>();
       
     {
-      observer_ptr<MockTextBox> textBox = gameObject.addComponent<MockTextBox>();
+      std::unique_ptr<MockTextBox> textBox(gameObject.addComponent<MockTextBox>());
         
       Assert::AreNotEqual((StringId)0, textBox->getKeyPressedEventHandle_Public());
       Assert::AreEqual(static_cast<size_t>(1), getKeyboard().getKeyPressedEvent().getSubscriberCount());

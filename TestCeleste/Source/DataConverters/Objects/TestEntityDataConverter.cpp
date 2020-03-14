@@ -304,6 +304,7 @@ namespace TestCeleste
   TEST_METHOD(EntityDataConverter_SetValues_NonNullEntity_AndDataLoadedCorrectly_SetsEntityIsActiveToLoadedValue)
   {
     MockEntity entity;
+    entity.setActive(false);
 
     MockEntityDataConverter converter("Entity");
     XMLDocument document;
