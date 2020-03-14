@@ -15,7 +15,7 @@ namespace Celeste::Rendering
   TextRenderer::TextRenderer(GameObject& gameObject) :
     Inherited(gameObject),
     m_font(),
-    m_lines(),
+    m_text(),
     m_dimensions()
   {
     setFont(Path("Fonts", "Arial.ttf"));
@@ -32,10 +32,13 @@ namespace Celeste::Rendering
 
     // Cache this location here so it's not evaluated for every letter
     GLint viewModelLocation = shaderProgram.getUniformLocation("view_model");
+    
+    std::vector<std::string> lines;
+    getLines(m_text, lines);
 
-    for (size_t i = 0; i < m_lines.size(); ++i)
+    for (size_t i = 0; i < lines.size(); ++i)
     {
-      const std::string& line = m_lines[i];
+      const std::string& line = lines[i];
       const glm::vec2& halfLineSize = font.measureString(line) * 0.5f;
 
       glm::mat4 letterRenderMatrix;
@@ -104,10 +107,13 @@ namespace Celeste::Rendering
   //------------------------------------------------------------------------------------------------
   void TextRenderer::recalculateDimensions()
   {
-    m_dimensions.x = 0;
-    m_dimensions.y = m_lines.size() * m_font.getHeight();
+    std::vector<std::string> lines;
+    getLines(m_text, lines);
 
-    for (const std::string& line : m_lines)
+    m_dimensions.x = 0;
+    m_dimensions.y = lines.size() * m_font.getHeight();
+
+    for (const std::string& line : lines)
     {
       m_dimensions.x = (std::max)(m_dimensions.x, m_font.measureString(line).x);
     }
@@ -118,223 +124,8 @@ namespace Celeste::Rendering
   //------------------------------------------------------------------------------------------------
   void TextRenderer::setText(const std::string& text)
   {
-    m_lines.clear();
-    getLines(text, m_lines);
+    m_text.assign(text);
     recalculateDimensions();
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextRenderer::clearLines()
-  {
-    m_lines.clear();
-    m_dimensions = glm::vec2();
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextRenderer::resetLines(const std::string& text)
-  {
-    m_lines.clear();
-    addLine(text);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextRenderer::resetLines(const std::vector<std::string>& lines)
-  {
-    m_lines.clear();
-    addLines(lines);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextRenderer::addLine(const std::string& lineText)
-  {
-    m_lines.push_back(lineText);
-    recalculateDimensions();
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextRenderer::addLines(const std::vector<std::string>& lines)
-  {
-    m_lines.insert(m_lines.end(), lines.begin(), lines.end());
-    recalculateDimensions();
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextRenderer::removeLine(size_t lineIndex)
-  {
-    if (lineIndex < m_lines.size())
-    {
-      // size_t so don't need to check >= 0
-      m_lines.erase(m_lines.begin() + lineIndex);
-      recalculateDimensions();
-    }
-    else
-    {
-      ASSERT_FAIL();
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextRenderer::setLine(size_t lineIndex, const std::string& text)
-  {
-    if (lineIndex < m_lines.size())
-    {
-      // size_t so don't need to check >= 0
-      m_lines[lineIndex] = text;
-      recalculateDimensions();
-    }
-    else
-    {
-      ASSERT_FAIL();
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextRenderer::getLine(size_t lineIndex, std::string& outLine) const
-  {
-    if (lineIndex < m_lines.size())
-    {
-      // size_t so don't need to check >= 0
-      outLine.append(m_lines[lineIndex]);
-    }
-    else
-    {
-      ASSERT_FAIL();
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  std::string TextRenderer::getLine(size_t lineIndex) const
-  {
-    if (lineIndex < m_lines.size())
-    {
-      // size_t so don't need to check >= 0
-      return m_lines[lineIndex];
-    }
-    else
-    {
-      ASSERT_FAIL();
-      return "";
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  size_t TextRenderer::getLineLength(size_t lineIndex) const
-  {
-    if (lineIndex < m_lines.size())
-    {
-      // size_t so don't need to check >= 0
-      return m_lines[lineIndex].size();
-    }
-    else
-    {
-      ASSERT_FAIL();
-      return 0;
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  glm::vec2 TextRenderer::getLineDimensions(size_t lineIndex) const
-  {
-    if (lineIndex < m_lines.size())
-    {
-      // size_t so don't need to check >= 0
-      return m_font.measureString(m_lines[lineIndex]);
-    }
-    else
-    {
-      ASSERT_FAIL();
-      return glm::vec2();
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextRenderer::addLetter(size_t lineIndex, size_t letterIndex, char letter)
-  {
-    if (lineIndex >= m_lines.size() || letterIndex > m_lines[lineIndex].size())
-    {
-      // size_t so don't need to check >= 0
-      // Strict inequality on letter index, because we want to be able to append to lines
-      ASSERT_FAIL();
-      return;
-    }
-
-    std::string& line = m_lines[lineIndex];
-    if (letterIndex == line.size())
-    {
-      line.push_back(letter);
-    }
-    else
-    {
-      line.insert(line.begin() + letterIndex, letter);
-    }
-
-    recalculateDimensions();
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextRenderer::removeLetter(size_t lineIndex, size_t letterIndex)
-  {
-    if (lineIndex >= m_lines.size() || letterIndex >= m_lines[lineIndex].size())
-    {
-      // size_t so don't need to check >= 0
-      ASSERT_FAIL();
-      return;
-    }
-
-    std::string& line = m_lines[lineIndex];
-    if (letterIndex == line.size())
-    {
-      line.pop_back();
-    }
-    else
-    {
-      line.erase(line.begin() + letterIndex);
-    }
-
-    recalculateDimensions();
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void TextRenderer::setLetter(size_t lineIndex, size_t letterIndex, char letter)
-  {
-    if (lineIndex >= m_lines.size() || letterIndex >= m_lines[lineIndex].size())
-    {
-      // size_t so don't need to check >= 0
-      ASSERT_FAIL();
-      return;
-    }
-
-    m_lines[lineIndex][letterIndex] = letter;
-    recalculateDimensions();
-  }
-
-  //------------------------------------------------------------------------------------------------
-  char TextRenderer::getLetter(size_t lineIndex, size_t letterIndex) const
-  {
-    if (lineIndex >= m_lines.size() || letterIndex >= m_lines[lineIndex].size())
-    {
-      // size_t so don't need to check >= 0
-      ASSERT_FAIL();
-      return (char)-1;
-    }
-
-    return m_lines[lineIndex][letterIndex];
-  }
-
-  //------------------------------------------------------------------------------------------------
-  glm::vec2 TextRenderer::getLetterOffset(size_t lineIndex, size_t letterIndex) const
-  {
-    if (lineIndex >= m_lines.size() || letterIndex > m_lines[lineIndex].size())
-    {
-      // size_t so don't need to check >= 0
-      // Strict inequality on letterIndex, because this corresponds to the length of the whole line
-      // Need to be able to do this to allow setting the caret past the last letter
-      ASSERT_FAIL();
-      return glm::vec2();
-    }
-
-    const glm::vec2& measured = m_font.measureString(m_lines[lineIndex].substr(0, letterIndex));
-    return glm::vec2(measured.x + getXPosition(getLineDimensions(lineIndex).x * 0.5f), getYPosition(m_lines.size() * getFontHeight() * 0.5f) - lineIndex * getFontHeight());
   }
 
 #pragma endregion

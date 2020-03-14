@@ -259,7 +259,6 @@
     <ClCompile Include="Source\DataConverters\Resources\TestPrefabDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\Physics\TestRectangleColliderDataConverter.cpp" />
     <ClCompile Include="Source\DataConverters\UI\TestSliderDataConverter.cpp" />
-    <ClCompile Include="Source\DataConverters\UI\TestTextBoxDataConverter.cpp" />
     <ClCompile Include="Source\Debug\Profiling\TestFPSCounter.cpp" />
     <ClCompile Include="Source\Debug\TestLog.cpp" />
     <ClCompile Include="Source\Debug\TestProfile.cpp" />
@@ -471,7 +470,6 @@
     <ClCompile Include="Source\UI\TestProgressBar.cpp" />
     <ClCompile Include="Source\UI\TestSlider.cpp" />
     <ClCompile Include="Source\UI\TestStackPanel.cpp" />
-    <ClCompile Include="Source\UI\TestTextBox.cpp" />
     <ClCompile Include="Source\Viewport\TestCamera.cpp" />
     <ClCompile Include="Source\Viewport\TestOpenGLWindow.cpp" />
     <ClCompile Include="Source\Resources\Shaders\TestFragmentShader.cpp" />

@@ -604,7 +604,7 @@ namespace TestCeleste
     Assert::AreEqual(glm::vec4(1), renderer.getColour());
     Assert::IsTrue(renderer.getHorizontalAlignment() == HorizontalAlignment::kCentre);
     Assert::IsTrue(renderer.getVerticalAlignment() == VerticalAlignment::kTop);
-    Assert::AreEqual(static_cast<size_t>(0), renderer.getLineCount());
+    Assert::AreEqual("", renderer.getText().c_str());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -624,9 +624,7 @@ namespace TestCeleste
     Assert::AreEqual(glm::vec4(1), renderer.getColour());
     Assert::IsTrue(renderer.getHorizontalAlignment() == HorizontalAlignment::kCentre);
     Assert::IsTrue(renderer.getVerticalAlignment() == VerticalAlignment::kTop);
-    Assert::AreEqual(static_cast<size_t>(2), renderer.getLineCount());
-    Assert::AreEqual("Line 1", renderer.getLine(0).c_str());
-    Assert::AreEqual("Line 2", renderer.getLine(1).c_str());
+    Assert::AreEqual("Line 1\nLine 2", renderer.getText().c_str());
   }
 
 #pragma endregion

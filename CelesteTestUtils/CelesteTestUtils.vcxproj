@@ -202,7 +202,6 @@
     <ClInclude Include="Headers\Mocks\Resources\Shaders\MockShader.h" />
     <ClInclude Include="Headers\Mocks\Resources\Shaders\MockVertexShader.h" />
     <ClInclude Include="Headers\Mocks\UI\MockButton.h" />
-    <ClInclude Include="Headers\Mocks\UI\MockTextBox.h" />
     <ClInclude Include="Headers\Resources\Animation\AnimatorLoadingResources.h" />
     <ClInclude Include="Headers\Resources\Audio\AudioSourceLoadingResources.h" />
     <ClInclude Include="Headers\Resources\GraphicalFX\OpacityLerperLoadingResources.h" />
@@ -253,7 +252,6 @@
     <ClCompile Include="Source\Mocks\Rendering\MockSpriteRenderer.cpp" />
     <ClCompile Include="Source\Mocks\Rendering\MockTextRenderer.cpp" />
     <ClCompile Include="Source\Mocks\UI\MockButton.cpp" />
-    <ClCompile Include="Source\Mocks\UI\MockTextBox.cpp" />
     <ClCompile Include="Source\Resources\Animation\AnimatorLoadingResources.cpp" />
     <ClCompile Include="Source\Resources\Audio\AudioSourceLoadingResources.cpp" />
     <ClCompile Include="Source\Resources\GraphicalFX\OpacityLerperLoadingResources.cpp" />

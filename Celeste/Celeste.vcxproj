@@ -461,7 +461,6 @@
     <ClInclude Include="Headers\UI\ProgressBar.h" />
     <ClInclude Include="Headers\UI\Slider.h" />
     <ClInclude Include="Headers\UI\StackPanel.h" />
-    <ClInclude Include="Headers\UI\TextBox.h" />
     <ClInclude Include="Headers\Utils\StringUtils.h" />
     <ClInclude Include="Headers\Rendering\TextRenderer.h" />
     <ClInclude Include="Headers\Viewport\Camera.h" />
@@ -656,7 +655,6 @@
     <ClCompile Include="Source\UI\ProgressBar.cpp" />
     <ClCompile Include="Source\UI\Slider.cpp" />
     <ClCompile Include="Source\UI\StackPanel.cpp" />
-    <ClCompile Include="Source\UI\TextBox.cpp" />
     <ClCompile Include="Source\Utils\StringUtils.cpp" />
     <ClCompile Include="Source\Viewport\Camera.cpp" />
     <ClCompile Include="Source\Viewport\OpenGLWindow.cpp" />

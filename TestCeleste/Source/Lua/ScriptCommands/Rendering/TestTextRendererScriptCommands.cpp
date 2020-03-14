@@ -68,15 +68,14 @@ namespace TestCeleste::Lua::Rendering::TextRendererScriptCommands
 
     GameObject gameObject;
     TextRenderer textRenderer(gameObject);
-    textRenderer.addLine("Test");
+    textRenderer.setText("Test");
 
-    Assert::AreEqual(static_cast<size_t>(1), textRenderer.getLineCount());
-    Assert::AreEqual("Test", textRenderer.getLine(0).c_str());
+    Assert::AreEqual("Test", textRenderer.getText().c_str());
 
     auto functionResult = state.globals()["TextRenderer"]["setText"].get<sol::protected_function>().call(textRenderer, "");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(static_cast<size_t>(0), textRenderer.getLineCount());
+    Assert::AreEqual("", textRenderer.getText().c_str());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -87,16 +86,14 @@ namespace TestCeleste::Lua::Rendering::TextRendererScriptCommands
     
     GameObject gameObject;
     TextRenderer textRenderer(gameObject);
-    textRenderer.addLine("Test");
+    textRenderer.setText("Test");
 
-    Assert::AreEqual(static_cast<size_t>(1), textRenderer.getLineCount());
-    Assert::AreEqual("Test", textRenderer.getLine(0).c_str());
+    Assert::AreEqual("Test", textRenderer.getText().c_str());
 
     auto functionResult = state.globals()["TextRenderer"]["setText"].get<sol::protected_function>().call(textRenderer, "Another Test");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(static_cast<size_t>(1), textRenderer.getLineCount());
-    Assert::AreEqual("Another Test", textRenderer.getLine(0).c_str());
+    Assert::AreEqual("Another Test", textRenderer.getText().c_str());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -107,17 +104,14 @@ namespace TestCeleste::Lua::Rendering::TextRendererScriptCommands
     
     GameObject gameObject;
     TextRenderer textRenderer(gameObject);
-    textRenderer.addLine("Text");
+    textRenderer.setText("Text");
 
-    Assert::AreEqual(static_cast<size_t>(1), textRenderer.getLineCount());
-    Assert::AreEqual("Text", textRenderer.getLine(0).c_str());
+    Assert::AreEqual("Text", textRenderer.getText().c_str());
 
     auto functionResult = state.globals()["TextRenderer"]["setText"].get<sol::protected_function>().call(textRenderer, "Another\nTest");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(static_cast<size_t>(2), textRenderer.getLineCount());
-    Assert::AreEqual("Another", textRenderer.getLine(0).c_str());
-    Assert::AreEqual("Test", textRenderer.getLine(1).c_str());
+    Assert::AreEqual("Another\nTest", textRenderer.getText().c_str());
   }
 
 #pragma endregion

@@ -30,16 +30,14 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<Celeste::Rendering::TextRenderer> renderer = gameObject.addComponent<Celeste::Rendering::TextRenderer>();
-    renderer->addLine("Text");
+    renderer->setText("Text");
     observer_ptr<FPSCounter> fpsCounter = gameObject.addComponent<FPSCounter>();
 
-    Assert::AreEqual(static_cast<size_t>(1), renderer->getLineCount());
-    Assert::AreEqual("Text", renderer->getLine(0).c_str());
+    Assert::AreEqual("Text", renderer->getText().c_str());
 
     fpsCounter->update(0.25f);
 
-    Assert::AreEqual(static_cast<size_t>(1), renderer->getLineCount());
-    Assert::AreEqual("Text", renderer->getLine(0).c_str());
+    Assert::AreEqual("Text", renderer->getText().c_str());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -47,16 +45,14 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<Celeste::Rendering::TextRenderer> renderer = gameObject.addComponent<Celeste::Rendering::TextRenderer>();
-    renderer->addLine("Text");
+    renderer->setText("Text");
     observer_ptr<FPSCounter> fpsCounter = gameObject.addComponent<FPSCounter>();
 
-    Assert::AreEqual(static_cast<size_t>(1), renderer->getLineCount());
-    Assert::AreEqual("Text", renderer->getLine(0).c_str());
+    Assert::AreEqual("Text", renderer->getText().c_str());
 
     fpsCounter->update(0.55f);
 
-    Assert::AreEqual(static_cast<size_t>(1), renderer->getLineCount());
-    Assert::AreEqual(std::to_string(static_cast<size_t>(1 / 0.55f)), renderer->getLine(0));
+    Assert::AreEqual(std::to_string(static_cast<size_t>(1 / 0.55f)), renderer->getText());
   }
 
 #pragma endregion

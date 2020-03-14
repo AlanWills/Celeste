@@ -162,9 +162,6 @@
     <ClInclude Include="Headers\UI\LayoutEnums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\UI\TextBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Resources\Fonts\Font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -918,9 +915,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Maths\Matrix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\UI\TextBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Resources\Fonts\Font.cpp">

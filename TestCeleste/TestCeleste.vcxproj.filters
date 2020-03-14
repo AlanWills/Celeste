@@ -147,9 +147,6 @@
     <ClCompile Include="Source\Input\TestInputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UI\TestTextBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Resources\Fonts\TestFont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -247,9 +244,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\XML\TestXMLObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\DataConverters\UI\TestTextBoxDataConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\DataConverters\UI\TestSliderDataConverter.cpp">
