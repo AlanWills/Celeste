@@ -15,7 +15,6 @@ namespace Celeste::Animation
     m_currentFrame(0),
     m_currentFrameDirty(true),
     m_spriteRenderer(gameObject.findComponent<Rendering::SpriteRenderer>()),
-    m_playImmediately(false),
     m_loop(true),
     m_playing(false),
     m_currentSecondsPerFrame(0),
@@ -23,15 +22,6 @@ namespace Celeste::Animation
     m_name(0)
   {
     ASSERT_NOT_NULL(m_spriteRenderer);
-
-    if (m_playImmediately)
-    {
-      play();
-    }
-    else
-    {
-      stop();
-    }
   }
 
   //------------------------------------------------------------------------------------------------

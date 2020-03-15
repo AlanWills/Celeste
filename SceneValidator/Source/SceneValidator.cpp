@@ -31,10 +31,17 @@ int main(int argc, char** argv)
   int errorFileCount = 0;
   for (const File& file : files)
   {
-    if (SceneLoader::load(file.getFilePath()))
+    std::tuple<bool, std::vector<GameObject*>> result = SceneLoader::load(file.getFilePath());
+
+    if (!std::get<0>(result))
     {
       ++errorFileCount;
       std::cout << file.getFilePath().c_str() << ": Failed" << std::endl;
+    }
+
+    for (auto gameObject : std::get<1>(result))
+    {
+      delete gameObject;
     }
 
     resourceManager.unload<Data>(file.getFilePath());

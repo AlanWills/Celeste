@@ -28,8 +28,6 @@ namespace Celeste::Lua::Animation::AnimatorScriptCommands
       "setSpriteSheetDimensions", &Animator::setSpriteSheetDimensions,
       "getSecondsPerFrame", &Animator::getSecondsPerFrame,
       "setSecondsPerFrame", &Animator::setSecondsPerFrame,
-      "getPlayImmediately", &Animator::getPlayImmediately,
-      "setPlayImmediately", &Animator::setPlayImmediately,
       "isLooping", &Animator::isLooping,
       "setLooping", &Internals::setLooping,
       "play", &Animator::play,

@@ -9,6 +9,12 @@ namespace Celeste::Lua::Maths::TransformScriptCommands
   namespace Internals
   {
     //------------------------------------------------------------------------------------------------
+    void setWorldTranslation_vec3Overload(Transform& transform, const glm::vec3& worldTranslation)
+    {
+      transform.setWorldTranslation(worldTranslation);
+    }
+
+    //------------------------------------------------------------------------------------------------
     void translate_TwoFloatsOverload(Transform& transform, float xTranslation, float yTranslation)
     {
       transform.translate(xTranslation, yTranslation);
@@ -21,6 +27,8 @@ namespace Celeste::Lua::Maths::TransformScriptCommands
     registerUserType<Transform>(
       Transform::type_name(),
       sol::base_classes, sol::bases<Object>(),
+      "getWorldTranslation", &Transform::getWorldTranslation,
+      "setWorldTranslation", &Internals::setWorldTranslation_vec3Overload,
       "translate", &Internals::translate_TwoFloatsOverload);
   }
 }

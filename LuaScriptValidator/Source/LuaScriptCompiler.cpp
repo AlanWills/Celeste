@@ -32,6 +32,9 @@ int main(int argc, char** argv)
       {
         ++errorFileCount;
         std::cout << file.getFilePath().c_str() << ": Failed" << std::endl;
+
+        sol::error error = loadResult;
+        std::cout << error.what() << std::endl;
       }
     }
     catch (const sol::error& e)

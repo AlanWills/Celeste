@@ -20,9 +20,6 @@ namespace Celeste::Animation
       inline float getSecondsPerFrame() const { return m_secondsPerFrame; }
       inline void setSecondsPerFrame(float secondsPerFrame) { m_secondsPerFrame = secondsPerFrame; }
 
-      inline bool getPlayImmediately() const { return m_playImmediately; }
-      inline void setPlayImmediately(bool playImmediately) { m_playImmediately = playImmediately; }
-
       inline void setLooping(LoopMode shouldLoop) { m_loop = shouldLoop == LoopMode::kLooping; }
       inline bool isLooping() const { return m_loop; }
 
@@ -77,7 +74,6 @@ namespace Celeste::Animation
 
       observer_ptr<Rendering::SpriteRenderer> m_spriteRenderer;
 
-      bool m_playImmediately;
       bool m_playing;
       bool m_loop;
 
