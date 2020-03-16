@@ -216,6 +216,18 @@ namespace Celeste::XML
   }
 
   //------------------------------------------------------------------------------------------------
+  XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, unsigned int& output)
+  {
+    XMLValueError result = detail::checkElementAndAttribute(element, attributeName);
+    if (result != XMLValueError::kSuccess)
+    {
+      return result;
+    }
+
+    return element->QueryUnsignedAttribute(attributeName.c_str(), &output) == XML_SUCCESS ? XMLValueError::kSuccess : XMLValueError::kError;
+  }
+
+  //------------------------------------------------------------------------------------------------
   XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, float& output)
   {
     XMLValueError result = detail::checkElementAndAttribute(element, attributeName);
@@ -270,6 +282,18 @@ namespace Celeste::XML
     }
 
     return attribute->QueryIntValue(&output) == XML_SUCCESS ? XMLValueError::kSuccess : XMLValueError::kError;
+  }
+
+  //------------------------------------------------------------------------------------------------
+  XMLValueError getAttributeData(const XMLAttribute* attribute, unsigned int& output)
+  {
+    if (attribute == nullptr)
+    {
+      ASSERT_FAIL();
+      return XMLValueError::kError;
+    }
+
+    return attribute->QueryUnsignedValue(&output) == XML_SUCCESS ? XMLValueError::kSuccess : XMLValueError::kError;
   }
 
   //------------------------------------------------------------------------------------------------

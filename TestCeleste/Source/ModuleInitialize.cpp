@@ -13,7 +13,7 @@ namespace TestCeleste
   std::unique_ptr<Game> game(nullptr);
 
   //------------------------------------------------------------------------------------------------
-  TEST_MODULE_INITIALIZE(TestCelestePlus_Initialize)
+  TEST_MODULE_INITIALIZE(TestCeleste_Initialize)
   {
     // Issues with unique_ptrs over dll boundaries so have to do this in the test project
     Assertion::setAsserter(new NullAsserter());
@@ -30,7 +30,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_MODULE_CLEANUP(TestCelestePlus_Cleanup)
+  TEST_MODULE_CLEANUP(TestCeleste_Cleanup)
   {
     Game::exit();
     GL::terminate();

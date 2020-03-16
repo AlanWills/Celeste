@@ -146,11 +146,13 @@ namespace Celeste::XML
   //------------------------------------------------------------------------------------------------
   CelesteDllExport XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, bool& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, int& output);
+  CelesteDllExport XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, unsigned int& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, float& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, std::string& output);
 
   CelesteDllExport XMLValueError getAttributeData(const XMLAttribute* attribute, bool& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLAttribute* attribute, int& output);
+  CelesteDllExport XMLValueError getAttributeData(const XMLAttribute* attribute, unsigned int& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLAttribute* attribute, float& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLAttribute* attribute, std::string& output);
 }

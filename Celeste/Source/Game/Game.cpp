@@ -33,6 +33,26 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
+  Game::Game(
+    int windowWidth,
+    int windowHeight,
+    OpenGLWindow::WindowMode windowMode,
+    const std::string& windowTitle) :
+    m_resourceManager(Path(Directory::getExecutingAppDirectory(), "Resources")),
+    m_sceneManager(),
+    m_window(windowWidth, windowHeight, windowMode, windowTitle),
+    m_inputManager(m_window.getGLWindow()),
+    m_physicsManager(),
+    m_renderManager(),
+    m_audioManager(),
+    m_clock(),
+    m_running(false)
+  {
+    ASSERT(!m_current);
+    m_current = this;
+  }
+
+  //------------------------------------------------------------------------------------------------
   Game::ResourceManager& Game::getResourceManager()
   {
     return m_current->m_resourceManager;
@@ -108,6 +128,10 @@ namespace Celeste
     {
       gameSettings->apply();
     }
+
+    // The window starts off hidden and we show it now after we have finished processing the window and game settings
+    // This is to avoid glitches at the start whilst the window setup is potentially changed from the default values by the settings
+    m_window.show();
   }
 
   //------------------------------------------------------------------------------------------------

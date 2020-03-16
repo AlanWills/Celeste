@@ -60,7 +60,19 @@ namespace Celeste
     m_viewportDimensions(screenWidth, screenHeight),
     m_viewportDimensionsChanged()
   {
+    if (!GL::glfw_initialize())
+    {
+      ASSERT_FAIL();
+    }
+
     initWindow(windowMode);
+
+    // It's important that GLEW is initialized after the window is created (I have literally no fucking idea why, 
+    // but it's been a pain to figure this out, so just trust me)
+    if (!GL::glew_initialize())
+    {
+      ASSERT_FAIL();
+    }
   }
 
   //------------------------------------------------------------------------------------------------
@@ -115,13 +127,15 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void OpenGLWindow::handleInput()
+  void OpenGLWindow::show() const
   {
-    // Check to see whether we should exit
-    if (getKeyboard().isKeyTapped(GLFW_KEY_ESCAPE))
-    {
-      glfwSetWindowShouldClose(m_window, GL_TRUE);
-    }
+    glfwShowWindow(m_window);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void OpenGLWindow::hide() const
+  {
+    glfwHideWindow(m_window);
   }
 
   //------------------------------------------------------------------------------------------------

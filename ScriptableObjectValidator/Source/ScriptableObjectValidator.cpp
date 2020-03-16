@@ -25,7 +25,9 @@ int main(int argc, char** argv)
 
   std::cout << std::to_string(files.size()) << " scriptable object files found" << std::endl;
 
-  Game game;
+  Game game(1, 1, OpenGLWindow::WindowMode::kWindowed, "");
+  game.getAudioManager().setMasterVolume(0);
+  
   ResourceManager& resourceManager = game.getResourceManager();
   resourceManager.setResourcesDirectory(pathToResourcesDirectory);
 

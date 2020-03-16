@@ -24,7 +24,8 @@ class OpenGLWindow
       const std::string& windowTitle = "");
     CelesteDllExport ~OpenGLWindow();
 
-    CelesteDllExport void handleInput();
+    CelesteDllExport void show() const;
+    CelesteDllExport void hide() const;
 
     CelesteDllExport glm::vec2 getWindowDimensions() const;
     CelesteDllExport void setWindowDimensions(glm::vec2 windowDimensions);

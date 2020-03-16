@@ -28,6 +28,11 @@ namespace Celeste
 
     public:
       CelesteDllExport Game();
+      CelesteDllExport Game(
+        int windowWidth,
+        int windowHeight,
+        OpenGLWindow::WindowMode windowMode,
+        const std::string& windowTitle);
       CelesteDllExport virtual ~Game() = default;
 
       /// \brief Begin our game loop
