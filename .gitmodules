@@ -7,3 +7,6 @@
 [submodule "3rdParty/gas-preprocessor"]
 	path = 3rdParty/gas-preprocessor
 	url = https://github.com/FFmpeg/gas-preprocessor.git
+[submodule "3rdParty/openal-soft"]
+	path = 3rdParty/openal-soft
+	url = https://github.com/kcat/openal-soft.git
