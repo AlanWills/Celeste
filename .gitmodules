@@ -4,3 +4,6 @@
 [submodule "3rdParty/ffmpeg"]
 	path = 3rdParty/ffmpeg
 	url = https://github.com/FFmpeg/FFmpeg.git
+[submodule "3rdParty/gas-preprocessor"]
+	path = 3rdParty/gas-preprocessor
+	url = https://github.com/FFmpeg/gas-preprocessor.git
