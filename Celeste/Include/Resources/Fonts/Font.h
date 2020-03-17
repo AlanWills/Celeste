@@ -11,34 +11,28 @@
 #include <unordered_map>
 
 
-namespace Celeste
+namespace Celeste::Resources
 {
-  namespace Resources
+  class Font : public Resource
   {
-    class Font : public Resource
-    {
-      public:
-        CelesteDllExport Font();
-        CelesteDllExport ~Font();
+    public:
+      CelesteDllExport FontInstance createInstance(float height);
 
-        CelesteDllExport FontInstance createInstance(float height);
+    protected:
+      size_t getNumberOfHeightsLoaded() const { return m_charactersLookup.size(); }
 
-      protected:
-        size_t getNumberOfHeightsLoaded() const { return m_charactersLookup.size(); }
+      bool doLoadFromFile(const Path& /*pathToFile*/) override { return true; }
+      CelesteDllExport void doUnload() override;
 
-        bool doLoadFromFile(const Path& pathToFile) override { return true; }
-        CelesteDllExport void doUnload() override;
+    private:
+      typedef std::unordered_map<char, Character> Characters;
+      typedef std::unordered_map<float, Characters> CharactersLookup;
+      typedef Resource Inherited;
 
-      private:
-        typedef std::unordered_map<char, Character> Characters;
-        typedef std::unordered_map<float, Characters> CharactersLookup;
-        typedef Resource Inherited;
+      /// Load the characters, create textures for the inputted height and add to the characters lookup.
+      /// If the characters already exist for the inputted height, do nothing.
+      void loadCharacters(float height);
 
-        /// Load the characters, create textures for the inputted height and add to the characters lookup.
-        /// If the characters already exist for the inputted height, do nothing.
-        void loadCharacters(float height);
-
-        CharactersLookup m_charactersLookup;
-    };
-  }
+      CharactersLookup m_charactersLookup;
+  };
 }
