@@ -40,3 +40,6 @@
 [submodule "3rdParty/SOIL2"]
 	path = 3rdParty/SOIL2
 	url = https://github.com/darsto/SOIL2.git
+[submodule "3rdParty/glew"]
+	path = 3rdParty/glew
+	url = https://github.com/LuaDist/glew.git
