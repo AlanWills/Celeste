@@ -34,9 +34,6 @@
 [submodule "3rdParty/freetype2"]
 	path = 3rdParty/freetype2
 	url = https://github.com/aseprite/freetype2.git
-[submodule "3rdParty/glew"]
-	path = 3rdParty/glew
-	url = https://github.com/nigels-com/glew.git
 [submodule "3rdParty/glfw"]
 	path = 3rdParty/glfw
 	url = https://github.com/glfw/glfw.git
