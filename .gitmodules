@@ -13,3 +13,9 @@
 [submodule "3rdParty/freealut"]
 	path = 3rdParty/freealut
 	url = https://github.com/vancegroup/freealut.git
+[submodule "3rdParty/assimp"]
+	path = 3rdParty/assimp
+	url = https://github.com/assimp/assimp.git
+[submodule "3rdParty/lua"]
+	path = 3rdParty/lua
+	url = https://github.com/LuaDist/lua.git
