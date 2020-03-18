@@ -22,3 +22,6 @@
 [submodule "3rdParty/tinyxml2"]
 	path = 3rdParty/tinyxml2
 	url = https://github.com/leethomason/tinyxml2.git
+[submodule "3rdParty/curl"]
+	path = 3rdParty/curl
+	url = https://github.com/curl/curl.git
