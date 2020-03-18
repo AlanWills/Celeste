@@ -19,3 +19,6 @@
 [submodule "3rdParty/lua"]
 	path = 3rdParty/lua
 	url = https://github.com/LuaDist/lua.git
+[submodule "3rdParty/tinyxml2"]
+	path = 3rdParty/tinyxml2
+	url = https://github.com/leethomason/tinyxml2.git
