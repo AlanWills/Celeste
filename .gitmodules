@@ -25,3 +25,21 @@
 [submodule "3rdParty/curl"]
 	path = 3rdParty/curl
 	url = https://github.com/curl/curl.git
+[submodule "3rdParty/curlpp"]
+	path = 3rdParty/curlpp
+	url = https://github.com/jpbarrette/curlpp.git
+[submodule "3rdParty/dirent"]
+	path = 3rdParty/dirent
+	url = https://github.com/tronkko/dirent.git
+[submodule "3rdParty/freetype2"]
+	path = 3rdParty/freetype2
+	url = https://github.com/aseprite/freetype2.git
+[submodule "3rdParty/glew"]
+	path = 3rdParty/glew
+	url = https://github.com/nigels-com/glew.git
+[submodule "3rdParty/glfw"]
+	path = 3rdParty/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "3rdParty/SOIL2"]
+	path = 3rdParty/SOIL2
+	url = https://github.com/darsto/SOIL2.git
