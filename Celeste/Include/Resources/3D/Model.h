@@ -13,46 +13,43 @@
 #include <unordered_map>
 
 
-namespace Celeste
+namespace Celeste::Resources
 {
-  namespace Resources
+  class Model : public Resource
   {
-    class Model : public Resource
-    {
-      public:
-        CelesteDllExport Model();
+    public:
+      CelesteDllExport Model();
 
-        const std::vector<Mesh>& getMeshes() const { return m_meshes; }
+      const std::vector<Mesh>& getMeshes() const { return m_meshes; }
 
-      protected:
-        CelesteDllExport bool doLoadFromFile(const Path& filePath) override;
-        CelesteDllExport void doUnload() override;
+    protected:
+      CelesteDllExport bool doLoadFromFile(const Path& filePath) override;
+      CelesteDllExport void doUnload() override;
 
-      private:
-        using Inherited = Resource;
+    private:
+      using Inherited = Resource;
 
-        void processNode(
-          aiNode* node,
-          const aiScene* scene,
-          const Directory& parentDirectory,
-          std::unordered_map<std::string, Texture>& textureCache);
+      void processNode(
+        aiNode* node,
+        const aiScene* scene,
+        const Directory& parentDirectory,
+        std::unordered_map<std::string, Texture>& textureCache);
 
-        Mesh processMesh(
-          aiMesh* mesh,
-          const aiScene* scene,
-          const Directory& parentDirectory,
-          std::unordered_map<std::string, Texture>& textureCache);
+      Mesh processMesh(
+        aiMesh* mesh,
+        const aiScene* scene,
+        const Directory& parentDirectory,
+        std::unordered_map<std::string, Texture>& textureCache);
 
-        std::vector<Texture> loadMaterialTextures(
-          aiMaterial* mat,
-          aiTextureType type,
-          const std::string& typeName,
-          const Directory& parentDirectory,
-          std::unordered_map<std::string, Texture>& textureCache);
+      std::vector<Texture> loadMaterialTextures(
+        aiMaterial* mat,
+        aiTextureType type,
+        const std::string& typeName,
+        const Directory& parentDirectory,
+        std::unordered_map<std::string, Texture>& textureCache);
 
-        unsigned int textureFromFile(const Path& path, bool gamma = false);
+      unsigned int textureFromFile(const Path& path, bool gamma = false);
 
-        std::vector<Mesh> m_meshes;
-    };
-  }
+      std::vector<Mesh> m_meshes;
+  };
 }

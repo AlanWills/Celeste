@@ -55,7 +55,7 @@ namespace Celeste
 
     protected:
       CelesteDllExport virtual void onInitialize();
-      virtual void onUpdate(float elapsedGameTime) { }
+      virtual void onUpdate(float /*elapsedGameTime*/) { }
       virtual void onExit() { }
 
     private:

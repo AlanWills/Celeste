@@ -15,7 +15,7 @@ namespace Celeste
 }
 
 
-namespace sol::detail
+namespace sol
 {
   template <>
   struct is_container<Celeste::GameObject> : std::false_type { };

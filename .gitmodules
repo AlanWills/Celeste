@@ -43,3 +43,9 @@
 [submodule "3rdParty/glew"]
 	path = 3rdParty/glew
 	url = https://github.com/LuaDist/glew.git
+[submodule "3rdParty/sol2"]
+	path = 3rdParty/sol2
+	url = https://github.com/ThePhD/sol2.git
+[submodule "3rdParty/crossguid"]
+	path = 3rdParty/crossguid
+	url = https://github.com/graeme-hill/crossguid.git

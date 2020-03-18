@@ -82,17 +82,17 @@ namespace Celeste::Bindings
       classContent.push_back('\n');
     }
 
-    for (const auto& scriptableObject : scriptableObject.m_scriptableObjects)
+    for (const auto& childSO : scriptableObject.m_scriptableObjects)
     {
       classContent.push_back('\n');
       classContent.append("\t\t[Serialize, DisplayPriority(");
       classContent.append(std::to_string(++index));
       classContent.append(")]\n");
-      scriptableObject->generateBinding(classContent);
+      childSO->generateBinding(classContent);
       classContent.push_back('\n');
 
       std::unique_ptr<Reflection::ITypeInfo> scriptableObjectTypeInfo(nullptr);
-      scriptableObject->type_info_i(scriptableObjectTypeInfo);
+      childSO->type_info_i(scriptableObjectTypeInfo);
 
       if (customNamespaces.find(scriptableObjectTypeInfo->getNamespace()) == customNamespaces.end() &&
         scriptableObjectTypeInfo->getNamespace() != typeInfo.getNamespace())

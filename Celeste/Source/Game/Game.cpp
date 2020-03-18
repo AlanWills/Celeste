@@ -182,7 +182,7 @@ namespace Celeste
       // we should not update the world - it will cause confusion in physics etc.
       if (elapsedRealTime < 1)
       {
-        GLfloat targetGameTime = m_clock.getTargetSecondsPerFrame() * m_clock.getTimeScale();
+        //float targetGameTime = m_clock.getTargetSecondsPerFrame() * m_clock.getTimeScale();
 
         handleInput();
 
@@ -300,7 +300,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Game::windowCloseFunc(GLFWwindow* window)
+  void Game::windowCloseFunc(GLFWwindow* /*window*/)
   {
     Game::exit();
   }

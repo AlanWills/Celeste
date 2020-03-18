@@ -2,6 +2,7 @@
 #include "Game/Game.h"
 #include "Input/KeyboardActivator.h"
 #include "Algorithms/EntityAlgorithms.h"
+#include "Scene/SceneUtils.h"
 
 
 namespace Celeste::Input
@@ -54,7 +55,7 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void keyCallback(GLFWwindow* window, int key, int scancode, int action, int modifiers)
+  void keyCallback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int /*modifiers*/)
   {
     // This callback is called when the keyboard state CHANGES
 
@@ -69,13 +70,13 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void charCallback(GLFWwindow* window, unsigned int codepoint)
+  void charCallback(GLFWwindow* /*window*/, unsigned int codepoint)
   {
     getKeyboard().onTextInputted(static_cast<char>(codepoint));
   }
 
   //------------------------------------------------------------------------------------------------
-  void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+  void mouseButtonCallback(GLFWwindow* /*window*/, int button, int action, int /*mods*/)
   {
     // This callback is called when the mouse state CHANGES
 

@@ -1,7 +1,7 @@
 #include "Resources/ResourceManager.h"
 #include "Game/Game.h"
 
-#include <SOIL/SOIL.h>
+#include <SOIL2/SOIL2.h>
 
 
 namespace Celeste::Resources

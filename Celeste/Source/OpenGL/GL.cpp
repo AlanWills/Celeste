@@ -21,7 +21,8 @@ namespace Celeste
       LOG("glfw Major Version: " + std::to_string(major));
       LOG("glfw Minor Version: " + std::to_string(minor));
       
-      if (GL_VERSION_3_0 || glewIsSupported("GL_VERSION_3_0"))
+#if GL_VERSION_3_0
+      if (glewIsSupported("GL_VERSION_3_0"))
       {
         // If we have not yet initialized the glfw state, we do so now
         result = (glfwInit() == GLFW_TRUE);
@@ -39,6 +40,9 @@ namespace Celeste
         LOG("OpenGL 3.0 not supported");
       }
     }
+#else
+      LOG("OpenGL 3.0 not supported");
+#endif
 
     return result;
   }

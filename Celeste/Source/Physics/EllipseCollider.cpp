@@ -110,12 +110,12 @@ namespace Celeste::Physics
       return true;
     }
 
-    // TODO proper ellipse collision - currently just rectangle rectangle
+    // TODO proper ellipse collision - currently just rectangle <-> rectangle
     return false;
   }
 
   //------------------------------------------------------------------------------------------------
-  bool EllipseCollider::intersects(const Maths::Ellipse& ellipse) const
+  bool EllipseCollider::intersects(const Maths::Ellipse& /*ellipse*/) const
   {
     // TODO
     return false;

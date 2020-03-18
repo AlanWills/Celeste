@@ -22,21 +22,6 @@ namespace Celeste::Lua::XML::tinyxml2ScriptCommands
     }
 
     //------------------------------------------------------------------------------------------------
-    void destroyNode(tinyxml2::XMLNode& node)
-    {
-    }
-
-    //------------------------------------------------------------------------------------------------
-    void destroyElement(tinyxml2::XMLElement& element)
-    {
-    }
-
-    //------------------------------------------------------------------------------------------------
-    void destroyAttribute(tinyxml2::XMLAttribute& attribute)
-    {
-    }
-
-    //------------------------------------------------------------------------------------------------
     const tinyxml2::XMLAttribute* findAttribute(tinyxml2::XMLElement& element, const std::string& attributeName)
     {
       return element.FindAttribute(attributeName.c_str());
@@ -63,21 +48,17 @@ namespace Celeste::Lua::XML::tinyxml2ScriptCommands
       "newElement", &XMLDocument::NewElement,
       "saveFile", &Internals::saveFile);
 
-    state.new_usertype<XMLNode>(
-      "XMLNode",
-      sol::destructor(&Internals::destroyNode));
+    state.new_usertype<XMLNode>("XMLNode");
 
     state.new_usertype<XMLElement>(
       "XMLElement",
       sol::base_classes, sol::bases<XMLNode>(),
       "findAttribute", &Internals::findAttribute,
-      "setAttribute", sol::overload(&Internals::setAttributeString),
-      sol::destructor(&Internals::destroyElement));
+      "setAttribute", sol::overload(&Internals::setAttributeString));
 
     state.new_usertype<XMLAttribute>(
       "XMLAttribute",
       "asString", &XMLAttribute::Value,
-      "asFloat", &XMLAttribute::FloatValue,
-      sol::destructor(&Internals::destroyAttribute));
+      "asFloat", &XMLAttribute::FloatValue);
   }
 }

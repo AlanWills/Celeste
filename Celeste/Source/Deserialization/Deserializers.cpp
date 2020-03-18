@@ -149,7 +149,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template<>
-  bool deserialize(const std::string& text, std::vector<Resources::Texture2D>& output)
+  bool deserialize(const std::string& /*text*/, std::vector<Resources::Texture2D>& /*output*/)
   {
 	  return true;
   }

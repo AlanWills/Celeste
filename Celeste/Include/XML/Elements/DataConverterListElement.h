@@ -138,7 +138,7 @@ namespace Celeste
         static constexpr bool isReference() { return false; }
 
   #if _DEBUG
-        void generateBinding(std::string& output) const override { }
+        void generateBinding(std::string& /*output*/) const override { }
   #endif
 
         CelesteDllExport static const char* const GAME_OBJECT_ELEMENT_NAME;
@@ -188,7 +188,7 @@ namespace Celeste
         static constexpr bool isReference() { return false; }
 
   #if _DEBUG
-        void generateBinding(std::string& output) const override { }
+        void generateBinding(std::string& /*output*/) const override { }
   #endif
 
       protected:

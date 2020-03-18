@@ -25,7 +25,7 @@ namespace Celeste::Lua::UI::StackPanelScriptCommands
   {
     using StackPanel = Celeste::UI::StackPanel;
 
-    sol::state& state = Lua::LuaState::instance();
+    Lua::LuaState::instance();
     registerUserType<StackPanel>(
       StackPanel::type_name(),
       "addChild", &Internals::addChild,

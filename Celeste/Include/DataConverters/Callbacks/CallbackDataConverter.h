@@ -18,7 +18,7 @@ namespace Celeste
       CelesteDllExport static const char* const ARG_ATTRIBUTE_NAME;
 
     protected:
-      inline bool doConvertFromXML(const XMLElement* callbackElement) { return true; }
+      inline bool doConvertFromXML(const XMLElement* /*callbackElement*/) { return true; }
 
     private:
       using Inherited = DataConverter;

@@ -25,30 +25,30 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void getLines(const std::string& text, std::vector<std::string>& outputLines)
+  void split(const std::string& text, std::vector<std::string>& outputLines, char delimiter)
   {
     if (text.empty())
     {
       return;
     }
 
-    std::string currentSubLine;
-    currentSubLine.reserve(text.size());
+    std::string current;
+    current.reserve(text.size());
 
     for (char c : text)
     {
-      if (c == '\n')
+      if (c == delimiter)
       {
-        outputLines.push_back(currentSubLine);
-        currentSubLine.clear();
+        outputLines.push_back(current);
+        current.clear();
       }
       else
       {
-        currentSubLine.push_back(c);
+        current.push_back(c);
       }
     }
 
-    outputLines.push_back(currentSubLine);
+    outputLines.push_back(current);
   }
 
   //------------------------------------------------------------------------------------------------

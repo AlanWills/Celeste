@@ -93,7 +93,7 @@ namespace Celeste
       if (measureString(text).x <= maxWidth)
       {
         // If we are not in danger of running over the max width, we just split using the standard string utils function
-        Celeste::getLines(text, outputLines);
+        Celeste::split(text, outputLines);
         return;
       }
 

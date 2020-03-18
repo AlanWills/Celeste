@@ -10,7 +10,7 @@ namespace Celeste::Lua::UI::ProgressBarScriptCommands
   {
     using ProgressBar = Celeste::UI::ProgressBar;
 
-    sol::state& state = Lua::LuaState::instance();
+    Lua::LuaState::instance();
     registerUserType<ProgressBar>(
       ProgressBar::type_name(),
       "getProgress", &ProgressBar::getProgress,

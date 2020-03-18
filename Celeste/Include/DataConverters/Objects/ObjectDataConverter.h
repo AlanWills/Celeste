@@ -18,7 +18,7 @@ namespace Celeste
       void setValues(T& object) const;
 
     protected:
-      virtual void doSetValues(T& object) const { }
+      virtual void doSetValues(T& /*object*/) const { }
 
     private:
       using Inherited = DataConverter;

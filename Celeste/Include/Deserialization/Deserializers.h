@@ -1,12 +1,9 @@
 #pragma once
 
-#include "tinyxml2.h"
-#include "XML/XMLEnums.h"
-#include "Scene/SceneUtils.h"
 #include "FileSystem/Path.h"
-#include "Debug/Assert.h"
 
 #include <string>
+#include <vector>
 
 
 namespace Celeste

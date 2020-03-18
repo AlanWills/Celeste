@@ -128,13 +128,7 @@ namespace Celeste::XML
       return 0;
     }
 
-    size_t count = 0;
-    for (const XMLElement* child : children(element))
-    {
-      ++count;
-    }
-
-    return count;
+    return child_count(element);
   }
 
   //------------------------------------------------------------------------------------------------

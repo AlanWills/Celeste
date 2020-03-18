@@ -205,11 +205,11 @@ namespace Celeste::Lua
 
   //------------------------------------------------------------------------------------------------
   void LuaComponentDataConverter::createElementFromLuaData(
-    const std::string& name,
-    const std::string& typeName,
-    bool isReference,
-    DeserializationRequirement isRequired,
-    const sol::optional<std::string>& luaDefaultValue)
+    const std::string&,
+    const std::string&,
+    bool,
+    DeserializationRequirement,
+    const sol::optional<std::string>&)
   {
     ASSERT_FAIL();
   }

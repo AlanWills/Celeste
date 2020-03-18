@@ -2,7 +2,7 @@
 #include "Resources/ResourceManager.h"
 #include "XML/tinyxml2_ext.h"
 #include "Registries/ScriptableObjectRegistry.h"
-#include "UID/Guid.hpp"
+#include "crossguid/guid.hpp"
 
 
 namespace Celeste
@@ -14,7 +14,7 @@ namespace Celeste
     m_fields(),
     m_scriptableObjects(),
     m_name(),
-    m_guid(newGuid())
+    m_guid(xg::newGuid())
   {
   }
 
@@ -34,12 +34,12 @@ namespace Celeste
 
     // Read and load guid
     const char* guid = element->Attribute("guid");
-    m_guid = guid != nullptr ? Guid(guid) : newGuid();
+    m_guid = guid != nullptr ? xg::Guid(guid) : xg::newGuid();
 
     if (!m_guid.isValid())
     {
       ASSERT_FAIL_MSG("Invalid or missing guid.  This will cause object references to not be set up correctly.");
-      m_guid = newGuid();
+      m_guid = xg::newGuid();
     }
 
     // Now deserialize all the field information
@@ -61,11 +61,11 @@ namespace Celeste
     // scriptable object.  We can match up their guid with any guid references found.
     for (; childrenIt != childrenEnd; ++childrenIt)
     {
-      const tinyxml2::XMLElement* element = *childrenIt;
-      const char* guid = element->Attribute("guid");
-      if (guid != nullptr)
+      const tinyxml2::XMLElement* childElement = *childrenIt;
+      const char* childGuid = childElement->Attribute("guid");
+      if (childGuid != nullptr)
       {
-        elementLookup.emplace(ElementInformation(guid), element);
+        elementLookup.emplace(ElementInformation(childGuid), childElement);
       }
     }
 

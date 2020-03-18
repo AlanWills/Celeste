@@ -34,7 +34,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <>
-  void serialize(const std::vector<Resources::Texture2D>& value, std::string& output)
+  void serialize(const std::vector<Resources::Texture2D>& /*value*/, std::string& /*output*/)
   {
   }
 }

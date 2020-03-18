@@ -21,7 +21,7 @@ namespace Celeste
     //------------------------------------------------------------------------------------------------
     bool Sound::doLoadFromFile(const Path& soundFilePath)
     {
-      m_audioHandle = alutCreateBufferFromFile((ALbyte*)soundFilePath.c_str());
+      m_audioHandle = alutCreateBufferFromFile(soundFilePath.c_str());
       if (m_audioHandle == AL_NONE)
       {
         const char* error = alutGetErrorString(alutGetError());

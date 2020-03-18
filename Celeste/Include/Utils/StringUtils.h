@@ -17,7 +17,7 @@ namespace Celeste
   CelesteDllExport size_t charToWchar(const char* input, wchar_t* output, size_t sizeOfOutputBuffer);
 
   /// Split the inputted text into constituent lines by searching for instances of the '\n' character
-  CelesteDllExport void getLines(const std::string& text, std::vector<std::string>& outputLines);
+  CelesteDllExport void split(const std::string& text, std::vector<std::string>& outputLines, char delimiter = 'n');
 
   /// Calls to_string on the input and appends it onto the outputStr
   /// Should only be used on primitive numeric types

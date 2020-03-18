@@ -2,7 +2,7 @@
 
 #include "CelesteDllExport.h"
 #include "DataConverters/Objects/ComponentDataConverter.h"
-#include "sol.hpp"
+#include "sol/sol.hpp"
 
 
 namespace Celeste::Lua

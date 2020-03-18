@@ -14,7 +14,7 @@ namespace Celeste
   }
 }
 
-namespace sol::detail
+namespace sol
 {
   template <>
   struct is_container<Celeste::Transform> : std::false_type { };

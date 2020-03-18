@@ -26,7 +26,7 @@ namespace Celeste::Rendering
   {
     shaderProgram.setVector4f("colour", getColour());
 
-    glm::vec2& halfTextSize = getDimensions() * 0.5f;
+    glm::vec2 halfTextSize = getDimensions() * 0.5f;
     const FontInstance& font = getFont();
     float fontHeight = font.getHeight();
 
@@ -34,7 +34,7 @@ namespace Celeste::Rendering
     GLint viewModelLocation = shaderProgram.getUniformLocation("view_model");
     
     std::vector<std::string> lines;
-    getLines(m_text, lines);
+    split(m_text, lines);
 
     for (size_t i = 0; i < lines.size(); ++i)
     {
@@ -64,8 +64,8 @@ namespace Celeste::Rendering
           continue;
         }
 
-        letterRenderMatrix[0] *= character->m_size.x;
-        letterRenderMatrix[1] *= character->m_size.y;
+        letterRenderMatrix[0] *= static_cast<float>(character->m_size.x);
+        letterRenderMatrix[1] *= static_cast<float>(character->m_size.y);
 
         //Shift down by the amount the letter lies underneath the line - bearing = amount above line and size = total height
         letterRenderMatrix[3].y += (character->m_bearing.y - character->m_size.y);
@@ -108,7 +108,7 @@ namespace Celeste::Rendering
   void TextRenderer::recalculateDimensions()
   {
     std::vector<std::string> lines;
-    getLines(m_text, lines);
+    split(m_text, lines);
 
     m_dimensions.x = 0;
     m_dimensions.y = lines.size() * m_font.getHeight();

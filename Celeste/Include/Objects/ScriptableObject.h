@@ -3,7 +3,7 @@
 #include "CelesteDllExport.h"
 #include "Fields/DataField.h"
 #include "tinyxml2.h"
-#include "UID/Guid.hpp"
+#include "crossguid/guid.hpp"
 #include "Resources/ResourceUtils.h"
 #include "Resources/ResourceManager.h"
 #include "Reflection/Type.h"
@@ -34,7 +34,7 @@ namespace Celeste
       void setName(const std::string& name) { m_name = name; }
       const std::string& getName() const { return m_name; }
 
-      const Celeste::Guid& getGuid() const { return m_guid; }
+      const xg::Guid& getGuid() const { return m_guid; }
 
       template <typename T>
       static std::unique_ptr<T> create(const std::string& name);
@@ -51,8 +51,8 @@ namespace Celeste
     protected:
       CelesteDllExport ScriptableObject();
 
-      virtual bool doDeserialize(const tinyxml2::XMLElement* element) { return true; }
-      virtual void doSerialize(tinyxml2::XMLElement* element) const { }
+      virtual bool doDeserialize(const tinyxml2::XMLElement* /*element*/) { return true; }
+      virtual void doSerialize(tinyxml2::XMLElement* /*element*/) const { }
 
       template <typename T>
       T& createField(const std::string& fieldName);
@@ -92,7 +92,7 @@ namespace Celeste
       std::vector<std::unique_ptr<ScriptableObject>> m_scriptableObjects;
 
       std::string m_name;
-      Celeste::Guid m_guid;
+      xg::Guid m_guid;
 
       // Need this to allow bindings generator to access all members
       friend class Bindings::BindingsGenerator;

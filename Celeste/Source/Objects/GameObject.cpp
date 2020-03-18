@@ -213,7 +213,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void GameObject::render(Rendering::SpriteBatch& spriteBatch, float lag)
+  void GameObject::render(Rendering::SpriteBatch& spriteBatch, float /*lag*/)
   {
     glm::vec3 worldTranslation = getTransform()->getWorldTranslation();
     float worldRotation = getTransform()->getWorldRotation();
@@ -285,7 +285,7 @@ namespace Celeste
       component->setActive(false);
       m_managedComponents.erase(componentIt);
     }
-    else if (auto componentIt = std::find(m_unmanagedComponents.begin(), m_unmanagedComponents.end(), component); componentIt != m_unmanagedComponents.end())
+    else if (componentIt = std::find(m_unmanagedComponents.begin(), m_unmanagedComponents.end(), component); componentIt != m_unmanagedComponents.end())
     {
       component->setActive(false);
       m_unmanagedComponents.erase(componentIt);

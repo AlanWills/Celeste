@@ -23,7 +23,7 @@ namespace Celeste::Lua::UI::SliderScriptCommands
   //------------------------------------------------------------------------------------------------
   void initialize()
   {
-    sol::state& state = Lua::LuaState::instance();
+    Lua::LuaState::instance();
     registerUserType<Slider>(
       Slider::type_name(),
       sol::base_classes, sol::bases<Celeste::Component, Celeste::Entity, Celeste::Object>(),

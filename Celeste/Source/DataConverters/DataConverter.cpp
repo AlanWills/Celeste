@@ -142,8 +142,6 @@ namespace Celeste
       return false;
     }
 
-    auto element = data->getDocument().FirstChildElement();
-
     if (data->getDocumentRoot() == nullptr)
     {
       ASSERT_FAIL();

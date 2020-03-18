@@ -45,9 +45,9 @@ namespace Celeste::Resources
   //------------------------------------------------------------------------------------------------
   void Prefab::doUnload()
   {
-    m_gameObjects.swap(XML::XMLObjectFactory::create<XML::DataConverterListElement, GameObjectDataConverter>(
+    m_gameObjects = XML::XMLObjectFactory::create<XML::DataConverterListElement, GameObjectDataConverter>(
       GameObjectDataConverter::CHILD_GAME_OBJECTS_ELEMENT_NAME,
-      DeserializationRequirement::kRequired));
+      DeserializationRequirement::kRequired);
   }
 
   //------------------------------------------------------------------------------------------------

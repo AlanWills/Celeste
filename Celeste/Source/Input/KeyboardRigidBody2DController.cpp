@@ -42,7 +42,7 @@ namespace Celeste::Input
     glm::mat4 matrix = m_space == Maths::Space::kLocal ? getTransform()->getLocalMatrix() : getTransform()->getWorldMatrix();
     const Keyboard& keyboard = getKeyboard();
 
-    glm::vec2 deltaLinear;
+    glm::vec2 deltaLinear = glm::vec2();
     float deltaAngular = 0;
 
     if (keyboard.isKeyPressed(m_decreaseXLinearVelocityKey))

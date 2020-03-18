@@ -1,6 +1,5 @@
 #include "OpenAL/OpenALState.h"
-#include "OpenAL/al.h"
-#include "alut/alut.h"
+#include "UtilityHeaders/ALHeaders.h"
 
 
 namespace Celeste

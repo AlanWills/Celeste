@@ -2,7 +2,7 @@
 
 #include "CelesteDllExport.h"
 #include "Media/VideoSettings.h"
-#include "sol.hpp"
+#include "sol/sol.hpp"
 
 
 namespace Celeste::Lua::Media::VideoScriptCommands

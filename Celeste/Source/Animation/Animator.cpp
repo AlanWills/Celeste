@@ -115,8 +115,6 @@ namespace Celeste::Animation
   //------------------------------------------------------------------------------------------------
   void Animator::restart()
   {
-    size_t numFrames = getFrameCount();
-
     m_currentFrame = 0;
     m_currentSecondsPerFrame = 0;
     m_currentFrameDirty = true;

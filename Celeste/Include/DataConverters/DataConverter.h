@@ -125,7 +125,7 @@ namespace Celeste
       CelesteDllExport observer_ptr<XML::Element> getElement(size_t index);
       CelesteDllExport observer_ptr<XML::Element> findElement(const std::string& name);
 
-      virtual bool doConvertFromXML(const XMLElement* objectElement) { return true; }
+      virtual bool doConvertFromXML(const XMLElement* /*objectElement*/) { return true; }
 
     private:
       template <template<typename> class T, typename K>
