@@ -10,3 +10,6 @@
 [submodule "3rdParty/openal-soft"]
 	path = 3rdParty/openal-soft
 	url = https://github.com/kcat/openal-soft.git
+[submodule "3rdParty/freealut"]
+	path = 3rdParty/freealut
+	url = https://github.com/vancegroup/freealut.git
