@@ -11,40 +11,31 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   bool GL::glfw_initialize()
   {
-    bool result = true;
-    
     if (!m_initialized)
     {
       int major = 0, minor = 0, revision = 0;
       glfwGetVersion(&major, &minor, &revision);
       
-      LOG("glfw Major Version: " + std::to_string(major));
-      LOG("glfw Minor Version: " + std::to_string(minor));
+      LOG("glfw Min Major Version: 3");
+      LOG("glfw Min Minor Version: 2");
+      LOG("glfw Device Major Version: " + std::to_string(major));
+      LOG("glfw Device Minor Version: " + std::to_string(minor));
       
 #if GL_VERSION_3_0
-      if (glewIsSupported("GL_VERSION_3_0"))
-      {
-        // If we have not yet initialized the glfw state, we do so now
-        result = (glfwInit() == GLFW_TRUE);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-        glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-
-        // Mark the state as now initialized
-        m_initialized = true;
-      }
-      else
-      {
-        LOG("OpenGL 3.0 not supported");
-      }
+      // If we have not yet initialized the glfw state, we do so now
+      m_initialized = (glfwInit() == GLFW_TRUE);
+      glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+      glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+      glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+      glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+      glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
     }
 #else
-      LOG("OpenGL 3.0 not supported");
+    LOG("OpenGL 3.0 not supported");
 #endif
 
-    return result;
+    ASSERT(m_initialized);
+    return m_initialized;
   }
 
   //------------------------------------------------------------------------------------------------
@@ -55,7 +46,10 @@ namespace Celeste
     // We don't ever have to exit glew so we don't have to worry about keeping track of it's initialization
     glewExperimental = GL_TRUE;
     result = (glewInit() == GLEW_OK);
-    result &= (glGetError() == GL_NO_ERROR); // Call it once to catch glewInit() bug, all other errors are now from our application.
+
+    // Call it once to catch glewInit() bug, all other errors are now from our application.
+    glGetError();
+    result &= (glGetError() == GL_NO_ERROR); 
 
     return result;
   }

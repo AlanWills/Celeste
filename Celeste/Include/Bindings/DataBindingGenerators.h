@@ -40,7 +40,7 @@ namespace Celeste
       private:
         static void generatePropertyBinding(
           const std::string& variableName,
-          typename choose_class<is_reference, const T&, T>::type value,
+          typename choose_class<is_reference, const T&, T>::type /*value*/,
           std::string& output)
         {
           output.append("public ");
