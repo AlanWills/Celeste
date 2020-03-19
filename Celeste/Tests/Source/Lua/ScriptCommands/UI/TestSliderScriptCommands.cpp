@@ -80,7 +80,7 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
     Celeste::Lua::UI::SliderScriptCommands::initialize();
 
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    gameObject.addComponent<SpriteRenderer>();
     
     Slider slider(gameObject);
     slider.setMin(0);
@@ -98,7 +98,7 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
     Celeste::Lua::UI::SliderScriptCommands::initialize();
 
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    gameObject.addComponent<SpriteRenderer>();
     
     Slider slider(gameObject);
     slider.setMax(100);
@@ -116,7 +116,7 @@ namespace TestCeleste::Lua::UI::SliderScriptCommands
     Celeste::Lua::UI::SliderScriptCommands::initialize();
 
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    gameObject.addComponent<SpriteRenderer>();
     
     Slider slider(gameObject);
     slider.setMin(0);

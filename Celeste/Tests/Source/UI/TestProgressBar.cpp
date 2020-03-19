@@ -3,7 +3,7 @@
 #include "UI/ProgressBar.h"
 #include "Rendering/SpriteRenderer.h"
 #include "Resources/ResourceManager.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
 #include "AssertExt.h"
@@ -66,40 +66,6 @@ namespace TestCeleste
     ProgressBar progress(gameObject);
 
     Assert::AreEqual(100.0f, progress.getMax());
-  }
-
-#pragma endregion
-
-#pragma region On Set GameObject Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ProgressBar_SetGameObject_WithSpriteRenderer_SetsForegroundScissorRectangleDimensions)
-  {
-    GameObject gameObject;
-    observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
-    renderer->setTexture(TestResources::getBlockPngRelativePath());
-
-    Assert::AreEqual(glm::vec2(), renderer->getScissorRectangle().getDimensions());
-
-    observer_ptr<ProgressBar> progressBar = gameObject.addComponent<ProgressBar>();
-
-    AssertCel::HasComponent<SpriteRenderer>(gameObject);
-    Assert::AreEqual(glm::vec2(0, renderer->getDimensions().y), renderer->getScissorRectangle().getDimensions());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ProgressBar_SetGameObject_WithSpriteRenderer_SetsForegroundScissorRectangleCentre)
-  {
-    GameObject gameObject;
-    observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
-    renderer->setTexture(TestResources::getBlockPngRelativePath());
-
-    Assert::AreEqual(glm::vec2(), renderer->getScissorRectangle().getCentre());
-
-    observer_ptr<ProgressBar> progressBar = gameObject.addComponent<ProgressBar>();
-
-    AssertCel::HasComponent<SpriteRenderer>(gameObject);
-    Assert::AreEqual(glm::vec2(-renderer->getDimensions().x * 0.5f, 0), renderer->getScissorRectangle().getCentre());
   }
 
 #pragma endregion

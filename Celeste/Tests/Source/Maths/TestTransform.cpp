@@ -412,6 +412,8 @@ namespace TestCeleste
       int count = 0;
       for (observer_ptr<Transform> child : transform)
       {
+        Assert::IsNotNull(child);
+
         ++count;
       }
 

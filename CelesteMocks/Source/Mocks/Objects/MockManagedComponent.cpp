@@ -2,7 +2,7 @@
 #include "UtilityHeaders/ComponentHeaders.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   REGISTER_MANAGED_COMPONENT(MockManagedComponent, 10);
 

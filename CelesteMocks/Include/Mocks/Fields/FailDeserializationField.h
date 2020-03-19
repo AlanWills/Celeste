@@ -3,7 +3,7 @@
 #include "Mocks/Fields/MockField.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
 
 class FailDeserializationField : public MockField
@@ -11,9 +11,9 @@ class FailDeserializationField : public MockField
   public:
     FailDeserializationField(const std::string& name) : MockField(name) { }
     
-    bool doDeserialize(const tinyxml2::XMLElement* element) override { return false; }
+    bool doDeserialize(const tinyxml2::XMLElement* /*element*/) override { return false; }
 
-    void doSerialize(tinyxml2::XMLElement* element) const { }
+    void doSerialize(tinyxml2::XMLElement* /*element*/) const { }
 };
 
 }

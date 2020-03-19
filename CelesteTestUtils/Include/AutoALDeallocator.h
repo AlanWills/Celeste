@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OpenAL/al.h"
+#include "AL/al.h"
 
 
 namespace CelesteTestUtils

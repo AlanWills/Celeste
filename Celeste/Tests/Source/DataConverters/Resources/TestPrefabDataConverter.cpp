@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Resources/MockPrefabDataConverter.h"
-#include "Resources/Resources/Data/PrefabLoadingResources.h"
+#include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "Resources/Data/Prefab.h"
 #include "Utils/GameObjectXMLUtils.h"
 #include "AssertCel.h"

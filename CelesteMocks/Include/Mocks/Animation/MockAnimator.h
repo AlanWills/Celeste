@@ -1,14 +1,14 @@
 #pragma once
 
-#include "CelesteTestUtilsDllExport.h"
+#include "CelesteMocksDllExport.h"
 #include "Animation/Animator.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockAnimator : public Celeste::Animation::Animator
   {
-    DECLARE_UNMANAGED_COMPONENT(MockAnimator, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockAnimator, CelesteMocksDllExport)
 
     public:      
       size_t getCurrentFrame_Public() const { return getCurrentFrame(); }

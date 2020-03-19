@@ -110,7 +110,7 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
   {
     GameObject gameObject, child;
     observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
-    observer_ptr<MockRenderer> renderer = child.addComponent<MockRenderer>();
+    child.addComponent<MockRenderer>();
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::UI::StackPanelScriptCommands::initialize();
@@ -133,7 +133,7 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
   {
     GameObject gameObject, child, child2;
     observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
-    observer_ptr<MockRenderer> renderer = child.addComponent<MockRenderer>();
+    child.addComponent<MockRenderer>();
     stackPanel->addChildren(child);
 
     sol::state& state = LuaState::instance();
@@ -152,7 +152,7 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
   {
     GameObject gameObject, child;
     observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
-    observer_ptr<MockRenderer> renderer = child.addComponent<MockRenderer>();
+    child.addComponent<MockRenderer>();
     stackPanel->addChildren(child);
 
     sol::state& state = LuaState::instance();
@@ -174,8 +174,8 @@ namespace TestCeleste::Lua::UI::StackPanelScriptCommands
     GameObject child2;
 
     observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
-    observer_ptr<MockRenderer> renderer = child.addComponent<MockRenderer>();
-    observer_ptr<MockRenderer> renderer2 = child2.addComponent<MockRenderer>();
+    child.addComponent<MockRenderer>();
+    child2.addComponent<MockRenderer>();
     stackPanel->addChildren(child, child2);
 
     sol::state& state = LuaState::instance();

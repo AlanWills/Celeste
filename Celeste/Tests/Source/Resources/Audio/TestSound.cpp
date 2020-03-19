@@ -2,7 +2,7 @@
 
 #include "Resources/Audio/Sound.h"
 #include "Resources/ResourceManager.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "AutoALDeallocator.h"
 
 using namespace Celeste::Resources;

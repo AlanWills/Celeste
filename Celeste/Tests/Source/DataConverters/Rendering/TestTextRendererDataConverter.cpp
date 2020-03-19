@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Rendering/MockTextRendererDataConverter.h"
-#include "Resources/Rendering/TextRendererLoadingResources.h"
+#include "TestResources/Rendering/TextRendererLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Rendering/TextRenderer.h"

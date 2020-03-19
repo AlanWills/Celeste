@@ -5,7 +5,7 @@
 #include "Debug/Asserting/NullAsserter.h"
 #include "OpenGL/GL.h"
 #include "Lua/LuaState.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 
 
 namespace TestCeleste
@@ -18,15 +18,13 @@ namespace TestCeleste
     // Issues with unique_ptrs over dll boundaries so have to do this in the test project
     Assertion::setAsserter(new NullAsserter());
 
-    CelesteTestUtils::TestResources::setResourcesDirectory(Path(Directory::getExecutingAppDirectory(), "Resources"));
-    CelesteTestUtils::TestResources::initialize();
+    CelesteTestResources::TestResources::setResourcesDirectory(Path(Directory::getExecutingAppDirectory(), "Resources"));
+    CelesteTestResources::TestResources::initialize();
 
     game = std::make_unique<Game>();
     game->getResourceManager().setResourcesDirectory(TestResources::getResourcesDirectory());
     
     Lua::LuaState::appendToLuaPackagePath(Path(Resources::getResourcesDirectory(), "Scripts", "?.lua;"));
-
-    getWindow().setViewportDimensions(100, 100);
   }
 
   //------------------------------------------------------------------------------------------------

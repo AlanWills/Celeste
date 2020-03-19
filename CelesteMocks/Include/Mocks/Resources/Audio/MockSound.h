@@ -3,7 +3,7 @@
 #include "Resources/Audio/Sound.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockSound : public Celeste::Resources::Sound
   {

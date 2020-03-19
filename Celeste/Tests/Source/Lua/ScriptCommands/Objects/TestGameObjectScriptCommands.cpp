@@ -600,8 +600,8 @@ namespace TestCeleste::Lua::ScriptCommands
   {
     GameObject gameObject;
 
-    observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
-    observer_ptr<MockComponent> component2 = gameObject.addComponent<MockComponent>();
+    gameObject.addComponent<MockComponent>();
+    gameObject.addComponent<MockComponent>();
 
     sol::state& state = LuaState::instance();
     Celeste::Lua::GameObjectScriptCommands::initialize();
@@ -633,7 +633,7 @@ namespace TestCeleste::Lua::ScriptCommands
     Assert::IsTrue(result.valid());
     Assert::IsNull(result.get<Component*>());
 
-    observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
+    gameObject.addComponent<MockComponent>();
 
     Assert::AreEqual(static_cast<size_t>(1), gameObject.getComponentCount());
 

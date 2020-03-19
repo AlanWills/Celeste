@@ -1,14 +1,14 @@
 #pragma once
 
-#include "CelesteTestUtilsDllExport.h"
+#include "CelesteMocksDllExport.h"
 #include "Objects/Component.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class CollisionDetector : public Celeste::Component
   {
-    DECLARE_UNMANAGED_COMPONENT(CollisionDetector, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(CollisionDetector, CelesteMocksDllExport)
 
     public:
       bool triggerEnterCalled() const { return m_triggerEnterCount > 0; }
@@ -39,12 +39,12 @@ namespace CelesteTestUtils
         m_collisionExitCount = 0;
       }
 
-      void triggerEnter(Celeste::Physics::Collider& collider) override { ++m_triggerEnterCount; }
-      void trigger(Celeste::Physics::Collider& collider) override { ++m_triggerCount; }
-      void triggerExit(Celeste::Physics::Collider& collider) override { ++m_triggerExitCount; }
-      void collisionEnter(Celeste::Physics::Collider& collider) override { ++m_collisionEnterCount; }
-      void collision(Celeste::Physics::Collider& collider) override { ++m_collisionCount; }
-      void collisionExit(Celeste::Physics::Collider& collider) override { ++m_collisionExitCount; }
+      void triggerEnter(Celeste::Physics::Collider& /*collider*/) override { ++m_triggerEnterCount; }
+      void trigger(Celeste::Physics::Collider& /*collider*/) override { ++m_triggerCount; }
+      void triggerExit(Celeste::Physics::Collider& /*collider*/) override { ++m_triggerExitCount; }
+      void collisionEnter(Celeste::Physics::Collider& /*collider*/) override { ++m_collisionEnterCount; }
+      void collision(Celeste::Physics::Collider& /*collider*/) override { ++m_collisionCount; }
+      void collisionExit(Celeste::Physics::Collider& /*collider*/) override { ++m_collisionExitCount; }
 
     private:
       using Inherited = Celeste::Component;

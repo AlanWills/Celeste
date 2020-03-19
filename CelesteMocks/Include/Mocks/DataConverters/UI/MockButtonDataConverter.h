@@ -3,7 +3,7 @@
 #include "DataConverters/UI/ButtonDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockButtonDataConverter : public Celeste::ButtonDataConverter
   {

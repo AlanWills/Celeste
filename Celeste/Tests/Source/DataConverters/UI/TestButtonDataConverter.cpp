@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/UI/MockButtonDataConverter.h"
-#include "Resources/UI/ButtonLoadingResources.h"
+#include "TestResources/UI/ButtonLoadingResources.h"
 #include "Input/MouseInteractionHandler.h"
 #include "Physics/RectangleCollider.h"
 #include "Rendering/SpriteRenderer.h"
@@ -33,9 +33,10 @@ namespace TestCeleste
   TEST_METHOD(ButtonDataConverter_CheckCanBeConvertedFromXML)
   {
     GameObject gameObject;
-    observer_ptr<Rendering::SpriteRenderer> renderer = gameObject.addComponent<Rendering::SpriteRenderer>();
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    gameObject.addComponent<Rendering::SpriteRenderer>();
+    gameObject.addComponent<RectangleCollider>();
+    gameObject.addComponent<MouseInteractionHandler>();
+
     observer_ptr<Data> data = getResourceManager().load<Data>(ButtonLoadingResources::getValidNoCallbacksFullPath());
     observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
@@ -459,9 +460,9 @@ namespace TestCeleste
   TEST_METHOD(ButtonDataConverter_SetValues_InputtingButton_DataNotLoadedCorrectly_DoesNothing)
   {
     GameObject gameObject;
-    observer_ptr<Rendering::SpriteRenderer> renderer = gameObject.addComponent<Rendering::SpriteRenderer>();
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    gameObject.addComponent<Rendering::SpriteRenderer>();
+    gameObject.addComponent<RectangleCollider>();
+    gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<Button> button = gameObject.addComponent<Button>();
 
     observer_ptr<Data> data = getResourceManager().load<Data>(ButtonLoadingResources::getInvalidFullPath());
@@ -480,9 +481,9 @@ namespace TestCeleste
   TEST_METHOD(ButtonDataConverter_SetValues_InputtingButton_DataLoadedCorrectly_ChangesButtonToMatchData)
   {
     GameObject gameObject;
-    observer_ptr<Rendering::SpriteRenderer> renderer = gameObject.addComponent<Rendering::SpriteRenderer>();
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-    observer_ptr<MouseInteractionHandler> mouseInteractionHandler = gameObject.addComponent<MouseInteractionHandler>();
+    gameObject.addComponent<Rendering::SpriteRenderer>();
+    gameObject.addComponent<RectangleCollider>();
+    gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<Button> button = gameObject.addComponent<Button>();
     button->setActive(false);
 

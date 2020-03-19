@@ -3,7 +3,7 @@
 #include "DataConverters/ObjectFX/LimitedLifeTimeDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockLimitedLifeTimeDataConverter : public Celeste::LimitedLifeTimeDataConverter
   {

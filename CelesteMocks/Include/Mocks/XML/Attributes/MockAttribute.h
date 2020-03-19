@@ -3,7 +3,7 @@
 #include "XML/Attributes/Attribute.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockAttribute : public Celeste::XML::Attribute
   {
@@ -21,14 +21,14 @@ namespace CelesteTestUtils
       void setDoConvertResult(bool value) { m_doConvertResult = value; }
 
     protected:
-      bool doConvertFromXML(const std::string& attributeText) override
+      bool doConvertFromXML(const std::string& /*attributeText*/) override
       {
         m_isDoConvertFromXMLCalled = true;
         return m_doConvertResult;
       }
 
   #if _DEBUG
-      void generateBinding(std::string& output) const override { }
+      void generateBinding(std::string& /*output*/) const override { }
   #endif
 
     private:

@@ -3,7 +3,7 @@
 #include "DataConverters/UI/SliderDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockSliderDataConverter : public Celeste::SliderDataConverter
   {

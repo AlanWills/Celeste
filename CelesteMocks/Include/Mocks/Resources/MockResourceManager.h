@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Resources/ResourceManager.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 
 using namespace Celeste;
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockResourceManager : public Celeste::Resources::ResourceManager
   {

@@ -1,6 +1,6 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "FileSystem/Directory.h"
 #include "AssertSpecialization/FileSystem.h"
 #include "AssertExt.h"

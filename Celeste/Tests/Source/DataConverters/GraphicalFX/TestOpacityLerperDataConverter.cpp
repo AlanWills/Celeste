@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/GraphicalFX/MockOpacityLerperDataConverter.h"
-#include "Resources/GraphicalFX/OpacityLerperLoadingResources.h"
+#include "TestResources/GraphicalFX/OpacityLerperLoadingResources.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Resources/ResourceManager.h"
 #include "GraphicalFX/OpacityLerper.h"

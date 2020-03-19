@@ -247,7 +247,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
 #pragma region Subscribe On Event Triggered Callback Tests
 
-  void TestEventTriggererScriptCommands::callback(const GameObject& gameObject) {}
+  void TestEventTriggererScriptCommands::callback(const GameObject& /*gameObject*/) {}
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(EventTriggererScriptCommands_subscribeOnEventTriggered_SubscribesToEvent)

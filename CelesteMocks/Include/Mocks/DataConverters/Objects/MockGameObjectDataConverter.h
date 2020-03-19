@@ -3,7 +3,7 @@
 #include "DataConverters/Objects/GameObjectDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockGameObjectDataConverter : public Celeste::GameObjectDataConverter
   {

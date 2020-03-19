@@ -1,4 +1,5 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
+#include "UtilityMacros/Unused.h"
 
 #include "XML/Elements/DataConverterListElement.h"
 #include "Registries/ComponentDataConverterRegistry.h"
@@ -104,10 +105,14 @@ namespace TestCeleste::XML
     std::unique_ptr<DataConverterListElement<ComponentDataConverter>> ele(XMLObjectFactory::create<DataConverterListElement, ComponentDataConverter>(
       "Test", DeserializationRequirement::kNotRequired));
 
+    size_t index = 0;
     for (ComponentDataConverter* converter : *ele)
     {
-      Assert::Fail();
+      UNUSED(converter);
+      ++index;
     }
+    
+    Assert::AreEqual(static_cast<size_t>(0), index);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -121,6 +126,7 @@ namespace TestCeleste::XML
     size_t index = 0;
     for (ComponentDataConverter* converter : *ele)
     {
+      UNUSED(converter);
       ++index;
     }
 

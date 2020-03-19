@@ -6,7 +6,7 @@
 #include "Lua/LuaState.h"
 
 #include "Mocks/Rendering/MockSpriteRenderer.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;

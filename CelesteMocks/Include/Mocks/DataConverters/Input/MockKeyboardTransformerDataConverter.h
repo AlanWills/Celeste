@@ -3,7 +3,7 @@
 #include "DataConverters/Input/KeyboardTransformerDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockKeyboardTransformerDataConverter : public Celeste::KeyboardTransformerDataConverter
   {

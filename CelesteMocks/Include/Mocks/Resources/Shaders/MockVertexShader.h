@@ -3,7 +3,7 @@
 #include "Resources/Shaders/VertexShader.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
 
 class MockVertexShader : public Celeste::Resources::VertexShader

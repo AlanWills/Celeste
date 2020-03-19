@@ -3,7 +3,7 @@
 #include "DataConverters/Resources/PrefabDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockPrefabDataConverter : public Celeste::PrefabDataConverter
   {

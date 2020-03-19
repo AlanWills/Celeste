@@ -5,7 +5,7 @@
 #include "Lua/ScriptCommands/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
-#include "Resources/Scene/SceneLoadingResources.h"
+#include "TestResources/Scene/SceneLoadingResources.h"
 #include "AssertCel.h"
 #include "FileAssert.h"
 

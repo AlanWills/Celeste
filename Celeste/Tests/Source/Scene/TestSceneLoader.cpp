@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Scene/SceneLoader.h"
-#include "Resources/Scene/SceneLoadingResources.h"
+#include "TestResources/Scene/SceneLoadingResources.h"
 #include "Objects/GameObject.h"
 #include "tinyxml2.h"
 

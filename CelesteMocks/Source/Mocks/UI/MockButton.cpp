@@ -2,7 +2,7 @@
 #include "UtilityHeaders/ComponentHeaders.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   REGISTER_UNMANAGED_COMPONENT(MockButton, 10);
 

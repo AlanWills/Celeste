@@ -4,8 +4,9 @@
 #include "Lua/LuaState.h"
 
 #include "Settings/WindowSettings.h"
-#include "Resources/Settings/WindowSettingsLoadingResources.h"
+#include "TestResources/Settings/WindowSettingsLoadingResources.h"
 #include "Viewport/OpenGLWindow.h"
+#include "Scene/SceneUtils.h"
 #include "OpenGL/GL.h"
 #include "FileAssert.h"
 

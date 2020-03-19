@@ -1,14 +1,14 @@
 #pragma once
 
-#include "CelesteTestUtilsDllExport.h"
+#include "CelesteMocksDllExport.h"
 #include "UI/Button.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockButton : public Celeste::UI::Button
   {
-    DECLARE_UNMANAGED_COMPONENT(MockButton, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockButton, CelesteMocksDllExport)
 
     public:
       Celeste::UI::Button::ButtonState getButtonState_Public() const { return getButtonState(); }

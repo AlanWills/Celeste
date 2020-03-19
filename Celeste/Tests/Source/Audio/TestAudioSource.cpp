@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 #include "Mocks/Audio/MockAudioSource.h"
 #include "Resources/ResourceManager.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "Audio/AudioUtils.h"
 #include "Audio/AudioManager.h"
 #include "OpenAL/OpenALState.h"

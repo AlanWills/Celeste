@@ -2,7 +2,7 @@
 
 #include "DataConverters/Objects/ScriptableObjectDataConverter.h"
 #include "Registries/ScriptableObjectRegistry.h"
-#include "Resources/Objects/MockScriptableObjectLoadingResources.h"
+#include "TestResources/Objects/MockScriptableObjectLoadingResources.h"
 #include "Mocks/Objects/MockScriptableObject.h"
 #include "AssertCel.h"
 #include "AssertExt.h"

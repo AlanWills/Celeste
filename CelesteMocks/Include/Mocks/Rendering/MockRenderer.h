@@ -1,17 +1,17 @@
 #pragma once
 
-#include "CelesteTestUtilsDllExport.h"
+#include "CelesteMocksDllExport.h"
 #include "Rendering/Renderer.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockRenderer : public Celeste::Rendering::Renderer
   {
-    DECLARE_UNMANAGED_COMPONENT(MockRenderer, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockRenderer, CelesteMocksDllExport)
 
     public:
-      void render(const Celeste::Resources::Program& program, const glm::mat4& viewModelMatrix) const override { m_renderCalled = true; }
+      void render(const Celeste::Resources::Program& /*program*/, const glm::mat4& /*viewModelMatrix*/) const override { m_renderCalled = true; }
 
       glm::vec2 getDimensions() const override { return m_dimensions; }
       void setDimensions(const glm::vec2& dimensions) { m_dimensions = dimensions; }

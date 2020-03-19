@@ -3,7 +3,7 @@
 #include "Resources/Shaders/Shader.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
 
 class MockShader : public Celeste::Resources::Shader

@@ -3,7 +3,7 @@
 #include "UI/Slider.h"
 #include "Rendering/SpriteRenderer.h"
 #include "Physics/RectangleCollider.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "Input/InputManager.h"
 #include "Utils/InputUtils.h"
 #include "Registries/ComponentRegistry.h"
@@ -249,7 +249,7 @@ namespace TestCeleste
   TEST_METHOD(Slider_SetCurrentValue_UpdatesCurrentValue)
   {
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    gameObject.addComponent<SpriteRenderer>();
     
     Slider slider(gameObject);
     slider.setCurrentValue(0.5f);
@@ -265,7 +265,7 @@ namespace TestCeleste
   TEST_METHOD(Slider_SetCurrentValue_ClampsCurrentValueBetweenMinAndMax)
   {
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    gameObject.addComponent<SpriteRenderer>();
 
     Slider slider(gameObject);
     slider.setMin(0.25f);
@@ -312,7 +312,7 @@ namespace TestCeleste
     float value = 0;
 
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    gameObject.addComponent<SpriteRenderer>();
     
     Slider slider(gameObject);
     slider.setMin(0);
@@ -339,7 +339,7 @@ namespace TestCeleste
     float value = 0;
 
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    gameObject.addComponent<SpriteRenderer>();
     
     Slider slider(gameObject);
     slider.setMin(0);
@@ -366,7 +366,7 @@ namespace TestCeleste
     float value = 0;
 
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
+    gameObject.addComponent<SpriteRenderer>();
     
     Slider slider(gameObject);
     slider.setMin(0);

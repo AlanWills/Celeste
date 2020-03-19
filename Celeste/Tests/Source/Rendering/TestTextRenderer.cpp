@@ -2,7 +2,7 @@
 
 #include "Mocks/Rendering/MockTextRenderer.h"
 #include "Resources/ResourceManager.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
 

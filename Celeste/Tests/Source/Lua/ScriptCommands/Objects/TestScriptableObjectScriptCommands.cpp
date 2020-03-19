@@ -2,7 +2,7 @@
 
 #include "Registries/ScriptableObjectRegistry.h"
 #include "Mocks/Objects/MockScriptableObject.h"
-#include "Resources/Objects/MockScriptableObjectLoadingResources.h"
+#include "TestResources/Objects/MockScriptableObjectLoadingResources.h"
 
 #include "Lua/ScriptCommands/Objects/ScriptableObjectScriptCommands.h"
 #include "Lua/LuaState.h"
@@ -185,10 +185,10 @@ namespace TestCeleste
 
         Assert::IsTrue(functionResult.valid());
 
-        auto& ptr = functionResult.get<std::unique_ptr<ScriptableObject>>();
+        auto ptr = functionResult.get<ScriptableObject*>();
 
-        AssertExt::IsNotNull(ptr);
-        Assert::IsNotNull(dynamic_cast<MockScriptableObject*>(ptr.get()));
+        Assert::IsNotNull(ptr);
+        Assert::IsNotNull(dynamic_cast<MockScriptableObject*>(ptr));
       }
 
       //------------------------------------------------------------------------------------------------
@@ -206,7 +206,7 @@ namespace TestCeleste
 
         Assert::IsTrue(functionResult.valid());
 
-        auto& ptr = functionResult.get<std::unique_ptr<ScriptableObject>>();
+        auto ptr = functionResult.get<ScriptableObject*>();
 
         Assert::AreEqual("Valid", ptr->getName().c_str());
         Assert::AreEqual("34b0d489-8485-4391-b3b9-b3f062e90c4a", ptr->getGuid().str().c_str());

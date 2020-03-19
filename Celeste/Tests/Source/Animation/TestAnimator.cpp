@@ -1,6 +1,6 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 #include "Mocks/Animation/MockAnimator.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
 #include "AssertExt.h"
@@ -196,7 +196,7 @@ namespace TestCeleste::Animation
   TEST_METHOD(Animator_Play_WhenLooping_ShouldPlayAnimation)
   {
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+    gameObject.addComponent<SpriteRenderer>();
     MockAnimator animator(gameObject);
     animator.setPlaying_Public(false);
     animator.setLooping(LoopMode::kLooping);
@@ -229,7 +229,7 @@ namespace TestCeleste::Animation
   TEST_METHOD(Animator_Play_WhenNotLooping_NoFrames_ShouldNotPlayAnimation)
   {
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+    gameObject.addComponent<SpriteRenderer>();
     MockAnimator animator(gameObject);
     animator.setPlaying_Public(false);
     animator.setLooping(LoopMode::kOneTime);
@@ -288,7 +288,8 @@ namespace TestCeleste::Animation
   TEST_METHOD(Animator_Restart_WithSpriteRendererButNoFrames_ResetsFrameValues)
   {
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+    gameObject.addComponent<SpriteRenderer>();
+
     MockAnimator animator(gameObject);
     animator.setSpriteSheetDimensions(glm::uvec2(0));
     animator.setCurrentFrame_Public(1);

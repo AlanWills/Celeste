@@ -3,7 +3,7 @@
 #include "Lua/ScriptCommands/Resources/ResourcesScriptCommands.h"
 #include "Lua/LuaState.h"
 
-#include "Resources/Resources/Data/PrefabLoadingResources.h"
+#include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "Resources/ResourceManager.h"
 
 #include "AssertCel.h"

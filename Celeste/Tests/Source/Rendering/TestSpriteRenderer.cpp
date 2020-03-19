@@ -4,7 +4,7 @@
 
 #include "Mocks/Rendering/MockSpriteRenderer.h"
 #include "Resources/ResourceManager.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "Registries/ComponentRegistry.h"
 #include "AssertCel.h"
 
@@ -184,7 +184,6 @@ namespace TestCeleste
 
     Assert::AreEqual(glm::vec2(400, 200), renderer.getDimensions());
 
-    observer_ptr<Texture2D> texture = getResourceManager().load<Texture2D>(TestResources::getBlockPngRelativePath());
     renderer.setTexture(TestResources::getBlockPngRelativePath());
 
     Assert::AreEqual(glm::vec2(400, 200), renderer.getDimensions());

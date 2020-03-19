@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/UI/MockStackPanelDataConverter.h"
-#include "Resources/UI/StackPanelLoadingResources.h"
+#include "TestResources/UI/StackPanelLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "UI/StackPanel.h"
 #include "Mocks/Rendering/MockRenderer.h"
@@ -434,8 +434,8 @@ namespace TestCeleste
   TEST_METHOD(StackPanelDataConverter_SetValues_InputtingStackPanel_DataLoadedCorrectly_AddsChildrenCorrectly)
   {
     GameObject gameObject, child, child2;
-    observer_ptr<MockRenderer> renderer = child.addComponent<MockRenderer>();
-    observer_ptr<MockRenderer> renderer2 = child2.addComponent<MockRenderer>();
+    child.addComponent<MockRenderer>();
+    child2.addComponent<MockRenderer>();
     observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();
     child.setParent(&gameObject);
     child2.setParent(&gameObject);

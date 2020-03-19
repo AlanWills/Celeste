@@ -1,4 +1,5 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
+#include "UtilityMacros/Unused.h"
 
 #include "XML/ChildXMLElementWalker.h"
 
@@ -20,6 +21,7 @@ namespace TestCeleste
     size_t counter = 0;
     for (const XMLElement* element : walker)
     {
+      UNUSED(element);
       ++counter;
     }
 
@@ -38,8 +40,9 @@ namespace TestCeleste
     ChildXMLElementWalker<true> walker(element);
 
     size_t counter = 0;
-    for (const XMLElement* element : walker)
+    for (const XMLElement* e : walker)
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -64,8 +67,9 @@ namespace TestCeleste
     ChildXMLElementWalker<true> walker(element);
 
     size_t counter = 0;
-    for (const XMLElement* element : walker)
+    for (const XMLElement* e : walker)
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -84,8 +88,9 @@ namespace TestCeleste
     ChildXMLElementWalker<true> walker(element, "Test");
 
     size_t counter = 0;
-    for (const XMLElement* element : walker)
+    for (const XMLElement* e : walker)
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -110,8 +115,9 @@ namespace TestCeleste
     ChildXMLElementWalker<true> walker(element, "Test");
 
     size_t counter = 0;
-    for (const XMLElement* element : walker)
+    for (const XMLElement* e : walker)
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -136,8 +142,9 @@ namespace TestCeleste
     ChildXMLElementWalker<true> walker(element, "Child1");
 
     size_t counter = 0;
-    for (const XMLElement* element : walker)
+    for (const XMLElement* e : walker)
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -152,8 +159,9 @@ namespace TestCeleste
   TEST_METHOD(ConstChildren_WithNullptrElement_DoesNotIterate)
   {
     size_t counter = 0;
-    for (const XMLElement* element : children(static_cast<const XMLElement*>(nullptr)))
+    for (const XMLElement* e : children(static_cast<const XMLElement*>(nullptr)))
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -170,8 +178,9 @@ namespace TestCeleste
     Assert::IsTrue(element->NoChildren());
 
     size_t counter = 0;
-    for (const XMLElement* element : children(static_cast<const XMLElement*>(element)))
+    for (const XMLElement* e : children(static_cast<const XMLElement*>(element)))
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -194,8 +203,9 @@ namespace TestCeleste
     Assert::IsFalse(element->NoChildren());
 
     size_t counter = 0;
-    for (const XMLElement* element : children(static_cast<const XMLElement*>(element)))
+    for (const XMLElement* e : children(static_cast<const XMLElement*>(element)))
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -212,8 +222,9 @@ namespace TestCeleste
     Assert::IsTrue(element->NoChildren());
 
     size_t counter = 0;
-    for (const XMLElement* element : children(static_cast<const XMLElement*>(element)))
+    for (const XMLElement* e : children(static_cast<const XMLElement*>(element)))
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -236,8 +247,9 @@ namespace TestCeleste
     Assert::IsFalse(element->NoChildren());
 
     size_t counter = 0;
-    for (const XMLElement* element : children(static_cast<const XMLElement*>(element), "Test"))
+    for (const XMLElement* e : children(static_cast<const XMLElement*>(element), "Test"))
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -260,8 +272,9 @@ namespace TestCeleste
     Assert::IsFalse(element->NoChildren());
 
     size_t counter = 0;
-    for (const XMLElement* element : children(static_cast<const XMLElement*>(element), "Child1"))
+    for (const XMLElement* e : children(static_cast<const XMLElement*>(element), "Child1"))
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -270,5 +283,5 @@ namespace TestCeleste
 
 #pragma endregion
 
-};
+  };
 }

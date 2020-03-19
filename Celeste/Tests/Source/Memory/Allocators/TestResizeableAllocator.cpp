@@ -1,4 +1,5 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
+#include "UtilityMacros/Unused.h"
 
 #include "Memory/Allocators/ResizeableAllocator.h"
 #include "Memory/Allocators/PoolAllocator.h"
@@ -184,7 +185,7 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(3);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
     ResizeableAllocatorIterator<MockComponent> it = allocator.begin();
 
     Assert::AreSame(*handle1, *it);
@@ -202,7 +203,7 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(3);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
     ResizeableAllocatorIterator<const MockComponent> it = (static_cast<const ResizeableAllocator<MockComponent>&>(allocator).begin());
 
     Assert::AreSame(*handle1, *it);
@@ -220,7 +221,7 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(3);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
 
     ResizeableAllocatorIterator<const MockComponent> it = allocator.cbegin();
     Assert::AreSame(*handle1, *it);
@@ -258,13 +259,14 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(3);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
 
     // 3 allocated objects
     {
       int count = 0;
       for (const MockComponent& component : allocator)
       {
+        UNUSED(component);
         count++;
       }
 
@@ -278,6 +280,7 @@ namespace TestCeleste
       int count = 0;
       for (const MockComponent& component : allocator)
       {
+        UNUSED(component);
         count++;
       }
 
@@ -291,6 +294,7 @@ namespace TestCeleste
       int count = 0;
       for (const MockComponent& component : allocator)
       {
+        UNUSED(component);
         count++;
       }
 
@@ -304,13 +308,14 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(1);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
 
     // 3 allocated objects
     {
       int count = 0;
       for (const MockComponent& component : allocator)
       {
+        UNUSED(component);
         count++;
       }
 
@@ -324,6 +329,7 @@ namespace TestCeleste
       int count = 0;
       for (const MockComponent& component : allocator)
       {
+        UNUSED(component);
         count++;
       }
 
@@ -337,6 +343,7 @@ namespace TestCeleste
       int count = 0;
       for (const MockComponent& component : allocator)
       {
+        UNUSED(component);
         count++;
       }
 
@@ -362,7 +369,7 @@ namespace TestCeleste
 
     // All three objects allocated
     {
-      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(handle1, foundObject);
@@ -372,7 +379,7 @@ namespace TestCeleste
     {
       allocator.deallocate(*handle1);
 
-      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(handle2, foundObject);
@@ -383,7 +390,7 @@ namespace TestCeleste
       // Have to get the allocator to deallocate, since this component is not from the static MockComponent allocator
       allocator.deallocate(*handle2);
 
-      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(handle3, foundObject);
@@ -404,7 +411,7 @@ namespace TestCeleste
 
     // All three objects allocated
     {
-      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(handle1, foundObject);
@@ -414,7 +421,7 @@ namespace TestCeleste
     {
       allocator.deallocate(*handle1);
 
-      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(handle2, foundObject);
@@ -425,7 +432,7 @@ namespace TestCeleste
       // Have to get the allocator to deallocate, since this component is not from the static MockComponent allocator
       allocator.deallocate(*handle2);
 
-      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<MockComponent> foundObject = allocator.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(handle3, foundObject);
@@ -436,23 +443,23 @@ namespace TestCeleste
   TEST_METHOD(ResizeableAllocator_Find_NoResizeOccurred_ShouldNotFindAnything)
   {
     ResizeableAllocator<MockComponent> allocator(3);
-    observer_ptr<MockComponent> handle1 = allocator.allocate();
-    observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
-    Assert::IsNull(allocator.find([](const MockComponent& component) -> bool { return false; }));
+    Assert::IsNull(allocator.find([](const MockComponent&) -> bool { return false; }));
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ResizeableAllocator_Find_ResizeOccurred_ShouldNotFindAnything)
   {
     ResizeableAllocator<MockComponent> allocator(2);
-    observer_ptr<MockComponent> handle1 = allocator.allocate();
-    observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
-    observer_ptr<MockComponent> handle4 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
-    Assert::IsNull(allocator.find([](const MockComponent& component) -> bool { return false; }));
+    Assert::IsNull(allocator.find([](const MockComponent&) -> bool { return false; }));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -461,7 +468,7 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(3);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
 
     Assert::AreEqual(handle2, allocator.find([handle1](const MockComponent& component) -> bool { return &component != handle1; }));
   }
@@ -472,11 +479,11 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(2);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
-    observer_ptr<MockComponent> handle4 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
     Assert::AreEqual(handle2, allocator.find([handle1](const MockComponent& component) -> bool { return &component != handle1; }));
-    Assert::IsNull(allocator.find([](const MockComponent& component) -> bool { return false; }));
+    Assert::IsNull(allocator.find([](const MockComponent&) -> bool { return false; }));
   }
 
 #pragma endregion
@@ -500,7 +507,7 @@ namespace TestCeleste
 
     // All three objects allocated
     {
-      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(static_cast<const MockComponent*>(handle1), foundObject);
@@ -510,7 +517,7 @@ namespace TestCeleste
     {
       allocator.deallocate(*handle1);
 
-      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(static_cast<const MockComponent*>(handle2), foundObject);
@@ -521,7 +528,7 @@ namespace TestCeleste
       // Have to get the allocator to deallocate, since this component is not from the static MockComponent allocator
       allocator.deallocate(*handle2);
 
-      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(static_cast<const MockComponent*>(handle3), foundObject);
@@ -545,7 +552,7 @@ namespace TestCeleste
 
     // All three objects allocated
     {
-      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(static_cast<const MockComponent*>(handle1), foundObject);
@@ -557,7 +564,7 @@ namespace TestCeleste
 
       Assert::IsFalse(allocator.isAllocated(*handle1));
 
-      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(static_cast<const MockComponent*>(handle2), foundObject);
@@ -568,7 +575,7 @@ namespace TestCeleste
       // Have to get the allocator to deallocate, since this component is not from the static MockComponent allocator
       allocator.deallocate(*handle2);
 
-      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent& component) -> bool { return true; });
+      observer_ptr<const MockComponent> foundObject = allocatorRef.find([](const MockComponent&) -> bool { return true; });
 
       Assert::IsNotNull(foundObject);
       Assert::AreEqual(static_cast<const MockComponent*>(handle3), foundObject);
@@ -579,29 +586,29 @@ namespace TestCeleste
   TEST_METHOD(ResizeableAllocator_ConstFind_NoResizeOccurred_ShouldNotFindAnything)
   {
     ResizeableAllocator<MockComponent> allocator(3);
-    observer_ptr<MockComponent> handle1 = allocator.allocate();
-    observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
     // Need a const reference to call const functions
     const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
-    Assert::IsNull(allocatorRef.find([](const MockComponent& component) -> bool { return false; }));
+    Assert::IsNull(allocatorRef.find([](const MockComponent&) -> bool { return false; }));
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ResizeableAllocator_ConstFind_ResizeOccurred_ShouldNotFindAnything)
   {
     ResizeableAllocator<MockComponent> allocator(2);
-    observer_ptr<MockComponent> handle1 = allocator.allocate();
-    observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
-    observer_ptr<MockComponent> handle4 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
     // Need a const reference to call const functions
     const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
-    Assert::IsNull(allocatorRef.find([](const MockComponent& component) -> bool { return false; }));
+    Assert::IsNull(allocatorRef.find([](const MockComponent&) -> bool { return false; }));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -610,7 +617,7 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(3);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
 
     // Need a const reference to call const functions
     const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
@@ -624,8 +631,8 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(2);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
-    observer_ptr<MockComponent> handle4 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
     // Need a const reference to call const functions
     const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
@@ -643,7 +650,7 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(3);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
       
     // Three allocated objects
     {
@@ -680,7 +687,7 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(1);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
 
     // Three allocated objects
     {
@@ -715,12 +722,12 @@ namespace TestCeleste
   TEST_METHOD(ResizeableAllocator_FindAll_NoResizeOccurred_ShouldNotFindAnything)
   {
     ResizeableAllocator<MockComponent> allocator(3);
-    observer_ptr<MockComponent> handle1 = allocator.allocate();
-    observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
     std::vector<std::reference_wrapper<MockComponent>> foundObjects;
-    allocator.findAll([](const MockComponent& c) { return false; }, foundObjects);
+    allocator.findAll([](const MockComponent&) { return false; }, foundObjects);
 
     Assert::AreEqual((size_t)0, foundObjects.size());
   }
@@ -729,12 +736,12 @@ namespace TestCeleste
   TEST_METHOD(ResizeableAllocator_FindAll_ResizeOccurred_ShouldNotFindAnything)
   {
     ResizeableAllocator<MockComponent> allocator(1);
-    observer_ptr<MockComponent> handle1 = allocator.allocate();
-    observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
     std::vector<std::reference_wrapper<MockComponent>> foundObjects;
-    allocator.findAll([](const MockComponent& c) { return false; }, foundObjects);
+    allocator.findAll([](const MockComponent&) { return false; }, foundObjects);
 
     Assert::AreEqual((size_t)0, foundObjects.size());
   }
@@ -744,8 +751,8 @@ namespace TestCeleste
   {
     ResizeableAllocator<MockComponent> allocator(3);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
-    observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
     std::vector<std::reference_wrapper<MockComponent>> foundObjects;
     allocator.findAll([&handle1](const MockComponent& c) { return &c == handle1; }, foundObjects);
@@ -758,8 +765,8 @@ namespace TestCeleste
   {
     ResizeableAllocator<MockComponent> allocator(1);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
-    observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
     std::vector<std::reference_wrapper<MockComponent>> foundObjects;
     allocator.findAll([&handle1](const MockComponent& c) { return &c == handle1; }, foundObjects);
@@ -777,7 +784,7 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(3);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
 
     // Used so we can force the const version of find
     const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
@@ -817,7 +824,7 @@ namespace TestCeleste
     ResizeableAllocator<MockComponent> allocator(1);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
     observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
 
     // Used so we can force the const version of find
     const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
@@ -855,15 +862,15 @@ namespace TestCeleste
   TEST_METHOD(ResizeableAllocator_ConstFindAll_ShouldNotFindAnything)
   {
     ResizeableAllocator<MockComponent> allocator(3);
-    observer_ptr<MockComponent> handle1 = allocator.allocate();
-    observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
     // Used so we can force the const version of find
     const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
 
     std::vector<std::reference_wrapper<const MockComponent>> foundObjects;
-    allocatorRef.findAll([](const MockComponent& c) { return false; }, foundObjects);
+    allocatorRef.findAll([](const MockComponent&) { return false; }, foundObjects);
 
     Assert::AreEqual((size_t)0, foundObjects.size());
   }
@@ -873,8 +880,8 @@ namespace TestCeleste
   {
     ResizeableAllocator<MockComponent> allocator(3);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
-    observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
     // Used so we can force the const version of find
     const ResizeableAllocator<MockComponent>& allocatorRef = allocator;
@@ -890,8 +897,8 @@ namespace TestCeleste
   {
     ResizeableAllocator<MockComponent> allocator(1);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
-    observer_ptr<MockComponent> handle2 = allocator.allocate();
-    observer_ptr<MockComponent> handle3 = allocator.allocate();
+    allocator.allocate();
+    allocator.allocate();
 
     // Used so we can force the const version of find
     const ResizeableAllocator<MockComponent>& allocatorRef = allocator;

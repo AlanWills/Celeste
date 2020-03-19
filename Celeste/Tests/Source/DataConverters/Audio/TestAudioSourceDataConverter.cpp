@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Audio/MockAudioSourceDataConverter.h"
-#include "Resources/Audio/AudioSourceLoadingResources.h"
+#include "TestResources/Audio/AudioSourceLoadingResources.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Resources/ResourceManager.h"
 #include "Audio/AudioSource.h"

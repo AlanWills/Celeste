@@ -1,4 +1,5 @@
  #include "UtilityHeaders/UnitTestHeaders.h"
+#include "UtilityMacros/Unused.h"
 
 #include "XML/Elements/ListElement.h"
 #include "Mocks/DataConverters/MockDataConverter.h"
@@ -124,10 +125,14 @@ namespace TestCeleste::XML
     std::unique_ptr<ListElement<std::string>> element(XMLObjectFactory::create<ListElement, std::string>(
       "Test", ChildElementName(""), DeserializationRequirement::kNotRequired));
 
+    size_t count = 0;
     for (const std::string& converter : *element)
     {
-      Assert::Fail();
+      UNUSED(converter);
+      ++count;
     }
+
+    Assert::AreEqual(static_cast<size_t>(0), count);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -141,6 +146,7 @@ namespace TestCeleste::XML
     size_t index = 0;
     for (const std::string& converter : *element)
     {
+      UNUSED(converter);
       ++index;
     }
 

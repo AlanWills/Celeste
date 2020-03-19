@@ -1,28 +1,28 @@
 #pragma once
 
 #include "BaseUnitTest.h"
+#include "CppUnitTest.h"
+#include "AssertSpecialization/glm.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 
 #define ARE_PTRS_EQUAL(Type) \
-namespace Microsoft { \
-  namespace VisualStudio { \
-    namespace CppUnitTestFramework { \
-      template<> \
-      static std::wstring ToString<Type>(Type* element) \
-      { \
-        return std::to_wstring(reinterpret_cast<size_t>(element)); \
-      } \
-      template<> \
-      static std::wstring ToString<Type>(const Type* element) \
-      { \
-        return std::to_wstring(reinterpret_cast<size_t>(element)); \
-      } \
-      template<> \
-      static std::wstring ToString<Type>(const Type& element) \
-      { \
-        return std::to_wstring(reinterpret_cast<size_t>(&element)); \
-      } \
-    } \
+namespace Microsoft::VisualStudio::CppUnitTestFramework { \
+  template<> \
+  inline std::wstring ToString<Type>(Type* element) \
+  { \
+    return std::to_wstring(reinterpret_cast<size_t>(element)); \
+  } \
+  template<> \
+  inline std::wstring ToString<Type>(const Type* element) \
+  { \
+    return std::to_wstring(reinterpret_cast<size_t>(element)); \
+  } \
+  template<> \
+  inline std::wstring ToString<Type>(const Type& element) \
+  { \
+    return std::to_wstring(reinterpret_cast<size_t>(&element)); \
   } \
 }
 

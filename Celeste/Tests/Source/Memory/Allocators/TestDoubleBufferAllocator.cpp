@@ -290,26 +290,20 @@ namespace TestCeleste
 
 //----------------------------------------------------------------------------------------------------------
 // Implementation of ToString for allocate result so that we can use Assert::AreEqual on AllocateResult enum
-namespace Microsoft {
-  namespace VisualStudio {
-    namespace CppUnitTestFramework {
+namespace Microsoft::VisualStudio::CppUnitTestFramework {
+  template<>
+  std::wstring ToString<AllocateResult>(const AllocateResult& coord)
+  {
+    switch (coord)
+    {
+    case AllocateResult::kSwapRequired:
+      return L"SwapRequired";
 
-      template<>
-      static std::wstring ToString<AllocateResult>(const AllocateResult  & coord) 
-      {
-        switch (coord)
-        {
-          case AllocateResult::kSwapRequired:
-            return L"SwapRequired";
+    case AllocateResult::kNoSwapRequired:
+      return L"NoSwapRequired";
 
-          case AllocateResult::kNoSwapRequired:
-            return L"NoSwapRequired";
-
-          default:
-            Assert::Fail();
-            return L"";
-        }
-      }
+    default:
+      return L"";
     }
   }
 }

@@ -5,7 +5,7 @@
 #include "Lua/ScriptCommands/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
-#include "Resources/Objects/MockScriptableObjectLoadingResources.h"
+#include "TestResources/Objects/MockScriptableObjectLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "AssertExt.h"
 #include "AssertCel.h"
@@ -78,7 +78,7 @@ namespace TestCeleste::Lua::ScriptCommands
     auto result = LuaState::instance()[MockScriptableObject::type_name()]["create"].get<sol::protected_function>().call("Test");
 
     Assert::IsTrue(result.valid());
-    AssertExt::IsNotNull(result.get<std::unique_ptr<MockScriptableObject>>());
+    Assert::IsNotNull(result.get<MockScriptableObject*>());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -88,10 +88,7 @@ namespace TestCeleste::Lua::ScriptCommands
     auto result = LuaState::instance()[MockScriptableObject::type_name()]["create"].get<sol::protected_function>().call("Test");
 
     Assert::IsTrue(result.valid());
-
-    std::unique_ptr<MockScriptableObject> obj = std::move(result.get<std::unique_ptr<MockScriptableObject>>());
-
-    Assert::AreEqual("Test", obj->getName().c_str());
+    Assert::AreEqual("Test", result.get<MockScriptableObject*>()->getName().c_str());
   }
 
 #pragma endregion
@@ -126,7 +123,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsTrue(result.valid());
 
-    auto obj = std::move(result.get<std::unique_ptr<MockScriptableObject>>());
+    auto obj = result.get<MockScriptableObject*>();
 
     Assert::AreEqual("Valid", obj->getName().c_str());
     Assert::AreEqual("34b0d489-8485-4391-b3b9-b3f062e90c4a", obj->getGuid().str().c_str());

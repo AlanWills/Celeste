@@ -3,7 +3,7 @@
 #include "DataConverters/Physics/RectangleColliderDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockRectangleColliderDataConverter : public Celeste::RectangleColliderDataConverter
   {

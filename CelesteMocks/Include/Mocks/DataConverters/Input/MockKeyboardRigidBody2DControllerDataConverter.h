@@ -3,7 +3,7 @@
 #include "DataConverters/Input/KeyboardRigidBody2DControllerDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockKeyboardRigidBody2DControllerDataConverter : public Celeste::KeyboardRigidBody2DControllerDataConverter
   {

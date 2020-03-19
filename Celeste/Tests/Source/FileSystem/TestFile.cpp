@@ -1,6 +1,6 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "FileSystem/File.h"
 #include "AssertCel.h"
 #include "FileAssert.h"
@@ -254,16 +254,16 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(File_Create_CreatesParentDirectory)
     {
-      Path parentDirectory(TestResources::getTempDirectory(), "Nested");
-      Path filePath(parentDirectory, "Text.txt");
+      Path parent(TestResources::getTempDirectory(), "Nested");
+      Path filePath(parent, "Text.txt");
       File file(filePath);
 
-      Assert::IsFalse(Directory::exists(parentDirectory));
+      Assert::IsFalse(Directory::exists(parent));
 
       file.create();
 
       Assert::IsTrue(file.exists());
-      Assert::IsTrue(Directory::exists(parentDirectory));
+      Assert::IsTrue(Directory::exists(parent));
     }
 
 #pragma endregion

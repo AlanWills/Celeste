@@ -2,7 +2,7 @@
 
 #include "Serialization/Serializers.h"
 #include "Resources/ResourceManager.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 
 using namespace Celeste;
 using namespace Celeste::Resources;

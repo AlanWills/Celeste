@@ -2,7 +2,7 @@
 
 #include "Deserialization/Deserializers.h"
 #include "Resources/ResourceManager.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 
 #include "AssertCel.h"
 #include "FileAssert.h"

@@ -179,7 +179,7 @@ namespace Celeste
       private:
         static void generatePropertyBinding(
           const std::string& variableName,
-          typename choose_class<static_cast<bool>(is_reference), const Resources::Texture2D&, Resources::Texture2D>::type value,
+          typename choose_class<static_cast<bool>(is_reference), const Resources::Texture2D&, Resources::Texture2D>::type /*value*/,
           std::string& output)
         {
           output.append("public Texture2D ");
@@ -197,7 +197,7 @@ namespace Celeste
       private:
         static void generatePropertyBinding(
           const std::string& variableName,
-          typename choose_class<static_cast<bool>(is_reference), const std::vector<Resources::Texture2D*>&, std::vector<Resources::Texture2D*>>::type value,
+          typename choose_class<static_cast<bool>(is_reference), const std::vector<Resources::Texture2D*>&, std::vector<Resources::Texture2D*>>::type /*value*/,
           std::string& output)
         {
           output.append("public List<Texture2D> ");

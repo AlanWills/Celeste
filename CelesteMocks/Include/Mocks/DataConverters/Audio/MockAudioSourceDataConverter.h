@@ -3,7 +3,7 @@
 #include "DataConverters/Audio/AudioSourceDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockAudioSourceDataConverter : public Celeste::AudioSourceDataConverter
   {

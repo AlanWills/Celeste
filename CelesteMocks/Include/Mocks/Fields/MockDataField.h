@@ -3,7 +3,7 @@
 #include "Fields/DataField.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   template <typename T, bool is_reference = false>
   class MockDataField : public Celeste::DataField<T, is_reference>

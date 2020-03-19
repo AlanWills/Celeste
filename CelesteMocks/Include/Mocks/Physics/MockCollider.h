@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CelesteTestUtilsDllExport.h"
+#include "CelesteMocksDllExport.h"
 #include "Physics/Collider.h"
 
 
@@ -11,11 +11,11 @@ namespace Celeste::Maths
   class Ellipse;
 }
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockCollider : public Celeste::Physics::Collider
   {
-    DECLARE_UNMANAGED_COMPONENT(MockCollider, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockCollider, CelesteMocksDllExport)
 
     public:
       glm::vec2 getCentre() const { return glm::vec2(); }
@@ -33,7 +33,7 @@ namespace CelesteTestUtils
       }
 
     protected:
-      void onSetOffset(const glm::vec2& oldOffset, const glm::vec2& newOffset) override
+      void onSetOffset(const glm::vec2& /*oldOffset*/, const glm::vec2& /*newOffset*/) override
       {
         m_onSetOffSetCalled = true;
       }

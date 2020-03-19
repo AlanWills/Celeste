@@ -4,84 +4,51 @@
 using namespace Celeste;
 
 
-namespace TestCeleste
+namespace TestCeleste::Deserialization
 {
-  namespace Deserialization
-  {
-    CELESTE_TEST_CLASS(TestGLMUVector2Deserializer)
+  CELESTE_TEST_CLASS(TestGLMUVector2Deserializer)
 
 #pragma region Deserialize Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GLMUVector2Deserializer_Deserialize_InputtingSingleNumber_SetsXComponentToNumber_AndReturnsTrue)
-    {
-      glm::uvec2 value;
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GLMUVector2Deserializer_Deserialize_InputtingSingleNumber_SetsXComponentToNumber_AndReturnsTrue)
+  {
+    glm::uvec2 value;
 
-      Assert::IsTrue(deserialize("56", value));
-      Assert::AreEqual(glm::uvec2(56, 0), value);
-    }
+    Assert::IsTrue(deserialize("56", value));
+    Assert::AreEqual(glm::uvec2(56, 0), value);
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GLMUVector2Deserializer_Deserialize_InputtingAttributeWithTwoNumbers_SetsXYComponentsToRespectiveNumbers_AndReturnsTrue)
-    {
-      glm::uvec2 value;
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GLMUVector2Deserializer_Deserialize_InputtingAttributeWithTwoNumbers_SetsXYComponentsToRespectiveNumbers_AndReturnsTrue)
+  {
+    glm::uvec2 value;
 
-      Assert::IsTrue(deserialize("56, 63", value));
-      Assert::AreEqual(glm::uvec2(56, 63), value);
-      Assert::IsTrue(deserialize("12,43", value));
-      Assert::AreEqual(glm::uvec2(12, 43), value);
-    }
+    Assert::IsTrue(deserialize("56, 63", value));
+    Assert::AreEqual(glm::uvec2(56, 63), value);
+    Assert::IsTrue(deserialize("12,43", value));
+    Assert::AreEqual(glm::uvec2(12, 43), value);
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GLMUVector2Deserializer_Deserialize_InputtingSinglePercentage_SetsXComponentsToCorrectViewportPercentage_AndReturnsTrue)
-    {
-      glm::uvec2 value;
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GLMUVector2Deserializer_Deserialize_InputtingNumbersButNoDelimiters_ReturnsFalse)
+  {
+    glm::uvec2 value;
 
-      Assert::IsTrue(deserialize("5%", value));
-      Assert::AreEqual(glm::uvec2(5 * getViewportDimensions().x, 0), value);
-    }
+    Assert::IsFalse(deserialize("56 12", value));
+    Assert::AreEqual(glm::uvec2(), value);
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GLMUVector2Deserializer_Deserialize_InputtingTwoPercentages_SetsXAndYComponentsToCorrectViewportPercentage_AndReturnsTrue)
-    {
-      const glm::uvec2& viewportDimensions = getViewportDimensions();
-      glm::uvec2 value;
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GLMUVector2Deserializer_Deserialize_InputtingInvalidText_ReturnsFalse)
+  {
+    glm::uvec2 value;
 
-      Assert::IsTrue(deserialize("5%, 6%", value));
-      Assert::AreEqual(glm::uvec2(5 * viewportDimensions.x, 6 * viewportDimensions.y), value);
-      Assert::IsTrue(deserialize("12%, 43%", value));
-      Assert::AreEqual(glm::uvec2(12 * viewportDimensions.x, 43 * viewportDimensions.y), value);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GLMUVector2Deserializer_Deserialize_InputtingNumbersButNoDelimiters_ReturnsFalse)
-    {
-      glm::uvec2 value;
-
-      Assert::IsFalse(deserialize("56 12", value));
-      Assert::AreEqual(glm::uvec2(), value);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GLMVector2Deserializer_Deserialize_InputtingPercentageForJustOneNumber_SetsNumbersToCorrectRelativeAndAbsoluteValue)
-    {
-      glm::uvec2 value;
-
-      Assert::IsTrue(deserialize("56%, 12", value));
-      Assert::AreEqual(glm::uvec2(56 * getViewportDimensions().x, 12), value);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(GLMUVector2Deserializer_Deserialize_InputtingInvalidText_ReturnsFalse)
-    {
-      glm::uvec2 value;
-
-      Assert::IsFalse(deserialize("awas,11ddd,00.111.121", value));
-      Assert::AreEqual(glm::uvec2(), value);
-    }
+    Assert::IsFalse(deserialize("awas,11ddd,00.111.121", value));
+    Assert::AreEqual(glm::uvec2(), value);
+  }
 
 #pragma endregion
 
-    };
-  }
+  };
 }

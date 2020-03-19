@@ -4,7 +4,7 @@
 #include "Lua/LuaState.h"
 
 #include "Settings/GameSettings.h"
-#include "Resources/Settings/GameSettingsLoadingResources.h"
+#include "TestResources/Settings/GameSettingsLoadingResources.h"
 #include "Audio/AudioManager.h"
 #include "AssertExt.h"
 #include "FileAssert.h"
@@ -190,7 +190,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
             )").valid());
 
     Assert::IsTrue(state.globals()["gameSettings"].valid());
-    AssertExt::IsNotNull(state.globals()["gameSettings"].get<std::unique_ptr<Settings::GameSettings>>());
+    Assert::IsNotNull(state.globals()["gameSettings"].get<Settings::GameSettings*>());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -203,7 +203,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
             gameSettings = GameSettings.create("Test")
             )").valid());
 
-    Assert::AreEqual("Test", state.globals()["gameSettings"].get<std::unique_ptr<Settings::GameSettings>>()->getName().c_str());
+    Assert::AreEqual("Test", state.globals()["gameSettings"].get<Settings::GameSettings*>()->getName().c_str());
   }
 
 #pragma endregion
@@ -241,7 +241,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
 
     Assert::IsTrue(state.script("gameSettings = GameSettings.load([[" + GameSettingsLoadingResources::getValidFullPath().as_string() + "]])").valid());
     Assert::IsTrue(state.globals()["gameSettings"].valid());
-    AssertExt::IsNotNull(state.globals()["gameSettings"].get<std::unique_ptr<Settings::GameSettings>>());
+    Assert::IsNotNull(state.globals()["gameSettings"].get<Settings::GameSettings*>());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -252,7 +252,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
 
     Assert::IsTrue(state.script("gameSettings = GameSettings.load([[" + GameSettingsLoadingResources::getValidFullPath().as_string() + "]])").valid());
 
-    auto& gameSettings = state.globals()["gameSettings"].get<std::unique_ptr<Settings::GameSettings>>();
+    auto gameSettings = state.globals()["gameSettings"].get<Settings::GameSettings*>();
 
     Assert::AreEqual("Valid", gameSettings->getName().c_str());
     Assert::AreEqual("34b0d489-8485-4391-b3b9-b3f062e90c4a", gameSettings->getGuid().str().c_str());
@@ -276,7 +276,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
 
     FileAssert::FileDoesNotExist(filePath);
 
-    auto& result = state[GameSettings::type_name()]["save"].get<sol::protected_function>().call(*gameSettings, filePath);
+    auto result = state[GameSettings::type_name()]["save"].get<sol::protected_function>().call(*gameSettings, filePath);
 
     Assert::IsTrue(result.valid());
     FileAssert::FileDoesNotExist(filePath);
@@ -293,7 +293,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
 
     FileAssert::FileDoesNotExist(filePath);
 
-    auto& result = state[GameSettings::type_name()]["save"].get<sol::protected_function>().call(*gameSettings, filePath);
+    auto result = state[GameSettings::type_name()]["save"].get<sol::protected_function>().call(*gameSettings, filePath);
 
     Assert::IsTrue(result.valid());
     FileAssert::FileExists(filePath);
@@ -315,7 +315,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
     FileAssert::FileExists(filePath);
     FileAssert::FileContentsEqual(filePath, "Test");
 
-    auto& result = state[GameSettings::type_name()]["save"].get<sol::protected_function>().call(*gameSettings, filePath);
+    auto result = state[GameSettings::type_name()]["save"].get<sol::protected_function>().call(*gameSettings, filePath);
 
     Assert::IsTrue(result.valid());
     FileAssert::FileContentsNotEqual(filePath, "Test");
@@ -333,7 +333,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
 
     FileAssert::FileDoesNotExist(fullFilePath);
 
-    auto& result = state[GameSettings::type_name()]["save"].get<sol::protected_function>().call(*gameSettings, relativeFilePath);
+    auto result = state[GameSettings::type_name()]["save"].get<sol::protected_function>().call(*gameSettings, relativeFilePath);
 
     Assert::IsTrue(result.valid());
     FileAssert::FileExists(fullFilePath);
@@ -356,7 +356,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
     FileAssert::FileExists(fullFilePath);
     FileAssert::FileContentsEqual(fullFilePath, "Test");
 
-    auto& result = state[GameSettings::type_name()]["save"].get<sol::protected_function>().call(*gameSettings, relativeFilePath);
+    auto result = state[GameSettings::type_name()]["save"].get<sol::protected_function>().call(*gameSettings, relativeFilePath);
 
     Assert::IsTrue(result.valid());
     FileAssert::FileContentsNotEqual(fullFilePath, "Test");

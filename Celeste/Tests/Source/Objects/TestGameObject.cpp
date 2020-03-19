@@ -1,4 +1,5 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
+#include "UtilityMacros/Unused.h"
 
 #include "Objects/GameObject.h"
 #include "UID/StringId.h"
@@ -586,6 +587,7 @@ namespace TestCeleste
     int counter = 0;
     for (observer_ptr<GameObject> child : gameObject)
     {
+      UNUSED(child);
       ++counter;
     }
 
@@ -608,6 +610,7 @@ namespace TestCeleste
     std::vector<observer_ptr<GameObject>> gameObjects;
     for (observer_ptr<GameObject> child : gameObject)
     {
+      UNUSED(child);
       gameObjects.push_back(child);
     }
 
@@ -641,7 +644,7 @@ namespace TestCeleste
   TEST_METHOD(GameObject_AddComponent_WhenInitialized_AddsComponent)
   {
     GameObject gameObject;
-    observer_ptr<MockManagedComponent> component = gameObject.addComponent<MockManagedComponent>();
+    gameObject.addComponent<MockManagedComponent>();
       
     Assert::IsTrue(gameObject.hasComponent<MockManagedComponent>());
   }
@@ -663,7 +666,7 @@ namespace TestCeleste
   TEST_METHOD(GameObject_HasComponent_ManagedComponent_ShouldReturnTrue)
   {
     GameObject gameObject;
-    observer_ptr<MockManagedComponent> component = gameObject.addComponent<MockManagedComponent>();
+    gameObject.addComponent<MockManagedComponent>();
 
     Assert::IsTrue(gameObject.hasComponent<MockManagedComponent>());
   }
@@ -709,8 +712,8 @@ namespace TestCeleste
   TEST_METHOD(GameObject_GetComponentCount_WithComponents_ReturnsCorrectNumberOfComponents)
   {
     GameObject gameObject;
-    observer_ptr<MockManagedComponent> component = gameObject.addComponent<MockManagedComponent>();
-    observer_ptr<MockManagedComponent> component2 = gameObject.addComponent<MockManagedComponent>();
+    gameObject.addComponent<MockManagedComponent>();
+    gameObject.addComponent<MockManagedComponent>();
 
     Assert::AreEqual(static_cast<size_t>(2), gameObject.getComponentCount());
   }
@@ -727,9 +730,9 @@ namespace TestCeleste
     Assert::AreEqual(static_cast<size_t>(0), gameObject.getComponentCount());
     Assert::IsNull(gameObject.getComponent(0));
 
-    observer_ptr<MockManagedComponent> component = gameObject.addComponent<MockManagedComponent>();
-    Assert::AreEqual(static_cast<size_t>(1), gameObject.getComponentCount());
+    gameObject.addComponent<MockManagedComponent>();
 
+    Assert::AreEqual(static_cast<size_t>(1), gameObject.getComponentCount());
     Assert::IsNull(gameObject.getComponent(1));
   }
 
@@ -757,9 +760,9 @@ namespace TestCeleste
     Assert::AreEqual(static_cast<size_t>(0), gameObject.getComponentCount());
     Assert::IsNull(gameObject.getConstComponent(0));
 
-    observer_ptr<MockManagedComponent> component = gameObject.addComponent<MockManagedComponent>();
-    Assert::AreEqual(static_cast<size_t>(1), gameObject.getComponentCount());
+    gameObject.addComponent<MockManagedComponent>();
 
+    Assert::AreEqual(static_cast<size_t>(1), gameObject.getComponentCount());
     Assert::IsNull(gameObject.getConstComponent(1));
   }
 
@@ -865,7 +868,7 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<MockManagedComponent> component = gameObject.addComponent<MockManagedComponent>();
 
-    auto predicate = [](const MockManagedComponent* component) -> bool
+    auto predicate = [](const MockManagedComponent*) -> bool
     {
       return true;
     };
@@ -880,9 +883,9 @@ namespace TestCeleste
 
     Assert::IsNull(gameObject.findComponent<MockManagedComponent>());
 
-    observer_ptr<MockManagedComponent> component = gameObject.addComponent<MockManagedComponent>();
+    gameObject.addComponent<MockManagedComponent>();
 
-    auto predicate = [](const MockManagedComponent* component) -> bool
+    auto predicate = [](const MockManagedComponent*) -> bool
     {
       return false;
     };
@@ -896,7 +899,7 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<MockUnmanagedComponent> script = gameObject.addComponent<MockUnmanagedComponent>();
 
-    auto predicate = [](const MockUnmanagedComponent* script) -> bool
+    auto predicate = [](const MockUnmanagedComponent*) -> bool
     {
       return true;
     };
@@ -911,9 +914,9 @@ namespace TestCeleste
 
     Assert::IsNull(gameObject.findComponent<MockUnmanagedComponent>());
 
-    observer_ptr<MockUnmanagedComponent> script = gameObject.addComponent<MockUnmanagedComponent>();
+    gameObject.addComponent<MockUnmanagedComponent>();
 
-    auto predicate = [](const MockUnmanagedComponent* script) -> bool
+    auto predicate = [](const MockUnmanagedComponent*) -> bool
     {
       return false;
     };
@@ -931,7 +934,7 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<MockManagedComponent> component = gameObject.addComponent<MockManagedComponent>();
 
-    auto predicate = [](const MockManagedComponent* component) -> bool
+    auto predicate = [](const MockManagedComponent*) -> bool
     {
       return true;
     };
@@ -950,9 +953,9 @@ namespace TestCeleste
 
     Assert::IsNull(mockComponent);
 
-    observer_ptr<MockManagedComponent> component2 = gameObject.addComponent<MockManagedComponent>();
+    gameObject.addComponent<MockManagedComponent>();
 
-    auto predicate = [](const MockManagedComponent* component) -> bool
+    auto predicate = [](const MockManagedComponent*) -> bool
     {
       return false;
     };
@@ -968,7 +971,7 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<MockUnmanagedComponent> script = gameObject.addComponent<MockUnmanagedComponent>();
 
-    auto predicate = [](const MockUnmanagedComponent* component) -> bool
+    auto predicate = [](const MockUnmanagedComponent*) -> bool
     {
       return true;
     };
@@ -987,9 +990,9 @@ namespace TestCeleste
 
     Assert::IsNull(handle);
 
-    observer_ptr<MockUnmanagedComponent> component2 = gameObject.addComponent<MockUnmanagedComponent>();
+    gameObject.addComponent<MockUnmanagedComponent>();
 
-    auto predicate = [](const MockUnmanagedComponent* component) -> bool
+    auto predicate = [](const MockUnmanagedComponent*) -> bool
     {
       return false;
     };

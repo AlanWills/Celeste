@@ -1,7 +1,7 @@
 #include "Mocks/Objects/MockScriptableObject.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   //------------------------------------------------------------------------------------------------
   MockScriptableObject::MockScriptableObject()

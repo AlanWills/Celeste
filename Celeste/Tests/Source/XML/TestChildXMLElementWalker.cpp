@@ -1,4 +1,5 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
+#include "UtilityMacros/Unused.h"
 
 #include "XML/ChildXMLElementWalker.h"
 
@@ -20,6 +21,7 @@ namespace TestCeleste
     size_t counter = 0;
     for (XMLElement* element : walker)
     {
+      UNUSED(element);
       ++counter;
     }
 
@@ -38,8 +40,9 @@ namespace TestCeleste
     ChildXMLElementWalker<false> walker(element);
 
     size_t counter = 0;
-    for (XMLElement* element : walker)
+    for (XMLElement* e : walker)
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -64,8 +67,9 @@ namespace TestCeleste
     ChildXMLElementWalker<false> walker(element);
 
     size_t counter = 0;
-    for (XMLElement* element : walker)
+    for (XMLElement* e : walker)
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -84,8 +88,9 @@ namespace TestCeleste
     ChildXMLElementWalker<false> walker(element, "Test");
 
     size_t counter = 0;
-    for (XMLElement* element : walker)
+    for (XMLElement* e : walker)
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -110,8 +115,9 @@ namespace TestCeleste
     ChildXMLElementWalker<false> walker(element, "Test");
 
     size_t counter = 0;
-    for (XMLElement* element : walker)
+    for (XMLElement* e : walker)
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -136,8 +142,9 @@ namespace TestCeleste
     ChildXMLElementWalker<false> walker(element, "Child1");
 
     size_t counter = 0;
-    for (XMLElement* element : walker)
+    for (XMLElement* e : walker)
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -154,6 +161,7 @@ namespace TestCeleste
     size_t counter = 0;
     for (XMLElement* element : children(static_cast<XMLElement*>(nullptr)))
     {
+      UNUSED(element);
       ++counter;
     }
 
@@ -170,8 +178,9 @@ namespace TestCeleste
     Assert::IsTrue(element->NoChildren());
 
     size_t counter = 0;
-    for (XMLElement* element : children(element))
+    for (XMLElement* e : children(element))
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -194,8 +203,9 @@ namespace TestCeleste
     Assert::IsFalse(element->NoChildren());
 
     size_t counter = 0;
-    for (XMLElement* element : children(element))
+    for (XMLElement* e : children(element))
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -212,8 +222,9 @@ namespace TestCeleste
     Assert::IsTrue(element->NoChildren());
 
     size_t counter = 0;
-    for (XMLElement* element : children(element))
+    for (XMLElement* e : children(element))
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -236,8 +247,9 @@ namespace TestCeleste
     Assert::IsFalse(element->NoChildren());
 
     size_t counter = 0;
-    for (XMLElement* element : children(element, "Test"))
+    for (XMLElement* e : children(element, "Test"))
     {
+      UNUSED(e);
       ++counter;
     }
 
@@ -260,8 +272,9 @@ namespace TestCeleste
     Assert::IsFalse(element->NoChildren());
 
     size_t counter = 0;
-    for (XMLElement* element : children(element, "Child1"))
+    for (XMLElement* e : children(element, "Child1"))
     {
+      UNUSED(e);
       ++counter;
     }
 

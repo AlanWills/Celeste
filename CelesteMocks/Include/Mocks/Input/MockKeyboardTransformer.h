@@ -1,14 +1,14 @@
 #pragma once
 
-#include "CelesteTestUtilsDllExport.h"
+#include "CelesteMocksDllExport.h"
 #include "Input/KeyboardTransformer.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockKeyboardTransformer : public Celeste::Input::KeyboardTransformer
   {
-    DECLARE_UNMANAGED_COMPONENT(MockKeyboardTransformer, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockKeyboardTransformer, CelesteMocksDllExport)
 
     public:
       const glm::vec2& getDirectionVector_Public() const { return getDirectionVector(); }

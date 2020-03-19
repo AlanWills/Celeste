@@ -4,7 +4,7 @@
 #include "Mocks/Objects/MockScriptableObject.h"
 #include "Serialization/MathsSerializers.h"
 #include "Deserialization/MathsDeserializers.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "FileAssert.h"
 
 using namespace Celeste::Bindings;

@@ -2,7 +2,7 @@
 
 #include "Resources/Shaders/Program.h"
 #include "Resources/ResourceManager.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "OpenGL/GL.h"
 
 using namespace Celeste::Resources;

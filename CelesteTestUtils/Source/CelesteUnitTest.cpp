@@ -1,7 +1,7 @@
 #include "CelesteUnitTest.h"
 #include "Input/InputManager.h"
 #include "Resources/ResourceManager.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "BaseUnitTest.h"
 #include "FileSystem/Directory.h"
 #include "Input/Mouse.h"
@@ -39,7 +39,7 @@ namespace CelesteTestUtils
   //------------------------------------------------------------------------------------------------
   void CelesteUnitTest::resetResources()
   {
-    Directory temp(CelesteTestUtils::TestResources::getTempDirectory());
+    Directory temp(CelesteTestResources::TestResources::getTempDirectory());
     temp.remove();
     temp.create();
   }

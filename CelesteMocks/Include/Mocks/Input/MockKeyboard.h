@@ -3,7 +3,7 @@
 #include "Input/Keyboard.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockKeyboard : public Celeste::Input::Keyboard
   {

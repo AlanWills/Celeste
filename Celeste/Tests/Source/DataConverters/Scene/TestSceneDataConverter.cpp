@@ -1,8 +1,8 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "DataConverters/Scene/SceneDataConverter.h"
-#include "Resources/Scene/SceneLoadingResources.h"
-#include "Resources/Resources/Data/PrefabLoadingResources.h"
+#include "TestResources/Scene/SceneLoadingResources.h"
+#include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Objects/GameObject.h"
 #include "Utils/GameObjectXMLUtils.h"
@@ -1179,7 +1179,7 @@ namespace TestCeleste
     SceneDataConverter converter("Screen");
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
-    tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
+    createGameObjectsElement(document, element);
 
     Assert::IsTrue(converter.getGameObjects().empty());
 
@@ -1239,7 +1239,7 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child", gameObjects);
+    createGameObjectElement(document, "Child", gameObjects);
 
     Assert::IsTrue(converter.getGameObjects().empty());
 
@@ -1279,7 +1279,7 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child");
+    createGameObjectElement(document, "Child", gameObjects);
 
     Assert::IsTrue(converter.convertFromXML(element));
   }
@@ -1291,8 +1291,8 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child", gameObjects);
-    tinyxml2::XMLElement* gameObject2 = createGameObjectElement(document, gameObjects);
+    createGameObjectElement(document, "Child", gameObjects);
+    createGameObjectElement(document, gameObjects);
 
     Assert::IsTrue(converter.getGameObjects().empty());
 
@@ -1308,8 +1308,8 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child", gameObjects);
-    tinyxml2::XMLElement* gameObject2 = createGameObjectElement(document, gameObjects);
+    createGameObjectElement(document, "Child", gameObjects);
+    createGameObjectElement(document, gameObjects);
 
     Assert::IsFalse(converter.convertFromXML(element));
   }
@@ -1321,8 +1321,8 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child", gameObjects);
-    tinyxml2::XMLElement* gameObject2 = createGameObjectElement(document, "Child2", gameObjects);
+    createGameObjectElement(document, "Child", gameObjects);
+    createGameObjectElement(document, "Child2", gameObjects);
 
     Assert::IsTrue(converter.getGameObjects().empty());
 
@@ -1371,8 +1371,8 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child", gameObjects);
-    tinyxml2::XMLElement* gameObject2 = createGameObjectElement(document, "Child2", gameObjects);
+    createGameObjectElement(document, "Child", gameObjects);
+    createGameObjectElement(document, "Child2", gameObjects);
 
     Assert::IsTrue(converter.convertFromXML(element));
   }
@@ -1458,7 +1458,7 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* prefab = createPrefabElement(document, "Child");
+    createPrefabElement(document, "Child", gameObjects);
 
     Assert::IsTrue(converter.convertFromXML(element));
   }
@@ -1470,8 +1470,8 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* prefab = createPrefabElement(document, "Child", gameObjects);
-    tinyxml2::XMLElement* prefab2 = createPrefabElement(document, gameObjects);
+    createPrefabElement(document, "Child", gameObjects);
+    createPrefabElement(document, gameObjects);
 
     Assert::IsTrue(converter.getGameObjects().empty());
 
@@ -1487,8 +1487,8 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* prefab = createPrefabElement(document, "Child", gameObjects);
-    tinyxml2::XMLElement* prefab2 = createPrefabElement(document, gameObjects);
+    createPrefabElement(document, "Child", gameObjects);
+    createPrefabElement(document, gameObjects);
 
     Assert::IsFalse(converter.convertFromXML(element));
   }
@@ -1565,8 +1565,8 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child", gameObjects);
-    tinyxml2::XMLElement* prefab = createPrefabElement(document, "Child2", gameObjects);
+    createGameObjectElement(document, "Child", gameObjects);
+    createPrefabElement(document, "Child2", gameObjects);
 
     Assert::IsTrue(converter.getGameObjects().empty());
 
@@ -1582,8 +1582,8 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child", gameObjects);
-    tinyxml2::XMLElement* prefab = createPrefabElement(document, "Child2", gameObjects);
+    createGameObjectElement(document, "Child", gameObjects);
+    createPrefabElement(document, "Child2", gameObjects);
 
     Assert::IsFalse(converter.convertFromXML(element));
   }
@@ -1595,7 +1595,7 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child", gameObjects);
+    createGameObjectElement(document, "Child", gameObjects);
     tinyxml2::XMLElement* prefab = createPrefabElement(document, "Child2", gameObjects);
     prefab->SetAttribute(PrefabDataConverter::PATH_ATTRIBUTE_NAME, PrefabLoadingResources::getValidSingleGameObjectRelativePath().c_str());
 
@@ -1615,7 +1615,7 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child", gameObjects);
+    createGameObjectElement(document, "Child", gameObjects);
     tinyxml2::XMLElement* prefab = createPrefabElement(document, "Child2", gameObjects);
     prefab->SetAttribute(PrefabDataConverter::PATH_ATTRIBUTE_NAME, PrefabLoadingResources::getValidSingleGameObjectRelativePath().c_str());
 
@@ -1688,8 +1688,8 @@ namespace TestCeleste
     XMLDocument document;
     XMLElement* element = document.NewElement("Name");
     XMLElement* gameObjects = createGameObjectsElement(document, element);
-    XMLElement* gameObject1 = createGameObjectElement(document, "Child1", gameObjects);
-    XMLElement* gameObject2 = createGameObjectElement(document, "Child2", gameObjects);
+    createGameObjectElement(document, "Child1", gameObjects);
+    createGameObjectElement(document, "Child2", gameObjects);
 
     Assert::IsTrue(converter.convertFromXML(element));
 
@@ -1708,8 +1708,8 @@ namespace TestCeleste
     XMLDocument document;
     XMLElement* element = document.NewElement("Name");
     XMLElement* gameObjects = createGameObjectsElement(document, element);
-    XMLElement* gameObject1 = createGameObjectElement(document, "Child1", gameObjects);
-    XMLElement* gameObject2 = createGameObjectElement(document, "Child2", gameObjects);
+    createGameObjectElement(document, "Child1", gameObjects);
+    createGameObjectElement(document, "Child2", gameObjects);
 
     Assert::IsTrue(converter.convertFromXML(element));
 
@@ -1779,7 +1779,7 @@ namespace TestCeleste
     XMLDocument document;
     XMLElement* element = document.NewElement("Name");
     XMLElement* gameObjects = createGameObjectsElement(document, element);
-    XMLElement* gameObjectElement = createGameObjectElement(document, "Child1", gameObjects);
+    createGameObjectElement(document, "Child1", gameObjects);
     XMLElement* prefab = createPrefabElement(document, "Child2", gameObjects);
     prefab->SetAttribute(PrefabDataConverter::PATH_ATTRIBUTE_NAME, PrefabLoadingResources::getValidSingleGameObjectRelativePath().c_str());
 
@@ -1800,7 +1800,7 @@ namespace TestCeleste
     XMLDocument document;
     XMLElement* element = createGameObjectElement(document, "Name");
     XMLElement* gameObjects = createGameObjectsElement(document, element);
-    XMLElement* gameObjectElement = createGameObjectElement(document, "Child1", gameObjects);
+    createGameObjectElement(document, "Child1", gameObjects);
     XMLElement* prefab = createPrefabElement(document, "Child2", gameObjects);
     prefab->SetAttribute(PrefabDataConverter::PATH_ATTRIBUTE_NAME, PrefabLoadingResources::getValidSingleGameObjectRelativePath().c_str());
 

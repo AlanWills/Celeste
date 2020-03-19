@@ -3,7 +3,7 @@
 #include "Input/Mouse.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockMouse : public Celeste::Input::Mouse
   {

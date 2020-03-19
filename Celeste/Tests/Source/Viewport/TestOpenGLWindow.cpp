@@ -161,7 +161,7 @@ namespace TestCeleste
     OpenGLWindow window(800, 600, OpenGLWindow::WindowMode::kWindowed);
 
     bool called = false;
-    auto f = [&called](const glm::vec2& newDimensions) -> void { called = true; };
+    auto f = [&called](const glm::vec2& /*newDimensions*/) -> void { called = true; };
     window.getViewportDimensionsChangedEvent().subscribe(f);
 
     Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
@@ -298,7 +298,7 @@ namespace TestCeleste
       window.setWindowDimensions(100, 100);
 
       bool called = false;
-      auto f = [&called](const glm::vec2 & newDimensions) -> void { called = true; };
+      auto f = [&called](const glm::vec2&) -> void { called = true; };
       window.getViewportDimensionsChangedEvent().subscribe(f);
       window.setWindowDimensions(glm::vec2(200, 100));
 
@@ -316,7 +316,7 @@ namespace TestCeleste
       window.setWindowDimensions(100, 100);
 
       glm::vec2 newDims;
-      auto f = [&newDims](const glm::vec2 & newDimensions) -> void { newDims = newDimensions; };
+      auto f = [&newDims](const glm::vec2& newDimensions) -> void { newDims = newDimensions; };
       window.getViewportDimensionsChangedEvent().subscribe(f);
       window.setWindowDimensions(glm::vec2(200, 100));
 
@@ -337,7 +337,7 @@ namespace TestCeleste
       window.setWindowDimensions(100, 100);
 
       glm::vec2 newDims;
-      auto f = [&newDims](const glm::vec2 & newDimensions) -> void { newDims = newDimensions; };
+      auto f = [&newDims](const glm::vec2& newDimensions) -> void { newDims = newDimensions; };
       window.getViewportDimensionsChangedEvent().subscribe(f);
       window.setWindowDimensions(glm::vec2(200, 100));
 
@@ -352,7 +352,7 @@ namespace TestCeleste
     window.setWindowDimensions(100, 100);
 
     bool called = false;
-    auto f = [&called](const glm::vec2 & newDimensions) -> void { called = true; };
+    auto f = [&called](const glm::vec2&) -> void { called = true; };
     window.getViewportDimensionsChangedEvent().subscribe(f);
     window.setWindowDimensions(glm::vec2(100, 100));
 
@@ -384,7 +384,7 @@ namespace TestCeleste
       window.setViewportDimensions(100, 100);
 
       bool called = false;
-      auto f = [&called](const glm::vec2 & newDimensions) -> void { called = true; };
+      auto f = [&called](const glm::vec2&) -> void { called = true; };
       window.getViewportDimensionsChangedEvent().subscribe(f);
       window.setViewportDimensions(glm::vec2(200, 100));
 
@@ -416,7 +416,7 @@ namespace TestCeleste
     window.setViewportDimensions(100, 100);
 
     bool called = false;
-    auto f = [&called](const glm::vec2& newDimensions) -> void { called = true; };
+    auto f = [&called](const glm::vec2&) -> void { called = true; };
     window.getViewportDimensionsChangedEvent().subscribe(f);
     window.setViewportDimensions(glm::vec2(100, 100));
 

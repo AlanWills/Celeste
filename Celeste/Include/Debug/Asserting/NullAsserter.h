@@ -13,6 +13,6 @@ namespace Celeste
       ~NullAsserter() override = default;
 
       /// \brief No-op check function
-      inline void check(bool condition) const override { }
+      inline void check(bool /*condition*/) const override { }
   };
 };

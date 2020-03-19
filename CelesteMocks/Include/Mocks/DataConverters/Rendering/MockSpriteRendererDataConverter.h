@@ -3,7 +3,7 @@
 #include "DataConverters/Rendering/SpriteRendererDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockSpriteRendererDataConverter : public Celeste::SpriteRendererDataConverter
   {

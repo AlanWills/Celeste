@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/UI/MockSliderDataConverter.h"
-#include "Resources/UI/SliderLoadingResources.h"
+#include "TestResources/UI/SliderLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "DataConverters/Callbacks/CallbackDataConverter.h"
@@ -29,7 +29,7 @@ namespace TestCeleste
   TEST_METHOD(SliderDataConverter_CheckCanBeConvertedFromXML)
   {
     GameObject gameObject;
-    observer_ptr<Rendering::SpriteRenderer> spriteRenderer = gameObject.addComponent<Rendering::SpriteRenderer>();
+    gameObject.addComponent<Rendering::SpriteRenderer>();
     observer_ptr<Data> data = getResourceManager().load<Data>(SliderLoadingResources::getValidNoCallbacksFullPath());
     observer_ptr<Component> component = ComponentDataConverterRegistry::convert(data->getDocumentRoot(), gameObject);
 
@@ -334,7 +334,7 @@ namespace TestCeleste
   TEST_METHOD(SliderDataConverter_SetValues_InputtingSlider_DataNotLoadedCorrectly_DoesNothing)
   {
     GameObject gameObject;
-    observer_ptr<Rendering::SpriteRenderer> spriteRenderer = gameObject.addComponent<Rendering::SpriteRenderer>();
+    gameObject.addComponent<Rendering::SpriteRenderer>();
     observer_ptr<Slider> slider = gameObject.addComponent<Slider>();
     slider->setCurrentValue(0.5f);
 
@@ -355,7 +355,8 @@ namespace TestCeleste
   TEST_METHOD(SliderDataConverter_SetValues_InputtingSlider_DataLoadedCorrectly_ChangesSliderToMatchData)
   {
     GameObject gameObject;
-    observer_ptr<Rendering::SpriteRenderer> spriteRenderer = gameObject.addComponent<Rendering::SpriteRenderer>();
+    gameObject.addComponent<Rendering::SpriteRenderer>();
+    
     observer_ptr<Slider> slider = gameObject.addComponent<Slider>();
     slider->setCurrentValue(0.5f);
     slider->setActive(false);

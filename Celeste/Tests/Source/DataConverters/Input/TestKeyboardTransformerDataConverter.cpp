@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Input/MockKeyboardTransformerDataConverter.h"
-#include "Resources/Input/KeyboardTransformerLoadingResources.h"
+#include "TestResources/Input/KeyboardTransformerLoadingResources.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Resources/ResourceManager.h"
 #include "Input/KeyboardTransformer.h"

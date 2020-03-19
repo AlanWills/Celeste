@@ -3,7 +3,7 @@
 #include "DataConverters/UI/StackPanelDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockStackPanelDataConverter : public Celeste::StackPanelDataConverter
   {

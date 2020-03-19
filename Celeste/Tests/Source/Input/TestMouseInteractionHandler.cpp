@@ -18,7 +18,7 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestMouseInteractionHandler)
 
     bool called = false;
-    void callback(Celeste::GameObject& gameObject)
+    void callback(Celeste::GameObject& /*gameObject*/)
     {
       called = true;
     }

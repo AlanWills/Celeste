@@ -3,7 +3,7 @@
 #include "Resources/Shaders/FragmentShader.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
 
 class MockFragmentShader : public Celeste::Resources::FragmentShader

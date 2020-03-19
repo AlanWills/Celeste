@@ -5,7 +5,7 @@
 #include "FileAssert.h"
 
 #include "Mocks/DataConverters/MockDataConverter.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "Resources/ResourceManager.h"
 
 using namespace Celeste::Resources;

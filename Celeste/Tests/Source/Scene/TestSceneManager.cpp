@@ -232,7 +232,7 @@ namespace TestCeleste
   {
     SceneManager sceneManager;
    
-    Assert::IsNull(sceneManager.find([](const GameObject& gameObject) { return false; }));
+    Assert::IsNull(sceneManager.find([](const GameObject& /*gameObject*/) { return false; }));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -241,7 +241,7 @@ namespace TestCeleste
     SceneManager sceneManager;
     std::unique_ptr<GameObject> gameObject(new GameObject());
 
-    Assert::AreEqual(gameObject.get(), sceneManager.find([](const GameObject& gameObject) { return true; }));
+    Assert::AreEqual(gameObject.get(), sceneManager.find([](const GameObject& /*gameObject*/) { return true; }));
   }
 
   //------------------------------------------------------------------------------------------------

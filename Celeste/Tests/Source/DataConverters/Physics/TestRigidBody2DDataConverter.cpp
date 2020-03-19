@@ -3,7 +3,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Physics/MockRigidBody2DDataConverter.h"
-#include "Resources/Physics/RigidBody2DLoadingResources.h"
+#include "TestResources/Physics/RigidBody2DLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Physics/RigidBody2D.h"

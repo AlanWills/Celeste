@@ -1,14 +1,14 @@
 #pragma once
 
-#include "CelesteTestUtilsDllExport.h"
+#include "CelesteMocksDllExport.h"
 #include "Rendering/SpriteRenderer.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockSpriteRenderer : public Celeste::Rendering::SpriteRenderer
   {
-    DECLARE_UNMANAGED_COMPONENT(MockSpriteRenderer, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockSpriteRenderer, CelesteMocksDllExport)
 
     public:
       void render(const Celeste::Resources::Program& program, const glm::mat4& viewModelMatrix) const override

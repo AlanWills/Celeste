@@ -68,8 +68,6 @@ namespace TestCeleste
     setUpButtonComponents(gameObject);
     MockButton button(gameObject);
 
-    const char* error = alutGetErrorString(alutGetError());
-
     Assert::IsNotNull(button.getDefaultTexture());
     Assert::IsNotNull(button.getHighlightedTexture());
     Assert::IsNotNull(button.getClickedTexture());
@@ -117,7 +115,7 @@ namespace TestCeleste
 
     Assert::IsTrue(audioSourceSource->getAudioType() == AudioType::kMusic);
 
-    observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
+    gameObject.addComponent<MockButton>();
 
     Assert::IsTrue(audioSourceSource->getAudioType() == AudioType::kSFX);
   }
@@ -233,7 +231,7 @@ namespace TestCeleste
     GameObject gameObject;
     setUpButtonComponents(gameObject);
     MockButton button(gameObject);
-    button.subscribeLeftClickCallback([](GameObject& gameObject) -> void { });
+    button.subscribeLeftClickCallback([](GameObject&) -> void { });
   }
 
   //------------------------------------------------------------------------------------------------
@@ -252,7 +250,7 @@ namespace TestCeleste
     Assert::IsTrue(gameObject.findComponent<Collider>()->isHitByRay());
 
     bool called = false;
-    button->subscribeLeftClickCallback([&called](GameObject& gameObject) -> void { called = true; });
+    button->subscribeLeftClickCallback([&called](GameObject&) -> void { called = true; });
     handler->getOnLeftButtonUpEvent().invoke(gameObject);
 
     Assert::IsTrue(called);
@@ -276,8 +274,8 @@ namespace TestCeleste
     bool called = false;
     bool called2 = false;
     button->subscribeLeftClickCallback(
-      [&called](GameObject& gameObject) -> void { called = true; },
-      [&called2](GameObject& gameObject) -> void { called2 = true; });
+      [&called](GameObject&) -> void { called = true; },
+      [&called2](GameObject&) -> void { called2 = true; });
     handler->getOnLeftButtonUpEvent().invoke(gameObject);
 
     Assert::IsTrue(called);
@@ -317,7 +315,7 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    observer_ptr<MouseInteractionHandler> mouseInteraction = gameObject.addComponent<MouseInteractionHandler>();
+    gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();  // Make sure this is last so it doesn't create components
 
@@ -356,7 +354,7 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    observer_ptr<MouseInteractionHandler> mouseInteraction = gameObject.addComponent<MouseInteractionHandler>();
+    gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
 
@@ -392,12 +390,12 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    observer_ptr<MouseInteractionHandler> mouseInteraction = gameObject.addComponent<MouseInteractionHandler>();
+    gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
 
     bool called = false;
-    button->subscribeLeftClickCallback([&called](GameObject& sender) -> void
+    button->subscribeLeftClickCallback([&called](GameObject&) -> void
     {
       called = true;
     });
@@ -433,12 +431,12 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    observer_ptr<MouseInteractionHandler> mouseInteraction = gameObject.addComponent<MouseInteractionHandler>();
+    gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
 
     bool called = false;
-    button->subscribeLeftClickCallback([&called](GameObject& sender) -> void
+    button->subscribeLeftClickCallback([&called](GameObject&) -> void
     {
       called = true;
     });
@@ -476,12 +474,12 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    observer_ptr<MouseInteractionHandler> mouseInteraction = gameObject.addComponent<MouseInteractionHandler>();
+    gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
 
     bool called = false;
-    button->subscribeLeftClickCallback([&called](GameObject& sender) -> void
+    button->subscribeLeftClickCallback([&called](GameObject&) -> void
     {
       called = true;
     });
@@ -524,12 +522,12 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    observer_ptr<MouseInteractionHandler> mouseInteraction = gameObject.addComponent<MouseInteractionHandler>();
+    gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
 
     bool called = false;
-    button->subscribeLeftClickCallback([&called](GameObject& sender) -> void
+    button->subscribeLeftClickCallback([&called](GameObject&) -> void
     {
       called = true;
     });

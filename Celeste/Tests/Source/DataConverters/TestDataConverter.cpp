@@ -3,7 +3,7 @@
 #include "Mocks/DataConverters/MockDataConverter.h"
 #include "Mocks/XML/Attributes/MockAttribute.h"
 #include "Mocks/XML/Elements/MockElement.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "Resources/ResourceManager.h"
 #include "FileAssert.h"
 

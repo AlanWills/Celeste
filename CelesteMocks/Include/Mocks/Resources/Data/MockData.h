@@ -3,7 +3,7 @@
 #include "Resources/Data/Data.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockData : public Celeste::Resources::Data
   {

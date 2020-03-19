@@ -3,7 +3,7 @@
 #include "Resources/Resource.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockResource : public Celeste::Resources::Resource
   {
@@ -17,7 +17,7 @@ namespace CelesteTestUtils
       bool getLoaded() const { return m_loaded; }
 
     protected:
-      bool doLoadFromFile(const Celeste::Path& path) override
+      bool doLoadFromFile(const Celeste::Path& /*path*/) override
       {
         m_loaded = true;
         return true;

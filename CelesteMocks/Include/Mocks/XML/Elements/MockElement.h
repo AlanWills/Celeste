@@ -3,7 +3,7 @@
 #include "XML/Elements/Element.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockElement : public Celeste::XML::Element
   {
@@ -23,14 +23,14 @@ namespace CelesteTestUtils
       void setDoConvertResult(bool value) { m_doConvertResult = value; }
 
     protected:
-      bool doConvertFromXML(const tinyxml2::XMLElement* childElement) override
+      bool doConvertFromXML(const tinyxml2::XMLElement* /*childElement*/) override
       {
         m_isDoConvertFromXMLCalled = true;
         return m_doConvertResult;
       }
 
   #if _DEBUG
-      void generateBinding(std::string& output) const override { }
+      void generateBinding(std::string& /*output*/) const override { }
   #endif
 
     private:

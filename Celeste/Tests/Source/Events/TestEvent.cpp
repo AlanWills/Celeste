@@ -49,7 +49,6 @@ namespace TestCeleste
     {
       Event<> event;
 
-      bool called = false;
       auto f = []() -> void { };
       auto f2 = []() -> void { };
       event.subscribe(f);
@@ -97,7 +96,7 @@ namespace TestCeleste
       Event<int> event;
 
       bool called = false;
-      auto f = [&called](int i) -> void { called = true; };
+      auto f = [&called](int) -> void { called = true; };
       StringId id = event.subscribe(f, 0);
       event.invoke(5);
 
@@ -111,8 +110,8 @@ namespace TestCeleste
       Event<int> event;
 
       bool called = false;
-      auto f = [&called](int i) -> void { called = true; };
-      auto f2 = [&called](int i) -> void { called = false; };
+      auto f = [&called](int) -> void { called = true; };
+      auto f2 = [&called](int) -> void { called = false; };
       StringId id = event.subscribe(f, 0);
       event.invoke(5);
 
@@ -129,7 +128,7 @@ namespace TestCeleste
     {
       Event<int> event;
 
-      auto f = [](int i) -> void { };
+      auto f = [](int) -> void { };
       StringId id = event.subscribe(f, "Test");
 
       Assert::AreEqual(internString("Test"), id);
@@ -140,7 +139,7 @@ namespace TestCeleste
     {
       Event<int> event;
 
-      auto f = [](int i) -> void {};
+      auto f = [](int) -> void {};
       StringId id = event.subscribe(f, "Test");
 
       Assert::AreNotEqual((StringId)0, id);
@@ -183,7 +182,7 @@ namespace TestCeleste
       Event<int> event;
 
       bool called = false;
-      auto f = [&called](int i) -> void { called = true; };
+      auto f = [&called](int) -> void { called = true; };
 
       StringId id = event.subscribe(f);
       event.invoke(5);
@@ -203,7 +202,7 @@ namespace TestCeleste
       Event<int> event;
 
       bool called = false;
-      auto f = [&called](int i) -> void { called = true; };
+      auto f = [&called](int) -> void { called = true; };
 
       StringId id = event.subscribe(f);
       event.invoke(5);
@@ -223,7 +222,7 @@ namespace TestCeleste
       Event<int> event;
 
       bool called = false;
-      auto f = [&called](int i) -> void { called = true; };
+      auto f = [&called](int) -> void { called = true; };
 
       event.subscribe(f, "Test");
       event.invoke(5);
@@ -243,7 +242,7 @@ namespace TestCeleste
       Event<int> event;
 
       bool called = false;
-      auto f = [&called](int i) -> void { called = true; };
+      auto f = [&called](int) -> void { called = true; };
 
       event.subscribe(f, "Test");
       event.invoke(5);
@@ -304,7 +303,7 @@ namespace TestCeleste
       Event<int, float> event;
 
       bool called = false;
-      auto f = [&called](int i, float f) -> void { called = true; };
+      auto f = [&called](int, float) -> void { called = true; };
       StringId id = event.subscribe(f, 0);
       event.invoke(5, 0.1f);
 
@@ -318,8 +317,8 @@ namespace TestCeleste
       Event<int, float> event;
 
       bool called = false;
-      auto f = [&called](int i, float f) -> void { called = true; };
-      auto f2 = [&called](int i, float f) -> void { called = false; };
+      auto f = [&called](int, float) -> void { called = true; };
+      auto f2 = [&called](int, float) -> void { called = false; };
       StringId id = event.subscribe(f, 0);
       event.invoke(5, 0.1f);
 
@@ -336,7 +335,7 @@ namespace TestCeleste
     {
       Event<int, float> event;
 
-      auto f = [](int i, float f) -> void {};
+      auto f = [](int, float) -> void {};
       StringId id = event.subscribe(f, "Test");
 
       Assert::AreEqual(internString("Test"), id);
@@ -347,7 +346,7 @@ namespace TestCeleste
     {
       Event<int, float> event;
 
-      auto f = [](int i, float f) -> void {};
+      auto f = [](int, float) -> void {};
       StringId id = event.subscribe(f, "Test");
 
       Assert::AreNotEqual((StringId)0, id);
@@ -390,7 +389,7 @@ namespace TestCeleste
       Event<int, float> event;
 
       bool called = false;
-      auto f = [&called](int i, float f) -> void { called = true; };
+      auto f = [&called](int, float) -> void { called = true; };
 
       StringId id = event.subscribe(f);
       event.invoke(5, 0.1f);
@@ -410,7 +409,7 @@ namespace TestCeleste
       Event<int, float> event;
 
       bool called = false;
-      auto f = [&called](int i, float f) -> void { called = true; };
+      auto f = [&called](int, float) -> void { called = true; };
 
       StringId id = event.subscribe(f);
       event.invoke(5, 0.1f);
@@ -430,7 +429,7 @@ namespace TestCeleste
       Event<int, float> event;
 
       bool called = false;
-      auto f = [&called](int i, float f) -> void { called = true; };
+      auto f = [&called](int, float) -> void { called = true; };
 
       event.subscribe(f, "Test");
       event.invoke(5, 0.1f);
@@ -450,7 +449,7 @@ namespace TestCeleste
       Event<int, float> event;
 
       bool called = false;
-      auto f = [&called](int i, float f) -> void { called = true; };
+      auto f = [&called](int, float) -> void { called = true; };
 
       event.subscribe(f, "Test");
       event.invoke(5, 0.1f);
@@ -487,7 +486,7 @@ namespace TestCeleste
     {
       bool called = false;
       Event<int, float> event;
-      auto f = [&called](int i, float f) -> void { called = true; };
+      auto f = [&called](int, float) -> void { called = true; };
       event.subscribe(f);
       event.invoke(5, 0.1f);
 

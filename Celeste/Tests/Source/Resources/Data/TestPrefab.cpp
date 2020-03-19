@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Resources/Data/Prefab.h"
-#include "Resources/Resources/Data/PrefabLoadingResources.h"
+#include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "Rendering/TextRenderer.h"
 #include "Rendering/SpriteRenderer.h"
 #include "DataConverters/Objects/GameObjectDataConverter.h"

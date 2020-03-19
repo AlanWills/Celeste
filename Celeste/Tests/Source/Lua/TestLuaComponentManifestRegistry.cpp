@@ -147,7 +147,7 @@ namespace TestCeleste::Lua
     Assert::AreEqual(static_cast<size_t>(0), LuaComponentManifestRegistry::registeredComponentsSize());
     AssertCel::DoesNotHaveComponent<LuaComponent>(gameObject);
 
-    observer_ptr<LuaComponent> luaComponent = LuaComponentManifestRegistry::createComponent("Test", gameObject);
+    LuaComponentManifestRegistry::createComponent("Test", gameObject);
 
     AssertCel::DoesNotHaveComponent<LuaComponent>(gameObject);
   }
@@ -175,7 +175,7 @@ namespace TestCeleste::Lua
     Assert::AreEqual(static_cast<size_t>(1), LuaComponentManifestRegistry::registeredComponentsSize());
     AssertCel::DoesNotHaveComponent<LuaComponent>(gameObject);
 
-    observer_ptr<LuaComponent> luaComponent = LuaComponentManifestRegistry::createComponent("Test", gameObject);
+    LuaComponentManifestRegistry::createComponent("Test", gameObject);
 
     AssertCel::HasComponent<LuaComponent>(gameObject);
   }

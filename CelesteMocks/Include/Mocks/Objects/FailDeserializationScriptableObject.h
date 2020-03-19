@@ -3,7 +3,7 @@
 #include "Mocks/Objects/MockScriptableObject.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
 
 class FailDeserializationScriptableObject : public MockScriptableObject
@@ -11,7 +11,7 @@ class FailDeserializationScriptableObject : public MockScriptableObject
   public:
     static std::string type_name() { return "FailDeserializationScriptableObject"; }
 
-    bool doDeserialize(const tinyxml2::XMLElement* element) override { return false; }
+    bool doDeserialize(const tinyxml2::XMLElement* /*element*/) override { return false; }
 };
 
 }

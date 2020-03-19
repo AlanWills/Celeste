@@ -3,7 +3,7 @@
 #include "Objects/Object.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockObject : public Celeste::Object
   {

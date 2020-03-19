@@ -1,14 +1,14 @@
 #pragma once
 
-#include "CelesteTestUtilsDllExport.h"
+#include "CelesteMocksDllExport.h"
 #include "Rendering/TextRenderer.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockTextRenderer : public Celeste::Rendering::TextRenderer
   {
-    DECLARE_UNMANAGED_COMPONENT(MockTextRenderer, CelesteTestUtilsDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockTextRenderer, CelesteMocksDllExport)
 
     public:
       float getXPosition_Public(float halfLineWidth) const

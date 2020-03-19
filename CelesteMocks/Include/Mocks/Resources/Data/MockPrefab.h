@@ -3,7 +3,7 @@
 #include "Resources/Data/Prefab.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockPrefab : public Celeste::Resources::Prefab
   {

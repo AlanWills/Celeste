@@ -3,7 +3,7 @@
 #include "DataConverters/Physics/RigidBody2DDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockRigidBody2DDataConverter : public Celeste::RigidBody2DDataConverter
   {

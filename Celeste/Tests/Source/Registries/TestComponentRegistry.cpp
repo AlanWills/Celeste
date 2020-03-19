@@ -47,7 +47,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_HasComponent_InputtingComponentTypeThatDoesExist_ShouldReturnTrue)
   {
-    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject& gameObject) { return nullptr; });
+    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject&) { return nullptr; });
 
     Assert::IsTrue(ComponentRegistry::hasComponent<NonRegisteredComponent>());
   }
@@ -61,7 +61,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ComponentRegistry_HasComponent_InputtingComponentNameThatDoesExist_ShouldReturnTrue)
   {
-    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject& gameObject) { return nullptr; });
+    ComponentRegistry::registerComponent(NonRegisteredComponent::type_name(), [](GameObject&) { return nullptr; });
 
     Assert::IsTrue(ComponentRegistry::hasComponent(NonRegisteredComponent::type_name()));
   }

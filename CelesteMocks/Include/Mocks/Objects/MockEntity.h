@@ -3,7 +3,7 @@
 #include "Objects/Entity.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockEntity : public Celeste::Entity
   {

@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Resources/MockResource.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 
 
 namespace TestCeleste

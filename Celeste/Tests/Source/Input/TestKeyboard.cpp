@@ -328,7 +328,7 @@ namespace TestCeleste
       Keyboard keyboard;
 
       bool called = false;
-      auto f = [&called](char c) -> void { called = true; };
+      auto f = [&called](char) -> void { called = true; };
 
       keyboard.getTextInputtedEvent().subscribe(f);
       keyboard.onTextInputted('c');
@@ -342,7 +342,7 @@ namespace TestCeleste
       Keyboard keyboard;
 
       bool called = false;
-      auto f = [&called](char c) -> void { called = true; };
+      auto f = [&called](char) -> void { called = true; };
 
       keyboard.getTextInputtedEvent().subscribe(f, "Test");
       keyboard.onTextInputted('c');
@@ -418,7 +418,7 @@ namespace TestCeleste
       Keyboard keyboard;
 
       bool called = false;
-      auto f = [&called](int keyPressed) -> void { called = true; };
+      auto f = [&called](int) -> void { called = true; };
 
       keyboard.getKeyPressedEvent().subscribe(f);
       keyboard.setKeyPressed(GLFW_KEY_A);
@@ -432,7 +432,7 @@ namespace TestCeleste
       Keyboard keyboard;
 
       bool called = false;
-      auto f = [&called](int keyPressed) -> void { called = true; };
+      auto f = [&called](int) -> void { called = true; };
 
       keyboard.getKeyPressedEvent().subscribe(f, "Test");
       keyboard.setKeyPressed(GLFW_KEY_A);
@@ -508,7 +508,7 @@ namespace TestCeleste
       Keyboard keyboard;
 
       bool called = false;
-      auto f = [&called](int keyReleased) -> void { called = true; };
+      auto f = [&called](int) -> void { called = true; };
 
       keyboard.getKeyReleasedEvent().subscribe(f);
       keyboard.setKeyReleased(GLFW_KEY_A);
@@ -522,7 +522,7 @@ namespace TestCeleste
       Keyboard keyboard;
 
       bool called = false;
-      auto f = [&called](int keyReleased) -> void { called = true; };
+      auto f = [&called](int) -> void { called = true; };
 
       keyboard.getKeyReleasedEvent().subscribe(f, "Test");
       keyboard.setKeyReleased(GLFW_KEY_A);
@@ -545,5 +545,6 @@ namespace TestCeleste
     }
 
 #pragma endregion
+
 	};
 }

@@ -64,32 +64,32 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Get Lines Tests
+#pragma region Split Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_GetLines_EmptyString_ReturnsEmptyList)
+    TEST_METHOD(StringUtils_Split_EmptyString_ReturnsEmptyList)
     {
       std::vector<std::string> lines;
-      getLines("", lines);
+      split("", lines);
 
       Assert::AreEqual((size_t)0, lines.size());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_GetLines_SingleLineText_ReturnsSingleEntryInList)
+    TEST_METHOD(StringUtils_Split_SingleLineText_ReturnsSingleEntryInList)
     {
       std::vector<std::string> lines;
-      getLines("Hello Ground Control", lines);
+      split("Hello Ground Control", lines);
 
       Assert::AreEqual((size_t)1, lines.size());
       Assert::AreEqual("Hello Ground Control", lines[0].c_str());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_GetLines_TextWithNewlineAtEnd_ReturnsTextAndEmptyStringInList)
+    TEST_METHOD(StringUtils_Split_TextWithNewlineAtEnd_ReturnsTextAndEmptyStringInList)
     {
       std::vector<std::string> lines;
-      getLines("Hello Ground Control\n", lines);
+      split("Hello Ground Control\n", lines);
 
       Assert::AreEqual((size_t)2, lines.size());
       Assert::AreEqual("Hello Ground Control", lines[0].c_str());
@@ -97,10 +97,10 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_GetLines_TextWithNewlineInMiddle_ReturnsTwoLines)
+    TEST_METHOD(StringUtils_Split_TextWithNewlineInMiddle_ReturnsTwoLines)
     {
       std::vector<std::string> lines;
-      getLines("Hello Ground\n Control", lines);
+      split("Hello Ground\n Control", lines);
 
       Assert::AreEqual((size_t)2, lines.size());
       Assert::AreEqual("Hello Ground", lines[0].c_str());
@@ -108,10 +108,10 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_GetLines_TextWithMultipleNewlines_ReturnsCorrectLines)
+    TEST_METHOD(StringUtils_Split_TextWithMultipleNewlines_ReturnsCorrectLines)
     {
       std::vector<std::string> lines;
-      getLines("Hell\no Ground\n Control\n", lines);
+      split("Hell\no Ground\n Control\n", lines);
 
       Assert::AreEqual((size_t)4, lines.size());
       Assert::AreEqual("Hell", lines[0].c_str());
@@ -121,10 +121,10 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_GetLines_AllNewlines_ReturnsCorrectLines)
+    TEST_METHOD(StringUtils_Split_AllNewlines_ReturnsCorrectLines)
     {
       std::vector<std::string> lines;
-      getLines("\n\n\n\n\n", lines);
+      split("\n\n\n\n\n", lines);
 
       Assert::AreEqual((size_t)6, lines.size());
 

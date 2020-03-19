@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Resources/Fonts/MockFont.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 
 using namespace Celeste::Resources;
 

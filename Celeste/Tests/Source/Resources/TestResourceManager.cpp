@@ -1,9 +1,9 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Resources/MockResourceManager.h"
-#include "Resources/Animation/AnimatorLoadingResources.h"
-#include "Resources/Resources/Data/PrefabLoadingResources.h"
-#include "Resources/Resources/Models/ModelLoadingResources.h"
+#include "TestResources/Animation/AnimatorLoadingResources.h"
+#include "TestResources/Resources/Data/PrefabLoadingResources.h"
+#include "TestResources/Resources/Models/ModelLoadingResources.h"
 #include "OpenAL/OpenALState.h"
 #include "AssertCel.h"
 #include "AssertSpecialization/FileSystem.h"

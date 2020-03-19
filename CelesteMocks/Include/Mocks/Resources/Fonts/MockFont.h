@@ -3,7 +3,7 @@
 #include "Resources/Fonts/Font.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
 
 class MockFont : public Celeste::Resources::Font

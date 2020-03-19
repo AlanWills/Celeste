@@ -2,7 +2,7 @@
 #include "Registries/ComponentDataConverterRegistry.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(MockComponentDataConverter)
 
@@ -16,7 +16,7 @@ namespace CelesteTestUtils
   }
 
   //------------------------------------------------------------------------------------------------
-  void MockComponentDataConverter::doSetValues(MockComponent& component) const
+  void MockComponentDataConverter::doSetValues(MockComponent& /*component*/) const
   { 
     m_doSetValuesCalled = true; 
   }

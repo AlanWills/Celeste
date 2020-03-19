@@ -3,7 +3,7 @@
 #include "DataConverters/GraphicalFX/OpacityLerperDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockOpacityLerperDataConverter : public Celeste::OpacityLerperDataConverter
   {

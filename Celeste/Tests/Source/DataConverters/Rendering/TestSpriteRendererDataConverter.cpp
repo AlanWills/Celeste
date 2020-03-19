@@ -1,10 +1,11 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Rendering/MockSpriteRendererDataConverter.h"
-#include "Resources/Rendering/SpriteRendererLoadingResources.h"
+#include "TestResources/Rendering/SpriteRendererLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Rendering/SpriteRenderer.h"
 #include "Registries/ComponentDataConverterRegistry.h"
+#include "Scene/SceneUtils.h"
 #include "AssertCel.h"
 
 using namespace Celeste::Resources;

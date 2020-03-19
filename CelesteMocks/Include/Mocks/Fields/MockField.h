@@ -3,7 +3,7 @@
 #include "Fields/Field.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
 
 class MockField : public Celeste::Field
@@ -17,13 +17,13 @@ class MockField : public Celeste::Field
     { 
     }
 
-    bool doDeserialize(const tinyxml2::XMLElement* element) override
+    bool doDeserialize(const tinyxml2::XMLElement* /*element*/) override
     { 
       m_doDeserializeCalled = true;
       return m_doDeserializeResult; 
     }
 
-    void doSerialize(tinyxml2::XMLElement* element) const 
+    void doSerialize(tinyxml2::XMLElement* /*element*/) const 
     { 
       const_cast<MockField*>(this)->m_doSerializeCalled = true;
     };
@@ -35,7 +35,7 @@ class MockField : public Celeste::Field
     void setDoDeserializeResult(bool doDeserializeResult) { m_doDeserializeResult = doDeserializeResult; }
 
   protected:
-    void generateBinding(std::string& output) const override { }
+    void generateBinding(std::string& /*output*/) const override { }
 
   private:
     bool m_doDeserializeCalled;

@@ -4,7 +4,7 @@
 #include "Mocks/Objects/MockObject.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockObjectDataConverter : public Celeste::ObjectDataConverter<MockObject>
   {
@@ -20,7 +20,7 @@ namespace CelesteTestUtils
       bool isDoSetValuesCalled() const { return m_doSetValuesCalled; }
 
     protected:
-      bool doConvertFromXML(const XMLElement* element) override { m_doConvertFromXMLCalled = true; return true; }
+      bool doConvertFromXML(const XMLElement* /*element*/) override { m_doConvertFromXMLCalled = true; return true; }
       void doSetValues(MockObject& object) const override { Inherited::doSetValues(object); m_doSetValuesCalled = true; }
 
     private:

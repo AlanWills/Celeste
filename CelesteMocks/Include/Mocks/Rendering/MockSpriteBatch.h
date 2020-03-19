@@ -3,7 +3,7 @@
 #include "Rendering/SpriteBatch.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
 
 class MockSpriteBatch : public Celeste::Rendering::SpriteBatch

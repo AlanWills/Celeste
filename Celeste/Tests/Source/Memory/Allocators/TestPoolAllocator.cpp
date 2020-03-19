@@ -4,6 +4,7 @@
 #include "Mocks/Objects/MockComponent.h"
 #include "Objects/GameObject.h"
 #include "AssertCel.h"
+#include "UtilityMacros/Unused.h"
 
 #include <vector>
 
@@ -245,6 +246,7 @@ namespace TestCeleste
       int count = 0;
       for (MockComponent& item : pool)
       {
+        UNUSED(item);
         count++;
       }
 

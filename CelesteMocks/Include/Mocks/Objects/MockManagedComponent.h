@@ -1,14 +1,14 @@
 #pragma once
 
-#include "CelesteTestUtilsDllExport.h"
+#include "CelesteMocksDllExport.h"
 #include "Objects/Component.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockManagedComponent : public Celeste::Component
   {
-    DECLARE_MANAGED_COMPONENT(MockManagedComponent, MadeUpManager, CelesteTestUtilsDllExport)
+    DECLARE_MANAGED_COMPONENT(MockManagedComponent, MadeUpManager, CelesteMocksDllExport)
 
     public:
       bool handleInputCalled() const { return m_handleInputCalled; }

@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Physics/MockRectangleColliderDataConverter.h"
-#include "Resources/Physics/RectangleColliderLoadingResources.h"
+#include "TestResources/Physics/RectangleColliderLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Physics/RectangleCollider.h"
 #include "Registries/ComponentDataConverterRegistry.h"

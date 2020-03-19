@@ -11,7 +11,7 @@
 namespace Microsoft::VisualStudio::CppUnitTestFramework
 {
   template<>
-  static std::wstring ToString<Celeste::Path>(const Celeste::Path& path)
+  inline std::wstring ToString<Celeste::Path>(const Celeste::Path& path)
   {
     wchar_t buffer[1024];
     Celeste::charToWchar(path.c_str(), buffer, 1024);
@@ -20,7 +20,7 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
   }
 
   template<>
-  static std::wstring ToString<Celeste::Directory>(const Celeste::Directory& directory)
+  inline std::wstring ToString<Celeste::Directory>(const Celeste::Directory& directory)
   {
     const Celeste::Path& directoryPath = directory.getDirectoryPath();
     wchar_t buffer[1024];
@@ -30,7 +30,7 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework
   }
 
   template<>
-  static std::wstring ToString<Celeste::File>(const Celeste::File& file)
+  inline std::wstring ToString<Celeste::File>(const Celeste::File& file)
   {
     const Celeste::Path& filePath = file.getFilePath();
     wchar_t buffer[1024];

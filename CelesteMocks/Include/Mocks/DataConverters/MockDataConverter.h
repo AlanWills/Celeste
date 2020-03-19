@@ -3,7 +3,7 @@
 #include "DataConverters/DataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockDataConverter : public Celeste::DataConverter
   {
@@ -108,7 +108,7 @@ namespace CelesteTestUtils
       void addData_Public(Celeste::XML::Element* element) { addData(element); }
 
     protected:
-      bool doConvertFromXML(const XMLElement* objectElement) override
+      bool doConvertFromXML(const XMLElement* /*objectElement*/) override
       { 
         m_isDoConvertFromXMLCalled = true;
         return true;

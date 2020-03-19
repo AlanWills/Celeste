@@ -3,7 +3,7 @@
 #include "Resources/2D/Texture2D.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockTexture2D : public Celeste::Resources::Texture2D
   {

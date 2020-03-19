@@ -6,7 +6,7 @@
 #include "Lua/LuaState.h"
 
 #include "Rendering/TextRenderer.h"
-#include "Resources/Resources/Data/PrefabLoadingResources.h"
+#include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "Resources/Data/Prefab.h"
 
 #include "AssertCel.h"

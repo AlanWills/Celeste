@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Input/MockKeyboardRigidBody2DControllerDataConverter.h"
-#include "Resources/Input/KeyboardRigidBody2DControllerLoadingResources.h"
+#include "TestResources/Input/KeyboardRigidBody2DControllerLoadingResources.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Deserialization/InputDeserializers.h"
 #include "Resources/ResourceManager.h"

@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Resources/2D/MockTexture2D.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "OpenGL/GL.h"
 
 using namespace Celeste;

@@ -3,7 +3,7 @@
 #include "DataConverters/Rendering/TextRendererDataConverter.h"
 
 
-namespace CelesteTestUtils
+namespace CelesteMocks
 {
   class MockTextRendererDataConverter : public Celeste::TextRendererDataConverter
   {

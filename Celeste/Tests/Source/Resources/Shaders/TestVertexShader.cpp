@@ -1,7 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Resources/Shaders/MockVertexShader.h"
-#include "Resources/TestResources.h"
+#include "TestResources/TestResources.h"
 #include "OpenGL/GL.h"
 #include "AutoGLDeallocator.h"
 

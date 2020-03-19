@@ -4,7 +4,7 @@
 #include "Mocks/Objects/FailDeserializationScriptableObject.h"
 #include "Mocks/Fields/FailDeserializationField.h"
 #include "Registries/ScriptableObjectRegistry.h"
-#include "Resources//TestResources.h"
+#include "TestResources/TestResources.h"
 #include "AssertCel.h"
 #include "FileAssert.h"
 #include "AssertExt.h"
@@ -12,146 +12,144 @@
 using namespace Celeste::Resources;
 
 
-namespace TestCeleste
+namespace TestCeleste::Objects
 {
-  namespace Objects
+  CELESTE_TEST_CLASS(TestScriptableObject)
+
+  //------------------------------------------------------------------------------------------------
+  void TestScriptableObject::testInitialize()
   {
-    CELESTE_TEST_CLASS(TestScriptableObject)
+    getResourceManager().unloadAll<Data>();
+  }
 
-    //------------------------------------------------------------------------------------------------
-    void TestScriptableObject::testInitialize()
+  //------------------------------------------------------------------------------------------------
+  void TestScriptableObject::testCleanup()
+  {
+    getResourceManager().unloadAll<Data>();
+
+    ScriptableObjectRegistry::removeScriptableObject<MockScriptableObject>();
+    ScriptableObjectRegistry::removeScriptableObject<FailDeserializationScriptableObject>();
+    ScriptableObjectRegistry::removeScriptableObject<FieldFailDeserializationScriptableObject>();
+    ScriptableObjectRegistry::removeScriptableObject<FieldsPassDeserializationScriptableObject>();
+    ScriptableObjectRegistry::removeScriptableObject<SingleChildScriptableObject>();
+    ScriptableObjectRegistry::removeScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>();
+    ScriptableObjectRegistry::removeScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  class FieldFailDeserializationScriptableObject : public MockScriptableObject
+  {
+  public:
+    FieldFailDeserializationScriptableObject() :
+      m_field(createField<FailDeserializationField>("FailField"))
     {
-      getResourceManager().unloadAll<Data>();
     }
 
-    //------------------------------------------------------------------------------------------------
-    void TestScriptableObject::testCleanup()
-    {
-      getResourceManager().unloadAll<Data>();
+    static std::string type_name() { return "FieldFailDeserializationScriptableObject"; }
 
-      ScriptableObjectRegistry::removeScriptableObject<MockScriptableObject>();
-      ScriptableObjectRegistry::removeScriptableObject<FailDeserializationScriptableObject>();
-      ScriptableObjectRegistry::removeScriptableObject<FieldFailDeserializationScriptableObject>();
-      ScriptableObjectRegistry::removeScriptableObject<FieldsPassDeserializationScriptableObject>();
-      ScriptableObjectRegistry::removeScriptableObject<SingleChildScriptableObject>();
-      ScriptableObjectRegistry::removeScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>();
-      ScriptableObjectRegistry::removeScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>();
+  private:
+    FailDeserializationField& m_field;
+  };
+
+  //------------------------------------------------------------------------------------------------
+  class FieldsPassDeserializationScriptableObject : public MockScriptableObject
+  {
+  public:
+    FieldsPassDeserializationScriptableObject() :
+      m_intField(createValueField<int>("IntField", 0)),
+      m_stringField(createReferenceField<std::string>("StringField", ""))
+    {
     }
 
-    //------------------------------------------------------------------------------------------------
-    class FieldFailDeserializationScriptableObject : public MockScriptableObject
+    static std::string type_name() { return "FieldsPassDeserializationScriptableObject"; }
+
+    int getIntField() const { return m_intField.getValue(); }
+    void setIntField(int value) { return m_intField.setValue(value); }
+
+    const std::string& getStringField() const { return m_stringField.getValue(); }
+    void setStringField(const std::string& value) { return m_stringField.setValue(value); }
+
+  private:
+    ValueField<int>& m_intField;
+    ReferenceField<std::string>& m_stringField;
+  };
+
+  //------------------------------------------------------------------------------------------------
+  class SingleChildScriptableObject : public MockScriptableObject
+  {
+  public:
+    SingleChildScriptableObject() :
+      m_child(createScriptableObject<MockScriptableObject>("Child"))
     {
-      public:
-        FieldFailDeserializationScriptableObject() :
-          m_field(createField<FailDeserializationField>("FailField"))
-        {
-        }
-        
-        static std::string type_name() { return "FieldFailDeserializationScriptableObject"; }
+    }
 
-      private:
-        FailDeserializationField& m_field;
-    };
+    static std::string type_name() { return "SingleChildScriptableObject"; }
 
-    //------------------------------------------------------------------------------------------------
-    class FieldsPassDeserializationScriptableObject : public MockScriptableObject
+    const MockScriptableObject& getChild() const { return m_child; }
+
+  private:
+    MockScriptableObject& m_child;
+  };
+
+  //------------------------------------------------------------------------------------------------
+  class ChildScriptableObjectFailDeserializationScriptableObject : public MockScriptableObject
+  {
+  public:
+    ChildScriptableObjectFailDeserializationScriptableObject() :
+      m_child(createScriptableObject<FailDeserializationScriptableObject>("FailChild"))
     {
-      public:
-        FieldsPassDeserializationScriptableObject() :
-          m_intField(createValueField<int>("IntField", 0)),
-          m_stringField(createReferenceField<std::string>("StringField", ""))
-        {
-        }
+    }
 
-        static std::string type_name() { return "FieldsPassDeserializationScriptableObject"; }
+    static std::string type_name() { return "ChildScriptableObjectFailDeserializationScriptableObject"; }
 
-        int getIntField() const { return m_intField.getValue(); }
-        void setIntField(int value) { return m_intField.setValue(value); }
+    const FailDeserializationScriptableObject& getChild() const { return m_child; }
 
-        const std::string& getStringField() const { return m_stringField.getValue(); }
-        void setStringField(const std::string& value) { return m_stringField.setValue(value); }
+  private:
+    FailDeserializationScriptableObject& m_child;
+  };
 
-      private:
-        ValueField<int>& m_intField;
-        ReferenceField<std::string>& m_stringField;
-    };
-
-    //------------------------------------------------------------------------------------------------
-    class SingleChildScriptableObject : public MockScriptableObject
+  //------------------------------------------------------------------------------------------------
+  class ChildScriptableObjectPassesDeserializationScriptableObject : public MockScriptableObject
+  {
+  public:
+    ChildScriptableObjectPassesDeserializationScriptableObject() :
+      m_child(createScriptableObject<FieldsPassDeserializationScriptableObject>("SuccessChild"))
     {
-      public:
-        SingleChildScriptableObject() :
-          m_child(createScriptableObject<MockScriptableObject>("Child"))
-        {
-        }
+    }
 
-        static std::string type_name() { return "SingleChildScriptableObject"; }
+    static std::string type_name() { return "ChildScriptableObjectPassesDeserializationScriptableObject"; }
 
-        const MockScriptableObject& getChild() const { return m_child; }
+    FieldsPassDeserializationScriptableObject& getChild() const { return m_child; }
 
-      private:
-        MockScriptableObject& m_child;
-    };
-
-    //------------------------------------------------------------------------------------------------
-    class ChildScriptableObjectFailDeserializationScriptableObject : public MockScriptableObject
-    {
-      public:
-        ChildScriptableObjectFailDeserializationScriptableObject() :
-          m_child(createScriptableObject<FailDeserializationScriptableObject>("FailChild"))
-        {
-        }
-
-        static std::string type_name() { return "ChildScriptableObjectFailDeserializationScriptableObject"; }
-
-        const FailDeserializationScriptableObject& getChild() const { return m_child; }
-
-      private:
-        FailDeserializationScriptableObject& m_child;
-    };
-
-    //------------------------------------------------------------------------------------------------
-    class ChildScriptableObjectPassesDeserializationScriptableObject : public MockScriptableObject
-    {
-    public:
-      ChildScriptableObjectPassesDeserializationScriptableObject() :
-        m_child(createScriptableObject<FieldsPassDeserializationScriptableObject>("SuccessChild"))
-      {
-      }
-
-      static std::string type_name() { return "ChildScriptableObjectPassesDeserializationScriptableObject"; }
-
-      FieldsPassDeserializationScriptableObject& getChild() const { return m_child; }
-
-    private:
-      FieldsPassDeserializationScriptableObject& m_child;
-    };
+  private:
+    FieldsPassDeserializationScriptableObject& m_child;
+  };
 
 #pragma region Constructor Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Constructor_SetsGuidToNewGuid)
-    {
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Constructor_SetsGuidToNewGuid)
+  {
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
 
-      Assert::IsFalse(scriptableObject->getGuid().str().empty());
-    }
+    Assert::IsFalse(scriptableObject->getGuid().str().empty());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Constructor_SetsFieldsVectorToEmptyVector)
-    {
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Constructor_SetsFieldsVectorToEmptyVector)
+  {
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
 
-      Assert::AreEqual(static_cast<size_t>(0), scriptableObject->getFieldsSize_Public());
-    }
+    Assert::AreEqual(static_cast<size_t>(0), scriptableObject->getFieldsSize_Public());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Constructor_SetsScriptableObjectsVectorToEmptyVector)
-    {
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Constructor_SetsScriptableObjectsVectorToEmptyVector)
+  {
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
 
-      Assert::AreEqual(static_cast<size_t>(0), scriptableObject->getScriptableObjectsSize_Public());
-    }
+    Assert::AreEqual(static_cast<size_t>(0), scriptableObject->getScriptableObjectsSize_Public());
+  }
 
 #pragma endregion
 
@@ -221,78 +219,78 @@ namespace TestCeleste
 
 #pragma region Create Value Field Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_CreateValueField_ReturnsField_WithCorrectValuesSet)
-    {
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
-      ValueField<int>& intField = scriptableObject->createValueField_Public("Test Int Field", 5);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_CreateValueField_ReturnsField_WithCorrectValuesSet)
+  {
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+    ValueField<int>& intField = scriptableObject->createValueField_Public("Test Int Field", 5);
 
-      Assert::AreEqual("Test Int Field", intField.getName().c_str());
-      Assert::AreEqual(5, intField.getValue());
-    }
+    Assert::AreEqual("Test Int Field", intField.getName().c_str());
+    Assert::AreEqual(5, intField.getValue());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_CreateValueField_AddsFieldToFieldsVector)
-    {
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_CreateValueField_AddsFieldToFieldsVector)
+  {
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
 
-      Assert::AreEqual(static_cast<size_t>(0), scriptableObject->getFieldsSize_Public());
+    Assert::AreEqual(static_cast<size_t>(0), scriptableObject->getFieldsSize_Public());
 
-      scriptableObject->createValueField_Public("Test Int Field", 5);
+    scriptableObject->createValueField_Public("Test Int Field", 5);
 
-      Assert::AreEqual(static_cast<size_t>(1), scriptableObject->getFieldsSize_Public());
-    }
+    Assert::AreEqual(static_cast<size_t>(1), scriptableObject->getFieldsSize_Public());
+  }
 
 #pragma endregion
 
 #pragma region Create Reference Field Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_CreateReferenceField_ReturnsField_WithCorrectValuesSet)
-    {
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
-      ReferenceField<std::string>& stringField = scriptableObject->createReferenceField_Public("Test String Field", std::string("Test Value"));
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_CreateReferenceField_ReturnsField_WithCorrectValuesSet)
+  {
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+    ReferenceField<std::string>& stringField = scriptableObject->createReferenceField_Public("Test String Field", std::string("Test Value"));
 
-      Assert::AreEqual("Test String Field", stringField.getName().c_str());
-      Assert::AreEqual("Test Value", stringField.getValue().c_str());
-    }
+    Assert::AreEqual("Test String Field", stringField.getName().c_str());
+    Assert::AreEqual("Test Value", stringField.getValue().c_str());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_CreateReferenceField_AddsFieldToFieldsVector)
-    {
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_CreateReferenceField_AddsFieldToFieldsVector)
+  {
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
 
-      Assert::AreEqual(static_cast<size_t>(0), scriptableObject->getFieldsSize_Public());
+    Assert::AreEqual(static_cast<size_t>(0), scriptableObject->getFieldsSize_Public());
 
-      scriptableObject->createReferenceField_Public("Test String Field", std::string("Test Value"));
+    scriptableObject->createReferenceField_Public("Test String Field", std::string("Test Value"));
 
-      Assert::AreEqual(static_cast<size_t>(1), scriptableObject->getFieldsSize_Public());
-    }
+    Assert::AreEqual(static_cast<size_t>(1), scriptableObject->getFieldsSize_Public());
+  }
 
 #pragma endregion
 
 #pragma region Create Scriptable Object Field Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_CreateScriptableObjectField_ReturnsScriptableObject_WithCorrectValuesSet)
-    {
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
-      MockScriptableObject& scriptableObjectField = scriptableObject->createScriptableObject_Public<MockScriptableObject>("Test String Field");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_CreateScriptableObjectField_ReturnsScriptableObject_WithCorrectValuesSet)
+  {
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+    MockScriptableObject& scriptableObjectField = scriptableObject->createScriptableObject_Public<MockScriptableObject>("Test String Field");
 
-      Assert::AreEqual("Test String Field", scriptableObjectField.getName().c_str());
-    }
+    Assert::AreEqual("Test String Field", scriptableObjectField.getName().c_str());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_CreateScriptableObjectField_AddsScriptableObjectToFieldsVector)
-    {
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_CreateScriptableObjectField_AddsScriptableObjectToFieldsVector)
+  {
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
 
-      Assert::AreEqual(static_cast<size_t>(0), scriptableObject->getFieldsSize_Public());
+    Assert::AreEqual(static_cast<size_t>(0), scriptableObject->getFieldsSize_Public());
 
-      scriptableObject->createScriptableObject_Public<MockScriptableObject>("Test String Field");
+    scriptableObject->createScriptableObject_Public<MockScriptableObject>("Test String Field");
 
-      Assert::AreEqual(static_cast<size_t>(1), scriptableObject->getScriptableObjectsSize_Public());
-    }
+    Assert::AreEqual(static_cast<size_t>(1), scriptableObject->getScriptableObjectsSize_Public());
+  }
 
 #pragma endregion
 
@@ -300,721 +298,721 @@ namespace TestCeleste
 
 #pragma region Template Overload
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_InputtingNonExistentFilePath_ReturnsNullptr)
-    {
-      std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>("ThisPathShouldExist"));
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_InputtingNonExistentFilePath_ReturnsNullptr)
+  {
+    std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>("ThisPathShouldExist"));
 
-      Assert::IsNull(object.get());
-    }
+    Assert::IsNull(object.get());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_DeserializationFails_ReturnsNullptr)
-    {
-      Path path(TestResources::getTempDirectory(), "FailedDeserialization.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_DeserializationFails_ReturnsNullptr)
+  {
+    Path path(TestResources::getTempDirectory(), "FailedDeserialization.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::IsNotNull(document.RootElement());
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::IsNotNull(document.RootElement());
 
-      std::unique_ptr<FailDeserializationScriptableObject> object(ScriptableObject::load<FailDeserializationScriptableObject>(path));
+    std::unique_ptr<FailDeserializationScriptableObject> object(ScriptableObject::load<FailDeserializationScriptableObject>(path));
 
-      Assert::IsNull(object.get());
-    }
+    Assert::IsNull(object.get());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_NoNameAttribute_SetsNameToEmptyString)
-    {
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_NoNameAttribute_SetsNameToEmptyString)
+  {
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::IsNull(element->Attribute("name"));
-      
-      std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>(path));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::IsNull(element->Attribute("name"));
 
-      Assert::IsTrue(object->getName().empty());
-    }
+    std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>(path));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_LoadsNameAttribute)
-    {
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->SetAttribute("name", "Test Name");
+    Assert::IsTrue(object->getName().empty());
+  }
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::AreEqual("Test Name", element->Attribute("name"));
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_LoadsNameAttribute)
+  {
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->SetAttribute("name", "Test Name");
 
-      std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>(path));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::AreEqual("Test Name", element->Attribute("name"));
 
-      Assert::AreEqual("Test Name", object->getName().c_str());
-    }
+    std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>(path));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_NoGuidAttribute_SetsGuidToNewGuid)
-    {
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
+    Assert::AreEqual("Test Name", object->getName().c_str());
+  }
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::IsNull(element->Attribute("guid"));
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_NoGuidAttribute_SetsGuidToNewGuid)
+  {
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
 
-      std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>(path));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::IsNull(element->Attribute("guid"));
 
-      Assert::IsFalse(object->getGuid().str().empty());
-    }
+    std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>(path));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_InvalidGuid_SetsGuidToNewGuid)
-    {
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->SetAttribute("guid", "Invalid");
+    Assert::IsFalse(object->getGuid().str().empty());
+  }
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::AreEqual("Invalid", element->Attribute("guid"));
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_InvalidGuid_SetsGuidToNewGuid)
+  {
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->SetAttribute("guid", "Invalid");
 
-      std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>(path));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::AreEqual("Invalid", element->Attribute("guid"));
 
-      Assert::AreNotEqual("Invalid", object->getGuid().str().c_str());
-    }
+    std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>(path));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_LoadsGuidAttribute)
-    {
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+    Assert::AreNotEqual("Invalid", object->getGuid().str().c_str());
+  }
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", element->Attribute("guid"));
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_LoadsGuidAttribute)
+  {
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
 
-      std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>(path));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", element->Attribute("guid"));
 
-      Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", object->getGuid().str().c_str());
-    }
+    std::unique_ptr<MockScriptableObject> object(ScriptableObject::load<MockScriptableObject>(path));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_FieldFailsDeserialization_ReturnsNullptr)
-    {
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
+    Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", object->getGuid().str().c_str());
+  }
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_FieldFailsDeserialization_ReturnsNullptr)
+  {
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
 
-      std::unique_ptr<FieldFailDeserializationScriptableObject> object(ScriptableObject::load<FieldFailDeserializationScriptableObject>(path));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
 
-      Assert::IsNull(object.get());
-    }
+    std::unique_ptr<FieldFailDeserializationScriptableObject> object(ScriptableObject::load<FieldFailDeserializationScriptableObject>(path));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_DeserializesAllFieldsCorrectly)
-    {
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("element");
-      document.InsertFirstChild(element);
-      element->SetAttribute("IntField", 5);
-      element->SetAttribute("StringField", "Test String");
+    Assert::IsNull(object.get());
+  }
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_DeserializesAllFieldsCorrectly)
+  {
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("element");
+    document.InsertFirstChild(element);
+    element->SetAttribute("IntField", 5);
+    element->SetAttribute("StringField", "Test String");
 
-      std::unique_ptr<FieldsPassDeserializationScriptableObject> object(ScriptableObject::load<FieldsPassDeserializationScriptableObject>(path));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
 
-      Assert::IsNotNull(object.get());
-      Assert::AreEqual(5, object->getIntField());
-      Assert::AreEqual("Test String", object->getStringField().c_str());
-    }
+    std::unique_ptr<FieldsPassDeserializationScriptableObject> object(ScriptableObject::load<FieldsPassDeserializationScriptableObject>(path));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObject_WithNoValueSetForAttribute_DoesNotLoadDataOntoScriptableObject)
-    {
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      XMLElement* child = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->InsertFirstChild(child);
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
-      element->SetAttribute("name", "Test Name");
-      child->SetAttribute("name", "Test Child Name");
-      child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-bbbb29f40e2f");
+    Assert::IsNotNull(object.get());
+    Assert::AreEqual(5, object->getIntField());
+    Assert::AreEqual("Test String", object->getStringField().c_str());
+  }
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::IsNull(element->Attribute("Child"));
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObject_WithNoValueSetForAttribute_DoesNotLoadDataOntoScriptableObject)
+  {
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    XMLElement* child = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->InsertFirstChild(child);
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
+    element->SetAttribute("name", "Test Name");
+    child->SetAttribute("name", "Test Child Name");
+    child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-bbbb29f40e2f");
 
-      std::unique_ptr<SingleChildScriptableObject> object(ScriptableObject::load<SingleChildScriptableObject>(path));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::IsNull(element->Attribute("Child"));
 
-      // Justification for this not returning null is that no value for the child SO was specified, so we just fallback on the default value
-      Assert::IsNotNull(object.get());
-      Assert::AreEqual("Child", object->getChild().getName().c_str());
-      Assert::AreNotEqual("be39a7c9-eeeb-4d1e-90a4-bbbb29f40e2f", object->getChild().getGuid().str().c_str());
-    }
+    std::unique_ptr<SingleChildScriptableObject> object(ScriptableObject::load<SingleChildScriptableObject>(path));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObject_WithNoDataElement_AndNoMatchingDataFile_ReturnsNull)
-    {
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      XMLElement* child = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->InsertFirstChild(child);
-      element->SetAttribute("name", "Test Name");
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
-      element->SetAttribute("SuccessChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+    // Justification for this not returning null is that no value for the child SO was specified, so we just fallback on the default value
+    Assert::IsNotNull(object.get());
+    Assert::AreEqual("Child", object->getChild().getName().c_str());
+    Assert::AreNotEqual("be39a7c9-eeeb-4d1e-90a4-bbbb29f40e2f", object->getChild().getGuid().str().c_str());
+  }
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", element->Attribute("SuccessChild"));
-      FileAssert::FileDoesNotExist("be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObject_WithNoDataElement_AndNoMatchingDataFile_ReturnsNull)
+  {
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    XMLElement* child = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->InsertFirstChild(child);
+    element->SetAttribute("name", "Test Name");
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
+    element->SetAttribute("SuccessChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
 
-      std::unique_ptr<ChildScriptableObjectPassesDeserializationScriptableObject> object(ScriptableObject::load<ChildScriptableObjectPassesDeserializationScriptableObject>(path));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", element->Attribute("SuccessChild"));
+    FileAssert::FileDoesNotExist("be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
 
-      // This returns null compared to the above case because we specified a value, but were unable to provide the data for it
-      Assert::IsNull(object.get());
-    }
+    std::unique_ptr<ChildScriptableObjectPassesDeserializationScriptableObject> object(ScriptableObject::load<ChildScriptableObjectPassesDeserializationScriptableObject>(path));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObjectCouldNotBeDeserialized_ReturnsNull)
-    {
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      XMLElement* child = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->InsertFirstChild(child);
-      element->SetAttribute("FailChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-      child->SetAttribute("name", "Test Child");
-      child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+    // This returns null compared to the above case because we specified a value, but were unable to provide the data for it
+    Assert::IsNull(object.get());
+  }
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObjectCouldNotBeDeserialized_ReturnsNull)
+  {
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    XMLElement* child = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->InsertFirstChild(child);
+    element->SetAttribute("FailChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+    child->SetAttribute("name", "Test Child");
+    child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
 
-      std::unique_ptr<ChildScriptableObjectFailDeserializationScriptableObject> object(ScriptableObject::load<ChildScriptableObjectFailDeserializationScriptableObject>(path));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
 
-      Assert::IsNull(object.get());
-    }
+    std::unique_ptr<ChildScriptableObjectFailDeserializationScriptableObject> object(ScriptableObject::load<ChildScriptableObjectFailDeserializationScriptableObject>(path));
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObjectCouldNotBeLoadedFromFile_ReturnsNull)
-    {
-      // Child SO
-      Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
-      XMLDocument childDocument;
-      XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
-      childDocument.InsertFirstChild(childElement);
-      childElement->SetAttribute("name", "Test Child");
-      childElement->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-      
-      Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
-      FileAssert::FileExists(childPath.as_string());
+    Assert::IsNull(object.get());
+  }
 
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->SetAttribute("name", "Test Child");
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
-      element->SetAttribute("FailChild", childPath.c_str());
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObjectCouldNotBeLoadedFromFile_ReturnsNull)
+  {
+    // Child SO
+    Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
+    XMLDocument childDocument;
+    XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
+    childDocument.InsertFirstChild(childElement);
+    childElement->SetAttribute("name", "Test Child");
+    childElement->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
+    Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
+    FileAssert::FileExists(childPath.as_string());
 
-      std::unique_ptr<ChildScriptableObjectFailDeserializationScriptableObject> object(ScriptableObject::load<ChildScriptableObjectFailDeserializationScriptableObject>(path));
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->SetAttribute("name", "Test Child");
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
+    element->SetAttribute("FailChild", childPath.c_str());
 
-      Assert::IsNull(object.get());
-    }
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_DeserializesAllChildScriptableObjects_WithDataInTheSameFile_Correctly)
-    {
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      XMLElement* child = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->InsertFirstChild(child);
-      child->SetAttribute("name", "Child Scriptable Object");
-      child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-      child->SetAttribute("IntField", 5);
-      child->SetAttribute("StringField", "Test Value");
-      element->SetAttribute("name", "Test Child");
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
-      element->SetAttribute("SuccessChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+    std::unique_ptr<ChildScriptableObjectFailDeserializationScriptableObject> object(ScriptableObject::load<ChildScriptableObjectFailDeserializationScriptableObject>(path));
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
+    Assert::IsNull(object.get());
+  }
 
-      std::unique_ptr<ChildScriptableObjectPassesDeserializationScriptableObject> object(ScriptableObject::load<ChildScriptableObjectPassesDeserializationScriptableObject>(path));
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_DeserializesAllChildScriptableObjects_WithDataInTheSameFile_Correctly)
+  {
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    XMLElement* child = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->InsertFirstChild(child);
+    child->SetAttribute("name", "Child Scriptable Object");
+    child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+    child->SetAttribute("IntField", 5);
+    child->SetAttribute("StringField", "Test Value");
+    element->SetAttribute("name", "Test Child");
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
+    element->SetAttribute("SuccessChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
 
-      Assert::IsNotNull(object.get());
-      Assert::AreEqual("Child Scriptable Object", object->getChild().getName().c_str());
-      Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", object->getChild().getGuid().str().c_str());
-      Assert::AreEqual(5, object->getChild().getIntField());
-      Assert::AreEqual("Test Value", object->getChild().getStringField().c_str());
-    }
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TemplateOverload_LoadsAllChildScriptableObjects_WithDataInOtherAssetFiles_Correctly)
-    {
-      // Child SO
-      Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
-      XMLDocument childDocument;
-      XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
-      childDocument.InsertFirstChild(childElement);
-      childElement->SetAttribute("name", "Child Scriptable Object");
-      childElement->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-      childElement->SetAttribute("IntField", 5);
-      childElement->SetAttribute("StringField", "Test Value");
+    std::unique_ptr<ChildScriptableObjectPassesDeserializationScriptableObject> object(ScriptableObject::load<ChildScriptableObjectPassesDeserializationScriptableObject>(path));
 
-      Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
-      FileAssert::FileExists(childPath.as_string());
+    Assert::IsNotNull(object.get());
+    Assert::AreEqual("Child Scriptable Object", object->getChild().getName().c_str());
+    Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", object->getChild().getGuid().str().c_str());
+    Assert::AreEqual(5, object->getChild().getIntField());
+    Assert::AreEqual("Test Value", object->getChild().getStringField().c_str());
+  }
 
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->SetAttribute("name", "Test Child");
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
-      element->SetAttribute("SuccessChild", childPath.c_str());
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TemplateOverload_LoadsAllChildScriptableObjects_WithDataInOtherAssetFiles_Correctly)
+  {
+    // Child SO
+    Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
+    XMLDocument childDocument;
+    XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
+    childDocument.InsertFirstChild(childElement);
+    childElement->SetAttribute("name", "Child Scriptable Object");
+    childElement->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+    childElement->SetAttribute("IntField", 5);
+    childElement->SetAttribute("StringField", "Test Value");
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
+    Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
+    FileAssert::FileExists(childPath.as_string());
 
-      std::unique_ptr<ChildScriptableObjectPassesDeserializationScriptableObject> object(ScriptableObject::load<ChildScriptableObjectPassesDeserializationScriptableObject>(path));
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->SetAttribute("name", "Test Child");
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
+    element->SetAttribute("SuccessChild", childPath.c_str());
 
-      Assert::IsNotNull(object.get());
-      Assert::AreEqual("Child Scriptable Object", object->getChild().getName().c_str());
-      Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", object->getChild().getGuid().str().c_str());
-      Assert::AreEqual(5, object->getChild().getIntField());
-      Assert::AreEqual("Test Value", object->getChild().getStringField().c_str());
-    }
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+
+    std::unique_ptr<ChildScriptableObjectPassesDeserializationScriptableObject> object(ScriptableObject::load<ChildScriptableObjectPassesDeserializationScriptableObject>(path));
+
+    Assert::IsNotNull(object.get());
+    Assert::AreEqual("Child Scriptable Object", object->getChild().getName().c_str());
+    Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", object->getChild().getGuid().str().c_str());
+    Assert::AreEqual(5, object->getChild().getIntField());
+    Assert::AreEqual("Test Value", object->getChild().getStringField().c_str());
+  }
 
 #pragma endregion
 
 #pragma region Type Name Overload
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_InputtingNonExistentFilePath_ReturnsNullptr)
-    {
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load("ThisPathShouldExist"));
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_InputtingNonExistentFilePath_ReturnsNullptr)
+  {
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load("ThisPathShouldExist"));
 
-      Assert::IsNull(object.get());
-    }
+    Assert::IsNull(object.get());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_DeserializationFails_ReturnsNullptr)
-    {
-      ScriptableObjectRegistry::addScriptableObject<FailDeserializationScriptableObject>();
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_DeserializationFails_ReturnsNullptr)
+  {
+    ScriptableObjectRegistry::addScriptableObject<FailDeserializationScriptableObject>();
 
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<FailDeserializationScriptableObject>());
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<FailDeserializationScriptableObject>());
 
-      Path path(TestResources::getTempDirectory(), "FailedDeserialization.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
+    Path path(TestResources::getTempDirectory(), "FailedDeserialization.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::IsNotNull(document.RootElement());
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::IsNotNull(document.RootElement());
 
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
 
-      Assert::IsNull(object.get());
-    }
+    Assert::IsNull(object.get());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_Deserialize_NoNameAttribute_SetsNameToEmptyString)
-    {
-      ScriptableObjectRegistry::addScriptableObject<MockScriptableObject>();
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_Deserialize_NoNameAttribute_SetsNameToEmptyString)
+  {
+    ScriptableObjectRegistry::addScriptableObject<MockScriptableObject>();
 
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
 
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::IsNull(element->Attribute("name"));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::IsNull(element->Attribute("name"));
 
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
 
-      Assert::IsTrue(object->getName().empty());
-    }
+    Assert::IsTrue(object->getName().empty());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_Deserialize_LoadsNameAttribute)
-    {
-      ScriptableObjectRegistry::addScriptableObject<MockScriptableObject>();
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_Deserialize_LoadsNameAttribute)
+  {
+    ScriptableObjectRegistry::addScriptableObject<MockScriptableObject>();
 
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
 
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->SetAttribute("name", "Test Name");
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->SetAttribute("name", "Test Name");
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::AreEqual("Test Name", element->Attribute("name"));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::AreEqual("Test Name", element->Attribute("name"));
 
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
 
-      Assert::AreEqual("Test Name", object->getName().c_str());
-    }
+    Assert::AreEqual("Test Name", object->getName().c_str());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_Deserialize_NoGuidAttribute_SetsGuidToNewGuid)
-    {
-      ScriptableObjectRegistry::addScriptableObject<MockScriptableObject>();
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_Deserialize_NoGuidAttribute_SetsGuidToNewGuid)
+  {
+    ScriptableObjectRegistry::addScriptableObject<MockScriptableObject>();
 
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
 
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
 
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::IsNull(element->Attribute("guid"));
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::IsNull(element->Attribute("guid"));
 
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
 
-      Assert::IsFalse(object->getGuid().str().empty());
-    }
+    Assert::IsFalse(object->getGuid().str().empty());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_Deserialize_InvalidGuid_SetsGuidToNewGuid)
-    {
-      ScriptableObjectRegistry::addScriptableObject<MockScriptableObject>();
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_Deserialize_InvalidGuid_SetsGuidToNewGuid)
+  {
+    ScriptableObjectRegistry::addScriptableObject<MockScriptableObject>();
 
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
 
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->SetAttribute("guid", "Invalid");
-
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::AreEqual("Invalid", element->Attribute("guid"));
-
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
-
-      Assert::AreNotEqual("Invalid", object->getGuid().str().c_str());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_Deserialize_LoadsGuidAttribute)
-    {
-      ScriptableObjectRegistry::addScriptableObject<MockScriptableObject>();
-
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
-
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", element->Attribute("guid"));
-
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
-
-      Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", object->getGuid().str().c_str());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_FieldFailsDeserialization_ReturnsNullptr)
-    {
-      ScriptableObjectRegistry::addScriptableObject<FieldFailDeserializationScriptableObject>();
-
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<FieldFailDeserializationScriptableObject>());
-
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
-
-      Assert::IsNull(object.get());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_DeserializesAllFieldsCorrectly)
-    {
-      ScriptableObjectRegistry::addScriptableObject<FieldsPassDeserializationScriptableObject>();
-
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<FieldsPassDeserializationScriptableObject>());
-
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement(FieldsPassDeserializationScriptableObject::type_name().c_str());
-      document.InsertFirstChild(element);
-      element->SetAttribute("IntField", 5);
-      element->SetAttribute("StringField", "Test String");
-
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
-      FieldsPassDeserializationScriptableObject* fieldsPassObject = dynamic_cast<FieldsPassDeserializationScriptableObject*>(object.get());
-
-      Assert::IsNotNull(object.get());
-      Assert::AreEqual(5, fieldsPassObject->getIntField());
-      Assert::AreEqual("Test String", fieldsPassObject->getStringField().c_str());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_ChildScriptableObject_WithNoValueSetForAttribute_DoesNotLoadDataOntoScriptableObject)
-    {
-      ScriptableObjectRegistry::addScriptableObject<SingleChildScriptableObject>();
-
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<SingleChildScriptableObject>());
-
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement(SingleChildScriptableObject::type_name().c_str());
-      XMLElement* child = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->InsertFirstChild(child);
-      element->SetAttribute("name", "Test Name");
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
-      child->SetAttribute("name", "Test Child Name");
-      child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-bbbb29f40e2f");
-
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::IsNull(element->Attribute("Child"));
-
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
-      SingleChildScriptableObject* singleChildObject = dynamic_cast<SingleChildScriptableObject*>(object.get());
-
-      // Justification for this not returning null is that no value for the SO was specified, so we just fallback on the default value
-      Assert::IsNotNull(object.get());
-      Assert::AreEqual("Child", singleChildObject->getChild().getName().c_str());
-      Assert::AreNotEqual("be39a7c9-eeeb-4d1e-90a4-bbbb29f40e2f", singleChildObject->getChild().getGuid().str().c_str());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_ChildScriptableObject_WithNoDataElement_AndNoMatchingDataFile_ReturnsFalse)
-    {
-      ScriptableObjectRegistry::addScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>();
-
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>());
-
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      XMLElement* child = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->InsertFirstChild(child);
-      element->SetAttribute("name", "Test Name");
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
-      element->SetAttribute("SuccessChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-      Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", element->Attribute("SuccessChild"));
-      FileAssert::FileDoesNotExist("be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
-
-      // This returns null compared to the above case because we specified a value, but were unable to provide the data for it
-      Assert::IsNull(object.get());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_ChildScriptableObjectCouldNotBeDeserialized_ReturnsNull)
-    {
-      ScriptableObjectRegistry::addScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>();
-
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>());
-
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      XMLElement* child = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->InsertFirstChild(child);
-      child->SetAttribute("name", "Test Child");
-      child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-      element->SetAttribute("name", "Test Child");
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
-      element->SetAttribute("FailChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
-
-      Assert::IsNull(object.get());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_ChildScriptableObjectCouldNotBeLoadedFromFile_ReturnsNull)
-    {
-      ScriptableObjectRegistry::addScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>();
-
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>());
-
-      // Child SO
-      Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
-      XMLDocument childDocument;
-      XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
-      childDocument.InsertFirstChild(childElement);
-      childElement->SetAttribute("name", "Test Child");
-      childElement->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-
-      Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
-      FileAssert::FileExists(childPath.as_string());
-
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->SetAttribute("name", "Test Child");
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
-      element->SetAttribute("FailChild", childPath.c_str());
-
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
-
-      Assert::IsNull(object.get());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_DeserializesAllChildScriptableObjects_WithDataInTheSameFile_Correctly)
-    {
-      ScriptableObjectRegistry::addScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>();
-
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>());
-
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement(ChildScriptableObjectPassesDeserializationScriptableObject::type_name().c_str());
-      XMLElement* child = document.NewElement("MockScriptableObject");
-      document.InsertFirstChild(element);
-      element->InsertFirstChild(child);
-      child->SetAttribute("name", "Child Scriptable Object");
-      child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-      child->SetAttribute("IntField", 5);
-      child->SetAttribute("StringField", "Test Value");
-      element->SetAttribute("name", "Test Child");
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
-      element->SetAttribute("SuccessChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
-      ChildScriptableObjectPassesDeserializationScriptableObject* childPassesObject = dynamic_cast<ChildScriptableObjectPassesDeserializationScriptableObject*>(object.get());
-
-      Assert::IsNotNull(object.get());
-      Assert::AreEqual("Child Scriptable Object", childPassesObject->getChild().getName().c_str());
-      Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", childPassesObject->getChild().getGuid().str().c_str());
-      Assert::AreEqual(5, childPassesObject->getChild().getIntField());
-      Assert::AreEqual("Test Value", childPassesObject->getChild().getStringField().c_str());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_TypeNameOverload_LoadsAllChildScriptableObjects_WithDataInOtherAssetFiles_Correctly)
-    {
-      ScriptableObjectRegistry::addScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>();
-
-      Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>());
-
-      // Child SO
-      Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
-      XMLDocument childDocument;
-      XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
-      childDocument.InsertFirstChild(childElement);
-      childElement->SetAttribute("name", "Child Scriptable Object");
-      childElement->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
-      childElement->SetAttribute("IntField", 5);
-      childElement->SetAttribute("StringField", "Test Value");
-
-      Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
-      FileAssert::FileExists(childPath.as_string());
-
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement(ChildScriptableObjectPassesDeserializationScriptableObject::type_name().c_str());
-      document.InsertFirstChild(element);
-      element->SetAttribute("name", "Test Child");
-      element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
-      element->SetAttribute("SuccessChild", childPath.c_str());
-
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
-      ChildScriptableObjectPassesDeserializationScriptableObject* childPassesObject = dynamic_cast<ChildScriptableObjectPassesDeserializationScriptableObject*>(object.get());
-
-      AssertExt::IsNotNull(object);
-      Assert::AreEqual("Child Scriptable Object", childPassesObject->getChild().getName().c_str());
-      Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", childPassesObject->getChild().getGuid().str().c_str());
-      Assert::AreEqual(5, childPassesObject->getChild().getIntField());
-      Assert::AreEqual("Test Value", childPassesObject->getChild().getStringField().c_str());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Load_InputtingPathToNonRegisteredType_ReturnsNullptr)
-    {
-      Assert::IsFalse(ScriptableObjectRegistry::hasScriptableObject<FieldsPassDeserializationScriptableObject>());
-
-      Path path(TestResources::getTempDirectory(), "Object.xml");
-      XMLDocument document;
-      XMLElement* element = document.NewElement(FieldsPassDeserializationScriptableObject::type_name().c_str());
-      document.InsertFirstChild(element);
-      element->SetAttribute("IntField", 5);
-      element->SetAttribute("StringField", "Test String");
-
-      Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
-      FileAssert::FileExists(path.as_string());
-
-      std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
-
-      AssertExt::IsNull(object);
-    }
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->SetAttribute("guid", "Invalid");
+
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::AreEqual("Invalid", element->Attribute("guid"));
+
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+
+    Assert::AreNotEqual("Invalid", object->getGuid().str().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_Deserialize_LoadsGuidAttribute)
+  {
+    ScriptableObjectRegistry::addScriptableObject<MockScriptableObject>();
+
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
+
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", element->Attribute("guid"));
+
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+
+    Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", object->getGuid().str().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_FieldFailsDeserialization_ReturnsNullptr)
+  {
+    ScriptableObjectRegistry::addScriptableObject<FieldFailDeserializationScriptableObject>();
+
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<FieldFailDeserializationScriptableObject>());
+
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+
+    Assert::IsNull(object.get());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_DeserializesAllFieldsCorrectly)
+  {
+    ScriptableObjectRegistry::addScriptableObject<FieldsPassDeserializationScriptableObject>();
+
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<FieldsPassDeserializationScriptableObject>());
+
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement(FieldsPassDeserializationScriptableObject::type_name().c_str());
+    document.InsertFirstChild(element);
+    element->SetAttribute("IntField", 5);
+    element->SetAttribute("StringField", "Test String");
+
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+    FieldsPassDeserializationScriptableObject* fieldsPassObject = dynamic_cast<FieldsPassDeserializationScriptableObject*>(object.get());
+
+    Assert::IsNotNull(object.get());
+    Assert::AreEqual(5, fieldsPassObject->getIntField());
+    Assert::AreEqual("Test String", fieldsPassObject->getStringField().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_ChildScriptableObject_WithNoValueSetForAttribute_DoesNotLoadDataOntoScriptableObject)
+  {
+    ScriptableObjectRegistry::addScriptableObject<SingleChildScriptableObject>();
+
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<SingleChildScriptableObject>());
+
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement(SingleChildScriptableObject::type_name().c_str());
+    XMLElement* child = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->InsertFirstChild(child);
+    element->SetAttribute("name", "Test Name");
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
+    child->SetAttribute("name", "Test Child Name");
+    child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-bbbb29f40e2f");
+
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::IsNull(element->Attribute("Child"));
+
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+    SingleChildScriptableObject* singleChildObject = dynamic_cast<SingleChildScriptableObject*>(object.get());
+
+    // Justification for this not returning null is that no value for the SO was specified, so we just fallback on the default value
+    Assert::IsNotNull(object.get());
+    Assert::AreEqual("Child", singleChildObject->getChild().getName().c_str());
+    Assert::AreNotEqual("be39a7c9-eeeb-4d1e-90a4-bbbb29f40e2f", singleChildObject->getChild().getGuid().str().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_ChildScriptableObject_WithNoDataElement_AndNoMatchingDataFile_ReturnsFalse)
+  {
+    ScriptableObjectRegistry::addScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>();
+
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>());
+
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    XMLElement* child = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->InsertFirstChild(child);
+    element->SetAttribute("name", "Test Name");
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
+    element->SetAttribute("SuccessChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+    Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", element->Attribute("SuccessChild"));
+    FileAssert::FileDoesNotExist("be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+
+    // This returns null compared to the above case because we specified a value, but were unable to provide the data for it
+    Assert::IsNull(object.get());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_ChildScriptableObjectCouldNotBeDeserialized_ReturnsNull)
+  {
+    ScriptableObjectRegistry::addScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>();
+
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>());
+
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    XMLElement* child = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->InsertFirstChild(child);
+    child->SetAttribute("name", "Test Child");
+    child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+    element->SetAttribute("name", "Test Child");
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
+    element->SetAttribute("FailChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+
+    Assert::IsNull(object.get());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_ChildScriptableObjectCouldNotBeLoadedFromFile_ReturnsNull)
+  {
+    ScriptableObjectRegistry::addScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>();
+
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>());
+
+    // Child SO
+    Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
+    XMLDocument childDocument;
+    XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
+    childDocument.InsertFirstChild(childElement);
+    childElement->SetAttribute("name", "Test Child");
+    childElement->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+
+    Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
+    FileAssert::FileExists(childPath.as_string());
+
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->SetAttribute("name", "Test Child");
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
+    element->SetAttribute("FailChild", childPath.c_str());
+
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+
+    Assert::IsNull(object.get());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_DeserializesAllChildScriptableObjects_WithDataInTheSameFile_Correctly)
+  {
+    ScriptableObjectRegistry::addScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>();
+
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>());
+
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement(ChildScriptableObjectPassesDeserializationScriptableObject::type_name().c_str());
+    XMLElement* child = document.NewElement("MockScriptableObject");
+    document.InsertFirstChild(element);
+    element->InsertFirstChild(child);
+    child->SetAttribute("name", "Child Scriptable Object");
+    child->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+    child->SetAttribute("IntField", 5);
+    child->SetAttribute("StringField", "Test Value");
+    element->SetAttribute("name", "Test Child");
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
+    element->SetAttribute("SuccessChild", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+    ChildScriptableObjectPassesDeserializationScriptableObject* childPassesObject = dynamic_cast<ChildScriptableObjectPassesDeserializationScriptableObject*>(object.get());
+
+    Assert::IsNotNull(object.get());
+    Assert::AreEqual("Child Scriptable Object", childPassesObject->getChild().getName().c_str());
+    Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", childPassesObject->getChild().getGuid().str().c_str());
+    Assert::AreEqual(5, childPassesObject->getChild().getIntField());
+    Assert::AreEqual("Test Value", childPassesObject->getChild().getStringField().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_TypeNameOverload_LoadsAllChildScriptableObjects_WithDataInOtherAssetFiles_Correctly)
+  {
+    ScriptableObjectRegistry::addScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>();
+
+    Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>());
+
+    // Child SO
+    Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
+    XMLDocument childDocument;
+    XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
+    childDocument.InsertFirstChild(childElement);
+    childElement->SetAttribute("name", "Child Scriptable Object");
+    childElement->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-677029f40e2f");
+    childElement->SetAttribute("IntField", 5);
+    childElement->SetAttribute("StringField", "Test Value");
+
+    Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
+    FileAssert::FileExists(childPath.as_string());
+
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement(ChildScriptableObjectPassesDeserializationScriptableObject::type_name().c_str());
+    document.InsertFirstChild(element);
+    element->SetAttribute("name", "Test Child");
+    element->SetAttribute("guid", "be39a7c9-eeeb-4d1e-90a4-aaaa29f40e2f");
+    element->SetAttribute("SuccessChild", childPath.c_str());
+
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+    ChildScriptableObjectPassesDeserializationScriptableObject* childPassesObject = dynamic_cast<ChildScriptableObjectPassesDeserializationScriptableObject*>(object.get());
+
+    AssertExt::IsNotNull(object);
+    Assert::AreEqual("Child Scriptable Object", childPassesObject->getChild().getName().c_str());
+    Assert::AreEqual("be39a7c9-eeeb-4d1e-90a4-677029f40e2f", childPassesObject->getChild().getGuid().str().c_str());
+    Assert::AreEqual(5, childPassesObject->getChild().getIntField());
+    Assert::AreEqual("Test Value", childPassesObject->getChild().getStringField().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Load_InputtingPathToNonRegisteredType_ReturnsNullptr)
+  {
+    Assert::IsFalse(ScriptableObjectRegistry::hasScriptableObject<FieldsPassDeserializationScriptableObject>());
+
+    Path path(TestResources::getTempDirectory(), "Object.xml");
+    XMLDocument document;
+    XMLElement* element = document.NewElement(FieldsPassDeserializationScriptableObject::type_name().c_str());
+    document.InsertFirstChild(element);
+    element->SetAttribute("IntField", 5);
+    element->SetAttribute("StringField", "Test String");
+
+    Assert::IsTrue(XML_SUCCESS == document.SaveFile(path.c_str()));
+    FileAssert::FileExists(path.as_string());
+
+    std::unique_ptr<ScriptableObject> object(ScriptableObject::load(path));
+
+    AssertExt::IsNull(object);
+  }
 
 #pragma endregion
 
@@ -1022,149 +1020,148 @@ namespace TestCeleste
 
 #pragma region Save Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Save_InputtingNonExistentFullFilePath_CreatesFile)
-    {
-      Path path(TestResources::getTempDirectory(), "Test.xml");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Save_InputtingNonExistentFullFilePath_CreatesFile)
+  {
+    Path path(TestResources::getTempDirectory(), "Test.xml");
 
-      FileAssert::FileDoesNotExist(path.as_string());
+    FileAssert::FileDoesNotExist(path.as_string());
 
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
-      scriptableObject->save(path);
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+    scriptableObject->save(path);
 
-      FileAssert::FileExists(path.as_string());
+    FileAssert::FileExists(path.as_string());
 
-      observer_ptr<Data> data = getResourceManager().load<Data>(path);
+    observer_ptr<Data> data = getResourceManager().load<Data>(path);
 
-      // Check the data is loadable
-      Assert::IsNotNull(data);
-    }
+    // Check the data is loadable
+    Assert::IsNotNull(data);
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Save_InputtingExistentFullFilePath_OverwritesFile)
-    {
-      Path path(TestResources::getTempDirectory(), "Test.xml");
-      File file(path);
-      file.create();
-      file.append("Test");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Save_InputtingExistentFullFilePath_OverwritesFile)
+  {
+    Path path(TestResources::getTempDirectory(), "Test.xml");
+    File file(path);
+    file.create();
+    file.append("Test");
 
-      FileAssert::FileContentsEqual(path.as_string(), "Test");
+    FileAssert::FileContentsEqual(path.as_string(), "Test");
 
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
-      scriptableObject->save(path);
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+    scriptableObject->save(path);
 
-      FileAssert::FileContentsNotEqual(path.as_string(), "Test");
-    }
+    FileAssert::FileContentsNotEqual(path.as_string(), "Test");
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Save_InputtingNonExistentRelativeFilePath_CreatesFile)
-    {
-      Path path(TestResources::getTempDirectoryRelativePath(), "Test.xml");
-      Path fullFilePath(TestResources::getResourcesDirectory(), path);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Save_InputtingNonExistentRelativeFilePath_CreatesFile)
+  {
+    Path path(TestResources::getTempDirectoryRelativePath(), "Test.xml");
+    Path fullFilePath(TestResources::getResourcesDirectory(), path);
 
-      FileAssert::FileDoesNotExist(fullFilePath.as_string());
+    FileAssert::FileDoesNotExist(fullFilePath.as_string());
 
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
-      scriptableObject->save(path);
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+    scriptableObject->save(path);
 
-      FileAssert::FileExists(fullFilePath.as_string());
+    FileAssert::FileExists(fullFilePath.as_string());
 
-      observer_ptr<Data> data = getResourceManager().load<Data>(path);
+    observer_ptr<Data> data = getResourceManager().load<Data>(path);
 
-      // Check the data is loadable
-      Assert::IsNotNull(data);
-    }
+    // Check the data is loadable
+    Assert::IsNotNull(data);
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Save_InputtingExistentRelativeFilePath_OverwritesFile)
-    {
-      Path path(TestResources::getTempDirectoryRelativePath(), "Test.xml");
-      Path fullFilePath(TestResources::getResourcesDirectory(), path);
-      File file(fullFilePath);
-      file.create();
-      file.append("Test");
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Save_InputtingExistentRelativeFilePath_OverwritesFile)
+  {
+    Path path(TestResources::getTempDirectoryRelativePath(), "Test.xml");
+    Path fullFilePath(TestResources::getResourcesDirectory(), path);
+    File file(fullFilePath);
+    file.create();
+    file.append("Test");
 
-      FileAssert::FileContentsEqual(fullFilePath.as_string(), "Test");
+    FileAssert::FileContentsEqual(fullFilePath.as_string(), "Test");
 
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
-      scriptableObject->save(path);
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+    scriptableObject->save(path);
 
-      FileAssert::FileContentsNotEqual(fullFilePath.as_string(), "Test");
-    }
+    FileAssert::FileContentsNotEqual(fullFilePath.as_string(), "Test");
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Save_CreatesElementForObject)
-    {
-      Path path(TestResources::getTempDirectory(), "Test.xml");
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
-      scriptableObject->setName("Test");
-      scriptableObject->save(path);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Save_CreatesElementForObject)
+  {
+    Path path(TestResources::getTempDirectory(), "Test.xml");
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+    scriptableObject->setName("Test");
+    scriptableObject->save(path);
 
-      observer_ptr<Data> data = getResourceManager().load<Data>(path);
+    observer_ptr<Data> data = getResourceManager().load<Data>(path);
 
-      Assert::IsNotNull(data);
-      Assert::IsNotNull(data->getDocumentRoot());
-      Assert::AreEqual("Test", data->getDocumentRoot()->Name());
-    }
+    Assert::IsNotNull(data);
+    Assert::IsNotNull(data->getDocumentRoot());
+    Assert::AreEqual("Test", data->getDocumentRoot()->Name());
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Save_SavesObjectNameAndGuid)
-    {
-      Path path(TestResources::getTempDirectory(), "Test.xml");
-      std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
-      scriptableObject->setName("Test");
-      scriptableObject->save(path);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Save_SavesObjectNameAndGuid)
+  {
+    Path path(TestResources::getTempDirectory(), "Test.xml");
+    std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
+    scriptableObject->setName("Test");
+    scriptableObject->save(path);
 
-      observer_ptr<Data> data = getResourceManager().load<Data>(path);
+    observer_ptr<Data> data = getResourceManager().load<Data>(path);
 
-      Assert::IsNotNull(data);
-      Assert::AreEqual("Test", data->getDocumentRoot()->Attribute("name"));
-      Assert::AreEqual(scriptableObject->getGuid().str().c_str(), data->getDocumentRoot()->Attribute("guid"));
-    }
+    Assert::IsNotNull(data);
+    Assert::AreEqual("Test", data->getDocumentRoot()->Attribute("name"));
+    Assert::AreEqual(scriptableObject->getGuid().str().c_str(), data->getDocumentRoot()->Attribute("guid"));
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Save_SavesFieldsCorrectly)
-    {
-      Path path(TestResources::getTempDirectory(), "Test.xml");
-      FieldsPassDeserializationScriptableObject object;
-      object.setName("Test");
-      object.setIntField(5);
-      object.setStringField("Test Value");
-      object.save(path);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Save_SavesFieldsCorrectly)
+  {
+    Path path(TestResources::getTempDirectory(), "Test.xml");
+    FieldsPassDeserializationScriptableObject object;
+    object.setName("Test");
+    object.setIntField(5);
+    object.setStringField("Test Value");
+    object.save(path);
 
-      observer_ptr<Data> data = getResourceManager().load<Data>(path);
+    observer_ptr<Data> data = getResourceManager().load<Data>(path);
 
-      Assert::IsNotNull(data);
-      Assert::AreEqual(5, data->getDocumentRoot()->IntAttribute("IntField"));
-      Assert::AreEqual("Test Value", data->getDocumentRoot()->Attribute("StringField"));
-    }
+    Assert::IsNotNull(data);
+    Assert::AreEqual(5, data->getDocumentRoot()->IntAttribute("IntField"));
+    Assert::AreEqual("Test Value", data->getDocumentRoot()->Attribute("StringField"));
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObject_Save_SavesChildScriptableObjectsCorrectly)
-    {
-      Path path(TestResources::getTempDirectory(), "Test.xml");
-      ChildScriptableObjectPassesDeserializationScriptableObject object;
-      object.setName("Test");
-      object.getChild().setName("TestChild");
-      object.getChild().setIntField(5);
-      object.getChild().setStringField("Test Value");
-      object.save(path);
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptableObject_Save_SavesChildScriptableObjectsCorrectly)
+  {
+    Path path(TestResources::getTempDirectory(), "Test.xml");
+    ChildScriptableObjectPassesDeserializationScriptableObject object;
+    object.setName("Test");
+    object.getChild().setName("TestChild");
+    object.getChild().setIntField(5);
+    object.getChild().setStringField("Test Value");
+    object.save(path);
 
-      observer_ptr<Data> data = getResourceManager().load<Data>(path);
+    observer_ptr<Data> data = getResourceManager().load<Data>(path);
 
-      Assert::IsNotNull(data);
+    Assert::IsNotNull(data);
 
-      const tinyxml2::XMLElement* testChild = data->getDocumentRoot()->FirstChildElement("TestChild");
+    const tinyxml2::XMLElement* testChild = data->getDocumentRoot()->FirstChildElement("TestChild");
 
-      Assert::IsNotNull(testChild);
-      Assert::AreEqual("TestChild", testChild->Attribute("name"));
-      Assert::AreEqual(object.getChild().getGuid().str().c_str(), testChild->Attribute("guid"));
-      Assert::AreEqual(5, testChild->IntAttribute("IntField"));
-      Assert::AreEqual("Test Value", testChild->Attribute("StringField"));
-    }
+    Assert::IsNotNull(testChild);
+    Assert::AreEqual("TestChild", testChild->Attribute("name"));
+    Assert::AreEqual(object.getChild().getGuid().str().c_str(), testChild->Attribute("guid"));
+    Assert::AreEqual(5, testChild->IntAttribute("IntField"));
+    Assert::AreEqual("Test Value", testChild->Attribute("StringField"));
+  }
 
 #pragma endregion
 
-    };
-  }
+  };
 }

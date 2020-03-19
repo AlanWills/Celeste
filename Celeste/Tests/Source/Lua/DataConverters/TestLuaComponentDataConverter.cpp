@@ -544,9 +544,6 @@ namespace TestCeleste::Lua
 
     const LuaComponentDataConverter converter(table, "Test");
 
-    bool value = bool();
-    bool other = value;
-
     // 1 attribute from base class
     Assert::AreEqual(static_cast<size_t>(2), converter.getAttributesSize());
     Assert::IsNotNull(dynamic_cast<const XML::ValueAttribute<bool>*>(converter.findAttribute("Attr")));
@@ -702,9 +699,6 @@ namespace TestCeleste::Lua
     table["Attributes"]["Attribute"] = attrTable;
 
     const LuaComponentDataConverter converter(table, "Test");
-
-    bool value = bool();
-    bool other = value;
 
     // 1 attribute from base class
     Assert::AreEqual(static_cast<size_t>(2), converter.getAttributesSize());
@@ -864,9 +858,6 @@ namespace TestCeleste::Lua
 
     const LuaComponentDataConverter converter(table, "Test");
 
-    bool value = bool();
-    bool other = value;
-
     // 1 attribute from base class
     Assert::AreEqual(static_cast<size_t>(2), converter.getAttributesSize());
     Assert::IsNotNull(dynamic_cast<const XML::ValueAttribute<std::string>*>(converter.findAttribute("Attr")));
@@ -925,7 +916,7 @@ namespace TestCeleste::Lua
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Child");
     sol::table table = LuaState::instance().create_table();
-    table["ConvertFromXML"] = [](tinyxml2::XMLElement* element) -> bool
+    table["ConvertFromXML"] = [](tinyxml2::XMLElement* /*element*/) -> bool
     {
       LuaState::instance().globals()["called"] = true;
       return true;
@@ -947,7 +938,7 @@ namespace TestCeleste::Lua
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Child");
     sol::table table = LuaState::instance().create_table();
-    table["ConvertFromXML"] = [](tinyxml2::XMLElement* element) -> bool
+    table["ConvertFromXML"] = [](tinyxml2::XMLElement* /*element*/) -> bool
     {
       return false;
     };
@@ -963,7 +954,7 @@ namespace TestCeleste::Lua
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Child");
     sol::table table = LuaState::instance().create_table();
-    table["ConvertFromXML"] = [](tinyxml2::XMLElement* element) -> bool
+    table["ConvertFromXML"] = [](tinyxml2::XMLElement* /*element*/) -> bool
     {
       return true;
     };

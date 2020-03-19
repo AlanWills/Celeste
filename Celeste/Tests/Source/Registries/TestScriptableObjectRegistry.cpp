@@ -2,7 +2,7 @@
 
 #include "Registries/ScriptableObjectRegistry.h"
 #include "Mocks/Objects/MockScriptableObject.h"
-#include "Resources/Objects/MockScriptableObjectLoadingResources.h"
+#include "TestResources/Objects/MockScriptableObjectLoadingResources.h"
 #include "AssertExt.h"
 #include "FileAssert.h"
 

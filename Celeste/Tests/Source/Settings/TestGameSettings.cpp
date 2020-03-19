@@ -2,8 +2,8 @@
 
 #include "Settings/GameSettings.h"
 #include "Resources/ResourceManager.h"
-#include "Resources/TestResources.h"
-#include "Resources/Settings/GameSettingsLoadingResources.h"
+#include "TestResources/TestResources.h"
+#include "TestResources/Settings/GameSettingsLoadingResources.h"
 #include "Audio/AudioManager.h"
 #include "XML/tinyxml2_ext.h"
 #include "AssertCel.h"
