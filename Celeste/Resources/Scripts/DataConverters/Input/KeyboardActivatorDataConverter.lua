@@ -36,6 +36,5 @@ LuaComponentDataConverter.register("KeyboardActivator",
         activator:setActivationKey(converter:findAttribute("activation_key"):asString())
         activator:setDeactivationKey(converter:findAttribute("deactivation_key"):asString())
         activator:setInputMode(converter:findAttribute("input_mode"):asString())
-        activator:setTarget(converter:findAttribute("target"):asString())
     end
 })

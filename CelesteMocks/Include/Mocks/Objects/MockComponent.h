@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CelesteMocksDllExport.h"
+#include "StaticLibExport.h"
 #include "Objects/Component.h"
 
 
@@ -8,7 +8,7 @@ namespace CelesteMocks
 {
   class MockComponent : public Celeste::Component
   {
-    DECLARE_UNMANAGED_COMPONENT(MockComponent, CelesteMocksDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockComponent, StaticLibExport)
 
     public:
       bool handleInputCalled() const { return m_handleInputCalled; }

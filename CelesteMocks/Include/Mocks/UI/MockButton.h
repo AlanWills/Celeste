@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CelesteMocksDllExport.h"
+#include "StaticLibExport.h"
 #include "UI/Button.h"
 
 
@@ -8,7 +8,7 @@ namespace CelesteMocks
 {
   class MockButton : public Celeste::UI::Button
   {
-    DECLARE_UNMANAGED_COMPONENT(MockButton, CelesteMocksDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockButton, StaticLibExport)
 
     public:
       Celeste::UI::Button::ButtonState getButtonState_Public() const { return getButtonState(); }

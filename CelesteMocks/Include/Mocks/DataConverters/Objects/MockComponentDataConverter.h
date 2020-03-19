@@ -2,14 +2,14 @@
 
 #include "DataConverters/Objects/ComponentDataConverter.h"
 #include "Mocks/Objects/MockComponent.h"
-#include "CelesteMocksDllExport.h"
+#include "StaticLibExport.h"
 
 
 namespace CelesteMocks
 {
   class MockComponentDataConverter : public Celeste::ComponentDataConverter
   {
-    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(MockComponentDataConverter, MockComponent, CelesteMocksDllExport)
+    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(MockComponentDataConverter, MockComponent, StaticLibExport)
 
     public:
       bool isDoConvertFromXMLCalled() const { return m_doConvertFromXMLCalled; }

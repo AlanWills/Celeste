@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CelesteMocksDllExport.h"
+#include "StaticLibExport.h"
 #include "Physics/Collider.h"
 
 
@@ -15,7 +15,7 @@ namespace CelesteMocks
 {
   class MockCollider : public Celeste::Physics::Collider
   {
-    DECLARE_UNMANAGED_COMPONENT(MockCollider, CelesteMocksDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockCollider, StaticLibExport)
 
     public:
       glm::vec2 getCentre() const { return glm::vec2(); }

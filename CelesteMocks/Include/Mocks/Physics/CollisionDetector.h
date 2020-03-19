@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CelesteMocksDllExport.h"
+#include "StaticLibExport.h"
 #include "Objects/Component.h"
 
 
@@ -8,7 +8,7 @@ namespace CelesteMocks
 {
   class CollisionDetector : public Celeste::Component
   {
-    DECLARE_UNMANAGED_COMPONENT(CollisionDetector, CelesteMocksDllExport)
+    DECLARE_UNMANAGED_COMPONENT(CollisionDetector, StaticLibExport)
 
     public:
       bool triggerEnterCalled() const { return m_triggerEnterCount > 0; }

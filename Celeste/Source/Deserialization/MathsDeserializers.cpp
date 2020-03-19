@@ -21,8 +21,9 @@ namespace Celeste
     std::vector<std::string> components;
     split(text, components, ',');
     glm::length_t componentsSize = static_cast<glm::length_t>(components.size());
-    
-    for (glm::length_t index = 0; index < length || index < componentsSize; ++index)
+    ASSERT(componentsSize <= length); // Shouldn't have specified more components than our vector
+
+    for (glm::length_t index = 0; index < length && index < componentsSize; ++index)
     {
       if (!deserialize(components[index], output[index]))
       {
@@ -42,10 +43,10 @@ namespace Celeste
     if (tryDeserialize(text, temp))
     {
       output = temp;
-      return false;
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   //------------------------------------------------------------------------------------------------
@@ -56,10 +57,10 @@ namespace Celeste
     if (tryDeserialize(text, temp))
     {
       output = temp;
-      return false;
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   //------------------------------------------------------------------------------------------------
@@ -70,10 +71,10 @@ namespace Celeste
     if (tryDeserialize(text, temp))
     {
       output = temp;
-      return false;
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   //------------------------------------------------------------------------------------------------
@@ -84,10 +85,10 @@ namespace Celeste
     if (tryDeserialize(text, temp))
     {
       output = temp;
-      return false;
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   //------------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CelesteMocksDllExport.h"
+#include "StaticLibExport.h"
 #include "Objects/ScriptableObject.h"
 
 
@@ -8,7 +8,7 @@ namespace CelesteMocks
 {
   class MockScriptableObject : public Celeste::ScriptableObject
   {
-    DECLARE_SCRIPTABLE_OBJECT(MockScriptableObject, CelesteMocksDllExport)
+    DECLARE_SCRIPTABLE_OBJECT(MockScriptableObject, StaticLibExport)
 
     public:
       template <typename T>

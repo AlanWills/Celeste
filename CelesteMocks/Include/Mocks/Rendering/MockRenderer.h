@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CelesteMocksDllExport.h"
+#include "StaticLibExport.h"
 #include "Rendering/Renderer.h"
 
 
@@ -8,7 +8,7 @@ namespace CelesteMocks
 {
   class MockRenderer : public Celeste::Rendering::Renderer
   {
-    DECLARE_UNMANAGED_COMPONENT(MockRenderer, CelesteMocksDllExport)
+    DECLARE_UNMANAGED_COMPONENT(MockRenderer, StaticLibExport)
 
     public:
       void render(const Celeste::Resources::Program& /*program*/, const glm::mat4& /*viewModelMatrix*/) const override { m_renderCalled = true; }
