@@ -265,7 +265,7 @@ namespace TestCeleste
 
     Assert::IsNull(renderer.getTexture());
 
-    renderer.render(program, glm::mat4());
+    renderer.render(program, glm::identity<glm::mat4>());
   }
 
 #pragma endregion

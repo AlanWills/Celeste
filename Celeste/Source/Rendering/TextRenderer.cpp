@@ -41,7 +41,7 @@ namespace Celeste::Rendering
       const std::string& line = lines[i];
       const glm::vec2& halfLineSize = font.measureString(line) * 0.5f;
 
-      glm::mat4 letterRenderMatrix;
+      glm::mat4 letterRenderMatrix = glm::identity<glm::mat4>();
       letterRenderMatrix[3].x = getXPosition(halfLineSize.x);
       letterRenderMatrix[3].y = getYPosition(halfTextSize.y) - (i + 0.75f) * fontHeight; // Go down the screen - first text at the top
 

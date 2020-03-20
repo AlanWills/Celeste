@@ -38,7 +38,8 @@ namespace Celeste
   glm::mat4 Camera::getViewMatrix() const
   {
     // If we are rendering in orthographic, return the identity
-    return m_projectionMode == ProjectionMode::kOrthographic ? glm::mat4() : glm::translate(glm::mat4(), -getTransform().getTranslation());
+    glm::mat4 m = glm::identity<glm::mat4>();
+    return m_projectionMode == ProjectionMode::kOrthographic ? m : glm::translate(m, -getTransform().getTranslation());
   }
 
   //------------------------------------------------------------------------------------------------

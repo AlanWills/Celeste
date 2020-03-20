@@ -9,7 +9,7 @@ namespace Celeste
     float rotation,
     const glm::vec3& scale)
   {
-    glm::mat4 localMatrix;
+    glm::mat4 localMatrix = glm::identity<glm::mat4>();
     localMatrix[3].x = translation.x;
     localMatrix[3].y = translation.y;
     localMatrix[3].z = translation.z;
@@ -24,7 +24,7 @@ namespace Celeste
     float rotation,
     const glm::vec3& scale)
   {
-    glm::mat4 inverseMatrix;
+    glm::mat4 inverseMatrix = glm::identity<glm::mat4>();
     inverseMatrix = glm::scale(inverseMatrix, scale);
     inverseMatrix = glm::rotate(inverseMatrix, -rotation, glm::vec3(0, 0, 1));
 

@@ -70,7 +70,7 @@ namespace Celeste::UI
     auto firstVisible = std::find_if(m_children.begin(), m_children.end(), visibilityPredicate);
     auto lastVisible = std::find_if(m_children.rbegin(), m_children.rend(), visibilityPredicate);
 
-    glm::vec2 totalSize;
+    glm::vec2 totalSize = glm::vec2();
     for (observer_ptr<GameObject> child : m_children)
     {
       if (observer_ptr<Renderer> renderer = child->findComponent<Renderer>(); renderer->isActive())

@@ -23,7 +23,7 @@ namespace TestCeleste
       Assert::AreEqual(0.0f, transform.getRotation());
       Assert::IsTrue(glm::vec3() == transform.getTranslation());
       Assert::IsTrue(glm::vec3(1, 1, 1) == transform.getScale());
-      Assert::IsTrue(glm::mat4() == transform.getLocalMatrix());
+      Assert::IsTrue(glm::identity<glm::mat4>() == transform.getLocalMatrix());
       
       Assert::IsNull(transform.getParent());
       Assert::IsNull(transform.getGameObject());
@@ -31,7 +31,7 @@ namespace TestCeleste
       Assert::AreEqual(0.0f, transform.getWorldRotation());
       Assert::IsTrue(glm::vec3() == transform.getWorldTranslation());
       Assert::IsTrue(glm::vec3(1, 1, 1) == transform.getWorldScale());
-      Assert::IsTrue(glm::mat4() == transform.getWorldMatrix());
+      Assert::IsTrue(glm::identity<glm::mat4>() == transform.getWorldMatrix());
     }
 
 #pragma endregion
@@ -677,8 +677,8 @@ namespace TestCeleste
       glm::mat4 expected = glm::inverse(transform.getLocalMatrix());
 
       AssertExt::AreAlmostEqual(expected, transform.getInverseLocalMatrix());
-      AssertExt::AreAlmostEqual(glm::mat4(), transform.getLocalMatrix() * transform.getInverseLocalMatrix());
-      AssertExt::AreAlmostEqual(glm::mat4(), transform.getInverseLocalMatrix() * transform.getLocalMatrix());
+      AssertExt::AreAlmostEqual(glm::identity<glm::mat4>(), transform.getLocalMatrix() * transform.getInverseLocalMatrix());
+      AssertExt::AreAlmostEqual(glm::identity<glm::mat4>(), transform.getInverseLocalMatrix() * transform.getLocalMatrix());
     }
 
 #pragma endregion
@@ -1066,8 +1066,8 @@ namespace TestCeleste
 
       Assert::IsNull(transform.getParent());
       AssertExt::AreAlmostEqual(expected, transform.getInverseWorldMatrix());
-      AssertExt::AreAlmostEqual(glm::mat4(), transform.getInverseWorldMatrix() * transform.getWorldMatrix());
-      AssertExt::AreAlmostEqual(glm::mat4(), transform.getWorldMatrix() * transform.getInverseWorldMatrix());
+      AssertExt::AreAlmostEqual(glm::identity<glm::mat4>(), transform.getInverseWorldMatrix() * transform.getWorldMatrix());
+      AssertExt::AreAlmostEqual(glm::identity<glm::mat4>(), transform.getWorldMatrix() * transform.getInverseWorldMatrix());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -1090,8 +1090,8 @@ namespace TestCeleste
 
       Assert::AreEqual(parent, transform->getParent());
       AssertExt::AreAlmostEqual(expected, transform->getInverseWorldMatrix());
-      AssertExt::AreAlmostEqual(glm::mat4(), transform->getInverseWorldMatrix() * transform->getWorldMatrix());
-      AssertExt::AreAlmostEqual(glm::mat4(), transform->getWorldMatrix() * transform->getInverseWorldMatrix());
+      AssertExt::AreAlmostEqual(glm::identity<glm::mat4>(), transform->getInverseWorldMatrix() * transform->getWorldMatrix());
+      AssertExt::AreAlmostEqual(glm::identity<glm::mat4>(), transform->getWorldMatrix() * transform->getInverseWorldMatrix());
     }
 
 #pragma endregion

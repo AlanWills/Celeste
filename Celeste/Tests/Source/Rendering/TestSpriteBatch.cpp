@@ -24,7 +24,7 @@ namespace TestCeleste
 
     Assert::AreEqual((size_t)0, spriteBatch.renderers_size_Public());
 
-    spriteBatch.render(renderer, glm::mat4());
+    spriteBatch.render(renderer, glm::identity<glm::mat4>());
 
     Assert::AreEqual((size_t)1, spriteBatch.renderers_size_Public());
   }

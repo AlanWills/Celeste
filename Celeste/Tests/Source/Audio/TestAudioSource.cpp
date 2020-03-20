@@ -73,56 +73,56 @@ namespace TestCeleste
     TEST_METHOD(AudioSource_Constructor_AudioSourceIsNotPlaying)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
+      MockAudioSource audioSource(gameObject);
 
-      Assert::IsFalse(audioSourceSourceSource.isPlaying());
+      Assert::IsFalse(audioSource.isPlaying());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_Constructor_AudioSetToNullHandle)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
+      MockAudioSource audioSource(gameObject);
 
-      Assert::IsNull(audioSourceSourceSource.getSound());
+      Assert::IsNull(audioSource.getSound());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_Constructor_AudioSourceIsNotLooping)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
+      MockAudioSource audioSource(gameObject);
 
-      Assert::IsFalse(audioSourceSourceSource.isLooping());
+      Assert::IsFalse(audioSource.isLooping());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_Constructor_AudioSourceVolumeIsOne)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
+      MockAudioSource audioSource(gameObject);
 
-      Assert::AreEqual(1.0f, audioSourceSourceSource.getVolume());
+      Assert::AreEqual(1.0f, audioSource.getVolume());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_Constructor_SetsAudioTypeToSFX)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
+      MockAudioSource audioSource(gameObject);
 
-      Assert::IsTrue(audioSourceSourceSource.getAudioType() == AudioType::kSFX);
+      Assert::IsTrue(audioSource.getAudioType() == AudioType::kSFX);
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_Constructor_GeneratesSourceHandle)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
+      MockAudioSource audioSource(gameObject);
 
-      Assert::AreNotEqual(static_cast<ALuint>(0), audioSourceSourceSource.getSourceHandle_Public());
-      Assert::AreEqual(0, audioSourceSourceSource.getSourceBufferHandle());
-      Assert::IsTrue(alIsSource(audioSourceSourceSource.getSourceHandle_Public()));
+      Assert::AreNotEqual(static_cast<ALuint>(0), audioSource.getSourceHandle_Public());
+      Assert::AreEqual(0, audioSource.getSourceBufferHandle());
+      Assert::IsTrue(alIsSource(audioSource.getSourceHandle_Public()));
     }
 
 #pragma endregion
@@ -132,17 +132,17 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_Destructor_DeallocatesSourceHandle)
     {
-      ALuint audioSourceSourceSourceHandle = 0;
+      ALuint audioSourceHandle = 0;
 
       {
         GameObject gameObject;
-        MockAudioSource audioSourceSourceSource(gameObject);
-        audioSourceSourceSourceHandle = audioSourceSourceSource.getSourceHandle_Public();
+        MockAudioSource audioSource(gameObject);
+        audioSourceHandle = audioSource.getSourceHandle_Public();
 
-        Assert::IsTrue(alIsSource(audioSourceSourceSourceHandle));
+        Assert::IsTrue(alIsSource(audioSourceHandle));
       }
 
-      Assert::IsFalse(alIsSource(audioSourceSourceSourceHandle));
+      Assert::IsFalse(alIsSource(audioSourceHandle));
     }
 
 #pragma endregion
@@ -153,26 +153,26 @@ namespace TestCeleste
     TEST_METHOD(AudioSource_SetSound_InputtingNullptr_DoesNotUpdateSourceBuffer)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
+      MockAudioSource audioSource(gameObject);
 
-      Assert::AreEqual(0, audioSourceSourceSource.getSourceBufferHandle());
+      Assert::AreEqual(0, audioSource.getSourceBufferHandle());
 
-      audioSourceSourceSource.setSound(nullptr);
+      audioSource.setSound(nullptr);
 
-      Assert::AreEqual(0, audioSourceSourceSource.getSourceBufferHandle());
+      Assert::AreEqual(0, audioSource.getSourceBufferHandle());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_SetSound_WithNonExistentSoundPath_DoesNotUpdateSourceBuffer)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
+      MockAudioSource audioSource(gameObject);
 
-      Assert::AreEqual(0, audioSourceSourceSource.getSourceBufferHandle());
+      Assert::AreEqual(0, audioSource.getSourceBufferHandle());
 
-      audioSourceSourceSource.setSound("ThisAudioFileShouldn'tExist.wav");
+      audioSource.setSound("ThisAudioFileShouldn'tExist.wav");
 
-      Assert::AreEqual(0, audioSourceSourceSource.getSourceBufferHandle());
+      Assert::AreEqual(0, audioSource.getSourceBufferHandle());
     }
 
 #pragma endregion
@@ -266,49 +266,49 @@ namespace TestCeleste
     TEST_METHOD(AudioSource_PlayWithNoSoundSet_DoesNothing)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
+      MockAudioSource audioSource(gameObject);
 
-      Assert::IsNull(audioSourceSourceSource.getSound());
-      Assert::IsFalse(audioSourceSourceSource.isPlaying());
+      Assert::IsNull(audioSource.getSound());
+      Assert::IsFalse(audioSource.isPlaying());
 
-      audioSourceSourceSource.play();
+      audioSource.play();
 
-      Assert::IsFalse(audioSourceSourceSource.isPlaying());
+      Assert::IsFalse(audioSource.isPlaying());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_Play_SoundSet_UpdatesIsPlayingFlag)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
+      MockAudioSource audioSource(gameObject);
 
-      audioSourceSourceSource.setSound(TestResources::getButtonHoverWavRelativePath());
+      audioSource.setSound(TestResources::getButtonHoverWavRelativePath());
 
-      Assert::IsNotNull(audioSourceSourceSource.getSound());
-      Assert::IsFalse(audioSourceSourceSource.isPlaying());
+      Assert::IsNotNull(audioSource.getSound());
+      Assert::IsFalse(audioSource.isPlaying());
 
-      audioSourceSourceSource.play();
+      audioSource.play();
 
-      Assert::IsTrue(audioSourceSourceSource.isPlaying());
+      Assert::IsTrue(audioSource.isPlaying());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_Play_SoundSet_InternallyPlaysSound)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
+      MockAudioSource audioSource(gameObject);
 
-      audioSourceSourceSource.setSound(TestResources::getButtonHoverWavRelativePath());
+      audioSource.setSound(TestResources::getButtonHoverWavRelativePath());
 
-      Assert::IsNotNull(audioSourceSourceSource.getSound());
+      Assert::IsNotNull(audioSource.getSound());
 
       ALenum state;
-      alGetSourcei(audioSourceSourceSource.getSourceHandle_Public(), AL_SOURCE_STATE, &state);
+      alGetSourcei(audioSource.getSourceHandle_Public(), AL_SOURCE_STATE, &state);
 
       Assert::IsFalse(state == AL_PLAYING);
 
-      audioSourceSourceSource.play();
-      alGetSourcei(audioSourceSourceSource.getSourceHandle_Public(), AL_SOURCE_STATE, &state);
+      audioSource.play();
+      alGetSourcei(audioSource.getSourceHandle_Public(), AL_SOURCE_STATE, &state);
 
       Assert::IsTrue(state == AL_PLAYING);
     }
@@ -321,56 +321,56 @@ namespace TestCeleste
     TEST_METHOD(AudioSource_Stop_NoSourceCreated_UpdatesIsPlayingFlag)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
-      audioSourceSourceSource.setSound(TestResources::getButtonHoverWavRelativePath());
-      audioSourceSourceSource.play();
+      MockAudioSource audioSource(gameObject);
+      audioSource.setSound(TestResources::getButtonHoverWavRelativePath());
+      audioSource.play();
 
-      Assert::IsTrue(audioSourceSourceSource.isPlaying());
+      Assert::IsTrue(audioSource.isPlaying());
 
-      audioSourceSourceSource.stop();
+      audioSource.stop();
 
-      Assert::IsFalse(audioSourceSourceSource.isPlaying());
+      Assert::IsFalse(audioSource.isPlaying());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_Stop_SourceCreated_UpdatesIsPlayingFlag)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
-      audioSourceSourceSource.setSound(TestResources::getButtonHoverWavRelativePath());
+      MockAudioSource audioSource(gameObject);
+      audioSource.setSound(TestResources::getButtonHoverWavRelativePath());
 
-      Assert::IsNotNull(audioSourceSourceSource.getSound());
-      Assert::IsFalse(audioSourceSourceSource.isPlaying());
-      Assert::IsTrue(alIsSource(audioSourceSourceSource.getSourceHandle_Public()));
+      Assert::IsNotNull(audioSource.getSound());
+      Assert::IsFalse(audioSource.isPlaying());
+      Assert::IsTrue(alIsSource(audioSource.getSourceHandle_Public()));
 
-      audioSourceSourceSource.play();
+      audioSource.play();
 
-      Assert::IsTrue(audioSourceSourceSource.isPlaying());
+      Assert::IsTrue(audioSource.isPlaying());
 
-      audioSourceSourceSource.stop();
+      audioSource.stop();
 
-      Assert::IsFalse(audioSourceSourceSource.isPlaying());
+      Assert::IsFalse(audioSource.isPlaying());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(AudioSource_Stop_SourceCreated_StopsSoundPlayingInternally)
     {
       GameObject gameObject;
-      MockAudioSource audioSourceSourceSource(gameObject);
-      audioSourceSourceSource.setSound(TestResources::getButtonHoverWavRelativePath());
+      MockAudioSource audioSource(gameObject);
+      audioSource.setSound(TestResources::getButtonHoverWavRelativePath());
 
       ALenum state;
-      alGetSourcei(audioSourceSourceSource.getSourceHandle_Public(), AL_SOURCE_STATE, &state);
+      alGetSourcei(audioSource.getSourceHandle_Public(), AL_SOURCE_STATE, &state);
 
       Assert::IsFalse(state == AL_PLAYING);
 
-      audioSourceSourceSource.play();
-      alGetSourcei(audioSourceSourceSource.getSourceHandle_Public(), AL_SOURCE_STATE, &state);
+      audioSource.play();
+      alGetSourcei(audioSource.getSourceHandle_Public(), AL_SOURCE_STATE, &state);
 
       Assert::IsTrue(state == AL_PLAYING);
 
-      audioSourceSourceSource.stop();
-      alGetSourcei(audioSourceSourceSource.getSourceHandle_Public(), AL_SOURCE_STATE, &state);
+      audioSource.stop();
+      alGetSourcei(audioSource.getSourceHandle_Public(), AL_SOURCE_STATE, &state);
 
       Assert::IsFalse(state == AL_PLAYING);
     }

@@ -44,7 +44,7 @@ namespace TestCeleste
     camera.setProjectionMode(ProjectionMode::kPerspective);
 
     Assert::IsTrue(camera.getProjectionMode() == ProjectionMode::kPerspective);
-    Assert::AreEqual(glm::translate(glm::mat4(), glm::vec3(1, -3, -0.25f)), camera.getViewMatrix());
+    Assert::AreEqual(glm::translate(glm::identity<glm::mat4>(), glm::vec3(1, -3, -0.25f)), camera.getViewMatrix());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ namespace TestCeleste
     camera.setProjectionMode(ProjectionMode::kOrthographic);
 
     Assert::IsTrue(camera.getProjectionMode() == ProjectionMode::kOrthographic);
-    Assert::AreEqual(glm::mat4(), camera.getViewMatrix());
+    Assert::AreEqual(glm::identity<glm::mat4>(), camera.getViewMatrix());
   }
 
 #pragma endregion

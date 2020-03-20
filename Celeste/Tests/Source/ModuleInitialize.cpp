@@ -18,7 +18,8 @@ namespace TestCeleste
     // Issues with unique_ptrs over dll boundaries so have to do this in the test project
     Assertion::setAsserter(new NullAsserter());
 
-    CelesteTestResources::TestResources::setResourcesDirectory(Path(Directory::getExecutingAppDirectory(), "Resources"));
+    CelesteTestResources::TestResources::setResourcesDirectory(
+      Path(Directory::getExecutingAppDirectory(), "..", "..", "..", "Celeste", "Celeste", "Tests", "Resources"));
     CelesteTestResources::TestResources::initialize();
 
     game = std::make_unique<Game>();

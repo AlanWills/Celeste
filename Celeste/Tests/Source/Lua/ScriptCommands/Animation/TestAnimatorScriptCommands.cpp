@@ -80,30 +80,6 @@ namespace TestCeleste::Lua::Animation::AnimatorScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(AnimatorScriptCommands_Initialize_Adds_getPlayImmediately_ToAnimatorTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["Animator"]["getPlayImmediately"].valid());
-
-    Celeste::Lua::Animation::AnimatorScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["Animator"]["getPlayImmediately"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(AnimatorScriptCommands_Initialize_Adds_setPlayImmediately_ToAnimatorTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["Animator"]["setPlayImmediately"].valid());
-
-    Celeste::Lua::Animation::AnimatorScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["Animator"]["setPlayImmediately"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(AnimatorScriptCommands_Initialize_Adds_isLooping_ToAnimatorTable)
   {
     sol::state& state = LuaState::instance();

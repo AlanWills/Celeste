@@ -39,7 +39,7 @@ namespace Celeste::Rendering
     }
 
     shaderProgram.setVector4f("colour", getColour());
-    shaderProgram.setMatrix4("view_model", viewModelMatrix * glm::translate(glm::mat4(), glm::vec3(-getOrigin(), 0)));
+    shaderProgram.setMatrix4("view_model", viewModelMatrix * glm::translate(glm::identity<glm::mat4>(), glm::vec3(-getOrigin(), 0)));
 
     m_texture->bind();
     glDrawArrays(GL_TRIANGLES, 0, 6);
