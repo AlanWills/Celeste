@@ -1,8 +1,13 @@
 #include "Input/InputManager.h"
 #include "Game/Game.h"
 #include "Input/KeyboardActivator.h"
+#include "Input/MouseInteractionHandler.h"
+#include "Input/GraphicsRaycaster.h"
+#include "Input/PhysicsRaycaster.h"
 #include "Algorithms/EntityAlgorithms.h"
 #include "Scene/SceneUtils.h"
+
+#include <unordered_set>
 
 
 namespace Celeste::Input
@@ -19,6 +24,9 @@ namespace Celeste::Input
   InputManager::~InputManager()
   {
     KeyboardActivator::m_allocator.deallocateAll();
+    MouseInteractionHandler::m_allocator.deallocateAll();
+    GraphicsRaycaster::m_allocator.deallocateAll();
+    PhysicsRaycaster::m_allocator.deallocateAll();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -33,7 +41,10 @@ namespace Celeste::Input
     updateMousePosition();
     m_mouse.handleInput();
 
+    raycast();
+
     Algorithms::handleInput(KeyboardActivator::m_allocator);
+    Algorithms::handleInput(MouseInteractionHandler::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -42,6 +53,7 @@ namespace Celeste::Input
     Inherited::update(elapsedGameTime);
 
     Algorithms::update(elapsedGameTime, KeyboardActivator::m_allocator);
+    Algorithms::update(elapsedGameTime, MouseInteractionHandler::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -50,8 +62,37 @@ namespace Celeste::Input
     // Update mouse position
     double x = 0, y = 0;
     glfwGetCursorPos(getWindow().getGLWindow(), &x, &y);
-
+    
     m_mouse.getTransform().setTranslation(static_cast<float>(x), getViewportDimensions().y - static_cast<float>(y));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void InputManager::raycast() const
+  {
+    std::unordered_set<observer_ptr<GameObject>> hitGameObjects;
+
+    for (GraphicsRaycaster& graphicsRaycaster : GraphicsRaycaster::m_allocator)
+    {
+      for (observer_ptr<GameObject> hitGameObject : graphicsRaycaster.raycast())
+      {
+        ASSERT(hitGameObjects.find(hitGameObject) == hitGameObjects.end());
+        hitGameObjects.emplace(hitGameObject);
+      }
+    }
+
+    for (PhysicsRaycaster& physicsRaycaster : PhysicsRaycaster::m_allocator)
+    {
+      for (observer_ptr<GameObject> hitGameObject : physicsRaycaster.raycast())
+      {
+        ASSERT(hitGameObjects.find(hitGameObject) == hitGameObjects.end());
+        hitGameObjects.emplace(hitGameObject);
+      }
+    }
+
+    for (MouseInteractionHandler& mouseInteractionhandler : MouseInteractionHandler::m_allocator)
+    {
+      mouseInteractionhandler.setMouseOver(hitGameObjects.find(mouseInteractionhandler.getGameObject()) != hitGameObjects.end());
+    }
   }
 
   //------------------------------------------------------------------------------------------------

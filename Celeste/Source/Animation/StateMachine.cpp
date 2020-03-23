@@ -4,7 +4,7 @@
 
 namespace Celeste::Animation
 {
-  REGISTER_UNMANAGED_COMPONENT(StateMachine, 10)
+  REGISTER_COMPONENT(StateMachine, 10)
 
   //------------------------------------------------------------------------------------------------
   StateMachine::StateMachine(GameObject& gameObject) :

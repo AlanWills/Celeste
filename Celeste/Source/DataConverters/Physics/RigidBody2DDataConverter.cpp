@@ -8,7 +8,7 @@
 
 namespace Celeste
 {
-  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(RigidBody2DDataConverter)
+  REGISTER_COMPONENT_DATA_CONVERTER(RigidBody2DDataConverter)
 
   const char* const RigidBody2DDataConverter::LINEAR_VELOCITY_ATTRIBUTE_NAME("linear_velocity");
   const char* const RigidBody2DDataConverter::MIN_LINEAR_VELOCITY_ATTRIBUTE_NAME("min_linear_velocity");

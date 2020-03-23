@@ -6,7 +6,7 @@ using namespace Celeste::Resources;
 
 namespace Celeste::Animation
 {
-  REGISTER_UNMANAGED_COMPONENT(Animator, 10)
+  REGISTER_COMPONENT(Animator, 10)
 
   //------------------------------------------------------------------------------------------------
   Animator::Animator(GameObject& gameObject) :

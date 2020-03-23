@@ -1,19 +1,21 @@
 #include "Viewport/Camera.h"
 #include "Input/InputUtils.h"
 #include "Input/Mouse.h"
+#include "UtilityHeaders/ComponentHeaders.h"
 
 
 namespace Celeste
 {
+  REGISTER_COMPONENT(Camera, 3);
+
   //------------------------------------------------------------------------------------------------
-  Camera::Camera() :
-    m_transform(),
+  Camera::Camera(GameObject& gameObject) :
+    Inherited(gameObject),
     m_projectionMode(ProjectionMode::kPerspective),
     m_nearPlane(0.1f),
     m_farPlane(100),
     m_viewportDimensions(1)
   {
-    getTransform().setTranslation(glm::vec3(0, 0, 1));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -39,7 +41,7 @@ namespace Celeste
   {
     // If we are rendering in orthographic, return the identity
     glm::mat4 m = glm::identity<glm::mat4>();
-    return m_projectionMode == ProjectionMode::kOrthographic ? m : glm::translate(m, -getTransform().getTranslation());
+    return m_projectionMode == ProjectionMode::kOrthographic ? m : glm::translate(m, -getTransform()->getTranslation());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -54,13 +56,13 @@ namespace Celeste
     // Orthographic specific ray stuff
     if (m_projectionMode == ProjectionMode::kOrthographic)
     {
-      return Maths::Ray(glm::vec3(screenPosition, 0) + getTransform().getWorldTranslation(), glm::vec3(0, 0, -1));
+      return Maths::Ray(glm::vec3(screenPosition, 0) + getTransform()->getWorldTranslation(), glm::vec3(0, 0, -1));
     }
     else if (m_projectionMode == ProjectionMode::kPerspective)
     {
       // Perspective ray creation
       Maths::Ray ray;
-      ray.m_origin = getTransform().getTranslation();
+      ray.m_origin = getTransform()->getTranslation();
 
       float mouseX = screenPosition.x / (m_viewportDimensions.x  * 0.5f) - 1.0f;
       float mouseY = screenPosition.y / (m_viewportDimensions.y * 0.5f) - 1.0f;

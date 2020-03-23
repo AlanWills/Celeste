@@ -5,7 +5,7 @@
 
 namespace Celeste
 {
-  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(RectangleColliderDataConverter)
+  REGISTER_COMPONENT_DATA_CONVERTER(RectangleColliderDataConverter)
 
   const char* const RectangleColliderDataConverter::IS_TRIGGER_ATTRIBUTE_NAME("trigger");
   const char* const RectangleColliderDataConverter::DIMENSIONS_ATTRIBUTE_NAME("dimensions");

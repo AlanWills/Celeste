@@ -43,7 +43,7 @@ namespace Celeste
     }
 
     // Set up the hierarchy here first
-    // Components do name lookup and require these objects to all be created
+    // Components can do name lookup and require these objects to all be created
     for (const auto& childGameObjectDataConverter : getChildGameObjects())
     {
       GameObject* childGameObject = childGameObjectDataConverter->instantiate(*gameObject.getTransform());

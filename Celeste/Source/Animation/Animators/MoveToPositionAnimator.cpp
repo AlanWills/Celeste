@@ -6,7 +6,7 @@
 
 namespace Celeste::Animators
 {
-  REGISTER_UNMANAGED_COMPONENT(MoveToPositionAnimator, 10);
+  REGISTER_COMPONENT(MoveToPositionAnimator, 10);
 
   //------------------------------------------------------------------------------------------------
   MoveToPositionAnimator::MoveToPositionAnimator(GameObject& gameObject) :

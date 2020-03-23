@@ -22,7 +22,7 @@
     \
     static bool m_registered;
 
-#define REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(ConverterType) \
+#define REGISTER_COMPONENT_DATA_CONVERTER(ConverterType) \
   bool ConverterType::m_registered = Celeste::ComponentDataConverterRegistry::addConverter<ConverterType>(); \
   \
   void ConverterType::doSetValues(Celeste::Component& component) const \

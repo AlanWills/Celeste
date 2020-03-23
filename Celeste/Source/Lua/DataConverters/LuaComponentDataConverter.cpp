@@ -248,10 +248,12 @@ namespace Celeste::Lua
   {
     Inherited::doSetValues(component);
 
+    sol::protected_function_result doSetValuesResult;
+
     if (!LuaState::instance()[getElementName()].valid())
     {
       // Unregistered or incompatible, so just pass the component
-      m_doSetValues(this, component);
+      doSetValuesResult = m_doSetValues(this, component);
     }
     else
     {
@@ -259,7 +261,16 @@ namespace Celeste::Lua
       ASSERT(result.valid());
 
       // Successful conversion to correct type so we shouldn't need to do casting in lua
-      m_doSetValues(this, result.get<sol::object>());
+      doSetValuesResult = m_doSetValues(this, result.get<sol::object>());
     }
+
+#if _DEBUG
+    if (!doSetValuesResult.valid())
+    {
+      sol::error e = doSetValuesResult;
+      LOG(e.what());
+      ASSERT_FAIL();
+    }
+#endif
   }
 }

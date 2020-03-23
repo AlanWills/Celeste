@@ -10,7 +10,6 @@ namespace Celeste::Physics
   Collider::Collider(GameObject& gameObject) :
     Inherited(gameObject),
     m_colliderType(ColliderType::kCollider),
-    m_hitByRay(false),
     m_offset()
   {
   }

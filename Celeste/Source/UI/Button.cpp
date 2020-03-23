@@ -4,7 +4,6 @@
 #include "Input/InputManager.h"
 #include "Input/MouseInteractionHandler.h"
 #include "DataConverters/UI/ButtonDataConverter.h"
-#include "Physics/RectangleCollider.h"
 #include "Rendering/SpriteRenderer.h"
 #include "Audio/AudioSource.h"
 #include "FileSystem/Path.h"
@@ -13,21 +12,19 @@
 namespace Celeste
 {
   using namespace Resources;
-  using namespace Physics;
   using namespace Audio;
   using namespace Rendering;
   using namespace Input;
 
   namespace UI
   {
-    REGISTER_UNMANAGED_COMPONENT(Button, 10)
+    REGISTER_COMPONENT(Button, 10)
 
     //------------------------------------------------------------------------------------------------
     Button::Button(GameObject& gameObject) :
       Inherited(gameObject),
       m_spriteRenderer(gameObject.findComponent<Rendering::SpriteRenderer>()),
       m_mouseInteraction(gameObject.findComponent<MouseInteractionHandler>()),
-      m_collider(gameObject.findComponent<Physics::RectangleCollider>()),
       m_audio(gameObject.findComponent<Audio::AudioSource>())
     {
       setDefaultTexture(ButtonDataConverter::getDefaultTextureDefaultPath());
@@ -49,10 +46,6 @@ namespace Celeste
       ASSERT_NOT_NULL(m_spriteRenderer);
       m_spriteRenderer->setTexture(m_defaultTexture);
 
-      // Set up the collider so that it can respond to mouse interaction
-      ASSERT_NOT_NULL(m_collider);
-      m_collider->setDimensions(m_spriteRenderer->getDimensions());
-
       // Set up the events for mouse interaction
       ASSERT_NOT_NULL(m_mouseInteraction);
       m_mouseInteraction->getOnEnterEvent().subscribe([this](GameObject&) -> void { onEnter(); });
@@ -73,31 +66,12 @@ namespace Celeste
       Inherited::update(secondsPerUpdate);
 
       m_clickTimer += secondsPerUpdate;
-
-      if (m_collider->isHitByRay())
-      {
-        if (m_state != ButtonState::kClicked)
-        {
-          m_spriteRenderer->setTexture(m_highlightedTexture);
-          m_collider->setDimensions(m_spriteRenderer->getDimensions());
-
-          m_state = ButtonState::kHighlighted;
-        }
-      }
-      else
-      {
-        m_spriteRenderer->setTexture(m_defaultTexture);
-        m_collider->setDimensions(m_spriteRenderer->getDimensions());
-
-        m_state = ButtonState::kIdle;
-      }
     }
 
     //------------------------------------------------------------------------------------------------
     void Button::onEnter()
     {
       m_spriteRenderer->setTexture(m_highlightedTexture);
-      m_collider->setDimensions(m_spriteRenderer->getDimensions());
 
       if (m_audio != nullptr)
       {
@@ -112,8 +86,6 @@ namespace Celeste
     void Button::onLeave()
     {
       m_spriteRenderer->setTexture(m_defaultTexture);
-      m_collider->setDimensions(m_spriteRenderer->getDimensions());
-
       m_state = ButtonState::kIdle;
     }
 
@@ -123,7 +95,6 @@ namespace Celeste
       if (m_state != ButtonState::kClicked)
       {
         m_spriteRenderer->setTexture(m_clickedTexture);
-        m_collider->setDimensions(m_spriteRenderer->getDimensions());
 
         if (m_audio != nullptr)
         {

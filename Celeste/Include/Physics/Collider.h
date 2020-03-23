@@ -31,9 +31,6 @@ namespace Celeste::Physics
       inline ColliderType getColliderType() const { return m_colliderType; }
       inline void setColliderType(ColliderType colliderType) { m_colliderType = colliderType; }
 
-      inline bool isHitByRay() const { return m_hitByRay; }
-      inline void setHitByRay(bool isHitByRay) { m_hitByRay = isHitByRay; }
-
       inline const glm::vec2& getOffset() const { return m_offset; }
       inline void setOffset(float x, float y) { setOffset(glm::vec2(x, y)); }
       inline void setOffset(const glm::vec2& offset)
@@ -55,7 +52,6 @@ namespace Celeste::Physics
       using Inherited = Component;
 
       ColliderType m_colliderType;
-      bool m_hitByRay;
       glm::vec2 m_offset;
   };
 }

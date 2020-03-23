@@ -10,11 +10,6 @@ namespace Celeste
 {
   class GameObject;
 
-  namespace Physics
-  {
-    class Collider;
-  }
-
   namespace Input
   {
     using GameObjectEvent = Event<GameObject&>;
@@ -22,7 +17,7 @@ namespace Celeste
 
     class MouseInteractionHandler : public Component
     {
-      DECLARE_UNMANAGED_COMPONENT(MouseInteractionHandler, CelesteDllExport)
+      DECLARE_MANAGED_COMPONENT(MouseInteractionHandler, InputManager, CelesteDllExport)
 
       public:
         /// An event that will be called when the mouse first enters the parent's collider
@@ -50,16 +45,14 @@ namespace Celeste
         /// An event that will be called the first time the mouse is released having been right pressed whilst the mouse was over this collider.
         inline const GameObjectEvent& getOnRightButtonUpEvent() const { return m_onRightButtonUp; }
 
-        CelesteDllExport void handleInput() override;
+        bool isMouseOver() const { return m_isMouseOver; }
+        void setMouseOver(bool mouseOver);
 
-      protected:
-        inline observer_ptr<Physics::Collider> getCollider() const { return m_collider; }
-        inline bool isMouseOver() const { return m_isMouseOver; }
+        CelesteDllExport void handleInput() override;
 
       private:
         using Inherited = Component;
 
-        observer_ptr<Physics::Collider> m_collider;
         bool m_isMouseOver;
         std::array<bool, 3> m_mouseButtonPressed;
 

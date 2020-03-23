@@ -1,6 +1,7 @@
 #include "Rendering/RenderManager.h"
 #include "Rendering/Canvas.h"
 #include "Algorithms/EntityAlgorithms.h"
+#include "Maths/Transform.h"
 
 
 namespace Celeste::Rendering

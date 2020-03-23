@@ -4,7 +4,7 @@
 
 namespace CelesteMocks
 {
-  REGISTER_UNMANAGED_COMPONENT(MockKeyboardTransformer, 10)
+  REGISTER_COMPONENT(MockKeyboardTransformer, 10)
 
   MockKeyboardTransformer::MockKeyboardTransformer(GameObject& gameObject) :
     Inherited(gameObject)

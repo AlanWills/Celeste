@@ -9,7 +9,7 @@ using namespace Celeste::Resources;
 
 namespace Celeste::Rendering
 {
-  REGISTER_UNMANAGED_COMPONENT(TextRenderer, 20)
+  REGISTER_COMPONENT(TextRenderer, 20)
 
   //------------------------------------------------------------------------------------------------
   TextRenderer::TextRenderer(GameObject& gameObject) :

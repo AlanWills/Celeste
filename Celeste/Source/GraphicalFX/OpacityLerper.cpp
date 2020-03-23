@@ -7,7 +7,7 @@ namespace Celeste
 {
   using namespace Rendering;
 
-  REGISTER_UNMANAGED_COMPONENT(OpacityLerper, 10)
+  REGISTER_COMPONENT(OpacityLerper, 10)
 
   //------------------------------------------------------------------------------------------------
   OpacityLerper::OpacityLerper(GameObject& gameObject) :

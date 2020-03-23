@@ -5,7 +5,7 @@
 
 namespace Celeste::Input
 {
-  REGISTER_UNMANAGED_COMPONENT(KeyboardTransformer, 10)
+  REGISTER_COMPONENT(KeyboardTransformer, 10)
 
   //------------------------------------------------------------------------------------------------
   KeyboardTransformer::KeyboardTransformer(GameObject& gameObject) :

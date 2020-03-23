@@ -4,7 +4,7 @@
 
 namespace CelesteMocks
 {
-  REGISTER_UNMANAGED_COMPONENT(MockRenderer, 10);
+  REGISTER_COMPONENT(MockRenderer, 10);
 
   //------------------------------------------------------------------------------------------------
   MockRenderer::MockRenderer(GameObject& gameObject) :

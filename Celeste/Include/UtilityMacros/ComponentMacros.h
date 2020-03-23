@@ -46,13 +46,7 @@
 #endif
 
 //------------------------------------------------------------------------------------------------
-#define REGISTER_MANAGED_COMPONENT(ComponentType, PoolSize) \
-  CUSTOM_MEMORY_CREATION(ComponentType, PoolSize) \
-  ADD_COMPONENT_TO_REGISTRY(ComponentType) \
-  BINDINGS_GENERATION(ComponentType)
-
-//------------------------------------------------------------------------------------------------
-#define REGISTER_UNMANAGED_COMPONENT(ComponentType, PoolSize) \
+#define REGISTER_COMPONENT(ComponentType, PoolSize) \
   CUSTOM_MEMORY_CREATION(ComponentType, PoolSize) \
   ADD_COMPONENT_TO_REGISTRY(ComponentType) \
   BINDINGS_GENERATION(ComponentType)

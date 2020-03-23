@@ -5,7 +5,7 @@
 
 namespace Celeste
 {
-  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(KeyboardTransformerDataConverter)
+  REGISTER_COMPONENT_DATA_CONVERTER(KeyboardTransformerDataConverter)
 
   const char* const KeyboardTransformerDataConverter::TRANSLATE_LEFT_KEY_ATTRIBUTE_NAME("translate_left_key");
   const char* const KeyboardTransformerDataConverter::TRANSLATE_RIGHT_KEY_ATTRIBUTE_NAME("translate_right_key");

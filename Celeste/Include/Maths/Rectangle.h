@@ -7,6 +7,8 @@
 
 namespace Celeste::Maths
 {
+  class Ray;
+
   class Rectangle
   {
     public:

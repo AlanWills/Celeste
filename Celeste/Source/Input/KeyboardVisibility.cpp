@@ -8,7 +8,7 @@ using namespace Celeste::Rendering;
 
 namespace Celeste::Input
 {
-  REGISTER_UNMANAGED_COMPONENT(KeyboardVisibility, 10)
+  REGISTER_COMPONENT(KeyboardVisibility, 10)
 
   //------------------------------------------------------------------------------------------------
   KeyboardVisibility::KeyboardVisibility(GameObject& gameObject) :

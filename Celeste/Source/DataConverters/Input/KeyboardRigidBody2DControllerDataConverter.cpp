@@ -5,7 +5,7 @@
 
 namespace Celeste
 {
-  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(KeyboardRigidBody2DControllerDataConverter)
+  REGISTER_COMPONENT_DATA_CONVERTER(KeyboardRigidBody2DControllerDataConverter)
 
   const char* const KeyboardRigidBody2DControllerDataConverter::DECREASE_X_LINEAR_VELOCITY_KEY_ATTRIBUTE_NAME("decrease_x_linear_velocity_key");
   const char* const KeyboardRigidBody2DControllerDataConverter::INCREASE_X_LINEAR_VELOCITY_KEY_ATTRIBUTE_NAME("increase_x_linear_velocity_key");

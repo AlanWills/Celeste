@@ -4,7 +4,7 @@
 
 namespace CelesteMocks
 {
-  REGISTER_UNMANAGED_COMPONENT(CollisionDetector, 4)
+  REGISTER_COMPONENT(CollisionDetector, 4)
 
   //------------------------------------------------------------------------------------------------
   CollisionDetector::CollisionDetector(GameObject& gameObject) :

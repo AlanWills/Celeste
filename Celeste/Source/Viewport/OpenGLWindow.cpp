@@ -13,12 +13,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   OpenGLWindow::OpenGLWindow(WindowMode windowMode, const std::string& windowTitle) :
     m_window(nullptr),
-    m_title(windowTitle),
-    m_left(0),
-    m_top(0),
-    m_right(0),
-    m_bottom(0),
-    m_viewportDimensions(1),
+    m_viewportDimensions(0),
     m_viewportDimensionsChanged()
   {
     if (!GL::glfw_initialize())
@@ -27,15 +22,12 @@ namespace Celeste
     }
 
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    ASSERT(monitor != nullptr);
+
     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+    ASSERT(mode != nullptr);
 
-    if (mode)
-    {
-      m_viewportDimensions.x = static_cast<float>(mode->width);
-      m_viewportDimensions.y = static_cast<float>(mode->height);
-    }
-
-    initWindow(windowMode);
+    initWindow(windowMode, mode->width, mode->height, windowTitle);
 
     // It's important that GLEW is initialized after the window is created (I have literally no fucking idea why, 
     // but it's been a pain to figure this out, so just trust me)
@@ -52,12 +44,7 @@ namespace Celeste
     WindowMode windowMode,
     const std::string& windowTitle) :
     m_window(nullptr),
-    m_title(windowTitle),
-    m_left(0),
-    m_top(0),
-    m_right(0),
-    m_bottom(0),
-    m_viewportDimensions(screenWidth, screenHeight),
+    m_viewportDimensions(0),
     m_viewportDimensionsChanged()
   {
     if (!GL::glfw_initialize())
@@ -65,7 +52,7 @@ namespace Celeste
       ASSERT_FAIL();
     }
 
-    initWindow(windowMode);
+    initWindow(windowMode, screenWidth, screenHeight, windowTitle);
 
     // It's important that GLEW is initialized after the window is created (I have literally no fucking idea why, 
     // but it's been a pain to figure this out, so just trust me)
@@ -85,35 +72,34 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void OpenGLWindow::initWindow(WindowMode windowMode)
+  void OpenGLWindow::initWindow(WindowMode windowMode, int targetWidth, int targetHeight, const std::string& title)
   {
-    int viewportDimensionsX = static_cast<int>(m_viewportDimensions.x);
-    int viewportDimensionsY = static_cast<int>(m_viewportDimensions.y);
-
-    m_window = glfwCreateWindow(viewportDimensionsX, viewportDimensionsY, m_title.c_str(), nullptr, nullptr);
+    m_window = glfwCreateWindow(targetWidth, targetHeight, title.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(m_window);
-    glfwGetWindowFrameSize(m_window, &m_left, &m_top, &m_right, &m_bottom);
+
+    int left = 0, right = 0, top = 0, bottom = 0;
+    glfwGetWindowFrameSize(m_window, &left, &top, &right, &bottom);
 
     const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-    int refreshRate = mode ? mode->refreshRate : 60;
+    int refreshRate = mode ? mode->refreshRate : GLFW_DONT_CARE;
 
     if (windowMode == WindowMode::kFullScreen)
     {
       // Just use preset viewport dimensions if in full screen
-      glfwSetWindowMonitor(m_window, glfwGetPrimaryMonitor(), 0, 0, viewportDimensionsX, viewportDimensionsY, refreshRate);
+      glfwSetWindowMonitor(m_window, glfwGetPrimaryMonitor(), 0, 0, targetWidth, targetHeight, refreshRate);
     }
     else
     {
-      // Account for window frame when in windowed mode
-      m_viewportDimensions -= glm::vec2(m_left + m_right, m_top + m_bottom);
-      viewportDimensionsX = static_cast<int>(m_viewportDimensions.x);
-      viewportDimensionsY = static_cast<int>(m_viewportDimensions.y);
-
-      glfwSetWindowMonitor(m_window, nullptr, m_left, m_top, viewportDimensionsX, viewportDimensionsY, refreshRate);
+      glfwSetWindowPos(m_window, 0, top);
     }
 
-    glViewport(0, 0, viewportDimensionsX, viewportDimensionsY);
+    int width = 0, height = 0;
+    glfwGetFramebufferSize(m_window, &width, &height);
+    glViewport(0, 0, width, height);
     glCheckError();
+
+    m_viewportDimensions.x = static_cast<float>(width);
+    m_viewportDimensions.y = static_cast<float>(height);
 
     // Don't bother calling event, because who will have subscribed?  We call this function from the constructor
 
@@ -124,6 +110,8 @@ namespace Celeste
     glDepthMask(GL_FALSE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+    setTitle(title);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -141,6 +129,8 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void OpenGLWindow::setWindowMode(WindowMode windowMode)
   {
+    // POSSIBLY NEED TO REVISIT THIS - don't think viewport calculation is correct
+
     if (windowMode == getWindowMode())
     {
       // Checks to see if the current window mode is the same as the desired window mode
@@ -154,22 +144,16 @@ namespace Celeste
     int viewportDimensionsX = static_cast<int>(m_viewportDimensions.x);
     int viewportDimensionsY = static_cast<int>(m_viewportDimensions.y);
 
+    int left = 0, right = 0, top = 0, bottom = 0;
+    glfwGetWindowFrameSize(m_window, &left, &top, &right, &bottom);
+
     if (windowMode == WindowMode::kFullScreen)
     {
-      // When in full screen, our window will not have a left or right
-      // So only account for them in windowed mode
-      //m_viewportDimensions += glm::vec2(m_left + m_right, m_top + m_bottom);
-
       glfwSetWindowMonitor(m_window, glfwGetPrimaryMonitor(), 0, 0, viewportDimensionsX, viewportDimensionsY, refreshRate);
     }
     else
     {
-      // When in full screen, our window will not have a left or right
-      // So only account for them in windowed mode
-
-      //m_viewportDimensions -= glm::vec2(m_left + m_right, m_top + m_bottom);
-
-      glfwSetWindowMonitor(m_window, nullptr, m_left, m_top, viewportDimensionsX, viewportDimensionsY, refreshRate);
+      glfwSetWindowMonitor(m_window, nullptr, left, top, viewportDimensionsX, viewportDimensionsY, refreshRate);
     }
 
     glViewport(0, 0, viewportDimensionsX, viewportDimensionsY);
@@ -187,7 +171,6 @@ namespace Celeste
       return;
     }
 
-    m_title = windowTitle;
     glfwSetWindowTitle(m_window, windowTitle.c_str());
   }
 
@@ -203,34 +186,10 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  glm::vec2 OpenGLWindow::getWindowDimensions() const
-  {
-    return getWindowMode() == WindowMode::kFullScreen ? m_viewportDimensions : 
-      m_viewportDimensions + glm::vec2(m_left + m_right, m_top + m_bottom);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void OpenGLWindow::setWindowDimensions(glm::vec2 windowDimensions)
-  {
-    if (!m_window)
-    {
-      ASSERT_FAIL();
-      return;
-    }
-
-    if (getWindowMode() == WindowMode::kWindowed)
-    {
-      // Adjust the viewport dimensions taking into account the border
-      windowDimensions.x -= (m_left + m_right);
-      windowDimensions.y -= (m_top + m_bottom);
-    }
-
-    setViewportDimensions(windowDimensions);
-  }
-
-  //------------------------------------------------------------------------------------------------
   void OpenGLWindow::setViewportDimensions(const glm::vec2& viewportDimensions)
   {
+    // POSSIBLY NEED TO REVISIT THIS - don't think viewport calculation is correct
+
     if (!m_window)
     {
       ASSERT_FAIL();
@@ -240,10 +199,13 @@ namespace Celeste
     ASSERT(viewportDimensions.x > 0);
     ASSERT(viewportDimensions.y > 0);
 
+    int left = 0, right = 0, top = 0, bottom = 0;
+    glfwGetWindowFrameSize(m_window, &left, &top, &right, &bottom);
+
     if (getWindowMode() == WindowMode::kWindowed)
     {
       // Adjust the dimensions for the window borders when in windowed mode
-      glfwSetWindowSize(m_window, static_cast<int>(viewportDimensions.x) + m_left + m_right, static_cast<int>(m_viewportDimensions.y + m_top + m_bottom));
+      glfwSetWindowSize(m_window, static_cast<int>(viewportDimensions.x) + left + right, static_cast<int>(m_viewportDimensions.y + top + bottom));
     }
 
     if (m_viewportDimensions != viewportDimensions)

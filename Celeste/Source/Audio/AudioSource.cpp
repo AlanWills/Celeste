@@ -10,7 +10,7 @@ using namespace Celeste::Resources;
 
 namespace Celeste::Audio
 {
-  REGISTER_MANAGED_COMPONENT(AudioSource, 10)
+  REGISTER_COMPONENT(AudioSource, 10)
 
   //------------------------------------------------------------------------------------------------
   AudioSource::AudioSource(GameObject& gameObject) :

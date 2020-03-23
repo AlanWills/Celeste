@@ -283,5 +283,88 @@ namespace TestCeleste
 
 #pragma endregion
 
+#pragma region Child Count Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ChildCount_WithNullptrElement_ReturnsZero)
+  {
+    Assert::AreEqual((size_t)0, child_count(nullptr));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ChildCount_ElementHasNoChildren_ReturnsZero)
+  {
+    XMLDocument document;
+    XMLElement* element = document.NewElement("Root");
+    document.InsertFirstChild(element);
+
+    Assert::IsTrue(element->NoChildren());
+    Assert::AreEqual((size_t)0, child_count(element));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ChildCount_ElementHasChildren_ReturnsCorrectChildCount)
+  {
+    XMLDocument document;
+    XMLElement* element = document.NewElement("Root");
+    XMLElement* child1 = document.NewElement("Child1");
+    XMLElement* child2 = document.NewElement("Child2");
+    XMLElement* child3 = document.NewElement("Child3");
+    document.InsertFirstChild(element);
+    element->InsertFirstChild(child1);
+    element->InsertEndChild(child2);
+    element->InsertEndChild(child3);
+
+    Assert::IsFalse(element->NoChildren());
+    Assert::AreEqual((size_t)3, child_count(element));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ChildCount_WithName_ElementHasNoChildren_ReturnsZero)
+  {
+    XMLDocument document;
+    XMLElement* element = document.NewElement("Root");
+    document.InsertFirstChild(element);
+
+    Assert::IsTrue(element->NoChildren());
+    Assert::AreEqual((size_t)0, child_count(element));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ChildCount_WithName_ElementHasNoChildrenWithName_ReturnsZero)
+  {
+    XMLDocument document;
+    XMLElement* element = document.NewElement("Root");
+    XMLElement* child1 = document.NewElement("Child1");
+    XMLElement* child2 = document.NewElement("Child2");
+    XMLElement* child3 = document.NewElement("Child3");
+    document.InsertFirstChild(element);
+    element->InsertFirstChild(child1);
+    element->InsertEndChild(child2);
+    element->InsertEndChild(child3);
+
+    Assert::IsFalse(element->NoChildren());
+    Assert::AreEqual((size_t)0, child_count(element));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ChildCount_WithName_ElementHasChildrenWithName_ReturnsCorrectCount)
+  {
+    XMLDocument document;
+    XMLElement* element = document.NewElement("Root");
+    XMLElement* child1 = document.NewElement("Child1");
+    XMLElement* child2 = document.NewElement("Child2");
+    XMLElement* child3 = document.NewElement("Child1");
+    document.InsertFirstChild(element);
+    element->InsertFirstChild(child1);
+    element->InsertEndChild(child2);
+    element->InsertEndChild(child3);
+
+    Assert::IsFalse(element->NoChildren());
+    Assert::AreEqual((size_t)2, child_count(element));
+  }
+
+#pragma endregion
+
   };
 }

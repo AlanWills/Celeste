@@ -37,6 +37,7 @@ namespace Celeste::Input
       using Inherited = Entity;
 
       void updateMousePosition();
+      void raycast() const;
 
       Keyboard m_keyboard;
       Mouse m_mouse;

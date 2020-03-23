@@ -25,7 +25,7 @@ namespace Celeste::Lua::LuaComponentDataConverterScriptCommands
 
     state.new_usertype<LuaComponentDataConverter>(
       "LuaComponentDataConverter",
-      sol::base_classes, sol::bases<ComponentDataConverter, ObjectDataConverter<Component>, DataConverter>(),
+      sol::base_classes, sol::bases<ComponentDataConverter, EntityDataConverter<Component>, ObjectDataConverter<Component>, DataConverter>(),
       "register", &Lua::LuaComponentDataConverterRegistry::registerConverter,
       "hasConverter", &Lua::LuaComponentDataConverterRegistry::hasConverter,
       "getConverter", &Internals::getConverter);

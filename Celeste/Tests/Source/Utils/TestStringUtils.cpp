@@ -10,165 +10,165 @@ namespace TestCeleste
 
 #pragma region Empty Wchar to Char Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_EmptyWcharToChar)
-    {
-      std::wstring w_string(L"");
-      char string[50];
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(StringUtils_EmptyWcharToChar)
+  {
+    std::wstring w_string(L"");
+    char string[50];
 
-      size_t amountConverted = wcharToChar(w_string.c_str(), string, 50);
+    size_t amountConverted = wcharToChar(w_string.c_str(), string, 50);
 
-      Assert::AreEqual("", string);
-      Assert::AreEqual((size_t)0, amountConverted);
-    }
+    Assert::AreEqual("", string);
+    Assert::AreEqual((size_t)0, amountConverted);
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_NonEmptyWcharToChar)
-    {
-      std::wstring w_string(L"Test String");
-      char string[50];
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(StringUtils_NonEmptyWcharToChar)
+  {
+    std::wstring w_string(L"Test String");
+    char string[50];
 
-      size_t amountConverted = wcharToChar(w_string.c_str(), string, 50);
+    size_t amountConverted = wcharToChar(w_string.c_str(), string, 50);
 
-      Assert::AreEqual("Test String", string);
-      Assert::AreEqual(w_string.size(), amountConverted);
-    }
+    Assert::AreEqual("Test String", string);
+    Assert::AreEqual(w_string.size(), amountConverted);
+  }
 
 #pragma endregion
 
 #pragma region Char to Wchar tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_EmptyCharToWchar)
-    {
-      std::string string("");
-      wchar_t w_string[50];
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(StringUtils_EmptyCharToWchar)
+  {
+    std::string string("");
+    wchar_t w_string[50];
 
-      size_t amountConverted = charToWchar(string.c_str(), w_string, 50);
+    size_t amountConverted = charToWchar(string.c_str(), w_string, 50);
 
-      Assert::AreEqual(L"", w_string);
-      Assert::AreEqual((size_t)0, amountConverted);
-    }
+    Assert::AreEqual(L"", w_string);
+    Assert::AreEqual((size_t)0, amountConverted);
+  }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_NonEmptyCharToWchar)
-    {
-      std::string string("Test String");
-      wchar_t w_string[50];
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(StringUtils_NonEmptyCharToWchar)
+  {
+    std::string string("Test String");
+    wchar_t w_string[50];
 
-      size_t amountConverted = charToWchar(string.c_str(), w_string, 50);
+    size_t amountConverted = charToWchar(string.c_str(), w_string, 50);
 
-      Assert::AreEqual(L"Test String", w_string);
-      Assert::AreEqual(string.size(), amountConverted);
-    }
+    Assert::AreEqual(L"Test String", w_string);
+    Assert::AreEqual(string.size(), amountConverted);
+  }
 
 #pragma endregion
 
 #pragma region Split Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_Split_EmptyString_ReturnsEmptyList)
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(StringUtils_Split_EmptyString_ReturnsEmptyList)
+  {
+    std::vector<std::string> lines;
+    split("", lines);
+
+    Assert::AreEqual((size_t)0, lines.size());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(StringUtils_Split_NoDelimiterInText_ReturnsSingleEntryInList)
+  {
+    std::vector<std::string> lines;
+    split("Hello Ground Control", lines);
+
+    Assert::AreEqual((size_t)1, lines.size());
+    Assert::AreEqual("Hello Ground Control", lines[0].c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(StringUtils_Split_TextWithDelimiterAtEnd_ReturnsTextAndEmptyStringInList)
+  {
+    std::vector<std::string> lines;
+    split("Hello Ground Control0", lines, '0');
+
+    Assert::AreEqual((size_t)2, lines.size());
+    Assert::AreEqual("Hello Ground Control", lines[0].c_str());
+    Assert::AreEqual("", lines[1].c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(StringUtils_Split_TextWithDelimiterInMiddle_ReturnsTwoLines)
+  {
+    std::vector<std::string> lines;
+    split("Hello Ground0 Control", lines, 0);
+
+    Assert::AreEqual((size_t)2, lines.size());
+    Assert::AreEqual("Hello Ground", lines[0].c_str());
+    Assert::AreEqual(" Control", lines[1].c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(StringUtils_Split_TextWithMultipleDelimiters_ReturnsCorrectLines)
+  {
+    std::vector<std::string> lines;
+    split("Hell0o Ground0 Control0", lines);
+
+    Assert::AreEqual((size_t)4, lines.size());
+    Assert::AreEqual("Hell", lines[0].c_str());
+    Assert::AreEqual("o Ground", lines[1].c_str());
+    Assert::AreEqual(" Control", lines[2].c_str());
+    Assert::AreEqual("", lines[3].c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(StringUtils_Split_AllDelimiters_ReturnsCorrectLines)
+  {
+    std::vector<std::string> lines;
+    split("00000", lines);
+
+    Assert::AreEqual((size_t)6, lines.size());
+
+    for (size_t i = 0; i < 6; ++i)
     {
-      std::vector<std::string> lines;
-      split("", lines);
-
-      Assert::AreEqual((size_t)0, lines.size());
+      Assert::AreEqual("", lines[i].c_str());
     }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_Split_SingleLineText_ReturnsSingleEntryInList)
-    {
-      std::vector<std::string> lines;
-      split("Hello Ground Control", lines);
-
-      Assert::AreEqual((size_t)1, lines.size());
-      Assert::AreEqual("Hello Ground Control", lines[0].c_str());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_Split_TextWithNewlineAtEnd_ReturnsTextAndEmptyStringInList)
-    {
-      std::vector<std::string> lines;
-      split("Hello Ground Control\n", lines);
-
-      Assert::AreEqual((size_t)2, lines.size());
-      Assert::AreEqual("Hello Ground Control", lines[0].c_str());
-      Assert::AreEqual("", lines[1].c_str());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_Split_TextWithNewlineInMiddle_ReturnsTwoLines)
-    {
-      std::vector<std::string> lines;
-      split("Hello Ground\n Control", lines);
-
-      Assert::AreEqual((size_t)2, lines.size());
-      Assert::AreEqual("Hello Ground", lines[0].c_str());
-      Assert::AreEqual(" Control", lines[1].c_str());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_Split_TextWithMultipleNewlines_ReturnsCorrectLines)
-    {
-      std::vector<std::string> lines;
-      split("Hell\no Ground\n Control\n", lines);
-
-      Assert::AreEqual((size_t)4, lines.size());
-      Assert::AreEqual("Hell", lines[0].c_str());
-      Assert::AreEqual("o Ground", lines[1].c_str());
-      Assert::AreEqual(" Control", lines[2].c_str());
-      Assert::AreEqual("", lines[3].c_str());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_Split_AllNewlines_ReturnsCorrectLines)
-    {
-      std::vector<std::string> lines;
-      split("\n\n\n\n\n", lines);
-
-      Assert::AreEqual((size_t)6, lines.size());
-
-      for (size_t i = 0; i < 6; ++i)
-      {
-        Assert::AreEqual("", lines[i].c_str());
-      }
-    }
+  }
 
 #pragma endregion
 
 #pragma region Numeric To String Append Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(StringUtils_IntToStringAppend)
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(StringUtils_IntToStringAppend)
+  {
     {
-      {
-        std::string actual;
-        numericToStringAppend(0, actual);
+      std::string actual;
+      numericToStringAppend(0, actual);
 
-        Assert::AreEqual("0", actual.c_str());
-      }
-
-      {
-        std::string actual;
-        numericToStringAppend(1010101010, actual);
-
-        Assert::AreEqual("1010101010", actual.c_str());
-      }
-
-      {
-        std::string actual("Hello");
-        numericToStringAppend(-9999999, actual);
-
-        Assert::AreEqual("Hello-9999999", actual.c_str());
-      }
-
-      {
-        std::string actual("Hello");
-        numericToStringAppend(-0.00054f, actual);
-
-        Assert::AreEqual("Hello-0.000540", actual.c_str());
-      }
+      Assert::AreEqual("0", actual.c_str());
     }
+
+    {
+      std::string actual;
+      numericToStringAppend(1010101010, actual);
+
+      Assert::AreEqual("1010101010", actual.c_str());
+    }
+
+    {
+      std::string actual("Hello");
+      numericToStringAppend(-9999999, actual);
+
+      Assert::AreEqual("Hello-9999999", actual.c_str());
+    }
+
+    {
+      std::string actual("Hello");
+      numericToStringAppend(-0.00054f, actual);
+
+      Assert::AreEqual("Hello-0.000540", actual.c_str());
+    }
+  }
 
 #pragma endregion
 

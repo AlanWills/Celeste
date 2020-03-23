@@ -4,7 +4,7 @@
 
 namespace CelesteMocks
 {
-  REGISTER_UNMANAGED_COMPONENT(MockButton, 10);
+  REGISTER_COMPONENT(MockButton, 10);
 
   MockButton::MockButton(GameObject& gameObject) :
     Inherited(gameObject)

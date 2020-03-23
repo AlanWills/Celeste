@@ -5,7 +5,7 @@
 
 namespace Celeste::UI
 {
-  REGISTER_MANAGED_COMPONENT(ProgressBar, 4)
+  REGISTER_COMPONENT(ProgressBar, 4)
 
   //------------------------------------------------------------------------------------------------
   ProgressBar::ProgressBar(GameObject& gameObject) :

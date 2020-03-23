@@ -7,7 +7,7 @@ using namespace Celeste::Resources;
 
 namespace Celeste::Rendering
 {
-  REGISTER_UNMANAGED_COMPONENT(ModelRenderer, 10)
+  REGISTER_COMPONENT(ModelRenderer, 10)
 
   //------------------------------------------------------------------------------------------------
   ModelRenderer::ModelRenderer(GameObject& gameObject) :

@@ -6,7 +6,7 @@
 
 namespace Celeste::Events
 {
-  REGISTER_UNMANAGED_COMPONENT(EventTriggerer, 10)
+  REGISTER_COMPONENT(EventTriggerer, 10)
 
   //------------------------------------------------------------------------------------------------
   EventTriggerer::EventTriggerer(GameObject& gameObject) :

@@ -2,7 +2,6 @@
 
 #include "Objects/Component.h"
 #include "Rendering/SpriteBatch.h"
-#include "Viewport/Camera.h"
 
 #include <queue>
 
@@ -18,21 +17,16 @@ namespace Celeste
       DECLARE_MANAGED_COMPONENT(Canvas, RenderManager, CelesteDllExport)
 
       public:
-        const glm::vec2& getDimensions() const { return m_camera.getViewportDimensions(); }
-        CelesteDllExport void setDimensions(const glm::vec2& canvasDimensions);
-        void setDimensions(float canvasXDimension, float canvasYDimension) { setDimensions(glm::vec2(canvasXDimension, canvasYDimension)); }
-
-        ProjectionMode getProjectionMode() const { return m_camera.getProjectionMode(); }
-        CelesteDllExport void setProjectionMode(ProjectionMode projectionMode);
-
-        CelesteDllExport void handleInput() override;
         CelesteDllExport void render(float lag);
       
+        // In the future we can update this when we need it, to use a camera for camera space
+        // rendering or world space rendering, but for now this is good enough
+        // If this happens, we'll need to update the raycasters too
+
       private:
         using Inherited = Component;
 
         SpriteBatch m_spriteBatch;
-        Camera m_camera;
 
         std::queue<observer_ptr<GameObject>> m_gameObjectQueue;
     };

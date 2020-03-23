@@ -4,7 +4,7 @@
 
 namespace CelesteMocks
 {
-  REGISTER_UNMANAGED_COMPONENT(MockCollider, 10);
+  REGISTER_COMPONENT(MockCollider, 10);
 
   //------------------------------------------------------------------------------------------------
   MockCollider::MockCollider(GameObject& gameObject) :

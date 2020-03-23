@@ -11,7 +11,7 @@ using namespace Celeste::Input;
 
 namespace Celeste::UI
 {
-  REGISTER_MANAGED_COMPONENT(Slider, 4)
+  REGISTER_COMPONENT(Slider, 4)
 
   //------------------------------------------------------------------------------------------------
   Slider::Slider(GameObject& gameObject) :
@@ -49,7 +49,7 @@ namespace Celeste::UI
     }
     else
     {
-      m_sliderClicked = getMouse().isButtonClicked(MouseButton::kLeft) && getGameObject()->findComponent<RectangleCollider>()->isHitByRay();
+      //m_sliderClicked = getMouse().isButtonClicked(MouseButton::kLeft) && getGameObject()->findComponent<RectangleCollider>()->isHitByRay();
     }
   }
 

@@ -4,7 +4,7 @@
 
 namespace Celeste
 {
-  REGISTER_UNMANAGED_COMPONENT(LoadResourcesAsyncScript, 1)
+  REGISTER_COMPONENT(LoadResourcesAsyncScript, 1)
 
   //------------------------------------------------------------------------------------------------
   LoadResourcesAsyncScript::LoadResourcesAsyncScript(GameObject& gameObject) :

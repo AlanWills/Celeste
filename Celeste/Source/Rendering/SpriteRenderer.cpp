@@ -7,7 +7,7 @@ using namespace Celeste::Resources;
 
 namespace Celeste::Rendering
 {
-  REGISTER_UNMANAGED_COMPONENT(SpriteRenderer, 50)
+  REGISTER_COMPONENT(SpriteRenderer, 50)
 
   //------------------------------------------------------------------------------------------------
   SpriteRenderer::SpriteRenderer(GameObject& gameObject) :

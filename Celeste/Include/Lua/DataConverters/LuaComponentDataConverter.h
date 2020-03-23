@@ -66,8 +66,8 @@ namespace Celeste::Lua
 
       void convertCallbacks(const sol::table& converterManifest);
 
-      sol::function m_doConvertFromXML;
-      sol::function m_doSetValues;
+      sol::protected_function m_doConvertFromXML;
+      sol::protected_function m_doSetValues;
   };
 
   //------------------------------------------------------------------------------------------------

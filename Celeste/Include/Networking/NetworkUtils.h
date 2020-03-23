@@ -5,12 +5,9 @@
 #include <string>
 
 
-namespace Celeste
+namespace Celeste::Networking
 {
-  namespace Networking
-  {
-    CelesteDllExport void initialize();
-    CelesteDllExport void sendRequest(const std::string& url, unsigned int port, const std::string& content);
-    CelesteDllExport void exit();
-  }
+  CelesteDllExport void initialize();
+  CelesteDllExport void sendRequest(const std::string& url, unsigned int port, const std::string& content);
+  CelesteDllExport void exit();
 }

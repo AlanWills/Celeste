@@ -5,7 +5,7 @@
 
 namespace Celeste::Debugging
 {
-  REGISTER_UNMANAGED_COMPONENT(FPSCounter, 1)
+  REGISTER_COMPONENT(FPSCounter, 1)
 
   //------------------------------------------------------------------------------------------------
   FPSCounter::FPSCounter(GameObject& gameObject) :

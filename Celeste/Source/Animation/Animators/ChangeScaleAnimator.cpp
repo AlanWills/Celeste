@@ -4,7 +4,7 @@
 
 namespace Celeste::Animators
 {
-  REGISTER_UNMANAGED_COMPONENT(ChangeScaleAnimator, 5)
+  REGISTER_COMPONENT(ChangeScaleAnimator, 5)
 
   //------------------------------------------------------------------------------------------------
   ChangeScaleAnimator::ChangeScaleAnimator(GameObject& gameObject) :

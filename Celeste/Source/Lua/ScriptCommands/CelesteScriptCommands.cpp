@@ -12,6 +12,7 @@
 #include "Lua/ScriptCommands/Input/InputScriptCommands.h"
 #include "Lua/ScriptCommands/Objects/ObjectScriptCommands.h"
 #include "Lua/ScriptCommands/DataConverters/DataConverterScriptCommands.h"
+#include "Lua/ScriptCommands/Viewport/ViewportScriptCommands.h"
 #include "Lua/ScriptCommands/UI/UIScriptCommands.h"
 #include "Lua/ScriptCommands/XML/XMLScriptCommands.h"
 #include "Lua/ScriptCommands/Lua/Components/LuaComponentManifestRegistryScriptCommands.h"
@@ -31,6 +32,7 @@ namespace Celeste::Lua::CelesteScriptCommands
     // Now initialize all lua scripts and API
     Lua::Core::ScriptCommands::initialize();
     Lua::Maths::ScriptCommands::initialize();
+    Lua::Viewport::ScriptCommands::initialize();
     Lua::XML::XMLScriptCommands::initialize();
     Lua::Objects::ScriptCommands::initialize();
     Lua::Resources::ScriptCommands::initialize();

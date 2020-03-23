@@ -5,7 +5,7 @@
 
 namespace Celeste
 {
-  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(SliderDataConverter);
+  REGISTER_COMPONENT_DATA_CONVERTER(SliderDataConverter);
 
   const char* const SliderDataConverter::MIN_ATTRIBUTE_NAME("min");
   const char* const SliderDataConverter::MAX_ATTRIBUTE_NAME("max");

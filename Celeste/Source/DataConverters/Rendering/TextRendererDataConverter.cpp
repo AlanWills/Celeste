@@ -7,7 +7,7 @@ namespace Celeste
 {
   using namespace Rendering;
 
-  REGISTER_MANAGED_COMPONENT_DATA_CONVERTER(TextRendererDataConverter)
+  REGISTER_COMPONENT_DATA_CONVERTER(TextRendererDataConverter)
 
   //------------------------------------------------------------------------------------------------
   const char* const TextRendererDataConverter::FONT_ATTRIBUTE_NAME("font");

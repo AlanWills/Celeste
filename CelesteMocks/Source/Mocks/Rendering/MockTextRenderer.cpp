@@ -4,7 +4,7 @@
 
 namespace CelesteMocks
 {
-  REGISTER_UNMANAGED_COMPONENT(MockTextRenderer, 10);
+  REGISTER_COMPONENT(MockTextRenderer, 10);
 
   MockTextRenderer::MockTextRenderer(GameObject& gameObject) :
     Inherited(gameObject)

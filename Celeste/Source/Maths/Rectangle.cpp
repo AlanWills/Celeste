@@ -1,4 +1,5 @@
 #include "Maths/Rectangle.h"
+#include "Maths/Ray.h"
 
 
 namespace Celeste::Maths

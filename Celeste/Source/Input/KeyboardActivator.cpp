@@ -5,7 +5,7 @@
 
 namespace Celeste::Input
 {
-  REGISTER_MANAGED_COMPONENT(KeyboardActivator, 10)
+  REGISTER_COMPONENT(KeyboardActivator, 10)
 
   //------------------------------------------------------------------------------------------------
   KeyboardActivator::KeyboardActivator(GameObject& gameObject) :

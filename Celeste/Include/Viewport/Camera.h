@@ -1,24 +1,21 @@
 #pragma once
 
+#include "Objects/Component.h"
 #include "Maths/Ray.h"
-#include "Maths/Transform.h"
 #include "Viewport/ViewportEnums.h"
+#include "UID/StringId.h"
 
 
 namespace Celeste
 {
-  class Camera
+  class Camera : public Component
   {
+    DECLARE_UNMANAGED_COMPONENT(Camera, CelesteDllExport);
+
     public:
-      CelesteDllExport Camera();
-
-      inline Transform& getTransform() { return m_transform; }
-      const Transform& getTransform() const { return const_cast<Camera*>(this)->getTransform(); }
-
       CelesteDllExport glm::mat4 getProjectionMatrix() const;
       CelesteDllExport glm::mat4 getViewMatrix() const;
 
-      /// \brief Create a ray from the camera's eye to the position in world space that is unprojected from the inputted screen position
       CelesteDllExport Maths::Ray createRay() const;
       CelesteDllExport Maths::Ray createRay(const glm::vec2& screenPosition) const;
 
@@ -42,10 +39,11 @@ namespace Celeste
       }
 
     private:
+      using Inherited = Component;
+
       glm::mat4 getPerspectiveProjectionMatrix() const;
       glm::mat4 getOrthographicProjectionMatrix() const;
 
-      Transform m_transform;
       ProjectionMode m_projectionMode;
       float m_nearPlane;
       float m_farPlane;

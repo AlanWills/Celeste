@@ -33,7 +33,7 @@ namespace Celeste
       const glm::vec2& resolution = getResolution();
       if (resolution != glm::zero<glm::vec2>())
       {
-        window.setWindowDimensions(resolution);
+        window.setViewportDimensions(resolution);
       }
     }
   }

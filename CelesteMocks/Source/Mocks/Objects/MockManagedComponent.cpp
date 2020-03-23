@@ -4,7 +4,7 @@
 
 namespace CelesteMocks
 {
-  REGISTER_MANAGED_COMPONENT(MockManagedComponent, 10);
+  REGISTER_COMPONENT(MockManagedComponent, 10);
 
   MockManagedComponent::MockManagedComponent(Celeste::GameObject& gameObject) :
     Celeste::Component(gameObject)

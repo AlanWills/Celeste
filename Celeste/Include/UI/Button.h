@@ -11,11 +11,6 @@ namespace Celeste
   class Path;
   class GameObject;
 
-  namespace Physics
-  {
-    class RectangleCollider;
-  }
-
   namespace Input
   {
     class MouseInteractionHandler;
@@ -98,7 +93,6 @@ namespace Celeste
 
         observer_ptr<Rendering::SpriteRenderer> m_spriteRenderer = nullptr;
         observer_ptr<Input::MouseInteractionHandler> m_mouseInteraction = nullptr;
-        observer_ptr<Physics::RectangleCollider> m_collider = nullptr;
         observer_ptr<Audio::AudioSource> m_audio = nullptr;
     };
 
