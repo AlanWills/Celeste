@@ -33,7 +33,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   glm::mat4 Camera::getOrthographicProjectionMatrix() const
   {
-    return glm::ortho<float>(0, m_viewportDimensions.x, 0, m_viewportDimensions.y);
+    return glm::ortho<float>(0, m_viewportDimensions.x, 0, m_viewportDimensions.y, m_nearPlane, m_farPlane);
   }
 
   //------------------------------------------------------------------------------------------------

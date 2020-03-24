@@ -50,17 +50,19 @@ namespace Celeste
 
       inline void advance()
       {
-        while (m_entityIt == m_entityEndIt && ++m_allocatorIt != m_allocatorEndIt)
+        while (m_entityIt == m_entityEndIt && m_allocatorDistance > 1)
         {
           // We are at the end of the allocator, but not in an allocated entry
           // We move to the next allocator
+          --m_allocatorDistance;
+          ++m_allocatorIt;
           m_entityIt = static_cast<AllocatorType>((*m_allocatorIt).get())->begin();
           m_entityEndIt = static_cast<AllocatorType>((*m_allocatorIt).get())->end();
         }
       }
 
       typename Iterator m_allocatorIt;
-      typename Iterator m_allocatorEndIt;
+      size_t m_allocatorDistance;
       PoolAllocatorIterator<T> m_entityIt;
       PoolAllocatorIterator<T> m_entityEndIt;
   };
@@ -71,7 +73,7 @@ namespace Celeste
     typename Iterator allocatorIt,
     typename Iterator allocatorEndIt)
     : m_allocatorIt(allocatorIt),
-      m_allocatorEndIt(allocatorEndIt),
+      m_allocatorDistance(std::distance(allocatorIt, allocatorEndIt)),
       m_entityIt(static_cast<AllocatorType>((*m_allocatorIt).get())->begin()),
       m_entityEndIt(static_cast<AllocatorType>((*m_allocatorIt).get())->end())
   {
@@ -84,7 +86,7 @@ namespace Celeste
     typename Iterator allocatorEndIt, 
     PoolAllocatorIterator<T> entityEndIt)
     : m_allocatorIt(allocatorEndIt),
-      m_allocatorEndIt(allocatorEndIt),
+      m_allocatorDistance(0),
       m_entityIt(entityEndIt),
       m_entityEndIt(entityEndIt)
   {

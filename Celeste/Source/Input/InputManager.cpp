@@ -73,19 +73,21 @@ namespace Celeste::Input
 
     for (GraphicsRaycaster& graphicsRaycaster : GraphicsRaycaster::m_allocator)
     {
-      for (observer_ptr<GameObject> hitGameObject : graphicsRaycaster.raycast())
+      auto hitObjects = graphicsRaycaster.raycast();
+      if (!hitObjects.empty())
       {
-        ASSERT(hitGameObjects.find(hitGameObject) == hitGameObjects.end());
-        hitGameObjects.emplace(hitGameObject);
+        ASSERT(hitGameObjects.find(hitObjects[0]) == hitGameObjects.end());
+        hitGameObjects.emplace(hitObjects[0]);
       }
     }
 
     for (PhysicsRaycaster& physicsRaycaster : PhysicsRaycaster::m_allocator)
     {
-      for (observer_ptr<GameObject> hitGameObject : physicsRaycaster.raycast())
+      auto hitObjects = physicsRaycaster.raycast();
+      if (!hitObjects.empty())
       {
-        ASSERT(hitGameObjects.find(hitGameObject) == hitGameObjects.end());
-        hitGameObjects.emplace(hitGameObject);
+        ASSERT(hitGameObjects.find(hitObjects[0]) == hitGameObjects.end());
+        hitGameObjects.emplace(hitObjects[0]);
       }
     }
 

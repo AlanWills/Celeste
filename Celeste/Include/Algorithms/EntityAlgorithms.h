@@ -7,34 +7,20 @@
 namespace Celeste::Algorithms
 {
   template <typename T>
-  inline void handleInput(ResizeableAllocatorIterator<T> begin, ResizeableAllocatorIterator<T> end)
-  {
-    while (begin != end)
-    {
-      (*begin).handleInput();
-      ++begin;
-    }
-  }
-
-  template <typename T>
   inline void handleInput(ResizeableAllocator<T>& allocator)
   {
-    handleInput<T>(allocator.begin(), allocator.end());
-  }
-
-  template <typename T>
-  inline void update(float elapsedGameTime, ResizeableAllocatorIterator<T> begin, ResizeableAllocatorIterator<T> end)
-  {
-    while (begin != end)
+    for (T& obj : allocator)
     {
-      (*begin).update(elapsedGameTime);
-      ++begin;
+      obj.handleInput();
     }
   }
 
   template <typename T>
   inline void update(float elapsedGameTime, ResizeableAllocator<T>& allocator)
   {
-    update<T>(elapsedGameTime, allocator.begin(), allocator.end());
+    for (T& obj : allocator)
+    {
+      obj.update(elapsedGameTime);
+    }
   }
 }

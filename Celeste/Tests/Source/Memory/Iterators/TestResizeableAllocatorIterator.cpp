@@ -163,6 +163,41 @@ namespace TestCeleste
     }
   }
 
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ResizeableAllocatorIterator_WhenAllocatorResizesDuringIteration_OnlyIteratesOverInitialAllocation)
+  {
+    std::unique_ptr<PoolAllocator<MockComponent>> allocator = std::make_unique<PoolAllocator<MockComponent>>(3);
+    observer_ptr<MockComponent> component1 = allocator->allocate();
+    observer_ptr<MockComponent> component2 = allocator->allocate();
+    observer_ptr<MockComponent> component3 = allocator->allocate();
+    std::list<std::unique_ptr<PoolAllocator<MockComponent>>> allocators;
+    allocators.emplace_back(std::move(allocator));
+
+    // Iterator over 3 allocated objects
+    {
+      ResizeableAllocatorIterator<MockComponent> it(allocators.begin(), allocators.end());
+      ResizeableAllocatorIterator<MockComponent> end(allocators.end(), allocators.back()->end());
+
+      Assert::AreSame(*component1, *it);
+
+      ++it;
+
+      Assert::AreSame(*component2, *it);
+
+      // Resize
+      std::unique_ptr<PoolAllocator<MockComponent>> allocator2 = std::make_unique<PoolAllocator<MockComponent>>(3);
+      allocator2->allocate();
+      allocator2->allocate();
+      allocator2->allocate();
+      allocators.emplace_back(std::move(allocator2));
+
+      ++it;
+
+      Assert::AreSame(*component3, *it);
+      Assert::IsTrue(it == end);
+    }
+  }
+
 #pragma endregion
 
 #pragma region Equality Operator Tests

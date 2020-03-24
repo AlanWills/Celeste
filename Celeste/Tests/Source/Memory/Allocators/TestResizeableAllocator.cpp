@@ -303,7 +303,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ResizeableAllocator_ForeachIteration_PoolResizeOccurred_IteratesOverAllocatedObjectsOnly)
+  TEST_METHOD(ResizeableAllocator_ForeachIteration_PoolShrinkOccurred_IteratesOverAllocatedObjectsOnly)
   {
     ResizeableAllocator<MockComponent> allocator(1);
     observer_ptr<MockComponent> handle1 = allocator.allocate();
@@ -343,6 +343,32 @@ namespace TestCeleste
       int count = 0;
       for (const MockComponent& component : allocator)
       {
+        UNUSED(component);
+        count++;
+      }
+
+      Assert::AreEqual(1, count);
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ResizeableAllocator_ForeachIteration_PoolExpandOccurs_IteratesOverInitiallyAllocatedObjectsOnly)
+  {
+    ResizeableAllocator<MockComponent> allocator(1);
+    allocator.allocate();
+
+    {
+      int count = 0;
+      for (const MockComponent& component : allocator)
+      {
+        if (count == 0)
+        {
+          for (size_t i = 0; i < 2 * allocator.capacity(); ++i)
+          {
+            allocator.allocate();
+          }
+        }
+
         UNUSED(component);
         count++;
       }
