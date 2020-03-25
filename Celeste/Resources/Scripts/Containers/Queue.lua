@@ -8,9 +8,7 @@ end
  
 ---------------------------------------------------------------------------------
 function Queue:size(value)
-    local last = self.last + 1
-    self.last = last
-    self[last] = value
+    return self.last - self.first
 end
   
 ---------------------------------------------------------------------------------
