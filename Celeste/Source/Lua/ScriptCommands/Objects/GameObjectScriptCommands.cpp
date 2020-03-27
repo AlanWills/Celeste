@@ -24,22 +24,6 @@ namespace Celeste::Lua::GameObjectScriptCommands
     }
 
     //------------------------------------------------------------------------------------------------
-    bool shouldRender(GameObject& gameObject)
-    {
-      observer_ptr<Rendering::Renderer> renderer = gameObject.findComponent<Rendering::Renderer>();
-      return renderer != nullptr && renderer->isActive();
-    }
-
-    //------------------------------------------------------------------------------------------------
-    void setShouldRender(GameObject& gameObject, bool shouldRender)
-    {
-      if (observer_ptr<Rendering::Renderer> renderer = gameObject.findComponent<Rendering::Renderer>(); renderer != nullptr)
-      {
-        renderer->setActive(shouldRender);
-      }
-    }
-
-    //------------------------------------------------------------------------------------------------
     observer_ptr<GameObject> getParent(GameObject& gameObject)
     {
       return gameObject.getParent();
@@ -84,8 +68,6 @@ namespace Celeste::Lua::GameObjectScriptCommands
       sol::base_classes, sol::bases<Entity, Object>(),
       "getName", &Internals::getName,
       "setName", &Internals::setName_String,
-      "shouldRender", &Internals::shouldRender,
-      "setShouldRender", &Internals::setShouldRender,
       "getParent", &Internals::getParent,
       "setParent", &GameObject::setParent,
       "getTransform", &Internals::getTransform,
