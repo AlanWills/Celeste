@@ -7,6 +7,12 @@
 using EllipseCollider = Celeste::Physics::EllipseCollider;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Physics::EllipseCollider> : std::false_type {};
+}
+
 namespace Celeste::Lua::Physics::EllipseColliderScriptCommands
 {
   namespace Internals

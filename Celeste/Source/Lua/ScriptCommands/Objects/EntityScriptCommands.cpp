@@ -4,6 +4,12 @@
 #include "Objects/Entity.h"
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Entity> : std::false_type {};
+}
+
 namespace Celeste::Lua::EntityScriptCommands
 {
   namespace Internals

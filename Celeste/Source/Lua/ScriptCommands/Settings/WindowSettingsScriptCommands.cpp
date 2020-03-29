@@ -9,6 +9,12 @@
 using WindowSettings = Celeste::Settings::WindowSettings;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Settings::WindowSettings> : std::false_type {};
+}
+
 namespace Celeste::Lua::Settings::WindowSettingsScriptCommands
 {
   namespace Internals

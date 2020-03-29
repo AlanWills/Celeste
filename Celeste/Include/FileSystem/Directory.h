@@ -39,7 +39,7 @@ namespace Celeste
       CelesteDllExport bool create() const;
 
       /// \brief Removes a directory and all of the contents inside it if it exists
-      CelesteDllExport void remove() const;
+      CelesteDllExport bool remove() const;
 
       /// \brief Obtain all of the files in the current directory and add them to the inputted vector
       /// Can provide a file extension filter to limit the files we are considering - by default considers all files

@@ -11,7 +11,11 @@ namespace Celeste::Lua::Core::ScriptCommands
     //------------------------------------------------------------------------------------------------
     void _assert(bool condition)
     {
+#if _DEBUG
       ASSERT(condition);
+#else
+      UNUSED(condition);
+#endif
     }
 
     //------------------------------------------------------------------------------------------------
@@ -23,7 +27,11 @@ namespace Celeste::Lua::Core::ScriptCommands
     //------------------------------------------------------------------------------------------------
     void assertFailMessage(const std::string& message)
     {
+#if _DEBUG
       ASSERT_FAIL_MSG(message.c_str());
+#else
+      UNUSED(message);
+#endif
     }
 
     //------------------------------------------------------------------------------------------------

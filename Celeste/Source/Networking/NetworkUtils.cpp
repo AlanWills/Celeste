@@ -8,13 +8,14 @@ namespace Celeste
   namespace Networking
   {
     //------------------------------------------------------------------------------------------------
-    void initialize()
+    bool initialize()
     {
       // Initialize Winsock
       WSADATA wsaData;
-      int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
 
+      bool result = WSAStartup(MAKEWORD(2, 2), &wsaData) == 0;
       ASSERT(result == 0);
+      return result;
     }
 
     //------------------------------------------------------------------------------------------------

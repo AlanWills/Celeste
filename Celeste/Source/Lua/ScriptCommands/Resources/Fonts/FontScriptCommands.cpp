@@ -6,6 +6,12 @@
 using Font = Celeste::Resources::Font;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Resources::Font> : std::false_type {};
+}
+
 namespace Celeste::Lua::Resources::FontScriptCommands
 {
   //------------------------------------------------------------------------------------------------

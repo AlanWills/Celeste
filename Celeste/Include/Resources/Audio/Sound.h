@@ -7,26 +7,23 @@
 #include <string>
 
 
-namespace Celeste
+namespace Celeste::Resources
 {
-  namespace Resources
+  class Sound : public Resource
   {
-    class Sound : public Resource
-    {
-      public:
-        CelesteDllExport Sound();
-        CelesteDllExport ~Sound();
+    public:
+      CelesteDllExport Sound();
+      CelesteDllExport ~Sound();
 
-        ALuint getAudioHandle() const { return m_audioHandle; }
+      ALuint getAudioHandle() const { return m_audioHandle; }
 
-      protected:
-        CelesteDllExport bool doLoadFromFile(const Path& soundFilePath) override;
-        CelesteDllExport void doUnload() override;
+    protected:
+      CelesteDllExport bool doLoadFromFile(const Path& soundFilePath) override;
+      CelesteDllExport void doUnload() override;
 
-      private:
-        typedef Resource Inherited;
+    private:
+      typedef Resource Inherited;
 
-        ALuint m_audioHandle;
-    };
-  }
+      ALuint m_audioHandle;
+  };
 }

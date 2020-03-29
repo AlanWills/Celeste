@@ -5,6 +5,12 @@
 using SpriteRenderer = Celeste::Rendering::SpriteRenderer;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Rendering::SpriteRenderer> : std::false_type {};
+}
+
 namespace Celeste::Lua::Rendering::SpriteRendererScriptCommands
 {
   namespace Internals

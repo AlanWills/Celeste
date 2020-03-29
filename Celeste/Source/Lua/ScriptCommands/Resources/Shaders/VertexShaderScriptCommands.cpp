@@ -6,6 +6,12 @@
 using VertexShader = Celeste::Resources::VertexShader;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Resources::VertexShader> : std::false_type {};
+}
+
 namespace Celeste::Lua::Resources::VertexShaderScriptCommands
 {
   //------------------------------------------------------------------------------------------------

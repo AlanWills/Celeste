@@ -7,6 +7,15 @@
 #include "Scene/SceneManager.h"
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::GameObject> : std::false_type {};
+
+  template <>
+  struct is_to_stringable<Celeste::Component> : std::false_type {};
+}
+
 namespace Celeste::Lua::GameObjectScriptCommands
 {
   namespace Internals

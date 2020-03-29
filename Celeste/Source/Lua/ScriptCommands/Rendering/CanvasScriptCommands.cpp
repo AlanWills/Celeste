@@ -8,6 +8,12 @@
 using ProjectionMode = Celeste::ProjectionMode;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Rendering::Canvas> : std::false_type {};
+}
+
 namespace Celeste::Lua::Rendering::CanvasScriptCommands
 {
   //------------------------------------------------------------------------------------------------

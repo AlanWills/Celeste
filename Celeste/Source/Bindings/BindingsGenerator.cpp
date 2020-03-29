@@ -1,3 +1,5 @@
+#if _DEBUG
+
 #include "Bindings/BindingsGenerator.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "DataConverters/Objects/ComponentDataConverter.h"
@@ -58,7 +60,6 @@ namespace Celeste::Bindings
     const Reflection::ITypeInfo& typeInfo,
     const ScriptableObject& scriptableObject)
   {
-#if _DEBUG
     File file(Path(parentDirectory.getDirectoryPath(), typeInfo.getName() + ".cs"));
     if (file.exists())
     {
@@ -113,7 +114,6 @@ namespace Celeste::Bindings
     file.append(createClassDeclaration(typeInfo));
     file.append(classContent);
     file.append(createFilePostamble());
-#endif
   }
 
   //------------------------------------------------------------------------------------------------
@@ -121,7 +121,6 @@ namespace Celeste::Bindings
     const Directory& parentDirectory,
     const Reflection::ITypeInfo& componentTypeInfo)
   {
-#if _DEBUG
     File file(Path(parentDirectory.getDirectoryPath(), componentTypeInfo.getName() + ".cs"));
     if (file.exists())
     {
@@ -162,6 +161,7 @@ namespace Celeste::Bindings
     file.append(createClassDeclaration(componentTypeInfo));
     file.append(classContent);
     file.append(createFilePostamble());
-#endif
   }
 }
+
+#endif

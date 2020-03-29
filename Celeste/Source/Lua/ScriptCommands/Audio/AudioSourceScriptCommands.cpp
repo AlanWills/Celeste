@@ -9,6 +9,15 @@ using AudioType = Celeste::Audio::AudioType;
 using AudioSource = Celeste::Audio::AudioSource;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Audio::AudioSource> : std::false_type {};
+
+  template <>
+  struct is_to_stringable<Celeste::Resources::Sound> : std::false_type {};
+}
+
 namespace Celeste::Lua::Audio::AudioSourceScriptCommands
 {
   namespace Internals

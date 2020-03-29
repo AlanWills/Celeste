@@ -5,6 +5,18 @@
 #include "DataConverters/Objects/ComponentDataConverter.h"
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Lua::LuaComponentDataConverter> : std::false_type {};
+
+  template <>
+  struct is_to_stringable<Celeste::ComponentDataConverter> : std::false_type {};
+
+  template <>
+  struct is_to_stringable<Celeste::Component> : std::false_type {};
+}
+
 namespace Celeste::Lua::LuaComponentDataConverterScriptCommands
 {
   namespace Internals

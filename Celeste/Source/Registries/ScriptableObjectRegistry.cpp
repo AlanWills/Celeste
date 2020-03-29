@@ -1,4 +1,5 @@
 #include "Registries/ScriptableObjectRegistry.h"
+#include "Resources/ResourceManager.h"
 
 
 namespace Celeste

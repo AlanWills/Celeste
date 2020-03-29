@@ -5,7 +5,6 @@
 
 #include <string>
 
-
 namespace Celeste 
 {
   namespace adl_helper 
@@ -28,7 +27,7 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template<class T>
-  bool from_string(const std::string& text, T& output)
+  bool from_string(const std::string& /*text*/, T& /*output*/)
   {
     STATIC_ASSERT_FAIL("Provide implementation of from_string for type");
     return false;

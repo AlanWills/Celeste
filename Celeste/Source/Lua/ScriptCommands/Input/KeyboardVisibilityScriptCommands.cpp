@@ -11,6 +11,12 @@ using Key = Celeste::Input::Key;
 using InputMode = Celeste::Input::InputMode;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Input::KeyboardVisibility> : std::false_type {};
+}
+
 namespace Celeste::Lua::Input::KeyboardVisibilityScriptCommands
 {
   namespace Internals

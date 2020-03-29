@@ -24,20 +24,19 @@ namespace Celeste::Input
   //------------------------------------------------------------------------------------------------
   std::vector<observer_ptr<GameObject>> GraphicsRaycaster::raycast()
   {
-    std::queue<observer_ptr<GameObject>> gameObjectQueue;
     std::vector<observer_ptr<GameObject>> hitGameObjects;
 
     Ray ray = Ray(glm::vec3(Input::getMouse().getScreenPosition(), 0), glm::vec3(0, 0, -1));
 
     if (getGameObject()->isActive())
     {
-      gameObjectQueue.push(getGameObject());
+      m_gameObjectQueue.push_back(getGameObject());
     }
 
-    while (!gameObjectQueue.empty())
+    while (!m_gameObjectQueue.empty())
     {
-      observer_ptr<GameObject> gameObject = gameObjectQueue.front();
-      gameObjectQueue.pop();
+      observer_ptr<GameObject> gameObject = m_gameObjectQueue.front();
+      m_gameObjectQueue.pop_front();
 
       // Raycast the current game object renderer we are iterating on
       observer_ptr<Renderer> renderer = gameObject->findComponent<Renderer>();
@@ -58,7 +57,7 @@ namespace Celeste::Input
         {
           // If we have a child which should be raycasted and it does not have a Canvas
           // it should be included in the raycast process for this Canvas
-          gameObjectQueue.push(child);
+          m_gameObjectQueue.push_back(child);
         }
       }
     }

@@ -6,6 +6,12 @@
 #include "Bindings/MathsDataBindingGenerators.h"
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::XML::Attribute> : std::false_type {};
+}
+
 namespace Celeste::Lua::XML::AttributeScriptCommands
 {
   //------------------------------------------------------------------------------------------------

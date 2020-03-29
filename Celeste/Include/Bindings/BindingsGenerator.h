@@ -1,5 +1,7 @@
 #pragma once
 
+#if _DEBUG
+
 #include "CelesteDllExport.h"
 #include "Objects/ScriptableObject.h"
 #include "FileSystem/Directory.h"
@@ -37,3 +39,5 @@ namespace Celeste::Bindings
       static std::string createFilePostamble();
   };
 }
+
+#endif

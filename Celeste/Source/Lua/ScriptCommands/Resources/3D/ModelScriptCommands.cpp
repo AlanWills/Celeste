@@ -6,6 +6,12 @@
 using Model = Celeste::Resources::Model;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Resources::Model> : std::false_type {};
+}
+
 namespace Celeste::Lua::Resources::ModelScriptCommands
 {
   //------------------------------------------------------------------------------------------------

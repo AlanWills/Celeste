@@ -27,7 +27,7 @@ namespace Celeste
   class ScriptableObject
   {
     public:
-      virtual ~ScriptableObject() = default;
+      CelesteDllExport virtual ~ScriptableObject();
       ScriptableObject(const ScriptableObject&) = delete;
       ScriptableObject& operator=(const ScriptableObject&) = delete;
 

@@ -6,6 +6,12 @@
 using Texture2D = Celeste::Resources::Texture2D;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Resources::Texture2D> : std::false_type {};
+}
+
 namespace Celeste::Lua::Resources::Texture2DScriptCommands
 {
   //------------------------------------------------------------------------------------------------

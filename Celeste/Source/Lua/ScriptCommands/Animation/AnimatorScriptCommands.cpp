@@ -5,6 +5,12 @@
 #include "Animation/Animator.h"
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Animation::Animator> : std::false_type {};
+}
+
 namespace Celeste::Lua::Animation::AnimatorScriptCommands
 {
   namespace Internals

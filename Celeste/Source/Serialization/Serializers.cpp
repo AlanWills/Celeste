@@ -34,6 +34,13 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <>
+  void serialize(Resources::Texture2D* value, std::string& output)
+  {
+    output.assign(value != nullptr ? deinternString(value->getResourceId()) : "");
+  }
+
+  //------------------------------------------------------------------------------------------------
+  template <>
   void serialize(const std::vector<Resources::Texture2D>& /*value*/, std::string& /*output*/)
   {
   }

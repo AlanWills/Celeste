@@ -163,3 +163,12 @@ namespace Celeste::Lua
       });
   }
 }
+
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Object> : std::false_type {};
+
+  template <>
+  struct is_to_stringable<Celeste::ScriptableObject> : std::false_type {};
+}

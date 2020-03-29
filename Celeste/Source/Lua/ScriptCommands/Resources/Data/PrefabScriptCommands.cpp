@@ -6,6 +6,12 @@
 using Prefab = Celeste::Resources::Prefab;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Resources::Prefab> : std::false_type {};
+}
+
 namespace Celeste::Lua::Resources::PrefabScriptCommands
 {
   //------------------------------------------------------------------------------------------------

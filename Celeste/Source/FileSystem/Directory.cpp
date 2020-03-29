@@ -24,9 +24,7 @@ namespace Celeste
   void Directory::getExecutingAppDirectory(std::string& outputDir)
   {
     char buffer[1024];
-    _getcwd(buffer, 1024);
-
-    outputDir.append(buffer);
+    outputDir.append(_getcwd(buffer, 1024));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -58,29 +56,32 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Directory::remove() const
+  bool Directory::remove() const
   {
-    if (exists(m_dirPath))
+    if (!exists(m_dirPath))
     {
-      std::vector<File> files;
-      findFiles(files);
-
-      for (const File& file : files)
-      {
-        file.remove();
-      }
-
-      std::vector<Directory> dirs;
-      findDirectories(dirs);
-
-      for (const Directory& dir : dirs)
-      {
-        dir.remove();
-      }
-
-      int result = _rmdir(m_dirPath.c_str());
-      ASSERT(result == 0);
+      return true;
     }
+
+    std::vector<File> files;
+    findFiles(files);
+
+    for (const File& file : files)
+    {
+      file.remove();
+    }
+
+    std::vector<Directory> dirs;
+    findDirectories(dirs);
+
+    for (const Directory& dir : dirs)
+    {
+      dir.remove();
+    }
+
+    bool result = _rmdir(m_dirPath.c_str()) == 0;
+    ASSERT(result);
+    return result;
   }
 
   //------------------------------------------------------------------------------------------------
@@ -131,8 +132,12 @@ namespace Celeste
       }
     }
 
+#if _DEBUG
     int result = closedir(dir);
     ASSERT(result == 0);
+#else
+    closedir(dir);
+#endif
   }
 
   //------------------------------------------------------------------------------------------------
@@ -165,8 +170,12 @@ namespace Celeste
       }
     }
 
+#if _DEBUG
     int result = closedir(dir);
     ASSERT(result == 0);
+#else
+    closedir(dir);
+#endif
   }
 
   //------------------------------------------------------------------------------------------------

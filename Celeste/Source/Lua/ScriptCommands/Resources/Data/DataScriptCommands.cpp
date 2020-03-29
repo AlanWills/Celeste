@@ -6,6 +6,12 @@
 using Data = Celeste::Resources::Data;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Resources::Data> : std::false_type {};
+}
+
 namespace Celeste::Lua::Resources::DataScriptCommands
 {
   //------------------------------------------------------------------------------------------------

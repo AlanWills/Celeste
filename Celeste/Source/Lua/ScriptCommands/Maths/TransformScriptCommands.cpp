@@ -4,6 +4,12 @@
 #include "Maths/Transform.h"
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Transform> : std::false_type {};
+}
+
 namespace Celeste::Lua::Maths::TransformScriptCommands
 {
   namespace Internals

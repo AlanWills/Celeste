@@ -8,6 +8,12 @@
 using DataConverter = Celeste::DataConverter;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::DataConverter> : std::false_type {};
+}
+
 namespace Celeste::Lua::DataConverters::ScriptCommands
 {
   namespace Internals

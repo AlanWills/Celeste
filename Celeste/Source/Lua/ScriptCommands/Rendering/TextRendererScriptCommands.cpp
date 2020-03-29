@@ -3,6 +3,12 @@
 #include "Rendering/TextRenderer.h"
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Rendering::TextRenderer> : std::false_type {};
+}
+
 namespace Celeste::Lua::Rendering::TextRendererScriptCommands
 {
   //------------------------------------------------------------------------------------------------

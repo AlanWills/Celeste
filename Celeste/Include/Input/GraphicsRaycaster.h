@@ -2,8 +2,13 @@
 
 #include "Objects/Component.h"
 
-#include <queue>
+#include <deque>
 
+
+namespace Celeste
+{
+  class GameObject;
+}
 
 namespace Celeste::Rendering
 {
@@ -21,5 +26,7 @@ namespace Celeste::Input
 
     private:
       using Inherited = Component;
+
+      std::deque<observer_ptr<GameObject>> m_gameObjectQueue;
   };
 }

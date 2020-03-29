@@ -7,6 +7,12 @@
 using namespace Celeste::Settings;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Settings::GameSettings> : std::false_type {};
+}
+
 namespace Celeste::Lua::Settings::GameSettingsScriptCommands
 {
   namespace Internals

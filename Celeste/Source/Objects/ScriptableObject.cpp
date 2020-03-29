@@ -19,6 +19,9 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
+  ScriptableObject::~ScriptableObject() = default;
+
+  //------------------------------------------------------------------------------------------------
   bool ScriptableObject::deserialize(const tinyxml2::XMLElement* element)
   {
     ASSERT(element);
@@ -193,8 +196,12 @@ namespace Celeste
     serialize(objectElement);
 
     // Now, save the data again
+#if _DEBUG
     bool result = data->overwriteFile();
     ASSERT(result);
+#else
+    data->overwriteFile();
+#endif
   }
 
   //------------------------------------------------------------------------------------------------

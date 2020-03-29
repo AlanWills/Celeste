@@ -4,6 +4,12 @@
 #include "XML/XMLObject.h"
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::XML::XMLObject> : std::false_type {};
+}
+
 namespace Celeste::Lua::XML::XMLObjectScriptCommands
 {
   //------------------------------------------------------------------------------------------------

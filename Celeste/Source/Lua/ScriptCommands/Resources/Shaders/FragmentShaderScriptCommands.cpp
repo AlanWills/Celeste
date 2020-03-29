@@ -6,6 +6,12 @@
 using FragmentShader = Celeste::Resources::FragmentShader;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Resources::FragmentShader> : std::false_type {};
+}
+
 namespace Celeste::Lua::Resources::FragmentShaderScriptCommands
 {
   //------------------------------------------------------------------------------------------------

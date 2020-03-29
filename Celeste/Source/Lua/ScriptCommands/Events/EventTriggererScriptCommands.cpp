@@ -14,6 +14,12 @@ using InputMode = Celeste::Input::InputMode;
 using EventTriggerer = Celeste::Events::EventTriggerer;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Events::EventTriggerer> : std::false_type {};
+}
+
 namespace Celeste::Lua::Events::EventTriggererScriptCommands
 {
   namespace Internals

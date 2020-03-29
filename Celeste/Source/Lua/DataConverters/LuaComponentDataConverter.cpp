@@ -6,6 +6,15 @@
 #include "Lua/LuaState.h"
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Lua::LuaComponentDataConverter> : std::false_type {};
+
+  template <>
+  struct is_to_stringable<Celeste::Component> : std::false_type {};
+}
+
 namespace Celeste::Lua
 {
   //------------------------------------------------------------------------------------------------

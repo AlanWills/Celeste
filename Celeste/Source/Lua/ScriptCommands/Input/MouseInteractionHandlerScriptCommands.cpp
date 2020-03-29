@@ -7,6 +7,12 @@
 using MouseInteractionHandler = Celeste::Input::MouseInteractionHandler;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Input::MouseInteractionHandler> : std::false_type {};
+}
+
 namespace Celeste::Lua::Input::MouseInteractionHandlerScriptCommands
 {
   namespace Internals

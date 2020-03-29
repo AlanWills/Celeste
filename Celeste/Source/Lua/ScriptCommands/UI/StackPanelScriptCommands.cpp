@@ -3,6 +3,12 @@
 #include "UI/StackPanel.h"
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::UI::StackPanel> : std::false_type {};
+}
+
 namespace Celeste::Lua::UI::StackPanelScriptCommands
 {
   namespace Internals
