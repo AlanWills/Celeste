@@ -16,9 +16,9 @@ namespace Celeste::Lua::UI::ProgressBarScriptCommands
   {
     using ProgressBar = Celeste::UI::ProgressBar;
 
-    Lua::LuaState::instance();
     registerUserType<ProgressBar>(
       ProgressBar::type_name(),
+      sol::base_classes, sol::bases<Component, Entity, Object>(),
       "getProgress", &ProgressBar::getProgress,
       "setProgress", &ProgressBar::setProgress);
   }

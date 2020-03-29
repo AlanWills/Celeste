@@ -17,6 +17,8 @@ namespace Celeste::Lua::Resources::Audio::SoundScriptCommands
   //------------------------------------------------------------------------------------------------
   void initialize()
   {
-    registerUserType<Sound>("Sound");
+    registerUserType<Sound>(
+      "Sound",
+      sol::base_classes, sol::bases<Celeste::Resources::Resource, Object>());
   }
 }

@@ -30,6 +30,7 @@ namespace Celeste::Lua::Animation::AnimatorScriptCommands
 
     registerUserType<Animator>(
       Animator::type_name(),
+      sol::base_classes, sol::bases<Component, Entity, Object>(),
       "getSpriteSheetDimensions", &Animator::getSpriteSheetDimensions,
       "setSpriteSheetDimensions", &Animator::setSpriteSheetDimensions,
       "getSecondsPerFrame", &Animator::getSecondsPerFrame,

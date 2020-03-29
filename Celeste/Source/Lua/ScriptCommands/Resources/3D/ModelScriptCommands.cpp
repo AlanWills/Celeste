@@ -17,6 +17,8 @@ namespace Celeste::Lua::Resources::ModelScriptCommands
   //------------------------------------------------------------------------------------------------
   void initialize()
   {
-    registerUserType<Model>("Model");
+    registerUserType<Model>(
+      "Model",
+      sol::base_classes, sol::bases<Celeste::Resources::Resource, Object>());
   }
 }

@@ -17,6 +17,8 @@ namespace Celeste::Lua::Resources::DataScriptCommands
   //------------------------------------------------------------------------------------------------
   void initialize()
   {
-    registerUserType<Data>("Data");
+    registerUserType<Data>(
+      "Data",
+      sol::base_classes, sol::bases<Celeste::Resources::Resource, Object>());
   }
 }

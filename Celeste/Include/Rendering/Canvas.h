@@ -3,7 +3,7 @@
 #include "Objects/Component.h"
 #include "Rendering/SpriteBatch.h"
 
-#include <queue>
+#include <deque>
 
 
 namespace Celeste
@@ -28,7 +28,7 @@ namespace Celeste
 
         SpriteBatch m_spriteBatch;
 
-        std::queue<observer_ptr<GameObject>> m_gameObjectQueue;
+        std::deque<observer_ptr<GameObject>> m_gameObjectQueue;
     };
   }
 }

@@ -17,6 +17,8 @@ namespace Celeste::Lua::Resources::FragmentShaderScriptCommands
   //------------------------------------------------------------------------------------------------
   void initialize()
   {
-    registerUserType<FragmentShader>("FragmentShader");
+    registerUserType<FragmentShader>(
+      "FragmentShader",
+      sol::base_classes, sol::bases<Celeste::Resources::Shader, Celeste::Resources::Resource, Object>());
   }
 }

@@ -22,7 +22,7 @@ namespace Celeste::Lua::Rendering::CanvasScriptCommands
     using Canvas = Celeste::Rendering::Canvas;
 
     registerUserType<Canvas>(
-      "Canvas",
+      Canvas::type_name(),
       sol::base_classes, sol::bases<Component, Entity, Object>());
   }
 }

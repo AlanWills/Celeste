@@ -19,6 +19,7 @@ namespace Celeste::Lua::Resources::PrefabScriptCommands
   {
     registerUserType<Prefab>(
       "Prefab",
+      sol::base_classes, sol::bases<Celeste::Resources::Resource, Object>(),
       "instantiate", &Prefab::instantiate);
   }
 }

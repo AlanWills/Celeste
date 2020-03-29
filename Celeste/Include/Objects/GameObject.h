@@ -56,9 +56,9 @@ namespace Celeste
       inline observer_ptr<Transform> getTransform() { return m_transform.get(); }
       inline observer_ptr<const Transform> getTransform() const { return const_cast<GameObject*>(this)->getTransform(); }
 
-      inline observer_ptr<Transform> getParentTransform() { return m_transform != nullptr ? m_transform->getParent() : nullptr; }
+      inline observer_ptr<Transform> getParentTransform() { return m_transform->getParent(); }
       inline observer_ptr<const Transform> getParentTransform() const { return const_cast<GameObject*>(this)->getParentTransform(); }
-      inline void setParentTransform(Transform* transform) { if (m_transform != nullptr) { m_transform->setParent(transform); } }
+      inline void setParentTransform(Transform* transform) { m_transform->setParent(transform); }
     
       inline CelesteDllExport GameObject* getParent()
       {

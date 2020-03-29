@@ -85,6 +85,7 @@ namespace Celeste::Lua::Events::EventTriggererScriptCommands
 
     registerUserType<EventTriggerer>(
       EventTriggerer::type_name(),
+      sol::base_classes, sol::bases<Component, Entity, Object>(),
       "getTriggerDelay", &EventTriggerer::getTriggerDelay,
       "setTriggerDelay", &EventTriggerer::setTriggerDelay,
       "getTriggerKey", &Internals::getTriggerKey,

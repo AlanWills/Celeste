@@ -17,6 +17,8 @@ namespace Celeste::Lua::Resources::VertexShaderScriptCommands
   //------------------------------------------------------------------------------------------------
   void initialize()
   {
-    registerUserType<VertexShader>("VertexShader");
+    registerUserType<VertexShader>(
+      "VertexShader",
+      sol::base_classes, sol::bases<Celeste::Resources::Resource, Object>());
   }
 }

@@ -30,13 +30,13 @@ namespace Celeste::Rendering
 
     if (observer_ptr<GameObject> gameObject = getGameObject(); gameObject->isActive())
     {
-      m_gameObjectQueue.push(gameObject);
+      m_gameObjectQueue.push_back(gameObject);
     }
 
     while (!m_gameObjectQueue.empty())
     {
       observer_ptr<GameObject> gameObject = m_gameObjectQueue.front();
-      m_gameObjectQueue.pop();
+      m_gameObjectQueue.pop_front();
 
       // Do another check here because sibling elements could have changed the render status in their render call
       if (gameObject->isActive())
@@ -54,7 +54,7 @@ namespace Celeste::Rendering
           {
             // If we have a child which should be rendered and it does not have a Canvas
             // it should be included in the render process for this Canvas
-            m_gameObjectQueue.push(child);
+            m_gameObjectQueue.push_back(child);
           }
         }
       }

@@ -17,6 +17,8 @@ namespace Celeste::Lua::Resources::FontScriptCommands
   //------------------------------------------------------------------------------------------------
   void initialize()
   {
-    registerUserType<Font>("Font");
+    registerUserType<Font>(
+      "Font",
+      sol::base_classes, sol::bases<Celeste::Resources::Resource, Object>());
   }
 }

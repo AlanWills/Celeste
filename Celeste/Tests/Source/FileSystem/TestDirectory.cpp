@@ -349,25 +349,22 @@ namespace TestCeleste
 #pragma region Remove Directory Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Directory_RemoveDirectoryThatExists)
+    TEST_METHOD(Directory_RemoveDirectoryThatExists_ReturnsTrue)
     {
       Directory dir = create<Directory>(Path(TestResources::getTempDirectory(), "TestRemove"));
-      dir.remove();
 
+      Assert::IsTrue(dir.remove());
       Assert::IsFalse(dir.exists());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Directory_RemoveDirectoryThatDoesntExist)
+    TEST_METHOD(Directory_RemoveDirectoryThatDoesntExist_ReturnsTrue)
     {
       Directory dir = create<Directory>(Path(TestResources::getTempDirectory(), "TestRemove"));
       dir.remove();
 
       Assert::IsFalse(dir.exists());
-
-      // Now try to remove it again to see we do not get any errors
-      dir.remove();
-
+      Assert::IsTrue(dir.remove());
       Assert::IsFalse(dir.exists());
     }
 
@@ -381,25 +378,32 @@ namespace TestCeleste
       Directory dir(Path(TestResources::getTempDirectory(), "TestCreate"));
 
       Assert::IsFalse(dir.exists());
+
       dir.create();
 
       Assert::IsTrue(dir.exists());
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Directory_Create_DirectoryAlreadyExists_DoesNothing)
+    TEST_METHOD(Directory_Create_DirectoryDoesntExist_ReturnsTrue)
     {
       Directory dir(Path(TestResources::getTempDirectory(), "TestCreate"));
 
       Assert::IsFalse(dir.exists());
+      Assert::IsTrue(dir.create());
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(Directory_Create_DirectoryAlreadyExists_ReturnsTrue)
+    {
+      Directory dir(Path(TestResources::getTempDirectory(), "TestCreate"));
+
+      Assert::IsFalse(dir.exists());
+
       dir.create();
 
       Assert::IsTrue(dir.exists());
-
-      // Now try creating it again
-      dir.create();
-
-      Assert::IsTrue(dir.exists());
+      Assert::IsTrue(dir.create());
     }
 
     //------------------------------------------------------------------------------------------------

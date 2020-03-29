@@ -16,6 +16,7 @@ namespace Celeste::Lua::Rendering::TextRendererScriptCommands
   {
     registerUserType<Celeste::Rendering::TextRenderer>(
       Celeste::Rendering::TextRenderer::type_name(),
+      sol::base_classes, sol::bases<Component, Entity, Object>(),
       "setText", &Celeste::Rendering::TextRenderer::setText);
   }
 }
