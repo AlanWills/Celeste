@@ -23,8 +23,8 @@ namespace Celeste::Animators
   {
     Inherited::update(elapsedGameTime);
 
-#if _DEBUG
     observer_ptr<GameObject> gameObject = getGameObject();
+#if _DEBUG
     if (gameObject == nullptr)
     {
       ASSERT_FAIL();

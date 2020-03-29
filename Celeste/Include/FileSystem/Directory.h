@@ -36,7 +36,7 @@ namespace Celeste
       bool exists() const { return exists(m_dirPath.as_string()); }
 
       /// \brief Creates a directory and any necessary parent directories if it does not already exist
-      CelesteDllExport void create() const;
+      CelesteDllExport bool create() const;
 
       /// \brief Removes a directory and all of the contents inside it if it exists
       CelesteDllExport void remove() const;

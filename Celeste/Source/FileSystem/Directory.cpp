@@ -38,20 +38,23 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Directory::create() const
+  bool Directory::create() const
   {
-    if (!exists(m_dirPath))
+    if (exists(m_dirPath))
     {
-      Directory parentDirectory(m_dirPath.getParentDirectory());
-      if (!parentDirectory.exists())
-      {
-        // Recursively create all the parent directories
-        parentDirectory.create();
-      }
-
-      int result = _mkdir(m_dirPath.c_str());
-      ASSERT(result == 0);
+      return true;
     }
+
+    Directory parentDirectory(m_dirPath.getParentDirectory());
+    if (!parentDirectory.exists())
+    {
+      // Recursively create all the parent directories
+      parentDirectory.create();
+    }
+
+    bool success = _mkdir(m_dirPath.c_str()) == 0;
+    ASSERT(success);
+    return success;
   }
 
   //------------------------------------------------------------------------------------------------

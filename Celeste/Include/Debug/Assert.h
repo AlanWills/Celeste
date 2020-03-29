@@ -18,7 +18,7 @@
 #ifdef _DEBUG
 #define STATIC_ASSERT(condition, message) static_assert(condition, message);
 #else
-#define STATIC_ASSERT(condition)
+#define STATIC_ASSERT(condition, message)
 #endif
 
 #define STATIC_ASSERT_FAIL(message) STATIC_ASSERT(false, message)
