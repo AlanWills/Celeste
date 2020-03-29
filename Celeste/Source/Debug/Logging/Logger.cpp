@@ -102,9 +102,9 @@ namespace Celeste
     m_backLogBufferStr.clear();
 
     const char* bufferedMessages = nullptr;
-    m_logBuffer.getBufferedData(&bufferedMessages);
+    size_t bufferedDataCount = m_logBuffer.getBufferedData(&bufferedMessages);
 
-    m_backLogBufferStr.append(bufferedMessages);
+    m_backLogBufferStr.append(bufferedMessages, bufferedDataCount);
 
     return m_backLogBufferStr;
   }

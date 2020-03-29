@@ -22,6 +22,10 @@ namespace TestCeleste
       getInputManager().getMouse().flush();
     }
 
+#pragma region Handle Input Tests
+
+#pragma endregion
+
 #pragma region Key Callback Tests
 
     //------------------------------------------------------------------------------------------------
@@ -270,5 +274,6 @@ namespace TestCeleste
     }
 
 #pragma endregion
+
   };
 }

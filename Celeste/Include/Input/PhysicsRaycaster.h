@@ -15,11 +15,9 @@ namespace Celeste::Input
     DECLARE_MANAGED_COMPONENT(PhysicsRaycaster, InputManager, CelesteDllExport);
 
     public:
-      std::vector<observer_ptr<GameObject>> raycast() const;
+      CelesteDllExport std::vector<observer_ptr<GameObject>> raycast();
 
     private:
       using Inherited = Component;
-
-      observer_ptr<Rendering::Canvas> m_canvas;
   };
 }

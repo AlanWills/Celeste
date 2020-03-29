@@ -69,30 +69,6 @@ namespace TestCeleste::Lua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_Initialize_Adds_shouldRender_ToGameObjectTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["GameObject"]["shouldRender"].valid());
-
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["GameObject"]["shouldRender"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_Initialize_Adds_setShouldRender_ToGameObjectTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["GameObject"]["setShouldRender"].valid());
-
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["GameObject"]["setShouldRender"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameObjectScriptCommands_Initialize_Adds_getParent_ToGameObjectTable)
   {
     sol::state& state = LuaState::instance();
@@ -301,66 +277,6 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsTrue(functionResult.valid());
     Assert::AreEqual(internString("Test2"), gameObject.getName());
-  }
-
-#pragma endregion
-
-#pragma region Should Render Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_shouldRender_ReturnsObjectRenderState)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    GameObject gameObject;
-    observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
-    renderer->setActive(false);
-
-    AssertCel::IsNotActive(*renderer);
-
-    auto functionResult = state["GameObject"]["shouldRender"].get<sol::protected_function>().call(gameObject);
-
-    Assert::IsTrue(functionResult.valid());
-    Assert::IsFalse(functionResult.get<bool>());
-
-    renderer->setActive(true);
-
-    AssertCel::IsActive(*renderer);
-
-    functionResult = state["GameObject"]["shouldRender"].get<sol::protected_function>().call(gameObject);
-
-    Assert::IsTrue(functionResult.valid());
-    Assert::IsTrue(functionResult.get<bool>());
-  }
-
-#pragma endregion
-
-#pragma region Set Should Render Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_setShouldRender_UpdatesShouldRenderFlagCorrectly)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::GameObjectScriptCommands::initialize();
-
-    GameObject gameObject;
-    observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
-    renderer->setActive(false);
-
-    AssertCel::IsNotActive(*renderer);
-
-    auto functionResult = state.globals()["GameObject"]["setShouldRender"].get<sol::protected_function>().call(
-      gameObject, true);
-
-    Assert::IsTrue(functionResult.valid());
-    AssertCel::IsActive(*renderer);
-
-    functionResult = state.globals()["GameObject"]["setShouldRender"].get<sol::protected_function>().call(
-      gameObject, false);
-
-    Assert::IsTrue(functionResult.valid());
-    AssertCel::IsNotActive(*renderer);
   }
 
 #pragma endregion

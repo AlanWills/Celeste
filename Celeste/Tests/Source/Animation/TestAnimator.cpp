@@ -17,8 +17,8 @@ namespace TestCeleste::Animation
 
 #pragma region Registration Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Animator_IsRegisteredWithComponentRegistry)
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(Animator_IsRegisteredWithComponentRegistry)
   {
     Assert::IsTrue(ComponentRegistry::hasComponent<Animator>());
   }

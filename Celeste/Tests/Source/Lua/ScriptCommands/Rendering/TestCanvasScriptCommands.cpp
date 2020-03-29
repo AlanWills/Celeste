@@ -33,54 +33,6 @@ namespace TestCeleste::Lua::Rendering::CanvasScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(CanvasScriptCommands_Initialize_Adds_getProjectionMode_ToCanvasTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["Canvas"]["getProjectionMode"].valid());
-
-    Celeste::Lua::Rendering::CanvasScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["Canvas"]["getProjectionMode"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(CanvasScriptCommands_Initialize_Adds_setProjectionMode_ToCanvasTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["Canvas"]["setProjectionMode"].valid());
-
-    Celeste::Lua::Rendering::CanvasScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["Canvas"]["setProjectionMode"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(CanvasScriptCommands_Initialize_Adds_getDimensions_ToCanvasTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["Canvas"]["getDimensions"].valid());
-
-    Celeste::Lua::Rendering::CanvasScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["Canvas"]["getDimensions"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(CanvasScriptCommands_Initialize_Adds_setDimensions_ToCanvasTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["Canvas"]["setDimensions"].valid());
-
-    Celeste::Lua::Rendering::CanvasScriptCommands::initialize();
-
-    Assert::IsTrue(state.globals()["Canvas"]["setDimensions"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(CanvasScriptCommands_Initialize_Adds_as_ToCanvasTable)
   {
     sol::state& state = LuaState::instance();

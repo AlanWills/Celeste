@@ -363,7 +363,7 @@ namespace TestCeleste
       {
         if (count == 0)
         {
-          for (size_t i = 0; i < 2 * allocator.capacity(); ++i)
+          for (size_t i = 0; i < 6; ++i)
           {
             allocator.allocate();
           }

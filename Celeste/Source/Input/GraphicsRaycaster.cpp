@@ -17,24 +17,21 @@ namespace Celeste::Input
 
   //------------------------------------------------------------------------------------------------
   GraphicsRaycaster::GraphicsRaycaster(GameObject& gameObject) :
-    Inherited(gameObject),
-    m_canvas(gameObject.findComponent<Rendering::Canvas>())
+    Inherited(gameObject)
   {
-    ASSERT(m_canvas);
   }
 
   //------------------------------------------------------------------------------------------------
-  std::vector<observer_ptr<GameObject>> GraphicsRaycaster::raycast() const
+  std::vector<observer_ptr<GameObject>> GraphicsRaycaster::raycast()
   {
     std::queue<observer_ptr<GameObject>> gameObjectQueue;
     std::vector<observer_ptr<GameObject>> hitGameObjects;
 
     Ray ray = Ray(glm::vec3(Input::getMouse().getScreenPosition(), 0), glm::vec3(0, 0, -1));
-    observer_ptr<GameObject> canvasGameObject = m_canvas->getGameObject();
 
-    if (canvasGameObject->isActive())
+    if (getGameObject()->isActive())
     {
-      gameObjectQueue.push(canvasGameObject);
+      gameObjectQueue.push(getGameObject());
     }
 
     while (!gameObjectQueue.empty())
@@ -42,30 +39,26 @@ namespace Celeste::Input
       observer_ptr<GameObject> gameObject = gameObjectQueue.front();
       gameObjectQueue.pop();
 
-      // Do another check here because sibling elements could have changed the activation status in their collision calls
-      if (gameObject->isActive())
+      // Raycast the current game object renderer we are iterating on
+      observer_ptr<Renderer> renderer = gameObject->findComponent<Renderer>();
+      if (renderer != nullptr && renderer->isActive())
       {
-        // Raycast the current game object renderer we are iterating on
-        observer_ptr<Renderer> renderer = gameObject->findComponent<Renderer>();
-        if (renderer != nullptr && renderer->isActive())
-        {
-          Maths::Rectangle rect(gameObject->getTransform()->getWorldTranslation(), renderer->getScaledDimensions());
+        Maths::Rectangle rect(gameObject->getTransform()->getWorldTranslation(), renderer->getScaledDimensions());
 
-          if (rect.contains(ray.m_origin))
-          {
-            hitGameObjects.push_back(gameObject);
-          }
+        if (rect.contains(ray.m_origin))
+        {
+          hitGameObjects.push_back(gameObject);
         }
+      }
 
-        // Go through each child
-        for (observer_ptr<GameObject> child : *gameObject)
+      // Go through each child
+      for (observer_ptr<GameObject> child : *gameObject)
+      {
+        if (child->isActive() && !child->hasComponent<Canvas>())
         {
-          if (child->isActive() && !child->hasComponent<Canvas>())
-          {
-            // If we have a child which should be raycasted and it does not have a Canvas
-            // it should be included in the raycast process for this Canvas
-            gameObjectQueue.push(child);
-          }
+          // If we have a child which should be raycasted and it does not have a Canvas
+          // it should be included in the raycast process for this Canvas
+          gameObjectQueue.push(child);
         }
       }
     }

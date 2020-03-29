@@ -17,7 +17,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
 {
   CELESTE_TEST_CLASS(TestWindowSettingsScriptCommands)
 
-  std::string originalWindowTitle;
   glm::vec2 originalResolution;
   bool originalWindowed;
 
@@ -26,7 +25,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
   {
     OpenGLWindow& window = getWindow();
 
-    originalWindowTitle = window.getTitle();
     originalResolution = window.getViewportDimensions();
     originalWindowed = window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed;
   }
@@ -42,7 +40,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
   {
     OpenGLWindow& window = getWindow();
 
-    window.setTitle(originalWindowTitle);
     window.setViewportDimensions(originalResolution);
     window.setWindowMode(originalWindowed ? OpenGLWindow::WindowMode::kWindowed : OpenGLWindow::WindowMode::kFullScreen);
   }
@@ -84,7 +81,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
     {
       OpenGLWindow& window = getWindow();
 
-      Assert::AreEqual(originalWindowTitle, window.getTitle());
       Assert::AreEqual(originalResolution, window.getViewportDimensions());
       Assert::AreEqual(originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
 
@@ -94,7 +90,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
       auto result = state["WindowSettings"]["apply"]("WubbaLubbaDubDub");
 
       Assert::IsTrue(result.valid());
-      Assert::AreEqual(originalWindowTitle, window.getTitle());
       Assert::AreEqual(originalResolution, window.getViewportDimensions());
       Assert::AreEqual(originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
     }
@@ -108,7 +103,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
       OpenGLWindow& window = getWindow();
 
       FileAssert::FileExists(Path(TestResources::getResourcesDirectory(), WindowSettingsLoadingResources::getInvalidRelativePath()).as_string());
-      Assert::AreEqual(originalWindowTitle, window.getTitle());
       Assert::AreEqual(originalResolution, window.getViewportDimensions());
       Assert::AreEqual(originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
 
@@ -118,7 +112,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
       auto result = state["WindowSettings"]["apply"](WindowSettingsLoadingResources::getInvalidRelativePath());
 
       Assert::IsTrue(result.valid());
-      Assert::AreEqual(originalWindowTitle, window.getTitle());
       Assert::AreEqual(originalResolution, window.getViewportDimensions());
       Assert::AreEqual(originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
     }
@@ -132,7 +125,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
       OpenGLWindow& window = getWindow();
 
       FileAssert::FileExists(Path(TestResources::getResourcesDirectory(), WindowSettingsLoadingResources::getValidRelativePath()).as_string());
-      Assert::AreEqual(originalWindowTitle, window.getTitle());
       Assert::AreEqual(originalResolution, window.getViewportDimensions());
       Assert::AreEqual(originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
 
@@ -142,7 +134,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
       auto result = state["WindowSettings"]["apply"](WindowSettingsLoadingResources::getValidRelativePath());
 
       Assert::IsTrue(result.valid());
-      Assert::AreEqual("Test Window Settings", window.getTitle().c_str());
       Assert::AreEqual(glm::vec2(120, 200), window.getViewportDimensions());
       Assert::IsTrue(OpenGLWindow::WindowMode::kFullScreen == window.getWindowMode());
     }
@@ -156,7 +147,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
       OpenGLWindow& window = getWindow();
 
       FileAssert::FileExists(WindowSettingsLoadingResources::getInvalidFullPath().as_string());
-      Assert::AreEqual(originalWindowTitle, window.getTitle());
       Assert::AreEqual(originalResolution, window.getViewportDimensions());
       Assert::AreEqual(originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
 
@@ -166,7 +156,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
       auto result = state["WindowSettings"]["apply"](WindowSettingsLoadingResources::getInvalidFullPath().as_string());
 
       Assert::IsTrue(result.valid());
-      Assert::AreEqual(originalWindowTitle, window.getTitle());
       Assert::AreEqual(originalResolution, window.getViewportDimensions());
       Assert::AreEqual(originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
     }
@@ -180,7 +169,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
       OpenGLWindow& window = getWindow();
 
       FileAssert::FileExists(WindowSettingsLoadingResources::getValidFullPath().as_string());
-      Assert::AreEqual(originalWindowTitle, window.getTitle());
       Assert::AreEqual(originalResolution, window.getViewportDimensions());
       Assert::AreEqual(originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
 
@@ -190,7 +178,6 @@ namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
       auto result = state["WindowSettings"]["apply"](WindowSettingsLoadingResources::getValidFullPath().as_string());
 
       Assert::IsTrue(result.valid());
-      Assert::AreEqual("Test Window Settings", window.getTitle().c_str());
       Assert::AreEqual(glm::vec2(120, 200), window.getViewportDimensions());
       Assert::IsTrue(OpenGLWindow::WindowMode::kFullScreen == window.getWindowMode());
     }

@@ -1,11 +1,10 @@
 #include "UI/Slider.h"
 #include "UtilityHeaders/ComponentHeaders.h"
 #include "Rendering/SpriteRenderer.h"
-#include "Physics/RectangleCollider.h"
 #include "Input/InputManager.h"
+#include "Input/MouseInteractionHandler.h"
 
 using namespace Celeste::Rendering;
-using namespace Celeste::Physics;
 using namespace Celeste::Input;
 
 
@@ -30,7 +29,7 @@ namespace Celeste::UI
     Inherited::handleInput();
 
 #if _DEBUG
-    if (getGameObject() == nullptr)
+    if (getGameObject() == nullptr || !getGameObject()->hasComponent<MouseInteractionHandler>())
     {
       ASSERT_FAIL();
       return;
@@ -49,7 +48,7 @@ namespace Celeste::UI
     }
     else
     {
-      //m_sliderClicked = getMouse().isButtonClicked(MouseButton::kLeft) && getGameObject()->findComponent<RectangleCollider>()->isHitByRay();
+      m_sliderClicked = getMouse().isButtonClicked(MouseButton::kLeft) && getGameObject()->findComponent<MouseInteractionHandler>()->isMouseOver();
     }
   }
 

@@ -2,9 +2,9 @@
 
 #include "UI/Slider.h"
 #include "Rendering/SpriteRenderer.h"
-#include "Physics/RectangleCollider.h"
 #include "TestResources/TestResources.h"
 #include "Input/InputManager.h"
+#include "Input/MouseInteractionHandler.h"
 #include "Utils/InputUtils.h"
 #include "Registries/ComponentRegistry.h"
 #include "Objects/GameObject.h"
@@ -16,7 +16,6 @@ namespace TestCeleste
 {
   using namespace UI;
   using namespace Celeste::Input;
-  using namespace Celeste::Physics;
   using namespace Celeste::Rendering;
 
   CELESTE_TEST_CLASS(TestSlider)
@@ -92,16 +91,15 @@ namespace TestCeleste
   TEST_METHOD(Slider_HandleInput_MouseLeftButtonNotClicked_AndSliderNotClicked_DoesNothing)
   {
     GameObject gameObject;
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
     renderer->setDimensions(400, 20);
     renderer->getScissorRectangle().setDimensions(40, 20);
-    collider->setDimensions(400, 20);
     observer_ptr<Slider> slider = gameObject.addComponent<Slider>();
 
     Assert::AreEqual(0.0f, slider->getCurrentValue());
     Assert::IsFalse(getMouse().isButtonClicked(MouseButton::kLeft));
-    Assert::IsFalse(gameObject.findComponent<RectangleCollider>()->isHitByRay());
+    Assert::IsFalse(handler->isMouseOver());
 
     getMouse().getTransform().translate(10, 0);
     slider->handleInput();
@@ -113,11 +111,10 @@ namespace TestCeleste
   TEST_METHOD(Slider_HandleInput_MouseLeftButtonClicked_AndSliderNotClicked_DoesNothing)
   {
     GameObject gameObject;
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
     renderer->setDimensions(400, 20);
     renderer->getScissorRectangle().setDimensions(40, 20);
-    collider->setDimensions(400, 20);
     observer_ptr<Slider> slider = gameObject.addComponent<Slider>();
 
     Assert::AreEqual(0.0f, slider->getCurrentValue());
@@ -125,7 +122,7 @@ namespace TestCeleste
     simulateMouseButtonClicked(Input::MouseButton::kLeft);
 
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kLeft));
-    Assert::IsFalse(gameObject.findComponent<RectangleCollider>()->isHitByRay());
+    Assert::IsFalse(handler->isMouseOver());
 
     getMouse().getTransform().translate(10, 0);
     slider->handleInput();
@@ -138,12 +135,10 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     renderer->setTexture(TestResources::getBlockPngRelativePath());
     renderer->setDimensions(400, 20);
     renderer->getScissorRectangle().setDimensions(30, 20);
-
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-    collider->setDimensions(400, 20);
 
     observer_ptr<Slider> slider = gameObject.addComponent<Slider>();
     slider->setMin(0);
@@ -151,11 +146,11 @@ namespace TestCeleste
       
     Assert::AreEqual(0.0f, slider->getCurrentValue());
 
-    collider->setHitByRay(true);
+    handler->setActive(true);
     simulateMouseButtonPressed(Input::MouseButton::kLeft);
 
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
-    Assert::IsTrue(collider->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     slider->handleInput();
 
@@ -174,11 +169,9 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
     renderer->setTexture(TestResources::getBlockPngRelativePath());
+    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     renderer->setDimensions(400, 20);
     renderer->getScissorRectangle().setDimensions(30, 20);
-
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
-    collider->setDimensions(400, 20);
 
     observer_ptr<Slider> slider = gameObject.addComponent<Slider>();
     slider->setMin(0);
@@ -186,11 +179,11 @@ namespace TestCeleste
 
     Assert::AreEqual(0.0f, slider->getCurrentValue());
 
-    collider->setHitByRay(true);
+    handler->setMouseOver(true);
     simulateMouseButtonPressed(Input::MouseButton::kLeft);
 
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
-    Assert::IsTrue(collider->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     slider->handleInput();
 
@@ -206,22 +199,21 @@ namespace TestCeleste
   TEST_METHOD(Slider_HandleInput_SliderClicked_TriggersValueChangedEvent)
   {
     GameObject gameObject;
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
     renderer->setDimensions(400, 20);
     renderer->getScissorRectangle().setDimensions(40, 20);
-    collider->setDimensions(400, 20);
     observer_ptr<Slider> slider = gameObject.addComponent<Slider>();
     slider->setMin(0);
     slider->setMax(1);
 
     Assert::AreEqual(0.0f, slider->getCurrentValue());
 
-    collider->setHitByRay(true);
+    handler->setMouseOver(true);
     simulateMouseButtonPressed(Input::MouseButton::kLeft);
 
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
-    Assert::IsTrue(collider->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     slider->handleInput();
 

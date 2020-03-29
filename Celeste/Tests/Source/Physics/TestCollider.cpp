@@ -33,15 +33,6 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Collider_DefaultConstructor_SetsIsHitByRayToFalse)
-  {
-    GameObject gameObject;
-    MockCollider collider(gameObject);
-
-    Assert::IsFalse(collider.isHitByRay());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(Collider_DefaultConstructor_SetsOffsetToZero)
   {
     GameObject gameObject;

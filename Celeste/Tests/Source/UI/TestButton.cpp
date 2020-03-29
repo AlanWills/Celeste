@@ -6,7 +6,6 @@
 #include "Input/MouseInteractionHandler.h"
 #include "Rendering/SpriteRenderer.h"
 #include "Audio/AudioSource.h"
-#include "Physics/RectangleCollider.h"
 #include "DataConverters/UI/ButtonDataConverter.h"
 #include "Utils/InputUtils.h"
 #include "Registries/ComponentRegistry.h"
@@ -15,7 +14,6 @@
 using namespace Celeste;
 using namespace Celeste::Audio;
 using namespace Celeste::Resources;
-using namespace Celeste::Physics;
 using namespace Celeste::Input;
 using namespace Celeste::Rendering;
 
@@ -77,51 +75,6 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region On Set GameObject Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Button_OnSetGameObject_SetsSpriteRendererTexture_ToButtonDefaultTexture)
-  {
-    GameObject gameObject;
-    setUpButtonComponents(gameObject);
-
-    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.findComponent<SpriteRenderer>();
-    observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
-
-    Assert::IsTrue(spriteRenderer->getTexture() == button->getDefaultTexture());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Button_OnSetParent_SetsColliderDimensions_AndScalesThemWithWorldScale)
-  {
-    GameObject gameObject;
-    gameObject.getTransform()->setWorldScale(0.5f, 0.25f, 5);
-    setUpButtonComponents(gameObject);
-
-    observer_ptr<RectangleCollider> collider = gameObject.findComponent<RectangleCollider>();
-    observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
-
-    Assert::IsTrue(collider->getDimensions() == (button->getDefaultTexture()->getDimensions() * glm::vec2(0.5f, 0.25f)));
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Button_OnSetGameObject_SetsAudioSourceToSFX)
-  {
-    GameObject gameObject;
-    setUpButtonComponents(gameObject);
-
-    observer_ptr<AudioSource> audioSourceSource = gameObject.findComponent<AudioSource>();
-    audioSourceSource->setAudioType(AudioType::kMusic);
-
-    Assert::IsTrue(audioSourceSource->getAudioType() == AudioType::kMusic);
-
-    gameObject.addComponent<MockButton>();
-
-    Assert::IsTrue(audioSourceSource->getAudioType() == AudioType::kSFX);
-  }
-
-#pragma endregion
-
 #pragma region Update Tests
 
   //------------------------------------------------------------------------------------------------
@@ -129,7 +82,7 @@ namespace TestCeleste
   {
     GameObject gameObject;
     setUpButtonComponents(gameObject);
-    observer_ptr<Collider> collider = gameObject.findComponent<Collider>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.findComponent<MouseInteractionHandler>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.findComponent<SpriteRenderer>();
 
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
@@ -137,9 +90,9 @@ namespace TestCeleste
 
     Assert::IsTrue(Button::ButtonState::kIdle == button->getButtonState_Public());
 
-    collider->setHitByRay(true);
+    handler->setMouseOver(true);
 
-    Assert::IsTrue(collider->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     // Have to make sure we exhaust the click timer
     button->update(100);
@@ -154,16 +107,16 @@ namespace TestCeleste
   {
     GameObject gameObject;
     setUpButtonComponents(gameObject);
-    observer_ptr<Collider> collider = gameObject.findComponent<Collider>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.findComponent<MouseInteractionHandler>();
 
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
     button->setButtonState_Public(Button::ButtonState::kClicked);
       
     Assert::IsTrue(Button::ButtonState::kClicked == button->getButtonState_Public());
 
-    collider->setHitByRay(true);
+    handler->setMouseOver(true);
 
-    Assert::IsTrue(collider->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     // Have to make sure we exhaust the click timer
     button->update(100);
@@ -176,17 +129,14 @@ namespace TestCeleste
   {
     GameObject gameObject;
     setUpButtonComponents(gameObject);
-    observer_ptr<Collider> collider = gameObject.findComponent<Collider>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.findComponent<MouseInteractionHandler>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.findComponent<SpriteRenderer>();
 
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
     button->setButtonState_Public(Button::ButtonState::kClicked);
 
     Assert::IsTrue(Button::ButtonState::kClicked == button->getButtonState_Public());
-
-    getMouse().getTransform().setTranslation(10000, 10000);
-
-    Assert::IsFalse(collider->intersects(glm::vec2(10000, 10000)));
+    Assert::IsFalse(handler->isMouseOver());
 
     // Have to make sure we exhaust the click timer
     button->update(100);
@@ -201,17 +151,14 @@ namespace TestCeleste
   {
     GameObject gameObject;
     setUpButtonComponents(gameObject);
-    observer_ptr<Collider> collider = gameObject.findComponent<Collider>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.findComponent<MouseInteractionHandler>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.findComponent<SpriteRenderer>();
 
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
     button->setButtonState_Public(Button::ButtonState::kHighlighted);
 
     Assert::IsTrue(Button::ButtonState::kHighlighted == button->getButtonState_Public());
-
-    getMouse().getTransform().setTranslation(10000, 10000);
-
-    Assert::IsFalse(collider->intersects(glm::vec2(10000, 10000)));
+    Assert::IsFalse(handler->isMouseOver());
 
     // Have to make sure we exhaust the click timer
     button->update(100);
@@ -243,11 +190,11 @@ namespace TestCeleste
 
     observer_ptr<MouseInteractionHandler> handler = gameObject.findComponent<MouseInteractionHandler>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
-    gameObject.findComponent<Collider>()->setHitByRay(true);
+    handler->setMouseOver(true);
     button->setButtonState_Public(Button::ButtonState::kClicked);
 
     Assert::AreEqual(handler, mouseInteractionHandler);
-    Assert::IsTrue(gameObject.findComponent<Collider>()->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     bool called = false;
     button->subscribeLeftClickCallback([&called](GameObject&) -> void { called = true; });
@@ -257,7 +204,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Button_SubscribeLeftClickCallback_MultipleCallbacks_SuubscribesToInteractionHandler)
+  TEST_METHOD(Button_SubscribeLeftClickCallback_MultipleCallbacks_SubscribesToInteractionHandler)
   {
     GameObject gameObject;
     setUpButtonComponents(gameObject);
@@ -265,11 +212,11 @@ namespace TestCeleste
 
     observer_ptr<MouseInteractionHandler> handler = gameObject.findComponent<MouseInteractionHandler>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
-    gameObject.findComponent<Collider>()->setHitByRay(true);
+    handler->setMouseOver(true);
     button->setButtonState_Public(Button::ButtonState::kClicked);
 
     Assert::AreEqual(handler, mouseInteractionHandler);
-    Assert::IsTrue(gameObject.findComponent<Collider>()->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     bool called = false;
     bool called2 = false;
@@ -289,14 +236,14 @@ namespace TestCeleste
   {
     GameObject gameObject;
     setUpButtonComponents(gameObject);
-    observer_ptr<Collider> collider = gameObject.findComponent<Collider>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.findComponent<MouseInteractionHandler>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.findComponent<SpriteRenderer>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.findComponent<AudioSource>();
 
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
-    collider->setHitByRay(true);
+    handler->setMouseOver(true);
 
-    Assert::IsTrue(collider->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     // Have to set up mouse interaction script
     gameObject.update(0);
@@ -313,21 +260,16 @@ namespace TestCeleste
   TEST_METHOD(Button_OnMouseLeave_SetsTextureToDefault)
   {
     GameObject gameObject;
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();  // Make sure this is last so it doesn't create components
 
-    getMouse().getTransform().setTranslation(0, 0);
-
-    Assert::IsTrue(collider->intersects(glm::vec2(0, 0)));
-
     // Have to set up mouse interaction script
     gameObject.update(0);
-    collider->setHitByRay(true);
+    handler->setMouseOver(true);
 
-    Assert::IsTrue(collider->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     gameObject.handleInput();
     button->update(0);
@@ -336,9 +278,9 @@ namespace TestCeleste
     Assert::AreEqual(button->getHighlightedTexture(), spriteRenderer->getTexture());
     Assert::IsTrue(audioSourceSource->isPlaying());
 
-    collider->setHitByRay(false);
+    handler->setMouseOver(false);
 
-    Assert::IsFalse(collider->isHitByRay());
+    Assert::IsFalse(handler->isMouseOver());
 
     gameObject.handleInput();
     button->update(0);
@@ -352,9 +294,8 @@ namespace TestCeleste
   TEST_METHOD(Button_OnMouseLeftClick_WhenNotClicked_SetsTextureToClicked_UpdatesSpriteRendererDimensions_PlaysClickedAudio_AndSetsStateToClicked)
   {
     GameObject gameObject;
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
 
@@ -366,9 +307,9 @@ namespace TestCeleste
 
     // Have to set up mouse interaction script
     gameObject.update(0);
-    collider->setHitByRay(true);
+    handler->setMouseOver(true);
 
-    Assert::IsTrue(collider->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     // This must go before the button handle input
     // Simulate a mouse click
@@ -388,9 +329,8 @@ namespace TestCeleste
   TEST_METHOD(Button_OnMouseLeftButtonReleased_ButtonNotClicked_HandlesEvent)
   {
     GameObject gameObject;
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
 
@@ -408,9 +348,9 @@ namespace TestCeleste
 
     // Have to set up mouse interaction script
     gameObject.update(0);
-    collider->setHitByRay(true);
+    handler->setMouseOver(true);
 
-    Assert::IsTrue(collider->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     // This must go before the button handle input
     // Simulate a mouse click
@@ -429,9 +369,8 @@ namespace TestCeleste
   TEST_METHOD(Button_OnMouseLeftButtonReleased_ColliderNotHitByRay_HandlesEvent)
   {
     GameObject gameObject;
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
 
@@ -449,9 +388,9 @@ namespace TestCeleste
 
     // Have to set up mouse interaction script
     gameObject.update(0);
-    collider->setHitByRay(true);
+    handler->setMouseOver(true);
 
-    Assert::IsTrue(collider->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     // This must go before the button handle input
     // Simulate a mouse click
@@ -459,9 +398,9 @@ namespace TestCeleste
 
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kLeft));
 
-    collider->setHitByRay(false);
+    handler->setMouseOver(false);
 
-    Assert::IsFalse(collider->isHitByRay());
+    Assert::IsFalse(handler->isMouseOver());
 
     gameObject.handleInput();
 
@@ -472,9 +411,8 @@ namespace TestCeleste
   TEST_METHOD(Button_OnMouseLeftButtonReleased_ButtonNotClicked_DoesNotChangeButtonState)
   {
     GameObject gameObject;
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
 
@@ -493,7 +431,7 @@ namespace TestCeleste
     // Have to set up mouse interaction script
     gameObject.update(0);
 
-    Assert::IsFalse(collider->isHitByRay());
+    Assert::IsFalse(handler->isMouseOver());
 
     // This must go before the button handle input
     // Simulate a mouse click
@@ -520,9 +458,8 @@ namespace TestCeleste
   TEST_METHOD(Button_OnMouseLeftButtonReleased_ButtonClicked_SetsButtonStateTo_kIdle)
   {
     GameObject gameObject;
-    observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    gameObject.addComponent<MouseInteractionHandler>();
+    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSourceSource = gameObject.addComponent<AudioSource>();
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
 
@@ -540,9 +477,9 @@ namespace TestCeleste
 
     // Have to set up mouse interaction script
     gameObject.update(0);
-    collider->setHitByRay(true);
+    handler->setMouseOver(true);
 
-    Assert::IsTrue(collider->isHitByRay());
+    Assert::IsTrue(handler->isMouseOver());
 
     // This must go before the button handle input
     // Simulate a mouse click
@@ -746,7 +683,6 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   void TestButton::setUpButtonComponents(GameObject& gameObject)
   {
-    gameObject.addComponent<RectangleCollider>();
     gameObject.addComponent<SpriteRenderer>();
     gameObject.addComponent<MouseInteractionHandler>();
     gameObject.addComponent<AudioSource>();

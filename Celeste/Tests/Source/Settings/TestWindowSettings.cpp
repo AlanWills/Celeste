@@ -16,7 +16,6 @@ namespace TestCeleste::Settings
 {
   CELESTE_TEST_CLASS(TestWindowSettings)
 
-  std::string originalWindowTitle;
   glm::vec2 originalResolution;
   bool originalWindowed;
 
@@ -25,7 +24,6 @@ namespace TestCeleste::Settings
   {
     OpenGLWindow& window = getWindow();
 
-    originalWindowTitle = window.getTitle();
     originalResolution = window.getViewportDimensions();
     originalWindowed = window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed;
   }
@@ -41,7 +39,6 @@ namespace TestCeleste::Settings
   {
     OpenGLWindow& window = getWindow();
 
-    window.setTitle(originalWindowTitle);
     window.setViewportDimensions(originalResolution);
     window.setWindowMode(originalWindowed ? OpenGLWindow::WindowMode::kWindowed : OpenGLWindow::WindowMode::kFullScreen);
   }
@@ -83,24 +80,6 @@ namespace TestCeleste::Settings
 #pragma endregion
 
 #pragma region Apply Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(WindowSettings_Apply_SetsWindowTitleToValue)
-  {
-    if (GL::isInitialized())
-    {
-      std::unique_ptr<WindowSettings> settings = ScriptableObject::create<WindowSettings>("");
-      settings->setWindowTitle(originalWindowTitle + "Test");
-
-      OpenGLWindow& window = getWindow();
-
-      Assert::AreEqual(originalWindowTitle, window.getTitle());
-
-      settings->apply();
-
-      Assert::AreEqual(originalWindowTitle + "Test", window.getTitle());
-    }
-  }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(WindowSettings_Apply_SetsViewportDimensionsToValue)

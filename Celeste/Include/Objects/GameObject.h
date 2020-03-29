@@ -99,13 +99,6 @@ namespace Celeste
       template <typename T>
       const T* findComponent() const { return const_cast<GameObject*>(this)->findComponent<T>(); }
 
-      /// Does not edit this instance, but allows us to enforce constness of handles by making this non-const
-      template <typename T>
-      T* findComponent(const std::function<bool(const T*)>& componentPredicate);
-
-      template <typename T>
-      const T* findComponent(const std::function<bool(const T*)>& componentPredicate) const { return const_cast<GameObject*>(this)->findComponent<T>(componentPredicate); }
-
       template <typename T>
       bool hasComponent() const;
 
@@ -183,38 +176,6 @@ namespace Celeste
       for (Component* unmanagedComponent : m_unmanagedComponents)
       {
         if (dynamic_cast<T*>(unmanagedComponent) != nullptr)
-        {
-          return reinterpret_cast<T*>(unmanagedComponent);
-        }
-      }
-    }
-
-    return nullptr;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  template <typename T>
-  T* GameObject::findComponent(const std::function<bool(const T*)>& componentPredicate)
-  {
-    STATIC_ASSERT((std::is_base_of<Component, T>::value), "Inputted argument does not have component has an ancestor.");
-
-    if (Celeste::is_managed_component<T>::value)
-    {
-      for (Component* managedComponent : m_managedComponents)
-      {
-        if (dynamic_cast<T*>(managedComponent) != nullptr &&
-          componentPredicate(reinterpret_cast<T*>(managedComponent)))
-        {
-          return reinterpret_cast<T*>(managedComponent);
-        }
-      }
-    }
-    else
-    {
-      for (Component* unmanagedComponent : m_unmanagedComponents)
-      {
-        if (dynamic_cast<T*>(unmanagedComponent) != nullptr &&
-          componentPredicate(reinterpret_cast<T*>(unmanagedComponent)))
         {
           return reinterpret_cast<T*>(unmanagedComponent);
         }

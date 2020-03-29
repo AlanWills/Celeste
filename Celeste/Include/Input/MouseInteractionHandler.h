@@ -46,7 +46,7 @@ namespace Celeste
         inline const GameObjectEvent& getOnRightButtonUpEvent() const { return m_onRightButtonUp; }
 
         bool isMouseOver() const { return m_isMouseOver; }
-        void setMouseOver(bool mouseOver);
+        CelesteDllExport void setMouseOver(bool mouseOver);
 
         CelesteDllExport void handleInput() override;
 

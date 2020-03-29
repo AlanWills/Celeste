@@ -1,5 +1,7 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
+#include "Registries/ComponentRegistry.h"
+#include "Objects/GameObject.h"
 #include "Viewport/Camera.h"
 #include "Scene/SceneUtils.h"
 #include "Input/Mouse.h"
@@ -16,12 +18,35 @@ namespace TestCeleste
 {
   CELESTE_TEST_CLASS(TestCamera)
 
+#pragma region Registration Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(Camera_IsRegisteredWithComponentRegistry)
+  {
+    Assert::IsTrue(ComponentRegistry::hasComponent<Camera>());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(Animator_IsAllocatableFromComponentRegistry)
+  {
+    GameObject gameObject;
+
+    observer_ptr<Component> component = ComponentRegistry::createComponent(Camera::type_name(), gameObject);
+
+    Assert::IsNotNull(component);
+    Assert::IsNotNull(dynamic_cast<Camera*>(component));
+    Assert::IsTrue(&gameObject == component->getGameObject());
+  }
+
+#pragma endregion
+
 #pragma region Constructor Tests
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_Constructor_SetsCameraValuesToDefault)
   {
-    Camera camera;
+    GameObject gameObject;
+    Camera camera(gameObject);
       
     Assert::AreEqual(1.0f, camera.getAspectRatio());
     Assert::AreNotEqual(0.0f, camera.getNearPlane());
@@ -37,10 +62,11 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_GetViewMatrix_PerspectiveMode_AppliesCameraTranslationOnly)
   {
-    Camera camera;
-    camera.getTransform().setTranslation(glm::vec3(-1, 3, 0.25f));
-    camera.getTransform().rotate(2);
-    camera.getTransform().scale(2, 0.5f, 0.6f);
+    GameObject gameObject;
+    Camera camera(gameObject);
+    camera.getTransform()->setTranslation(glm::vec3(-1, 3, 0.25f));
+    camera.getTransform()->rotate(2);
+    camera.getTransform()->scale(2, 0.5f, 0.6f);
     camera.setProjectionMode(ProjectionMode::kPerspective);
 
     Assert::IsTrue(camera.getProjectionMode() == ProjectionMode::kPerspective);
@@ -50,10 +76,11 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_GetViewMatrix_OrthographicMode_ReturnsIdentityMatrix)
   {
-    Camera camera;
-    camera.getTransform().setTranslation(glm::vec3(-1, 3, 0.25f));
-    camera.getTransform().rotate(2);
-    camera.getTransform().scale(2, 0.5f, 0.6f);
+    GameObject gameObject;
+    Camera camera(gameObject);
+    camera.getTransform()->setTranslation(glm::vec3(-1, 3, 0.25f));
+    camera.getTransform()->rotate(2);
+    camera.getTransform()->scale(2, 0.5f, 0.6f);
     camera.setProjectionMode(ProjectionMode::kOrthographic);
 
     Assert::IsTrue(camera.getProjectionMode() == ProjectionMode::kOrthographic);
@@ -67,29 +94,33 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_GetProjectionMatrix_Orthographic)
   {
-    Camera camera;
+    GameObject gameObject;
+    Camera camera(gameObject);
     camera.setProjectionMode(ProjectionMode::kOrthographic);
     camera.setViewportDimensions(800, 600);
-    camera.getTransform().setTranslation(glm::vec3(-1, 3, 0.25f));
-    camera.getTransform().rotate(2);
-    camera.getTransform().scale(2, 0.5f, 0.6f);
+    camera.setNearPlane(1);
+    camera.setFarPlane(100);
+    camera.getTransform()->setTranslation(glm::vec3(-1, 3, 0.25f));
+    camera.getTransform()->rotate(2);
+    camera.getTransform()->scale(2, 0.5f, 0.6f);
 
     Assert::IsTrue(ProjectionMode::kOrthographic == camera.getProjectionMode());
 
     float width = 800;
     float height = 600;
-    Assert::AreEqual(glm::ortho<float>(0, width, 0, height), camera.getProjectionMatrix());
+    Assert::AreEqual(glm::ortho<float>(0, width, 0, height, 1, 100), camera.getProjectionMatrix());
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_GetProjectionMatrix_Perspective)
   {
-    Camera camera;
+    GameObject gameObject;
+    Camera camera(gameObject);
     camera.setProjectionMode(ProjectionMode::kPerspective);
     camera.setViewportDimensions(800, 600);
-    camera.getTransform().setTranslation(glm::vec3(-1, 3, 0.25f));
-    camera.getTransform().rotate(2);
-    camera.getTransform().scale(2, 0.5f, 0.6f);
+    camera.getTransform()->setTranslation(glm::vec3(-1, 3, 0.25f));
+    camera.getTransform()->rotate(2);
+    camera.getTransform()->scale(2, 0.5f, 0.6f);
 
     Assert::IsTrue(ProjectionMode::kPerspective == camera.getProjectionMode());
 
@@ -106,7 +137,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_CreateRay_Perspective_Simple)
   {
-    Camera camera;
+    GameObject gameObject;
+    Camera camera(gameObject);
     camera.setProjectionMode(ProjectionMode::kPerspective);
 
     Assert::IsTrue(camera.getProjectionMode() == ProjectionMode::kPerspective);
@@ -116,14 +148,15 @@ namespace TestCeleste
 
     Ray actual = camera.createRay();
 
-    Assert::AreEqual(camera.getTransform().getWorldTranslation(), actual.m_origin);
+    Assert::AreEqual(camera.getTransform()->getWorldTranslation(), actual.m_origin);
     Assert::AreEqual(glm::vec3(0, 0, -1), actual.m_direction);
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_CreateRay_Perspective_Complex)
   {
-    Camera camera;
+    GameObject gameObject;
+    Camera camera(gameObject);
     camera.setProjectionMode(ProjectionMode::kPerspective);
     camera.setViewportDimensions(1920, 1080);
 
@@ -134,16 +167,17 @@ namespace TestCeleste
 
     Ray actual = camera.createRay();
 
-    Assert::AreEqual(camera.getTransform().getWorldTranslation(), actual.m_origin);
+    Assert::AreEqual(camera.getTransform()->getWorldTranslation(), actual.m_origin);
     AssertExt::AreAlmostEqual(getRayDirection(glm::vec2(1, -2), camera), actual.m_direction);
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_CreateRay_InputtingValues_Perspective_Simple)
   {
-    Camera camera;
+    GameObject gameObject;
+    Camera camera(gameObject);
 
-    camera.getTransform().setTranslation(glm::vec3(0, 0, 5));
+    camera.getTransform()->setTranslation(glm::vec3(0, 0, 5));
     camera.setViewportDimensions(800, 600);
     camera.setProjectionMode(ProjectionMode::kPerspective);
 
@@ -163,9 +197,10 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_CreateRay_InputtingValues_Perspective_Complex)
   {
-    Camera camera;
+    GameObject gameObject;
+    Camera camera(gameObject);
 
-    camera.getTransform().setTranslation(glm::vec3(0.25f, -2, 5));
+    camera.getTransform()->setTranslation(glm::vec3(0.25f, -2, 5));
     camera.setViewportDimensions(800, 600);
     camera.setProjectionMode(ProjectionMode::kPerspective);
 
@@ -181,7 +216,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_CreateRay_Orthographic)
   {
-    Camera camera;
+    GameObject gameObject;
+    Camera camera(gameObject);
     camera.setProjectionMode(ProjectionMode::kOrthographic);
 
     Assert::IsTrue(camera.getProjectionMode() == ProjectionMode::kOrthographic);
@@ -191,16 +227,17 @@ namespace TestCeleste
 
     Ray actual = camera.createRay();
 
-    Assert::AreEqual(glm::vec3(5, -2.123f, 0) + camera.getTransform().getWorldTranslation(), actual.m_origin);
+    Assert::AreEqual(glm::vec3(5, -2.123f, 0) + camera.getTransform()->getWorldTranslation(), actual.m_origin);
     Assert::AreEqual(glm::vec3(0, 0, -1), actual.m_direction);
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_CreateRay_InputtingValues_Orthographic)
   {
-    Camera camera;
+    GameObject gameObject;
+    Camera camera(gameObject);
 
-    camera.getTransform().setTranslation(glm::vec3(1, -3.5f, 5));
+    camera.getTransform()->setTranslation(glm::vec3(1, -3.5f, 5));
     camera.setProjectionMode(ProjectionMode::kOrthographic);
 
     Assert::IsTrue(ProjectionMode::kOrthographic == camera.getProjectionMode());
@@ -225,7 +262,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_SetProjectionMode)
   {
-    Camera camera;
+    GameObject gameObject;
+    Camera camera(gameObject);
     camera.setProjectionMode(ProjectionMode::kPerspective);
 
     Assert::IsTrue(ProjectionMode::kPerspective == camera.getProjectionMode());
@@ -238,7 +276,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Camera_SetViewportDimensions_ChangesAspectRatio)
   {
-    Camera camera;
+    GameObject gameObject;
+    Camera camera(gameObject);
     camera.setViewportDimensions(300, 150);
 
     Assert::AreEqual(2.0f, camera.getAspectRatio());
@@ -249,7 +288,6 @@ namespace TestCeleste
   }
 
   private:
-
     //------------------------------------------------------------------------------------------------
     glm::vec3 getRayDirection(
       const glm::vec2& screenPosition, 
