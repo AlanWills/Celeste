@@ -7,11 +7,8 @@
 
 #include <memory.h>
 
+struct GLFWwindow;
 
-namespace Celeste
-{
-  class GLFWWindow;
-}
 
 namespace Celeste::Input
 {

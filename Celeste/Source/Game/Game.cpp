@@ -10,6 +10,14 @@
 
 #include "Debug/Log.h"
 
+#if _DEBUG
+#include "Lua/ScriptCommands/DolceScriptCommands.h"
+#include "Debug/Windows/HierarchyDolceWindow.h"
+#include "Debug/Windows/LuaScriptDolceWindow.h"
+
+#include "imgui.h"
+#endif
+
 
 namespace Celeste
 {
@@ -27,6 +35,9 @@ namespace Celeste
     m_audioManager(),
     m_clock(),
     m_running(false)
+#if _DEBUG
+    , m_dolce(m_window.getGLWindow())
+#endif
   {
     ASSERT(!m_current);
     m_current = this;
@@ -47,6 +58,9 @@ namespace Celeste
     m_audioManager(),
     m_clock(),
     m_running(false)
+#if _DEBUG
+    , m_dolce(m_window.getGLWindow())
+#endif
   {
     ASSERT(!m_current);
     m_current = this;
@@ -100,6 +114,14 @@ namespace Celeste
     return m_current->m_clock;
   }
 
+#if _DEBUG
+  //------------------------------------------------------------------------------------------------
+  Dolce::Dolce& Game::getDolce()
+  {
+    return m_current->m_dolce;
+  }
+#endif
+
   //------------------------------------------------------------------------------------------------
   void Game::initialize()
   {
@@ -111,6 +133,11 @@ namespace Celeste
     // before their lua Game script is run
     applySettings();
     onInitialize();
+
+#if _DEBUG
+    initializeDolce();
+#endif
+
     executeGameScript();
   }
 
@@ -140,14 +167,35 @@ namespace Celeste
     Path gameLuaScriptPath(Resources::getResourcesDirectory(), "Scripts", "Game.lua");
     if (File::exists(gameLuaScriptPath))
     {
-      Lua::LuaState::scriptFile(gameLuaScriptPath);
+      auto result = Lua::LuaState::scriptFile(gameLuaScriptPath);
+#if _DEBUG
+      if (!result.valid())
+      {
+        sol::error e = result;
+        ASSERT_FAIL_MSG(e.what());
+      }
+#elif
+      UNUSED(result);
+#endif
     }
   }
 
+#if _DEBUG
   //------------------------------------------------------------------------------------------------
-  void Game::onInitialize()
+  void Game::initializeDolce()
   {
+    Dolce::Dolce& dolce = getDolce();
+
+    Dolce::Lua::ScriptCommands::initialize(Lua::LuaState::instance(), dolce);
+
+    dolce.registerWindow(std::make_unique<Debug::HierarchyDolceWindow>(m_sceneManager)).open();
+    dolce.registerWindow(std::make_unique<Debug::LuaScriptDolceWindow>()).open();
+
+    Lua::LuaState::scriptFile(Path(Resources::getResourcesDirectory(), "TestDolceWindow.lua"));
+
+    onInitializeDolce(dolce);
   }
+#endif
 
   //------------------------------------------------------------------------------------------------
   void Game::run()
@@ -283,6 +331,10 @@ namespace Celeste
   void Game::render(GLfloat lag)
   {
     m_renderManager.render(lag);
+
+#if _DEBUG
+    m_dolce.render();
+#endif
   }
 
   //------------------------------------------------------------------------------------------------

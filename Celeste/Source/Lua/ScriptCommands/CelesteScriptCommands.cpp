@@ -2,6 +2,7 @@
 #include "Lua/ScriptCommands/CoreScriptCommands.h"
 #include "Lua/ScriptCommands/Animation/AnimationScriptCommands.h"
 #include "Lua/ScriptCommands/Audio/AudioScriptCommands.h"
+#include "Lua/ScriptCommands/Debug/DebugScriptCommands.h"
 #include "Lua/ScriptCommands/Events/EventScriptCommands.h"
 #include "Lua/ScriptCommands/Resources/ResourcesScriptCommands.h"
 #include "Lua/ScriptCommands/Scene/SceneScriptCommands.h"
@@ -30,6 +31,7 @@ namespace Celeste::Lua::CelesteScriptCommands
     Lua::LuaState::appendToLuaPackagePath(Path(Celeste::Resources::getResourcesDirectory(), "Scripts", "?.lua;"));
 
     // Now initialize all lua scripts and API
+    Lua::Debug::ScriptCommands::initialize();
     Lua::Core::ScriptCommands::initialize();
     Lua::Maths::ScriptCommands::initialize();
     Lua::Viewport::ScriptCommands::initialize();

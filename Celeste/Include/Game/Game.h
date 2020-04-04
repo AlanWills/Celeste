@@ -10,6 +10,10 @@
 #include "Time/Clock.h"
 #include "Memory/ObserverPtr.h"
 
+#if _DEBUG
+#include "Dolce.h"
+#endif
+
 #include <memory>
 
 
@@ -53,10 +57,18 @@ namespace Celeste
       CelesteDllExport static AudioManager& getAudioManager();
       CelesteDllExport static Clock& getClock();
 
+#if _DEBUG
+      CelesteDllExport static Dolce::Dolce& getDolce();
+#endif
+
     protected:
-      CelesteDllExport virtual void onInitialize();
+      virtual void onInitialize() { }
       virtual void onUpdate(float /*elapsedGameTime*/) { }
       virtual void onExit() { }
+
+#if _DEBUG
+      virtual void onInitializeDolce(Dolce::Dolce& /*dolce*/) {}
+#endif
 
     private:
       Game(const Game&) = delete;
@@ -69,6 +81,10 @@ namespace Celeste
 
       void applySettings() const;
       void executeGameScript() const;
+
+#if _DEBUG
+      void initializeDolce();
+#endif
 
       static void windowCloseFunc(GLFWwindow* window);
 
@@ -83,5 +99,9 @@ namespace Celeste
       AudioManager m_audioManager;
       Clock m_clock;
       bool m_running;
+
+#if _DEBUG
+      Dolce::Dolce m_dolce;
+#endif
   };
 }

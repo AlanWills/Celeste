@@ -14,3 +14,4 @@ Profiler.txt
 TestResults.xml
 Build\ Server/
 .vs/
+*.ilk

@@ -49,3 +49,6 @@
 [submodule "3rdParty/crossguid"]
 	path = 3rdParty/crossguid
 	url = https://github.com/graeme-hill/crossguid.git
+[submodule "Dolce"]
+	path = Dolce
+	url = https://github.com/AlanWills/Dolce.git

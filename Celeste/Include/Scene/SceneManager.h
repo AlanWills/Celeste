@@ -34,11 +34,10 @@ namespace Celeste
       observer_ptr<GameObject> findWithTag(const std::string& tag) { return findWithTag(internString(tag)); }
 
       CelesteDllExport std::vector<std::reference_wrapper<const GameObject>> getRootGameObjects() const;
+      CelesteDllExport std::vector<std::reference_wrapper<GameObject>> getRootGameObjects();
 
     private:
       using Inherited = Entity;
-      
-      std::vector<std::reference_wrapper<GameObject>> getRootGameObjects();
 
       void handleInputGameObjectHierarchy(GameObject& gameObject);
       void updateGameObjectHierarchy(GameObject& gameObject, float elapsedGameTime);

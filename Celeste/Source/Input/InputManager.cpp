@@ -6,6 +6,7 @@
 #include "Input/PhysicsRaycaster.h"
 #include "Algorithms/EntityAlgorithms.h"
 #include "Scene/SceneUtils.h"
+#include "Debug/DolceUtils.h"
 
 #include <unordered_set>
 
@@ -100,6 +101,13 @@ namespace Celeste::Input
   //------------------------------------------------------------------------------------------------
   void keyCallback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int /*modifiers*/)
   {
+#if _DEBUG
+    if (Debug::getDolce().hasKeyboardFocus())
+    {
+      return;
+    }
+#endif
+
     // This callback is called when the keyboard state CHANGES
 
     if (action == GLFW_PRESS || action == GLFW_REPEAT)
@@ -115,12 +123,26 @@ namespace Celeste::Input
   //------------------------------------------------------------------------------------------------
   void charCallback(GLFWwindow* /*window*/, unsigned int codepoint)
   {
+#if _DEBUG
+    if (Debug::getDolce().hasKeyboardFocus())
+    {
+      return;
+    }
+#endif
+
     getKeyboard().onTextInputted(static_cast<char>(codepoint));
   }
 
   //------------------------------------------------------------------------------------------------
   void mouseButtonCallback(GLFWwindow* /*window*/, int button, int action, int /*mods*/)
   {
+#if _DEBUG
+    if (Debug::getDolce().hasMouseFocus())
+    {
+      return;
+    }
+#endif
+
     // This callback is called when the mouse state CHANGES
 
     MouseButton mButton = MouseButton::kLeft;
