@@ -52,3 +52,9 @@
 [submodule "Dolce"]
 	path = Dolce
 	url = https://github.com/AlanWills/Dolce.git
+[submodule "DolceLua"]
+	path = DolceLua
+	url = https://github.com/AlanWills/DolceLua.git
+[submodule "CelesteLua"]
+	path = CelesteLua
+	url = https://github.com/AlanWills/CelesteLua.git

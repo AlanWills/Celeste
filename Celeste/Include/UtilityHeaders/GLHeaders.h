@@ -4,7 +4,10 @@
 #include <GL/glew.h>
 
 // GLFW
+#ifndef GLFW_DLL
 #define GLFW_DLL
+#endif
+
 #include <glfw/glfw3.h>
 
 #include <glm/glm.hpp>

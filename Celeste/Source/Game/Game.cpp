@@ -2,7 +2,6 @@
 #include "OpenGL/GL.h"
 
 #include "Lua/Components/LuaComponentManifestRegistry.h"
-#include "Lua/ScriptCommands/CelesteScriptCommands.h"
 #include "Lua/LuaState.h"
 
 #include "Settings/GameSettings.h"
@@ -11,7 +10,6 @@
 #include "Debug/Log.h"
 
 #if _DEBUG
-#include "Lua/ScriptCommands/DolceScriptCommands.h"
 #include "Debug/Windows/HierarchyDolceWindow.h"
 #include "Debug/Windows/LuaScriptDolceWindow.h"
 
@@ -127,8 +125,6 @@ namespace Celeste
   {
     glfwSetWindowCloseCallback(m_window.getGLWindow(), &Game::windowCloseFunc);
 
-    Lua::CelesteScriptCommands::initialize();
-
     // Call onInitialize first to give derived game classes the chance to register script commands
     // before their lua Game script is run
     applySettings();
@@ -186,12 +182,8 @@ namespace Celeste
   {
     Dolce::Dolce& dolce = getDolce();
 
-    Dolce::Lua::ScriptCommands::initialize(Lua::LuaState::instance(), dolce);
-
     dolce.registerWindow(std::make_unique<Debug::HierarchyDolceWindow>(m_sceneManager)).open();
     dolce.registerWindow(std::make_unique<Debug::LuaScriptDolceWindow>()).open();
-
-    Lua::LuaState::scriptFile(Path(Resources::getResourcesDirectory(), "TestDolceWindow.lua"));
 
     onInitializeDolce(dolce);
   }
