@@ -1,0 +1,1 @@
+require 'Debug.Windows.PerformanceDolceWindow'

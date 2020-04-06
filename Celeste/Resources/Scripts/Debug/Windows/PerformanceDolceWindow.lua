@@ -1,0 +1,1 @@
+Dolce.instance:registerWindow("Performance", { render = function() end })
