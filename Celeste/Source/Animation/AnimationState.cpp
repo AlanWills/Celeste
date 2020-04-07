@@ -1,6 +1,6 @@
 #include "Animation/AnimationState.h"
 #include "Animation/Animator.h"
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 
 
 namespace Celeste::Animation

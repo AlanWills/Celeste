@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CelesteDllExport.h"
-#include "UtilityHeaders/LuaHeaders.h"
+#include "Lua/LuaHeaders.h"
 
 
 namespace Celeste::Lua

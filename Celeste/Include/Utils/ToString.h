@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CelesteDllExport.h"
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 
 #include <string>
 

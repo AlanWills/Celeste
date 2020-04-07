@@ -1,5 +1,5 @@
 #include "Deserialization/MathsDeserializers.h"
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 #include "Utils/StringUtils.h"
 
 #include <algorithm>

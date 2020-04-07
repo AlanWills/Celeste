@@ -1,6 +1,6 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 
-#include "Debug/Log.h"
+#include "Log/Log.h"
 #include "FileSystem/Path.h"
 #include "FileSystem/Directory.h"
 

@@ -1,11 +1,11 @@
-#include "Debug/Log.h"
-#include "Debug/Logging/Logger.h"
+#include "Log.h"
+#include "Logging/StdoutLogger.h"
 #include "FileSystem/Directory.h"
 
 
 namespace Celeste
 {
-  std::unique_ptr<ILogger> Log::m_logger = std::unique_ptr<ILogger>(new Logger(Path(Directory::getExecutingAppDirectory(), "Log.txt")));
+  std::unique_ptr<ILogger> Log::m_logger = std::unique_ptr<ILogger>(new StdoutLogger());
 
   //------------------------------------------------------------------------------------------------
   Log::Log()
@@ -20,14 +20,14 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Log::setLogger(ILogger* asserter) 
+  void Log::setLogger(std::unique_ptr<ILogger>&& logger) 
   { 
-    m_logger.reset(asserter); 
+    m_logger = std::move(logger); 
   }
 
   //------------------------------------------------------------------------------------------------
-  ILogger* Log::getLogger()
+  ILogger& Log::getLogger()
   { 
-    return m_logger.get(); 
+    return *m_logger; 
   }
 }

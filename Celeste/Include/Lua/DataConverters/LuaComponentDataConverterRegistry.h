@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UtilityHeaders/LuaHeaders.h"
+#include "Lua/LuaHeaders.h"
 #include "Lua/DataConverters/LuaComponentDataConverter.h"
 #include "CelesteDllExport.h"
 

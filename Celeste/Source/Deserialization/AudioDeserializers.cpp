@@ -1,5 +1,5 @@
 #include "Deserialization/AudioDeserializers.h"
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 
 
 namespace Celeste

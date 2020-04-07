@@ -1,6 +1,6 @@
 #include "OpenGL/GL.h"
 #include "UtilityHeaders/GLHeaders.h"
-#include "Debug/Log.h"
+#include "Log.h"
 
 
 namespace Celeste

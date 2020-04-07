@@ -1,5 +1,5 @@
-#include "Debug/Assert.h"
-#include "Debug/Asserting/DebugAsserter.h"
+#include "Assert/Assert.h"
+#include "Assert/DebugAsserter.h"
 
 
 namespace Celeste
@@ -14,14 +14,14 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Assertion::setAsserter(IAsserter* asserter) 
+  void Assertion::setAsserter(std::unique_ptr<IAsserter>&& asserter) 
   { 
-    m_asserter.reset(asserter); 
+    m_asserter = std::move(asserter); 
   }
 
   //------------------------------------------------------------------------------------------------
-  IAsserter* Assertion::getAsserter() 
+  IAsserter& Assertion::getAsserter() 
   { 
-    return m_asserter.get(); 
+    return *m_asserter; 
   }
 }

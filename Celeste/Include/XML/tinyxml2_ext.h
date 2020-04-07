@@ -3,7 +3,7 @@
 #include "XMLEnums.h"
 #include "tinyxml2.h"
 #include "ChildXMLElementWalker.h"
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 
 #include <string>
 #include <vector>

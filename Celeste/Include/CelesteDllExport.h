@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UtilityHeaders/PlatformHeaders.h"
+#include "Platform/Platform.h"
 
 #ifdef BUILDING_CELESTE_ENGINE_DLL
 #define CelesteDllExport __declspec(dllexport)

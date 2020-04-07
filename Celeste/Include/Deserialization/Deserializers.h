@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CelesteDllExport.h"
 #include "FileSystem/Path.h"
 
 #include <string>

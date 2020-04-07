@@ -1,0 +1,1 @@
+enum { make_compiler_happy };

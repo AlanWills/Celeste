@@ -1,6 +1,6 @@
 #include "Networking/NetworkUtils.h"
 #include "UtilityHeaders/NetworkHeaders.h"
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 
 
 namespace Celeste

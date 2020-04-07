@@ -16,7 +16,7 @@
 #include <string>
 #include <iostream>
 
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 
 
 #define GL_FATAL_ERROR_NUMBER 0

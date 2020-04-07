@@ -3,7 +3,7 @@
 #include "Resources/2D/RawImageLoader.h"
 #include "UtilityHeaders/GLHeaders.h"
 #include "OpenGL/GL.h"
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 
 
 namespace Celeste

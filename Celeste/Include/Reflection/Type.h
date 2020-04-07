@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 #include "TypeTraits.h"
 #include "ITypeInfo.h"
 

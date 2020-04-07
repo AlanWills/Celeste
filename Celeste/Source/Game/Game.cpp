@@ -7,7 +7,7 @@
 #include "Settings/GameSettings.h"
 #include "Settings/WindowSettings.h"
 
-#include "Debug/Log.h"
+#include "Log.h"
 
 #if _DEBUG
 #include "Debug/Windows/HierarchyDolceWindow.h"
@@ -251,7 +251,7 @@ namespace Celeste
     GL::terminate();
 
     // Finally, make sure we flush the log in case we have buffered output we have not committed to file yet
-    Log::getLogger()->flush();
+    Log::getLogger().flush();
   }
 
   //------------------------------------------------------------------------------------------------

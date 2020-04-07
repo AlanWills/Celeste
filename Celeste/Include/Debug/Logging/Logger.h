@@ -1,8 +1,9 @@
 #pragma once
 
+#include "CelesteDllExport.h"
 #include "Memory/Allocators/DoubleBufferAllocator.h"
 #include "FileSystem/File.h"
-#include "ILogger.h"
+#include "Logging/ILogger.h"
 
 
 namespace Celeste
@@ -32,7 +33,7 @@ namespace Celeste
       CelesteDllExport void log(const std::string& message, Verbosity verbosity, const char* function, const char* file, int line) override;
 
       /// \brief Returns the string in the back log buffer
-      CelesteDllExport const std::string& getLog() override;
+      CelesteDllExport const std::string& getLog();
 
       /// \brief Swaps the front log buffer with the back log buffer and writes the new back log buffer contents to the file
       /// Call when you have logged messages and you wish to write them to file and then discard them

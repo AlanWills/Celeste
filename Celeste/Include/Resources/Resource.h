@@ -3,7 +3,7 @@
 #include "FileSystem/Path.h"
 #include "FileSystem/File.h"
 #include "Objects/Object.h"
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 #include "UID/StringId.h"
 #include "CelesteDllExport.h"
 

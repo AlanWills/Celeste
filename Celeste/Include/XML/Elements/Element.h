@@ -2,7 +2,7 @@
 
 #include "XML/XMLObject.h"
 #include "XML/XMLEnums.h"
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 
 #include <string>
 

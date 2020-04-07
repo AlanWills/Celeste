@@ -3,7 +3,7 @@
 #include "FileSystem/File.h"
 #include "Resources/Resource.h"
 #include "XML/tinyxml2_ext.h"
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 #include "UID/StringId.h"
 
 

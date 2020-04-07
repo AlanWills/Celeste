@@ -3,8 +3,8 @@
 #include "Memory/Iterators/ResizeableAllocatorIterator.h"
 #include "Memory/Allocators/PoolAllocator.h"
 #include "Memory/ObserverPtr.h"
-#include "Debug/Assert.h"
-#include "Debug/Log.h"
+#include "Assert/Assert.h"
+#include "Log.h"
 
 #include <algorithm>
 #include <numeric>

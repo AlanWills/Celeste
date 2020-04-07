@@ -3,7 +3,7 @@
 #include "CelesteDllExport.h"
 #include "tinyxml2.h"
 #include <Memory/ObserverPtr.h>
-#include "Debug/Assert.h"
+#include "Assert/Assert.h"
 
 #include <functional>
 #include <unordered_map>
