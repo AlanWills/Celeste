@@ -1,16 +1,16 @@
 set(INCLUDES 
-    ${FREEALUT_PROJECT_DIR}/include
-    ${OPENAL_INCLUDE_DIR}
-    ${SOIL2_PROJECT_DIR}/src
-    ${CURLPP_PROJECT_DIR}/include)
+    ${THIRD_PARTY_DIR}/freealut/include
+    ${THIRD_PARTY_DIR}/openal-soft/include/AL
+    ${THIRD_PARTY_DIR}/SOIL2/src
+    ${THIRD_PARTY_DIR}/curlpp/include)
 
 set(LIBS 
     opengl32
     OpenAL
     alut
     assimp
-    curlpp
     crossguid
+    curlpp
     freetype
     glew
     glfw

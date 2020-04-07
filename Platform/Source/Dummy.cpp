@@ -1,0 +1,1 @@
+enum { some_compilers_need_something };
