@@ -27,7 +27,6 @@ namespace Celeste
       break;
 
     case Verbosity::kRaw:
-      std::cout << "RAW: ";
       break;
     }
 

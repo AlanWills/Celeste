@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.6)
 
 function(build_library)
     set(oneValueArgs NAME FOLDER TYPE)
-    set(multiValueArgs INCLUDES LIBS)
+    set(multiValueArgs INCLUDES LIBS RESOURCES)
     cmake_parse_arguments(BUILD_LIBRARY "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN} )
 
@@ -14,7 +14,9 @@ function(build_library)
     source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES})						   
     source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${HEADER_FILES})
 
-    add_library(${PROJECT_NAME} ${BUILD_LIBRARY_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${RES_FILES})
+    add_library(${PROJECT_NAME} ${BUILD_LIBRARY_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${RESOURCES})
+
+    set_source_files_properties(${RES_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
 
     set_target_properties(${PROJECT_NAME} PROPERTIES 
         FOLDER ${BUILD_LIBRARY_FOLDER}
