@@ -250,8 +250,10 @@ namespace Celeste
 
     GL::terminate();
 
-    // Finally, make sure we flush the log in case we have buffered output we have not committed to file yet
+    // We flush the logger here to allow it to write any remaining information
+    // Then we reset it to allow proper cleanup before the app terminates
     Log::getLogger().flush();
+    Log::setLogger(std::unique_ptr<ILogger>(nullptr));
   }
 
   //------------------------------------------------------------------------------------------------

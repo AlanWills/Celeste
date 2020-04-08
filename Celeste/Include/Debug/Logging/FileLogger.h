@@ -19,13 +19,13 @@ namespace Celeste
   // Also writes to a file when it's buffer becomes too large
   // Any messages in the front buffer of the log are considered 'untouchable'
   // If you wish to obtain them, call flush() and then call getLog() or read from the log file
-  class Logger : public ILogger
+  class FileLogger : public ILogger
   {
     public:
       /// \brief Pass in a custom path relative to the executing directory to specify the output log file
-      CelesteDllExport Logger(const std::string& logFileFullPath);
-      CelesteDllExport Logger(const Path& logFilePath) : Logger(logFilePath.as_string()) { }
-      CelesteDllExport ~Logger() override;
+      CelesteDllExport FileLogger(const std::string& logFileFullPath);
+      CelesteDllExport FileLogger(const Path& logFilePath) : FileLogger(logFilePath.as_string()) { }
+      CelesteDllExport ~FileLogger() override;
 
       /// \brief Custom logging function which also records the error warning level
       /// If the log is set to ignore errors of the inputted verbosity, this error will instead be dismissed

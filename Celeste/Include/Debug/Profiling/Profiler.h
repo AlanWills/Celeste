@@ -1,7 +1,7 @@
 #pragma once
 
 #include "UID/StringId.h"
-#include "Debug/Logging/Logger.h"
+#include "Debug/Logging/FileLogger.h"
 #include "Debug/Profiling/ProfilingBlock.h"
 #include "Memory/Allocators/PoolAllocator.h"
 #include "IProfiler.h"
@@ -50,6 +50,6 @@ namespace Celeste
       std::string m_currentBlockName;
 
       /// The logger we will use to write profiling information to a file
-      Logger m_logger;
+      FileLogger m_logger;
   };
 }

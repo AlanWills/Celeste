@@ -1,6 +1,8 @@
 Build/
 bin/
 obj/
+dll/
+lib/
 *.tlog
 *.db
 *.opendb

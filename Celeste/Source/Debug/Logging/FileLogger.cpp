@@ -1,4 +1,4 @@
-#include "Debug/Logging/Logger.h"
+#include "Debug/Logging/FileLogger.h"
 #include "FileSystem/Directory.h"
 
 #include <thread>
@@ -7,7 +7,7 @@
 namespace Celeste
 {
   //------------------------------------------------------------------------------------------------
-  Logger::Logger(const std::string& logFileFullPath) :
+  FileLogger::FileLogger(const std::string& logFileFullPath) :
     m_shouldFlushAfterEveryLog(false),
     m_logFile(logFileFullPath),
     m_verbosity(Verbosity::kRaw | Verbosity::kInfo | Verbosity::kWarning | Verbosity::kError | Verbosity::kCriticalError)
@@ -20,7 +20,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  Logger::~Logger()
+  FileLogger::~FileLogger()
   {
     // When this is destroyed, we write the contents of the front buffer to the log file
     // Anything in the back buffer will have already been written
@@ -34,7 +34,7 @@ namespace Celeste
   }*/
 
   //------------------------------------------------------------------------------------------------
-  void Logger::log(
+  void FileLogger::log(
     const std::string& message,
     Verbosity verbosity,
     const char* function,
@@ -83,7 +83,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Logger::flush()
+  void FileLogger::flush()
   {
     m_logBuffer.swapBuffers();
 
@@ -91,13 +91,13 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Logger::writeLogBackBufferToFile()
+  void FileLogger::writeLogBackBufferToFile()
   {
     m_logFile.append(getLog());
   }
 
   //------------------------------------------------------------------------------------------------
-  const std::string& Logger::getLog()
+  const std::string& FileLogger::getLog()
   {
     m_backLogBufferStr.clear();
 
@@ -110,14 +110,14 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Logger::clear()
+  void FileLogger::clear()
   {
     m_logBuffer.deallocateAll();
     m_logFile.clear();
   }
 
   //------------------------------------------------------------------------------------------------
-  const char* Logger::getVerbosityString(Verbosity verbosity)
+  const char* FileLogger::getVerbosityString(Verbosity verbosity)
   {
     switch (verbosity)
       {
