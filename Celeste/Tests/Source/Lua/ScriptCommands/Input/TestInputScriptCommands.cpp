@@ -10,7 +10,7 @@ using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;
 
 
-namespace TestCeleste::Lua::Input
+namespace TestCeleste::Lua::ScriptCommands
 {
   CELESTE_TEST_CLASS(TestInputScriptCommands)
 
@@ -21,6 +21,16 @@ namespace TestCeleste::Lua::Input
   }
 
 #pragma region Initialize Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(InputScriptCommands_Initialize_InitializesMouseScriptCommands)
+  {
+    Assert::IsFalse(LuaState::instance().globals()["Mouse"].valid());
+
+    Celeste::Lua::Input::ScriptCommands::initialize();
+
+    Assert::IsTrue(LuaState::instance().globals()["Mouse"].valid());
+  }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(InputScriptCommands_Initialize_InitializesKeyboardActivatorScriptCommands)

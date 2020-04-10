@@ -12,6 +12,7 @@
 #if _DEBUG
 #include "Debug/Windows/HierarchyDolceWindow.h"
 #include "Debug/Windows/LuaScriptDolceWindow.h"
+#include "Settings/DolceSettings.h"
 
 #include "imgui.h"
 #endif
@@ -182,10 +183,31 @@ namespace Celeste
   {
     Dolce::Dolce& dolce = getDolce();
 
-    dolce.registerWindow(std::make_unique<Debug::HierarchyDolceWindow>(m_sceneManager)).open();
-    dolce.registerWindow(std::make_unique<Debug::LuaScriptDolceWindow>()).open();
+    dolce.registerWindow(std::make_unique<Debug::HierarchyDolceWindow>(m_sceneManager));
+    dolce.registerWindow(std::make_unique<Debug::LuaScriptDolceWindow>());
 
     onInitializeDolce(dolce);
+
+    std::unique_ptr<Settings::DolceSettings> dolceSettings = ScriptableObject::load<Settings::DolceSettings>(Path(Resources::getResourcesDirectory(), "Data", "Settings", "DolceSettings.asset"));
+    if (dolceSettings != nullptr)
+    {
+      dolceSettings->applyTo(dolce);
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Game::shutdownDolce()
+  {
+    Path dolcePath(Resources::getResourcesDirectory(), "Data", "Settings", "DolceSettings.asset");
+    std::unique_ptr<Settings::DolceSettings> dolceSettings = ScriptableObject::load<Settings::DolceSettings>(dolcePath);
+
+    if (dolceSettings == nullptr)
+    {
+      dolceSettings = std::move(ScriptableObject::create<Settings::DolceSettings>("DolceSettings"));
+    }
+    
+    dolceSettings->applyFrom(getDolce());
+    dolceSettings->save(dolcePath);
   }
 #endif
 
@@ -249,6 +271,10 @@ namespace Celeste
     onExit();
 
     GL::terminate();
+
+#if _DEBUG
+    shutdownDolce();
+#endif
 
     // We flush the logger here to allow it to write any remaining information
     // Then we reset it to allow proper cleanup before the app terminates

@@ -84,6 +84,7 @@ namespace Celeste
 
 #if _DEBUG
       void initializeDolce();
+      void shutdownDolce();
 #endif
 
       static void windowCloseFunc(GLFWwindow* window);
