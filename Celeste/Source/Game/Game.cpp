@@ -7,11 +7,12 @@
 #include "Settings/GameSettings.h"
 #include "Settings/WindowSettings.h"
 
-#include "Log.h"
+#include "Log/Log.h"
 
 #if _DEBUG
 #include "Debug/Windows/HierarchyDolceWindow.h"
 #include "Debug/Windows/LuaScriptDolceWindow.h"
+#include "Debug/Logging/DolceLogger.h"
 #include "Settings/DolceSettings.h"
 
 #include "imgui.h"
@@ -186,6 +187,9 @@ namespace Celeste
     dolce.registerWindow(std::make_unique<Debug::HierarchyDolceWindow>(m_sceneManager));
     dolce.registerWindow(std::make_unique<Debug::LuaScriptDolceWindow>());
 
+    Path logPath(Directory::getExecutingAppDirectory(), "Log.txt");
+    Celeste::Log::Logging::setLogger(std::make_unique<Log::DolceLogger>(dolce, logPath));
+
     onInitializeDolce(dolce);
 
     std::unique_ptr<Settings::DolceSettings> dolceSettings = ScriptableObject::load<Settings::DolceSettings>(Path(Resources::getResourcesDirectory(), "Data", "Settings", "DolceSettings.asset"));
@@ -278,8 +282,8 @@ namespace Celeste
 
     // We flush the logger here to allow it to write any remaining information
     // Then we reset it to allow proper cleanup before the app terminates
-    Log::getLogger().flush();
-    Log::setLogger(std::unique_ptr<ILogger>(nullptr));
+    Log::Logging::getLogger().flush();
+    Log::Logging::setLogger(std::unique_ptr<Log::ILogger>(nullptr));
   }
 
   //------------------------------------------------------------------------------------------------

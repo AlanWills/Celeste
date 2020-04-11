@@ -1,32 +1,32 @@
-#include "Log.h"
-#include "Logging/StdoutLogger.h"
+#include "Log/Log.h"
+#include "Log/StdoutLogger.h"
 #include "FileSystem/Directory.h"
 
 
-namespace Celeste
+namespace Celeste::Log
 {
-  std::unique_ptr<ILogger> Log::m_logger = std::unique_ptr<ILogger>(new StdoutLogger());
+  std::unique_ptr<ILogger> Logging::m_logger = std::unique_ptr<ILogger>(new StdoutLogger());
 
   //------------------------------------------------------------------------------------------------
-  Log::Log()
+  Logging::Logging()
   {
   }
 
   //------------------------------------------------------------------------------------------------
-  Log& Log::instance()
+  Logging& Logging::instance()
   {
-    static Log instance;
+    static Logging instance;
     return instance;
   }
 
   //------------------------------------------------------------------------------------------------
-  void Log::setLogger(std::unique_ptr<ILogger>&& logger) 
+  void Logging::setLogger(std::unique_ptr<ILogger>&& logger)
   { 
     m_logger = std::move(logger); 
   }
 
   //------------------------------------------------------------------------------------------------
-  ILogger& Log::getLogger()
+  ILogger& Logging::getLogger()
   { 
     return *m_logger; 
   }

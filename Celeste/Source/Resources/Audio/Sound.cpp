@@ -1,6 +1,6 @@
 #include "Resources/Audio/Sound.h"
 #include "FileSystem/File.h"
-#include "Log.h"
+#include "Log/Log.h"
 
 
 namespace Celeste::Resources

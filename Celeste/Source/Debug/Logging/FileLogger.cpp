@@ -4,7 +4,7 @@
 #include <thread>
 
 
-namespace Celeste
+namespace Celeste::Log
 {
   //------------------------------------------------------------------------------------------------
   FileLogger::FileLogger(const std::string& logFileFullPath) :

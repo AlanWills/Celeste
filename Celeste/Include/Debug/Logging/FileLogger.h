@@ -3,10 +3,10 @@
 #include "CelesteDllExport.h"
 #include "Memory/Allocators/DoubleBufferAllocator.h"
 #include "FileSystem/File.h"
-#include "Logging/ILogger.h"
+#include "Log/ILogger.h"
 
 
-namespace Celeste
+namespace Celeste::Log
 {
   #define INFO_STRING "Info"
   #define WARNING_STRING "Warning"

@@ -1,9 +1,9 @@
-#include "Logging/StdoutLogger.h"
+#include "Log/StdoutLogger.h"
 
 #include <iostream>
 
 
-namespace Celeste
+namespace Celeste::Log
 {
   //------------------------------------------------------------------------------------------------
   void StdoutLogger::log(const std::string& message, Verbosity verbosity, const char* function, const char* file, int line)

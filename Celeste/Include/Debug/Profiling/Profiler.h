@@ -50,6 +50,6 @@ namespace Celeste
       std::string m_currentBlockName;
 
       /// The logger we will use to write profiling information to a file
-      FileLogger m_logger;
+      Log::FileLogger m_logger;
   };
 }

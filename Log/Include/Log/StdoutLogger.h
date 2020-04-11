@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Logging/ILogger.h"
+#include "Log/ILogger.h"
 
 
-namespace Celeste
+namespace Celeste::Log
 {
   class StdoutLogger : public ILogger
   {
