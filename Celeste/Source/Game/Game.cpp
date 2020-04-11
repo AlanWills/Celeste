@@ -12,6 +12,7 @@
 #if _DEBUG
 #include "Debug/Windows/HierarchyDolceWindow.h"
 #include "Debug/Windows/LuaScriptDolceWindow.h"
+#include "Debug/Windows/LogDolceWindow.h"
 #include "Debug/Logging/DolceLogger.h"
 #include "Settings/DolceSettings.h"
 
@@ -186,9 +187,10 @@ namespace Celeste
 
     dolce.registerWindow(std::make_unique<Debug::HierarchyDolceWindow>(m_sceneManager));
     dolce.registerWindow(std::make_unique<Debug::LuaScriptDolceWindow>());
+    auto& logWindow = dolce.registerWindow(std::make_unique<Debug::LogDolceWindow>());
 
     Path logPath(Directory::getExecutingAppDirectory(), "Log.txt");
-    Celeste::Log::Logging::setLogger(std::make_unique<Log::DolceLogger>(dolce, logPath));
+    Celeste::Log::Logging::setLogger(std::make_unique<Log::DolceLogger>(logWindow, logPath));
 
     onInitializeDolce(dolce);
 

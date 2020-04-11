@@ -24,8 +24,14 @@ namespace Celeste::Debug
         int line);
 
     private:
+      void toggleLogFlag(Log::Verbosity verbosity);
+
+      void clearLog();
+
+      void renderLogFlag(const char* label, Log::Verbosity verbosity);
       void renderLogLine(const std::tuple<Log::Verbosity, std::string>& logLine);
 
       std::vector<std::tuple<Log::Verbosity, std::string>> m_logLines;
+      Log::Verbosity m_logFlags;
   };
 }

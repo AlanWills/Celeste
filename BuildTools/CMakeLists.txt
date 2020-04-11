@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.6)
 
-function(build_library)
+function(build_project)
     set(oneValueArgs NAME FOLDER TYPE)
     set(multiValueArgs INCLUDES LIBS)
     cmake_parse_arguments(BUILD_LIBRARY "${options}" "${oneValueArgs}"
@@ -37,4 +37,18 @@ function(build_library)
     endif()
 
     target_compile_options(${PROJECT_NAME} PRIVATE /MP4 /W4 /WX)
+endfunction()
+
+function(build_library)
+    set(oneValueArgs NAME FOLDER TYPE)
+    set(multiValueArgs INCLUDES LIBS)
+    cmake_parse_arguments(BUILD_LIBRARY "${options}" "${oneValueArgs}"
+                          "${multiValueArgs}" ${ARGN})
+
+    build_project(
+        NAME ${BUILD_LIBRARY_NAME}
+        FOLDER ${BUILD_LIBRARY_FOLDER}
+        TYPE ${BUILD_LIBRARY_TYPE}
+        INCLUDES "${BUILD_LIBRARY_INCLUDES}"
+        LIBS "${BUILD_LIBRARY_LIBS}")
 endfunction()

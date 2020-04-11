@@ -88,7 +88,7 @@ bool ComponentRegistry::registerComponent()
 template <typename T>
 bool ComponentRegistry::addBindings()
 {
-  getBindings().emplace_back(std::unique_ptr<Reflection::Type<T>>());
+  getBindings().emplace_back(std::make_unique<Reflection::Type<T>>());
   return true;
 }
 #endif

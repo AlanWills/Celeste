@@ -3,16 +3,15 @@
 #include <string>
 
 
-namespace Celeste
+namespace Celeste::Reflection
 {
-  namespace Reflection
+  class ITypeInfo
   {
-    class ITypeInfo
-    {
-      public:
-        virtual const std::string& getName() const = 0;
-        virtual const std::string& getAssembly() const = 0;
-        virtual const std::string& getNamespace() const = 0;
-    };
-  }
+    public:
+      virtual ~ITypeInfo() = default;
+
+      virtual const std::string& getName() const = 0;
+      virtual const std::string& getAssembly() const = 0;
+      virtual const std::string& getNamespace() const = 0;
+  };
 }

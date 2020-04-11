@@ -48,7 +48,7 @@ namespace Celeste
       logString.append("Profiling Block: ");
       logString.append(profilingInfo.second.getName());
 
-      m_logger.log(logString, Log::kRaw, profilingInfo.second.getName().c_str(), "", 0);
+      m_logger.log(logString, Log::Verbosity::kRaw, profilingInfo.second.getName().c_str(), "", 0);
       logString.clear();
     }
 
@@ -57,7 +57,7 @@ namespace Celeste
       logString.append("Number of calls: ");
       numericToStringAppend(profilingInfo.second.m_numCalls, logString);
 
-      m_logger.log(logString, Log::kRaw, profilingInfo.second.getName().c_str(), "", 0);
+      m_logger.log(logString, Log::Verbosity::kRaw, profilingInfo.second.getName().c_str(), "", 0);
       logString.clear();
     }
 
@@ -66,7 +66,7 @@ namespace Celeste
       logString.append("Average time (s): ");
       numericToStringAppend(Clock::systemSeconds(profilingInfo.second.m_averageTimeTaken), logString);
 
-      m_logger.log(logString, Log::kRaw, profilingInfo.second.getName().c_str(), "", 0);
+      m_logger.log(logString, Log::Verbosity::kRaw, profilingInfo.second.getName().c_str(), "", 0);
       logString.clear();
     }
 
@@ -75,7 +75,7 @@ namespace Celeste
       logString.append("Last call time (s): ");
       numericToStringAppend(Clock::systemSeconds(profilingInfo.second.m_lastCallTimeTaken), logString);
 
-      m_logger.log(logString, Log::kRaw, profilingInfo.second.getName().c_str(), "", 0);
+      m_logger.log(logString, Log::Verbosity::kRaw, profilingInfo.second.getName().c_str(), "", 0);
       logString.clear();
     }
   }

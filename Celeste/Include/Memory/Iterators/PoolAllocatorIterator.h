@@ -6,9 +6,15 @@
 namespace Celeste
 {
   template <typename T>
-  class PoolAllocatorIterator : std::iterator<std::forward_iterator_tag, T>
+  class PoolAllocatorIterator
   {
     public:
+      using iterator_category = std::forward_iterator_tag;
+      using value_type = T;
+      using difference_type = ptrdiff_t;
+      using pointer = T*;
+      using reference = T&;
+
       PoolAllocatorIterator(T* ptr);
       PoolAllocatorIterator(T* ptr, const bool* allocated, size_t size);
       PoolAllocatorIterator(const PoolAllocatorIterator<T>&);

@@ -3,6 +3,8 @@
 
 #include <thread>
 
+using namespace celstl;
+
 
 namespace Celeste::Log
 {
@@ -43,7 +45,7 @@ namespace Celeste::Log
   {
     // If we have not indicated that the logger should log messages of the inputted verbosity
     // Then we do not log the message
-    if ((m_verbosity & static_cast<int>(verbosity)) == 0)
+    if (!celstl::hasFlag(m_verbosity, verbosity))
     {
       return;
     }
@@ -51,7 +53,7 @@ namespace Celeste::Log
     std::string fullMessage(message);
 
     // Don't decorate raw logs
-    if ((Verbosity::kRaw & static_cast<int>(verbosity)) == 0)
+    if (!celstl::hasFlag(verbosity, Verbosity::kRaw))
     {
       fullMessage.clear();
       fullMessage.reserve(1024);

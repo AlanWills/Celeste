@@ -12,7 +12,7 @@ namespace Celeste::XML
   class ChildXMLElementWalker
   {
     private:
-      typedef SiblingXMLElementIterator<is_const> iterator;
+      using iterator = SiblingXMLElementIterator<is_const>;
 
     public:
       ChildXMLElementWalker(typename iterator::pointer element, const std::string& name = "") :

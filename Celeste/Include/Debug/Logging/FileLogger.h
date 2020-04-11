@@ -59,6 +59,6 @@ namespace Celeste::Log
       File m_logFile;
       std::string m_backLogBufferStr;
       bool m_shouldFlushAfterEveryLog;
-      int m_verbosity;
+      Verbosity m_verbosity;
   };
 }

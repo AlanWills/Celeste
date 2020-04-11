@@ -4,14 +4,14 @@
 #include "Templates/ChooseClass.h"
 
 #include <list>
-#include <iterator>
 #include <type_traits>
+#include <iterator>
 
 
 namespace Celeste
 {
   template <typename T>
-  class ResizeableAllocatorIterator : std::iterator<std::forward_iterator_tag, T>
+  class ResizeableAllocatorIterator
   {
     private:
       using Iterator = typename choose_class<
@@ -25,6 +25,12 @@ namespace Celeste
         typename PoolAllocator<typename std::remove_const<T>::type>*>::type;
 
     public:
+      using iterator_category = std::forward_iterator_tag;
+      using value_type = T;
+      using difference_type = ptrdiff_t;
+      using pointer = T*;
+      using reference = T&;
+
       ResizeableAllocatorIterator(typename Iterator allocatorEndIt, PoolAllocatorIterator<T> entityEndIt);
       ResizeableAllocatorIterator(typename Iterator allocatorIt, typename Iterator allocatorEndIt);
       ResizeableAllocatorIterator(const ResizeableAllocatorIterator<T>&) = default;
@@ -39,8 +45,8 @@ namespace Celeste
       inline bool operator==(const ResizeableAllocatorIterator<T>& other) const { return m_entityIt.get() == other.get(); }
       inline bool operator!=(const ResizeableAllocatorIterator<T>& other) const { return !(*this == other); }
 
-      inline T& operator*() const { return *m_entityIt; }
-      inline T* get() const { return m_entityIt.get(); }
+      inline reference operator*() const { return *m_entityIt; }
+      inline pointer get() const { return m_entityIt.get(); }
 
     private:
       inline void next()

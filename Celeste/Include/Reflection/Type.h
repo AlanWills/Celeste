@@ -43,6 +43,10 @@ namespace Celeste
           m_assembly.assign(startingChar, firstColon);
           m_namespace.assign(startingChar, lastColon - 2); // Don't write the final '::'
         }
+        Type(Type<T>&&) = default;
+        ~Type() override = default;
+
+        Type<T>& operator=(Type<T>&&) = default;
 
         const std::string& getName() const override { return m_name; }
         const std::string& getAssembly() const override { return m_assembly; }
@@ -66,6 +70,10 @@ namespace Celeste
           m_name("int"),
           m_assembly(),
           m_namespace() { }
+        Type(Type<int>&&) = default;
+        ~Type() override = default;
+
+        Type<int>& operator=(Type<int>&&) = default;
 
         const std::string& getName() const override { return m_name; }
         const std::string& getAssembly() const override { return m_assembly; }
@@ -86,6 +94,10 @@ namespace Celeste
           m_name("float"),
           m_assembly(),
           m_namespace() { }
+        Type(Type<float>&&) = default;
+        ~Type() override = default;
+
+        Type<float>& operator=(Type<float>&&) = default;
 
         const std::string& getName() const override { return m_name; }
         const std::string& getAssembly() const override { return m_assembly; }
@@ -106,6 +118,10 @@ namespace Celeste
           m_name("string"),
           m_assembly(),
           m_namespace() { }
+        Type(Type<std::string>&&) = default;
+        ~Type() override = default;
+
+        Type<std::string>& operator=(Type<std::string>&&) = default;
 
         const std::string& getName() const override { return m_name; }
         const std::string& getAssembly() const override { return m_assembly; }

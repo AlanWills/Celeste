@@ -1,21 +1,14 @@
 #include "Debug/Logging/DolceLogger.h"
 #include "Debug/Windows/LogDolceWindow.h"
-#include "Dolce.h"
 
 
 namespace Celeste::Log
 {
   //------------------------------------------------------------------------------------------------
-  DolceLogger::DolceLogger(Dolce::Dolce& dolce, const std::string& logFileFullPath) :
+  DolceLogger::DolceLogger(Celeste::Debug::LogDolceWindow& logWindow, const std::string& logFileFullPath) :
     FileLogger(logFileFullPath),
-    m_logWindow(static_cast<Debug::LogDolceWindow*>(dolce.findWindow("Log")))
+    m_logWindow(&logWindow)
   {
-    if (m_logWindow == nullptr)
-    {
-      m_logWindow = &dolce.registerWindow(std::make_unique<Debug::LogDolceWindow>());
-    }
-
-    m_logWindow->open();
   }
 
   //------------------------------------------------------------------------------------------------

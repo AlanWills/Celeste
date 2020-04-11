@@ -4,11 +4,6 @@
 #include "Memory/ObserverPtr.h"
 
 
-namespace Dolce
-{
-  class Dolce;
-}
-
 namespace Celeste::Debug
 {
   class LogDolceWindow;
@@ -19,9 +14,9 @@ namespace Celeste::Log
   class DolceLogger : public FileLogger
   {
     public:
-      CelesteDllExport DolceLogger(Dolce::Dolce& dolce, const std::string& logFileFullPath);
-      CelesteDllExport DolceLogger(Dolce::Dolce& dolce, const Path& logFilePath) :
-        DolceLogger(dolce, logFilePath.as_string()) { }
+      CelesteDllExport DolceLogger(Celeste::Debug::LogDolceWindow& logWindow, const std::string& logFileFullPath);
+      CelesteDllExport DolceLogger(Celeste::Debug::LogDolceWindow& logWindow, const Path& logFilePath) :
+        DolceLogger(logWindow, logFilePath.as_string()) { }
       CelesteDllExport ~DolceLogger();
 
       CelesteDllExport void log(
