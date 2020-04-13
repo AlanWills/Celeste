@@ -12,16 +12,16 @@
 	url = https://github.com/kcat/openal-soft.git
 [submodule "3rdParty/freealut"]
 	path = 3rdParty/freealut
-	url = https://github.com/vancegroup/freealut.git
+	url = https://github.com/AlanWills/freealut.git
 [submodule "3rdParty/assimp"]
 	path = 3rdParty/assimp
 	url = https://github.com/assimp/assimp.git
 [submodule "3rdParty/lua"]
 	path = 3rdParty/lua
-	url = https://github.com/LuaDist/lua.git
+	url = https://github.com/AlanWills/liblua.git
 [submodule "3rdParty/tinyxml2"]
 	path = 3rdParty/tinyxml2
-	url = https://github.com/leethomason/tinyxml2.git
+	url = https://github.com/AlanWills/tinyxml2.git
 [submodule "3rdParty/curl"]
 	path = 3rdParty/curl
 	url = https://github.com/curl/curl.git
@@ -30,7 +30,7 @@
 	url = https://github.com/jpbarrette/curlpp.git
 [submodule "3rdParty/dirent"]
 	path = 3rdParty/dirent
-	url = https://github.com/tronkko/dirent.git
+	url = https://github.com/AlanWills/dirent.git
 [submodule "3rdParty/freetype2"]
 	path = 3rdParty/freetype2
 	url = https://github.com/aseprite/freetype2.git
@@ -39,10 +39,10 @@
 	url = https://github.com/glfw/glfw.git
 [submodule "3rdParty/SOIL2"]
 	path = 3rdParty/SOIL2
-	url = https://github.com/darsto/SOIL2.git
+	url = https://github.com/AlanWills/SOIL2.git
 [submodule "3rdParty/glew"]
 	path = 3rdParty/glew
-	url = https://github.com/LuaDist/glew.git
+	url = https://github.com/AlanWills/glew.git
 [submodule "3rdParty/sol2"]
 	path = 3rdParty/sol2
 	url = https://github.com/ThePhD/sol2.git
