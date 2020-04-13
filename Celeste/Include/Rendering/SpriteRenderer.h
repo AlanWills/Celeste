@@ -48,6 +48,8 @@ namespace Celeste::Rendering
     private:
       using Inherited = Renderer;
 
+      void updateDimensionsForAspectRatio(const glm::vec2& imageDimensions);
+
       Resources::Texture2D* m_texture;
       glm::vec2 m_dimensions;
       bool m_preserveAspectRatio;

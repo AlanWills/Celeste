@@ -57,31 +57,41 @@ namespace Celeste::Rendering
   //------------------------------------------------------------------------------------------------
   void SpriteRenderer::setTexture(Texture2D* texture)
   {
-    // Make ready for the new texture
     m_texture = texture;
 
-    if (texture != nullptr && m_dimensions == glm::vec2())
+    if (m_texture == nullptr)
     {
-      // Set the dimensions if they are unset
-      // Do not need to call setDimensions, because setting to texture dimensions
-      // will automatically preserve aspect ratio
+      return;
+    }
+
+    if (glm::zero<glm::vec2>() == m_dimensions)
+    {
+      // Don't have dimensions specified
       m_dimensions = m_texture->getDimensions();
+    }
+    else if (m_preserveAspectRatio)
+    {
+      updateDimensionsForAspectRatio(m_texture->getDimensions());
     }
   }
 
   //------------------------------------------------------------------------------------------------
   void SpriteRenderer::setDimensions(const glm::vec2& dimensions)
   {
-    if (m_texture == nullptr || !m_preserveAspectRatio)
-    {
-      m_dimensions = dimensions;
-      return;
-    }
+    m_dimensions = dimensions;
 
-    const glm::vec2& imageDimensions = m_texture->getDimensions();
+    if (m_texture != nullptr && m_preserveAspectRatio)
+    {
+      updateDimensionsForAspectRatio(m_texture->getDimensions());
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void SpriteRenderer::updateDimensionsForAspectRatio(const glm::vec2& imageDimensions)
+  {
     ASSERT(imageDimensions.x > 0 && imageDimensions.y > 0);
 
     // We wish to maintain the aspect ratio of the object we are rendering
-    m_dimensions = (std::min)(dimensions.x / imageDimensions.x, dimensions.y / imageDimensions.y) * imageDimensions;
+    m_dimensions = (std::min)(m_dimensions.x / imageDimensions.x, m_dimensions.y / imageDimensions.y) * imageDimensions;
   }
 }
