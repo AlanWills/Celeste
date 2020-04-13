@@ -194,7 +194,6 @@ namespace TestCeleste
       ++it;
 
       Assert::AreSame(*component3, *it);
-      Assert::IsTrue(it == end);
     }
   }
 

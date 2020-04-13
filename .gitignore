@@ -15,6 +15,7 @@ Log.txt
 Profiler.txt
 TestResults.xml
 Build\ Server/
+Temp/
 .vs/
 *.ilk
 *.exp

@@ -1458,7 +1458,7 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    createPrefabElement(document, "Child", gameObjects);
+    createPrefabElement(document, "Child", PrefabLoadingResources::getValidSingleGameObjectRelativePath(), gameObjects);
 
     Assert::IsTrue(converter.convertFromXML(element));
   }

@@ -352,7 +352,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(ScriptableObjectRegistry_GenerateAllBindings_GeneratesBindingsForClasses)
     {
-      Directory directory(Path(TestResources::getTempDirectory(), "Bindings"));
+      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
       ScriptableObjectRegistry::generateAllBindings(directory);
 
       std::vector<File> output;
@@ -364,7 +364,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(ScriptableObjectRegistry_GenerateAllBindings_DoesntGenerateBindingsForClassesThatAlreadyHaveFiles)
     {
-      Directory directory(Path(TestResources::getTempDirectory(), "Bindings"));
+      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
 
       for (const std::pair<std::string, std::pair<std::string, ScriptableObjectRegistry::BindingsFactoryFunction>>& object : ScriptableObjectRegistry::getBindingsMapConst())
       {
@@ -389,7 +389,7 @@ namespace TestCeleste
     TEST_METHOD(ScriptableObjectRegistry_GenerateAllBindings_InvokesCallbackForEachClass)
     {
       size_t counter = 0;
-      Directory directory(Path(TestResources::getTempDirectory(), "Bindings"));
+      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
       ScriptableObjectRegistry::generateAllBindings(directory, [&counter](const std::string&, const Path&) -> void
       {
         ++counter;
@@ -409,7 +409,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_GeneratesBindingsForClassesInNamespace)
     {
-      Directory directory(Path(TestResources::getTempDirectory(), "Bindings"));
+      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
       ScriptableObjectRegistry::generateBindingsForAssembly("Celeste", directory);
 
       std::vector<File> output;
@@ -421,7 +421,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_DoesntGenerateBindingsForClassesNotInNamespace)
     {
-      Directory directory(Path(TestResources::getTempDirectory(), "Bindings"));
+      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
       ScriptableObjectRegistry::generateBindingsForAssembly("FakeAssembly", directory);
 
       std::vector<File> output;
@@ -433,7 +433,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_DoesntGenerateBindingsForClassesThatAlreadyHaveFiles)
     {
-      Directory directory(Path(TestResources::getTempDirectory(), "Bindings"));
+      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
 
       for (const auto& pair : ScriptableObjectRegistry::getBindingsMapConst())
       {
@@ -458,7 +458,7 @@ namespace TestCeleste
     TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_InvokesCallbackForEachClassInNamespace)
     {
       size_t counter = 0;
-      Directory directory(Path(TestResources::getTempDirectory(), "Bindings"));
+      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
       ScriptableObjectRegistry::generateBindingsForAssembly("Celeste", directory, [&counter](const std::string&, const Path&) -> void
       {
         ++counter;

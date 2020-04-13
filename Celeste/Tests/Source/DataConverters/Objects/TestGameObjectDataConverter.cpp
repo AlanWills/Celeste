@@ -325,7 +325,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectDataConverter_Convert_PositionAttribute_AbsoluteValues_SetsValueTypeAndValuesCorrectly_AndReturnsTrue)
+  TEST_METHOD(GameObjectDataConverter_Convert_PositionAttribute_SetsValueTypeAndValuesCorrectly_AndReturnsTrue)
   {
     GameObjectDataConverter converter("GameObject");
     XMLDocument document;
@@ -336,22 +336,6 @@ namespace TestCeleste
     Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(converter.POSITION_ATTRIBUTE_NAME));
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::AreEqual(glm::vec3(30, 40, 0.5), converter.getPosition());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectDataConverter_Convert_PositionAttribute_RelativeValues_SetsValueTypeAndValuesCorrectly_AndReturnsTrue)
-  {
-    GameObjectDataConverter converter("GameObject");
-    XMLDocument document;
-    XMLElement* element = document.NewElement("GameObject");
-    element->SetAttribute(GameObjectDataConverter::NAME_ATTRIBUTE_NAME, "Name");
-    element->SetAttribute(converter.POSITION_ATTRIBUTE_NAME, "3%,2%,0.1%");
-    
-    const glm::vec2& viewportDimensions = getViewportDimensions();
-
-    Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(converter.POSITION_ATTRIBUTE_NAME));
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(glm::vec3(3 * viewportDimensions.x, 2 * viewportDimensions.y, 0.1), converter.getPosition());
   }
 
 #pragma endregion
@@ -771,7 +755,7 @@ namespace TestCeleste
     XMLDocument document;
     tinyxml2::XMLElement* element = createGameObjectElement(document, "Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
-    createPrefabElement(document, "Child", gameObjects);
+    createPrefabElement(document, "Child", PrefabLoadingResources::getValidSingleGameObjectRelativePath(), gameObjects);
 
     Assert::IsTrue(converter.convertFromXML(element));
   }

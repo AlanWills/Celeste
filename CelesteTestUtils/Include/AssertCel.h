@@ -47,21 +47,5 @@ namespace CelesteTestUtils
 
       template <typename T>
       static inline void IsNotActive(T* const entity) { Assert::IsFalse(entity->isActive()); }
-
-      //------------------------------------------------------------------------------------------------
-      // FileExists
-      static void FileExists(const Celeste::Path& path);
-
-      //------------------------------------------------------------------------------------------------
-      // FileDoesNotExist
-      static void FileDoesNotExist(const Celeste::Path& path);
-
-      //------------------------------------------------------------------------------------------------
-      // LuaModuleIsLoaded
-      static void IsLuaModuleLoaded(const std::string& moduleName);
-
-      //------------------------------------------------------------------------------------------------
-      // LuaModuleIsNotLoaded
-      static void IsLuaModuleNotLoaded(const std::string& moduleName);
   };
 }

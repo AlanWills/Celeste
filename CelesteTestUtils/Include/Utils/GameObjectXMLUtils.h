@@ -45,4 +45,10 @@ namespace CelesteTestUtils
     tinyxml2::XMLDocument& document,
     const std::string& name,
     tinyxml2::XMLElement* parent);
+
+  tinyxml2::XMLElement* createPrefabElement(
+    tinyxml2::XMLDocument& document,
+    const std::string& name,
+    const std::string& path,
+    tinyxml2::XMLElement* parent);
 }

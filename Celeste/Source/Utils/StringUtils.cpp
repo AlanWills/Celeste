@@ -1,29 +1,8 @@
 #include "Utils/StringUtils.h"
-#include <stdlib.h>
 
 
 namespace Celeste
 {
-  //------------------------------------------------------------------------------------------------
-  size_t wcharToChar(const wchar_t* input, char* output, size_t sizeOfOutputBuffer)
-  {
-    size_t numConverted = 0;
-    wcstombs_s(&numConverted, output, sizeOfOutputBuffer, input, sizeOfOutputBuffer);
-
-    // Don't care about null terminator, so remove it from count of characters converted
-    return numConverted - 1;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  size_t charToWchar(const char* input, wchar_t* output, size_t sizeOfOutputBuffer)
-  {
-    size_t numConverted = 0;
-    mbstowcs_s(&numConverted, output, sizeOfOutputBuffer, input, sizeOfOutputBuffer);
-
-    // Don't care about null terminator, so remove it from count of characters converted
-    return numConverted - 1;
-  }
-
   //------------------------------------------------------------------------------------------------
   void split(const std::string& text, std::vector<std::string>& outputLines, char delimiter)
   {

@@ -309,7 +309,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_DeserializationFails_ReturnsNullptr)
   {
-    Path path(TestResources::getTempDirectory(), "FailedDeserialization.xml");
+    Path path(TempDirectory::getFullPath(), "FailedDeserialization.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -326,7 +326,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_NoNameAttribute_SetsNameToEmptyString)
   {
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -343,7 +343,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_LoadsNameAttribute)
   {
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -361,7 +361,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_NoGuidAttribute_SetsGuidToNewGuid)
   {
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -378,7 +378,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_InvalidGuid_SetsGuidToNewGuid)
   {
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -396,7 +396,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_Deserialize_LoadsGuidAttribute)
   {
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -414,7 +414,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_FieldFailsDeserialization_ReturnsNullptr)
   {
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -430,7 +430,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_DeserializesAllFieldsCorrectly)
   {
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("element");
     document.InsertFirstChild(element);
@@ -450,7 +450,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObject_WithNoValueSetForAttribute_DoesNotLoadDataOntoScriptableObject)
   {
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     XMLElement* child = document.NewElement("MockScriptableObject");
@@ -476,7 +476,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObject_WithNoDataElement_AndNoMatchingDataFile_ReturnsNull)
   {
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     XMLElement* child = document.NewElement("MockScriptableObject");
@@ -500,7 +500,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObjectCouldNotBeDeserialized_ReturnsNull)
   {
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     XMLElement* child = document.NewElement("MockScriptableObject");
@@ -522,7 +522,7 @@ namespace TestCeleste::Objects
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_ChildScriptableObjectCouldNotBeLoadedFromFile_ReturnsNull)
   {
     // Child SO
-    Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
+    Path childPath(TempDirectory::getFullPath(), "ChildObject.xml");
     XMLDocument childDocument;
     XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
     childDocument.InsertFirstChild(childElement);
@@ -532,7 +532,7 @@ namespace TestCeleste::Objects
     Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
     FileAssert::FileExists(childPath.as_string());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -551,7 +551,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_DeserializesAllChildScriptableObjects_WithDataInTheSameFile_Correctly)
   {
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     XMLElement* child = document.NewElement("MockScriptableObject");
@@ -581,7 +581,7 @@ namespace TestCeleste::Objects
   TEST_METHOD(ScriptableObject_Load_TemplateOverload_LoadsAllChildScriptableObjects_WithDataInOtherAssetFiles_Correctly)
   {
     // Child SO
-    Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
+    Path childPath(TempDirectory::getFullPath(), "ChildObject.xml");
     XMLDocument childDocument;
     XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
     childDocument.InsertFirstChild(childElement);
@@ -593,7 +593,7 @@ namespace TestCeleste::Objects
     Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
     FileAssert::FileExists(childPath.as_string());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -632,7 +632,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<FailDeserializationScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "FailedDeserialization.xml");
+    Path path(TempDirectory::getFullPath(), "FailedDeserialization.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -653,7 +653,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -674,7 +674,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -696,7 +696,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -717,7 +717,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -739,7 +739,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<MockScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -761,7 +761,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<FieldFailDeserializationScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -781,7 +781,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<FieldsPassDeserializationScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement(FieldsPassDeserializationScriptableObject::type_name().c_str());
     document.InsertFirstChild(element);
@@ -806,7 +806,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<SingleChildScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement(SingleChildScriptableObject::type_name().c_str());
     XMLElement* child = document.NewElement("MockScriptableObject");
@@ -837,7 +837,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     XMLElement* child = document.NewElement("MockScriptableObject");
@@ -865,7 +865,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     XMLElement* child = document.NewElement("MockScriptableObject");
@@ -893,7 +893,7 @@ namespace TestCeleste::Objects
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectFailDeserializationScriptableObject>());
 
     // Child SO
-    Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
+    Path childPath(TempDirectory::getFullPath(), "ChildObject.xml");
     XMLDocument childDocument;
     XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
     childDocument.InsertFirstChild(childElement);
@@ -903,7 +903,7 @@ namespace TestCeleste::Objects
     Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
     FileAssert::FileExists(childPath.as_string());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement("MockScriptableObject");
     document.InsertFirstChild(element);
@@ -926,7 +926,7 @@ namespace TestCeleste::Objects
 
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement(ChildScriptableObjectPassesDeserializationScriptableObject::type_name().c_str());
     XMLElement* child = document.NewElement("MockScriptableObject");
@@ -961,7 +961,7 @@ namespace TestCeleste::Objects
     Assert::IsTrue(ScriptableObjectRegistry::hasScriptableObject<ChildScriptableObjectPassesDeserializationScriptableObject>());
 
     // Child SO
-    Path childPath(TestResources::getTempDirectory(), "ChildObject.xml");
+    Path childPath(TempDirectory::getFullPath(), "ChildObject.xml");
     XMLDocument childDocument;
     XMLElement* childElement = childDocument.NewElement("MockScriptableObject");
     childDocument.InsertFirstChild(childElement);
@@ -973,7 +973,7 @@ namespace TestCeleste::Objects
     Assert::IsTrue(XML_SUCCESS == childDocument.SaveFile(childPath.c_str()));
     FileAssert::FileExists(childPath.as_string());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement(ChildScriptableObjectPassesDeserializationScriptableObject::type_name().c_str());
     document.InsertFirstChild(element);
@@ -999,7 +999,7 @@ namespace TestCeleste::Objects
   {
     Assert::IsFalse(ScriptableObjectRegistry::hasScriptableObject<FieldsPassDeserializationScriptableObject>());
 
-    Path path(TestResources::getTempDirectory(), "Object.xml");
+    Path path(TempDirectory::getFullPath(), "Object.xml");
     XMLDocument document;
     XMLElement* element = document.NewElement(FieldsPassDeserializationScriptableObject::type_name().c_str());
     document.InsertFirstChild(element);
@@ -1023,7 +1023,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Save_InputtingNonExistentFullFilePath_CreatesFile)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
 
     FileAssert::FileDoesNotExist(path.as_string());
 
@@ -1041,7 +1041,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Save_InputtingExistentFullFilePath_OverwritesFile)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
     File file(path);
     file.create();
     file.append("Test");
@@ -1057,7 +1057,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Save_InputtingNonExistentRelativeFilePath_CreatesFile)
   {
-    Path path(TestResources::getTempDirectoryRelativePath(), "Test.xml");
+    Path path(TempDirectory::getRelativePath(), "Test.xml");
     Path fullFilePath(TestResources::getResourcesDirectory(), path);
 
     FileAssert::FileDoesNotExist(fullFilePath.as_string());
@@ -1076,7 +1076,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Save_InputtingExistentRelativeFilePath_OverwritesFile)
   {
-    Path path(TestResources::getTempDirectoryRelativePath(), "Test.xml");
+    Path path(TempDirectory::getRelativePath(), "Test.xml");
     Path fullFilePath(TestResources::getResourcesDirectory(), path);
     File file(fullFilePath);
     file.create();
@@ -1093,7 +1093,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Save_CreatesElementForObject)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
     std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
     scriptableObject->setName("Test");
     scriptableObject->save(path);
@@ -1108,7 +1108,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Save_SavesObjectNameAndGuid)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
     std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
     scriptableObject->setName("Test");
     scriptableObject->save(path);
@@ -1123,7 +1123,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Save_SavesFieldsCorrectly)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
     FieldsPassDeserializationScriptableObject object;
     object.setName("Test");
     object.setIntField(5);
@@ -1140,7 +1140,7 @@ namespace TestCeleste::Objects
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptableObject_Save_SavesChildScriptableObjectsCorrectly)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
     ChildScriptableObjectPassesDeserializationScriptableObject object;
     object.setName("Test");
     object.getChild().setName("TestChild");

@@ -10,12 +10,6 @@
 
 namespace Celeste
 {
-  /// Convert a long string to a normal string and returns the number of characters in the converted string
-  CelesteDllExport size_t wcharToChar(const wchar_t* input, char* output, size_t sizeOfOutputBuffer);
-
-  /// Convert a string to a long string and returns the number of characters in the converted string
-  CelesteDllExport size_t charToWchar(const char* input, wchar_t* output, size_t sizeOfOutputBuffer);
-
   /// Split the inputted text into constituent lines by searching for instances of the '\n' character
   CelesteDllExport void split(const std::string& text, std::vector<std::string>& outputLines, char delimiter = '\n');
 

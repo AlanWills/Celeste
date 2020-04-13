@@ -9,7 +9,6 @@
 #include "TestResources/Input/KeyboardTransformerLoadingResources.h"
 #include "TestResources/Input/KeyboardVisibilityLoadingResources.h"
 
-#include "TestResources/ObjectFX/LimitedLifeTimeLoadingResources.h"
 #include "TestResources/Objects/GameObjectLoadingResources.h"
 #include "TestResources/Objects/MockScriptableObjectLoadingResources.h"
 
@@ -36,7 +35,8 @@
 
 namespace CelesteTestResources
 {
-  Path TestResources::m_resourcesDirectory(Path(Directory::getExecutingAppDirectory(), UPDIR_STRING, UPDIR_STRING, UPDIR_STRING, UPDIR_STRING, "CelesteTestResources", "Resources"));
+  Path TestResources::m_resourcesDirectory(Path(Directory::getExecutingAppDirectory(), UPDIR_STRING, UPDIR_STRING, UPDIR_STRING, 
+    "Celeste", "Celeste", "Tests", "Resources"));
 
   REGISTER_TEST_RESOURCE_CLASS(TestResources)
 
@@ -45,7 +45,6 @@ namespace CelesteTestResources
   {
     sol::table testResources = createLuaResourcesTable();
 
-    ADD_DIRECTORY_TO_LUA(testResources, Temp);
     ADD_DIRECTORY_TO_LUA(testResources, VertexShaders);
     ADD_DIRECTORY_TO_LUA(testResources, FragmentShaders);
     ADD_DIRECTORY_TO_LUA(testResources, Textures);
@@ -88,7 +87,6 @@ namespace CelesteTestResources
     KeyboardTransformerLoadingResources::addAllResourcesToLua();
     KeyboardVisibilityLoadingResources::addAllResourcesToLua();
 
-    LimitedLifeTimeLoadingResources::addAllResourcesToLua();
     GameObjectLoadingResources::addAllResourcesToLua();
     MockScriptableObjectLoadingResources::addAllResourcesToLua();
 
@@ -151,7 +149,6 @@ namespace CelesteTestResources
     KeyboardTransformerLoadingResources::unloadAllResources();
     KeyboardVisibilityLoadingResources::unloadAllResources();
 
-    LimitedLifeTimeLoadingResources::unloadAllResources();
     GameObjectLoadingResources::unloadAllResources();
     MockScriptableObjectLoadingResources::unloadAllResources();
 

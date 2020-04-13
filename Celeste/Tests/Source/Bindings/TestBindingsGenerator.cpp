@@ -80,7 +80,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(BindingsGenerator_GenerateScriptableObjectBindings_InputtingObject_FileExists_DoesNothing)
   {
-    Path path(TestResources::getTempDirectory(), "MockScriptableObject.cs");
+    Path path(TempDirectory::getFullPath(), "MockScriptableObject.cs");
     File file(path);
     file.create(true);
     file.append("Text");
@@ -89,7 +89,7 @@ namespace TestCeleste
     FileAssert::FileContentsEqual(path.as_string(), "Text");
 
     std::unique_ptr<MockScriptableObject> soPtr = ScriptableObject::create<MockScriptableObject>("");
-    BindingsGenerator::generateScriptableObjectBindings(Directory(TestResources::getTempDirectory()), Reflection::Type<MockScriptableObject>(), *soPtr);
+    BindingsGenerator::generateScriptableObjectBindings(Directory(TempDirectory::getFullPath()), Reflection::Type<MockScriptableObject>(), *soPtr);
 
     FileAssert::FileExists(path.as_string());
     FileAssert::FileContentsEqual(path.as_string(), "Text");
@@ -98,12 +98,12 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(BindingsGenerator_GenerateScriptableObjectBindings_InputtingObject_GeneratesFieldInfoCorrectly)
   {
-    File file(Path(TestResources::getTempDirectory(), "ScriptableObjectWithFields.cs"));
+    File file(Path(TempDirectory::getFullPath(), "ScriptableObjectWithFields.cs"));
     ScriptableObjectWithFields fields;
     
     FileAssert::FileDoesNotExist(file.getFilePath().as_string());
 
-    BindingsGenerator::generateScriptableObjectBindings(Directory(TestResources::getTempDirectory()), Reflection::Type<ScriptableObjectWithFields>(), fields);
+    BindingsGenerator::generateScriptableObjectBindings(Directory(TempDirectory::getFullPath()), Reflection::Type<ScriptableObjectWithFields>(), fields);
 
     std::string expected;
     expected.append("using System;\n");
@@ -138,12 +138,12 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(BindingsGenerator_GenerateScriptableObjectBindings_InputtingObject_GeneratesChildScriptableObjectInfoCorrectly)
   {
-    File file(Path(TestResources::getTempDirectory(), "ScriptableObjectWithScriptableObject.cs"));
+    File file(Path(TempDirectory::getFullPath(), "ScriptableObjectWithScriptableObject.cs"));
     ScriptableObjectWithScriptableObject object;
 
     FileAssert::FileDoesNotExist(file.getFilePath().as_string());
 
-    BindingsGenerator::generateScriptableObjectBindings(Directory(TestResources::getTempDirectory()), Reflection::Type<ScriptableObjectWithScriptableObject>(), object);
+    BindingsGenerator::generateScriptableObjectBindings(Directory(TempDirectory::getFullPath()), Reflection::Type<ScriptableObjectWithScriptableObject>(), object);
 
     std::string expected;
     expected.append("using System;\n");
@@ -172,15 +172,15 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(BindingsGenerator_GenerateScriptableObjectBindings_InputtingObject_AddsRelevantNamespacesForChildScriptableObjects)
   {
-    File file(Path(TestResources::getTempDirectory(), "ScriptableObjectWithScriptableObjectFromDifferentNamespace.cs"));
+    File file(Path(TempDirectory::getFullPath(), "ScriptableObjectWithScriptableObjectFromDifferentNamespace.cs"));
     ScriptableObjectWithScriptableObjectFromDifferentNamespace object;
 
     FileAssert::FileDoesNotExist(file.getFilePath().as_string());
 
-    BindingsGenerator::generateScriptableObjectBindings(Directory(TestResources::getTempDirectory()), Reflection::Type<ScriptableObjectWithScriptableObjectFromDifferentNamespace>(), object);
+    BindingsGenerator::generateScriptableObjectBindings(Directory(TempDirectory::getFullPath()), Reflection::Type<ScriptableObjectWithScriptableObjectFromDifferentNamespace>(), object);
 
     std::string expected;
-    expected.append("using CelesteTestUtils;\n");
+    expected.append("using CelesteMocks;\n");
     expected.append("using System;\n");
     expected.append("using System.Collections.Generic;\n");
     expected.append("using System.Linq;\n");
@@ -211,7 +211,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(BindingsGenerator_GenerateScriptableObjectBindings_Template_FileExists_DoesNothing)
   {
-    Path path(TestResources::getTempDirectory(), "MockScriptableObject.cs");
+    Path path(TempDirectory::getFullPath(), "MockScriptableObject.cs");
     File file(path);
     file.create(true);
     file.append("Text");
@@ -219,7 +219,7 @@ namespace TestCeleste
     FileAssert::FileExists(path.as_string());
     FileAssert::FileContentsEqual(path.as_string(), "Text");
 
-    BindingsGenerator::generateScriptableObjectBindings<MockScriptableObject>(Directory(TestResources::getTempDirectory()));
+    BindingsGenerator::generateScriptableObjectBindings<MockScriptableObject>(Directory(TempDirectory::getFullPath()));
 
     FileAssert::FileExists(path.as_string());
     FileAssert::FileContentsEqual(path.as_string(), "Text");
@@ -228,11 +228,11 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(BindingsGenerator_GenerateScriptableObjectBindings_Template_GeneratesFieldInfoCorrectly)
   {
-    File file(Path(TestResources::getTempDirectory(), "ScriptableObjectWithFields.cs"));
+    File file(Path(TempDirectory::getFullPath(), "ScriptableObjectWithFields.cs"));
 
     FileAssert::FileDoesNotExist(file.getFilePath().as_string());
 
-    BindingsGenerator::generateScriptableObjectBindings<ScriptableObjectWithFields>(Directory(TestResources::getTempDirectory()));
+    BindingsGenerator::generateScriptableObjectBindings<ScriptableObjectWithFields>(Directory(TempDirectory::getFullPath()));
 
     std::string expected;
     expected.append("using System;\n");
@@ -267,11 +267,11 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(BindingsGenerator_GenerateScriptableObjectBindings_Template_GeneratesChildScriptableObjectInfoCorrectly)
   {
-    File file(Path(TestResources::getTempDirectory(), "ScriptableObjectWithScriptableObject.cs"));
+    File file(Path(TempDirectory::getFullPath(), "ScriptableObjectWithScriptableObject.cs"));
 
     FileAssert::FileDoesNotExist(file.getFilePath().as_string());
 
-    BindingsGenerator::generateScriptableObjectBindings<ScriptableObjectWithScriptableObject>(Directory(TestResources::getTempDirectory()));
+    BindingsGenerator::generateScriptableObjectBindings<ScriptableObjectWithScriptableObject>(Directory(TempDirectory::getFullPath()));
 
     std::string expected;
     expected.append("using System;\n");
@@ -300,14 +300,14 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(BindingsGenerator_GenerateScriptableObjectBindings_Template_AddsRelevantNamespacesForChildScriptableObjects)
   {
-    File file(Path(TestResources::getTempDirectory(), "ScriptableObjectWithScriptableObjectFromDifferentNamespace.cs"));
+    File file(Path(TempDirectory::getFullPath(), "ScriptableObjectWithScriptableObjectFromDifferentNamespace.cs"));
 
     FileAssert::FileDoesNotExist(file.getFilePath().as_string());
 
-    BindingsGenerator::generateScriptableObjectBindings<ScriptableObjectWithScriptableObjectFromDifferentNamespace>(Directory(TestResources::getTempDirectory()));
+    BindingsGenerator::generateScriptableObjectBindings<ScriptableObjectWithScriptableObjectFromDifferentNamespace>(Directory(TempDirectory::getFullPath()));
 
     std::string expected;
-    expected.append("using CelesteTestUtils;\n");
+    expected.append("using CelesteMocks;\n");
     expected.append("using System;\n");
     expected.append("using System.Collections.Generic;\n");
     expected.append("using System.Linq;\n");

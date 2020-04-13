@@ -555,7 +555,7 @@ namespace TestCeleste
   TEST_METHOD(DataConverter_ConvertFromXML_InputtingExistentPath_ConvertsAttributes)
   {
     AttributeDataConverter<std::string> converter("Data");
-    Path filePath(TestResources::getTempDirectory(), "Test.xml");
+    Path filePath(TempDirectory::getFullPath(), "Test.xml");
 
     XMLDocument document;
     XMLElement* element = document.NewElement("Data");
@@ -575,7 +575,7 @@ namespace TestCeleste
   TEST_METHOD(DataConverter_ConvertFromXML_InputtingExistentPath_RequiredAttributeThatDoesntExist_ReturnsFalse)
   {
     AttributeDataConverter<std::string, DeserializationRequirement::kRequired> converter("Data");
-    Path filePath(TestResources::getTempDirectory(), "Test.xml");
+    Path filePath(TempDirectory::getFullPath(), "Test.xml");
 
     XMLDocument document;
     XMLElement* element = document.NewElement("Element");
@@ -591,7 +591,7 @@ namespace TestCeleste
   TEST_METHOD(DataConverter_ConvertFromXML_InputtingExistentPath_ConvertsElements)
   {
     ElementDataConverter<std::string> converter("Element");
-    Path filePath(TestResources::getTempDirectory(), "Test.xml");
+    Path filePath(TempDirectory::getFullPath(), "Test.xml");
 
     XMLDocument document;
     XMLElement* element = document.NewElement("Element");
@@ -613,7 +613,7 @@ namespace TestCeleste
   TEST_METHOD(DataConverter_ConvertFromXML_InputtingExistentPath_RequiredElementThatDoesntExist_ReturnsFalse)
   {
     ElementDataConverter<std::string, DeserializationRequirement::kRequired> converter("Data");
-    Path filePath(TestResources::getTempDirectory(), "Test.xml");
+    Path filePath(TempDirectory::getFullPath(), "Test.xml");
 
     XMLDocument document;
     XMLElement* element = document.NewElement("Element");
@@ -629,7 +629,7 @@ namespace TestCeleste
   TEST_METHOD(DataConverter_ConvertFromXML_InputtingExistentPath_CallsDoConvertFromXML)
   {
     MockDataConverter converter("Data");
-    Path filePath(TestResources::getTempDirectory(), "Test.xml");
+    Path filePath(TempDirectory::getFullPath(), "Test.xml");
 
     XMLDocument document;
     XMLElement* element = document.NewElement("Element");
@@ -672,7 +672,7 @@ namespace TestCeleste
   TEST_METHOD(DataConverter_ConvertFromXML_InputtingExistentPathString_ConvertsAttributes)
   {
     AttributeDataConverter<std::string> converter("Data");
-    Path filePath(TestResources::getTempDirectory(), "Test.xml");
+    Path filePath(TempDirectory::getFullPath(), "Test.xml");
 
     XMLDocument document;
     XMLElement* element = document.NewElement("Data");
@@ -692,7 +692,7 @@ namespace TestCeleste
   TEST_METHOD(DataConverter_ConvertFromXML_InputtingExistentPathString_RequiredAttributeThatDoesntExist_ReturnsFalse)
   {
     AttributeDataConverter<std::string, DeserializationRequirement::kRequired> converter("Data");
-    Path filePath(TestResources::getTempDirectory(), "Test.xml");
+    Path filePath(TempDirectory::getFullPath(), "Test.xml");
 
     XMLDocument document;
     XMLElement* element = document.NewElement("Data");
@@ -708,7 +708,7 @@ namespace TestCeleste
   TEST_METHOD(DataConverter_ConvertFromXML_InputtingExistentPathString_ConvertsElements)
   {
     ElementDataConverter<std::string> converter("Element");
-    Path filePath(TestResources::getTempDirectory(), "Test.xml");
+    Path filePath(TempDirectory::getFullPath(), "Test.xml");
 
     XMLDocument document;
     XMLElement* element = document.NewElement("Element");
@@ -730,7 +730,7 @@ namespace TestCeleste
   TEST_METHOD(DataConverter_ConvertFromXML_InputtingExistentPathString_RequiredElementThatDoesntExist_ReturnsFalse)
   {
     ElementDataConverter<std::string, DeserializationRequirement::kRequired> converter("Data");
-    Path filePath(TestResources::getTempDirectory(), "Test.xml");
+    Path filePath(TempDirectory::getFullPath(), "Test.xml");
 
     XMLDocument document;
     XMLElement* element = document.NewElement("Element");
@@ -746,7 +746,7 @@ namespace TestCeleste
   TEST_METHOD(DataConverter_ConvertFromXML_InputtingExistentPathString_CallsDoConvertFromXML)
   {
     MockDataConverter converter("Data");
-    Path filePath(TestResources::getTempDirectory(), "Test.xml");
+    Path filePath(TempDirectory::getFullPath(), "Test.xml");
 
     XMLDocument document;
     XMLElement* element = document.NewElement("Element");

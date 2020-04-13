@@ -30,18 +30,9 @@ namespace CelesteTestUtils
   //------------------------------------------------------------------------------------------------
   void CelesteUnitTest::resetState()
   {
-    resetResources();
     resetMouse();
     resetKeyboard();
     resetLuaGlobals();
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void CelesteUnitTest::resetResources()
-  {
-    Directory temp(CelesteTestResources::TestResources::getTempDirectory());
-    temp.remove();
-    temp.create();
   }
 
   //------------------------------------------------------------------------------------------------

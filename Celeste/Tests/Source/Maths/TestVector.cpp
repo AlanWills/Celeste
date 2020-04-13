@@ -14,7 +14,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Vector_LengthSquared_ZeroVector_ReturnsZero)
     {
-      glm::vec3 zero;
+      glm::vec3 zero(0);
 
       Assert::AreEqual(0.0f, zero.x);
       Assert::AreEqual(0.0f, zero.y);

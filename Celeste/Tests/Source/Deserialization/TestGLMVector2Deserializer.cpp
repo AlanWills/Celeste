@@ -14,7 +14,7 @@ namespace TestCeleste::Deserialization
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GLMVector2Deserializer_Deserialize_InputtingSingleNumber_SetsXComponentToNumber_AndReturnsTrue)
   {
-    glm::vec2 value;
+    glm::vec2 value(0);
 
     Assert::IsTrue(deserialize("56", value));
     Assert::AreEqual(glm::vec2(56, 0), value);
@@ -23,7 +23,7 @@ namespace TestCeleste::Deserialization
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GLMVector2Deserializer_Deserialize_InputtingAttributeWithTwoNumbers_SetsXYComponentsToRespectiveNumbers_AndReturnsTrue)
   {
-    glm::vec2 value;
+    glm::vec2 value(0);
 
     Assert::IsTrue(deserialize("56, 63", value));
     Assert::AreEqual(glm::vec2(56, 63), value);
@@ -34,19 +34,19 @@ namespace TestCeleste::Deserialization
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GLMVector2Deserializer_Deserialize_InputtingNumbersButNoDelimiters_ReturnsFalse)
   {
-    glm::vec2 value;
+    glm::vec2 value(0);
 
     Assert::IsFalse(deserialize("56 12", value));
-    Assert::AreEqual(glm::vec2(), value);
+    Assert::AreEqual(glm::vec2(0), value);
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GLMVector2Deserializer_Deserialize_InputtingInvalidText_ReturnsFalse)
   {
-    glm::vec2 value;
+    glm::vec2 value(0);
 
     Assert::IsFalse(deserialize("awas,11ddd,00.111.121", value));
-    Assert::AreEqual(glm::vec2(), value);
+    Assert::AreEqual(glm::vec2(0), value);
   }
 
 #pragma endregion

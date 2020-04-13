@@ -2,7 +2,7 @@
 
 #include "Mocks/Resources/Data/MockData.h"
 #include "TestResources/TestResources.h"
-#include "AssertCel.h"
+#include "FileAssert.h"
 
 
 namespace TestCeleste
@@ -86,7 +86,7 @@ namespace TestCeleste
     {
       MockData data;
 
-      Assert::IsTrue(data.saveToFile(Path(TestResources::getTempDirectory(), "TestData.xml")));
+      Assert::IsTrue(data.saveToFile(Path(TempDirectory::getFullPath(), "TestData.xml")));
     }
 
     //----------------------------------------------------------------------------------------------------------
@@ -101,13 +101,13 @@ namespace TestCeleste
       XMLElement* secondChild = document.NewElement("Child2");
       root->InsertEndChild(secondChild);
 
-      Path path(TestResources::getTempDirectory(), "TestData.xml");
+      Path path(TempDirectory::getFullPath(), "TestData.xml");
 
-      AssertCel::FileDoesNotExist(path);
+      FileAssert::FileDoesNotExist(path);
 
       data.saveToFile(path);
 
-      AssertCel::FileExists(path);
+      FileAssert::FileExists(path);
 
       XMLDocument loadedDocument;
       loadedDocument.LoadFile(path.as_string().c_str());
@@ -126,13 +126,13 @@ namespace TestCeleste
       XMLElement* root = document.NewElement("Root");
       document.InsertFirstChild(root);
 
-      Path path(TestResources::getTempDirectory(), "TestData.xml");
+      Path path(TempDirectory::getFullPath(), "TestData.xml");
 
-      AssertCel::FileDoesNotExist(path);
+      FileAssert::FileDoesNotExist(path);
 
       data.saveToFile(path);
 
-      AssertCel::FileExists(path);
+      FileAssert::FileExists(path);
 
       XMLDocument loadedDocument;
       loadedDocument.LoadFile(path.as_string().c_str());
@@ -142,7 +142,7 @@ namespace TestCeleste
 
       data.getDocumentRoot()->SetName("NewRoot");
 
-      AssertCel::FileExists(path);
+      FileAssert::FileExists(path);
 
       data.saveToFile(path);
       loadedDocument.LoadFile(path.as_string().c_str());
@@ -164,7 +164,7 @@ namespace TestCeleste
     TEST_METHOD(Data_SaveToFile_InputtingValidPathString_ReturnsTrue)
     {
       MockData data;
-      Path path(TestResources::getTempDirectory(), "TestData.xml");
+      Path path(TempDirectory::getFullPath(), "TestData.xml");
       const std::string& str = path.as_string();
 
       Assert::IsTrue(data.saveToFile(str));
@@ -182,13 +182,13 @@ namespace TestCeleste
       XMLElement* secondChild = document.NewElement("Child2");
       root->InsertEndChild(secondChild);
 
-      Path path(TestResources::getTempDirectory(), "TestData.xml");
+      Path path(TempDirectory::getFullPath(), "TestData.xml");
 
-      AssertCel::FileDoesNotExist(path);
+      FileAssert::FileDoesNotExist(path);
 
       data.saveToFile(path.as_string());
 
-      AssertCel::FileExists(path);
+      FileAssert::FileExists(path);
 
       XMLDocument loadedDocument;
       loadedDocument.LoadFile(path.as_string().c_str());
@@ -207,13 +207,13 @@ namespace TestCeleste
       XMLElement* root = document.NewElement("Root");
       document.InsertFirstChild(root);
 
-      Path path(TestResources::getTempDirectory(), "TestData.xml");
+      Path path(TempDirectory::getFullPath(), "TestData.xml");
 
-      AssertCel::FileDoesNotExist(path);
+      FileAssert::FileDoesNotExist(path);
 
       data.saveToFile(path.as_string());
 
-      AssertCel::FileExists(path);
+      FileAssert::FileExists(path);
 
       XMLDocument loadedDocument;
       loadedDocument.LoadFile(path.as_string().c_str());
@@ -223,7 +223,7 @@ namespace TestCeleste
 
       data.getDocumentRoot()->SetName("NewRoot");
 
-      AssertCel::FileExists(path);
+      FileAssert::FileExists(path);
 
       data.saveToFile(path.as_string());
       loadedDocument.LoadFile(path.as_string().c_str());
@@ -250,7 +250,7 @@ namespace TestCeleste
     {
       MockData data;
 
-      File dataFile(Path(TestResources::getTempDirectory(), "Data.xml"));
+      File dataFile(Path(TempDirectory::getFullPath(), "Data.xml"));
       File(TestResources::getDataXmlFullPath()).copy(dataFile.getFilePath());
 
       Assert::IsTrue(dataFile.exists());
@@ -280,7 +280,7 @@ namespace TestCeleste
     {
       MockData data;
 
-      File dataFile(Path(TestResources::getTempDirectory(), "Data.xml"));
+      File dataFile(Path(TempDirectory::getFullPath(), "Data.xml"));
       File(TestResources::getDataXmlFullPath()).copy(dataFile.getFilePath());
 
       Assert::IsTrue(dataFile.exists());
@@ -306,7 +306,7 @@ namespace TestCeleste
     {
       MockData data;
 
-      File dataFile(Path(TestResources::getTempDirectory(), "Data.xml"));
+      File dataFile(Path(TempDirectory::getFullPath(), "Data.xml"));
       File(TestResources::getDataXmlFullPath()).copy(dataFile.getFilePath());
 
       Assert::IsTrue(dataFile.exists());

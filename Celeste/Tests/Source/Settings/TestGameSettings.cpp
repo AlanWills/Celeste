@@ -6,7 +6,7 @@
 #include "TestResources/Settings/GameSettingsLoadingResources.h"
 #include "Audio/AudioManager.h"
 #include "XML/tinyxml2_ext.h"
-#include "AssertCel.h"
+#include "FileAssert.h"
 
 using namespace Celeste::XML;
 using namespace Celeste::Settings;
@@ -84,7 +84,7 @@ namespace TestCeleste::Settings
   {
     Path path(GameSettingsLoadingResources::getInvalidFullPath());
 
-    AssertCel::FileExists(path);
+    FileAssert::FileExists(path);
 
     std::unique_ptr<GameSettings> settings(ScriptableObject::load<GameSettings>(path));
 
@@ -96,7 +96,7 @@ namespace TestCeleste::Settings
   {
     Path path(GameSettingsLoadingResources::getValidFullPath());
 
-    AssertCel::FileExists(path);
+    FileAssert::FileExists(path);
 
     std::unique_ptr<GameSettings> settings(ScriptableObject::load<GameSettings>(path));
 
@@ -108,7 +108,7 @@ namespace TestCeleste::Settings
   {
     Path path(GameSettingsLoadingResources::getValidFullPath());
 
-    AssertCel::FileExists(path);
+    FileAssert::FileExists(path);
 
     std::unique_ptr<GameSettings> settings(ScriptableObject::load<GameSettings>(path));
 
@@ -131,9 +131,9 @@ namespace TestCeleste::Settings
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameSettings_Save_InputtingPath_FileDoesNotExist_CreatesFileWithSettingsSerializedCorrectly)
   {
-    Path destPath(TestResources::getTempDirectory(), "Settings.xml");
+    Path destPath(TempDirectory::getFullPath(), "Settings.xml");
 
-    AssertCel::FileDoesNotExist(destPath);
+    FileAssert::FileDoesNotExist(destPath);
 
     std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
     settings->setMasterVolume(0.5f);
@@ -152,9 +152,9 @@ namespace TestCeleste::Settings
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameSettings_Save_InputtingPath_FileExists_OverwritesFileWithSettingsSerializedCorrectly)
   {
-    Path destPath(TestResources::getTempDirectory(), "Settings.xml");
+    Path destPath(TempDirectory::getFullPath(), "Settings.xml");
 
-    AssertCel::FileDoesNotExist(destPath);
+    FileAssert::FileDoesNotExist(destPath);
 
     std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
     settings->setMasterVolume(0.5f);
@@ -169,7 +169,7 @@ namespace TestCeleste::Settings
     Assert::AreEqual(0.25f, settings2->getMusicVolume());
     Assert::AreEqual(0.1f, settings2->getSFXVolume());
 
-    AssertCel::FileExists(destPath);
+    FileAssert::FileExists(destPath);
 
     settings2->setMasterVolume(0.45f);
     settings2->setMusicVolume(0.65f);

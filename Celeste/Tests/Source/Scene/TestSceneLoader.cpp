@@ -46,7 +46,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SceneLoader_Load_InputtingExistentFullFilePath_ToInvalidXMLFile_ReturnsFalseAndEmptyGameObjects)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
     File file(path);
     file.append("");
 
@@ -61,7 +61,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SceneLoader_Load_InputtingExistentRelativeFilePath_ToInvalidXMLFile_ReturnsFalseAndEmptyGameObjects)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
     File file(path);
     file.append("");
 
@@ -76,7 +76,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SceneLoader_Load_InputtingExistentFullFilePath_NoDocumentRoot_ReturnsFalseAndEmptyGameObjects)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
     XMLDocument document;
     document.SaveFile(path.c_str());
 
@@ -91,7 +91,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SceneLoader_Load_InputtingExistentRelativeFilePath_NoDocumentRoot_ReturnsFalseAndEmptyGameObjects)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
     XMLDocument document;
     document.SaveFile(path.c_str());
 
@@ -106,7 +106,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SceneLoader_Load_InputtingExistentFullFilePath_DocumentRootHasNoChildElement_ReturnsFalseAndEmptyGameObjects)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
     XMLDocument document;
     document.NewElement("Root");
     document.SaveFile(path.c_str());
@@ -122,7 +122,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SceneLoader_Load_InputtingExistentRelativeFilePath_DocumentRootHasNoChildElement_ReturnsFalseAndEmptyGameObjects)
   {
-    Path path(TestResources::getTempDirectory(), "Test.xml");
+    Path path(TempDirectory::getFullPath(), "Test.xml");
     XMLDocument document;
     document.NewElement("Root");
     document.SaveFile(path.c_str());

@@ -385,7 +385,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SpriteRendererDataConverter_ConvertFromXML_SizeAttribute_AbsoluteValues_SetsValuesCorrectly_AndReturnsTrue)
+  TEST_METHOD(SpriteRendererDataConverter_ConvertFromXML_SizeAttribute_SetsValuesCorrectly_AndReturnsTrue)
   {
     SpriteRendererDataConverter converter;
     XMLDocument document;
@@ -395,20 +395,6 @@ namespace TestCeleste
     Assert::AreEqual(glm::vec2(), converter.getSize());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::AreEqual(glm::vec2(200, 300), converter.getSize());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SpriteRendererDataConverter_ConvertFromXML_SizeAttribute_RelativeValues_SetsValuesCorrectly_AndReturnsTrue)
-  {
-    SpriteRendererDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("SpriteRenderer");
-    element->SetAttribute(SpriteRendererDataConverter::SIZE_ATTRIBUTE_NAME, "0.2%, 3%");
-    const glm::vec2& viewportDimensions = getViewportDimensions();
-
-    Assert::AreEqual(glm::vec2(), converter.getSize());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(glm::vec2(0.2f * viewportDimensions.x, 3 * viewportDimensions.y), converter.getSize());
   }
 
 #pragma endregion
@@ -567,7 +553,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SpriteRendererDataConverter_ConvertFromXML_ScissorRectangleDimensionsAttribute_AbsoluteValues_SetsValuesCorrectly_AndReturnsTrue)
+  TEST_METHOD(SpriteRendererDataConverter_ConvertFromXML_ScissorRectangleDimensionsAttribute_SetsValuesCorrectly_AndReturnsTrue)
   {
     SpriteRendererDataConverter converter;
     XMLDocument document;
@@ -577,20 +563,6 @@ namespace TestCeleste
     Assert::AreEqual(glm::vec2(), converter.getScissorRectangleDimensions());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::AreEqual(glm::vec2(200, 300), converter.getScissorRectangleDimensions());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SpriteRendererDataConverter_ConvertFromXML_ScissorRectangleDimensionsAttribute_RelativeValues_SetsValuesCorrectly_AndReturnsTrue)
-  {
-    SpriteRendererDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("SpriteRenderer");
-    element->SetAttribute(SpriteRendererDataConverter::SCISSOR_RECTANGLE_DIMENSIONS_ATTRIBUTE_NAME, "0.2%, 3%");
-    const glm::vec2& viewportDimensions = getViewportDimensions();
-
-    Assert::AreEqual(glm::vec2(), converter.getScissorRectangleDimensions());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(glm::vec2(0.2f * viewportDimensions.x, 3 * viewportDimensions.y), converter.getScissorRectangleDimensions());
   }
 
 #pragma endregion
@@ -623,7 +595,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SpriteRendererDataConverter_ConvertFromXML_ScissorRectangleCentreAttribute_AbsoluteValues_SetsValuesCorrectly_AndReturnsTrue)
+  TEST_METHOD(SpriteRendererDataConverter_ConvertFromXML_ScissorRectangleCentreAttribute_SetsValuesCorrectly_AndReturnsTrue)
   {
     SpriteRendererDataConverter converter;
     XMLDocument document;
@@ -633,20 +605,6 @@ namespace TestCeleste
     Assert::AreEqual(glm::vec2(), converter.getScissorRectangleCentre());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::AreEqual(glm::vec2(200, 300), converter.getScissorRectangleCentre());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SpriteRendererDataConverter_ConvertFromXML_ScissorRectangleCentreAttribute_RelativeValues_SetsValuesCorrectly_AndReturnsTrue)
-  {
-    SpriteRendererDataConverter converter;
-    XMLDocument document;
-    XMLElement* element = document.NewElement("SpriteRenderer");
-    element->SetAttribute(SpriteRendererDataConverter::SCISSOR_RECTANGLE_CENTRE_ATTRIBUTE_NAME, "0.2%, 3%");
-    const glm::vec2& viewportDimensions = getViewportDimensions();
-
-    Assert::AreEqual(glm::vec2(), converter.getScissorRectangleCentre());
-    Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(glm::vec2(0.2f * viewportDimensions.x, 3 * viewportDimensions.y), converter.getScissorRectangleCentre());
   }
 
 #pragma endregion

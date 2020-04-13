@@ -1,3 +1,0 @@
-local EmptyModule = { }
-
-return EmptyModule

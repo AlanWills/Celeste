@@ -146,7 +146,7 @@ namespace TestCeleste
       
     Assert::AreEqual(0.0f, slider->getCurrentValue());
 
-    handler->setActive(true);
+    handler->setMouseOver(true);
     simulateMouseButtonPressed(Input::MouseButton::kLeft);
 
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));

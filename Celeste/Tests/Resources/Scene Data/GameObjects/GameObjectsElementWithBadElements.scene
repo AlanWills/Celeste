@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene name="Test">
   <GameObjects>
-    <GameObject position="0.5%" name-="Logo0"/>
-    <GameObject layeras="World" position="12,16,1" name="GameObject1"/>
-    <GameObject position="1%,12%,16%" name="GameObjectFull" active="true" should_render="false"/>
+    <GameObject position="0.5" name-="Logo0"/>
+    <GameObject position="12,16,1" name="GameObject1"/>
+    <GameObject position="1,12,16" name="GameObjectFull" active="true" should_render="false"/>
     <gameObject_ position="12,16,1" name="GameObject2"/>
     <WubDubDub position="12,16,1" name="GameObject3"/>
   </GameObjects>

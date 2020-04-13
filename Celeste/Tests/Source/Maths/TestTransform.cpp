@@ -611,7 +611,7 @@ namespace TestCeleste
       transform.setTranslation(glm::vec3(2, -1, 1));
       transform.setScale(glm::vec3(0.5f, 0.25f, 1));
 
-      glm::mat4 expected;
+      glm::mat4 expected = glm::identity<glm::mat4>();
       expected[3] = glm::vec4(2, -1, 1, 1);
       expected = glm::rotate(expected, -glm::half_pi<float>(), glm::vec3(0, 0, 1));
       expected = glm::scale(expected, glm::vec3(0.5f, 0.25f, 1));
@@ -1018,7 +1018,7 @@ namespace TestCeleste
       transform.setTranslation(glm::vec3(2, -1, 1));
       transform.setScale(glm::vec3(0.5f, 0.25f, 1));
 
-      glm::mat4 expected;
+      glm::mat4 expected = glm::identity<glm::mat4>();
       expected[3] = glm::vec4(2, -1, 1, 1);
       expected = glm::rotate(expected, -glm::half_pi<float>(), glm::vec3(0, 0, 1));
       expected = glm::scale(expected, glm::vec3(0.5f, 0.25f, 1));
@@ -1042,7 +1042,7 @@ namespace TestCeleste
       transform->setScale(glm::vec3(0.5f, 0.25f, 1));
       transform->setParent(parent);
 
-      glm::mat4 expected;
+      glm::mat4 expected = glm::identity<glm::mat4>();
       expected[3] = glm::vec4(1.75f, -3, 0, 1);
       expected = glm::rotate(expected, -glm::pi<float>(), glm::vec3(0, 0, 1));
       expected = glm::scale(expected, glm::vec3(2.5f, 0.25f, -1));

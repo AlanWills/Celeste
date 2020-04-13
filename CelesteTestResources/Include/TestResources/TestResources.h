@@ -95,7 +95,6 @@ namespace CelesteTestResources
       static Path getResourcesDirectory();
       static void setResourcesDirectory(const Path& resourcesDirectory);
 
-      DECLARE_TEST_RESOURCE_DIRECTORY(Temp, "Temp")
       DECLARE_TEST_RESOURCE_DIRECTORY(VertexShaders, "Vertex Shaders")
       DECLARE_TEST_RESOURCE_DIRECTORY(FragmentShaders, "Fragment Shaders")
       DECLARE_TEST_RESOURCE_DIRECTORY(Textures, "Textures")

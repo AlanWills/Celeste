@@ -97,8 +97,8 @@ namespace celstl
 
   //------------------------------------------------------------------------------------------------
   template<typename Enum, typename enable = std::enable_if<EnableBitMaskOperators<Enum>::enable, Enum>::type>
-  bool hasFlag(Enum lhs, Enum rhs)
+  bool hasFlag(Enum value, Enum flag)
   {
-    return (lhs & rhs) == lhs;
+    return (value & flag) == flag;
   }
 }

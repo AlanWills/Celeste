@@ -14,16 +14,16 @@ namespace TestCeleste::Deserialization
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GLMVector3Deserializer_Deserialize_InputtingEmptyString_DoesNotChangeValue_AndReturnsFalse)
   {
-    glm::vec3 value;
+    glm::vec3 value(0);
 
     Assert::IsFalse(deserialize("", value));
-    Assert::AreEqual(glm::vec3(), value);
+    Assert::AreEqual(glm::vec3(0), value);
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GLMVector3Deserializer_Deserialize_InputtingSingleNumber_SetsXComponentToNumber_AndReturnsTrue)
   {
-    glm::vec3 value;
+    glm::vec3 value(0);
 
     Assert::IsTrue(deserialize("56", value));
     Assert::AreEqual(glm::vec3(56, 0, 0), value);
@@ -32,7 +32,7 @@ namespace TestCeleste::Deserialization
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GLMVector3Deserializer_Deserialize_InputtingTwoNumbers_SetsXYComponentsToFirstNumberAndSecondNumber_AndReturnsTrue)
   {
-    glm::vec3 value;
+    glm::vec3 value(0);
 
     Assert::IsTrue(deserialize("56, 63", value));
     Assert::AreEqual(glm::vec3(56, 63, 0), value);
@@ -43,7 +43,7 @@ namespace TestCeleste::Deserialization
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GLMVector3Deserializer_Deserialize_InputtingThreeNumbers_SetsXYZComponentsToFirstSecondThirdNumbers_AndReturnsTrue)
   {
-    glm::vec3 value;
+    glm::vec3 value(0);
 
     Assert::IsTrue(deserialize("56, 63, 100", value));
     Assert::AreEqual(glm::vec3(56, 63, 100), value);
@@ -54,10 +54,10 @@ namespace TestCeleste::Deserialization
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GLMVector3Deserializer_Deserialize_InputtingInvalidText_ReturnsFalse)
   {
-    glm::vec3 value;
+    glm::vec3 value(0);
 
     Assert::IsFalse(deserialize("awas,11ddd,00.111.121", value));
-    Assert::AreEqual(glm::vec3(), value);
+    Assert::AreEqual(glm::vec3(0), value);
   }
 
 #pragma endregion

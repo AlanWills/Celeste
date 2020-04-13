@@ -12,7 +12,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_CreateMatrix)
     {
-      glm::mat4 expected;
+      glm::mat4 expected = glm::identity<glm::mat4>();
       expected[3] = glm::vec4(2, -1, 1, 1);
       expected = glm::rotate(expected, -glm::half_pi<float>(), glm::vec3(0, 0, 1));
       expected = glm::scale(expected, glm::vec3(0.5f, 0.25f, 1));
@@ -24,7 +24,7 @@ namespace TestCeleste
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Transform_CreateInverseMatrix)
     {
-      glm::mat4 expected;
+      glm::mat4 expected = glm::identity<glm::mat4>();
       expected[3] = glm::vec4(2, -1, 1, 1);
       expected = glm::rotate(expected, -glm::half_pi<float>(), glm::vec3(0, 0, 1));
       expected = glm::scale(expected, glm::vec3(0.5f, 0.25f, 1));

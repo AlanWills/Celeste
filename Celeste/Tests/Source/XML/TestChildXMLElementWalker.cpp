@@ -344,7 +344,7 @@ namespace TestCeleste
     element->InsertEndChild(child3);
 
     Assert::IsFalse(element->NoChildren());
-    Assert::AreEqual((size_t)0, child_count(element));
+    Assert::AreEqual((size_t)0, child_count(element, "Child4"));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -361,7 +361,7 @@ namespace TestCeleste
     element->InsertEndChild(child3);
 
     Assert::IsFalse(element->NoChildren());
-    Assert::AreEqual((size_t)2, child_count(element));
+    Assert::AreEqual((size_t)2, child_count(element, "Child1"));
   }
 
 #pragma endregion

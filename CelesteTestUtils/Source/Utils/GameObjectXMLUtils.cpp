@@ -93,4 +93,18 @@ namespace CelesteTestUtils
 
     return element;
   }
+
+  //------------------------------------------------------------------------------------------------
+  tinyxml2::XMLElement* createPrefabElement(
+    tinyxml2::XMLDocument& document,
+    const std::string& name,
+    const std::string& path,
+    tinyxml2::XMLElement* parent)
+  {
+    tinyxml2::XMLElement* element = createPrefabElement(document, parent);
+    element->SetAttribute(PrefabDataConverter::NAME_ATTRIBUTE_NAME, name.c_str());
+    element->SetAttribute(PrefabDataConverter::PATH_ATTRIBUTE_NAME, path.c_str());
+
+    return element;
+  }
 }

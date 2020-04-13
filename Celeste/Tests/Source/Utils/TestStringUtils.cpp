@@ -8,62 +8,6 @@ namespace TestCeleste
 {
   CELESTE_TEST_CLASS(TestStringUtils)
 
-#pragma region Empty Wchar to Char Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(StringUtils_EmptyWcharToChar)
-  {
-    std::wstring w_string(L"");
-    char string[50];
-
-    size_t amountConverted = wcharToChar(w_string.c_str(), string, 50);
-
-    Assert::AreEqual("", string);
-    Assert::AreEqual((size_t)0, amountConverted);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(StringUtils_NonEmptyWcharToChar)
-  {
-    std::wstring w_string(L"Test String");
-    char string[50];
-
-    size_t amountConverted = wcharToChar(w_string.c_str(), string, 50);
-
-    Assert::AreEqual("Test String", string);
-    Assert::AreEqual(w_string.size(), amountConverted);
-  }
-
-#pragma endregion
-
-#pragma region Char to Wchar tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(StringUtils_EmptyCharToWchar)
-  {
-    std::string string("");
-    wchar_t w_string[50];
-
-    size_t amountConverted = charToWchar(string.c_str(), w_string, 50);
-
-    Assert::AreEqual(L"", w_string);
-    Assert::AreEqual((size_t)0, amountConverted);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(StringUtils_NonEmptyCharToWchar)
-  {
-    std::string string("Test String");
-    wchar_t w_string[50];
-
-    size_t amountConverted = charToWchar(string.c_str(), w_string, 50);
-
-    Assert::AreEqual(L"Test String", w_string);
-    Assert::AreEqual(string.size(), amountConverted);
-  }
-
-#pragma endregion
-
 #pragma region Split Tests
 
   //------------------------------------------------------------------------------------------------
@@ -100,7 +44,7 @@ namespace TestCeleste
   TEST_METHOD(StringUtils_Split_TextWithDelimiterInMiddle_ReturnsTwoLines)
   {
     std::vector<std::string> lines;
-    split("Hello Ground0 Control", lines, 0);
+    split("Hello Ground0 Control", lines, '0');
 
     Assert::AreEqual((size_t)2, lines.size());
     Assert::AreEqual("Hello Ground", lines[0].c_str());
@@ -111,7 +55,7 @@ namespace TestCeleste
   TEST_METHOD(StringUtils_Split_TextWithMultipleDelimiters_ReturnsCorrectLines)
   {
     std::vector<std::string> lines;
-    split("Hell0o Ground0 Control0", lines);
+    split("Hell0o Ground0 Control0", lines, '0');
 
     Assert::AreEqual((size_t)4, lines.size());
     Assert::AreEqual("Hell", lines[0].c_str());
@@ -124,7 +68,7 @@ namespace TestCeleste
   TEST_METHOD(StringUtils_Split_AllDelimiters_ReturnsCorrectLines)
   {
     std::vector<std::string> lines;
-    split("00000", lines);
+    split("00000", lines, '0');
 
     Assert::AreEqual((size_t)6, lines.size());
 

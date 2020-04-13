@@ -1,8 +1,7 @@
-#include "Lua/DataConverters/LuaComponentDataConverter.h"
-#include "Lua/ScriptCommands/ScriptCommandUtils.h"
-#include "Lua/LuaState.h"
-
 #include "UtilityHeaders/UnitTestHeaders.h"
+#include "Lua/DataConverters/LuaComponentDataConverter.h"
+#include "ScriptCommands/ScriptCommandUtils.h"
+#include "Lua/LuaState.h"
 
 #include "Mocks/Objects/MockComponent.h"
 
@@ -982,6 +981,8 @@ namespace TestCeleste::Lua
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponentDataConverter_DoSetValues_WithCallback_ForNonLuaRegisteredComponent_CallsCallbackWithComponentPtr)
   {
+    sol::state& state = LuaState::instance();
+
     class TempComponent : public MockComponent { public: TempComponent(GameObject& gameObject) : MockComponent(gameObject) {} };
 
     XMLDocument document;
@@ -989,7 +990,7 @@ namespace TestCeleste::Lua
 
     GameObject gameObject;
     TempComponent component(gameObject);
-    sol::table table = LuaState::instance().create_table();
+    sol::table table = state.create_table();
     table["SetValues"] = [](LuaComponentDataConverter*, sol::object object) -> void
     {
       LuaState::instance().globals()["called"] = true;
@@ -998,12 +999,12 @@ namespace TestCeleste::Lua
     };
 
     LuaComponentDataConverter converter(table, "Test");
-    LuaState::instance().globals()["called"] = false;
-    Celeste::Lua::registerUserType<Component>("Component", sol::base_classes, sol::bases<Entity, Object>());
+    state["called"] = false;
+    Celeste::Lua::registerUserType<Component>(state, "Component", sol::base_classes, sol::bases<Entity, Object>());
 
-    Assert::IsTrue(LuaState::instance().globals()["Component"].valid());
-    Assert::IsFalse(LuaState::instance().globals()["TempComponent"].valid());
-    Assert::IsFalse(LuaState::instance().globals()["called"].get_or(true));
+    Assert::IsTrue(state["Component"].valid());
+    Assert::IsFalse(state["TempComponent"].valid());
+    Assert::IsFalse(state["called"].get_or(true));
 
     converter.convertFromXML(element);
 
@@ -1011,18 +1012,20 @@ namespace TestCeleste::Lua
 
     converter.setValues(component);
 
-    Assert::IsTrue(LuaState::instance().globals()["called"].get_or(false));
+    Assert::IsTrue(state["called"].get_or(false));
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(LuaComponentDataConverter_DoSetValues_WithCallback_ForLuaRegisteredComponent_CallsCallbackWithDerivedPtrType)
   {
+    sol::state& state = LuaState::instance();
+    
     XMLDocument document;
     tinyxml2::XMLElement* element = document.NewElement("Child");
 
     GameObject gameObject;
     MockComponent component(gameObject);
-    sol::table table = LuaState::instance().create_table();
+    sol::table table = state.create_table();
     table["SetValues"] = [](LuaComponentDataConverter*, sol::object object) -> void
     {
       LuaState::instance().globals()["called"] = true;
@@ -1031,13 +1034,13 @@ namespace TestCeleste::Lua
     };
 
     LuaComponentDataConverter converter(table, "MockComponent");
-    LuaState::instance().globals()["called"] = false;
-    Celeste::Lua::registerUserType<Component>("Component", sol::base_classes, sol::bases<Entity, Object>());
-    Celeste::Lua::registerUserType<MockComponent>("MockComponent", sol::base_classes, sol::bases<Component, Entity, Object>());
+    state["called"] = false;
+    Celeste::Lua::registerUserType<Component>(state, "Component", sol::base_classes, sol::bases<Entity, Object>());
+    Celeste::Lua::registerUserType<MockComponent>(state, "MockComponent", sol::base_classes, sol::bases<Component, Entity, Object>());
 
-    Assert::IsTrue(LuaState::instance().globals()["Component"].valid());
-    Assert::IsTrue(LuaState::instance().globals()["MockComponent"].valid());
-    Assert::IsFalse(LuaState::instance().globals()["called"].get_or(true));
+    Assert::IsTrue(state["Component"].valid());
+    Assert::IsTrue(state["MockComponent"].valid());
+    Assert::IsFalse(state["called"].get_or(true));
 
     converter.convertFromXML(element);
 
@@ -1045,7 +1048,7 @@ namespace TestCeleste::Lua
 
     converter.setValues(component);
 
-    Assert::IsTrue(LuaState::instance().globals()["called"].get_or(false));
+    Assert::IsTrue(state["called"].get_or(false));
   }
 
 #pragma endregion

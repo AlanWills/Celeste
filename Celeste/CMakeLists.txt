@@ -25,7 +25,19 @@ set(LIBS
     FileSystem
     Lua
     Dolce)
+    
+set(TEST_LIBS
+    CelesteLua
+    CelesteMocks
+    CelesteTestResources
+    CelesteTestUtils)
 
-build_library(NAME Celeste FOLDER Celeste TYPE SHARED INCLUDES "${INCLUDES}" LIBS "${LIBS}")
+build_library(
+    NAME Celeste 
+    FOLDER Celeste 
+    TYPE SHARED 
+    INCLUDES "${INCLUDES}" 
+    LIBS "${LIBS}"
+    TEST_LIBS "${TEST_LIBS}")
 
 target_compile_definitions(Celeste PUBLIC -DGLM_FORCE_SILENT_WARNINGS PRIVATE -DBUILDING_CELESTE_ENGINE_DLL)
