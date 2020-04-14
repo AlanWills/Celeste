@@ -34,9 +34,12 @@ set_target_properties(UpdateAssimpLibsDebugSymbolsAndDLLs PROPERTIES
 
 
 ##---------------------------- crossguid ----------------------------##
+set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
+set(BUILD_SHARED_LIBS OFF)
 set(CROSSGUID_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/crossguid")
 SET(CROSSGUID_TESTS OFF CACHE BOOL "" FORCE)
 add_subdirectory(${CROSSGUID_PROJECT_DIR} ${CROSSGUID_PROJECT_DIR}/build)
+set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 
 set_target_properties(crossguid PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
