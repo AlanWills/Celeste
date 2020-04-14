@@ -18,7 +18,7 @@
 	url = https://github.com/assimp/assimp.git
 [submodule "3rdParty/lua"]
 	path = 3rdParty/lua
-	url = https://github.com/AlanWills/liblua.git
+	url = https://github.com/AlanWills/lualib.git
 [submodule "3rdParty/tinyxml2"]
 	path = 3rdParty/tinyxml2
 	url = https://github.com/AlanWills/tinyxml2.git
