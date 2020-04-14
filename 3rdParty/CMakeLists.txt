@@ -203,11 +203,11 @@ set_target_properties(imgui PROPERTIES
 
 
 ##---------------------------- lua ----------------------------##
-set(BUILD_STATIC_LIBS_SAVED "${BUILD_STATIC_LIBS}")
-set(BUILD_STATIC_LIBS ON)
+set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
+set(BUILD_SHARED_LIBS ON)
 set(LUA_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lua")
 add_subdirectory(${LUA_PROJECT_DIR} ${LUA_PROJECT_DIR}/build EXCLUDE_FROM_ALL)
-set(BUILD_STATIC_LIBS "${BUILD_STATIC_LIBS_SAVED}")
+set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 
 set_target_properties(liblua PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
