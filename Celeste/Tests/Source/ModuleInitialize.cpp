@@ -8,7 +8,7 @@
 #include "TestResources/TestResources.h"
 
 
-namespace TestCelesteLua
+namespace TestCeleste
 {
   std::unique_ptr<Game> game(nullptr);
 
