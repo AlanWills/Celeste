@@ -5,6 +5,7 @@ if (NOT DEFINED BUILDS_DIR)
     set(BUILDS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dll/${CMAKE_VS_PLATFORM_NAME})
 endif()
 
+SET(CMAKE_DEBUG_POSTFIX "" CACHE STRING "" FORCE)
 set(THIRD_PARTY_FOLDER "3rd Party")
 set(THIRD_PARTY_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/${CMAKE_VS_PLATFORM_NAME})
 ##---------------------------- end Globals ----------------------------##
@@ -29,7 +30,7 @@ set_target_properties(zlibstatic PROPERTIES
 
 set_target_properties(UpdateAssimpLibsDebugSymbolsAndDLLs PROPERTIES 
     FOLDER ${THIRD_PARTY_FOLDER})
-#---------------------------- end freealut ----------------------------##
+#---------------------------- end assimp ----------------------------##
 
 
 ##---------------------------- crossguid ----------------------------##
@@ -41,7 +42,7 @@ set_target_properties(crossguid PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
-##---------------------------- end curl ----------------------------##
+##---------------------------- end crossguid ----------------------------##
 
 
 ##---------------------------- curl ----------------------------##
@@ -125,6 +126,8 @@ set_target_properties(alut PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
+
+    add_dependencies(alut OpenAL)
 #---------------------------- end freealut ----------------------------##
 
 
