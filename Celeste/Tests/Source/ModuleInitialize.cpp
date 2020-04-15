@@ -15,8 +15,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_MODULE_INITIALIZE(TestCeleste_Initialize)
   {
-    std::cout << "Executing App Directory";
-    std::cout << Directory::getExecutingAppDirectory();
+    std::cout << "Executing App Directory " << Directory::getExecutingAppDirectory() << std::endl;
 
     // Issues with unique_ptrs over dll boundaries so have to do this in the test project
     Assertion::setAsserter(std::make_unique<NullAsserter>());
