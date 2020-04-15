@@ -15,6 +15,8 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_MODULE_INITIALIZE(TestCeleste_Initialize)
   {
+    std::cout << TestResources::getResourcesDirectory().as_string();
+
     // Issues with unique_ptrs over dll boundaries so have to do this in the test project
     Assertion::setAsserter(std::make_unique<NullAsserter>());
 
