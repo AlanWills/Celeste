@@ -38,7 +38,7 @@ namespace Celeste
 
       void enableViewportFlag(GLenum flag) { glEnable(flag); }
 
-      WindowMode getWindowMode() const { return glfwGetWindowMonitor(m_window) ? WindowMode::kFullScreen : WindowMode::kWindowed; }
+      WindowMode getWindowMode() const { return m_windowMode; }
       CelesteDllExport void setWindowMode(WindowMode windowMode);
 
       CelesteDllExport void setTitle(const std::string& windowTitle);
@@ -47,7 +47,7 @@ namespace Celeste
       const Event<const glm::vec2&>& getViewportDimensionsChangedEvent() const { return m_viewportDimensionsChanged; }
 
     private:
-      void initWindow(WindowMode windowMode, int targetWidth, int targetHeight, const std::string& title);
+      void initWindow(int targetWidth, int targetHeight, const std::string& title);
 
       GLFWwindow* m_window;
 
@@ -55,6 +55,7 @@ namespace Celeste
       //int m_left, m_top, m_right, m_bottom;
 
       glm::vec2 m_viewportDimensions;
+      WindowMode m_windowMode;
       Event<const glm::vec2&> m_viewportDimensionsChanged;
   };
 }

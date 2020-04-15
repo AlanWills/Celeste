@@ -14,6 +14,7 @@ namespace Celeste
   OpenGLWindow::OpenGLWindow(WindowMode windowMode, const std::string& windowTitle) :
     m_window(nullptr),
     m_viewportDimensions(0),
+    m_windowMode(windowMode),
     m_viewportDimensionsChanged()
   {
     if (!GL::glfw_initialize())
@@ -29,7 +30,7 @@ namespace Celeste
     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
     ASSERT(mode != nullptr);
 
-    initWindow(windowMode, mode->width, mode->height, windowTitle);
+    initWindow(mode->width, mode->height, windowTitle);
 
     // It's important that GLEW is initialized after the window is created (I have literally no fucking idea why, 
     // but it's been a pain to figure this out, so just trust me)
@@ -49,6 +50,7 @@ namespace Celeste
     const std::string& windowTitle) :
     m_window(nullptr),
     m_viewportDimensions(0),
+    m_windowMode(windowMode),
     m_viewportDimensionsChanged()
   {
     if (!GL::glfw_initialize())
@@ -58,7 +60,7 @@ namespace Celeste
       return;
     }
 
-    initWindow(windowMode, screenWidth, screenHeight, windowTitle);
+    initWindow(screenWidth, screenHeight, windowTitle);
 
     // It's important that GLEW is initialized after the window is created (I have literally no fucking idea why, 
     // but it's been a pain to figure this out, so just trust me)
@@ -80,7 +82,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void OpenGLWindow::initWindow(WindowMode windowMode, int targetWidth, int targetHeight, const std::string& title)
+  void OpenGLWindow::initWindow(int targetWidth, int targetHeight, const std::string& title)
   {
     m_window = glfwCreateWindow(targetWidth, targetHeight, title.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(m_window);
@@ -92,7 +94,7 @@ namespace Celeste
     const GLFWvidmode* mode = monitor != nullptr ? glfwGetVideoMode(monitor) : nullptr;
     int refreshRate = mode != nullptr ? mode->refreshRate : GLFW_DONT_CARE;
 
-    if (windowMode == WindowMode::kFullScreen)
+    if (m_windowMode == WindowMode::kFullScreen)
     {
       // Just use preset viewport dimensions if in full screen
       glfwSetWindowMonitor(m_window, monitor, 0, 0, targetWidth, targetHeight, refreshRate);
@@ -150,7 +152,7 @@ namespace Celeste
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = monitor != nullptr ? glfwGetVideoMode(monitor) : nullptr;
 
-    int refreshRate = mode ? mode->refreshRate : 60;
+    int refreshRate = mode ? mode->refreshRate : GLFW_DONT_CARE;
     int viewportDimensionsX = static_cast<int>(m_viewportDimensions.x);
     int viewportDimensionsY = static_cast<int>(m_viewportDimensions.y);
 
@@ -169,6 +171,7 @@ namespace Celeste
     glViewport(0, 0, viewportDimensionsX, viewportDimensionsY);
     glCheckError();
 
+    m_windowMode = windowMode;
     m_viewportDimensionsChanged.invoke(m_viewportDimensions);
   }
 
