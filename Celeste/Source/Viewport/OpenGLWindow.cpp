@@ -54,6 +54,8 @@ namespace Celeste
     if (!GL::glfw_initialize())
     {
       ASSERT_FAIL();
+      LOG_CRITICAL_ERROR("GLFW failed to initialize.");
+      return;
     }
 
     initWindow(windowMode, screenWidth, screenHeight, windowTitle);
@@ -63,6 +65,8 @@ namespace Celeste
     if (!GL::glew_initialize())
     {
       ASSERT_FAIL();
+      LOG_CRITICAL_ERROR("GLEW failed to initialize.");
+      return;
     }
   }
 
@@ -84,8 +88,9 @@ namespace Celeste
     int left = 0, right = 0, top = 0, bottom = 0;
     glfwGetWindowFrameSize(m_window, &left, &top, &right, &bottom);
 
-    const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-    int refreshRate = mode ? mode->refreshRate : GLFW_DONT_CARE;
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = monitor != nullptr ? glfwGetVideoMode(monitor) : nullptr;
+    int refreshRate = mode != nullptr ? mode->refreshRate : GLFW_DONT_CARE;
 
     if (windowMode == WindowMode::kFullScreen)
     {

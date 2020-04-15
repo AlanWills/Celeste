@@ -15,15 +15,13 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_MODULE_INITIALIZE(TestCeleste_Initialize)
   {
-    std::cout << "Executing App Directory " << Directory::getExecutingAppDirectory() << std::endl;
-
     // Issues with unique_ptrs over dll boundaries so have to do this in the test project
     Assertion::setAsserter(std::make_unique<NullAsserter>());
 
     CelesteTestResources::TestResources::initialize();
     TempDirectory::setParentDirectory(TestResources::getResourcesDirectory().as_string());
 
-    game = std::make_unique<Game>();
+    game = std::make_unique<Game>(50, 50, OpenGLWindow::WindowMode::kWindowed, "Test Celeste");
     game->getResourceManager().setResourcesDirectory(TestResources::getResourcesDirectory());
 
     Celeste::Path celesteLuaScripts(Directory::getExecutingAppDirectory(), UPDIR_STRING, UPDIR_STRING, UPDIR_STRING,
