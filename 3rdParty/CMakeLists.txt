@@ -12,10 +12,13 @@ set(THIRD_PARTY_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/${CMAKE_VS_PLATFORM_NAME
 
 
 ##---------------------------- assimp ----------------------------##
+set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
+set(BUILD_SHARED_LIBS ON)
 set(ASSIMP_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assimp")
 SET(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
 SET(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 add_subdirectory(${ASSIMP_PROJECT_DIR} ${ASSIMP_PROJECT_DIR}/build EXCLUDE_FROM_ALL)
+set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 
 set_target_properties(assimp PROPERTIES 
     FOLDER ${THIRD_PARTY_FOLDER}
@@ -135,8 +138,11 @@ set_target_properties(alut PROPERTIES
 
 
 ##---------------------------- freetype2 ----------------------------##
+set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
+set(BUILD_SHARED_LIBS OFF)
 set(FREETYPE2_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/freetype2")
 add_subdirectory(${FREETYPE2_PROJECT_DIR} ${FREETYPE2_PROJECT_DIR}/build EXCLUDE_FROM_ALL)
+set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 
 set_target_properties(freetype PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
@@ -204,7 +210,7 @@ set_target_properties(imgui PROPERTIES
 
 ##---------------------------- lua ----------------------------##
 set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
-set(BUILD_SHARED_LIBS ON)
+set(BUILD_SHARED_LIBS OFF)
 set(LUA_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lua")
 add_subdirectory(${LUA_PROJECT_DIR} ${LUA_PROJECT_DIR}/build EXCLUDE_FROM_ALL)
 set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
