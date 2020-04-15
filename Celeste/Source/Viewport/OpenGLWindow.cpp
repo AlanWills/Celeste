@@ -95,7 +95,7 @@ namespace Celeste
     if (windowMode == WindowMode::kFullScreen)
     {
       // Just use preset viewport dimensions if in full screen
-      glfwSetWindowMonitor(m_window, glfwGetPrimaryMonitor(), 0, 0, targetWidth, targetHeight, refreshRate);
+      glfwSetWindowMonitor(m_window, monitor, 0, 0, targetWidth, targetHeight, refreshRate);
     }
     else
     {
@@ -147,7 +147,8 @@ namespace Celeste
       return;
     }
 
-    const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = monitor != nullptr ? glfwGetVideoMode(monitor) : nullptr;
 
     int refreshRate = mode ? mode->refreshRate : 60;
     int viewportDimensionsX = static_cast<int>(m_viewportDimensions.x);
@@ -158,7 +159,7 @@ namespace Celeste
 
     if (windowMode == WindowMode::kFullScreen)
     {
-      glfwSetWindowMonitor(m_window, glfwGetPrimaryMonitor(), 0, 0, viewportDimensionsX, viewportDimensionsY, refreshRate);
+      glfwSetWindowMonitor(m_window, monitor, 0, 0, viewportDimensionsX, viewportDimensionsY, refreshRate);
     }
     else
     {
