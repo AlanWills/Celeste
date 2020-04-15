@@ -19,6 +19,8 @@ namespace Celeste
     if (!GL::glfw_initialize())
     {
       ASSERT_FAIL();
+      LOG_CRITICAL_ERROR("GLFW failed to initialize.");
+      return;
     }
 
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
@@ -34,6 +36,8 @@ namespace Celeste
     if (!GL::glew_initialize())
     {
       ASSERT_FAIL();
+      LOG_CRITICAL_ERROR("GLEW failed to initialize.");
+      return;
     }
   }
 
