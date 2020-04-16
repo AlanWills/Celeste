@@ -21,7 +21,7 @@ namespace TestCeleste
     CelesteTestResources::TestResources::initialize();
     TempDirectory::setParentDirectory(TestResources::getResourcesDirectory().as_string());
 
-    game = std::make_unique<Game>(50, 50, OpenGLWindow::WindowMode::kWindowed, "Test Celeste");
+    game = std::make_unique<Game>(1920, 1080, OpenGLWindow::WindowMode::kWindowed, "Test Celeste");
     game->getResourceManager().setResourcesDirectory(TestResources::getResourcesDirectory());
 
     Celeste::Path celesteLuaScripts(Directory::getExecutingAppDirectory(), UPDIR_STRING, UPDIR_STRING, UPDIR_STRING,

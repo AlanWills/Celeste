@@ -180,6 +180,7 @@ namespace TestCeleste
     GameObject gameObject;
     GraphicsRaycaster raycaster(gameObject);
     observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
+    renderer->setDimensions(glm::vec2(0, 0));
 
     GameObject child;
     child.setParent(&gameObject);
@@ -198,6 +199,7 @@ namespace TestCeleste
     GameObject gameObject;
     GraphicsRaycaster raycaster(gameObject);
     observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
+    renderer->setDimensions(glm::vec2(0, 0));
 
     GameObject child;
     child.setParent(&gameObject);
