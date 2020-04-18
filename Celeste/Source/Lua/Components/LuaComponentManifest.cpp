@@ -44,13 +44,13 @@ namespace Celeste::Lua
   //------------------------------------------------------------------------------------------------
   void LuaComponentManifest::initializeComponent(LuaComponent& luaComponent) const
   {
-    sol::table instance = LuaState::instance().create_table();
-    instance[sol::metatable_key] = m_componentTable;
+    //sol::table instance = LuaState::instance().create_table();
+    //instance[sol::metatable_key] = m_componentTable;
 
     // Set up callbacks
     luaComponent.setOnSetActiveFunc(m_onSetActiveFunc);
     luaComponent.setHandleInputFunc(m_handleInputFunc);
     luaComponent.setUpdateFunc(m_updateFunc);
-    luaComponent.setInstance(instance);
+    //luaComponent.setInstance(instance);
   }
 }
