@@ -219,6 +219,8 @@ set_target_properties(liblua PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
+
+target_compile_definitions(liblua PRIVATE -DLUA_BUILD_AS_DLL)
 #---------------------------- end lua ----------------------------##
 
 
