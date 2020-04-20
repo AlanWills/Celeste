@@ -348,134 +348,134 @@ namespace TestCeleste
 #pragma endregion
 
 #pragma region Generate All Bindings Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObjectRegistry_GenerateAllBindings_GeneratesBindingsForClasses)
-    {
-      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
-      ScriptableObjectRegistry::generateAllBindings(directory);
-
-      std::vector<File> output;
-      directory.findFiles(output, ".", true);
-
-      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), output.size());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObjectRegistry_GenerateAllBindings_DoesntGenerateBindingsForClassesThatAlreadyHaveFiles)
-    {
-      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
-
-      for (const std::pair<std::string, std::pair<std::string, ScriptableObjectRegistry::BindingsFactoryFunction>>& object : ScriptableObjectRegistry::getBindingsMapConst())
-      {
-        File file(Path(directory.getDirectoryPath(), object.first + ".cs"));
-        file.append("Test");
-      }
-
-      ScriptableObjectRegistry::generateAllBindings(directory);
-
-      std::vector<File> output;
-      directory.findFiles(output, ".", true);
-
-      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), output.size());
-
-      for (const File& file : output)
-      {
-        FileAssert::FileContentsEqual(file.getFilePath().as_string(), "Test");
-      }
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObjectRegistry_GenerateAllBindings_InvokesCallbackForEachClass)
-    {
-      size_t counter = 0;
-      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
-      ScriptableObjectRegistry::generateAllBindings(directory, [&counter](const std::string&, const Path&) -> void
-      {
-        ++counter;
-      });
-
-      std::vector<File> output;
-      directory.findFiles(output, ".", true);
-
-      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), output.size());
-      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), counter);
-    }
-
-#pragma endregion
-
-#pragma region Generate Bindings For Assembly Tests
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_GeneratesBindingsForClassesInNamespace)
-    {
-      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
-      ScriptableObjectRegistry::generateBindingsForAssembly("Celeste", directory);
-
-      std::vector<File> output;
-      directory.findFiles(output, ".", true);
-
-      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), output.size());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_DoesntGenerateBindingsForClassesNotInNamespace)
-    {
-      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
-      ScriptableObjectRegistry::generateBindingsForAssembly("FakeAssembly", directory);
-
-      std::vector<File> output;
-      directory.findFiles(output, ".", true);
-
-      Assert::AreEqual(static_cast<size_t>(0), output.size());
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_DoesntGenerateBindingsForClassesThatAlreadyHaveFiles)
-    {
-      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
-
-      for (const auto& pair : ScriptableObjectRegistry::getBindingsMapConst())
-      {
-        File file(Path(directory.getDirectoryPath(), pair.first + ".cs"));
-        file.append("Test");
-      }
-      
-      ScriptableObjectRegistry::generateBindingsForAssembly("Celeste", directory);
-
-      std::vector<File> output;
-      directory.findFiles(output, ".", true);
-
-      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), output.size());
-
-      for (const File& file : output)
-      {
-        FileAssert::FileContentsEqual(file.getFilePath().as_string(), "Test");
-      }
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_InvokesCallbackForEachClassInNamespace)
-    {
-      size_t counter = 0;
-      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
-      ScriptableObjectRegistry::generateBindingsForAssembly("Celeste", directory, [&counter](const std::string&, const Path&) -> void
-      {
-        ++counter;
-      });
-
-      Assert::AreNotEqual(static_cast<size_t>(0), counter);
-      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), counter);
-
-      counter = 0;
-      directory.remove();
-      ScriptableObjectRegistry::generateBindingsForAssembly("FakeAssembly", directory, [&counter](const std::string&, const Path&) -> void
-      {
-        ++counter;
-      });
-
-      Assert::AreEqual(static_cast<size_t>(0), counter);
-    }
+//
+//    //------------------------------------------------------------------------------------------------
+//    TEST_METHOD(ScriptableObjectRegistry_GenerateAllBindings_GeneratesBindingsForClasses)
+//    {
+//      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
+//      ScriptableObjectRegistry::generateAllBindings(directory);
+//
+//      std::vector<File> output;
+//      directory.findFiles(output, ".", true);
+//
+//      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), output.size());
+//    }
+//
+//    //------------------------------------------------------------------------------------------------
+//    TEST_METHOD(ScriptableObjectRegistry_GenerateAllBindings_DoesntGenerateBindingsForClassesThatAlreadyHaveFiles)
+//    {
+//      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
+//
+//      for (const std::pair<std::string, std::pair<std::string, ScriptableObjectRegistry::BindingsFactoryFunction>>& object : ScriptableObjectRegistry::getBindingsMapConst())
+//      {
+//        File file(Path(directory.getDirectoryPath(), object.first + ".cs"));
+//        file.append("Test");
+//      }
+//
+//      ScriptableObjectRegistry::generateAllBindings(directory);
+//
+//      std::vector<File> output;
+//      directory.findFiles(output, ".", true);
+//
+//      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), output.size());
+//
+//      for (const File& file : output)
+//      {
+//        FileAssert::FileContentsEqual(file.getFilePath().as_string(), "Test");
+//      }
+//    }
+//
+//    //------------------------------------------------------------------------------------------------
+//    TEST_METHOD(ScriptableObjectRegistry_GenerateAllBindings_InvokesCallbackForEachClass)
+//    {
+//      size_t counter = 0;
+//      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
+//      ScriptableObjectRegistry::generateAllBindings(directory, [&counter](const std::string&, const Path&) -> void
+//      {
+//        ++counter;
+//      });
+//
+//      std::vector<File> output;
+//      directory.findFiles(output, ".", true);
+//
+//      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), output.size());
+//      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), counter);
+//    }
+//
+//#pragma endregion
+//
+//#pragma region Generate Bindings For Assembly Tests
+//
+//    //------------------------------------------------------------------------------------------------
+//    TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_GeneratesBindingsForClassesInNamespace)
+//    {
+//      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
+//      ScriptableObjectRegistry::generateBindingsForAssembly("Celeste", directory);
+//
+//      std::vector<File> output;
+//      directory.findFiles(output, ".", true);
+//
+//      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), output.size());
+//    }
+//
+//    //------------------------------------------------------------------------------------------------
+//    TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_DoesntGenerateBindingsForClassesNotInNamespace)
+//    {
+//      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
+//      ScriptableObjectRegistry::generateBindingsForAssembly("FakeAssembly", directory);
+//
+//      std::vector<File> output;
+//      directory.findFiles(output, ".", true);
+//
+//      Assert::AreEqual(static_cast<size_t>(0), output.size());
+//    }
+//
+//    //------------------------------------------------------------------------------------------------
+//    TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_DoesntGenerateBindingsForClassesThatAlreadyHaveFiles)
+//    {
+//      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
+//
+//      for (const auto& pair : ScriptableObjectRegistry::getBindingsMapConst())
+//      {
+//        File file(Path(directory.getDirectoryPath(), pair.first + ".cs"));
+//        file.append("Test");
+//      }
+//      
+//      ScriptableObjectRegistry::generateBindingsForAssembly("Celeste", directory);
+//
+//      std::vector<File> output;
+//      directory.findFiles(output, ".", true);
+//
+//      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), output.size());
+//
+//      for (const File& file : output)
+//      {
+//        FileAssert::FileContentsEqual(file.getFilePath().as_string(), "Test");
+//      }
+//    }
+//
+//    //------------------------------------------------------------------------------------------------
+//    TEST_METHOD(ScriptableObjectRegistry_GenerateBindingsForAssembly_InvokesCallbackForEachClassInNamespace)
+//    {
+//      size_t counter = 0;
+//      Directory directory(Path(TempDirectory::getFullPath(), "Bindings"));
+//      ScriptableObjectRegistry::generateBindingsForAssembly("Celeste", directory, [&counter](const std::string&, const Path&) -> void
+//      {
+//        ++counter;
+//      });
+//
+//      Assert::AreNotEqual(static_cast<size_t>(0), counter);
+//      Assert::AreEqual(ScriptableObjectRegistry::getBindingsMapConst().size(), counter);
+//
+//      counter = 0;
+//      directory.remove();
+//      ScriptableObjectRegistry::generateBindingsForAssembly("FakeAssembly", directory, [&counter](const std::string&, const Path&) -> void
+//      {
+//        ++counter;
+//      });
+//
+//      Assert::AreEqual(static_cast<size_t>(0), counter);
+//    }
 
 #pragma endregion
 

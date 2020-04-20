@@ -27,7 +27,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Animator_IsAllocatableFromComponentRegistry)
+  TEST_METHOD(Camera_IsAllocatableFromComponentRegistry)
   {
     GameObject gameObject;
 

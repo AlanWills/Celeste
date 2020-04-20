@@ -28,45 +28,51 @@ namespace Celeste
   }
 
 #if _DEBUG
-  //------------------------------------------------------------------------------------------------
-  ScriptableObjectRegistry::BindingsMap& ScriptableObjectRegistry::getBindingsMap()
-  {
-    static BindingsMap bindingsMap;
-    return bindingsMap;
-  }
+  ////------------------------------------------------------------------------------------------------
+  //ScriptableObjectRegistry::BindingsMap& ScriptableObjectRegistry::getBindingsMap()
+  //{
+  //  static BindingsMap bindingsMap;
+  //  return bindingsMap;
+  //}
+
+  ////------------------------------------------------------------------------------------------------
+  //const ScriptableObjectRegistry::BindingsMap& ScriptableObjectRegistry::getBindingsMapConst()
+  //{
+  //  return getBindingsMap();
+  //}
 
   //------------------------------------------------------------------------------------------------
   void ScriptableObjectRegistry::generateAllBindings(
-    const Directory& destinationDirectory,
-    const BindingCallback& onBindingGenerated)
+    const Directory& /*destinationDirectory*/,
+    const BindingCallback& /*onBindingGenerated*/)
   {
-    for (const BindingsMapPair& pair : getBindingsMap())
+    /*for (const BindingsMapPair& pair : getBindingsMap())
     {
       Path path(destinationDirectory.getDirectoryPath(), pair.first + ".cs");
       pair.second.second(destinationDirectory);
 
       onBindingGenerated(pair.first, path);
-    }
+    }*/
   }
 
   //------------------------------------------------------------------------------------------------
   void ScriptableObjectRegistry::generateBindingsForAssembly(
-    const std::string& assemblyName,
-    const Directory& destinationDirectory,
-    const BindingCallback& onBindingGenerated)
+    const std::string& /*assemblyName*/,
+    const Directory& /*destinationDirectory*/,
+    const BindingCallback& /*onBindingGenerated*/)
   {
-    for (const BindingsMapPair& pair : getBindingsMap())
-    {
-      // Check for equality or the namespace name starts with the inputted namespace (i.e. it is nested)
-      if (pair.second.first.size() >= assemblyName.size() &&
-          pair.second.first.compare(0, assemblyName.size(), assemblyName, 0, assemblyName.size()) == 0)
-      {
-        Path path(destinationDirectory.getDirectoryPath(), pair.first + ".cs");
-        pair.second.second(destinationDirectory);
+    //for (const BindingsMapPair& pair : getBindingsMap())
+    //{
+    //  // Check for equality or the namespace name starts with the inputted namespace (i.e. it is nested)
+    //  if (pair.second.first.size() >= assemblyName.size() &&
+    //      pair.second.first.compare(0, assemblyName.size(), assemblyName, 0, assemblyName.size()) == 0)
+    //  {
+    //    Path path(destinationDirectory.getDirectoryPath(), pair.first + ".cs");
+    //    pair.second.second(destinationDirectory);
 
-        onBindingGenerated(pair.first, path);
-      }
-    }
+    //    onBindingGenerated(pair.first, path);
+    //  }
+    //}
   }
 #endif
 }

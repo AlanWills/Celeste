@@ -42,10 +42,10 @@ namespace Celeste
         generateBindingsForAssembly(assemblyName, destinationDirectory, [](const std::string&, const Path&) -> void {});
       }
 
-      static const BindingsMap& getBindingsMapConst() { return getBindingsMap(); }
+      //static const BindingsMap& getBindingsMapConst();
 
     private:
-      static BindingsMap& getBindingsMap();
+      //static BindingsMap& getBindingsMap();
 #endif
 
     private:
@@ -93,7 +93,7 @@ namespace Celeste
 
         getInstantiationMap().erase(objectName);
   #if _DEBUG
-        getBindingsMap().erase(objectName);
+        //getBindingsMap().erase(objectName);
   #endif
       }
 
@@ -125,10 +125,10 @@ namespace Celeste
     if (!hasScriptableObject(typeInfo.getName()))
     {
   #if _DEBUG
-      getBindingsMap().emplace(typeInfo.getName(), std::pair<std::string, BindingsFactoryFunction>(typeInfo.getAssembly(), [](const Directory& parentDirectory) -> void
+      /*getBindingsMap().emplace(typeInfo.getName(), std::pair<std::string, BindingsFactoryFunction>(typeInfo.getAssembly(), [](const Directory& parentDirectory) -> void
       {
         Bindings::BindingsGenerator::generateScriptableObjectBindings<T>(parentDirectory);
-      }));
+      }));*/
   #endif
 
       getInstantiationMap().emplace(typeInfo.getName(), std::make_pair(
