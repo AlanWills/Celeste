@@ -47,7 +47,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(OpenGLWindow_Windowed_PassingScreenResolutionToConstructor_AccountsForWindowFrameSize)
   {
-    if (GL::isInitialized())
+    if (GL::isInitialized() && glfwGetPrimaryMonitor() != nullptr)
     {
       // This should just create a window using the inputted resolution
       // Check this doesn't cause any errors
@@ -83,9 +83,12 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(OpenGWindow_Constructor_Windowed)
   {
-    OpenGLWindow window(OpenGLWindow::WindowMode::kWindowed);
+    if (GL::isInitialized() && glfwGetPrimaryMonitor() != nullptr)
+    {
+      OpenGLWindow window(OpenGLWindow::WindowMode::kWindowed);
 
-    Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
+      Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
+    }
   }
 
 #pragma endregion
@@ -132,35 +135,41 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(OpenGLWindow_SetWindowMode_kWindowed_TokWindowed_DoesNothing)
   {
-    OpenGLWindow window(800, 600, OpenGLWindow::WindowMode::kWindowed);
+    if (GL::isInitialized() && glfwGetPrimaryMonitor() != nullptr)
+    {
+      OpenGLWindow window(800, 600, OpenGLWindow::WindowMode::kWindowed);
 
-    int left = 0, top = 0, right = 0, bottom = 0;
-    glfwGetWindowFrameSize(window.getGLWindow(), &left, &top, &right, &bottom);
+      int left = 0, top = 0, right = 0, bottom = 0;
+      glfwGetWindowFrameSize(window.getGLWindow(), &left, &top, &right, &bottom);
 
-    Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
-    Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());
+      Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
+      Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());
 
-    window.setWindowMode(OpenGLWindow::WindowMode::kWindowed);
+      window.setWindowMode(OpenGLWindow::WindowMode::kWindowed);
 
-    Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
-    Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());
+      Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
+      Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());
+    }
   }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(OpenGLWindow_SetWindowMode_kWindowed_TokWindowed_DoesNotCallViewportDimensionsChangedEvent)
   {
-    OpenGLWindow window(800, 600, OpenGLWindow::WindowMode::kWindowed);
+    if (GL::isInitialized() && glfwGetPrimaryMonitor() != nullptr)
+    {
+      OpenGLWindow window(800, 600, OpenGLWindow::WindowMode::kWindowed);
 
-    bool called = false;
-    auto f = [&called](const glm::vec2& /*newDimensions*/) -> void { called = true; };
-    window.getViewportDimensionsChangedEvent().subscribe(f);
+      bool called = false;
+      auto f = [&called](const glm::vec2& /*newDimensions*/) -> void { called = true; };
+      window.getViewportDimensionsChangedEvent().subscribe(f);
 
-    Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
+      Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
 
-    window.setWindowMode(OpenGLWindow::WindowMode::kWindowed);
+      window.setWindowMode(OpenGLWindow::WindowMode::kWindowed);
 
-    Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
-    Assert::IsFalse(called);
+      Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
+      Assert::IsFalse(called);
+    }
   }
 
   //------------------------------------------------------------------------------------------------
