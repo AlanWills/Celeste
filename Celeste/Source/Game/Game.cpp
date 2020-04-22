@@ -170,8 +170,7 @@ namespace Celeste
 #if _DEBUG
       if (!result.valid())
       {
-        sol::error e = result;
-        ASSERT_FAIL_MSG(e.what());
+        ASSERT_FAIL();
       }
 #elif
       UNUSED(result);
