@@ -29,7 +29,7 @@
 
 #define DECLARE_SCRIPTABLE_OBJECT(Type, DllExport) \
   public: \
-    static std::string type_name() { return #Type; } \
+    static constexpr const char* const type_name() { return #Type; } \
     \
     Type(const Type&) = delete; \
     Type& operator=(const Type&) = delete; \
@@ -38,6 +38,8 @@
     SCRIPTABLE_OBJECT_BINDINGS_GENERATION(Type) \
   protected: \
     DllExport Type(); \
+    \
+    const std::string getTypeName() const override { return type_name(); } \
     \
   private: \
     static bool m_registered; \

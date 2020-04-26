@@ -66,6 +66,11 @@ namespace Celeste
       template <typename T>
       T& createScriptableObject(const std::string& name);
 
+      template <typename T>
+      T& deserializeScriptableObject(const tinyxml2::XMLElement* element);
+
+      CelesteDllExport ScriptableObject& deserializeScriptableObject(const tinyxml2::XMLElement* element);
+
       size_t getFieldsSize() const { return m_fields.size(); }
       size_t getScriptableObjectsSize() const { return m_scriptableObjects.size(); }
 
@@ -78,6 +83,8 @@ namespace Celeste
       virtual void type_info_i(std::unique_ptr<Reflection::ITypeInfo>& output) const = 0;
   #endif
 
+      virtual const std::string getTypeName() const = 0;
+      
     private:
       using ElementInformation = std::string;
       using ElementLookup = std::unordered_map<ElementInformation, const tinyxml2::XMLElement*>;
@@ -153,6 +160,13 @@ namespace Celeste
   {
     m_scriptableObjects.emplace_back(ScriptableObject::create<T>(name));
     return static_cast<T&>(*(m_scriptableObjects.back()));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  template <typename T>
+  T& ScriptableObject::deserializeScriptableObject(const tinyxml2::XMLElement* element)
+  {
+    return static_cast<T&>(deserializeScriptableObject(element));
   }
 }
 

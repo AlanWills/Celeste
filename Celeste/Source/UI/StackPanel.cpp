@@ -80,77 +80,74 @@ namespace Celeste::UI
     }
 
     totalSize += (float)(numVisible - 1) * glm::vec2(m_padding);
+    float currentPosition = 0;
 
     if (m_orientation == Orientation::kHorizontal)
     {
-      // Stack all the children horizontally with the first added on the left
-      float currentLeft = 0;
-      if (m_horizontalAlignment == HorizontalAlignment::kCentre)
-      {
-        currentLeft -= totalSize.x * 0.5f;
-      }
-      else if (m_horizontalAlignment == HorizontalAlignment::kRight)
-      {
-        currentLeft -= totalSize.x;
-      }
-
       for (observer_ptr<GameObject> child : m_children)
       {
         if (observer_ptr<Renderer> renderer = child->findComponent<Renderer>(); renderer->isActive())
         {
           if (child != *firstVisible)
           {
-            currentLeft += m_padding * 0.5f;
+            currentPosition += m_padding * 0.5f;
           }
 
-          float halfDims = getVisibleDimensions(renderer).x * 0.5f;
-          currentLeft += halfDims;
+          float width = getVisibleDimensions(renderer).x;
+          float position = currentPosition + width * 0.5f;
+
+          if (m_horizontalAlignment == HorizontalAlignment::kCentre)
+          {
+            position -= totalSize.x * 0.5f;
+          }
+          else if (m_horizontalAlignment == HorizontalAlignment::kRight)
+          {
+            position *= -1;
+          }
 
           observer_ptr<Transform> transform = child->getTransform();
-          transform->setTranslation(glm::vec3(currentLeft, transform->getTranslation().y, transform->getTranslation().z));
+          transform->setTranslation(glm::vec3(position, transform->getTranslation().y, transform->getTranslation().z));
 
-          currentLeft += halfDims;
-
+          currentPosition += width;
+          
           if (child != *lastVisible)
           {
-            currentLeft += m_padding * 0.5f;
+            currentPosition += m_padding * 0.5f;
           }
         }
       }
     }
     else
     {
-      // Stack all the children vertically with the first added at the top
-      float currentBottom = 0;
-      if (m_verticalAlignment == VerticalAlignment::kCentre)
-      {
-        currentBottom -= totalSize.y * 0.5f;
-      }
-      else if (m_verticalAlignment == VerticalAlignment::kTop)
-      {
-        currentBottom -= totalSize.y;
-      }
-
       for (observer_ptr<GameObject> child : m_children)
       {
         if (observer_ptr<Renderer> renderer = child->findComponent<Renderer>(); renderer->isActive())
         {
           if (child != *firstVisible)
           {
-            currentBottom += m_padding * 0.5f;
+            currentPosition += m_padding * 0.5f;
           }
 
-          float halfDims = getVisibleDimensions(child->findComponent<Renderer>()).y * 0.5f;
-          currentBottom += halfDims;
+          float height = getVisibleDimensions(renderer).y;
+          float position = currentPosition + height * 0.5f;
+
+          if (m_verticalAlignment == VerticalAlignment::kCentre)
+          {
+            position -= totalSize.y * 0.5f;
+          }
+          else if (m_verticalAlignment == VerticalAlignment::kTop)
+          {
+            position *= -1;
+          }
 
           observer_ptr<Transform> transform = child->getTransform();
-          transform->setTranslation(glm::vec3(transform->getTranslation().x, currentBottom, transform->getTranslation().z));
+          transform->setTranslation(glm::vec3(transform->getTranslation().x, position, transform->getTranslation().z));
 
-          currentBottom += halfDims;
+          currentPosition += height;
 
           if (child != *lastVisible)
           {
-            currentBottom += m_padding * 0.5f;
+            currentPosition += m_padding * 0.5f;
           }
         }
       }

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 
 function(build_project)
-    set(oneValueArgs NAME FOLDER TYPE SOURCE_DIR RUNTIME_OUTPUT_DIRECTORY)
+    set(oneValueArgs NAME FOLDER TYPE SOURCE_DIR RESOURCES_DIR RUNTIME_OUTPUT_DIRECTORY)
     set(multiValueArgs INCLUDES LIBS)
     cmake_parse_arguments(BUILD_PROJECT "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN} )
@@ -10,15 +10,21 @@ function(build_project)
 
     file(GLOB_RECURSE SOURCE_FILES ${BUILD_PROJECT_SOURCE_DIR}/Source/*.c ${BUILD_PROJECT_SOURCE_DIR}/Source/*.cpp)
     file(GLOB_RECURSE HEADER_FILES ${BUILD_PROJECT_SOURCE_DIR}/Include/*.h ${BUILD_PROJECT_SOURCE_DIR}/Include/*.hpp)
-    file(GLOB_RECURSE RESOURCE_FILES ${BUILD_PROJECT_SOURCE_DIR}/Resources/*.*)
-
+    
     source_group(TREE ${BUILD_PROJECT_SOURCE_DIR} FILES ${SOURCE_FILES})						   
     source_group(TREE ${BUILD_PROJECT_SOURCE_DIR} FILES ${HEADER_FILES})
-    source_group(TREE ${BUILD_PROJECT_SOURCE_DIR} FILES ${RESOURCE_FILES})
+
+    if (BUILD_PROJECT_RESOURCES_DIR)
+        message(${BUILD_PROJECT_RESOURCES_DIR})
+        file(GLOB_RECURSE RESOURCE_FILES ${BUILD_PROJECT_RESOURCES_DIR}/*.*)
+
+        source_group(TREE ${BUILD_PROJECT_SOURCE_DIR} FILES ${RESOURCE_FILES})
+        set_source_files_properties(${RESOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+    elseif()
+        set(RESOURCE_FILES "")
+    endif()
 
     add_library(${PROJECT_NAME} ${BUILD_PROJECT_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${RESOURCE_FILES})
-
-    set_source_files_properties(${RESOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
 
     IF(NOT BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY)
         set(BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR})
@@ -45,7 +51,7 @@ function(build_project)
 endfunction()
 
 function(build_library)
-    set(oneValueArgs NAME FOLDER TYPE RUNTIME_OUTPUT_DIRECTORY)
+    set(oneValueArgs NAME FOLDER TYPE RESOURCES_DIR RUNTIME_OUTPUT_DIRECTORY)
     set(multiValueArgs INCLUDES LIBS TEST_LIBS)
     cmake_parse_arguments(BUILD_LIBRARY "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN})
@@ -55,6 +61,7 @@ function(build_library)
         FOLDER ${BUILD_LIBRARY_FOLDER}
         TYPE ${BUILD_LIBRARY_TYPE}
         SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
+        RESOURCES_DIR ${BUILD_LIBRARY_RESOURCES_DIR}
         INCLUDES "${BUILD_LIBRARY_INCLUDES}"
         LIBS "${BUILD_LIBRARY_LIBS}"
         RUNTIME_OUTPUT_DIRECTORY ${BUILD_LIBRARY_RUNTIME_OUTPUT_DIRECTORY})
@@ -75,6 +82,7 @@ function(build_library)
             FOLDER ${BUILD_LIBRARY_FOLDER}/Tests
             TYPE SHARED
             SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Tests
+            RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Tests/Resources
             LIBS "${BUILD_LIBRARY_TEST_LIBS}"
             RUNTIME_OUTPUT_DIRECTORY ${BUILD_LIBRARY_RUNTIME_OUTPUT_DIRECTORY})
 

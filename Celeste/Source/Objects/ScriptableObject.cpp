@@ -189,11 +189,14 @@ namespace Celeste
 
     XMLDocument& document = data->getDocument();
     document.Clear();
-    tinyxml2::XMLElement* objectElement = document.NewElement(getName().c_str());
+
+    tinyxml2::XMLElement* objectElement = document.NewElement(getTypeName().c_str());
     document.InsertFirstChild(objectElement);
     
     // Having created all the necessary elements, we now recursively serialize the object tree
     serialize(objectElement);
+    
+    document.InsertFirstChild(document.NewDeclaration());
 
     // Now, save the data again
 #if _DEBUG
@@ -211,11 +214,11 @@ namespace Celeste
     if (element != nullptr)
     {
       // Check name of element is set up correctly
-      ASSERT(getName() == element->Name());
+      ASSERT(getTypeName() == element->Name());
 
       // Now serialize the guid and internal name of the object
-      element->SetAttribute("guid", m_guid.str().c_str());
       element->SetAttribute("name", m_name.c_str());
+      element->SetAttribute("guid", m_guid.str().c_str());
 
       // Then serialize all fields onto the element too
       for (const auto& field : m_fields)
@@ -228,14 +231,36 @@ namespace Celeste
         // ERROR - COULD HAVE RECURSIVE LOOP
         // NEED TO COLLECT ALL THE OBJECTS BY PASSING A DICTIONARY OR SOMETHING TO GET A LIST OF ALL CHILDREN THAT NEED SERIALIZING
         // Copy the C# implementation
+
+        // NEED TO HANDLE PATH REFERENCE OR BAKED IN SOS HERE
+        // Perhaps when we deserialize we can keep track of whether it was a path or a baked in asset
+        // Then serialize correctly using this
+
+        // Add a guid reference to the child element
+        element->SetAttribute(scriptableObject->getName().c_str(), scriptableObject->getGuid().str().c_str());
         
         // Now create an actual element for the child object underneath the childrenElement
-        tinyxml2::XMLElement* childElement = element->GetDocument()->NewElement(scriptableObject->getName().c_str());
+        tinyxml2::XMLElement* childElement = element->GetDocument()->NewElement(scriptableObject->getTypeName().c_str());
         element->InsertEndChild(childElement);
         scriptableObject->serialize(childElement);
       }
     }
 
     doSerialize(element);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  ScriptableObject& ScriptableObject::deserializeScriptableObject(const tinyxml2::XMLElement* element)
+  {
+    ASSERT(ScriptableObjectRegistry::hasScriptableObject(element->Name()));
+    std::unique_ptr<ScriptableObject> scriptableObject = ScriptableObjectRegistry::createScriptableObject(element->Name(), "");
+
+    if (!scriptableObject->deserialize(element))
+    {
+      ASSERT_FAIL();
+    }
+
+    m_scriptableObjects.emplace_back(std::move(scriptableObject));
+    return *m_scriptableObjects.back();
   }
 }
