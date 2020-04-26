@@ -1,92 +1,185 @@
 cmake_minimum_required(VERSION 3.6)
 
-function(build_project)
-    set(oneValueArgs NAME FOLDER TYPE SOURCE_DIR RESOURCES_DIR RUNTIME_OUTPUT_DIRECTORY)
+function(cbt_build_executable)
+    set(oneValueArgs NAME FOLDER SOURCE_DIR RUNTIME_OUTPUT_DIRECTORY)
     set(multiValueArgs INCLUDES LIBS)
-    cmake_parse_arguments(BUILD_PROJECT "${options}" "${oneValueArgs}"
+    cmake_parse_arguments(BUILD_EXECUTABLE "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN} )
 
-    project(${BUILD_PROJECT_NAME})
+    project(${BUILD_EXECUTABLE_NAME})
 
-    file(GLOB_RECURSE SOURCE_FILES ${BUILD_PROJECT_SOURCE_DIR}/Source/*.c ${BUILD_PROJECT_SOURCE_DIR}/Source/*.cpp)
-    file(GLOB_RECURSE HEADER_FILES ${BUILD_PROJECT_SOURCE_DIR}/Include/*.h ${BUILD_PROJECT_SOURCE_DIR}/Include/*.hpp)
+    file(GLOB SOURCE_FILES ${BUILD_EXECUTABLE_SOURCE_DIR}/*.c ${BUILD_EXECUTABLE_SOURCE_DIR}/*.cpp)
+    file(GLOB HEADER_FILES ${BUILD_EXECUTABLE_SOURCE_DIR}/*.h ${BUILD_EXECUTABLE_SOURCE_DIR}/*.hpp)
+    file(GLOB_RECURSE RESOURCE_FILES ${BUILD_EXECUTABLE_SOURCE_DIR}/Resources/*.*)
     
-    source_group(TREE ${BUILD_PROJECT_SOURCE_DIR} FILES ${SOURCE_FILES})						   
-    source_group(TREE ${BUILD_PROJECT_SOURCE_DIR} FILES ${HEADER_FILES})
+    source_group(TREE ${BUILD_EXECUTABLE_SOURCE_DIR} PREFIX Source FILES ${SOURCE_FILES})						   
+    source_group(TREE ${BUILD_EXECUTABLE_SOURCE_DIR} PREFIX Include FILES ${HEADER_FILES})
+    source_group(TREE ${BUILD_EXECUTABLE_SOURCE_DIR} FILES ${RESOURCE_FILES})
 
-    if (BUILD_PROJECT_RESOURCES_DIR)
-        message(${BUILD_PROJECT_RESOURCES_DIR})
-        file(GLOB_RECURSE RESOURCE_FILES ${BUILD_PROJECT_RESOURCES_DIR}/*.*)
+    set_source_files_properties(${RESOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+    
+    add_executable(${PROJECT_NAME} ${BUILD_EXECUTABLE_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${RESOURCE_FILES})
 
-        source_group(TREE ${BUILD_PROJECT_SOURCE_DIR} FILES ${RESOURCE_FILES})
-        set_source_files_properties(${RESOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
-    elseif()
-        set(RESOURCE_FILES "")
-    endif()
-
-    add_library(${PROJECT_NAME} ${BUILD_PROJECT_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${RESOURCE_FILES})
-
-    IF(NOT BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY)
-        set(BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR})
+    IF(NOT BUILD_EXECUTABLE_RUNTIME_OUTPUT_DIRECTORY)
+        set(BUILD_EXECUTABLE_RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR})
     ENDIF()
 
     set_target_properties(${PROJECT_NAME} PROPERTIES 
-        FOLDER ${BUILD_PROJECT_FOLDER}
-        RUNTIME_OUTPUT_DIRECTORY ${BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY}
-        CXX_STANDARD 17)
+        FOLDER ${BUILD_EXECUTABLE_FOLDER}
+        RUNTIME_OUTPUT_DIRECTORY ${BUILD_EXECUTABLE_RUNTIME_OUTPUT_DIRECTORY}
+        CXX_STANDARD 17
+        VS_DEBUGGER_WORKING_DIRECTORY ${BUILD_EXECUTABLE_SOURCE_DIR})
 
-    IF(NOT BUILD_PROJECT_INCLUDES)
-        set(BUILD_PROJECT_INCLUDES ${BUILD_PROJECT_SOURCE_DIR}/Include)
+    IF(NOT BUILD_EXECUTABLE_INCLUDES)
+        set(BUILD_EXECUTABLE_INCLUDES ${BUILD_EXECUTABLE_SOURCE_DIR}/Include)
     ELSE()
-        list(APPEND BUILD_PROJECT_INCLUDES ${BUILD_PROJECT_SOURCE_DIR}/Include)
+        list(APPEND BUILD_EXECUTABLE_INCLUDES ${BUILD_EXECUTABLE_SOURCE_DIR}/Include)
     ENDIF()
 
-    target_include_directories(${PROJECT_NAME} PUBLIC "${BUILD_PROJECT_INCLUDES}")
+    target_include_directories(${PROJECT_NAME} PUBLIC "${BUILD_EXECUTABLE_INCLUDES}")
        
-    if (BUILD_PROJECT_LIBS)
-        target_link_libraries(${PROJECT_NAME} PUBLIC "${BUILD_PROJECT_LIBS}")
+    if (BUILD_EXECUTABLE_LIBS)
+        target_link_libraries(${PROJECT_NAME} PUBLIC "${BUILD_EXECUTABLE_LIBS}")
     endif()
 
     target_compile_options(${PROJECT_NAME} PRIVATE /MP4 /W4 /WX)
 endfunction()
 
-function(build_library)
-    set(oneValueArgs NAME FOLDER TYPE RESOURCES_DIR RUNTIME_OUTPUT_DIRECTORY)
-    set(multiValueArgs INCLUDES LIBS TEST_LIBS)
+function(cbt_build_library)
+    set(oneValueArgs NAME FOLDER TYPE SOURCE_DIR RESOURCES_DIR RUNTIME_OUTPUT_DIRECTORY)
+    set(multiValueArgs INCLUDES LIBS)
     cmake_parse_arguments(BUILD_LIBRARY "${options}" "${oneValueArgs}"
-                          "${multiValueArgs}" ${ARGN})
+                          "${multiValueArgs}" ${ARGN} )
 
-    build_project(
-        NAME ${BUILD_LIBRARY_NAME}
+    project(${BUILD_LIBRARY_NAME})
+
+    file(GLOB_RECURSE SOURCE_FILES ${BUILD_LIBRARY_SOURCE_DIR}/Source/*.c ${BUILD_LIBRARY_SOURCE_DIR}/Source/*.cpp)
+    file(GLOB_RECURSE HEADER_FILES ${BUILD_LIBRARY_SOURCE_DIR}/Include/*.h ${BUILD_LIBRARY_SOURCE_DIR}/Include/*.hpp)
+    
+    source_group(TREE ${BUILD_LIBRARY_SOURCE_DIR} FILES ${SOURCE_FILES})						   
+    source_group(TREE ${BUILD_LIBRARY_SOURCE_DIR} FILES ${HEADER_FILES})
+
+    if (EXISTS ${BUILD_LIBRARY_RESOURCES_DIR})
+        file(GLOB_RECURSE RESOURCE_FILES ${BUILD_LIBRARY_RESOURCES_DIR}/*.*)
+
+        source_group(TREE ${BUILD_LIBRARY_SOURCE_DIR} FILES ${RESOURCE_FILES})
+        set_source_files_properties(${RESOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+    else()
+        set(RESOURCE_FILES "")
+    endif()
+
+    add_library(${PROJECT_NAME} ${BUILD_LIBRARY_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${RESOURCE_FILES})
+
+    IF(NOT BUILD_LIBRARY_RUNTIME_OUTPUT_DIRECTORY)
+        set(BUILD_LIBRARY_RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR})
+    ENDIF()
+
+    set_target_properties(${PROJECT_NAME} PROPERTIES 
         FOLDER ${BUILD_LIBRARY_FOLDER}
-        TYPE ${BUILD_LIBRARY_TYPE}
-        SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
-        RESOURCES_DIR ${BUILD_LIBRARY_RESOURCES_DIR}
-        INCLUDES "${BUILD_LIBRARY_INCLUDES}"
-        LIBS "${BUILD_LIBRARY_LIBS}"
-        RUNTIME_OUTPUT_DIRECTORY ${BUILD_LIBRARY_RUNTIME_OUTPUT_DIRECTORY})
+        RUNTIME_OUTPUT_DIRECTORY ${BUILD_LIBRARY_RUNTIME_OUTPUT_DIRECTORY}
+        CXX_STANDARD 17)
 
-    if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/Tests)
-        if (NOT BUILD_LIBRARY_TEST_LIBS)
-            set(BUILD_LIBRARY_TEST_LIBS 
-                ${BUILD_LIBRARY_NAME}
-                TestUtils)
-        else()
-            list(APPEND BUILD_LIBRARY_TEST_LIBS 
-                ${BUILD_LIBRARY_NAME}
-                TestUtils)
+    IF(NOT BUILD_LIBRARY_INCLUDES)
+        set(BUILD_LIBRARY_INCLUDES ${BUILD_LIBRARY_SOURCE_DIR}/Include)
+    ELSE()
+        list(APPEND BUILD_LIBRARY_INCLUDES ${BUILD_LIBRARY_SOURCE_DIR}/Include)
+    ENDIF()
+
+    target_include_directories(${PROJECT_NAME} PUBLIC "${BUILD_LIBRARY_INCLUDES}")
+       
+    if (BUILD_LIBRARY_LIBS)
+        target_link_libraries(${PROJECT_NAME} PUBLIC "${BUILD_LIBRARY_LIBS}")
+    endif()
+
+    target_compile_options(${PROJECT_NAME} PRIVATE /MP4 /W4 /WX)
+
+    if ("${BUILD_LIBRARY_TYPE}" STREQUAL "SHARED")
+        string(TOUPPER "${PROJECT_NAME}" UPPER_CASE_PROJECT_NAME)
+        target_compile_definitions(${PROJECT_NAME} PRIVATE -DBUILDING_${UPPER_CASE_PROJECT_NAME}_DLL)
+    endif()
+endfunction()
+
+function(cbt_build_project)
+    set(oneValueArgs NAME FOLDER TYPE SOURCE_DIR RESOURCES_DIR RUNTIME_OUTPUT_DIRECTORY)
+    set(multiValueArgs INCLUDES LIBS TEST_LIBS)
+    cmake_parse_arguments(BUILD_PROJECT "${options}" "${oneValueArgs}"
+                          "${multiValueArgs}" ${ARGN})
+    
+    if (NOT BUILD_PROJECT_SOURCE_DIR)
+        set(BUILD_PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+    endif()
+
+    if ("${BUILD_PROJECT_TYPE}" STREQUAL "EXECUTABLE")
+        cbt_build_project(
+            NAME ${BUILD_PROJECT_NAME}Library
+            FOLDER ${BUILD_PROJECT_FOLDER}
+            TYPE SHARED
+            SOURCE_DIR ${BUILD_PROJECT_SOURCE_DIR}
+            LIBS ${BUILD_PROJECT_LIBS}
+            TEST_LIBS ${BUILD_PROJECT_TEST_LIBS}
+            RUNTIME_OUTPUT_DIRECTORY ${BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY})
+
+        set(EXECUTABLE_LIBS 
+            ${BUILD_PROJECT_NAME}Library
+            ${BUILD_PROJECT_NAME}LibraryLua)   # May have to check here that the library and lib projects exists
+
+        cbt_build_executable(
+            NAME ${BUILD_PROJECT_NAME}
+            FOLDER ${BUILD_PROJECT_FOLDER}
+            SOURCE_DIR ${BUILD_PROJECT_SOURCE_DIR}
+            INCLUDES "${BUILD_PROJECT_INCLUDES}"
+            LIBS "${EXECUTABLE_LIBS}"
+            RUNTIME_OUTPUT_DIRECTORY ${BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY})
+    else()
+        cbt_build_library(
+            NAME ${BUILD_PROJECT_NAME}
+            FOLDER ${BUILD_PROJECT_FOLDER}
+            TYPE ${BUILD_PROJECT_TYPE}
+            SOURCE_DIR ${BUILD_PROJECT_SOURCE_DIR}
+            RESOURCES_DIR ${BUILD_PROJECT_RESOURCES_DIR}
+            INCLUDES "${BUILD_PROJECT_INCLUDES}"
+            LIBS "${BUILD_PROJECT_LIBS}"
+            RUNTIME_OUTPUT_DIRECTORY ${BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY})
+
+        # Lua Before Tests so that we don't get modification of parameters like tests libs
+        if (EXISTS ${BUILD_PROJECT_SOURCE_DIR}/Lua)
+            set(BUILD_PROJECT_LUA_LIBS 
+                ${BUILD_PROJECT_NAME}
+                Lua)
+
+            cbt_build_project(
+                NAME ${BUILD_PROJECT_NAME}Lua
+                FOLDER ${BUILD_PROJECT_FOLDER}
+                TYPE STATIC
+                SOURCE_DIR ${BUILD_PROJECT_SOURCE_DIR}/Lua
+                RESOURCES_DIR ${BUILD_PROJECT_SOURCE_DIR}/Lua/Resources
+                LIBS "${BUILD_PROJECT_LUA_LIBS}"
+                TEST_LIBS "${BUILD_PROJECT_TEST_LIBS}"
+                RUNTIME_OUTPUT_DIRECTORY ${BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY})
         endif()
 
-        build_project(
-            NAME Test${BUILD_LIBRARY_NAME}
-            FOLDER ${BUILD_LIBRARY_FOLDER}/Tests
-            TYPE SHARED
-            SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Tests
-            RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Tests/Resources
-            LIBS "${BUILD_LIBRARY_TEST_LIBS}"
-            RUNTIME_OUTPUT_DIRECTORY ${BUILD_LIBRARY_RUNTIME_OUTPUT_DIRECTORY})
+        if (EXISTS ${BUILD_PROJECT_SOURCE_DIR}/Tests)
+            if (NOT BUILD_PROJECT_TEST_LIBS)
+                set(BUILD_PROJECT_TEST_LIBS 
+                    ${BUILD_PROJECT_NAME}
+                    TestUtils)
+            else()
+                list(APPEND BUILD_PROJECT_TEST_LIBS 
+                    ${BUILD_PROJECT_NAME}
+                    TestUtils)
+            endif()
 
-        set_target_properties(Test${BUILD_LIBRARY_NAME} PROPERTIES
-            VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Tests)
+            cbt_build_library(
+                NAME Test${BUILD_PROJECT_NAME}
+                FOLDER ${BUILD_PROJECT_FOLDER}/Tests
+                TYPE SHARED
+                SOURCE_DIR ${BUILD_PROJECT_SOURCE_DIR}/Tests
+                RESOURCES_DIR ${BUILD_PROJECT_SOURCE_DIR}/Tests/Resources
+                LIBS "${BUILD_PROJECT_TEST_LIBS}"
+                RUNTIME_OUTPUT_DIRECTORY ${BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY})
+
+            set_target_properties(Test${BUILD_PROJECT_NAME} PROPERTIES
+                VS_DEBUGGER_WORKING_DIRECTORY ${BUILD_PROJECT_SOURCE_DIR}/Tests)
+        endif()
     endif()
 endfunction()

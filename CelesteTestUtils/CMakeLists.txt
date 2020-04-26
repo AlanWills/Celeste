@@ -4,4 +4,4 @@ set(LIBS
     CelesteMocks
     CelesteTestResources)
 
-build_library(NAME CelesteTestUtils FOLDER Celeste/Tests TYPE STATIC LIBS "${LIBS}")
+cbt_build_project(NAME CelesteTestUtils FOLDER Celeste/Tests TYPE STATIC LIBS "${LIBS}")

@@ -57,22 +57,10 @@ add_subdirectory(${DOLCE_PROJECT_DIR} ${DOLCE_PROJECT_DIR}/Build ${EXCLUDE})
 #---------------------------- end Dolce ----------------------------##
 
 
-#------------------------------ DolceLua ------------------------------##
-set(DOLCE_LUA_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/DolceLua")
-add_subdirectory(${DOLCE_LUA_PROJECT_DIR} ${DOLCE_LUA_PROJECT_DIR}/Build ${EXCLUDE})
-#---------------------------- end DolceLua ----------------------------##
-
-
 #------------------------------ Celeste ------------------------------##
 set(CELESTE_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Celeste)
 add_subdirectory(${CELESTE_PROJECT_DIR} ${CELESTE_PROJECT_DIR}/Build ${EXCLUDE})
 #---------------------------- end Celeste ----------------------------##
-
-
-#------------------------------ CelesteLua ------------------------------##
-set(CELESTE_LUA_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/CelesteLua")
-add_subdirectory(${CELESTE_LUA_PROJECT_DIR} ${CELESTE_LUA_PROJECT_DIR}/Build ${EXCLUDE})
-#---------------------------- end CelesteLua ----------------------------##
 
 
 #------------------------------ Celeste Mocks Project ------------------------------##

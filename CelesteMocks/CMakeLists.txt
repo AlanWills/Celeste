@@ -1,4 +1,4 @@
 set(LIBS
     Celeste)
 
-build_library(NAME CelesteMocks FOLDER Celeste/Tests TYPE STATIC LIBS "${LIBS}")
+cbt_build_project(NAME CelesteMocks FOLDER Celeste/Tests TYPE STATIC LIBS "${LIBS}")

@@ -24,7 +24,8 @@ set(LIBS
     CelesteStl
     FileSystem
     Lua
-    Dolce)
+    Dolce
+    DolceLua)
     
 set(TEST_LIBS
     CelesteLua
@@ -32,7 +33,7 @@ set(TEST_LIBS
     CelesteTestResources
     CelesteTestUtils)
 
-build_library(
+cbt_build_project(
     NAME Celeste 
     FOLDER Celeste 
     TYPE SHARED 
@@ -40,4 +41,4 @@ build_library(
     LIBS "${LIBS}"
     TEST_LIBS "${TEST_LIBS}")
 
-target_compile_definitions(Celeste PUBLIC -DGLM_FORCE_SILENT_WARNINGS PRIVATE -DBUILDING_CELESTE_ENGINE_DLL)
+target_compile_definitions(Celeste PUBLIC -DGLM_FORCE_SILENT_WARNINGS)

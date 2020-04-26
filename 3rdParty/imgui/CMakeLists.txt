@@ -6,6 +6,4 @@ set(LIBS
     glfw
 	glew)
 
-build_library(NAME imgui FOLDER "3rd Party" TYPE SHARED INCLUDES "${INCLUDES}" LIBS "${LIBS}")
-
-target_compile_definitions(imgui PRIVATE -DBUILDING_IMGUI_DLL)
+cbt_build_project(NAME imgui FOLDER "3rd Party" TYPE SHARED INCLUDES "${INCLUDES}" LIBS "${LIBS}")
