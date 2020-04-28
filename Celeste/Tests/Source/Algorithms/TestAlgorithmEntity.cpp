@@ -1,6 +1,6 @@
 #include "UtilityHeaders/UnitTestHeaders.h"
 #include "Memory/Allocators/ResizeableAllocator.h"
-#include "Algorithms/EntityAlgorithms.h"
+#include "Algorithm/Entity.h"
 
 #include "Mocks/Objects/MockEntity.h"
 
@@ -9,12 +9,12 @@ using namespace Celeste;
 
 namespace TestCeleste
 {
-  CELESTE_TEST_CLASS(TestEntityAlgorithms)
+  CELESTE_TEST_CLASS(TestAlgorithmEntity)
 
 #pragma region Handle Input Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(EntityAlgorithms_HandleInput_InputtingResizeableAllocator_CallsHandleInputOnAllocatedObjects)
+  TEST_METHOD(AlgorithmEntity_HandleInput_InputtingResizeableAllocator_CallsHandleInputOnAllocatedObjects)
   {
     ResizeableAllocator<MockEntity> allocator(5);
     MockEntity* entity = new (allocator.allocate()) MockEntity();
@@ -23,7 +23,7 @@ namespace TestCeleste
     Assert::IsFalse(entity->isHandleInputCalled());
     Assert::IsFalse(entity2->isHandleInputCalled());
 
-    Algorithms::handleInput(allocator);
+    Algorithm::handleInput(allocator);
 
     Assert::IsTrue(entity->isHandleInputCalled());
     Assert::IsTrue(entity2->isHandleInputCalled());
@@ -34,7 +34,7 @@ namespace TestCeleste
 #pragma region Update Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(EntityAlgorithms_Update_InputtingResizeableAllocator_CallsUpdateOnAllocatedObjects)
+  TEST_METHOD(AlgorithmEntity_Update_InputtingResizeableAllocator_CallsUpdateOnAllocatedObjects)
   {
     ResizeableAllocator<MockEntity> allocator(5);
     MockEntity* entity = new (allocator.allocate()) MockEntity();
@@ -43,7 +43,7 @@ namespace TestCeleste
     Assert::IsFalse(entity->isHandleInputCalled());
     Assert::IsFalse(entity2->isHandleInputCalled());
 
-    Algorithms::handleInput(allocator);
+    Algorithm::handleInput(allocator);
 
     Assert::IsTrue(entity->isHandleInputCalled());
     Assert::IsTrue(entity2->isHandleInputCalled());

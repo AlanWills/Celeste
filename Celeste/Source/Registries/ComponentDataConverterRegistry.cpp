@@ -1,4 +1,5 @@
 #include "Registries/ComponentDataConverterRegistry.h"
+#include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
 #include "DataConverters/Objects/ComponentDataConverter.h"
 #include "Objects/Component.h"

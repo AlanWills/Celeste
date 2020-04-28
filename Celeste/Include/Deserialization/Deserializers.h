@@ -2,6 +2,7 @@
 
 #include "CelesteDllExport.h"
 #include "FileSystem/Path.h"
+#include "Utils/ToString.h"
 
 #include <string>
 #include <vector>

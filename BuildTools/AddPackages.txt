@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.6)
+
+function(cbt_add_packages)
+    set(options)
+    set(oneValueArgs)
+    set(multiValueArgs PACKAGES)
+    cmake_parse_arguments(ADD_PACKAGES "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
+    
+    foreach(package IN LISTS ADD_PACKAGES_PACKAGES)
+        set(PACKAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${package})
+        add_subdirectory(${PACKAGE_DIR} ${PACKAGE_DIR}/Build)
+    endforeach()
+endfunction()

@@ -18,12 +18,13 @@ set(LIBS
     libcurl
     tinyxml2
     SOIL2
+    StaticTypeInfo
     Platform
     Assert
     Log
     CelesteStl
     FileSystem
-    Lua
+    FileSystemLua
     Dolce
     DolceLua)
     

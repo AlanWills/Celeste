@@ -1,7 +1,7 @@
 #include "Audio/AudioManager.h"
 #include "Audio/AudioSource.h"
 #include "OpenAL/OpenALState.h"
-#include "Algorithms/EntityAlgorithms.h"
+#include "Algorithm/Entity.h"
 #include "glm/glm.hpp"
 
 
@@ -34,7 +34,7 @@ namespace Celeste::Audio
   {
     Inherited::handleInput();
 
-    Algorithms::handleInput(AudioSource::m_allocator);
+    Algorithm::handleInput(AudioSource::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ namespace Celeste::Audio
   {
     Inherited::update(elapsedGameTime);
 
-    Algorithms::update(elapsedGameTime, AudioSource::m_allocator);
+    Algorithm::update(elapsedGameTime, AudioSource::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------

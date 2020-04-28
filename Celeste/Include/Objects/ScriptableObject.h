@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <functional>
 #include <memory>
+#include <tuple>
 
 
 namespace Celeste
@@ -64,6 +65,9 @@ namespace Celeste
       ReferenceField<T>& createReferenceField(const std::string& fieldName, const T& defaultValue = T()) { return createDataFieldImpl<T, true>(fieldName, defaultValue); }
 
       template <typename T>
+      T& addScriptableObject(std::unique_ptr<T>&& scriptableObject);
+
+      template <typename T>
       T& createScriptableObject(const std::string& name);
 
       template <typename T>
@@ -88,6 +92,7 @@ namespace Celeste
     private:
       using ElementInformation = std::string;
       using ElementLookup = std::unordered_map<ElementInformation, const tinyxml2::XMLElement*>;
+      using EmbeddedScriptableObject = std::tuple<std::unique_ptr<ScriptableObject>, std::string>;
 
       CelesteDllExport bool deserialize(const tinyxml2::XMLElement* element);
       void serialize(tinyxml2::XMLElement* element) const;
@@ -96,7 +101,7 @@ namespace Celeste
       DataField<T, is_reference>& createDataFieldImpl(const std::string& fieldName, typename DataField<T, is_reference>::field_type defaultValue);
 
       std::vector<std::unique_ptr<Field>> m_fields;
-      std::vector<std::unique_ptr<ScriptableObject>> m_scriptableObjects;
+      std::vector<EmbeddedScriptableObject> m_scriptableObjects;
 
       std::string m_name;
       xg::Guid m_guid;
@@ -156,10 +161,17 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
+  T& ScriptableObject::addScriptableObject(std::unique_ptr<T>&& scriptableObject)
+  {
+    m_scriptableObjects.emplace_back(std::move(scriptableObject), "");
+    return static_cast<T&>(*std::get<0>(m_scriptableObjects.back()));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  template <typename T>
   T& ScriptableObject::createScriptableObject(const std::string& name)
   {
-    m_scriptableObjects.emplace_back(ScriptableObject::create<T>(name));
-    return static_cast<T&>(*(m_scriptableObjects.back()));
+    return addScriptableObject<T>(ScriptableObject::create<T>(name));
   }
 
   //------------------------------------------------------------------------------------------------

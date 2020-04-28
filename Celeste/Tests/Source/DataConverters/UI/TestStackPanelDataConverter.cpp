@@ -408,7 +408,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(StackPanelDataConverter_SetValues_InputtingStackPanel_DataLoadedCorrectly_ChangesButtonToMatchData)
+  TEST_METHOD(StackPanelDataConverter_SetValues_InputtingStackPanel_DataLoadedCorrectly_ChangesStackPanelToMatchData)
   {
     GameObject gameObject;
     observer_ptr<StackPanel> stackPanel = gameObject.addComponent<StackPanel>();

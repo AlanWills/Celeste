@@ -77,8 +77,10 @@ namespace Celeste
     // or it is a path to another scriptable object asset, in which it's value won't be in the elements lookup.
     // Instead we can set it's value by loading in the appropriate scriptable object asset.
 
-    for (const auto& scriptableObject : m_scriptableObjects)
+    for (EmbeddedScriptableObject& embeddedScriptableObject : m_scriptableObjects)
     {
+      std::unique_ptr<ScriptableObject>& scriptableObject = std::get<0>(embeddedScriptableObject);
+
       const char* scriptableObjectValue = element->Attribute(scriptableObject->getName().c_str());
       if (scriptableObjectValue != nullptr)
       {
@@ -121,7 +123,14 @@ namespace Celeste
             ASSERT_FAIL();
             return false;
           }
+
+          std::get<1>(embeddedScriptableObject) = scriptableObjectValue;
         }
+
+        // Store the scriptable object value
+        // So when serializing we know it's a scriptable object which requires a link to a field/separate file
+        // rather than an SO managed manually by a derived class or added at runtime
+        std::get<1>(embeddedScriptableObject) = scriptableObjectValue;
       }
     }
 
@@ -226,23 +235,35 @@ namespace Celeste
         field->serialize(element);
       }
 
-      for (const auto& scriptableObject : m_scriptableObjects)
+      for (const EmbeddedScriptableObject& embeddedScriptableObject : m_scriptableObjects)
       {
         // ERROR - COULD HAVE RECURSIVE LOOP
         // NEED TO COLLECT ALL THE OBJECTS BY PASSING A DICTIONARY OR SOMETHING TO GET A LIST OF ALL CHILDREN THAT NEED SERIALIZING
         // Copy the C# implementation
 
-        // NEED TO HANDLE PATH REFERENCE OR BAKED IN SOS HERE
-        // Perhaps when we deserialize we can keep track of whether it was a path or a baked in asset
-        // Then serialize correctly using this
+        const std::unique_ptr<ScriptableObject>& scriptableObject = std::get<0>(embeddedScriptableObject);
+        const std::string& embeddedLink = std::get<1>(embeddedScriptableObject);
 
-        // Add a guid reference to the child element
-        element->SetAttribute(scriptableObject->getName().c_str(), scriptableObject->getGuid().str().c_str());
-        
-        // Now create an actual element for the child object underneath the childrenElement
-        tinyxml2::XMLElement* childElement = element->GetDocument()->NewElement(scriptableObject->getTypeName().c_str());
-        element->InsertEndChild(childElement);
-        scriptableObject->serialize(childElement);
+        if (!embeddedLink.empty())
+        {          
+          // We have an SO that is referenced by an attribute so we need to link it here
+          // This is either a path to a separate file, or a guid to a child SO in this file
+          element->SetAttribute(scriptableObject->getName().c_str(), embeddedLink.c_str());
+        }
+
+        if (embeddedLink.empty() || xg::Guid(embeddedLink).isValid())
+        {
+          // Need to save the SO in this file
+          // Create an actual element for the child object underneath the childrenElement
+          tinyxml2::XMLElement* childElement = element->GetDocument()->NewElement(scriptableObject->getTypeName().c_str());
+          element->InsertEndChild(childElement);
+          scriptableObject->serialize(childElement);
+        }
+        else
+        {
+          // Need to save the SO in the file it came from
+          scriptableObject->save(embeddedLink);
+        }
       }
     }
 
@@ -260,7 +281,6 @@ namespace Celeste
       ASSERT_FAIL();
     }
 
-    m_scriptableObjects.emplace_back(std::move(scriptableObject));
-    return *m_scriptableObjects.back();
+    return addScriptableObject(std::move(scriptableObject));
   }
 }

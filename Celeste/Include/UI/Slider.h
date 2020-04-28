@@ -51,6 +51,6 @@ namespace Celeste::UI
     const Callbacks&... callbacks)
   {
     subscribeValueChangedCallback(callback);
-    subscribeValueChangedCallback(calback...);
+    subscribeValueChangedCallback(callbacks...);
   }
 }

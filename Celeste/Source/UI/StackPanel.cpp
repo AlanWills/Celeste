@@ -134,6 +134,7 @@ namespace Celeste::UI
           if (m_verticalAlignment == VerticalAlignment::kCentre)
           {
             position -= totalSize.y * 0.5f;
+            position *= -1; // Vertical centre adds elements at the top first
           }
           else if (m_verticalAlignment == VerticalAlignment::kTop)
           {

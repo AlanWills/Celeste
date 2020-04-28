@@ -25,7 +25,7 @@ namespace TestCelesteLua
     game->getResourceManager().setResourcesDirectory(TestResources::getResourcesDirectory());
 
     Celeste::Path celesteLuaScripts(Directory::getExecutingAppDirectory(), UPDIR_STRING, UPDIR_STRING, UPDIR_STRING, 
-      "Celeste", "CelesteLua", "Resources", "Scripts", "?.lua;");
+      "Celeste", "Celeste", "Lua", "Resources", "Scripts", "?.lua;");
     Lua::LuaState::appendToLuaPackagePath(celesteLuaScripts);
   }
 

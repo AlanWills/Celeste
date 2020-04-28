@@ -4,7 +4,7 @@
 #include "Input/MouseInteractionHandler.h"
 #include "Input/GraphicsRaycaster.h"
 #include "Input/PhysicsRaycaster.h"
-#include "Algorithms/EntityAlgorithms.h"
+#include "Algorithm/Entity.h"
 #include "Scene/SceneUtils.h"
 #include "Debug/DolceUtils.h"
 
@@ -44,8 +44,8 @@ namespace Celeste::Input
 
     raycast();
 
-    Algorithms::handleInput(KeyboardActivator::m_allocator);
-    Algorithms::handleInput(MouseInteractionHandler::m_allocator);
+    Algorithm::handleInput(KeyboardActivator::m_allocator);
+    Algorithm::handleInput(MouseInteractionHandler::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -53,8 +53,8 @@ namespace Celeste::Input
   {
     Inherited::update(elapsedGameTime);
 
-    Algorithms::update(elapsedGameTime, KeyboardActivator::m_allocator);
-    Algorithms::update(elapsedGameTime, MouseInteractionHandler::m_allocator);
+    Algorithm::update(elapsedGameTime, KeyboardActivator::m_allocator);
+    Algorithm::update(elapsedGameTime, MouseInteractionHandler::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------

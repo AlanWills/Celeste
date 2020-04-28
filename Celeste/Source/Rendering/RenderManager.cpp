@@ -1,6 +1,6 @@
 #include "Rendering/RenderManager.h"
 #include "Rendering/Canvas.h"
-#include "Algorithms/EntityAlgorithms.h"
+#include "Algorithm/Entity.h"
 #include "Maths/Transform.h"
 
 
@@ -22,7 +22,7 @@ namespace Celeste::Rendering
   {
     Inherited::handleInput();
 
-    Algorithms::handleInput(Canvas::m_allocator);
+    Algorithm::handleInput(Canvas::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ namespace Celeste::Rendering
   {
     Inherited::update(elapsedGameTime);
 
-    Algorithms::update(elapsedGameTime, Canvas::m_allocator);
+    Algorithm::update(elapsedGameTime, Canvas::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------

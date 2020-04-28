@@ -5,6 +5,7 @@
 #include "Maths/Transform.h"
 #include "Memory/Iterators/GameObjectIterator.h"
 #include "UtilityMacros/CustomMemoryMacros.h"
+#include "Templates/ComponentTypeTraits.h"
 
 #include <vector>
 #include <functional>
@@ -143,7 +144,7 @@ namespace Celeste
     }
 #endif
 
-    if (Celeste::is_managed_component<T>::value)
+    if constexpr (Celeste::is_managed_component<T>::value)
     {
       m_managedComponents.push_back(component);
     }
@@ -161,7 +162,7 @@ namespace Celeste
   {
     STATIC_ASSERT((std::is_base_of<Component, T>::value), "Inputted argument does not have component has an ancestor.");
 
-    if (Celeste::is_managed_component<T>::value)
+    if constexpr (Celeste::is_managed_component<T>::value)
     {
       for (Component* managedComponent : m_managedComponents)
       {
@@ -189,7 +190,7 @@ namespace Celeste
   template <typename T>
   bool GameObject::hasComponent() const
   {
-    if (Celeste::is_managed_component<T>::value)
+    if constexpr (Celeste::is_managed_component<T>::value)
     {
       for (Component* managedComponent : m_managedComponents)
       {

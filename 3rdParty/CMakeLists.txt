@@ -241,6 +241,15 @@ add_subdirectory(${SOL2_PROJECT_DIR} ${SOL2_PROJECT_DIR}/build)
 #---------------------------- end sol2 ----------------------------##
 
 
+##---------------------------- StaticTypeInfo ----------------------------##
+set(STATIC_TYPE_INFO_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/StaticTypeInfo")
+add_subdirectory(${STATIC_TYPE_INFO_PROJECT_DIR} ${STATIC_TYPE_INFO_PROJECT_DIR}/build)
+
+set_target_properties(StaticTypeInfoHeaders PROPERTIES
+    FOLDER ${THIRD_PARTY_FOLDER})
+#---------------------------- end sol2 ----------------------------##
+
+
 ##---------------------------- tinyxml2 ----------------------------##
 set(TINYXML2_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tinyxml2")
 add_subdirectory(${TINYXML2_PROJECT_DIR} ${TINYXML2_PROJECT_DIR}/build)

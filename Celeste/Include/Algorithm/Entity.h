@@ -4,7 +4,7 @@
 #include "Memory/Allocators/ResizeableAllocator.h"
 
 
-namespace Celeste::Algorithms
+namespace Celeste::Algorithm
 {
   template <typename T>
   inline void handleInput(ResizeableAllocator<T>& allocator)

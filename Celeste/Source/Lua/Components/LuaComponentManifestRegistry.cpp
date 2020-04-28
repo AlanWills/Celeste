@@ -1,9 +1,8 @@
 #include "Lua/LuaState.h"
 #include "Lua/Components/LuaComponentManifestRegistry.h"
 #include "Lua/Components/LuaComponent.h"
-#include "Registries/ComponentRegistry.h"
-
 #include "Objects/GameObject.h"
+#include "Registries/ComponentRegistry.h"
 
 
 namespace Celeste::Lua

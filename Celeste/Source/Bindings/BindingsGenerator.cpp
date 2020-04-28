@@ -83,8 +83,10 @@ namespace Celeste::Bindings
       classContent.push_back('\n');
     }
 
-    for (const auto& childSO : scriptableObject.m_scriptableObjects)
+    for (const std::tuple<std::unique_ptr<ScriptableObject>, std::string>& embeddedChildSO : scriptableObject.m_scriptableObjects)
     {
+      const std::unique_ptr<ScriptableObject>& childSO = std::get<0>(embeddedChildSO);
+
       classContent.push_back('\n');
       classContent.append("\t\t[Serialize, DisplayPriority(");
       classContent.append(std::to_string(++index));

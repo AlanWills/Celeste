@@ -1,4 +1,5 @@
 #include "ScriptCommands/XML/ElementScriptCommands.h"
+#include "XML/Elements/Element.h"
 #include "sol/sol.hpp"
 
 

@@ -1,3 +1,4 @@
+#include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
 #include "Bindings/BindingsGenerator.h"
 #include "FileSystem/Directory.h"

@@ -17,10 +17,9 @@ namespace celstl
   typename std::enable_if<EnableBitMaskOperators<Enum>::enable, Enum>::type
     operator |(Enum lhs, Enum rhs)
   {
-    using underlying = typename std::underlying_type<Enum>::type;
     return static_cast<Enum> (
-      static_cast<underlying>(lhs) |
-      static_cast<underlying>(rhs)
+      static_cast<typename std::underlying_type<Enum>::type>(lhs) |
+      static_cast<typename std::underlying_type<Enum>::type>(rhs)
       );
   }
 
@@ -30,8 +29,8 @@ namespace celstl
     operator &(Enum lhs, Enum rhs)
   {
     return static_cast<Enum> (
-      static_cast<std::underlying_type<Enum>::type>(lhs) &
-      static_cast<std::underlying_type<Enum>::type>(rhs)
+      static_cast<typename std::underlying_type<Enum>::type>(lhs) &
+      static_cast<typename std::underlying_type<Enum>::type>(rhs)
       );
   }
 
@@ -41,8 +40,8 @@ namespace celstl
     operator ^(Enum lhs, Enum rhs)
   {
     return static_cast<Enum> (
-      static_cast<std::underlying_type<Enum>::type>(lhs) ^
-      static_cast<std::underlying_type<Enum>::type>(rhs)
+      static_cast<typename std::underlying_type<Enum>::type>(lhs) ^
+      static_cast<typename std::underlying_type<Enum>::type>(rhs)
       );
   }
 
@@ -52,7 +51,7 @@ namespace celstl
     operator ~(Enum rhs)
   {
     return static_cast<Enum> (
-      ~static_cast<std::underlying_type<Enum>::type>(rhs)
+      ~static_cast<typename std::underlying_type<Enum>::type>(rhs)
       );
   }
 
@@ -62,8 +61,8 @@ namespace celstl
     operator |=(Enum& lhs, Enum rhs)
   {
     lhs = static_cast<Enum> (
-      static_cast<std::underlying_type<Enum>::type>(lhs) |
-      static_cast<std::underlying_type<Enum>::type>(rhs)
+      static_cast<typename std::underlying_type<Enum>::type>(lhs) |
+      static_cast<typename std::underlying_type<Enum>::type>(rhs)
       );
 
     return lhs;
@@ -75,8 +74,8 @@ namespace celstl
     operator &=(Enum& lhs, Enum rhs)
   {
     lhs = static_cast<Enum> (
-      static_cast<std::underlying_type<Enum>::type>(lhs) &
-      static_cast<std::underlying_type<Enum>::type>(rhs)
+      static_cast<typename std::underlying_type<Enum>::type>(lhs) &
+      static_cast<typename std::underlying_type<Enum>::type>(rhs)
       );
 
     return lhs;
@@ -88,15 +87,15 @@ namespace celstl
     operator ^=(Enum& lhs, Enum rhs)
   {
     lhs = static_cast<Enum> (
-      static_cast<std::underlying_type<Enum>::type>(lhs) ^
-      static_cast<std::underlying_type<Enum>::type>(rhs)
+      static_cast<typename std::underlying_type<Enum>::type>(lhs) ^
+      static_cast<typename std::underlying_type<Enum>::type>(rhs)
       );
 
     return lhs;
   }
 
   //------------------------------------------------------------------------------------------------
-  template<typename Enum, typename enable = std::enable_if<EnableBitMaskOperators<Enum>::enable, Enum>::type>
+  template<typename Enum, typename enable = typename std::enable_if<EnableBitMaskOperators<Enum>::enable, Enum>::type>
   bool hasFlag(Enum value, Enum flag)
   {
     return (value & flag) == flag;

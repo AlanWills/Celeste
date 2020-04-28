@@ -61,3 +61,6 @@
 [submodule "Lua"]
 	path = Lua
 	url = https://github.com/AlanWills/Lua.git
+[submodule "3rdParty/StaticTypeInfo"]
+	path = 3rdParty/StaticTypeInfo
+	url = https://github.com/TheLartians/StaticTypeInfo.git
