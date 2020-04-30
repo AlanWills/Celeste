@@ -243,10 +243,7 @@ add_subdirectory(${SOL2_PROJECT_DIR} ${SOL2_PROJECT_DIR}/build)
 
 ##---------------------------- StaticTypeInfo ----------------------------##
 set(STATIC_TYPE_INFO_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/StaticTypeInfo")
-add_subdirectory(${STATIC_TYPE_INFO_PROJECT_DIR} ${STATIC_TYPE_INFO_PROJECT_DIR}/build)
-
-set_target_properties(StaticTypeInfoHeaders PROPERTIES
-    FOLDER ${THIRD_PARTY_FOLDER})
+add_subdirectory(${STATIC_TYPE_INFO_PROJECT_DIR} ${STATIC_TYPE_INFO_PROJECT_DIR}/build EXCLUDE_FROM_ALL)
 #---------------------------- end sol2 ----------------------------##
 
 

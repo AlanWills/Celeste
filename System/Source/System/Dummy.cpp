@@ -1,0 +1,1 @@
+enum compiler_needs_cpp {};

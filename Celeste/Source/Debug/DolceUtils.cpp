@@ -2,6 +2,7 @@
 
 #include "Debug/DolceUtils.h"
 #include "Game/Game.h"
+#include "Dolce.h"
 
 
 namespace Celeste::Debug
@@ -9,7 +10,7 @@ namespace Celeste::Debug
   //------------------------------------------------------------------------------------------------
   Dolce::Dolce& getDolce()
   {
-    return Game::getDolce();
+    return *Game::current().getSystem<Dolce::Dolce>();
   }
 }
 

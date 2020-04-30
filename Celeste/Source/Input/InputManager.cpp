@@ -7,6 +7,7 @@
 #include "Algorithm/Entity.h"
 #include "Scene/SceneUtils.h"
 #include "Debug/DolceUtils.h"
+#include "Dolce.h"
 
 #include <unordered_set>
 

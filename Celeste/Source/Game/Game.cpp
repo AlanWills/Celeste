@@ -10,6 +10,7 @@
 #include "Log/Log.h"
 
 #if _DEBUG
+#include "Dolce.h"
 #include "Debug/Windows/HierarchyDolceWindow.h"
 #include "Debug/Windows/LuaScriptDolceWindow.h"
 #include "Debug/Windows/LogDolceWindow.h"
@@ -34,11 +35,7 @@ namespace Celeste
     m_physicsManager(),
     m_renderManager(),
     m_audioManager(),
-    m_clock(),
-    m_running(false)
-#if _DEBUG
-    , m_dolce(m_window.getGLWindow())
-#endif
+    m_clock()
   {
     ASSERT(!m_current);
     m_current = this;
@@ -57,11 +54,7 @@ namespace Celeste
     m_physicsManager(),
     m_renderManager(),
     m_audioManager(),
-    m_clock(),
-    m_running(false)
-#if _DEBUG
-    , m_dolce(m_window.getGLWindow())
-#endif
+    m_clock()
   {
     ASSERT(!m_current);
     m_current = this;
@@ -115,17 +108,40 @@ namespace Celeste
     return m_current->m_clock;
   }
 
-#if _DEBUG
   //------------------------------------------------------------------------------------------------
-  Dolce::Dolce& Game::getDolce()
+  void Game::addSystem(static_type_info::TypeIndex id, std::unique_ptr<System::ISystem>&& system)
   {
-    return m_current->m_dolce;
+    ASSERT(m_systems.find(id) == m_systems.end());
+    if (m_systems.find(id) == m_systems.end())
+    {
+      m_systems.emplace(id, std::move(system));
+    }
   }
-#endif
+
+  //------------------------------------------------------------------------------------------------
+  void Game::removeSystem(static_type_info::TypeIndex id)
+  {
+    ASSERT(m_systems.find(id) != m_systems.end());
+    if (m_systems.find(id) != m_systems.end())
+    {
+      m_systems.erase(id);
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
+  System::ISystem* Game::getSystem(static_type_info::TypeIndex id)
+  {
+    ASSERT(m_systems.find(id) != m_systems.end());
+    return m_systems.find(id) != m_systems.end() ? m_systems.at(id).get() : nullptr;
+  }
 
   //------------------------------------------------------------------------------------------------
   void Game::initialize()
   {
+#if _DEBUG
+    addSystem<Dolce::Dolce>(m_window.getGLWindow());
+#endif
+
     glfwSetWindowCloseCallback(m_window.getGLWindow(), &Game::windowCloseFunc);
 
     // Call onInitialize first to give derived game classes the chance to register script commands
@@ -182,7 +198,8 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void Game::initializeDolce()
   {
-    Dolce::Dolce& dolce = getDolce();
+    Dolce::Dolce* dolcePtr = getSystem<Dolce::Dolce>();
+    Dolce::Dolce& dolce = *dolcePtr;
 
     dolce.registerWindow(std::make_unique<Debug::HierarchyDolceWindow>(m_sceneManager));
     dolce.registerWindow(std::make_unique<Debug::LuaScriptDolceWindow>());
@@ -210,8 +227,8 @@ namespace Celeste
     {
       dolceSettings = std::move(ScriptableObject::create<Settings::DolceSettings>("DolceSettings"));
     }
-    
-    dolceSettings->applyFrom(getDolce());
+
+    dolceSettings->applyFrom(*getSystem<Dolce::Dolce>());
     dolceSettings->save(dolcePath);
   }
 #endif
@@ -315,6 +332,11 @@ namespace Celeste
       m_renderManager.handleInput();
     }
 
+    for (const auto& systemPair : m_systems)
+    {
+      systemPair.second->handleInput();
+    }
+
     if (m_inputManager.getKeyboard().isKeyTapped(GLFW_KEY_ESCAPE))
     {
       glfwSetWindowShouldClose(m_window.getGLWindow(), GL_TRUE);
@@ -349,6 +371,11 @@ namespace Celeste
       m_renderManager.update(elapsedGameTime);
     }
 
+    for (const auto& systemPair : m_systems)
+    {
+      systemPair.second->update(elapsedGameTime);
+    }
+
     onUpdate(elapsedGameTime);
   }
 
@@ -358,7 +385,7 @@ namespace Celeste
     m_renderManager.render(lag);
 
 #if _DEBUG
-    m_dolce.render();
+    getSystem<Dolce::Dolce>()->render();
 #endif
   }
 
