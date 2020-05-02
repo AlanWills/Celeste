@@ -1,5 +1,5 @@
 #include "ScriptCommands/Resources/Shaders/VertexShaderScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 
 #include "Resources/Shaders/VertexShader.h"
 

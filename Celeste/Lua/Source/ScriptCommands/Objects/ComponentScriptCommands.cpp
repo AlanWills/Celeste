@@ -1,5 +1,5 @@
 #include "ScriptCommands/Objects/ComponentScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "sol/sol.hpp"
 
 #include "Registries/ComponentRegistry.h"

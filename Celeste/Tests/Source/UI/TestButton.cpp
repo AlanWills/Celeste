@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/UI/MockButton.h"
 #include "Resources/ResourceManager.h"
@@ -7,9 +7,9 @@
 #include "Rendering/SpriteRenderer.h"
 #include "Audio/AudioSource.h"
 #include "DataConverters/UI/ButtonDataConverter.h"
-#include "Utils/InputUtils.h"
+#include "TestUtils/Utils/InputUtils.h"
 #include "Registries/ComponentRegistry.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Audio;
@@ -150,7 +150,7 @@ namespace TestCeleste
 
     Assert::IsTrue(handler->isMouseOver());
 
-    handler->handleInput();
+    handler->update(0);
     button->update(0);
 
     Assert::AreEqual(button->getHighlightedTexture()->getDimensions(), spriteRenderer->getDimensions());
@@ -172,7 +172,7 @@ namespace TestCeleste
 
     Assert::IsTrue(handler->isMouseOver());
 
-    handler->handleInput();
+    handler->update(0);
     button->update(0);
 
     Assert::IsTrue(button->getButtonState_Public() == Button::ButtonState::kHighlighted);
@@ -183,7 +183,7 @@ namespace TestCeleste
 
     Assert::IsFalse(handler->isMouseOver());
 
-    handler->handleInput();
+    handler->update(0);
     button->update(0);
 
     Assert::AreEqual(button->getDefaultTexture()->getDimensions(), spriteRenderer->getDimensions());
@@ -216,7 +216,7 @@ namespace TestCeleste
       
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::AreEqual(button->getClickedTexture()->getDimensions(), spriteRenderer->getDimensions());
     Assert::IsTrue(button->getButtonState_Public() == Button::ButtonState::kClicked);
@@ -257,7 +257,7 @@ namespace TestCeleste
 
     button->setButtonState_Public(Button::ButtonState::kIdle);
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -291,7 +291,7 @@ namespace TestCeleste
 
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(Button::ButtonState::kIdle == button->getButtonState_Public());
 
@@ -300,7 +300,7 @@ namespace TestCeleste
     Assert::IsTrue(Button::ButtonState::kHighlighted == button->getButtonState_Public());
 
     simulateMouseButtonReleased(MouseButton::kLeft);
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
     Assert::IsTrue(Button::ButtonState::kHighlighted == button->getButtonState_Public());
@@ -337,12 +337,12 @@ namespace TestCeleste
 
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(Button::ButtonState::kClicked == button->getButtonState_Public());
 
     simulateMouseButtonReleased(MouseButton::kLeft);
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(called);
     Assert::IsTrue(Button::ButtonState::kIdle == button->getButtonState_Public());
@@ -531,7 +531,7 @@ namespace TestCeleste
 #pragma region Utility Functions
 
   //------------------------------------------------------------------------------------------------
-  void TestButton::setUpButtonComponents(GameObject& gameObject)
+  void setUpButtonComponents(GameObject& gameObject)
   {
     gameObject.addComponent<SpriteRenderer>();
     gameObject.addComponent<MouseInteractionHandler>();
@@ -539,7 +539,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestButton::setUpButtonComponents(observer_ptr<GameObject> gameObject)
+  void setUpButtonComponents(observer_ptr<GameObject> gameObject)
   {
     setUpButtonComponents(*gameObject);
   }

@@ -1,9 +1,9 @@
 #include "Audio/AudioManager.h"
 #include "Audio/AudioSource.h"
 #include "OpenAL/OpenALState.h"
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "Objects/GameObject.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Audio;
@@ -14,7 +14,7 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestAudioManager)
 
     //------------------------------------------------------------------------------------------------
-    static void TestAudioManager::testClassInitialize()
+    static void testClassInitialize()
     {
       // Reset the alut state
       OpenALState::terminate();
@@ -22,7 +22,7 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    void TestAudioManager::testCleanup()
+    void testCleanup()
     {
       // Reset the alut state
       OpenALState::terminate();

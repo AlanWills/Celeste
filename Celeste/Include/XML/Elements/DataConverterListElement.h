@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Element.h"
+#include "XML/tinyxml2_ext.h"
 
 #include <vector>
 

@@ -1,12 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Rendering/MockTextRendererDataConverter.h"
 #include "TestResources/Rendering/TextRendererLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Rendering/TextRenderer.h"
-#include "AssertSpecialization/FileSystem.h"
-#include "AssertCel.h"
+#include "TestUtils/AssertSpecialization/FileSystem.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::UI;
@@ -18,7 +18,7 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestTextRendererDataConverter)
 
   //------------------------------------------------------------------------------------------------
-  void TestTextRendererDataConverter::testInitialize()
+  void testInitialize()
   {
     TextRendererLoadingResources::unloadAllResources();
   }

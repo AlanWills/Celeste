@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Input/InputScriptCommands.h"
 #include "ScriptCommands/Objects/ComponentScriptCommands.h"
@@ -15,7 +15,7 @@ namespace TestCelesteLua::Lua::ScriptCommands
   CELESTE_TEST_CLASS(TestInputScriptCommands)
 
   //------------------------------------------------------------------------------------------------
-  void TestInputScriptCommands::testInitialize()
+  void testInitialize()
   {
     Celeste::Lua::ComponentScriptCommands::initialize(LuaState::instance());
   }

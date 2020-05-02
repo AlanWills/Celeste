@@ -1,12 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Objects/GameObjectScriptCommands.h"
 #include "ScriptCommands/UI/ProgressBarScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
 #include "UI/ProgressBar.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using ProgressBar = Celeste::UI::ProgressBar;

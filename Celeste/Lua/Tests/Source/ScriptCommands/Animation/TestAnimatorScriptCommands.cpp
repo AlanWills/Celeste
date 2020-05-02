@@ -1,10 +1,10 @@
 #include "ScriptCommands/Objects/GameObjectScriptCommands.h"
 #include "ScriptCommands/Animation/AnimatorScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
-#include "UtilityHeaders/UnitTestHeaders.h"
-#include "AssertCel.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 #include "Mocks/Animation/MockAnimator.h"
 

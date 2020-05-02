@@ -2,8 +2,8 @@
 
 #include "Keyboard.h"
 #include "Mouse.h"
-#include "Objects/Entity.h"
 #include "Input/InputUtils.h"
+#include "System/ISystem.h"
 
 #include <memory.h>
 
@@ -12,7 +12,7 @@ struct GLFWwindow;
 
 namespace Celeste::Input
 {
-  class InputManager : public Entity
+  class InputManager : public System::ISystem
   {
     public:
       CelesteDllExport InputManager(GLFWwindow* window);
@@ -27,11 +27,10 @@ namespace Celeste::Input
       inline Mouse& getMouse() { return m_mouse; }
       inline const Mouse& getMouse() const { return m_mouse; }
 
-      CelesteDllExport void handleInput() override;
       CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
-      using Inherited = Entity;
+      using Inherited = System::ISystem;
 
       void updateMousePosition();
       void raycast() const;

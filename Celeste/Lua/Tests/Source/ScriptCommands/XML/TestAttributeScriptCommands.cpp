@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/XML/AttributeScriptCommands.h"
 #include "Lua/LuaState.h"

@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Rendering/MockSpriteRendererDataConverter.h"
 #include "TestResources/Rendering/SpriteRendererLoadingResources.h"
@@ -6,7 +6,7 @@
 #include "Rendering/SpriteRenderer.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Scene/SceneUtils.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::Rendering;
@@ -14,11 +14,10 @@ using namespace Celeste::Rendering;
 
 namespace TestCeleste
 {
-
   CELESTE_TEST_CLASS(TestSpriteRendererDataConverter)
 
   //------------------------------------------------------------------------------------------------
-  void TestSpriteRendererDataConverter::testInitialize()
+  void testInitialize()
   {
     SpriteRendererLoadingResources::unloadAllResources();
   }

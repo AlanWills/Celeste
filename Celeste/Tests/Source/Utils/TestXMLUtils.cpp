@@ -1,6 +1,6 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
-#include "Utils/XMLUtils.h"
+#include "TestUtils/Utils/XMLUtils.h"
 
 using namespace tinyxml2;
 

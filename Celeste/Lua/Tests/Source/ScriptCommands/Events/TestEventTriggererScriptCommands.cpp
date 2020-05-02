@@ -1,6 +1,6 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "ScriptCommands/Events/EventTriggererScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
 #include "Objects/GameObject.h"
@@ -273,7 +273,7 @@ namespace TestCelesteLua::Lua::ScriptCommands
 
 #pragma region Subscribe On Event Triggered Callback Tests
 
-  void TestEventTriggererScriptCommands::callback(const GameObject& /*gameObject*/) {}
+  void callback(const GameObject& /*gameObject*/) {}
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(EventTriggererScriptCommands_subscribeOnEventTriggered_SubscribesToEvent)

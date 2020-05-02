@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Maths/TransformScriptCommands.h"
 #include "Lua/LuaState.h"

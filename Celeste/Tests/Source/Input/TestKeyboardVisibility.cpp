@@ -1,12 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Input/KeyboardVisibility.h"
 #include "Input/InputManager.h"
 #include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
 #include "Mocks/Rendering/MockRenderer.h"
-#include "Utils/InputUtils.h"
-#include "AssertCel.h"
+#include "TestUtils/Utils/InputUtils.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Input;
@@ -17,14 +17,14 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestKeyboardVisibility)
 
   //------------------------------------------------------------------------------------------------
-  void TestKeyboardVisibility::testInitialize()
+  void testInitialize()
   {
     // Flush the keyboard to avoid carrying over any changes we make in tests
     getKeyboard().flush();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestKeyboardVisibility::testCleanup()
+  void testCleanup()
   {
     // Flush the keyboard to avoid carrying over any changes we make in tests
     getKeyboard().flush();
@@ -86,7 +86,7 @@ namespace TestCeleste
 #pragma region Handle Input Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_HandleInput_TargetHasNoRenderer_DoesNothing)
+    TEST_METHOD(KeyboardVisibility_Update_TargetHasNoRenderer_DoesNothing)
     {
       GameObject gameObject;
       KeyboardVisibility keyboardVisibility(gameObject);
@@ -96,11 +96,11 @@ namespace TestCeleste
       keyboardVisibility.setInputMode(InputMode::kToggle);
       keyboardVisibility.setVisibilityKey(GLFW_KEY_A);
       keyboardVisibility.setInvisibilityKey(GLFW_KEY_D);
-      keyboardVisibility.handleInput();  // Check this doesn't throw
+      keyboardVisibility.update(0);  // Check this doesn't throw
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_HandleInput_WithNeitherVisibilityOrInvisibilityKeySet_DoesNothing)
+    TEST_METHOD(KeyboardVisibility_Update_WithNeitherVisibilityOrInvisibilityKeySet_DoesNothing)
     {
       GameObject gameObject;
       observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
@@ -112,13 +112,13 @@ namespace TestCeleste
       AssertCel::IsNotActive(*renderer);
 
       keyboardVisibility->setInputMode(InputMode::kToggle);
-      keyboardVisibility->handleInput();
+      keyboardVisibility->update(0);
 
       AssertCel::IsNotActive(*renderer);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_HandleInput_ToggleMode_VisibilityKeyNotSet_DoesNotMakeTargetVisible)
+    TEST_METHOD(KeyboardVisibility_Update_ToggleMode_VisibilityKeyNotSet_DoesNotMakeTargetVisible)
     {
       GameObject gameObject;
       observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
@@ -132,13 +132,13 @@ namespace TestCeleste
       Assert::AreEqual(GLFW_KEY_D, keyboardVisibility->getInvisibilityKey());
       Assert::IsTrue(keyboardVisibility->getInputMode() == InputMode::kToggle);
 
-      keyboardVisibility->handleInput();
+      keyboardVisibility->update(0);
 
       AssertCel::IsNotActive(*renderer);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_HandleInput_ToggleMode_VisibilityKeySet_MakesTargetVisible)
+    TEST_METHOD(KeyboardVisibility_Update_ToggleMode_VisibilityKeySet_MakesTargetVisible)
     {
       GameObject gameObject;
       observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
@@ -154,13 +154,13 @@ namespace TestCeleste
       Assert::IsTrue(keyboardVisibility->getInputMode() == InputMode::kToggle);
 
       simulateKeyTapped(GLFW_KEY_A);
-      keyboardVisibility->handleInput();
+      keyboardVisibility->update(0);
 
       AssertCel::IsActive(*renderer);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_HandleInput_ToggleMode_InvisibilityKeyNotSet_DoesNotMakeTargetInvisible)
+    TEST_METHOD(KeyboardVisibility_Update_ToggleMode_InvisibilityKeyNotSet_DoesNotMakeTargetInvisible)
     {
       GameObject gameObject;
       observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
@@ -173,13 +173,13 @@ namespace TestCeleste
       Assert::AreEqual(GLFW_KEY_D, keyboardVisibility->getVisibilityKey());
       Assert::IsTrue(keyboardVisibility->getInputMode() == InputMode::kToggle);
 
-      keyboardVisibility->handleInput();
+      keyboardVisibility->update(0);
 
       AssertCel::IsActive(*renderer);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_HandleInput_ToggleMode_InvisibilityKeySet_MakesTargetInvisible)
+    TEST_METHOD(KeyboardVisibility_Update_ToggleMode_InvisibilityKeySet_MakesTargetInvisible)
     {
       GameObject gameObject;
       observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
@@ -194,13 +194,13 @@ namespace TestCeleste
       Assert::IsTrue(keyboardVisibility->getInputMode() == InputMode::kToggle);
 
       simulateKeyTapped(GLFW_KEY_A);
-      keyboardVisibility->handleInput();
+      keyboardVisibility->update(0);
 
       AssertCel::IsNotActive(*renderer);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_HandleInput_ToggleMode_VisibilityAndInvisibilityKeysSet_InvertsTargetShouldRenderFlagWhenKeysPressed)
+    TEST_METHOD(KeyboardVisibility_Update_ToggleMode_VisibilityAndInvisibilityKeysSet_InvertsTargetShouldRenderFlagWhenKeysPressed)
     {
       GameObject gameObject;
       observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
@@ -219,7 +219,7 @@ namespace TestCeleste
 
         Assert::IsTrue(getKeyboard().isKeyTapped(keyboardVisibility->getVisibilityKey()));
 
-        keyboardVisibility->handleInput();
+        keyboardVisibility->update(0);
 
         AssertCel::IsActive(*renderer);
       }
@@ -233,14 +233,14 @@ namespace TestCeleste
 
         Assert::IsTrue(getKeyboard().isKeyTapped(keyboardVisibility->getInvisibilityKey()));
 
-        keyboardVisibility->handleInput();
+        keyboardVisibility->update(0);
 
         AssertCel::IsNotActive(*renderer);
       }
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_HandleInput_ContinuousMode_VisibilityKeyNotSet_DoesNotChangeTargetShouldRenderFlag)
+    TEST_METHOD(KeyboardVisibility_Update_ContinuousMode_VisibilityKeyNotSet_DoesNotChangeTargetShouldRenderFlag)
     {
       GameObject gameObject;
       observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
@@ -254,13 +254,13 @@ namespace TestCeleste
       Assert::AreEqual(GLFW_KEY_A, keyboardVisibility->getInvisibilityKey());
       Assert::IsTrue(0 > keyboardVisibility->getVisibilityKey());
 
-      keyboardVisibility->handleInput();
+      keyboardVisibility->update(0);
 
       AssertCel::IsNotActive(*renderer);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(KeyboardVisibility_HandleInput_ContinuousMode_VisibilityKeySet_TargetShouldRenderFlag_EqualsWhetherKeyPressed)
+    TEST_METHOD(KeyboardVisibility_Update_ContinuousMode_VisibilityKeySet_TargetShouldRenderFlag_EqualsWhetherKeyPressed)
     {
       GameObject gameObject;
       observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
@@ -278,7 +278,7 @@ namespace TestCeleste
 
         Assert::IsTrue(getKeyboard().isKeyPressed(keyboardVisibility->getVisibilityKey()));
 
-        keyboardVisibility->handleInput();
+        keyboardVisibility->update(0);
 
         AssertCel::IsActive(*renderer);
       }
@@ -292,7 +292,7 @@ namespace TestCeleste
 
         Assert::IsFalse(getKeyboard().isKeyPressed(keyboardVisibility->getVisibilityKey()));
 
-        keyboardVisibility->handleInput();
+        keyboardVisibility->update(0);
 
         AssertCel::IsNotActive(*renderer);
       }

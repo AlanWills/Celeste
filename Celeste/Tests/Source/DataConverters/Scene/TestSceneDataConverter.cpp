@@ -1,13 +1,13 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "DataConverters/Scene/SceneDataConverter.h"
 #include "TestResources/Scene/SceneLoadingResources.h"
 #include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Objects/GameObject.h"
-#include "Utils/GameObjectXMLUtils.h"
+#include "TestUtils/Utils/GameObjectXMLUtils.h"
 #include "Scene/SceneManager.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 #include <numeric>
 
@@ -34,7 +34,7 @@ namespace TestCeleste
   };
 
   //------------------------------------------------------------------------------------------------
-  void TestScreenDataConverter::testCleanup()
+  void testCleanup()
   {
     SceneLoadingResources::unloadAllResources();
   }

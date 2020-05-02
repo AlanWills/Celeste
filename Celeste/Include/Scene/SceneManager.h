@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Objects/Entity.h"
-#include "Memory/ObserverPtr.h"
+#include "CelesteStl/Memory/ObserverPtr.h"
 #include "UID/StringId.h"
 #include "Memory/Iterators/ResizeableAllocatorIterator.h"
+#include "System/ISystem.h"
 
 #include <functional>
 
@@ -12,7 +12,7 @@ namespace Celeste
 {
   class GameObject;
 
-  class SceneManager : public Entity
+  class SceneManager : public System::ISystem
   {
     public:
       using FindGameObjectPredicate = std::function<bool(const GameObject&)>;
@@ -24,7 +24,6 @@ namespace Celeste
       SceneManager(const SceneManager&) = delete;
       SceneManager& operator=(const SceneManager&) = delete;
 
-      CelesteDllExport void handleInput() override;
       CelesteDllExport void update(float elapsedGameTime) override;
 
       CelesteDllExport observer_ptr<GameObject> find(const FindGameObjectPredicate& predicate);
@@ -37,9 +36,8 @@ namespace Celeste
       CelesteDllExport std::vector<std::reference_wrapper<GameObject>> getRootGameObjects();
 
     private:
-      using Inherited = Entity;
+      using Inherited = System::ISystem;
 
-      void handleInputGameObjectHierarchy(GameObject& gameObject);
       void updateGameObjectHierarchy(GameObject& gameObject, float elapsedGameTime);
   };
 }

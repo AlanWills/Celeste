@@ -1,5 +1,5 @@
-#include "TestUtils.h"
-#include "Algorithm/String.h"
+#include "TestUtils/TestUtils.h"
+#include "CelesteStl/Algorithm/String.h"
 
 
 namespace Testcelstl

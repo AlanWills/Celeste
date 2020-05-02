@@ -1,15 +1,15 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "UI/Slider.h"
 #include "Rendering/SpriteRenderer.h"
 #include "TestResources/TestResources.h"
 #include "Input/InputManager.h"
 #include "Input/MouseInteractionHandler.h"
-#include "Utils/InputUtils.h"
-#include "Registries/ComponentRegistry.h"
+#include "TestUtils/Utils/InputUtils.h"
 #include "Objects/GameObject.h"
-#include "AssertCel.h"
-#include "AssertExt.h"
+#include "Registries/ComponentRegistry.h"
+#include "TestUtils/Assert/AssertCel.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 
 namespace TestCeleste
@@ -21,13 +21,13 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestSlider)
 
   //------------------------------------------------------------------------------------------------
-  void TestSlider::testInitialize()
+  void testInitialize()
   {
     getMouse().flush();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestSlider::testCleanup()
+  void testCleanup()
   {
     getMouse().flush();
   }
@@ -102,7 +102,7 @@ namespace TestCeleste
     Assert::IsFalse(handler->isMouseOver());
 
     getMouse().getTransform().translate(10, 0);
-    slider->handleInput();
+    slider->update(0);
 
     Assert::AreEqual(0.0f, slider->getCurrentValue());
   }
@@ -125,7 +125,7 @@ namespace TestCeleste
     Assert::IsFalse(handler->isMouseOver());
 
     getMouse().getTransform().translate(10, 0);
-    slider->handleInput();
+    slider->update(0);
 
     Assert::AreEqual(0.0f, slider->getCurrentValue());
   }
@@ -152,13 +152,13 @@ namespace TestCeleste
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
     Assert::IsTrue(handler->isMouseOver());
 
-    slider->handleInput();
+    slider->update(0);
 
     Assert::AreEqual(0.0f, slider->getCurrentValue());
 
     getMouse().getTransform().setTranslation(renderer->getDimensions().x * 0.25f, 0);
 
-    slider->handleInput();
+    slider->update(0);
 
     Assert::AreEqual((100 / 370.0f) + 0.5f, slider->getCurrentValue());
   }
@@ -185,12 +185,12 @@ namespace TestCeleste
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
     Assert::IsTrue(handler->isMouseOver());
 
-    slider->handleInput();
+    slider->update(0);
 
     Assert::AreEqual(0.0f, slider->getCurrentValue());
 
     getMouse().getTransform().setTranslation(renderer->getDimensions().x * 0.25f, 0);
-    slider->handleInput();
+    slider->update(0);
 
     AssertExt::AreAlmostEqual(100.0f, renderer->getScissorRectangle().getCentre().x, 0.0001f);
   }
@@ -215,7 +215,7 @@ namespace TestCeleste
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
     Assert::IsTrue(handler->isMouseOver());
 
-    slider->handleInput();
+    slider->update(0);
 
     bool called = false;
     float value = 0;
@@ -227,7 +227,7 @@ namespace TestCeleste
 
     // Now that slider is clicked we move it
     getMouse().getTransform().translate(renderer->getDimensions().x * 0.25f, 0);
-    slider->handleInput();
+    slider->update(0);
 
     Assert::IsTrue(called);
     Assert::AreEqual(slider->getCurrentValue(), value);

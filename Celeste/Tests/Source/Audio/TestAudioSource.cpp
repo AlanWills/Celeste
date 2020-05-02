@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "Mocks/Audio/MockAudioSource.h"
 #include "Resources/ResourceManager.h"
 #include "TestResources/TestResources.h"
@@ -6,8 +6,8 @@
 #include "Audio/AudioManager.h"
 #include "OpenAL/OpenALState.h"
 #include "Registries/ComponentRegistry.h"
-#include "AssertCel.h"
-#include "AssertExt.h"
+#include "TestUtils/Assert/AssertCel.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;
 using namespace Celeste::Resources;
@@ -19,14 +19,14 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestAudioSource)
 
   //------------------------------------------------------------------------------------------------
-  static void TestAudioSource::testClassInitialize()
+  static void testClassInitialize()
   {
     // Set up alut if required
     OpenALState::initialize();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestAudioSource::testInitialize()
+  void testInitialize()
   {
     getAudioManager().setMasterVolume(1);
     getAudioManager().setMusicVolume(1);
@@ -36,7 +36,7 @@ namespace TestCeleste
   }
 
   //----------------------------------------------------------------------------------------------------------
-  void TestAudioSource::testCleanup()
+  void testCleanup()
   {
     getResourceManager().unloadAll<Sound>();
 

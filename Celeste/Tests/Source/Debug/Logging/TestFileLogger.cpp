@@ -1,9 +1,9 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Debug/Logging/FileLogger.h"
 #include "FileSystem/Path.h"
 #include "FileSystem/Directory.h"
-#include "FileAssert.h"
+#include "TestUtils/Assert/FileAssert.h"
 
 // There is ambiguity in naming with the unit test logger here
 // So we qualify with namespaces

@@ -1,9 +1,9 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Resources/Shaders/MockVertexShader.h"
 #include "TestResources/TestResources.h"
 #include "OpenGL/GL.h"
-#include "AutoGLDeallocator.h"
+#include "TestUtils/RAII/AutoGLDeallocator.h"
 
 using namespace Celeste::Resources;
 

@@ -1,12 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Input/KeyboardActivator.h"
 #include "Input/InputManager.h"
-#include "Registries/ComponentRegistry.h"
 #include "Objects/GameObject.h"
+#include "Registries/ComponentRegistry.h"
 #include "Objects/Component.h"
-#include "Utils/InputUtils.h"
-#include "AssertCel.h"
+#include "TestUtils/Utils/InputUtils.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Input;
@@ -17,14 +17,14 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestKeyboardActivator)
 
   //------------------------------------------------------------------------------------------------
-  void TestKeyboardActivator::testInitialize()
+  void testInitialize()
   {
     // Flush the keyboard to avoid carrying over any changes we make in tests
     getKeyboard().flush();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestKeyboardActivator::testCleanup()
+  void testCleanup()
   {
     // Flush the keyboard to avoid carrying over any changes we make in tests
     getKeyboard().flush();
@@ -95,7 +95,7 @@ namespace TestCeleste
     Assert::IsTrue(keyboardActivator->getDeactivationKey() < 0);
     AssertCel::IsActive(gameObject);
 
-    keyboardActivator->handleInput();
+    keyboardActivator->update(0);
 
     AssertCel::IsActive(gameObject);
   }
@@ -114,7 +114,7 @@ namespace TestCeleste
     Assert::IsTrue(keyboardActivator->getInputMode() == InputMode::kToggle);
     AssertCel::IsNotActive(gameObject);
 
-    keyboardActivator->handleInput();
+    keyboardActivator->update(0);
 
     AssertCel::IsNotActive(gameObject);
   }
@@ -136,7 +136,7 @@ namespace TestCeleste
 
     Assert::IsTrue(isKeyTapped(GLFW_KEY_D));
 
-    keyboardActivator->handleInput();
+    keyboardActivator->update(0);
 
     AssertCel::IsActive(gameObject);
   }
@@ -155,7 +155,7 @@ namespace TestCeleste
     Assert::IsTrue(keyboardActivator->getInputMode() == InputMode::kToggle);
     AssertCel::IsActive(gameObject);
 
-    keyboardActivator->handleInput();
+    keyboardActivator->update(0);
 
     AssertCel::IsActive(gameObject);
   }
@@ -177,7 +177,7 @@ namespace TestCeleste
 
     Assert::IsTrue(isKeyTapped(GLFW_KEY_D));
 
-    keyboardActivator->handleInput();
+    keyboardActivator->update(0);
 
     AssertCel::IsNotActive(gameObject);
   }
@@ -201,7 +201,7 @@ namespace TestCeleste
 
     Assert::IsTrue(isKeyTapped(GLFW_KEY_D));
 
-    keyboardActivator->handleInput();
+    keyboardActivator->update(0);
 
     AssertCel::IsActive(gameObject);
 
@@ -209,7 +209,7 @@ namespace TestCeleste
 
     Assert::IsTrue(isKeyTapped(GLFW_KEY_A));
 
-    keyboardActivator->handleInput();
+    keyboardActivator->update(0);
 
     AssertCel::IsNotActive(gameObject);
   }
@@ -227,7 +227,7 @@ namespace TestCeleste
     Assert::IsTrue(keyboardActivator->getActivationKey() < 0);
     Assert::AreEqual(GLFW_KEY_A, keyboardActivator->getDeactivationKey());
 
-    keyboardActivator->handleInput();
+    keyboardActivator->update(0);
 
     AssertCel::IsNotActive(gameObject);
   }
@@ -249,7 +249,7 @@ namespace TestCeleste
 
     Assert::IsTrue(isKeyPressed(GLFW_KEY_A));
 
-    keyboardActivator->handleInput();
+    keyboardActivator->update(0);
 
     AssertCel::IsActive(gameObject);
   }
@@ -268,7 +268,7 @@ namespace TestCeleste
     Assert::IsTrue(keyboardActivator->getInputMode() == InputMode::kContinuous);
     Assert::IsFalse(isKeyPressed(GLFW_KEY_A));
 
-    keyboardActivator->handleInput();
+    keyboardActivator->update(0);
 
     AssertCel::IsNotActive(gameObject);
   }

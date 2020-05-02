@@ -1,5 +1,5 @@
 #include "ScriptCommands/Resources/Shaders/FragmentShaderScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 
 #include "Resources/Shaders/FragmentShader.h"
 

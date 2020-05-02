@@ -1,7 +1,7 @@
 #pragma once
 
 #include "FileLogger.h"
-#include "Memory/ObserverPtr.h"
+#include "CelesteStl/Memory/ObserverPtr.h"
 
 
 namespace Celeste::Debug

@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Settings/WindowSettingsScriptCommands.h"
 #include "Lua/LuaState.h"
@@ -8,7 +8,7 @@
 #include "Viewport/OpenGLWindow.h"
 #include "Scene/SceneUtils.h"
 #include "OpenGL/GL.h"
-#include "FileAssert.h"
+#include "TestUtils/Assert/FileAssert.h"
 
 using LuaState = Celeste::Lua::LuaState;
 
@@ -21,7 +21,7 @@ namespace TestCelesteLua::Lua::Settings::WindowSettingsScriptCommands
   bool originalWindowed;
 
   //------------------------------------------------------------------------------------------------
-  void TestWindowSettingsScriptCommands::testInitialize()
+  void testInitialize()
   {
     OpenGLWindow& window = getWindow();
 
@@ -30,13 +30,13 @@ namespace TestCelesteLua::Lua::Settings::WindowSettingsScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestWindowSettingsScriptCommands::testCleanup()
+  void testCleanup()
   {
     resetWindow();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestWindowSettingsScriptCommands::resetWindow()
+  void resetWindow()
   {
     OpenGLWindow& window = getWindow();
 

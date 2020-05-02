@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Settings/WindowSettings.h"
 #include "Resources/ResourceManager.h"
@@ -20,7 +20,7 @@ namespace TestCeleste::Settings
   bool originalWindowed;
 
   //------------------------------------------------------------------------------------------------
-  void TestWindowSettings::testInitialize()
+  void testInitialize()
   {
     OpenGLWindow& window = getWindow();
 
@@ -29,13 +29,13 @@ namespace TestCeleste::Settings
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestWindowSettings::testCleanup()
+  void testCleanup()
   {
     resetWindow();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestWindowSettings::resetWindow()
+  void resetWindow()
   {
     OpenGLWindow& window = getWindow();
 

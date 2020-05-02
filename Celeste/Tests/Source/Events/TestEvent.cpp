@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Events/Event.h"
 
@@ -21,7 +21,7 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    void TestEvent::testInitialize()
+    void testInitialize()
     {
       call_count = 0;
     }

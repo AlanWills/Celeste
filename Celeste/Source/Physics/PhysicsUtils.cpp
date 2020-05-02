@@ -1,4 +1,5 @@
 #include "Physics/PhysicsUtils.h"
+#include "Physics/PhysicsManager.h"
 #include "Game/Game.h"
 
 
@@ -7,7 +8,7 @@ namespace Celeste::Physics
   //------------------------------------------------------------------------------------------------
   PhysicsManager& getPhysicsManager()
   {
-    return Game::getPhysicsManager();
+    return *Game::current().getSystem<Physics::PhysicsManager>();
   }
 
   //------------------------------------------------------------------------------------------------

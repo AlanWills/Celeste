@@ -1,5 +1,5 @@
-#include "TestUtils.h"
-#include "Conversion/String.h"
+#include "TestUtils/TestUtils.h"
+#include "CelesteStl/Conversion/String.h"
 
 using namespace celstl;
 

@@ -1,11 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Resources/ResourceLoader.h"
 #include "TestResources/TestResources.h"
 #include "Resources/Audio/Sound.h"
 #include "Mocks/Resources/MockResourceLoader.h"
 #include "Mocks/Resources/MockResource.h"
-#include "AssertCel.h"
+#include "Objects/GameObject.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 

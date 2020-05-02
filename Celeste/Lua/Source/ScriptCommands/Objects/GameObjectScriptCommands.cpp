@@ -1,5 +1,5 @@
 #include "ScriptCommands/Objects/GameObjectScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 
 #include "Registries/ComponentRegistry.h"
 #include "Rendering/Renderer.h"

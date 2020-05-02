@@ -1,5 +1,5 @@
 #include "ScriptCommands/Physics/EllipseColliderScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "sol/sol.hpp"
 
 #include "Physics/EllipseCollider.h"

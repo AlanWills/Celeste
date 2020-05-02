@@ -1,5 +1,5 @@
 #include "ScriptCommands/Resources/Data/PrefabScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 
 #include "Resources/Data/Prefab.h"
 

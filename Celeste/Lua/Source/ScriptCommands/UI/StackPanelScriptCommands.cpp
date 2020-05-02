@@ -1,5 +1,5 @@
 #include "ScriptCommands/UI/StackPanelScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "UI/StackPanel.h"
 #include "sol/sol.hpp"
 

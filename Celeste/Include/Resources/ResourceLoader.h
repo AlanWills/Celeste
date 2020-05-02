@@ -3,7 +3,7 @@
 #include "UID/StringId.h"
 #include "FileSystem/Directory.h"
 #include "Memory/Allocators/ResizeableAllocator.h"
-#include "Memory/ObserverPtr.h"
+#include "CelesteStl/Memory/ObserverPtr.h"
 
 #include <vector>
 #include <memory>

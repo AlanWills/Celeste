@@ -1,11 +1,11 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Bindings/BindingsGenerator.h"
 #include "Mocks/Objects/MockScriptableObject.h"
 #include "Serialization/MathsSerializers.h"
 #include "Deserialization/MathsDeserializers.h"
 #include "TestResources/TestResources.h"
-#include "FileAssert.h"
+#include "TestUtils/Assert/FileAssert.h"
 
 using namespace Celeste::Bindings;
 

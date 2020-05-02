@@ -1,12 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Resources/Data/Prefab.h"
 #include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "Rendering/TextRenderer.h"
 #include "Rendering/SpriteRenderer.h"
 #include "DataConverters/Objects/GameObjectDataConverter.h"
-#include "FileAssert.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/FileAssert.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Resources;

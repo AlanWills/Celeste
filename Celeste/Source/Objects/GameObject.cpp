@@ -167,21 +167,6 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void GameObject::handleInput()
-  {
-    Inherited::handleInput();
-
-    // Act on a copy so we can remove components during the handle input step
-    for (Component* component : std::vector<Component*>(m_unmanagedComponents))
-    {
-      if (component->isActive())
-      {
-        component->handleInput();
-      }
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
   void GameObject::update(GLfloat elapsedGameTime)
   {
     Inherited::update(elapsedGameTime);

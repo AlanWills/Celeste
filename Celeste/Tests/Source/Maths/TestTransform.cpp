@@ -1,9 +1,9 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Maths/Transform.h"
 #include "Objects/GameObject.h"
-#include "AssertCel.h"
-#include "AssertExt.h"
+#include "TestUtils/Assert/AssertCel.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;
 

@@ -19,14 +19,10 @@ namespace Celeste::Lua
       const sol::function& getOnSetActiveFunc() const { return m_onSetActiveFunc; }
       void setOnSetActiveFunc(const sol::function& func) { m_onSetActiveFunc = func; }
 
-      const sol::function& getHandleInputFunc() const { return m_handleInputFunc; }
-      void setHandleInputFunc(const sol::function& func) { m_handleInputFunc = func; }
-
       const sol::function& getUpdateFunc() const { return m_updateFunc; }
       void setUpdateFunc(const sol::function& func) { m_updateFunc = func; }
 
       CelesteDllExport void setActive(bool active) override;
-      CelesteDllExport void handleInput() override;
       CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
@@ -36,7 +32,6 @@ namespace Celeste::Lua
 
       sol::table m_instance;
       sol::function m_onSetActiveFunc;
-      sol::function m_handleInputFunc;
       sol::function m_updateFunc;
   };
 }

@@ -1,5 +1,5 @@
 #include "ScriptCommands/Resources/Audio/SoundScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 
 #include "Resources/Audio/Sound.h"
 

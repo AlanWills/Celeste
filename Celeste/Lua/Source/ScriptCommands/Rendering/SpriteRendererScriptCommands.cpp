@@ -1,5 +1,5 @@
 #include "ScriptCommands/Rendering/SpriteRendererScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Rendering/SpriteRenderer.h"
 #include "sol/sol.hpp"
 

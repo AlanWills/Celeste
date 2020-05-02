@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "SOIL2/SOIL2.h"
 #include "Resources/2D/RawImageLoader.h"

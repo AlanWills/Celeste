@@ -1,8 +1,8 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Resources/Data/MockData.h"
 #include "TestResources/TestResources.h"
-#include "FileAssert.h"
+#include "TestUtils/Assert/FileAssert.h"
 
 
 namespace TestCeleste

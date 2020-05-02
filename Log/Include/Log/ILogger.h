@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LogDllExport.h"
-#include "Verbosity.h"
+#include "Log/LogDllExport.h"
+#include "Log/Verbosity.h"
 
 #include <string>
 

@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Input/MockMouse.h"
 #include "TestResources/TestResources.h"
@@ -69,7 +69,7 @@ namespace TestCeleste
       mouse.setButtonPressed(MouseButton::kRight);
 
       // Process latest mouse messages
-      mouse.handleInput();
+      mouse.update();
 
       Assert::IsTrue(mouse.isButtonPressed(MouseButton::kLeft));
       Assert::IsTrue(mouse.isButtonPressed(MouseButton::kRight));
@@ -93,7 +93,7 @@ namespace TestCeleste
       Assert::IsFalse(mouse.isButtonPressed(MouseButton::kMiddle));
       Assert::IsFalse(mouse.isButtonPressed(MouseButton::kRight));
 
-      mouse.handleInput();
+      mouse.update();
 
       Assert::IsFalse(mouse.isButtonPressed(MouseButton::kMiddle));
     }
@@ -118,7 +118,7 @@ namespace TestCeleste
       mouse.setButtonReleased(MouseButton::kRight);
 
       // Process latest mouse messages
-      mouse.handleInput();
+      mouse.update();
 
       Assert::IsTrue(mouse.isButtonReleased(MouseButton::kLeft));
       Assert::IsTrue(mouse.isButtonReleased(MouseButton::kRight));
@@ -131,7 +131,7 @@ namespace TestCeleste
       mouse.setButtonPressed(MouseButton::kLeft);
       mouse.setButtonPressed(MouseButton::kMiddle);
       mouse.setButtonPressed(MouseButton::kRight);
-      mouse.handleInput();
+      mouse.update();
 
       Assert::IsFalse(mouse.isButtonReleased(MouseButton::kLeft));
       Assert::IsFalse(mouse.isButtonReleased(MouseButton::kMiddle));
@@ -158,12 +158,12 @@ namespace TestCeleste
       // Process down message
       mouse.setButtonReleased(MouseButton::kLeft);
       mouse.setButtonReleased(MouseButton::kRight);
-      mouse.handleInput();
+      mouse.update();
 
       // Process up message
       mouse.setButtonPressed(MouseButton::kLeft);
       mouse.setButtonPressed(MouseButton::kRight);
-      mouse.handleInput();
+      mouse.update();
 
       Assert::IsTrue(mouse.isButtonClicked(MouseButton::kLeft));
       Assert::IsTrue(mouse.isButtonClicked(MouseButton::kRight));
@@ -181,7 +181,7 @@ namespace TestCeleste
       // Process down message
       mouse.setButtonReleased(MouseButton::kLeft);
       mouse.setButtonReleased(MouseButton::kRight);
-      mouse.handleInput();
+      mouse.update();
 
       Assert::IsFalse(mouse.isButtonClicked(MouseButton::kLeft));
       Assert::IsFalse(mouse.isButtonClicked(MouseButton::kRight));
@@ -190,7 +190,7 @@ namespace TestCeleste
       // Process up message
       mouse.setButtonPressed(MouseButton::kLeft);
       mouse.setButtonPressed(MouseButton::kRight);
-      mouse.handleInput();
+      mouse.update();
 
       Assert::IsFalse(mouse.isButtonClicked(MouseButton::kMiddle));
     }
@@ -217,7 +217,7 @@ namespace TestCeleste
       // Process messages
       mouse.setButtonPressed(MouseButton::kLeft);
       mouse.setButtonPressed(MouseButton::kRight);
-      mouse.handleInput();
+      mouse.update();
 
       Assert::IsTrue(mouse.isButtonPressed(MouseButton::kLeft));
       Assert::IsTrue(mouse.isButtonPressed(MouseButton::kRight));
@@ -238,7 +238,7 @@ namespace TestCeleste
       // Process messages
       mouse.setButtonReleased(MouseButton::kLeft);
       mouse.setButtonReleased(MouseButton::kRight);
-      mouse.handleInput();
+      mouse.update();
 
       Assert::IsFalse(mouse.isButtonClicked(MouseButton::kLeft));
       Assert::IsFalse(mouse.isButtonClicked(MouseButton::kRight));
@@ -247,7 +247,7 @@ namespace TestCeleste
       // Process messages
       mouse.setButtonPressed(MouseButton::kLeft);
       mouse.setButtonPressed(MouseButton::kRight);
-      mouse.handleInput();
+      mouse.update();
 
       Assert::IsTrue(mouse.isButtonClicked(MouseButton::kLeft));
       Assert::IsTrue(mouse.isButtonClicked(MouseButton::kRight));

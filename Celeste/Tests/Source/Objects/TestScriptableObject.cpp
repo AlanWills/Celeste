@@ -1,13 +1,13 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Objects/MockScriptableObject.h"
 #include "Mocks/Objects/FailDeserializationScriptableObject.h"
 #include "Mocks/Fields/FailDeserializationField.h"
 #include "Registries/ScriptableObjectRegistry.h"
 #include "TestResources/TestResources.h"
-#include "AssertCel.h"
-#include "FileAssert.h"
-#include "AssertExt.h"
+#include "TestUtils/Assert/AssertCel.h"
+#include "TestUtils/Assert/FileAssert.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste::Resources;
 
@@ -17,13 +17,13 @@ namespace TestCeleste::Objects
   CELESTE_TEST_CLASS(TestScriptableObject)
 
   //------------------------------------------------------------------------------------------------
-  void TestScriptableObject::testInitialize()
+  void testInitialize()
   {
     getResourceManager().unloadAll<Data>();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestScriptableObject::testCleanup()
+  void testCleanup()
   {
     getResourceManager().unloadAll<Data>();
 

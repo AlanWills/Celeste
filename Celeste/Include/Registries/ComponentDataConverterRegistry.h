@@ -2,7 +2,7 @@
 
 #include "CelesteDllExport.h"
 #include "tinyxml2.h"
-#include <Memory/ObserverPtr.h>
+#include "CelesteStl/Memory/ObserverPtr.h"
 #include "Assert/Assert.h"
 
 #include <functional>

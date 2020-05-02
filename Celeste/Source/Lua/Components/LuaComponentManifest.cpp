@@ -49,7 +49,6 @@ namespace Celeste::Lua
 
     // Set up callbacks
     luaComponent.setOnSetActiveFunc(m_onSetActiveFunc);
-    luaComponent.setHandleInputFunc(m_handleInputFunc);
     luaComponent.setUpdateFunc(m_updateFunc);
     //luaComponent.setInstance(instance);
   }

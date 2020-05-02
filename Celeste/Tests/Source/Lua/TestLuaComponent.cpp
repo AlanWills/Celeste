@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Lua/LuaState.h"
 #include "Lua/Components/LuaComponent.h"
@@ -6,7 +6,7 @@
 
 #include "Objects/GameObject.h"
 
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Lua;
@@ -37,15 +37,6 @@ namespace TestCeleste::Lua
     )";
 
   //------------------------------------------------------------------------------------------------
-  std::string handleInputScript = R"(
-    handleInputCalled = false
-
-    function handleInput(component)
-      handleInputCalled = true
-    end
-    )";
-
-  //------------------------------------------------------------------------------------------------
   std::string updateScript = R"(
     updateCalled = false
 
@@ -55,13 +46,13 @@ namespace TestCeleste::Lua
     )";
 
   //------------------------------------------------------------------------------------------------
-  void TestLuaComponent::testInitialize()
+  void testInitialize()
   {
     LuaState::instance().script(resetScript);
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestLuaComponent::testCleanup()
+  void testCleanup()
   {
     LuaState::instance().script(resetScript);
   }
@@ -75,15 +66,6 @@ namespace TestCeleste::Lua
     LuaComponent luaComponent(gameObject);
 
     Assert::IsFalse(luaComponent.getOnSetActiveFunc().valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_Constructor_SetsHandleInputFunc_ToEmptyFunc)
-  {
-    GameObject gameObject;
-    LuaComponent luaComponent(gameObject);
-
-    Assert::IsFalse(luaComponent.getHandleInputFunc().valid());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -138,40 +120,6 @@ namespace TestCeleste::Lua
     luaComponent.setActive(true);
 
     Assert::IsTrue(luaComponent.isActive());
-  }
-
-#pragma endregion
-
-#pragma region Handle Input Function Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_HandleInput_WithNoHandleInputFunction_DoesNothing)
-  {
-    GameObject gameObject;
-    LuaComponent luaComponent(gameObject);
-
-    Assert::IsFalse(luaComponent.getHandleInputFunc().valid());
-
-    luaComponent.handleInput();
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponent_HandleInput_WithHandleInputFunction_CallsHandleInputFunction)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsTrue(state.safe_script(handleInputScript).valid());
-    Assert::IsFalse(state["handleInputCalled"]);
-
-    GameObject gameObject;
-    LuaComponent luaComponent(gameObject);
-    luaComponent.setHandleInputFunc(state["handleInput"]);
-
-    Assert::IsTrue(luaComponent.getHandleInputFunc().valid());
-
-    luaComponent.handleInput();
-
-    Assert::IsTrue(state["handleInputCalled"]);
   }
 
 #pragma endregion

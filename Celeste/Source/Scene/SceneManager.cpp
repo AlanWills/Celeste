@@ -14,38 +14,11 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void SceneManager::handleInput()
-  {
-    Inherited::handleInput();
-
-    for (GameObject& gameObject : getRootGameObjects())
-    {
-      handleInputGameObjectHierarchy(gameObject);
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
   void SceneManager::update(float elapsedGameTime)
   {
-    Inherited::update(elapsedGameTime);
-
     for (GameObject& gameObject : getRootGameObjects())
     {
       updateGameObjectHierarchy(gameObject, elapsedGameTime);
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void SceneManager::handleInputGameObjectHierarchy(GameObject& gameObject)
-  {
-    if (gameObject.isActive())
-    {
-      gameObject.handleInput();
-
-      for (size_t i = 0; i < gameObject.getChildCount(); ++i)
-      {
-        handleInputGameObjectHierarchy(*gameObject.getChild(i));
-      }
     }
   }
 

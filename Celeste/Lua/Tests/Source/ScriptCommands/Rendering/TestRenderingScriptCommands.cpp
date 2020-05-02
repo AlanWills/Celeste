@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Rendering/RenderingScriptCommands.h"
 #include "ScriptCommands/Objects/ComponentScriptCommands.h"
@@ -21,7 +21,7 @@ namespace TestCelesteLua::Lua::Rendering
   CELESTE_TEST_CLASS(TestRenderingScriptCommands)
 
   //------------------------------------------------------------------------------------------------
-  void TestRenderingScriptCommands::testInitialize()
+  void testInitialize()
   {
     Celeste::Lua::ComponentScriptCommands::initialize(LuaState::instance());
   }

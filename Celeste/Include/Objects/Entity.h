@@ -13,7 +13,6 @@ namespace Celeste
       Entity() = default;
       virtual ~Entity() = default;
 
-      virtual void handleInput() {}
       virtual void update(float /*elapsedGameTime*/) {}
 
       inline bool isActive() const { return m_active; }

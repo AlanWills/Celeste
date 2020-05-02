@@ -1,8 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
+#include "Resources/ResourceManager.h"
 #include "Resources/ResourceUtils.h"
 #include "Game/Game.h"
-#include "AssertSpecialization/FileSystem.h"
+#include "TestUtils/AssertSpecialization/FileSystem.h"
+
+using namespace Celeste;
+using ResourceManager = Celeste::Resources::ResourceManager;
 
 
 namespace TestCeleste::Resources
@@ -14,7 +18,7 @@ namespace TestCeleste::Resources
   //----------------------------------------------------------------------------------------------------------
   TEST_METHOD(ResourceUtils_GetResourceManager_ReturnsGameResourceManager)
   {
-    Assert::IsTrue(&Celeste::Game::getResourceManager() == &Celeste::Resources::getResourceManager());
+    Assert::IsTrue(&Game::current().getResourceManager() == &Celeste::Resources::getResourceManager());
   }
 
 #pragma endregion
@@ -24,7 +28,7 @@ namespace TestCeleste::Resources
   //----------------------------------------------------------------------------------------------------------
   TEST_METHOD(ResourceUtils_GetResourcesDirectory_ReturnsResourceManagerResourceDirectory)
   {
-    Assert::AreEqual(Celeste::Game::getResourceManager().getResourcesDirectory(), Celeste::Resources::getResourcesDirectory());
+    Assert::AreEqual(Game::current().getResourceManager().getResourcesDirectory(), Celeste::Resources::getResourcesDirectory());
   }
 
 #pragma endregion

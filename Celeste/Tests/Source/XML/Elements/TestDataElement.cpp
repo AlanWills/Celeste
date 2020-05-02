@@ -1,8 +1,8 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "XML/XMLObjectFactory.h"
 #include "XML/Elements/DataElement.h"
-#include "AssertExt.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;
 using namespace Celeste::XML;

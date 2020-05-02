@@ -7,7 +7,7 @@
 #include "Algorithm/Entity.h"
 #include "Scene/SceneUtils.h"
 #include "Debug/DolceUtils.h"
-#include "Dolce.h"
+#include "Dolce/Dolce.h"
 
 #include <unordered_set>
 
@@ -32,27 +32,16 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void InputManager::handleInput()
+  void InputManager::update(float elapsedGameTime)
   {
-    Inherited::handleInput();
-
-    m_keyboard.handleInput();
+    m_keyboard.update();
 
     // Do this here rather than in the mouse class so that we can completely control the mouse behaviour
     // from outside the class
     updateMousePosition();
-    m_mouse.handleInput();
+    m_mouse.update();
 
     raycast();
-
-    Algorithm::handleInput(KeyboardActivator::m_allocator);
-    Algorithm::handleInput(MouseInteractionHandler::m_allocator);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void InputManager::update(GLfloat elapsedGameTime)
-  {
-    Inherited::update(elapsedGameTime);
 
     Algorithm::update(elapsedGameTime, KeyboardActivator::m_allocator);
     Algorithm::update(elapsedGameTime, MouseInteractionHandler::m_allocator);

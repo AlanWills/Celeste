@@ -4,20 +4,17 @@
 #include "DataConverters/Enums/ConverterEnums.h"
 
 
-namespace Celeste
+namespace Celeste::XML
 {
-  namespace XML
+  class XMLObject
   {
-    class XMLObject
-    {
-      public:
-        XMLObject(DeserializationRequirement required = DeserializationRequirement::kNotRequired) : m_deserializationRequirement(required) { }
-        virtual ~XMLObject() { }
+    public:
+      XMLObject(DeserializationRequirement required = DeserializationRequirement::kNotRequired) : m_deserializationRequirement(required) { }
+      virtual ~XMLObject() { }
 
-        bool isRequired() const { return m_deserializationRequirement == DeserializationRequirement::kRequired; }
+      bool isRequired() const { return m_deserializationRequirement == DeserializationRequirement::kRequired; }
 
-      private:
-        DeserializationRequirement m_deserializationRequirement;
-    };
-  }
+    private:
+      DeserializationRequirement m_deserializationRequirement;
+  };
 }

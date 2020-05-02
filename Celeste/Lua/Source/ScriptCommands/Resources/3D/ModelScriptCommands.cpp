@@ -1,5 +1,5 @@
 #include "ScriptCommands/Resources/3D/ModelScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Resources/3D/Model.h"
 
 using Model = Celeste::Resources::Model;

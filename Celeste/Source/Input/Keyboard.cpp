@@ -15,7 +15,7 @@ namespace Celeste
     }
 
     //------------------------------------------------------------------------------------------------
-    void Keyboard::handleInput()
+    void Keyboard::update()
     {
       for (int i = 0; i < KEYBOARD_KEY_COUNT; ++i)
       {

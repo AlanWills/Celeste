@@ -2,8 +2,8 @@
 
 #include "Settings/DolceSettings.h"
 #include "UtilityHeaders/ScriptableObjectHeaders.h"
-#include "Dolce.h"
-#include "DolceWindow.h"
+#include "Dolce/Dolce.h"
+#include "Dolce/DolceWindow.h"
 #include "XML/tinyxml2_ext.h"
 
 using namespace Celeste::XML;

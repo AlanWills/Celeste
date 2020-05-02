@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AssertDllExport.h"
+#include "Assert/AssertDllExport.h"
 
 
 namespace Celeste

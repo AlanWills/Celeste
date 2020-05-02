@@ -1,8 +1,8 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Objects/MockComponentDataConverter.h"
 #include "Objects/GameObject.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Resources;

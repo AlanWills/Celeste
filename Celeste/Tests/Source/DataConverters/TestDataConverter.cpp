@@ -1,11 +1,11 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/MockDataConverter.h"
 #include "Mocks/XML/Attributes/MockAttribute.h"
 #include "Mocks/XML/Elements/MockElement.h"
 #include "TestResources/TestResources.h"
 #include "Resources/ResourceManager.h"
-#include "FileAssert.h"
+#include "TestUtils/Assert/FileAssert.h"
 
 using namespace Celeste::Resources;
 
@@ -87,13 +87,13 @@ namespace TestCeleste
   };
 
   //------------------------------------------------------------------------------------------------
-  void TestDataConverter::testInitialize()
+  void testInitialize()
   {
     getResourceManager().unloadAll<Data>();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestDataConverter::testCleanup()
+  void testCleanup()
   {
     getResourceManager().unloadAll<Data>();
   }

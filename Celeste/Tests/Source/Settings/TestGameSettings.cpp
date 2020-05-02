@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Settings/GameSettings.h"
 #include "Resources/ResourceManager.h"
@@ -6,7 +6,7 @@
 #include "TestResources/Settings/GameSettingsLoadingResources.h"
 #include "Audio/AudioManager.h"
 #include "XML/tinyxml2_ext.h"
-#include "FileAssert.h"
+#include "TestUtils/Assert/FileAssert.h"
 
 using namespace Celeste::XML;
 using namespace Celeste::Settings;
@@ -22,7 +22,7 @@ namespace TestCeleste::Settings
   float originalSFXVolume;
 
   //------------------------------------------------------------------------------------------------
-  void TestGameSettings::testInitialize()
+  void testInitialize()
   {
     Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 
@@ -32,7 +32,7 @@ namespace TestCeleste::Settings
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestGameSettings::testCleanup()
+  void testCleanup()
   {
     Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 

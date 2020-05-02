@@ -1,11 +1,11 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Deserialization/Deserializers.h"
 #include "Resources/ResourceManager.h"
 #include "TestResources/TestResources.h"
 
-#include "AssertCel.h"
-#include "FileAssert.h"
+#include "TestUtils/Assert/AssertCel.h"
+#include "TestUtils/Assert/FileAssert.h"
 
 using namespace Celeste::Resources;
 

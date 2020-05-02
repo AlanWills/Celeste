@@ -1,11 +1,11 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Audio/MockAudioSourceDataConverter.h"
 #include "TestResources/Audio/AudioSourceLoadingResources.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Resources/ResourceManager.h"
 #include "Audio/AudioSource.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Resources;
@@ -17,7 +17,7 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestAudioSourceDataConverter)
 
   //------------------------------------------------------------------------------------------------
-  void TestAudioSourceDataConverter::testInitialize()
+  void testInitialize()
   {
     AudioSourceLoadingResources::unloadAllResources();
   }

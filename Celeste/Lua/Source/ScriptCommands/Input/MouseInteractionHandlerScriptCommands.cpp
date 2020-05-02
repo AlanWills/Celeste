@@ -1,5 +1,5 @@
 #include "ScriptCommands/Input/MouseInteractionHandlerScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "sol/sol.hpp"
 
 #include "Input/MouseInteractionHandler.h"

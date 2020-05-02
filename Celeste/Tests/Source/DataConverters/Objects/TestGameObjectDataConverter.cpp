@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "DataConverters/Objects/GameObjectDataConverter.h"
 #include "TestResources/Objects/GameObjectLoadingResources.h"
@@ -7,9 +7,9 @@
 #include "Rendering/SpriteRenderer.h"
 #include "DataConverters/Rendering/SpriteRendererDataConverter.h"
 #include "DataConverters/Resources/PrefabDataConverter.h"
-#include "Utils/GameObjectXMLUtils.h"
+#include "TestUtils/Utils/GameObjectXMLUtils.h"
 #include "Scene/SceneUtils.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 #include "Lua/Components/LuaComponentManifestRegistry.h"
 #include "Lua/Components/LuaComponent.h"
 
@@ -33,14 +33,14 @@ namespace TestCeleste
   };
 
   //------------------------------------------------------------------------------------------------
-  void TestGameObjectDataConverter::testInitialize()
+  void testInitialize()
   {
     GameObjectLoadingResources::unloadAllResources();
     LuaComponentManifestRegistry::deregisterComponent("Test");
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestGameObjectDataConverter::testCleanup()
+  void testCleanup()
   {
     GameObjectLoadingResources::unloadAllResources();
     LuaComponentManifestRegistry::deregisterComponent("Test");

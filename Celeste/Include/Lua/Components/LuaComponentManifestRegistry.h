@@ -3,7 +3,7 @@
 #include "CelesteDllExport.h"
 #include "Lua/LuaHeaders.h"
 #include "Lua/Components/LuaComponentManifest.h"
-#include "Memory/ObserverPtr.h"
+#include "CelesteStl/Memory/ObserverPtr.h"
 
 #include <unordered_map>
 

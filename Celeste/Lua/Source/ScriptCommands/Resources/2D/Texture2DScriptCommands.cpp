@@ -1,5 +1,5 @@
 #include "ScriptCommands/Resources/2D/Texture2DScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Resources/2D/Texture2D.h"
 #include "sol/sol.hpp"
 

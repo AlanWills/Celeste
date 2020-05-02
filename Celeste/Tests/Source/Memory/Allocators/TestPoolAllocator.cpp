@@ -1,9 +1,9 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Memory/Allocators/PoolAllocator.h"
 #include "Mocks/Objects/MockComponent.h"
 #include "Objects/GameObject.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 #include "UtilityMacros/Unused.h"
 
 #include <vector>

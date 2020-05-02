@@ -1,11 +1,11 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Physics/RectangleCollider.h"
 #include "Maths/Ray.h"
 #include "Mocks/Physics/MockCollider.h"
-#include "Registries/ComponentRegistry.h"
 #include "Objects/GameObject.h"
-#include "AssertCel.h"
+#include "Registries/ComponentRegistry.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 
 namespace TestCeleste

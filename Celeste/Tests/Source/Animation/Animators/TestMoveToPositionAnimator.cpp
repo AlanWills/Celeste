@@ -1,9 +1,9 @@
 #include "Animation/Animators/MoveToPositionAnimator.h"
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
 #include "Physics/RigidBody2D.h"
-#include "Objects/GameObject.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Animators;

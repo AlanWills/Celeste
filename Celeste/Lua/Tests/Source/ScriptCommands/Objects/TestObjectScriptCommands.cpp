@@ -1,11 +1,11 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Objects/ObjectScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
 #include "Mocks/Objects/MockObject.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;

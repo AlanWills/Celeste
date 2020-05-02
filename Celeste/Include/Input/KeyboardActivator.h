@@ -22,7 +22,7 @@ namespace Celeste::Input
       inline InputMode getInputMode() const { return m_inputMode; }
       inline void setInputMode(InputMode inputMode) { m_inputMode = inputMode; }
 
-      CelesteDllExport void handleInput() override;
+      CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
       using Inherited = Component;

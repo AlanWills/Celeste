@@ -7,7 +7,7 @@
 #include "XML/Elements/DataElement.h"
 #include "XML/Elements/DataConverterListElement.h"
 #include "XML/XMLObjectFactory.h"
-#include "Memory/ObserverPtr.h"
+#include "CelesteStl/Memory/ObserverPtr.h"
 
 #include <string>
 #include <vector>

@@ -1,5 +1,5 @@
 #include "ScriptCommands/Resources/Fonts/FontScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 
 #include "Resources/Fonts/Font.h"
 

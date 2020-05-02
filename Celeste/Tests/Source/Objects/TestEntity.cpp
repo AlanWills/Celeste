@@ -1,7 +1,8 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
+#include "Objects/GameObject.h"
 #include "Mocks/Objects/MockEntity.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 
 namespace TestCeleste
@@ -16,22 +17,6 @@ namespace TestCeleste
     MockEntity entity;
 
     AssertCel::IsActive(entity);
-  }
-
-#pragma endregion
-
-#pragma region Handle Input Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Entity_HandleInput_CallsOnHandleInput)
-  {
-    MockEntity entity;
-
-    Assert::IsFalse(entity.isHandleInputCalled());
-
-    entity.handleInput();
-
-    Assert::IsTrue(entity.isHandleInputCalled());
   }
 
 #pragma endregion

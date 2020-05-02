@@ -1,12 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Objects/GameObjectScriptCommands.h"
 #include "ScriptCommands/Rendering/TextRendererScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
 #include "Mocks/Rendering/MockTextRenderer.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using TextRenderer = Celeste::Rendering::TextRenderer;

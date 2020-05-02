@@ -19,7 +19,7 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void Mouse::handleInput()
+  void Mouse::update()
   {
     for (int i = 0; i < static_cast<int>(MouseButton::kNumButtons); ++i)
     {

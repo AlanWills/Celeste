@@ -11,7 +11,6 @@ namespace Celeste::Lua
   LuaComponent::LuaComponent(GameObject& gameObject) :
     Inherited(gameObject),
     m_onSetActiveFunc(),
-    m_handleInputFunc(),
     m_updateFunc()
   {
   }
@@ -24,17 +23,6 @@ namespace Celeste::Lua
     if (m_onSetActiveFunc.valid())
     {
       m_onSetActiveFunc(m_instance, active);
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void LuaComponent::handleInput()
-  {
-    Inherited::handleInput();
-
-    if (m_handleInputFunc.valid())
-    {
-      m_handleInputFunc(m_instance);
     }
   }
 
@@ -54,7 +42,6 @@ namespace Celeste::Lua
   {
     m_instance = sol::nil;
     m_onSetActiveFunc = sol::nil;
-    m_handleInputFunc = sol::nil;
     m_updateFunc = sol::nil;
   }
 }

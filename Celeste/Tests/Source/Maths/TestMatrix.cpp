@@ -1,7 +1,7 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Maths/Matrix.h"
-#include "AssertExt.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 
 namespace TestCeleste

@@ -24,9 +24,9 @@ namespace Celeste::UI
   }
 
   //------------------------------------------------------------------------------------------------
-  void Slider::handleInput()
+  void Slider::update(float elapsedGameTime)
   {
-    Inherited::handleInput();
+    Inherited::update(elapsedGameTime);
 
 #if _DEBUG
     if (getGameObject() == nullptr || !getGameObject()->hasComponent<MouseInteractionHandler>())

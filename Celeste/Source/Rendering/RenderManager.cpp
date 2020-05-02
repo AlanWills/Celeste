@@ -18,18 +18,8 @@ namespace Celeste::Rendering
   }
 
   //------------------------------------------------------------------------------------------------
-  void RenderManager::handleInput()
-  {
-    Inherited::handleInput();
-
-    Algorithm::handleInput(Canvas::m_allocator);
-  }
-
-  //------------------------------------------------------------------------------------------------
   void RenderManager::update(float elapsedGameTime)
   {
-    Inherited::update(elapsedGameTime);
-
     Algorithm::update(elapsedGameTime, Canvas::m_allocator);
   }
 

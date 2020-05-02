@@ -1,12 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Debug/Profiling/Profiler.h"
 #include "FileSystem/Path.h"
 #include "FileSystem/Directory.h"
 #include "Utils/StringUtils.h"
 
-#include "FileAssert.h"
-#include "AssertExt.h"
+#include "TestUtils/Assert/FileAssert.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 #include <chrono>
 #include <thread>

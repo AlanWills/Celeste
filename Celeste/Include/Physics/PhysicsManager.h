@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Objects/Entity.h"
+#include "System/ISystem.h"
 #include "PhysicsUtils.h"
 #include "SimulatedBody.h"
 
@@ -10,7 +10,7 @@ namespace Celeste::Physics
   class Collider;
   class RigidBody2D;
 
-  class PhysicsManager : public Entity
+  class PhysicsManager : public System::ISystem
   {
     public:
       CelesteDllExport PhysicsManager();
@@ -29,11 +29,10 @@ namespace Celeste::Physics
       CelesteDllExport void addSimulatedBody(RigidBody2D& rigidBody);
       CelesteDllExport void addSimulatedBody(Collider& collider, RigidBody2D& rigidBody);
 
-      void handleInput() override;
       void update(float elapsedGameTime) override;
 
     private:
-      using Inherited = Entity;
+      using Inherited = System::ISystem;
       using SimulatedBodies = std::vector<SimulatedBody>;
 
       void doCollision(SimulatedBody& body, Collider& collider);

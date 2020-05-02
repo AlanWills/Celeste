@@ -6,7 +6,7 @@
 #include "ScriptCommands/Resources/Data/PrefabScriptCommands.h"
 #include "ScriptCommands/Resources/Fonts/FontScriptCommands.h"
 #include "ScriptCommands/Resources/Shaders/ShaderScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "sol/sol.hpp"
 
 #include "Resources/ResourceUtils.h"

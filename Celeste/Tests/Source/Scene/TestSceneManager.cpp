@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "Scene/SceneManager.h"
 #include "Objects/GameObject.h"
 
@@ -10,112 +10,6 @@ using namespace Celeste;
 namespace TestCeleste
 {
   CELESTE_TEST_CLASS(TestSceneManager)
-
-#pragma region Handle Input Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SceneManager_HandleInput_CallsHandleInputOnAllActiveRoots)
-  {
-    SceneManager sceneManager;
-    std::unique_ptr<GameObject> gameObject(new GameObject());
-    std::unique_ptr<GameObject> gameObject2(new GameObject());
-    gameObject2->setActive(false);
-    MockComponent* component = gameObject->addComponent<MockComponent>();
-    MockComponent* component2 = gameObject2->addComponent<MockComponent>();
-
-    Assert::IsFalse(component->handleInputCalled());
-    Assert::IsFalse(component2->handleInputCalled());
-
-    sceneManager.handleInput();
-
-    Assert::IsTrue(component->handleInputCalled());
-    Assert::IsFalse(component2->handleInputCalled());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SceneManager_HandleInput_RootActive_CallsHandleInputOnChildren)
-  {
-    SceneManager sceneManager;
-    std::unique_ptr<GameObject> gameObject(new GameObject());
-    std::unique_ptr<GameObject> child1(new GameObject());
-    std::unique_ptr<GameObject> child2(new GameObject());
-    child1->setParent(gameObject.get());
-    child2->setParent(gameObject.get());
-
-    MockComponent* component1 = child1->addComponent<MockComponent>();
-    MockComponent* component2 = child2->addComponent<MockComponent>();
-
-    Assert::IsFalse(component1->handleInputCalled());
-    Assert::IsFalse(component2->handleInputCalled());
-
-    sceneManager.handleInput();
-
-    Assert::IsTrue(component1->handleInputCalled());
-    Assert::IsTrue(component2->handleInputCalled());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SceneManager_HandleInput_RootActive_CallsHandleInputOnActiveChildren)
-  {
-    SceneManager sceneManager;
-    std::unique_ptr<GameObject> gameObject(new GameObject());
-    std::unique_ptr<GameObject> child1(new GameObject());
-    std::unique_ptr<GameObject> child2(new GameObject());
-    child1->setParent(gameObject.get());
-    child2->setParent(gameObject.get());
-    child1->setActive(false);
-
-    MockComponent* component1 = child1->addComponent<MockComponent>();
-    MockComponent* component2 = child2->addComponent<MockComponent>();
-
-    Assert::IsFalse(component1->handleInputCalled());
-    Assert::IsFalse(component2->handleInputCalled());
-
-    sceneManager.handleInput();
-
-    Assert::IsFalse(component1->handleInputCalled());
-    Assert::IsTrue(component2->handleInputCalled());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SceneManager_HandleInput_RootNotActive_DoesNotCallHandleInputOnRoot)
-  {
-    SceneManager sceneManager;
-    std::unique_ptr<GameObject> gameObject(new GameObject());
-    gameObject->setActive(false);
-    MockComponent* component = gameObject->addComponent<MockComponent>();
-
-    Assert::IsFalse(component->handleInputCalled());
-
-    sceneManager.handleInput();
-
-    Assert::IsFalse(component->handleInputCalled());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SceneManager_HandleInput_RootNotActive_DoesNotCallHandleInputOnChildren)
-  {
-    SceneManager sceneManager;
-    std::unique_ptr<GameObject> gameObject(new GameObject());
-    std::unique_ptr<GameObject> child1(new GameObject());
-    std::unique_ptr<GameObject> child2(new GameObject());
-    gameObject->setActive(false);
-    child1->setParent(gameObject.get());
-    child2->setParent(gameObject.get());
-
-    MockComponent* component1 = child1->addComponent<MockComponent>();
-    MockComponent* component2 = child2->addComponent<MockComponent>();
-
-    Assert::IsFalse(component1->handleInputCalled());
-    Assert::IsFalse(component2->handleInputCalled());
-
-    sceneManager.handleInput();
-
-    Assert::IsFalse(component1->handleInputCalled());
-    Assert::IsFalse(component2->handleInputCalled());
-  }
-
-#pragma endregion
 
 #pragma region Update Tests
 

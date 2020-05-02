@@ -18,7 +18,7 @@ namespace Celeste::Input
     public:
       CelesteDllExport Mouse();
 
-      CelesteDllExport void handleInput();
+      CelesteDllExport void update();
       CelesteDllExport void flush();
 
       Transform& getTransform() { return m_transform; }

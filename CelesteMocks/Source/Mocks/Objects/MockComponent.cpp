@@ -9,7 +9,6 @@ namespace CelesteMocks
   //------------------------------------------------------------------------------------------------
   MockComponent::MockComponent(GameObject& gameObject) :
     Inherited(gameObject),
-    m_handleInputCalled(false),
     m_updateCalled(false)
   {
   }

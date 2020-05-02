@@ -25,20 +25,8 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void PhysicsManager::handleInput()
-  {
-    Inherited::handleInput();
-
-    Algorithm::handleInput(RigidBody2D::m_allocator);
-    Algorithm::handleInput(RectangleCollider::m_allocator);
-    Algorithm::handleInput(EllipseCollider::m_allocator);
-  }
-
-  //------------------------------------------------------------------------------------------------
   void PhysicsManager::update(float elapsedGameTime)
   {
-    Inherited::update(elapsedGameTime);
-
     Algorithm::update(elapsedGameTime, RectangleCollider::m_allocator);
     Algorithm::update(elapsedGameTime, EllipseCollider::m_allocator);
 

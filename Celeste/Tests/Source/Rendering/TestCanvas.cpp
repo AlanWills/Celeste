@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Rendering/Canvas.h"
 #include "Rendering/RenderManager.h"
@@ -9,7 +9,7 @@
 #include "Scene/SceneUtils.h"
 #include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using RectangleCollider = Celeste::Physics::RectangleCollider;
 

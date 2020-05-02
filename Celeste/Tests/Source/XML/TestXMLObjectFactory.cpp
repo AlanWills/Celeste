@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "XML/XMLObjectFactory.h"
 #include "XML/Attributes/DataAttribute.h"
@@ -6,7 +6,7 @@
 #include "XML/Elements/ListElement.h"
 #include "XML/Elements/DataConverterListElement.h"
 #include "Mocks/DataConverters/MockDataConverter.h"
-#include "AssertExt.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;
 using namespace Celeste::XML;

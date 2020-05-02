@@ -8,16 +8,21 @@
 #include "Settings/WindowSettings.h"
 
 #include "Log/Log.h"
+#include "Scene/SceneManager.h"
+#include "Input/InputManager.h"
+#include "Physics/PhysicsManager.h"
+#include "Rendering/RenderManager.h"
+#include "Audio/AudioManager.h"
 
 #if _DEBUG
-#include "Dolce.h"
+#include "Dolce/Dolce.h"
 #include "Debug/Windows/HierarchyDolceWindow.h"
 #include "Debug/Windows/LuaScriptDolceWindow.h"
 #include "Debug/Windows/LogDolceWindow.h"
 #include "Debug/Logging/DolceLogger.h"
 #include "Settings/DolceSettings.h"
 
-#include "imgui.h"
+#include "imgui/imgui.h"
 #endif
 
 
@@ -29,16 +34,13 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   Game::Game() :
     m_resourceManager(Path(Directory::getExecutingAppDirectory(), "Resources")),
-    m_sceneManager(),
     m_window(),
-    m_inputManager(m_window.getGLWindow()),
-    m_physicsManager(),
-    m_renderManager(),
-    m_audioManager(),
     m_clock()
   {
     ASSERT(!m_current);
     m_current = this;
+
+    registerSystems();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -48,64 +50,37 @@ namespace Celeste
     OpenGLWindow::WindowMode windowMode,
     const std::string& windowTitle) :
     m_resourceManager(Path(Directory::getExecutingAppDirectory(), "Resources")),
-    m_sceneManager(),
     m_window(windowWidth, windowHeight, windowMode, windowTitle),
-    m_inputManager(m_window.getGLWindow()),
-    m_physicsManager(),
-    m_renderManager(),
-    m_audioManager(),
     m_clock()
   {
     ASSERT(!m_current);
     m_current = this;
+
+    registerSystems();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  Game& Game::current()
+  {
+    return *m_current;
   }
 
   //------------------------------------------------------------------------------------------------
   Game::ResourceManager& Game::getResourceManager()
   {
-    return m_current->m_resourceManager;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  SceneManager& Game::getSceneManager()
-  {
-    return m_current->m_sceneManager;
+    return m_resourceManager;
   }
 
   //------------------------------------------------------------------------------------------------
   OpenGLWindow& Game::getWindow()
   {
-    return m_current->m_window;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  Game::InputManager& Game::getInputManager()
-  {
-    return m_current->m_inputManager;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  Game::PhysicsManager& Game::getPhysicsManager()
-  {
-    return m_current->m_physicsManager;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  Game::RenderManager& Game::getRenderManager()
-  {
-    return m_current->m_renderManager;
-  }
-
-  //------------------------------------------------------------------------------------------------
-  Game::AudioManager& Game::getAudioManager()
-  {
-    return m_current->m_audioManager;
+    return m_window;
   }
 
   //------------------------------------------------------------------------------------------------
   Clock& Game::getClock()
   {
-    return m_current->m_clock;
+    return m_clock;
   }
 
   //------------------------------------------------------------------------------------------------
@@ -136,12 +111,22 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Game::initialize()
+  void Game::registerSystems()
   {
+    addSystem<SceneManager>();
+    addSystem<Input::InputManager>(m_window.getGLWindow());
+    addSystem<Physics::PhysicsManager>();
+    addSystem<Rendering::RenderManager>();
+    addSystem<Audio::AudioManager>();
+
 #if _DEBUG
     addSystem<Dolce::Dolce>(m_window.getGLWindow());
 #endif
+  }
 
+  //------------------------------------------------------------------------------------------------
+  void Game::initialize()
+  {
     glfwSetWindowCloseCallback(m_window.getGLWindow(), &Game::windowCloseFunc);
 
     // Call onInitialize first to give derived game classes the chance to register script commands
@@ -201,7 +186,7 @@ namespace Celeste
     Dolce::Dolce* dolcePtr = getSystem<Dolce::Dolce>();
     Dolce::Dolce& dolce = *dolcePtr;
 
-    dolce.registerWindow(std::make_unique<Debug::HierarchyDolceWindow>(m_sceneManager));
+    dolce.registerWindow(std::make_unique<Debug::HierarchyDolceWindow>(*getSystem<SceneManager>()));
     dolce.registerWindow(std::make_unique<Debug::LuaScriptDolceWindow>());
     auto& logWindow = dolce.registerWindow(std::make_unique<Debug::LogDolceWindow>());
 
@@ -268,8 +253,6 @@ namespace Celeste
       {
         //float targetGameTime = m_clock.getTargetSecondsPerFrame() * m_clock.getTimeScale();
 
-        handleInput();
-
         //while (elapsedRealTime > targetGameTime)
         {
           // Manage user input
@@ -305,72 +288,8 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Game::handleInput()
-  {
-    if (m_inputManager.isActive())
-    {
-      m_inputManager.handleInput();
-    }
-    
-    if (m_sceneManager.isActive())
-    {
-      m_sceneManager.handleInput();
-    }
-
-    if (m_physicsManager.isActive())
-    {
-      m_physicsManager.handleInput();
-    }
-
-    if (m_audioManager.isActive())
-    {
-      m_audioManager.handleInput();
-    }
-
-    if (m_renderManager.isActive())
-    {
-      m_renderManager.handleInput();
-    }
-
-    for (const auto& systemPair : m_systems)
-    {
-      systemPair.second->handleInput();
-    }
-
-    if (m_inputManager.getKeyboard().isKeyTapped(GLFW_KEY_ESCAPE))
-    {
-      glfwSetWindowShouldClose(m_window.getGLWindow(), GL_TRUE);
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
   void Game::update(GLfloat elapsedGameTime)
   {
-    if (m_inputManager.isActive())
-    {
-      m_inputManager.update(elapsedGameTime);
-    }
-
-    if (m_sceneManager.isActive())
-    {
-      m_sceneManager.update(elapsedGameTime);
-    }
-
-    if (m_physicsManager.isActive())
-    {
-      m_physicsManager.update(elapsedGameTime);
-    }
-
-    if (m_audioManager.isActive())
-    {
-      m_audioManager.update(elapsedGameTime);
-    }
-
-    if (m_renderManager.isActive())
-    {
-      m_renderManager.update(elapsedGameTime);
-    }
-
     for (const auto& systemPair : m_systems)
     {
       systemPair.second->update(elapsedGameTime);
@@ -382,7 +301,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void Game::render(GLfloat lag)
   {
-    m_renderManager.render(lag);
+    getSystem<Rendering::RenderManager>()->render(lag);
 
 #if _DEBUG
     getSystem<Dolce::Dolce>()->render();
@@ -396,9 +315,9 @@ namespace Celeste
     {
       m_current->m_running = false;
 
-      if (getWindow().getGLWindow())
+      if (m_current->getWindow().getGLWindow())
       {
-        glfwSetWindowShouldClose(getWindow().getGLWindow(), GL_TRUE);
+        glfwSetWindowShouldClose(m_current->getWindow().getGLWindow(), GL_TRUE);
       }
     }
   }

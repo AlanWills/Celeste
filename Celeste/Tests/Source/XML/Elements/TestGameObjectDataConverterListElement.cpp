@@ -1,12 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "UtilityMacros/Unused.h"
 
 #include "XML/Elements/DataConverterListElement.h"
 #include "DataConverters/Objects/GameObjectDataConverter.h"
 #include "DataConverters/Resources/PrefabDataConverter.h"
 #include "TestResources/Resources/Data/PrefabLoadingResources.h"
-#include "Utils/GameObjectXMLUtils.h"
-#include "AssertExt.h"
+#include "TestUtils/Utils/GameObjectXMLUtils.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste::XML;
 

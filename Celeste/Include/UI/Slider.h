@@ -31,7 +31,7 @@ namespace Celeste::UI
       m_valueChanged.subscribe(callback);
     }
 
-    CelesteDllExport void handleInput() override;
+    CelesteDllExport void update(float elapsedGameTime) override;
 
   private:
     using Inherited = Component;

@@ -1,11 +1,11 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "DataConverters/Objects/ScriptableObjectDataConverter.h"
 #include "Registries/ScriptableObjectRegistry.h"
 #include "TestResources/Objects/MockScriptableObjectLoadingResources.h"
 #include "Mocks/Objects/MockScriptableObject.h"
-#include "AssertCel.h"
-#include "AssertExt.h"
+#include "TestUtils/Assert/AssertCel.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;
 using namespace Celeste::Resources;
@@ -16,13 +16,13 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestScriptableObjectDataConverter)
 
   //------------------------------------------------------------------------------------------------
-  void TestScriptableObjectDataConverter::testInitialize()
+  void testInitialize()
   {
     ScriptableObjectRegistry::removeScriptableObject<MockScriptableObject>();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestScriptableObjectDataConverter::testCleanup()
+  void testCleanup()
   {
     ScriptableObjectRegistry::removeScriptableObject<MockScriptableObject>();
   }

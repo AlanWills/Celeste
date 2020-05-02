@@ -1,7 +1,8 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
-#include "Physics/PhysicsUtils.h"
 #include "Game/Game.h"
+#include "Physics/PhysicsManager.h"
+#include "Physics/PhysicsUtils.h"
 #include "Physics/RectangleCollider.h"
 #include "Physics/RigidBody2D.h"
 
@@ -11,13 +12,12 @@ using namespace Celeste::Physics;
 
 namespace TestCeleste
 {
-
   CELESTE_TEST_CLASS(TestPhysicsUtils)
 
   //------------------------------------------------------------------------------------------------
-  void TestPhysicsUtils::testInitialize()
+  void testInitialize()
   {
-    Game::getPhysicsManager().clearSimulatedBodies();
+    Game::current().getSystem<Physics::PhysicsManager>()->clearSimulatedBodies();
   }
 
 #pragma region Get Physics Manager Tests
@@ -25,7 +25,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(PhysicsUtils_GetPhysicsManager_EqualsGamePhysicsManager)
   {
-    Assert::IsTrue(&getPhysicsManager() == &Game::getPhysicsManager());
+    Assert::IsTrue(&getPhysicsManager() == Game::current().getSystem<Physics::PhysicsManager>());
   }
 
 #pragma endregion

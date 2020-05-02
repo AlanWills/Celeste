@@ -1,11 +1,11 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Input/MockKeyboardTransformerDataConverter.h"
 #include "TestResources/Input/KeyboardTransformerLoadingResources.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Resources/ResourceManager.h"
 #include "Input/KeyboardTransformer.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::Input;
@@ -16,7 +16,7 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestKeyboardTransformerDataConverter)
 
   //------------------------------------------------------------------------------------------------
-  void TestKeyboardTransformerDataConverter::testInitialize()
+  void testInitialize()
   {
     KeyboardTransformerLoadingResources::unloadAllResources();
   }

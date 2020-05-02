@@ -1,7 +1,7 @@
 #define NOMINMAX  // Disable windows.h min/max macros
 
-#include "TestUtils.h"
-#include "Enums/Enum.h"
+#include "TestUtils/TestUtils.h"
+#include "CelesteStl/Enums/Enum.h"
 
 
 enum class Test : unsigned int

@@ -1,10 +1,10 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/DataConverters/LuaComponentDataConverterScriptCommands.h"
 #include "Lua/DataConverters/LuaComponentDataConverterRegistry.h"
 #include "Lua/LuaState.h"
 
-#include "AssertExt.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 using LuaState = Celeste::Lua::LuaState;
 
@@ -17,13 +17,13 @@ namespace TestCelesteLua::Lua::ScriptCommands
   CELESTE_TEST_CLASS(TestLuaComponentDataConverterScriptCommands)
 
   //------------------------------------------------------------------------------------------------
-  void TestLuaComponentDataConverterScriptCommands::testInitialize()
+  void testInitialize()
   {
     LuaComponentDataConverterRegistry::clear();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestLuaComponentDataConverterScriptCommands::testCleanup()
+  void testCleanup()
   {
     LuaComponentDataConverterRegistry::clear();
   }

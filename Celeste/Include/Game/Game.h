@@ -1,14 +1,9 @@
 #pragma once
 
 #include "Resources/ResourceManager.h"
-#include "Scene/SceneManager.h"
 #include "Viewport/OpenGLWindow.h"
-#include "Input/InputManager.h"
-#include "Physics/PhysicsManager.h"
-#include "Rendering/RenderManager.h"
-#include "Audio/AudioManager.h"
 #include "Time/Clock.h"
-#include "Memory/ObserverPtr.h"
+#include "CelesteStl/Memory/ObserverPtr.h"
 #include "System/ISystemContainer.h"
 #include "System/ISystem.h"
 #include "static_type_info.h"
@@ -30,10 +25,6 @@ namespace Celeste
   {
     private:
       using ResourceManager = Resources::ResourceManager;
-      using InputManager = Input::InputManager;
-      using PhysicsManager = Physics::PhysicsManager;
-      using RenderManager = Rendering::RenderManager;
-      using AudioManager = Audio::AudioManager;
 
     public:
       CelesteDllExport Game();
@@ -53,7 +44,7 @@ namespace Celeste
       /// Returns true if run() has been called on the game and false if exit() has been called.
       inline bool isRunning() const { return m_running; }
       
-      inline static Game& current() { return *m_current; }
+      CelesteDllExport static Game& current();
 
       CelesteDllExport void addSystem(static_type_info::TypeIndex id, std::unique_ptr<System::ISystem>&& system) override;
       CelesteDllExport void removeSystem(static_type_info::TypeIndex id) override;
@@ -68,14 +59,9 @@ namespace Celeste
       template <class TSystem>
       const TSystem* getSystem() const;
 
-      CelesteDllExport static ResourceManager& getResourceManager();
-      CelesteDllExport static SceneManager& getSceneManager();
-      CelesteDllExport static OpenGLWindow& getWindow();
-      CelesteDllExport static InputManager& getInputManager();
-      CelesteDllExport static PhysicsManager& getPhysicsManager();
-      CelesteDllExport static RenderManager& getRenderManager();
-      CelesteDllExport static AudioManager& getAudioManager();
-      CelesteDllExport static Clock& getClock();
+      CelesteDllExport ResourceManager& getResourceManager();
+      CelesteDllExport OpenGLWindow& getWindow();
+      CelesteDllExport Clock& getClock();
 
     protected:
       virtual void onInitialize() { }
@@ -92,8 +78,8 @@ namespace Celeste
       Game(const Game&) = delete;
       Game& operator=(const Game&) = delete;
 
+      void registerSystems();
       void initialize();
-      void handleInput();
       void update(GLfloat elapsedGameTime);
       void render(GLfloat lag);
 
@@ -109,16 +95,11 @@ namespace Celeste
 
       static observer_ptr<Game> m_current;
 
+      ResourceManager m_resourceManager;
+      OpenGLWindow m_window;
+      Clock m_clock;
       Systems m_systems;
 
-      ResourceManager m_resourceManager;
-      SceneManager m_sceneManager;
-      OpenGLWindow m_window;
-      InputManager m_inputManager;
-      PhysicsManager m_physicsManager;
-      RenderManager m_renderManager;
-      AudioManager m_audioManager;
-      Clock m_clock;
       bool m_running = false;
   };
 

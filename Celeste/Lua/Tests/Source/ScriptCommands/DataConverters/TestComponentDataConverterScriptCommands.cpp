@@ -4,7 +4,7 @@
 #include "Objects/GameObject.h"
 
 #include "Mocks/Objects/MockComponent.h"
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;

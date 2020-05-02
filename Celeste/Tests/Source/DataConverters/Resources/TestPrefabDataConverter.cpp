@@ -1,10 +1,10 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Resources/MockPrefabDataConverter.h"
 #include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "Resources/Data/Prefab.h"
-#include "Utils/GameObjectXMLUtils.h"
-#include "AssertCel.h"
+#include "TestUtils/Utils/GameObjectXMLUtils.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 
 namespace TestCeleste
@@ -12,7 +12,7 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestPrefabDataConverter)
 
   //------------------------------------------------------------------------------------------------
-  void TestPrefabDataConverter::testInitialize()
+  void testInitialize()
   {
     PrefabLoadingResources::unloadAllResources();
   }

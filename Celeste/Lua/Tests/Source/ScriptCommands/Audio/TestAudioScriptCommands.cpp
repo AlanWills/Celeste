@@ -5,7 +5,7 @@
 #include "Audio/AudioUtils.h"
 #include "Audio/AudioManager.h"
 
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "Objects/Component.h"
 
 using LuaState = Celeste::Lua::LuaState;
@@ -17,7 +17,7 @@ namespace TestCelesteLua::Lua::ScriptCommands
   CELESTE_TEST_CLASS(TestAudioScriptCommands)
 
   //------------------------------------------------------------------------------------------------
-  void TestAudioScriptCommands::testInitialize()
+  void testInitialize()
   {
     Celeste::Lua::ComponentScriptCommands::initialize(Celeste::Lua::LuaState::instance());
   }

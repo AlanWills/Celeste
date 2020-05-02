@@ -1,10 +1,10 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "GraphicalFX/OpacityLerper.h"
+#include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
 #include "Rendering/SpriteRenderer.h"
-#include "Objects/GameObject.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Rendering;

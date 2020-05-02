@@ -1,12 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
+#include "Objects/GameObject.h"
 #include "Lua/LuaState.h"
 #include "Lua/Components/LuaComponentManifestRegistry.h"
 #include "Lua/Components/LuaComponent.h"
 #include "Registries/ComponentRegistry.h"
-#include "Objects/GameObject.h"
 
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Lua;
@@ -17,14 +17,14 @@ namespace TestCeleste::Lua
   CELESTE_TEST_CLASS(TestLuaComponentManifestRegistry)
 
   //------------------------------------------------------------------------------------------------
-  void TestLuaComponentManifestRegistry::testInitialize()
+  void testInitialize()
   {
     LuaComponentManifestRegistry::deregisterComponent("Test");
     ComponentRegistry::deregisterComponent("Test");
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestLuaComponentManifestRegistry::testCleanup()
+  void testCleanup()
   {
     LuaComponentManifestRegistry::deregisterComponent("Test");
     ComponentRegistry::deregisterComponent("Test");

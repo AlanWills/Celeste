@@ -1,4 +1,7 @@
 #include "Input/InputUtils.h"
+#include "Input/InputManager.h"
+#include "Input/Keyboard.h"
+#include "Input/Mouse.h"
 #include "Game/Game.h"
 
 
@@ -7,7 +10,7 @@ namespace Celeste::Input
   //------------------------------------------------------------------------------------------------
   InputManager& getInputManager()
   {
-    return Game::getInputManager();
+    return *Game::current().getSystem<Input::InputManager>();
   }
 
   //------------------------------------------------------------------------------------------------

@@ -30,18 +30,8 @@ namespace Celeste::Audio
   }
 
   //------------------------------------------------------------------------------------------------
-  void AudioManager::handleInput()
-  {
-    Inherited::handleInput();
-
-    Algorithm::handleInput(AudioSource::m_allocator);
-  }
-
-  //------------------------------------------------------------------------------------------------
   void AudioManager::update(float elapsedGameTime)
   {
-    Inherited::update(elapsedGameTime);
-
     Algorithm::update(elapsedGameTime, AudioSource::m_allocator);
   }
 

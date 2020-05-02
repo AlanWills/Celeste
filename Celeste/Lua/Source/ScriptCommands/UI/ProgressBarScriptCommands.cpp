@@ -1,5 +1,5 @@
 #include "ScriptCommands/UI/ProgressBarScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "UI/ProgressBar.h"
 #include "sol/sol.hpp"
 

@@ -1,5 +1,5 @@
 #include "ScriptCommands/Animation/AnimatorScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 
 #include "Animation/Animator.h"
 

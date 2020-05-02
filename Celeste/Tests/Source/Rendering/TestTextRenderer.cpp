@@ -1,10 +1,10 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Rendering/MockTextRenderer.h"
 #include "Resources/ResourceManager.h"
 #include "TestResources/TestResources.h"
 #include "Registries/ComponentRegistry.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::UI;

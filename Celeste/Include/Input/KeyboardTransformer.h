@@ -31,7 +31,6 @@ namespace Celeste::Input
       inline void setTranslationSpeed(float translationSpeed) { m_translationSpeed = translationSpeed; }
       inline void setRotationSpeed(float rotationSpeed) { m_rotationSpeed = rotationSpeed; }
 
-      CelesteDllExport void handleInput() override;
       CelesteDllExport void update(float elapsedGameTime) override;
 
     protected:

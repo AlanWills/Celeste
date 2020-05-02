@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DolceWindow.h"
+#include "Dolce/DolceWindow.h"
 #include "Log/Verbosity.h"
 
 #include <vector>

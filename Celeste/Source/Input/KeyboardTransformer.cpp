@@ -24,9 +24,17 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void KeyboardTransformer::handleInput()
+  void KeyboardTransformer::update(float elapsedGameTime)
   {
-    Inherited::handleInput();
+    Inherited::update(elapsedGameTime);
+
+#if _DEBUG
+    if (getGameObject() == nullptr || getGameObject()->getTransform() == nullptr)
+    {
+      ASSERT_FAIL();
+      return;
+    }
+#endif
 
     // Zero the direction and rotation delta again
     m_directionVector = glm::vec2();
@@ -70,20 +78,6 @@ namespace Celeste::Input
       // Rotate right (+ve)
       m_deltaRotation += 1;
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void KeyboardTransformer::update(float elapsedGameTime)
-  {
-    Inherited::update(elapsedGameTime);
-
-#if _DEBUG
-    if (getGameObject() == nullptr || getGameObject()->getTransform() == nullptr)
-    {
-      ASSERT_FAIL();
-      return;
-    }
-#endif
 
     observer_ptr<Transform> transform = getGameObject()->getTransform();
 

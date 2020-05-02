@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "UtilityMacros/Unused.h"
 
 #include "Objects/GameObject.h"
@@ -8,7 +8,7 @@
 #include "Mocks/Rendering/MockSpriteBatch.h"
 #include "Mocks/Rendering/MockSpriteRenderer.h"
 #include "Mocks/Rendering/MockTextRenderer.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 
@@ -945,38 +945,6 @@ namespace TestCeleste
     gameObject.removeComponent(script);
 
     Assert::AreEqual(static_cast<size_t>(0), gameObject.getComponentCount());
-  }
-
-#pragma endregion
-
-#pragma region Handle Input Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObject_HandleInput_CallsHandleInputOnAllUnmanagedComponents_WhichAreActive)
-  {
-    GameObject gameObject;
-    observer_ptr<MockUnmanagedComponent> script1 = gameObject.addComponent<MockUnmanagedComponent>();
-    observer_ptr<MockUnmanagedComponent> script2 = gameObject.addComponent<MockUnmanagedComponent>();
-
-    script2->setActive(false);
-
-    // Have to call update to move components to the active components vector
-    gameObject.update(0);
-    gameObject.handleInput();
-
-    Assert::IsTrue(script1->handleInputCalled());
-    Assert::IsFalse(script2->handleInputCalled());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObject_HandleInput_DoesNotCallHandleInputOnManagedComponents)
-  {
-    GameObject gameObject;
-    observer_ptr<MockManagedComponent> component = gameObject.addComponent<MockManagedComponent>();
-
-    gameObject.handleInput();
-
-    Assert::IsFalse(component->handleInputCalled());
   }
 
 #pragma endregion

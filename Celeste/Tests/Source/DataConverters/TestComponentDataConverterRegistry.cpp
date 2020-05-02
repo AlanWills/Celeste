@@ -1,10 +1,10 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
+#include "Objects/GameObject.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Mocks/DataConverters/Objects/MockComponentDataConverter.h"
 #include "Registries/ComponentRegistry.h"
-#include "Objects/GameObject.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 
@@ -14,7 +14,7 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestComponentDataConverterRegistry)
 
   //------------------------------------------------------------------------------------------------
-  void TestComponentDataConverterRegistry::testInitialize()
+  void testInitialize()
   {
     ComponentDataConverterRegistry::removeConverter<MockComponentDataConverter>();
   }

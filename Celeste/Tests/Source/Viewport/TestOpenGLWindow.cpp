@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "Scene/SceneUtils.h"
 #include "Viewport/OpenGLWindow.h"
 #include "OpenGL/GL.h"
@@ -11,13 +11,13 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestOpenGLWindow)
 
   //------------------------------------------------------------------------------------------------
-  void TestOpenGLWindow::testInitialize()
+  void testInitialize()
   {
     glfwMakeContextCurrent(nullptr);
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestOpenGLWindow::testCleanup()
+  void testCleanup()
   {
     glfwMakeContextCurrent(getWindow().getGLWindow());
   }

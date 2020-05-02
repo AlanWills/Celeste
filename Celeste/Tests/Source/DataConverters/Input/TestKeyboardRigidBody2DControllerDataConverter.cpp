@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Input/MockKeyboardRigidBody2DControllerDataConverter.h"
 #include "TestResources/Input/KeyboardRigidBody2DControllerLoadingResources.h"
@@ -6,7 +6,7 @@
 #include "Deserialization/InputDeserializers.h"
 #include "Resources/ResourceManager.h"
 #include "Input/KeyboardRigidBody2DController.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::Input;
@@ -17,7 +17,7 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestKeyboardRigidBody2DControllerDataConverter)
 
   //------------------------------------------------------------------------------------------------
-  void TestKeyboardRigidBody2DControllerDataConverter::testInitialize()
+  void testInitialize()
   {
     KeyboardRigidBody2DControllerLoadingResources::unloadAllResources();
   }

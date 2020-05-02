@@ -1,5 +1,6 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
+#include "Rendering/RenderManager.h"
 #include "Rendering/RenderUtils.h"
 #include "Game/Game.h"
 
@@ -15,7 +16,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(RenderUtils_GetRenderManager_EqualsGameRenderManager)
   {
-    Assert::IsTrue(&getRenderManager() == &Celeste::Game::getRenderManager());
+    Assert::IsTrue(&getRenderManager() == Celeste::Game::current().getSystem<RenderManager>());
   }
 
 #pragma endregion

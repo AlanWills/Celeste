@@ -7,6 +7,6 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   Clock& getClock()
   {
-    return Game::getClock();
+    return Game::current().getClock();
   }
 }

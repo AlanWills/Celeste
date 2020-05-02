@@ -1,5 +1,5 @@
 #include "ScriptCommands/Objects/EntityScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Objects/Entity.h"
 #include "sol/sol.hpp"
 

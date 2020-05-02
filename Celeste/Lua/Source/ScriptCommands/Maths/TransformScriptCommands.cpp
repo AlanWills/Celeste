@@ -1,5 +1,5 @@
 #include "ScriptCommands/Maths/TransformScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Maths/Transform.h"
 #include "sol/sol.hpp"
 

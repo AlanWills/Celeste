@@ -1,5 +1,5 @@
 #include "ScriptCommands/Audio/AudioSourceScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 
 #include "Audio/AudioSource.h"
 #include "Deserialization/AudioDeserializers.h"

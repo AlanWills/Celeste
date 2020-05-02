@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Enums/Enum.h"
+#include "CelesteStl/Enums/Enum.h"
 
 
 namespace Celeste::Log

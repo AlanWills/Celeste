@@ -2,7 +2,7 @@
 
 #if _DEBUG
 
-#include "DolceWindow.h"
+#include "Dolce/DolceWindow.h"
 
 
 namespace Celeste::Debug

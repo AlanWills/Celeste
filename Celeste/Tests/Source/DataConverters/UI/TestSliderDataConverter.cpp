@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/UI/MockSliderDataConverter.h"
 #include "TestResources/UI/SliderLoadingResources.h"
@@ -7,7 +7,7 @@
 #include "DataConverters/Callbacks/CallbackDataConverter.h"
 #include "Rendering/SpriteRenderer.h"
 #include "UI/Slider.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::UI;

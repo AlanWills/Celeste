@@ -1,5 +1,5 @@
 #include "ScriptCommands/Rendering/CanvasScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Rendering/Canvas.h"
 #include "sol/sol.hpp"
 

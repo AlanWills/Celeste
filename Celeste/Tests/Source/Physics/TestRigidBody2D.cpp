@@ -1,10 +1,10 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
-#include "Physics/RigidBody2D.h"
-#include "AssertExt.h"
-#include "AssertCel.h"
-#include "Registries/ComponentRegistry.h"
 #include "Objects/GameObject.h"
+#include "Physics/RigidBody2D.h"
+#include "TestUtils/Assert/AssertExt.h"
+#include "TestUtils/Assert/AssertCel.h"
+#include "Registries/ComponentRegistry.h"
 
 using namespace Celeste;
 

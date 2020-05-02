@@ -2,7 +2,7 @@
 
 #include "Memory/Iterators/ResizeableAllocatorIterator.h"
 #include "Memory/Allocators/PoolAllocator.h"
-#include "Memory/ObserverPtr.h"
+#include "CelesteStl/Memory/ObserverPtr.h"
 #include "Assert/Assert.h"
 #include "Log/Log.h"
 

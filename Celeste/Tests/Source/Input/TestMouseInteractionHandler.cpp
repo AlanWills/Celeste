@@ -1,11 +1,11 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Input/MouseInteractionHandler.h"
 #include "Objects/GameObject.h"
 #include "Input/InputManager.h"
 #include "Registries/ComponentRegistry.h"
-#include "Utils/InputUtils.h"
-#include "AssertCel.h"
+#include "TestUtils/Utils/InputUtils.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Input;
@@ -22,7 +22,7 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestMouseInteractionHandler::testInitialize()
+  void testInitialize()
   {
     called = false;
     getMouse().flush();
@@ -61,7 +61,7 @@ namespace TestCeleste
     handler->getOnEnterEvent().subscribe(std::bind(&TestMouseInteractionHandler::callback, this, std::placeholders::_1));
     handler->setMouseOver(true);
     getMouse().getTransform().setTranslation(0, 0);
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(called);
   }
@@ -77,12 +77,12 @@ namespace TestCeleste
 
     Assert::IsTrue(handler->isMouseOver());
 
-    handler->handleInput();
+    handler->update(0);
     handler->setMouseOver(false);
 
     Assert::IsFalse(handler->isMouseOver());
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(called);
   }
@@ -102,7 +102,7 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(called);
   }
@@ -119,7 +119,7 @@ namespace TestCeleste
     Assert::IsFalse(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -136,7 +136,7 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsFalse(getMouse().isButtonClicked(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -158,13 +158,13 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
     simulateMouseButtonReleased(MouseButton::kLeft);
       
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsFalse(getMouse().isButtonPressed(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(called);
   }
@@ -182,14 +182,14 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
     simulateMouseButtonReleased(MouseButton::kLeft);
     handler->setMouseOver(false);
 
     Assert::IsFalse(handler->isMouseOver());
     Assert::IsFalse(getMouse().isButtonPressed(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -207,12 +207,12 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(handler->isMouseOver()); 
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -230,12 +230,12 @@ namespace TestCeleste
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
 
     handler->setMouseOver(true);
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -252,12 +252,12 @@ namespace TestCeleste
     Assert::IsFalse(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kLeft));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -279,7 +279,7 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(called);
   }
@@ -296,7 +296,7 @@ namespace TestCeleste
     Assert::IsFalse(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -313,7 +313,7 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsFalse(getMouse().isButtonClicked(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -335,13 +335,13 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
     simulateMouseButtonReleased(MouseButton::kMiddle);
 
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsFalse(getMouse().isButtonPressed(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(called);
   }
@@ -359,14 +359,14 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
     simulateMouseButtonReleased(MouseButton::kMiddle);
     handler->setMouseOver(false);
 
     Assert::IsFalse(handler->isMouseOver());
     Assert::IsFalse(getMouse().isButtonPressed(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -384,12 +384,12 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -407,12 +407,12 @@ namespace TestCeleste
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kMiddle));
 
     handler->setMouseOver(true);
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -429,12 +429,12 @@ namespace TestCeleste
     Assert::IsFalse(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -456,7 +456,7 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kRight));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(called);
   }
@@ -473,7 +473,7 @@ namespace TestCeleste
     Assert::IsFalse(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kRight));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -490,7 +490,7 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsFalse(getMouse().isButtonClicked(MouseButton::kRight));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -512,13 +512,13 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kRight));
 
-    handler->handleInput();
+    handler->update(0);
     simulateMouseButtonReleased(MouseButton::kRight);
 
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsFalse(getMouse().isButtonPressed(MouseButton::kRight));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(called);
   }
@@ -536,14 +536,14 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kRight));
 
-    handler->handleInput();
+    handler->update(0);
     simulateMouseButtonReleased(MouseButton::kRight);
     handler->setMouseOver(false);
 
     Assert::IsFalse(getMouse().isButtonPressed(MouseButton::kRight));
     Assert::IsFalse(handler->isMouseOver());
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -561,12 +561,12 @@ namespace TestCeleste
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kRight));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kRight));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -584,12 +584,12 @@ namespace TestCeleste
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kMiddle));
 
     handler->setMouseOver(true);
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsTrue(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kMiddle));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }
@@ -606,12 +606,12 @@ namespace TestCeleste
     Assert::IsFalse(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kRight));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(handler->isMouseOver());
     Assert::IsTrue(getMouse().isButtonPressed(MouseButton::kRight));
 
-    handler->handleInput();
+    handler->update(0);
 
     Assert::IsFalse(called);
   }

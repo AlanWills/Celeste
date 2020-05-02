@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Resources/ResourcesScriptCommands.h"
 #include "Lua/LuaState.h"
@@ -6,7 +6,7 @@
 #include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "Resources/ResourceManager.h"
 
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste::Resources;
@@ -16,15 +16,15 @@ namespace TestCelesteLua::Lua::ScriptCommands
 {
   CELESTE_TEST_CLASS(TestResourcesScriptCommands)
 
-    //------------------------------------------------------------------------------------------------
-    void TestResourcesScriptCommands::testInitialize()
+  //------------------------------------------------------------------------------------------------
+  void testInitialize()
   {
     getResourceManager().setResourcesDirectory(TestResources::getResourcesDirectory());
     getResourceManager().unload<Data>(TestResources::getDataXmlFullPath());
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestResourcesScriptCommands::testCleanup()
+  void testCleanup()
   {
     getResourceManager().setResourcesDirectory(TestResources::getResourcesDirectory());
     getResourceManager().unload<Data>(TestResources::getDataXmlFullPath());

@@ -1,11 +1,11 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Physics/MockRectangleColliderDataConverter.h"
 #include "TestResources/Physics/RectangleColliderLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Physics/RectangleCollider.h"
 #include "Registries/ComponentDataConverterRegistry.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::Physics;
@@ -16,7 +16,7 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestRectangleColliderDataConverter)
 
   //------------------------------------------------------------------------------------------------
-  void TestRectangleColliderDataConverter::testInitialize()
+  void testInitialize()
   {
     RectangleColliderLoadingResources::unloadAllResources();
   }

@@ -1,11 +1,11 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Physics/PhysicsManager.h"
 #include "Game/Game.h"
 #include "Physics/RectangleCollider.h"
 #include "Physics/RigidBody2D.h"
 #include "Mocks/Physics/CollisionDetector.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Physics;
@@ -16,9 +16,9 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestPhysicsManager)
 
   //------------------------------------------------------------------------------------------------
-  void TestPhysicsManager::testInitialize()
+  void testInitialize()
   {
-    Game::getPhysicsManager().clearSimulatedBodies();
+    Game::current().getSystem<Physics::PhysicsManager>()->clearSimulatedBodies();
   }
 
 #pragma region Constructor Tests

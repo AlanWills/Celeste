@@ -1,12 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/UI/SliderScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
 #include "UI/Slider.h"
 #include "Rendering/SpriteRenderer.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using Slider = Celeste::UI::Slider;
@@ -132,7 +132,7 @@ namespace TestCelesteLua::Lua::UI::SliderScriptCommands
 
 #pragma region Subscribe On Value Changed Callback Tests
 
-  void TestSliderScriptCommands::callback(GameObject&, float) {}
+  void callback(GameObject&, float) {}
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(SliderScriptCommands_SubscribeOnValueChangedCallback_AddsCallback)

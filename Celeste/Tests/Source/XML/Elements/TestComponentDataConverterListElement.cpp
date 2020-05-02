@@ -1,10 +1,10 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "UtilityMacros/Unused.h"
 
 #include "XML/Elements/DataConverterListElement.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Mocks/DataConverters/Objects/MockComponentDataConverter.h"
-#include "AssertExt.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;
 using namespace Celeste::XML;
@@ -15,13 +15,13 @@ namespace TestCeleste::XML
   CELESTE_TEST_CLASS(TestComponentDataConverterListElement)
 
   //------------------------------------------------------------------------------------------------
-  void TestComponentDataConverterListElement::testInitialize()
+  void testInitialize()
   {
     ComponentDataConverterRegistry::removeConverter<MockComponentDataConverter>();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestComponentDataConverterListElement::testCleanup()
+  void testCleanup()
   {
     ComponentDataConverterRegistry::removeConverter<MockComponentDataConverter>();
   }

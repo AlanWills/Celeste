@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Physics/PhysicsScriptCommands.h"
 #include "ScriptCommands/Objects/ComponentScriptCommands.h"
@@ -15,7 +15,7 @@ namespace TestCelesteLua::Lua::Physics
   CELESTE_TEST_CLASS(TestPhysicsScriptCommands)
 
   //------------------------------------------------------------------------------------------------
-  void TestPhysicsScriptCommands::testInitialize()
+  void testInitialize()
   {
     Celeste::Lua::ComponentScriptCommands::initialize(LuaState::instance());
   }

@@ -1,8 +1,8 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "Animation/AnimationState.h"
 #include "Mocks/Animation/MockAnimator.h"
 #include "Registries/ComponentRegistry.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Animation;

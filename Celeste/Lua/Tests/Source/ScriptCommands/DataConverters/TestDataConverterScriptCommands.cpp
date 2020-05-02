@@ -1,8 +1,8 @@
 #include "ScriptCommands/DataConverters/DataConverterScriptCommands.h"
 #include "Lua/LuaState.h"
 
-#include "UtilityHeaders/UnitTestHeaders.h"
-#include "FileAssert.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/Assert/FileAssert.h"
 
 #include "Mocks/DataConverters/MockDataConverter.h"
 #include "TestResources/TestResources.h"
@@ -17,7 +17,7 @@ namespace TestCelesteLua::Lua::DataConverterScriptCommands
   CELESTE_TEST_CLASS(TestDataConverterScriptCommands)
 
   //------------------------------------------------------------------------------------------------
-  void TestDataConverterScriptCommands::testCleanup()
+  void testCleanup()
   {
     getResourceManager().unloadAll<Data>();
   }

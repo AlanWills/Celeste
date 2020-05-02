@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Objects/Entity.h"
+#include "System/ISystem.h"
 #include "Audio/AudioUtils.h"
 
 
 namespace Celeste::Audio
 {
-  class AudioManager : public Entity
+  class AudioManager : public System::ISystem
   {
     public:
       CelesteDllExport AudioManager();
@@ -24,11 +24,10 @@ namespace Celeste::Audio
       float getSFXVolume() const { return m_sfxVolume; }
       CelesteDllExport void setSFXVolume(float volume);
 
-      void handleInput() override;
       void update(float elapsedGameTime) override;
 
     private:
-      using Inherited = Entity;
+      using Inherited = System::ISystem;
 
       float m_masterVolume;
       float m_musicVolume;

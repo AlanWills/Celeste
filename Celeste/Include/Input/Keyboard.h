@@ -16,7 +16,7 @@ namespace Celeste
     public:
       CelesteDllExport Keyboard();
       
-      CelesteDllExport void handleInput();
+      CelesteDllExport void update();
 
       CelesteDllExport void setKeyPressed(int key);
       CelesteDllExport void setKeyReleased(int key);

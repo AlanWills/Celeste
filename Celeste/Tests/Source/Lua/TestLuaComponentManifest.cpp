@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Lua/Components/LuaComponentManifest.h"
 #include "Lua/Components/LuaComponent.h"
@@ -17,11 +17,9 @@ namespace TestCeleste::Lua
     //------------------------------------------------------------------------------------------------
     std::string resetScript = R"(
     onSetActiveCalled = false
-    handleInputCalled = false
     updateCalled = false
 
     onSetActive = nil
-    handleInput = nil
     update = nil
     )";
 
@@ -35,15 +33,6 @@ namespace TestCeleste::Lua
     )";
 
   //------------------------------------------------------------------------------------------------
-  std::string handleInputScript = R"(
-    handleInputCalled = false
-
-    function handleInput(component)
-      handleInputCalled = true
-    end
-    )";
-
-  //------------------------------------------------------------------------------------------------
   std::string updateScript = R"(
     updateCalled = false
 
@@ -53,13 +42,13 @@ namespace TestCeleste::Lua
     )";
 
   //------------------------------------------------------------------------------------------------
-  void TestLuaComponentManifest::testInitialize()
+  void testInitialize()
   {
     LuaState::instance().script(resetScript);
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestLuaComponentManifest::testCleanup()
+  void testCleanup()
   {
     LuaState::instance().script(resetScript);
   }
@@ -94,36 +83,6 @@ namespace TestCeleste::Lua
     manifest.getOnSetActiveFunc()(nullptr, false);
 
     Assert::IsTrue(state["onSetActiveCalled"]);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithoutValidHandleInputCallback_SetsHandleInputToEmptyFunc)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state["handleInput"].valid());
-
-    LuaComponentManifest manifest{ state.globals() };
-
-    Assert::IsFalse(manifest.getHandleInputFunc().valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(LuaComponentManifest_Constructor_InputtingTableWithValidHandleInputCallback_SetsHandleInputToFunc)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsTrue(state.script(handleInputScript).valid());
-    Assert::IsTrue(state["handleInput"].valid());
-
-    LuaComponentManifest manifest{ state.globals() };
-
-    Assert::IsTrue(manifest.getHandleInputFunc().valid());
-    Assert::IsFalse(state["handleInputCalled"]);
-
-    manifest.getHandleInputFunc()(nullptr);
-
-    Assert::IsTrue(state["handleInputCalled"]);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -168,22 +127,17 @@ namespace TestCeleste::Lua
     sol::state& state = LuaState::instance();
 
     Assert::IsTrue(state.script(onSetActiveScript).valid());
-    Assert::IsTrue(state.script(handleInputScript).valid());
     Assert::IsTrue(state.script(updateScript).valid());
 
     LuaComponentManifest manifest{ state.globals() };
 
     Assert::IsTrue(manifest.getOnSetActiveFunc().valid());
-    Assert::IsTrue(manifest.getHandleInputFunc().valid());
     Assert::IsTrue(manifest.getUpdateFunc().valid());
 
     manifest.initializeComponent(luaComponent);
 
     Assert::IsTrue(luaComponent.getOnSetActiveFunc().valid());
     Assert::IsTrue(manifest.getOnSetActiveFunc() == luaComponent.getOnSetActiveFunc());
-
-    Assert::IsTrue(luaComponent.getHandleInputFunc().valid());
-    Assert::IsTrue(manifest.getHandleInputFunc() == luaComponent.getHandleInputFunc());
 
     Assert::IsTrue(luaComponent.getUpdateFunc().valid());
     Assert::IsTrue(manifest.getUpdateFunc() == luaComponent.getUpdateFunc());

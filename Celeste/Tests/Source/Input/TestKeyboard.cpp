@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Input/MockKeyboard.h"
 
@@ -77,7 +77,7 @@ namespace TestCeleste
       // Process key down events
       keyboard.setKeyPressed(GLFW_KEY_A);
       keyboard.setKeyPressed(GLFW_KEY_SPACE);
-      keyboard.handleInput();
+      keyboard.update();
 
       Assert::IsTrue(keyboard.isKeyPressed(GLFW_KEY_A));
       Assert::IsTrue(keyboard.isKeyPressed(GLFW_KEY_SPACE));
@@ -99,7 +99,7 @@ namespace TestCeleste
       Assert::IsFalse(keyboard.isKeyPressed(GLFW_KEY_A));
       Assert::IsFalse(keyboard.isKeyPressed(GLFW_KEY_SPACE));
 
-      keyboard.handleInput();
+      keyboard.update();
 
       Assert::IsFalse(keyboard.isKeyPressed(GLFW_KEY_B));
       Assert::IsFalse(keyboard.isKeyPressed(GLFW_KEY_C));
@@ -132,7 +132,7 @@ namespace TestCeleste
       // Process key down events
       keyboard.setKeyReleased(GLFW_KEY_A);
       keyboard.setKeyReleased(GLFW_KEY_SPACE);
-      keyboard.handleInput();
+      keyboard.update();
 
       Assert::IsTrue(keyboard.isKeyReleased(GLFW_KEY_A));
       Assert::IsTrue(keyboard.isKeyReleased(GLFW_KEY_SPACE));
@@ -150,7 +150,7 @@ namespace TestCeleste
 
       keyboard.setKeyPressed(GLFW_KEY_A);
       keyboard.setKeyPressed(GLFW_KEY_SPACE);
-      keyboard.handleInput();
+      keyboard.update();
 
       Assert::IsFalse(keyboard.isKeyReleased(GLFW_KEY_A));
       Assert::IsFalse(keyboard.isKeyReleased(GLFW_KEY_SPACE));
@@ -192,12 +192,12 @@ namespace TestCeleste
       // Process key down events
       keyboard.setKeyReleased(GLFW_KEY_A);
       keyboard.setKeyReleased(GLFW_KEY_SPACE);
-      keyboard.handleInput();
+      keyboard.update();
 
       // Process key up events
       keyboard.setKeyPressed(GLFW_KEY_A);
       keyboard.setKeyPressed(GLFW_KEY_SPACE);
-      keyboard.handleInput();
+      keyboard.update();
 
       Assert::IsTrue(keyboard.isKeyTapped(GLFW_KEY_A));
       Assert::IsTrue(keyboard.isKeyTapped(GLFW_KEY_SPACE));
@@ -216,7 +216,7 @@ namespace TestCeleste
       // Process key down events
       keyboard.setKeyReleased(GLFW_KEY_A);
       keyboard.setKeyReleased(GLFW_KEY_SPACE);
-      keyboard.handleInput();
+      keyboard.update();
 
       Assert::IsFalse(keyboard.isKeyTapped(GLFW_KEY_A));
       Assert::IsFalse(keyboard.isKeyTapped(GLFW_KEY_SPACE));
@@ -229,7 +229,7 @@ namespace TestCeleste
       Assert::IsFalse(keyboard.isKeyTapped(GLFW_KEY_A));
       Assert::IsFalse(keyboard.isKeyTapped(GLFW_KEY_SPACE));
 
-      keyboard.handleInput();
+      keyboard.update();
 
       Assert::IsFalse(keyboard.isKeyTapped(GLFW_KEY_B));
       Assert::IsFalse(keyboard.isKeyTapped(GLFW_KEY_C));
@@ -259,7 +259,7 @@ namespace TestCeleste
       // Process key down messages
       keyboard.setKeyPressed(GLFW_KEY_A);
       keyboard.setKeyPressed(GLFW_KEY_SPACE);
-      keyboard.handleInput();
+      keyboard.update();
 
       Assert::IsTrue(keyboard.isKeyPressed(GLFW_KEY_A));
       Assert::IsTrue(keyboard.isKeyPressed(GLFW_KEY_SPACE));
@@ -279,12 +279,12 @@ namespace TestCeleste
       // Process key down messages
       keyboard.setKeyReleased(GLFW_KEY_A);
       keyboard.setKeyReleased(GLFW_KEY_SPACE);
-      keyboard.handleInput();
+      keyboard.update();
 
       // Process key up messages
       keyboard.setKeyPressed(GLFW_KEY_A);
       keyboard.setKeyPressed(GLFW_KEY_SPACE);
-      keyboard.handleInput();
+      keyboard.update();
 
       Assert::IsTrue(keyboard.isKeyTapped(GLFW_KEY_A));
       Assert::IsTrue(keyboard.isKeyTapped(GLFW_KEY_SPACE));

@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Settings/GameSettingsScriptCommands.h"
 #include "Lua/LuaState.h"
@@ -6,8 +6,8 @@
 #include "Settings/GameSettings.h"
 #include "TestResources/Settings/GameSettingsLoadingResources.h"
 #include "Audio/AudioManager.h"
-#include "AssertExt.h"
-#include "FileAssert.h"
+#include "TestUtils/Assert/AssertExt.h"
+#include "TestUtils/Assert/FileAssert.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using GameSettings = Settings::GameSettings;
@@ -22,7 +22,7 @@ namespace TestCelesteLua::Lua::GameSettingsScriptCommands
   float originalSFXVolume;
 
   //------------------------------------------------------------------------------------------------
-  void TestGameSettingsScriptCommands::testInitialize()
+  void testInitialize()
   {
     Celeste::Audio::AudioManager& audioSourceManager = Celeste::Audio::getAudioManager();
 
@@ -32,7 +32,7 @@ namespace TestCelesteLua::Lua::GameSettingsScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestGameSettingsScriptCommands::testCleanup()
+  void testCleanup()
   {
     Celeste::Audio::AudioManager& audioSourceManager = Celeste::Audio::getAudioManager();
 

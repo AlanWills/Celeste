@@ -2,7 +2,7 @@
 
 #include "Debug/DolceUtils.h"
 #include "Game/Game.h"
-#include "Dolce.h"
+#include "Dolce/Dolce.h"
 
 
 namespace Celeste::Debug

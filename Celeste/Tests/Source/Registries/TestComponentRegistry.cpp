@@ -1,16 +1,15 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
-#include "Registries/ComponentRegistry.h"
 #include "Objects/GameObject.h"
+#include "Registries/ComponentRegistry.h"
 #include "Mocks/Objects/MockComponent.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 
 
 namespace TestCeleste
 {
-
   class NonRegisteredComponent : public Component 
   { 
     public: 
@@ -23,14 +22,14 @@ namespace TestCeleste
   CELESTE_TEST_CLASS(TestComponentRegistry)
 
   //------------------------------------------------------------------------------------------------
-  void TestComponentRegistry::testInitialize()
+  void testInitialize()
   {
     ComponentRegistry::deregisterComponent<NonRegisteredComponent>();
     ComponentRegistry::registerComponent<MockComponent>();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestComponentRegistry::testCleanup()
+  void testCleanup()
   {
     ComponentRegistry::deregisterComponent<NonRegisteredComponent>();
     ComponentRegistry::registerComponent<MockComponent>();

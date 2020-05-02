@@ -1,14 +1,14 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Objects/GameObjectScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
 #include "Registries/ComponentRegistry.h"
 #include "Mocks/Objects/MockComponent.h"
 #include "Mocks/Rendering/MockRenderer.h"
 #include "Objects/GameObject.h"
-#include "AssertCel.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;
@@ -19,13 +19,13 @@ namespace TestCelesteLua::Lua::ScriptCommands
   CELESTE_TEST_CLASS(TestGameObjectScriptCommands)
 
   //------------------------------------------------------------------------------------------------
-  void TestGameObjectScriptCommands::testInitialize()
+  void testInitialize()
   {
     ComponentRegistry::deregisterComponent<MockComponent>();
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestGameObjectScriptCommands::testCleanup()
+  void testCleanup()
   {
     ComponentRegistry::deregisterComponent<MockComponent>();
   }

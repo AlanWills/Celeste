@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CelesteDllExport.h"
-#include "Memory/ObserverPtr.h"
+#include "CelesteStl/Memory/ObserverPtr.h"
 
 #include <vector>
 #include <tuple>

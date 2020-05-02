@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/UI/MockButtonDataConverter.h"
 #include "TestResources/UI/ButtonLoadingResources.h"
@@ -8,8 +8,8 @@
 #include "UI/Button.h"
 #include "Resources/ResourceManager.h"
 #include "Registries/ComponentDataConverterRegistry.h"
-#include "AssertSpecialization/FileSystem.h"
-#include "AssertCel.h"
+#include "TestUtils/AssertSpecialization/FileSystem.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::UI;

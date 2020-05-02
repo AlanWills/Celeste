@@ -1,13 +1,13 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Objects/GameObjectScriptCommands.h"
 #include "ScriptCommands/Scene/SceneScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
 #include "TestResources/Scene/SceneLoadingResources.h"
-#include "AssertCel.h"
-#include "FileAssert.h"
+#include "TestUtils/Assert/AssertCel.h"
+#include "TestUtils/Assert/FileAssert.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;

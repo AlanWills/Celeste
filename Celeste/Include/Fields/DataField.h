@@ -15,7 +15,7 @@ namespace Celeste
     public:
       ~DataField() = default;
 
-      typedef typename choose_class<is_reference, const T&, T>::type field_type;
+      using field_type = typename choose_class<is_reference, const T&, T>::type;
 
       typename field_type getValue() const { return m_value; }
       void setValue(typename field_type value) { m_value = value; }

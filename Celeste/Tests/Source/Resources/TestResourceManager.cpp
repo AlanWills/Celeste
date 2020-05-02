@@ -1,12 +1,12 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Resources/MockResourceManager.h"
 #include "TestResources/Animation/AnimatorLoadingResources.h"
 #include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "TestResources/Resources/Models/ModelLoadingResources.h"
 #include "OpenAL/OpenALState.h"
-#include "AssertCel.h"
-#include "AssertSpecialization/FileSystem.h"
+#include "TestUtils/Assert/AssertCel.h"
+#include "TestUtils/AssertSpecialization/FileSystem.h"
 
 using namespace Celeste::Resources;
 
@@ -16,7 +16,7 @@ namespace TestCeleste::Resources
   CELESTE_TEST_CLASS(TestResourceManager)
 
   //------------------------------------------------------------------------------------------------
-  void TestResourceManager::testInitialize()
+  void testInitialize()
   {
     // Recreate the alut state
     OpenALState::terminate();
@@ -24,7 +24,7 @@ namespace TestCeleste::Resources
   }
 
   //------------------------------------------------------------------------------------------------
-  void TestResourceManager::testCleanup()
+  void testCleanup()
   {
     // Recreate the alut state
     OpenALState::terminate();

@@ -1,5 +1,5 @@
 #include "ScriptCommands/Settings/WindowSettingsScriptCommands.h"
-#include "ScriptCommands/ScriptCommandUtils.h"
+#include "ScriptCommands/Utils/ScriptCommandUtils.h"
 
 #include "Settings/WindowSettings.h"
 

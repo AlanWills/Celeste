@@ -26,9 +26,9 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void KeyboardRigidBody2DController::handleInput()
+  void KeyboardRigidBody2DController::update(float elapsedGameTime)
   {
-    Inherited::handleInput();
+    Inherited::update(elapsedGameTime);
 
 #if _DEBUG
     if (m_rigidBody2D == nullptr)

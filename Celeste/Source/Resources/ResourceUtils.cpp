@@ -8,7 +8,7 @@ namespace Celeste::Resources
   //------------------------------------------------------------------------------------------------
   ResourceManager& getResourceManager()
   {
-    return Game::getResourceManager();
+    return Game::current().getResourceManager();
   }
 
   //------------------------------------------------------------------------------------------------

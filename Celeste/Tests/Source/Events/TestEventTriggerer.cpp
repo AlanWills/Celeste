@@ -1,11 +1,10 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Events/EventTriggerer.h"
-#include "Registries/ComponentRegistry.h"
-#include "Registries/ComponentRegistry.h"
 #include "Objects/GameObject.h"
-#include "Utils/InputUtils.h"
-#include "AssertCel.h"
+#include "Registries/ComponentRegistry.h"
+#include "TestUtils/Utils/InputUtils.h"
+#include "TestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Events;

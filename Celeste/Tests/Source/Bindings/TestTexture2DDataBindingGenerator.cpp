@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "Bindings/DataBindingGenerators.h"
 #include "Resources/2D/Texture2D.h"
 

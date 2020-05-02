@@ -1,4 +1,4 @@
-#include "UtilityHeaders/UnitTestHeaders.h"
+#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Time/TimeUtils.h"
 #include "Game/Game.h"
@@ -13,7 +13,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GetClock_ShouldReturnGameClock)
   {
-    Assert::IsTrue(&Celeste::Game::getClock() == &Celeste::getClock());
+    Assert::IsTrue(&Celeste::Game::current().getClock() == &Celeste::getClock());
   }
 
   #pragma endregion

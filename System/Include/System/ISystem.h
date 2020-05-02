@@ -14,7 +14,6 @@ namespace Celeste::System
       ISystem& operator=(const ISystem&) = delete;
       ISystem& operator=(ISystem&&) = default;
 
-      virtual void handleInput() = 0;
       virtual void update(float elapsedGameTime) = 0;
   };
 }

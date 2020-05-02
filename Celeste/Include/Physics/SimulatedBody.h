@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Memory/ObserverPtr.h"
+#include "CelesteStl/Memory/ObserverPtr.h"
 
 #include <vector>
 
