@@ -85,8 +85,10 @@ namespace TestCeleste::Resources
 
 #pragma region Measure String Tests
 
+#pragma region String Overload
+
   //----------------------------------------------------------------------------------------------------------
-  TEST_METHOD(Font_MeasureString_FontNotLoaded_ReturnsZeroVector)
+  TEST_METHOD(Font_MeasureString_StringOverload_FontNotLoaded_ReturnsZeroVector)
   {
     MockFontInstance font;
 
@@ -233,6 +235,163 @@ namespace TestCeleste::Resources
 
     Assert::AreEqual(glm::vec2(0, 6 * instance.getHeight()), instance.measureString(str));
   }
+
+#pragma endregion
+
+#pragma region Iterators Overload
+
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Font_MeasureString_IteratorsOverload_FontNotLoaded_ReturnsZeroVector)
+  {
+    MockFontInstance font;
+    std::string str("Hello");
+
+    Assert::AreEqual(0.0f, font.getHeight());
+    Assert::AreEqual((size_t)0, font.getNumberOfCharacters_Public());
+    Assert::AreEqual((StringId)0, font.getFontName());
+    Assert::AreEqual(glm::vec2(), font.measureString(str.begin(), str.end()));
+  }
+
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Font_MeasureString_FontLoaded_InputtingEqualIterators_Returns_Zero_FontHeight)
+  {
+    FontInstance instance = getResourceManager().load<Font>(TestResources::getArialTtfRelativePath())->createInstance(6);
+    std::string str("");
+
+    Assert::AreEqual(6.0f, instance.getHeight());
+    Assert::AreEqual(glm::vec2(0, 6.0f), instance.measureString(str.begin(), str.end()));
+  }
+
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Font_MeasureString_FontLoaded_InputtingNonEqualIterators_ReturnsCorrectDimensions)
+  {
+    FontInstance instance = getResourceManager().load<Font>(TestResources::getArialTtfRelativePath())->createInstance(6);
+
+    Assert::AreEqual(6.0f, instance.getHeight());
+
+    std::string str = "Hello";
+    float x = 0;
+
+    for (char letter : str)
+    {
+      const Character* character = instance.getCharacter(letter);
+
+      x += character->m_advance;
+    }
+
+    Assert::AreEqual(glm::vec2(x, instance.getHeight()), instance.measureString(str.begin(), str.end()));
+  }
+
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Font_MeasureString_FontLoaded_InputtingNonEqualIterators_WithSpaces_ReturnsCorrectDimensions)
+  {
+    FontInstance instance = getResourceManager().load<Font>(TestResources::getArialTtfRelativePath())->createInstance(6);
+
+    Assert::AreEqual(6.0f, instance.getHeight());
+
+    std::string str = "H       el  lo";
+    float x = 0;
+
+    for (char letter : str)
+    {
+      x += instance.getCharacter(letter)->m_advance;
+    }
+
+    Assert::AreEqual(glm::vec2(x, instance.getHeight()), instance.measureString(str.begin(), str.end()));
+  }
+
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Font_MeasureString_FontLoaded_InputtingNonEqualIterators_WithNewline_ReturnsCorrectDimensions)
+  {
+    // Don't use raw char strings as they end in a \0
+    FontInstance instance = getResourceManager().load<Font>(TestResources::getArialTtfRelativePath())->createInstance(6);
+
+    Assert::AreEqual(6.0f, instance.getHeight());
+
+    std::string str = "Hello\nWorld";
+    float maxX = 0;
+
+    {
+      float x = 0;
+      for (char letter : std::string("Hello"))
+      {
+        x += instance.getCharacter(letter)->m_advance;
+      }
+
+      maxX = x;
+    }
+
+    {
+      float x = 0;
+      for (char letter : std::string("World"))
+      {
+        x += instance.getCharacter(letter)->m_advance;
+      }
+
+      maxX = std::max(x, maxX);
+    }
+
+    Assert::AreEqual(glm::vec2(maxX, 2 * instance.getHeight()), instance.measureString(str.begin(), str.end()));
+  }
+
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Font_MeasureString_FontLoaded_InputtingNonEqualIterators_WithMultipleNewlines_ReturnsCorrectDimensions)
+  {
+    // Don't use raw char strings as they end in a \0
+    FontInstance instance = getResourceManager().load<Font>(TestResources::getArialTtfRelativePath())->createInstance(6);
+
+    Assert::AreEqual(6.0f, instance.getHeight());
+
+    std::string str = "Hello\nGroundControl\nThisIsMajorTom";
+    float maxX = 0;
+
+    {
+      float x = 0;
+      for (char letter : std::string("Hello"))
+      {
+        x += instance.getCharacter(letter)->m_advance;
+      }
+
+      maxX = x;
+    }
+
+    {
+      float x = 0;
+      for (char letter : std::string("GroundControl"))
+      {
+        x += instance.getCharacter(letter)->m_advance;
+      }
+
+      maxX = std::max(x, maxX);
+    }
+
+    {
+      float x = 0;
+      for (char letter : std::string("ThisIsMajorTom"))
+      {
+        x += instance.getCharacter(letter)->m_advance;
+      }
+
+      maxX = std::max(x, maxX);
+    }
+
+    Assert::AreEqual(glm::vec2(maxX, 3 * instance.getHeight()), instance.measureString(str.begin(), str.end()));
+  }
+
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Font_MeasureString_FontLoaded_InputtingNonEqualIterators_AllNewlines_ReturnsCorrectDimensions)
+  {
+    // Don't use raw char strings as they end in a \0
+    FontInstance instance = getResourceManager().load<Font>(TestResources::getArialTtfRelativePath())->createInstance(6);
+
+    Assert::AreEqual(6.0f, instance.getHeight());
+
+    std::string str = "\n\n\n\n\n";
+
+    Assert::AreEqual(glm::vec2(0, 6 * instance.getHeight()), instance.measureString(str.begin(), str.end()));
+  }
+
+#pragma endregion
 
 #pragma endregion
 

@@ -122,6 +122,18 @@ namespace Celeste::Rendering
 #pragma region Text Manipulation Functions
 
   //------------------------------------------------------------------------------------------------
+  void TextRenderer::setHorizontalWrapMode(UI::HorizontalWrapMode horizontalWrapMode)
+  { 
+    m_horizontalWrapMode = horizontalWrapMode;
+
+    if (m_horizontalWrapMode == UI::HorizontalWrapMode::kWrap && m_maxWidth > 0)
+    {
+      layoutText();
+      recalculateDimensions();
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
   void TextRenderer::setMaxWidth(float maxWidth)
   {
     ASSERT(maxWidth > 0 || m_horizontalWrapMode != UI::HorizontalWrapMode::kWrap);
@@ -130,6 +142,7 @@ namespace Celeste::Rendering
     if (m_horizontalWrapMode == UI::HorizontalWrapMode::kWrap)
     {
       layoutText();
+      recalculateDimensions();
     }
   }
 

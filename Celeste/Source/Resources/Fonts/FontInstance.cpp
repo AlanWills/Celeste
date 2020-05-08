@@ -57,21 +57,20 @@ namespace Celeste
       while (start != end)
       {
         const Character* character = getCharacter(*start);
-        if (!character)
+        ASSERT_NOT_NULL(character);
+        
+        if (character != nullptr)
         {
-          ASSERT_FAIL();
-          continue;
-        }
-
-        if (*start == '\n')
-        {
-          ++y;
-          x = (std::max)(x, currentX);
-          currentX = 0;
-        }
-        else
-        {
-          currentX += character->m_advance;
+          if (*start == '\n')
+          {
+            ++y;
+            x = (std::max)(x, currentX);
+            currentX = 0;
+          }
+          else
+          {
+            currentX += character->m_advance;
+          }
         }
 
         ++start;

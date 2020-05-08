@@ -9,6 +9,94 @@ namespace TestCeleste
 {
   CELESTE_TEST_CLASS(TestLayoutEnums)
 
+#pragma region Horizontal Wrap Mode To String Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(HorizontalWrapMode_ToString_InputtingkWrap_ReturnsCorrectString)
+  {
+    Assert::AreEqual("Wrap", to_string(UI::HorizontalWrapMode::kWrap).c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(HorizontalWrapMode_ToString_InputtingkOverflow_ReturnsCorrectString)
+  {
+    Assert::AreEqual("Overflow", to_string(UI::HorizontalWrapMode::kOverflow).c_str());
+  }
+
+#pragma endregion
+
+#pragma region Horizontal Wrap Mode From String Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(HorizontalWrapMode_FromString_InputtingWrap_SetsOutputToCorrectValue)
+  {
+    UI::HorizontalWrapMode wrapMode = UI::HorizontalWrapMode::kOverflow;
+    from_string("Wrap", wrapMode);
+
+    Assert::IsTrue(UI::HorizontalWrapMode::kWrap == wrapMode);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(HorizontalWrapMode_FromString_InputtingWrap_ReturnsTrue)
+  {
+    UI::HorizontalWrapMode wrapMode = UI::HorizontalWrapMode::kOverflow;
+
+    Assert::IsTrue(from_string("Wrap", wrapMode));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(HorizontalWrapMode_FromString_InputtingOverflow_SetsOutputToCorrectValue)
+  {
+    UI::HorizontalWrapMode wrapMode = UI::HorizontalWrapMode::kWrap;
+    from_string("Overflow", wrapMode);
+
+    Assert::IsTrue(UI::HorizontalWrapMode::kOverflow == wrapMode);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(HorizontalWrapMode_FromString_InputtingOverflow_ReturnsTrue)
+  {
+    UI::HorizontalWrapMode wrapMode = UI::HorizontalWrapMode::kWrap;
+
+    Assert::IsTrue(from_string("Overflow", wrapMode));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(HorizontalWrapMode_FromString_InputtingEmptyString_DoesNotChangeValue)
+  {
+    UI::HorizontalWrapMode wrapMode = UI::HorizontalWrapMode::kWrap;
+    from_string("", wrapMode);
+
+    Assert::IsTrue(UI::HorizontalWrapMode::kWrap == wrapMode);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(HorizontalWrapMode_FromString_InputtingEmptyString_ReturnsFalse)
+  {
+    UI::HorizontalWrapMode wrapMode = UI::HorizontalWrapMode::kWrap;
+
+    Assert::IsFalse(from_string("", wrapMode));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(HorizontalWrapMode_FromString_InputtingInvalidString_DoesNotChangeValue)
+  {
+    UI::HorizontalWrapMode wrapMode = UI::HorizontalWrapMode::kWrap;
+    from_string("WubbaLubbaDubDub", wrapMode);
+
+    Assert::IsTrue(UI::HorizontalWrapMode::kWrap == wrapMode);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(HorizontalWrapMode_FromString_InputtingInvalidString_ReturnsFalse)
+  {
+    UI::HorizontalWrapMode wrapMode = UI::HorizontalWrapMode::kWrap;
+
+    Assert::IsFalse(from_string("WubbaLubbaDubDub", wrapMode));
+  }
+
+#pragma endregion
+
 #pragma region Orientation To String Tests
 
   //------------------------------------------------------------------------------------------------

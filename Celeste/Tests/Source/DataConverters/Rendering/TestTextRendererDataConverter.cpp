@@ -103,6 +103,22 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRendererDataConverter_Constructor_SetsMaxWidth_ToZero)
+  {
+    TextRendererDataConverter converter;
+
+    Assert::AreEqual(0.0f, converter.getMaxWidth());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRendererDataConverter_Constructor_SetsHorizontalWrapMode_TokOverflow)
+  {
+    TextRendererDataConverter converter;
+
+    Assert::IsTrue(converter.getHorizontalWrapMode() == UI::HorizontalWrapMode::kOverflow);
+  }
+
+  //------------------------------------------------------------------------------------------------
   TEST_METHOD(TextRendererDataConverter_Constructor_SetsHorizontalAlignment_TokCentre)
   {
     TextRendererDataConverter converter;
@@ -164,6 +180,22 @@ namespace TestCeleste
     const MockTextRendererDataConverter converter;
 
     Assert::IsNotNull(converter.findAttribute(TextRendererDataConverter::FONT_HEIGHT_ATTRIBUTE_NAME));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRendererDataConverter_Constructor_AddsMaxWidthAttribute)
+  {
+    const MockTextRendererDataConverter converter;
+
+    Assert::IsNotNull(converter.findAttribute(TextRendererDataConverter::MAX_WIDTH_ATTRIBUTE_NAME));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRendererDataConverter_Constructor_AddsHorizontalWrapModeAttribute)
+  {
+    const MockTextRendererDataConverter converter;
+
+    Assert::IsNotNull(converter.findAttribute(TextRendererDataConverter::HORIZONTAL_WRAP_MODE_ATTRIBUTE_NAME));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -347,6 +379,90 @@ namespace TestCeleste
     Assert::AreEqual(12.0f, converter.getFontHeight());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::AreEqual(20.0f, converter.getFontHeight());
+  }
+
+#pragma endregion
+
+#pragma region Convert Max Width Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRendererDataConverter_ConvertFromXML_NoMaxWidthAttribute_DoesNothing_ReturnsTrue)
+  {
+    XMLDocument document;
+    XMLElement* element = document.NewElement("TextRenderer");
+    TextRendererDataConverter converter;
+
+    Assert::AreEqual(0.0f, converter.getMaxWidth());
+    Assert::IsTrue(converter.convertFromXML(element));
+    Assert::AreEqual(0.0f, converter.getMaxWidth());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRendererDataConverter_ConvertFromXML_MaxWidthAttribute_InvalidText_DoesNothing_ReturnsFalse)
+  {
+    XMLDocument document;
+    XMLElement* element = document.NewElement("TextRenderer");
+    TextRendererDataConverter converter;
+    element->SetAttribute(TextRendererDataConverter::MAX_WIDTH_ATTRIBUTE_NAME, "whahdiuwa");
+
+    Assert::AreEqual(0.0f, converter.getMaxWidth());
+    Assert::IsFalse(converter.convertFromXML(element));
+    Assert::AreEqual(0.0f, converter.getMaxWidth());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRendererDataConverter_ConvertFromXML_MaxWidthAttribute_ValidText_DoesNothing_ReturnsTrue)
+  {
+    XMLDocument document;
+    XMLElement* element = document.NewElement("TextRenderer");
+    TextRendererDataConverter converter;
+    element->SetAttribute(TextRendererDataConverter::MAX_WIDTH_ATTRIBUTE_NAME, 20);
+
+    Assert::AreEqual(0.0f, converter.getMaxWidth());
+    Assert::IsTrue(converter.convertFromXML(element));
+    Assert::AreEqual(20.0f, converter.getMaxWidth());
+  }
+
+#pragma endregion
+
+#pragma region Convert Horizontal Wrap Mode Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRendererDataConverter_ConvertFromXML_NoHorizontalWrapModeAttribute_DoesNothing_ReturnsTrue)
+  {
+    XMLDocument document;
+    XMLElement* element = document.NewElement("TextRenderer");
+    TextRendererDataConverter converter;
+
+    Assert::IsTrue(converter.getHorizontalWrapMode() == HorizontalWrapMode::kOverflow);
+    Assert::IsTrue(converter.convertFromXML(element));
+    Assert::IsTrue(converter.getHorizontalWrapMode() == HorizontalWrapMode::kOverflow);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRendererDataConverter_ConvertFromXML_HorizontalWrapModeAttribute_InvalidText_DoesNothing_ReturnsFalse)
+  {
+    XMLDocument document;
+    XMLElement* element = document.NewElement("TextRenderer");
+    TextRendererDataConverter converter;
+    element->SetAttribute(TextRendererDataConverter::HORIZONTAL_WRAP_MODE_ATTRIBUTE_NAME, "whahdiuwa");
+
+    Assert::IsTrue(converter.getHorizontalWrapMode() == HorizontalWrapMode::kOverflow);
+    Assert::IsFalse(converter.convertFromXML(element));
+    Assert::IsTrue(converter.getHorizontalWrapMode() == HorizontalWrapMode::kOverflow);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRendererDataConverter_ConvertFromXML_HorizontalWrapModeAttribute_ValidText_DoesNothing_ReturnsTrue)
+  {
+    XMLDocument document;
+    XMLElement* element = document.NewElement("TextRenderer");
+    TextRendererDataConverter converter;
+    element->SetAttribute(TextRendererDataConverter::HORIZONTAL_WRAP_MODE_ATTRIBUTE_NAME, "Wrap");
+
+    Assert::IsTrue(converter.getHorizontalWrapMode() == HorizontalWrapMode::kOverflow);
+    Assert::IsTrue(converter.convertFromXML(element));
+    Assert::IsTrue(converter.getHorizontalWrapMode() == HorizontalWrapMode::kWrap);
   }
 
 #pragma endregion
@@ -601,7 +717,9 @@ namespace TestCeleste
 
     Assert::AreEqual(internString(Path(getResourcesDirectory(), "Fonts", "Arial.ttf").as_string()), renderer.getFont().getFontName());
     Assert::AreEqual(20.0f, renderer.getFontHeight());
+    Assert::AreEqual(123456789.0f, renderer.getMaxWidth());
     Assert::AreEqual(glm::vec4(1), renderer.getColour());
+    Assert::IsTrue(renderer.getHorizontalWrapMode() == HorizontalWrapMode::kWrap);
     Assert::IsTrue(renderer.getHorizontalAlignment() == HorizontalAlignment::kCentre);
     Assert::IsTrue(renderer.getVerticalAlignment() == VerticalAlignment::kTop);
     Assert::AreEqual("", renderer.getText().c_str());
@@ -621,7 +739,9 @@ namespace TestCeleste
 
     Assert::AreEqual(internString(Path(getResourcesDirectory(), "Fonts", "Arial.ttf").as_string()), renderer.getFont().getFontName());
     Assert::AreEqual(20.0f, renderer.getFontHeight());
+    Assert::AreEqual(123456789.0f, renderer.getMaxWidth());
     Assert::AreEqual(glm::vec4(1), renderer.getColour());
+    Assert::IsTrue(renderer.getHorizontalWrapMode() == HorizontalWrapMode::kWrap);
     Assert::IsTrue(renderer.getHorizontalAlignment() == HorizontalAlignment::kCentre);
     Assert::IsTrue(renderer.getVerticalAlignment() == VerticalAlignment::kTop);
     Assert::AreEqual("Line 1\nLine 2", renderer.getText().c_str());

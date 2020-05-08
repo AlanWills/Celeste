@@ -156,6 +156,12 @@ function(cbt_build_project)
                 LIBS "${BUILD_PROJECT_LUA_LIBS}"
                 TEST_LIBS "${BUILD_PROJECT_TEST_LIBS}"
                 RUNTIME_OUTPUT_DIRECTORY ${BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY})
+
+            ## Manually change the lua project to go in the Lua folder
+            ## We can't just pass this to the cbt_build_project function because the Lua project might have tests
+            ## And they will end up in BUILD_PROJECT_FOLDER/Lua/Tests rather than BUILD_PROJECT_FOLDER/Tests
+            set_target_properties(${BUILD_PROJECT_NAME}Lua PROPERTIES 
+                FOLDER ${BUILD_PROJECT_FOLDER}/Lua)
         endif()
 
         if (EXISTS ${BUILD_PROJECT_SOURCE_DIR}/Tests)

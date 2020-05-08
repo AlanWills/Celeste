@@ -524,6 +524,158 @@ namespace TestCeleste
     Assert::AreEqual(renderer.getFont().measureString("Wubba\nLubba\nDub\nDub"), renderer.getDimensions());
   }
 
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetText_InputtingNonEmptyString_Wrap_TextLessThanOrEqualToMaxWidth_DoesNotChangeText)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kWrap);
+    renderer.setMaxWidth(100000000);
+    renderer.setText("Wubba Lubba Dub Dub");
+
+    Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetText_InputtingNonEmptyString_Wrap_TextMoreThanMaxWidth_ChangesTextToWrapCorrectly)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kWrap);
+    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+    renderer.setText("Wubba Lubba Dub Dub");
+
+    Assert::AreEqual("Wubba Lubba\nDub Dub", renderer.getText().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetText_InputtingNonEmptyString_Overflow_TextLessThanOrEqualToMaxWidth_DoesNotChangeText)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kOverflow);
+    renderer.setMaxWidth(100000000);
+    renderer.setText("Wubba Lubba Dub Dub");
+
+    Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetText_InputtingNonEmptyString_Overflow_TextMoreThanMaxWidth_DoesNotChangeText)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kOverflow);
+    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+    renderer.setText("Wubba Lubba Dub Dub");
+
+    Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());
+  }
+
+#pragma endregion
+
+#pragma region Set Max Width Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetMaxWidth_Wrap_TextLessThanOrEqualToMaxWidth_DoesNotChangeText)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kWrap);
+    renderer.setText("Wubba Lubba Dub Dub");
+    renderer.setMaxWidth(100000000);
+
+    Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetMaxWidth_Wrap_TextGreaterThanMaxWidth_UpdatesTextToWrapCorrectly)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kWrap);
+    renderer.setText("Wubba Lubba Dub Dub");
+    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+
+    Assert::AreEqual("Wubba Lubba\nDub Dub", renderer.getText().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetMaxWidth_Overflow_TextLessThanOrEqualToMaxWidth_DoesNotChangeText)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kOverflow);
+    renderer.setText("Wubba Lubba Dub Dub");
+    renderer.setMaxWidth(100000000);
+
+    Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetMaxWidth_Overflow_TextGreaterThanMaxWidth_DoesNotChangeText)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kOverflow);
+    renderer.setText("Wubba Lubba Dub Dub");
+    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+
+    Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());
+  }
+
+#pragma endregion
+
+#pragma region Set Horizontal Wrap Mode Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetHorizontalWrapModeToWrap_TextLessThanOrEqualToMaxWidth_DoesNotChangeText)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setText("Wubba Lubba Dub Dub");
+    renderer.setMaxWidth(100000000);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kWrap);
+
+    Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetHorizontalWrapModeToWrap_TextGreaterThanMaxWidth_UpdatesTextToWrapCorrectly)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setText("Wubba Lubba Dub Dub");
+    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kWrap);
+
+    Assert::AreEqual("Wubba Lubba\nDub Dub", renderer.getText().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetHorizontalWrapModeToOverflow_TextLessThanOrEqualToMaxWidth_DoesNotChangeText)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setText("Wubba Lubba Dub Dub");
+    renderer.setMaxWidth(100000000);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kOverflow);
+
+    Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TextRenderer_SetHorizontalWrapModeToOverflow_TextGreaterThanMaxWidth_DoesNotChangeText)
+  {
+    GameObject gameObject;
+    MockTextRenderer renderer(gameObject);
+    renderer.setText("Wubba Lubba Dub Dub");
+    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+    renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kOverflow);
+
+    Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());
+  }
+
 #pragma endregion
 
   };

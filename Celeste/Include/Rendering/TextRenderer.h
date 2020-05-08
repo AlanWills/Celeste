@@ -31,7 +31,7 @@ namespace Celeste::Rendering
       const std::string& getText() const { return m_text; }
       CelesteDllExport void setText(const std::string& text);
 
-      inline void setHorizontalWrapMode(UI::HorizontalWrapMode horizontalWrapMode) { m_horizontalWrapMode = horizontalWrapMode; }
+      CelesteDllExport void setHorizontalWrapMode(UI::HorizontalWrapMode horizontalWrapMode);
       inline UI::HorizontalWrapMode getHorizontalWrapMode() const { return m_horizontalWrapMode; }
 
       inline void setHorizontalAlignment(UI::HorizontalAlignment horizontalAlignment) { m_horizontalAlignment = horizontalAlignment; }

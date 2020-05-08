@@ -354,6 +354,34 @@ namespace TestCeleste
     Assert::AreEqual(&child2, result[2]);
   }
 
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GraphicsRaycaster_Raycast_RendererHasScissorRectangleSet_UsesScissorRectangleInRaycastCalculation)
+  {
+    GameObject gameObject;
+    gameObject.getTransform()->translate(50, 10, 4);
+    GraphicsRaycaster raycaster(gameObject);
+    observer_ptr<MockRenderer> renderer = gameObject.addComponent<MockRenderer>();
+    renderer->getScissorRectangle().setDimensions(50, 25);
+    renderer->getScissorRectangle().setCentre(100, 50);
+
+    getMouse().getTransform().setTranslation(160, 50);
+
+    AssertCel::IsActive(gameObject);
+    AssertCel::HasComponent<Renderer>(gameObject);
+    AssertCel::IsActive(renderer);
+
+    auto result = raycaster.raycast();
+
+    Assert::AreEqual(static_cast<size_t>(1), result.size());
+    Assert::AreEqual(&gameObject, result[0]);
+
+    getMouse().getTransform().setTranslation(50, 10);
+
+    result = raycaster.raycast();
+
+    Assert::IsTrue(result.empty());
+  }
+
 #pragma endregion
 
   };
