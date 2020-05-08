@@ -175,14 +175,17 @@ namespace Celeste::Rendering
   //------------------------------------------------------------------------------------------------
   void TextRenderer::setText(const std::string& text)
   {
-    m_text.assign(text);
-
-    if (m_horizontalWrapMode == UI::HorizontalWrapMode::kWrap && m_maxWidth > 0)
+    if (m_text != text)
     {
-      layoutText();
-    }
+      m_text.assign(text);
 
-    recalculateDimensions();
+      if (m_horizontalWrapMode == UI::HorizontalWrapMode::kWrap && m_maxWidth > 0)
+      {
+        layoutText();
+      }
+
+      recalculateDimensions();
+    }
   }
 
 #pragma endregion
