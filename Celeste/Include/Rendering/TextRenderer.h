@@ -31,11 +31,17 @@ namespace Celeste::Rendering
       const std::string& getText() const { return m_text; }
       CelesteDllExport void setText(const std::string& text);
 
+      inline void setHorizontalWrapMode(UI::HorizontalWrapMode horizontalWrapMode) { m_horizontalWrapMode = horizontalWrapMode; }
+      inline UI::HorizontalWrapMode getHorizontalWrapMode() const { return m_horizontalWrapMode; }
+
       inline void setHorizontalAlignment(UI::HorizontalAlignment horizontalAlignment) { m_horizontalAlignment = horizontalAlignment; }
       inline UI::HorizontalAlignment getHorizontalAlignment() const { return m_horizontalAlignment; }
 
       inline void setVerticalAlignment(UI::VerticalAlignment verticalAlignment) { m_verticalAlignment = verticalAlignment; }
       inline UI::VerticalAlignment getVerticalAlignment() const { return m_verticalAlignment; }
+
+      CelesteDllExport void setMaxWidth(float maxWidth);
+      inline float getMaxWidth() const { return m_maxWidth; }
 
     protected:
       inline float getXPosition(float halfLineWidth) const { return -static_cast<int>(m_horizontalAlignment)* halfLineWidth; }
@@ -44,13 +50,16 @@ namespace Celeste::Rendering
     private:
       using Inherited = Renderer;
 
+      void layoutText();
       void recalculateDimensions();
 
       Resources::FontInstance m_font;
 
+      UI::HorizontalWrapMode m_horizontalWrapMode = UI::HorizontalWrapMode::kOverflow;
       UI::HorizontalAlignment m_horizontalAlignment = UI::HorizontalAlignment::kCentre;
       UI::VerticalAlignment m_verticalAlignment = UI::VerticalAlignment::kCentre;
 
+      float m_maxWidth = 0;
       glm::vec2 m_dimensions;
       std::string m_text;
   };

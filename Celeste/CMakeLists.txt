@@ -25,6 +25,8 @@ set(LIBS
     CelesteStl
     FileSystem
     FileSystemLua
+    System
+    SystemLua
     Dolce
     DolceLua)
     

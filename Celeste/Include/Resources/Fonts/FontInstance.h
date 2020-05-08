@@ -20,6 +20,7 @@ namespace Celeste
         float getHeight() const { return m_height; }
         StringId getFontName() const { return m_fontName; }
 
+        CelesteDllExport glm::vec2 measureString(std::string::const_iterator start, std::string::const_iterator end) const;
         CelesteDllExport glm::vec2 measureString(const std::string& text) const;
         CelesteDllExport void getLines(const std::string& text, float m_maxWidth, std::vector<std::string>& outputLines) const;
 

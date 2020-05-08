@@ -6,6 +6,31 @@ namespace Celeste
 {
   //------------------------------------------------------------------------------------------------
   template <>
+  std::string to_string(UI::HorizontalWrapMode horizontalWrapMode)
+  {
+    return horizontalWrapMode == UI::HorizontalWrapMode::kWrap ? "Wrap" : "Overflow";
+  }
+
+  //------------------------------------------------------------------------------------------------
+  template<>
+  bool from_string(const std::string& wrapModeString, UI::HorizontalWrapMode& wrapMode)
+  {
+    if (wrapModeString == "Wrap")
+    {
+      wrapMode = UI::HorizontalWrapMode::kWrap;
+      return true;
+    }
+    else if (wrapModeString == "Overflow")
+    {
+      wrapMode = UI::HorizontalWrapMode::kOverflow;
+      return true;
+    }
+    
+    return false;
+  }
+
+  //------------------------------------------------------------------------------------------------
+  template <>
   std::string to_string(UI::Orientation orientation)
   {
     return orientation == UI::Orientation::kHorizontal ? "Horizontal" : "Vertical";

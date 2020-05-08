@@ -18,6 +18,7 @@
 #include "ScriptCommands/XML/XMLScriptCommands.h"
 #include "ScriptCommands/FileSystem/FileSystemScriptCommands.h"
 #include "ScriptCommands/Lua/Components/LuaComponentManifestRegistryScriptCommands.h"
+#include "ScriptCommands/System/SystemScriptCommands.h"
 #include "Lua/LuaState.h"
 
 #include "Resources/ResourceUtils.h"
@@ -37,6 +38,7 @@ namespace Celeste::Lua::CelesteScriptCommands
     Lua::LuaState::appendToLuaPackagePath(Path(Celeste::Resources::getResourcesDirectory(), "Scripts", "?.lua;"));
 
     // Now initialize all lua scripts and API
+    Lua::System::ScriptCommands::initialize(state);
     Lua::FileSystem::ScriptCommands::initialize(state);
     Lua::Core::ScriptCommands::initialize(state);
     Lua::Maths::ScriptCommands::initialize(state);

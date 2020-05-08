@@ -122,9 +122,53 @@ namespace Celeste::Rendering
 #pragma region Text Manipulation Functions
 
   //------------------------------------------------------------------------------------------------
+  void TextRenderer::setMaxWidth(float maxWidth)
+  {
+    ASSERT(maxWidth > 0 || m_horizontalWrapMode != UI::HorizontalWrapMode::kWrap);
+    m_maxWidth = maxWidth;
+
+    if (m_horizontalWrapMode == UI::HorizontalWrapMode::kWrap)
+    {
+      layoutText();
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void TextRenderer::layoutText()
+  {
+    ASSERT(m_maxWidth > 0);
+
+    float currentWidth = 0;
+    size_t currentOffset = 0;
+    size_t nextOffset = m_text.find(' ');
+
+    while (nextOffset < m_text.size())
+    {
+      float extraWidth = m_font.measureString(m_text.begin() + currentOffset, m_text.begin() + nextOffset).x;
+      
+      if (currentWidth + extraWidth > m_maxWidth)
+      {
+        // We have gone over our max width so we move the word to the next line
+        m_text[currentOffset] = '\n';
+        currentWidth = 0;
+      }
+
+      currentWidth += extraWidth;
+      currentOffset = nextOffset;
+      nextOffset = m_text.find(' ', currentOffset + 1);
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
   void TextRenderer::setText(const std::string& text)
   {
     m_text.assign(text);
+
+    if (m_horizontalWrapMode == UI::HorizontalWrapMode::kWrap && m_maxWidth > 0)
+    {
+      layoutText();
+    }
+
     recalculateDimensions();
   }
 

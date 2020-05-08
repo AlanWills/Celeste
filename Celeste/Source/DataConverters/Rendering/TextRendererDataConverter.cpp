@@ -12,6 +12,8 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   const char* const TextRendererDataConverter::FONT_ATTRIBUTE_NAME("font");
   const char* const TextRendererDataConverter::FONT_HEIGHT_ATTRIBUTE_NAME("font_height");
+  const char* const TextRendererDataConverter::MAX_WIDTH_ATTRIBUTE_NAME("max_width");
+  const char* const TextRendererDataConverter::HORIZONTAL_WRAP_MODE_ATTRIBUTE_NAME("horizontal_wrap_mode");
   const char* const TextRendererDataConverter::HORIZONTAL_ALIGNMENT_ATTRIBUTE_NAME("horizontal_alignment");
   const char* const TextRendererDataConverter::VERTICAL_ALIGNMENT_ATTRIBUTE_NAME("vertical_alignment");
   const char* const TextRendererDataConverter::COLOUR_ATTRIBUTE_NAME("colour");
@@ -23,6 +25,8 @@ namespace Celeste
     Inherited(Rendering::TextRenderer::type_name()),
     m_font(createReferenceAttribute<Path>(FONT_ATTRIBUTE_NAME, Path("Fonts", "Arial.ttf"))),
     m_fontHeight(createValueAttribute(FONT_HEIGHT_ATTRIBUTE_NAME, 12.0f)),
+    m_maxWidth(createValueAttribute(MAX_WIDTH_ATTRIBUTE_NAME, 0.0f)),
+    m_horizontalWrapMode(createValueAttribute(HORIZONTAL_WRAP_MODE_ATTRIBUTE_NAME, UI::HorizontalWrapMode::kOverflow)),
     m_horizontalAlignment(createValueAttribute(HORIZONTAL_ALIGNMENT_ATTRIBUTE_NAME, UI::HorizontalAlignment::kCentre)),
     m_verticalAlignment(createValueAttribute(VERTICAL_ALIGNMENT_ATTRIBUTE_NAME, UI::VerticalAlignment::kCentre)),
     m_colour(createReferenceAttribute(COLOUR_ATTRIBUTE_NAME, glm::vec3(1))),
@@ -36,6 +40,8 @@ namespace Celeste
   {
     textRenderer.setFont(getFont());
     textRenderer.setFontHeight(getFontHeight());
+    textRenderer.setMaxWidth(getMaxWidth());
+    textRenderer.setHorizontalWrapMode(getHorizontalWrapMode());
     textRenderer.setHorizontalAlignment(getHorizontalAlignment());
     textRenderer.setVerticalAlignment(getVerticalAlignment());
     textRenderer.setColour(getColour());

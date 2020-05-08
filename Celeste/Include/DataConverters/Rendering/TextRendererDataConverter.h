@@ -23,6 +23,8 @@ namespace Celeste
     public:
       inline const Path& getFont() const { return m_font.getValue(); }
       inline float getFontHeight() const { return m_fontHeight.getValue(); }
+      inline float getMaxWidth() const { return m_maxWidth.getValue(); }
+      inline UI::HorizontalWrapMode getHorizontalWrapMode() const { return m_horizontalWrapMode.getValue(); }
       inline UI::HorizontalAlignment getHorizontalAlignment() const { return m_horizontalAlignment.getValue(); }
       inline UI::VerticalAlignment getVerticalAlignment() const { return m_verticalAlignment.getValue(); }
       inline const glm::vec3& getColour() const { return m_colour.getValue(); }
@@ -33,6 +35,8 @@ namespace Celeste
 
       CelesteDllExport static const char* const FONT_ATTRIBUTE_NAME;
       CelesteDllExport static const char* const FONT_HEIGHT_ATTRIBUTE_NAME;
+      CelesteDllExport static const char* const MAX_WIDTH_ATTRIBUTE_NAME;
+      CelesteDllExport static const char* const HORIZONTAL_WRAP_MODE_ATTRIBUTE_NAME;
       CelesteDllExport static const char* const HORIZONTAL_ALIGNMENT_ATTRIBUTE_NAME;
       CelesteDllExport static const char* const VERTICAL_ALIGNMENT_ATTRIBUTE_NAME;
       CelesteDllExport static const char* const COLOUR_ATTRIBUTE_NAME;
@@ -44,6 +48,8 @@ namespace Celeste
 
       XML::ReferenceAttribute<Path>& m_font;
       XML::ValueAttribute<float>& m_fontHeight;
+      XML::ValueAttribute<float>& m_maxWidth;
+      XML::ValueAttribute<UI::HorizontalWrapMode>& m_horizontalWrapMode;
       XML::ValueAttribute<UI::HorizontalAlignment>& m_horizontalAlignment;
       XML::ValueAttribute<UI::VerticalAlignment>& m_verticalAlignment;
       XML::ReferenceAttribute<glm::vec3>& m_colour;

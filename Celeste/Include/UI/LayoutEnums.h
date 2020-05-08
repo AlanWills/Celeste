@@ -10,6 +10,12 @@ namespace Celeste
 {
   namespace UI
   {
+    enum class HorizontalWrapMode
+    {
+      kWrap,
+      kOverflow,
+    };
+
     enum class Orientation
     {
       kHorizontal,
@@ -30,6 +36,14 @@ namespace Celeste
       kTop = 2,
     };
   }
+
+  //------------------------------------------------------------------------------------------------
+  template<>
+  CelesteDllExport std::string to_string(UI::HorizontalWrapMode horizontalWrapMode);
+
+  //------------------------------------------------------------------------------------------------
+  template<>
+  CelesteDllExport bool from_string(const std::string& wrapModeString, UI::HorizontalWrapMode& wrapMode);
 
   //------------------------------------------------------------------------------------------------
   template<>

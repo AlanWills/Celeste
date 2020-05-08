@@ -44,9 +44,9 @@ namespace Celeste
     }
 
     //------------------------------------------------------------------------------------------------
-    glm::vec2 FontInstance::measureString(const std::string& text) const
+    glm::vec2 FontInstance::measureString(std::string::const_iterator start, std::string::const_iterator end) const
     {
-      if (text.empty())
+      if (start == end)
       {
         return glm::vec2(0, m_height);
       }
@@ -54,16 +54,16 @@ namespace Celeste
       float x = 0, currentX = 0;
       int y = 0;
 
-      for (size_t i = 0; i < text.size(); ++i)
+      while (start != end)
       {
-        const Character* character = getCharacter(text[i]);
+        const Character* character = getCharacter(*start);
         if (!character)
         {
           ASSERT_FAIL();
           continue;
         }
 
-        if (text[i] == '\n')
+        if (*start == '\n')
         {
           ++y;
           x = (std::max)(x, currentX);
@@ -73,6 +73,8 @@ namespace Celeste
         {
           currentX += character->m_advance;
         }
+
+        ++start;
       }
 
       ++y;
@@ -80,6 +82,12 @@ namespace Celeste
       currentX = 0;
 
       return glm::vec2(x, y * m_height);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    glm::vec2 FontInstance::measureString(const std::string& text) const
+    {
+      return measureString(text.begin(), text.end());
     }
 
     //------------------------------------------------------------------------------------------------

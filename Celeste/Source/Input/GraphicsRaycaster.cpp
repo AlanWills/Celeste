@@ -42,7 +42,19 @@ namespace Celeste::Input
       observer_ptr<Renderer> renderer = gameObject->findComponent<Renderer>();
       if (renderer != nullptr && renderer->isActive())
       {
-        Maths::Rectangle rect(gameObject->getTransform()->getWorldTranslation(), renderer->getScaledDimensions());
+        Maths::Rectangle rect;
+        glm::vec2 scissorRectangleDims = renderer->getScissorRectangle().getDimensions();
+
+        if (scissorRectangleDims == glm::zero<glm::vec2>())
+        {
+          rect.setCentre(gameObject->getTransform()->getWorldTranslation());
+          rect.setDimensions(renderer->getScaledDimensions());
+        }
+        else
+        {
+          rect.setCentre(glm::vec2(gameObject->getTransform()->getWorldTranslation()) + renderer->getScissorRectangle().getCentre());
+          rect.setDimensions(scissorRectangleDims * glm::vec2(gameObject->getTransform()->getScale()));
+        }
 
         if (rect.contains(ray.m_origin))
         {
