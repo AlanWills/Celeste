@@ -2,7 +2,7 @@
 
 #include "Settings/DolceSettings.h"
 #include "UtilityHeaders/ScriptableObjectHeaders.h"
-#include "Dolce/Dolce.h"
+#include "Dolce/IDolce.h"
 #include "Dolce/DolceWindow.h"
 #include "XML/tinyxml2_ext.h"
 
@@ -26,7 +26,7 @@ namespace Celeste::Settings
   }
 
   //------------------------------------------------------------------------------------------------
-  void DolceSettings::applyTo(Dolce::Dolce& dolce) const
+  void DolceSettings::applyTo(Dolce::IDolce& dolce) const
   {
     dolce.setEnabled(getEnabled());
 
@@ -41,7 +41,7 @@ namespace Celeste::Settings
   }
 
   //------------------------------------------------------------------------------------------------
-  void DolceSettings::applyFrom(Dolce::Dolce& dolce)
+  void DolceSettings::applyFrom(Dolce::IDolce& dolce)
   {
     m_enabled.setValue(dolce.isEnabled());
     m_openWindows = std::move(dolce.getOpenWindows());

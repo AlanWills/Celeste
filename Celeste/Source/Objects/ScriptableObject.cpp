@@ -158,37 +158,10 @@ namespace Celeste
       return;
     }
 
-    Path savePath;
-
-    if (!getResourcesDirectory().isAncestorOf(pathToFile))
-    {
-      // A fairly vague attempt at handling relative and absolute paths
-      // This currently enforces scriptable objects must be saved within resources
-      // as we see if the path we have is a full path relative to the resources directory
-      // or does not contain the resources directory path
-      savePath.combine(getResourcesDirectory(), pathToFile);
-    }
-    else
-    {
-      savePath.combine(pathToFile);
-    }
-
-    observer_ptr<Data> data = getResourceManager().load<Data>(savePath);
+    observer_ptr<Data> data = getResourceManager().load<Data>(pathToFile);
     if (data == nullptr)
     {
-      // Create the data file here
-      XMLDocument document;
-      document.InsertFirstChild(document.NewDeclaration());
-      
-      tinyxml2::XMLError error = document.SaveFile(savePath.c_str());
-      if (error != tinyxml2::XMLError::XML_SUCCESS)
-      {
-        LOG(std::to_string(error));
-        ASSERT_FAIL();
-        return;
-      }
-
-      data = getResourceManager().load<Data>(savePath);
+      data = getResourceManager().create(pathToFile);
       if (data == nullptr)
       {
         ASSERT_FAIL();

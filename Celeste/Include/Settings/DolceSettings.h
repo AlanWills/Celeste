@@ -8,7 +8,7 @@
 
 namespace Dolce
 {
-  class Dolce;
+  class IDolce;
 }
 
 namespace Celeste::Settings
@@ -21,8 +21,8 @@ namespace Celeste::Settings
       bool getEnabled() const { return m_enabled.getValue(); }
       const std::vector<std::string>& getOpenWindows() const { return m_openWindows; }
 
-      CelesteDllExport void applyTo(Dolce::Dolce& dolce) const;
-      CelesteDllExport void applyFrom(Dolce::Dolce& dolce);
+      CelesteDllExport void applyTo(Dolce::IDolce& dolce) const;
+      CelesteDllExport void applyFrom(Dolce::IDolce& dolce);
 
       static const char* const ENABLED_ATTRIBUTE_NAME;
       static const char* const OPEN_WINDOWS_ELEMENT_NAME;

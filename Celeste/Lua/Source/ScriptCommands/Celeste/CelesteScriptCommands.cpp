@@ -58,9 +58,8 @@ namespace Celeste::Lua::CelesteScriptCommands
     Lua::Events::ScriptCommands::initialize(state);
     Lua::LuaComponentManifestRegistryScriptCommands::initialize(state);
     Lua::Time::ScriptCommands::initialize(state);
-
-#if _DEBUG
+    
+    // Need these for both debug and release so our lua scripts will work no matter what
     Dolce::Lua::ScriptCommands::initialize(state, Debug::getDolce());
-#endif
   }
 }

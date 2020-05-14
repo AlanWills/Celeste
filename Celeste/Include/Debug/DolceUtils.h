@@ -1,18 +1,14 @@
 #pragma once
 
-#if _DEBUG
-
 #include "CelesteDllExport.h"
 
 
 namespace Dolce
 {
-  class Dolce;
+  class IDolce;
 }
 
 namespace Celeste::Debug
 {
-  CelesteDllExport Dolce::Dolce& getDolce();
+  CelesteDllExport Dolce::IDolce& getDolce();
 }
-
-#endif

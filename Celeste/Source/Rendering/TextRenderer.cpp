@@ -154,8 +154,14 @@ namespace Celeste::Rendering
     float currentWidth = 0;
     size_t currentOffset = 0;
     size_t nextOffset = m_text.find(' ');
+    
+    if (nextOffset == m_text.npos)
+    {
+      // Early out optimization
+      return;
+    }
 
-    while (nextOffset < m_text.size())
+    while (nextOffset < m_text.npos)
     {
       float extraWidth = m_font.measureString(m_text.begin() + currentOffset, m_text.begin() + nextOffset).x;
       
@@ -169,6 +175,13 @@ namespace Celeste::Rendering
       currentWidth += extraWidth;
       currentOffset = nextOffset;
       nextOffset = m_text.find(' ', currentOffset + 1);
+    }
+
+    // Finally, have to check the last word
+    if (currentWidth + m_font.measureString(m_text.begin() + currentOffset, m_text.end()).x > m_maxWidth)
+    {
+      // We have gone over our max width so we move the word to the next line
+      m_text[currentOffset] = '\n';
     }
   }
 

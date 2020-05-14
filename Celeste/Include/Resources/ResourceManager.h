@@ -44,6 +44,8 @@ namespace Celeste::Resources
       template <typename T>
       T* load(const Path& relativeOrFullPath);
 
+      CelesteDllExport Data* create(const Path& relativeOrFullPath);
+
       template <typename T>
       void unload(const Path& relativeOrFullPath);
 

@@ -23,6 +23,8 @@
 #include "Settings/DolceSettings.h"
 
 #include "imgui/imgui.h"
+#else
+#include "Dolce/DolceDummy.h"
 #endif
 
 
@@ -120,8 +122,11 @@ namespace Celeste
     addSystem<Audio::AudioManager>();
 
 #if _DEBUG
-    addSystem<Dolce::Dolce>(m_window.getGLWindow());
+    std::unique_ptr<System::ISystem> dolce = std::make_unique<Dolce::Dolce>(m_window.getGLWindow());
+#else
+    std::unique_ptr<System::ISystem> dolce = std::make_unique<Dolce::DolceDummy>();
 #endif
+    addSystem(static_type_info::getTypeIndex<Dolce::IDolce>(), std::move(dolce));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -183,15 +188,15 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void Game::initializeDolce()
   {
-    Dolce::Dolce* dolcePtr = getSystem<Dolce::Dolce>();
-    Dolce::Dolce& dolce = *dolcePtr;
+    Dolce::IDolce* dolcePtr = getSystem<Dolce::IDolce>();
+    Dolce::Dolce& dolce = static_cast<Dolce::Dolce&>(*dolcePtr);
 
-    dolce.registerWindow(std::make_unique<Debug::HierarchyDolceWindow>(*getSystem<SceneManager>()));
-    dolce.registerWindow(std::make_unique<Debug::LuaScriptDolceWindow>());
-    auto& logWindow = dolce.registerWindow(std::make_unique<Debug::LogDolceWindow>());
+    dolce.addWindow(std::make_unique<Debug::HierarchyDolceWindow>(*getSystem<SceneManager>()));
+    dolce.addWindow(std::make_unique<Debug::LuaScriptDolceWindow>());
+    auto logWindow = dolce.addWindow(std::make_unique<Debug::LogDolceWindow>());
 
     Path logPath(Directory::getExecutingAppDirectory(), "Log.txt");
-    Celeste::Log::Logging::setLogger(std::make_unique<Log::DolceLogger>(logWindow, logPath));
+    Celeste::Log::Logging::setLogger(std::make_unique<Log::DolceLogger>(*logWindow, logPath));
 
     onInitializeDolce(dolce);
 
@@ -213,7 +218,7 @@ namespace Celeste
       dolceSettings = std::move(ScriptableObject::create<Settings::DolceSettings>("DolceSettings"));
     }
 
-    dolceSettings->applyFrom(*getSystem<Dolce::Dolce>());
+    dolceSettings->applyFrom(*getSystem<Dolce::IDolce>());
     dolceSettings->save(dolcePath);
   }
 #endif
@@ -304,7 +309,7 @@ namespace Celeste
     getSystem<Rendering::RenderManager>()->render(lag);
 
 #if _DEBUG
-    getSystem<Dolce::Dolce>()->render();
+    getSystem<Dolce::IDolce>()->render();
 #endif
   }
 

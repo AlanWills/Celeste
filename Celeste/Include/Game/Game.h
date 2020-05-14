@@ -14,7 +14,7 @@
 
 namespace Dolce
 {
-  class Dolce;
+  class IDolce;
 }
 
 namespace Celeste
@@ -65,12 +65,9 @@ namespace Celeste
 
     protected:
       virtual void onInitialize() { }
+      virtual void onInitializeDolce(Dolce::IDolce& /*dolce*/) {}
       virtual void onUpdate(float /*elapsedGameTime*/) { }
       virtual void onExit() { }
-
-#if _DEBUG
-      virtual void onInitializeDolce(Dolce::Dolce& /*dolce*/) {}
-#endif
 
     private:
       using Systems = std::unordered_map<static_type_info::TypeIndex, std::unique_ptr<System::ISystem>>;
