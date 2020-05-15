@@ -4,7 +4,7 @@
 namespace Celeste
 {
   //------------------------------------------------------------------------------------------------
-  void split(const std::string& text, std::vector<std::string>& outputLines, char delimiter)
+  void split(const std::string& text, std::vector<std::string>& outputWords, char delimiter)
   {
     if (text.empty())
     {
@@ -18,7 +18,7 @@ namespace Celeste
     {
       if (c == delimiter)
       {
-        outputLines.push_back(current);
+        outputWords.push_back(current);
         current.clear();
       }
       else
@@ -27,7 +27,7 @@ namespace Celeste
       }
     }
 
-    outputLines.push_back(current);
+    outputWords.push_back(current);
   }
 
   //------------------------------------------------------------------------------------------------
