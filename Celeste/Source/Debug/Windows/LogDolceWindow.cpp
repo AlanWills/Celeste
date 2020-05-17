@@ -85,11 +85,11 @@ namespace Celeste::Debug
     if (verbosity != Log::Verbosity::kRaw)
     {
       logLine.append(Internals::getVerbosityString(verbosity));
-      logLine.append(": '");
+      logLine.append(": ");
     }
 
     logLine.append(message);
-    logLine.append("' in ");
+    logLine.append(" in ");
     logLine.append(function);
     logLine.append(", line ");
     logLine.append(std::to_string(line));

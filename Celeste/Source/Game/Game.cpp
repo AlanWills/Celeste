@@ -172,15 +172,7 @@ namespace Celeste
     Path gameLuaScriptPath(Resources::getResourcesDirectory(), "Scripts", "Game.lua");
     if (File::exists(gameLuaScriptPath))
     {
-      auto result = Lua::LuaState::scriptFile(gameLuaScriptPath);
-#if _DEBUG
-      if (!result.valid())
-      {
-        ASSERT_FAIL();
-      }
-#elif
-      UNUSED(result);
-#endif
+      Lua::LuaState::scriptFile(gameLuaScriptPath);
     }
   }
 
