@@ -15,7 +15,7 @@ namespace Celeste
 {
   class KeyboardTransformerDataConverter : public ComponentDataConverter
   {
-    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(KeyboardTransformerDataConverter, Input::KeyboardTransformer, CelesteDllExport)
+    DECLARE_COMPONENT_DATA_CONVERTER(KeyboardTransformerDataConverter, Input::KeyboardTransformer, CelesteDllExport)
 
     public:
       inline int getTranslateLeftKey() const { return m_translateLeftKey.getValue().m_key; }

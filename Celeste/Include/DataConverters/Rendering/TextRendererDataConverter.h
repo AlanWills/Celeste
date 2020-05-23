@@ -18,7 +18,7 @@ namespace Celeste
 {
   class TextRendererDataConverter : public ComponentDataConverter
   {
-    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(TextRendererDataConverter, Rendering::TextRenderer, CelesteDllExport)
+    DECLARE_COMPONENT_DATA_CONVERTER(TextRendererDataConverter, Rendering::TextRenderer, CelesteDllExport)
 
     public:
       inline const Path& getFont() const { return m_font.getValue(); }

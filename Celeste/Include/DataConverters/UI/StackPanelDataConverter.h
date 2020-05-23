@@ -16,7 +16,7 @@ namespace Celeste
 {
   class StackPanelDataConverter : public ComponentDataConverter
   {
-    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(StackPanelDataConverter, UI::StackPanel, CelesteDllExport)
+    DECLARE_COMPONENT_DATA_CONVERTER(StackPanelDataConverter, UI::StackPanel, CelesteDllExport)
 
     public:
       inline UI::Orientation getOrientation() const { return m_orientation.getValue(); }

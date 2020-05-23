@@ -10,7 +10,7 @@ namespace Celeste
 
   class SliderDataConverter : public ComponentDataConverter
   {
-    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(SliderDataConverter, UI::Slider, CelesteDllExport)
+    DECLARE_COMPONENT_DATA_CONVERTER(SliderDataConverter, UI::Slider, CelesteDllExport)
 
     public:
       using CallbackDataConverters = typename XML::DataConverterListElement<CallbackDataConverter>::Items;

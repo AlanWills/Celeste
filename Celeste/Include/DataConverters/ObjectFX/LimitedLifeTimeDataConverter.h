@@ -14,7 +14,7 @@ namespace Celeste
 
   class LimitedLifeTimeDataConverter : public ComponentDataConverter
   {
-    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(LimitedLifeTimeDataConverter, LimitedLifeTime, CelesteDllExport)
+    DECLARE_COMPONENT_DATA_CONVERTER(LimitedLifeTimeDataConverter, LimitedLifeTime, CelesteDllExport)
 
     private:
       using OnDeathCallbacks = typename XML::DataConverterListElement<CallbackDataConverter>::Items;

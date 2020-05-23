@@ -9,7 +9,7 @@ namespace CelesteMocks
 {
   class MockComponentDataConverter : public Celeste::ComponentDataConverter
   {
-    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(MockComponentDataConverter, MockComponent, StaticLibExport)
+    DECLARE_COMPONENT_DATA_CONVERTER(MockComponentDataConverter, MockComponent, StaticLibExport)
 
     public:
       bool isDoConvertFromXMLCalled() const { return m_doConvertFromXMLCalled; }

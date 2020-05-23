@@ -23,8 +23,8 @@ namespace Celeste
     public:
       using BindingCallback = std::function<void(const std::string&, const Path& filePath)>;
 
-    private:
       using ComponentCreationFunction = std::function<observer_ptr<Component>(GameObject&)>;
+    private:
       using ComponentMap = std::unordered_map<std::string, ComponentCreationFunction>;
       using ComponentBindingStorageValue = std::unique_ptr<Reflection::ITypeInfo>;
       using ComponentBindingStorage = std::vector<ComponentBindingStorageValue>;

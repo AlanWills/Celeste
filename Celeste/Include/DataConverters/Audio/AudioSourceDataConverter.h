@@ -16,7 +16,7 @@ namespace Celeste
 {
   class AudioSourceDataConverter : public ComponentDataConverter
   {
-    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(AudioSourceDataConverter, Audio::AudioSource, CelesteDllExport)
+    DECLARE_COMPONENT_DATA_CONVERTER(AudioSourceDataConverter, Audio::AudioSource, CelesteDllExport)
 
     public:
       inline const Path& getSoundPath() const { return m_soundPath.getValue(); }

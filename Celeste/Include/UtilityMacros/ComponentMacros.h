@@ -34,7 +34,7 @@
 
   //------------------------------------------------------------------------------------------------
 #define ADD_COMPONENT_TO_REGISTRY(ComponentType) \
-  bool ComponentType::m_registered = ComponentRegistry::registerComponent(ComponentType::type_name(), [](GameObject& gameObject) { return gameObject.addComponent<ComponentType>(); });
+  bool ComponentType::m_registered = Celeste::ComponentRegistry::registerComponent(ComponentType::type_name(), [](Celeste::GameObject& gameObject) { return gameObject.addComponent<ComponentType>(); });
 
   //------------------------------------------------------------------------------------------------
 #if _DEBUG

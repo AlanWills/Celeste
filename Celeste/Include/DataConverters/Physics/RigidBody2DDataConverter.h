@@ -15,7 +15,7 @@ namespace Celeste
 {
   class RigidBody2DDataConverter : public ComponentDataConverter
   {
-    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(RigidBody2DDataConverter, Physics::RigidBody2D, CelesteDllExport)
+    DECLARE_COMPONENT_DATA_CONVERTER(RigidBody2DDataConverter, Physics::RigidBody2D, CelesteDllExport)
 
     public:
       inline const glm::vec2& getLinearVelocity() const { return m_linearVelocity.getValue(); }

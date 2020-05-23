@@ -1,7 +1,7 @@
 #pragma once
 
 
-#define DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(ConverterType, CompType, DllExport) \
+#define DECLARE_COMPONENT_DATA_CONVERTER(ConverterType, CompType, DllExport) \
   public: \
     using ComponentType = CompType; \
     \

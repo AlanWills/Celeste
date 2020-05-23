@@ -13,7 +13,7 @@ namespace Celeste
 {
   class SpriteRendererDataConverter : public ComponentDataConverter
   {
-    DECLARE_MANAGED_COMPONENT_DATA_CONVERTER(SpriteRendererDataConverter, Rendering::SpriteRenderer, CelesteDllExport)
+    DECLARE_COMPONENT_DATA_CONVERTER(SpriteRendererDataConverter, Rendering::SpriteRenderer, CelesteDllExport)
 
     public:
       inline const Path& getSprite() const { return m_sprite.getValue(); }
