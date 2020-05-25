@@ -4,6 +4,7 @@
 #include "tinyxml2.h"
 #include "ChildXMLElementWalker.h"
 #include "Assert/Assert.h"
+#include "glm/glm.hpp"
 
 #include <string>
 #include <vector>
@@ -14,8 +15,8 @@ using namespace tinyxml2;
 namespace Celeste::XML
 {
   //------------------------------------------------------------------------------------------------
-    // getChildElementCount
-    //------------------------------------------------------------------------------------------------
+  // getChildElementCount
+  //------------------------------------------------------------------------------------------------
   CelesteDllExport size_t getChildElementCount(const XMLElement* element);
 
   //------------------------------------------------------------------------------------------------
@@ -149,10 +150,12 @@ namespace Celeste::XML
   CelesteDllExport XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, unsigned int& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, float& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, std::string& output);
+  CelesteDllExport XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, glm::vec3& output);
 
   CelesteDllExport XMLValueError getAttributeData(const XMLAttribute* attribute, bool& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLAttribute* attribute, int& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLAttribute* attribute, unsigned int& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLAttribute* attribute, float& output);
   CelesteDllExport XMLValueError getAttributeData(const XMLAttribute* attribute, std::string& output);
+  CelesteDllExport XMLValueError getAttributeData(const XMLAttribute* attribute, glm::vec3& output);
 }

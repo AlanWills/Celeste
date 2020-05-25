@@ -2,7 +2,6 @@
 
 #include "Serialization/Serializers.h"
 #include "glm/glm.hpp"
-#include "Maths/MathsEnums.h"
 
 
 namespace Celeste

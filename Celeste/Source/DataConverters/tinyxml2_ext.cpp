@@ -1,4 +1,5 @@
 #include "DataConverters/DataConverter.h"
+#include "Deserialization/MathsDeserializers.h"
 
 
 namespace Celeste::XML
@@ -255,6 +256,18 @@ namespace Celeste::XML
   }
 
   //------------------------------------------------------------------------------------------------
+  XMLValueError getAttributeData(const XMLElement* element, const std::string& attributeName, glm::vec3& output)
+  {
+    XMLValueError result = detail::checkElementAndAttribute(element, attributeName);
+    if (result != XMLValueError::kSuccess)
+    {
+      return result;
+    }
+
+    return getAttributeData(element->FindAttribute(attributeName.c_str()), output);
+  }
+
+  //------------------------------------------------------------------------------------------------
   XMLValueError getAttributeData(const XMLAttribute* attribute, bool& output)
   {
     if (attribute == nullptr)
@@ -317,6 +330,24 @@ namespace Celeste::XML
       return XMLValueError::kSuccess;
     }
     
+    return XMLValueError::kError;
+  }
+
+  //------------------------------------------------------------------------------------------------
+  XMLValueError getAttributeData(const XMLAttribute* attribute, glm::vec3& output)
+  {
+    if (attribute == nullptr)
+    {
+      ASSERT_FAIL();
+      return XMLValueError::kError;
+    }
+
+    if (attribute->Value() != nullptr)
+    {
+      deserialize(attribute->Value(), output);
+      return XMLValueError::kSuccess;
+    }
+
     return XMLValueError::kError;
   }
 }

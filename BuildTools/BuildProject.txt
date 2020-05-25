@@ -8,7 +8,7 @@ function(cbt_build_executable)
 
     project(${BUILD_EXECUTABLE_NAME})
 
-    file(GLOB SOURCE_FILES ${BUILD_EXECUTABLE_SOURCE_DIR}/*.c ${BUILD_EXECUTABLE_SOURCE_DIR}/*.cpp ${BUILD_EXECUTABLE_SOURCE_DIR}/*.h ${BUILD_EXECUTABLE_SOURCE_DIR}/*.hpp)
+    file(GLOB SOURCE_FILES ${BUILD_EXECUTABLE_SOURCE_DIR}/*.c ${BUILD_EXECUTABLE_SOURCE_DIR}/*.cpp)
     file(GLOB HEADER_FILES ${BUILD_EXECUTABLE_SOURCE_DIR}/*.h ${BUILD_EXECUTABLE_SOURCE_DIR}/*.hpp)
     file(GLOB_RECURSE RESOURCE_FILES ${BUILD_EXECUTABLE_SOURCE_DIR}/Resources/*.*)
     
@@ -36,7 +36,7 @@ function(cbt_build_executable)
         list(APPEND BUILD_EXECUTABLE_INCLUDES ${BUILD_EXECUTABLE_SOURCE_DIR}/Include)
     ENDIF()
 
-    target_include_directories(${PROJECT_NAME} PUBLIC "${BUILD_EXECUTABLE_INCLUDES}" PRIVATE ${BUILD_EXECUTABLE_SOURCE_DIR}/Source)
+    target_include_directories(${PROJECT_NAME} PUBLIC "${BUILD_EXECUTABLE_INCLUDES}")
        
     if (BUILD_EXECUTABLE_LIBS)
         target_link_libraries(${PROJECT_NAME} PUBLIC "${BUILD_EXECUTABLE_LIBS}")
@@ -53,7 +53,7 @@ function(cbt_build_library)
 
     project(${BUILD_LIBRARY_NAME})
 
-    file(GLOB_RECURSE SOURCE_FILES ${BUILD_LIBRARY_SOURCE_DIR}/Source/*.c ${BUILD_LIBRARY_SOURCE_DIR}/Source/*.cpp ${BUILD_EXECUTABLE_SOURCE_DIR}/Source/*.h ${BUILD_EXECUTABLE_SOURCE_DIR}/Source/*.hpp)
+    file(GLOB_RECURSE SOURCE_FILES ${BUILD_LIBRARY_SOURCE_DIR}/Source/*.c ${BUILD_LIBRARY_SOURCE_DIR}/Source/*.cpp)
     file(GLOB_RECURSE HEADER_FILES ${BUILD_LIBRARY_SOURCE_DIR}/Include/*.h ${BUILD_LIBRARY_SOURCE_DIR}/Include/*.hpp)
     
     source_group(TREE ${BUILD_LIBRARY_SOURCE_DIR} FILES ${SOURCE_FILES})						   
@@ -85,7 +85,7 @@ function(cbt_build_library)
         list(APPEND BUILD_LIBRARY_INCLUDES ${BUILD_LIBRARY_SOURCE_DIR}/Include)
     ENDIF()
 
-    target_include_directories(${PROJECT_NAME} PUBLIC "${BUILD_LIBRARY_INCLUDES}" PRIVATE ${BUILD_LIBRARY_SOURCE_DIR}/Source)
+    target_include_directories(${PROJECT_NAME} PUBLIC "${BUILD_LIBRARY_INCLUDES}")
        
     if (BUILD_LIBRARY_LIBS)
         target_link_libraries(${PROJECT_NAME} PUBLIC "${BUILD_LIBRARY_LIBS}")
