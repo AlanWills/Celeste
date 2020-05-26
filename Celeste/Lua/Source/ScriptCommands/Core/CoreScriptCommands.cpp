@@ -35,18 +35,42 @@ namespace Celeste::Lua::Core::ScriptCommands
     }
 
     //------------------------------------------------------------------------------------------------
+    template <typename T>
+    void log(T message)
+    {
+      LOG(Celeste::to_string<T>(message));
+    }
+
+    //------------------------------------------------------------------------------------------------
+    template <>
     void log(const std::string& message)
     {
       LOG(message);
     }
 
     //------------------------------------------------------------------------------------------------
+    template <typename T>
+    void logWarning(T message)
+    {
+      LOG_WARNING(Celeste::to_string<T>(message));
+    }
+
+    //------------------------------------------------------------------------------------------------
+    template <>
     void logWarning(const std::string& message)
     {
       LOG_WARNING(message);
     }
 
     //------------------------------------------------------------------------------------------------
+    template <typename T>
+    void logError(T message)
+    {
+      LOG_ERROR(Celeste::to_string<T>(message));
+    }
+
+    //------------------------------------------------------------------------------------------------
+    template <>
     void logError(const std::string& message)
     {
       LOG_ERROR(message);
@@ -65,9 +89,27 @@ namespace Celeste::Lua::Core::ScriptCommands
     state.set_function("assert", &Internals::_assert);
     state.set_function("assertFail", &Internals::assertFail);
     state.set_function("assertFailMessage", &Internals::assertFailMessage);
-    state.set_function("log", &Internals::log);
-    state.set_function("logWarning", &Internals::logWarning);
-    state.set_function("logError", &Internals::logError);
+    state.set_function("log", sol::overload(
+      &Internals::log<const std::string&>, 
+      &Internals::log<bool>, 
+      &Internals::log<int>,
+      &Internals::log<unsigned int>,
+      &Internals::log<size_t>,
+      &Internals::log<float>));
+    state.set_function("logWarning", sol::overload(
+      &Internals::logWarning<const std::string&>,
+      &Internals::logWarning<bool>,
+      &Internals::logWarning<int>,
+      &Internals::logWarning<unsigned int>,
+      &Internals::logWarning<size_t>,
+      &Internals::logWarning<float>));
+    state.set_function("logError", sol::overload(
+      &Internals::logError<const std::string&>,
+      &Internals::logError<bool>,
+      &Internals::logError<int>,
+      &Internals::logError<unsigned int>,
+      &Internals::logError<size_t>,
+      &Internals::logError<float>));
     state.set_function("exit", &Internals::exit);
 
     // Initialize the lua script files for Celeste
