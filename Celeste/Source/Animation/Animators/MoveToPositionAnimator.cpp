@@ -23,18 +23,9 @@ namespace Celeste::Animators
   {
     Inherited::update(elapsedGameTime);
 
-    observer_ptr<GameObject> gameObject = getGameObject();
-#if _DEBUG
-    if (gameObject == nullptr)
-    {
-      ASSERT_FAIL();
-      return;
-    }
-#endif
-
     m_elapsedTime += elapsedGameTime;
     glm::vec3 newTranslation = (m_time == 0 || m_elapsedTime > m_time) ? m_targetPosition : m_startingPosition + ((m_targetPosition - m_startingPosition) * m_elapsedTime / m_time);
-    gameObject->getTransform()->setTranslation(newTranslation);
+    getGameObject().getTransform()->setTranslation(newTranslation);
 
     if (m_elapsedTime >= m_time)
     {
@@ -53,11 +44,7 @@ namespace Celeste::Animators
   //------------------------------------------------------------------------------------------------
   void MoveToPositionAnimator::reset()
   {
-    if (getGameObject() != nullptr)
-    {
-      m_startingPosition = getGameObject()->getTransform()->getTranslation();
-    }
-
+    m_startingPosition = getGameObject().getTransform()->getTranslation();
     m_elapsedTime = 0;
   }
 }

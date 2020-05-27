@@ -46,7 +46,7 @@ namespace TestCeleste
 
     Assert::IsNotNull(component);
     Assert::IsNotNull(dynamic_cast<StackPanel*>(component));
-    Assert::AreEqual(&gameObject, component->getGameObject());
+    Assert::AreSame(gameObject, component->getGameObject());
   }
 
 #pragma endregion
@@ -90,7 +90,6 @@ namespace TestCeleste
     observer_ptr<StackPanel> stackPanel = parent.addComponent<StackPanel>();
     gameObject.addComponent<SpriteRenderer>();
 
-    Assert::IsNotNull(stackPanel->getGameObject());
     Assert::IsNotNull(gameObject.findComponent<SpriteRenderer>());
 
     stackPanel->addChildren(gameObject);

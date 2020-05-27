@@ -229,7 +229,7 @@ namespace TestCeleste
 
     observer_ptr<Component> component = ComponentRegistry::createComponent(MockComponent::type_name(), gameObject);
 
-    Assert::AreEqual(&gameObject, component->getGameObject());
+    Assert::AreSame(gameObject, component->getGameObject());
   }
 
 #pragma endregion

@@ -32,7 +32,7 @@ namespace Celeste::Input
     }
 #endif
 
-    if (observer_ptr<Renderer> renderer = getGameObject()->findComponent<Renderer>(); renderer != nullptr)
+    if (observer_ptr<Renderer> renderer = getGameObject().findComponent<Renderer>(); renderer != nullptr)
     {
       bool currentState = renderer->isActive();
 
@@ -40,18 +40,18 @@ namespace Celeste::Input
       {
         if (currentState != isKeyPressed(m_visibilityKey))
         {
-          getGameObject()->setActive(!currentState);
+          getGameObject().setActive(!currentState);
         }
       }
       else
       {
         if (currentState && m_invisibilityKey > 0 && isKeyTapped(m_invisibilityKey))
         {
-          getGameObject()->setActive(false);
+          getGameObject().setActive(false);
         }
         else if (!currentState && m_visibilityKey > 0 && isKeyTapped(m_visibilityKey))
         {
-          getGameObject()->setActive(true);
+          getGameObject().setActive(true);
         }
       }
     }

@@ -225,7 +225,7 @@ namespace TestCeleste
 
     Assert::IsNotNull(component);
     AssertCel::HasComponent<MockComponent>(gameObject);
-    Assert::IsTrue(&gameObject == component->getGameObject());
+    Assert::AreSame(gameObject, component->getGameObject());
     AssertCel::IsNotActive(*component);
   }
 
@@ -246,7 +246,7 @@ namespace TestCeleste
 
     Assert::IsNotNull(component);
     AssertCel::HasComponent<MockComponent>(gameObject);
-    Assert::IsTrue(&gameObject == component->getGameObject());
+    Assert::AreSame(gameObject, component->getGameObject());
     AssertCel::IsNotActive(*component);
   }
 

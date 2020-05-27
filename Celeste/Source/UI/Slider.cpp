@@ -29,7 +29,7 @@ namespace Celeste::UI
     Inherited::update(elapsedGameTime);
 
 #if _DEBUG
-    if (getGameObject() == nullptr || !getGameObject()->hasComponent<MouseInteractionHandler>())
+    if (!getGameObject().hasComponent<MouseInteractionHandler>())
     {
       ASSERT_FAIL();
       return;
@@ -42,13 +42,13 @@ namespace Celeste::UI
       // In the range [-0.5, 0.5]
       float diff = (getMouse().getTransform().getWorldTranslation().x - getTransform()->getWorldTranslation().x);
 
-      observer_ptr<SpriteRenderer> spriteRenderer = getGameObject()->findComponent<SpriteRenderer>();
+      observer_ptr<SpriteRenderer> spriteRenderer = getGameObject().findComponent<SpriteRenderer>();
       setCurrentValue((diff / (spriteRenderer->getDimensions().x - spriteRenderer->getScissorRectangle().getDimensions().x)) + 0.5f);
       m_sliderClicked = getMouse().isButtonPressed(MouseButton::kLeft);
     }
     else
     {
-      m_sliderClicked = getMouse().isButtonClicked(MouseButton::kLeft) && getGameObject()->findComponent<MouseInteractionHandler>()->isMouseOver();
+      m_sliderClicked = getMouse().isButtonClicked(MouseButton::kLeft) && getGameObject().findComponent<MouseInteractionHandler>()->isMouseOver();
     }
   }
 
@@ -63,12 +63,12 @@ namespace Celeste::UI
       // Update slider position
       float offset = (m_currentValue - (m_max + m_min) * 0.5f) / (m_max - m_min);
 
-      observer_ptr<SpriteRenderer> spriteRenderer = getGameObject()->findComponent<SpriteRenderer>();
+      observer_ptr<SpriteRenderer> spriteRenderer = getGameObject().findComponent<SpriteRenderer>();
       Maths::Rectangle& scissorRectangle = spriteRenderer->getScissorRectangle();
       spriteRenderer->getScissorRectangle().setCentreX((spriteRenderer->getDimensions().x - scissorRectangle.getDimensions().x) * offset);
     }
 
     // Trigger event
-    m_valueChanged.invoke(*getGameObject(), m_currentValue);
+    m_valueChanged.invoke(getGameObject(), m_currentValue);
   }
 }

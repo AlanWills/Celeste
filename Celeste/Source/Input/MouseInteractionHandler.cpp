@@ -36,7 +36,7 @@ namespace Celeste::Input
 
     if (m_isMouseOver)
     {
-      GameObject& gameObject = *getGameObject();
+      GameObject& gameObject = getGameObject();
 
       if (leftMouseButtonPressed && !m_mouseButtonPressed[0])
       {
@@ -80,12 +80,12 @@ namespace Celeste::Input
 
     if (!m_isMouseOver)
     {
-      m_onEnter.invoke(*getGameObject());
+      m_onEnter.invoke(getGameObject());
       m_isMouseOver = true;
     }
     else
     {
-      m_onLeave.invoke(*getGameObject());
+      m_onLeave.invoke(getGameObject());
       m_isMouseOver = false;
     }
   }

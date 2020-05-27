@@ -28,9 +28,9 @@ namespace Celeste::Rendering
 
     ASSERT(m_gameObjectQueue.empty());
 
-    if (observer_ptr<GameObject> gameObject = getGameObject(); gameObject->isActive())
+    if (GameObject& gameObject = getGameObject(); gameObject.isActive())
     {
-      m_gameObjectQueue.push_back(gameObject);
+      m_gameObjectQueue.push_back(&gameObject);
     }
 
     while (!m_gameObjectQueue.empty())

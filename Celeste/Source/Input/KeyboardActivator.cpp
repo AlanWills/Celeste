@@ -33,16 +33,16 @@ namespace Celeste::Input
 
     if (m_inputMode == InputMode::kContinuous && m_activationKey > 0)
     {
-      getGameObject()->setActive(isKeyPressed(m_activationKey));
+      getGameObject().setActive(isKeyPressed(m_activationKey));
     }
     else if (m_inputMode == InputMode::kToggle)
     {
-      if (getGameObject()->isActive())
+      if (getGameObject().isActive())
       {
         if (m_deactivationKey >= 0 && isKeyTapped(m_deactivationKey))
         {
           // Deactivate the gameobject and all other components/scripts but keep this one active
-          getGameObject()->setActive(false);
+          getGameObject().setActive(false);
         }
       }
       else
@@ -50,7 +50,7 @@ namespace Celeste::Input
         if (m_activationKey >= 0 && isKeyTapped(m_activationKey))
         {
           // Activate the gameobject and all other components/scripts
-          getGameObject()->setActive(true);
+          getGameObject().setActive(true);
         }
       }
     }

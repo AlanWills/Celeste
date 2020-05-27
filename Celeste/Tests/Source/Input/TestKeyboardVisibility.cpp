@@ -47,7 +47,7 @@ namespace TestCeleste
 
     Assert::IsNotNull(component);
     Assert::IsNotNull(dynamic_cast<KeyboardVisibility*>(component));
-    Assert::IsTrue(&gameObject == component->getGameObject());
+    Assert::AreSame(gameObject, component->getGameObject());
   }
 
 #pragma endregion

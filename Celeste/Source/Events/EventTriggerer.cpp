@@ -23,7 +23,7 @@ namespace Celeste::Events
 
     m_currentTriggerTimer += elapsedGameTime;
 
-    if ((m_triggerCondition && m_triggerCondition(*getGameObject())) ||
+    if ((m_triggerCondition && m_triggerCondition(getGameObject())) ||
         Input::getKeyboard().isKeyTapped(m_triggerKey) ||
         (m_currentTriggerTimer >= m_triggerDelay))
     {
@@ -36,12 +36,12 @@ namespace Celeste::Events
   {
     m_currentTriggerTimer = 0;
 
-    GameObject* gameObject = getGameObject();
+    GameObject& gameObject = getGameObject();
     if (m_triggerMode == TriggerMode::kOnce)
     {
-      gameObject->removeComponent(this);
+      gameObject.removeComponent(this);
     }
 
-    m_event.invoke(*gameObject);
+    m_event.invoke(gameObject);
   }
 }

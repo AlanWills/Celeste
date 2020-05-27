@@ -29,14 +29,14 @@ namespace Celeste
     Inherited::update(elapsedGameTime);
 
 #if _DEBUG
-    if (!getGameObject()->hasComponent<Renderer>())
+    if (!getGameObject().hasComponent<Renderer>())
     {
       ASSERT_FAIL();
       return;
     }
 #endif
 
-    observer_ptr<Renderer> renderer = getGameObject()->findComponent<Renderer>();
+    observer_ptr<Renderer> renderer = getGameObject().findComponent<Renderer>();
     float currentOpacity = renderer->getOpacity();
 
     if (m_lerpingUp)

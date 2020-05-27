@@ -28,9 +28,9 @@ namespace Celeste::Input
 
     Ray ray = Ray(glm::vec3(Input::getMouse().getScreenPosition(), 0), glm::vec3(0, 0, -1));
 
-    if (getGameObject()->isActive())
+    if (getGameObject().isActive())
     {
-      m_gameObjectQueue.push_back(getGameObject());
+      m_gameObjectQueue.push_back(&getGameObject());
     }
 
     while (!m_gameObjectQueue.empty())

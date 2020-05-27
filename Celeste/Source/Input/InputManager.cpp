@@ -84,7 +84,7 @@ namespace Celeste::Input
 
     for (MouseInteractionHandler& mouseInteractionhandler : MouseInteractionHandler::m_allocator)
     {
-      mouseInteractionhandler.setMouseOver(hitGameObjects.find(mouseInteractionhandler.getGameObject()) != hitGameObjects.end());
+      mouseInteractionhandler.setMouseOver(hitGameObjects.find(&mouseInteractionhandler.getGameObject()) != hitGameObjects.end());
     }
   }
 

@@ -29,7 +29,7 @@ namespace Celeste::Animators
 
     m_elapsedTime += elapsedGameTime;
     glm::vec3 newScale = (m_time == 0 || m_elapsedTime >= m_time) ? m_targetScale : (m_startingScale + ((m_targetScale - m_startingScale) * m_elapsedTime / m_time));
-    getGameObject()->getTransform()->setScale(newScale);
+    getGameObject().getTransform()->setScale(newScale);
 
     if (m_elapsedTime >= m_time)
     {
@@ -48,11 +48,7 @@ namespace Celeste::Animators
   //------------------------------------------------------------------------------------------------
   void ChangeScaleAnimator::reset()
   {
-    if (getGameObject() != nullptr)
-    {
-      m_startingScale = getGameObject()->getTransform()->getScale();
-    }
-
+    m_startingScale = getGameObject().getTransform()->getScale();
     m_elapsedTime = 0;
   }
 }

@@ -118,10 +118,10 @@ namespace Celeste::Physics
         if (std::find(body.m_collidersLastFrame.begin(), body.m_collidersLastFrame.end(), &collider) == body.m_collidersLastFrame.end())
         {
           // Body hasn't collided before so we call the trigger enter function
-          body.m_collider->getGameObject()->triggerEnter(collider);
+          body.m_collider->getGameObject().triggerEnter(collider);
         }
 
-        body.m_collider->getGameObject()->trigger(collider);
+        body.m_collider->getGameObject().trigger(collider);
       }
       else
       {
@@ -158,22 +158,22 @@ namespace Celeste::Physics
 
         if (std::find(body.m_collidersLastFrame.begin(), body.m_collidersLastFrame.end(), &collider) == body.m_collidersLastFrame.end())
         {
-          body.m_collider->getGameObject()->collisionEnter(collider);
+          body.m_collider->getGameObject().collisionEnter(collider);
         }
       }
 
-      body.m_collider->getGameObject()->collision(collider);
+      body.m_collider->getGameObject().collision(collider);
     }
     else if (std::find(body.m_collidersLastFrame.begin(), body.m_collidersLastFrame.end(), &collider) != body.m_collidersLastFrame.end())
     {
       // Body intersected collider last frame so call exit based on collider type
       if (collider.getColliderType() == ColliderType::kTrigger)
       {
-        body.m_collider->getGameObject()->triggerExit(collider);
+        body.m_collider->getGameObject().triggerExit(collider);
       }
       else
       {
-        body.m_collider->getGameObject()->collisionExit(collider);
+        body.m_collider->getGameObject().collisionExit(collider);
       }
     }
   }

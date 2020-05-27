@@ -32,7 +32,7 @@ namespace TestCeleste::Animation
 
     Assert::IsNotNull(component);
     Assert::IsNotNull(dynamic_cast<Animator*>(component));
-    Assert::IsTrue(&gameObject == component->getGameObject());
+    Assert::AreSame(gameObject, component->getGameObject());
   }
 
 #pragma endregion

@@ -30,7 +30,7 @@ namespace TestCeleste
 
     Assert::IsNotNull(component);
     Assert::IsNotNull(dynamic_cast<MoveToPositionAnimator*>(component));
-    Assert::IsTrue(&gameObject == component->getGameObject());
+    Assert::AreSame(gameObject, component->getGameObject());
   }
 
 #pragma endregion
@@ -57,7 +57,7 @@ namespace TestCeleste
       GameObject gameObject;
       MoveToPositionAnimator animator(gameObject);
 
-      Assert::IsTrue(&gameObject == animator.getGameObject());
+      Assert::AreSame(gameObject, animator.getGameObject());
       Assert::AreEqual(glm::vec3(), animator.getTargetPosition());
 
       animator.setTargetPosition(glm::vec3(100, 200, 300));

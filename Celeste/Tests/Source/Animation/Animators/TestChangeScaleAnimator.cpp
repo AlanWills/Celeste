@@ -29,7 +29,7 @@ namespace TestCeleste
 
     Assert::IsNotNull(component);
     Assert::IsNotNull(dynamic_cast<ChangeScaleAnimator*>(component));
-    Assert::IsTrue(&gameObject == component->getGameObject());
+    Assert::AreSame(gameObject, component->getGameObject());
   }
 
 #pragma endregion
@@ -56,7 +56,7 @@ namespace TestCeleste
     GameObject gameObject;
     ChangeScaleAnimator animator(gameObject);
 
-    Assert::IsTrue(&gameObject == animator.getGameObject());
+    Assert::AreSame(gameObject, animator.getGameObject());
     Assert::AreEqual(glm::vec3(1), animator.getTargetScale());
 
     animator.setTargetScale(glm::vec3(100, 200, 300));

@@ -655,7 +655,7 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<MockManagedComponent> component = gameObject.addComponent<MockManagedComponent>();
 
-    Assert::IsTrue(component->getGameObject() == &gameObject);
+    Assert::AreSame(component->getGameObject(), gameObject);
   }
 
 #pragma endregion
@@ -876,7 +876,7 @@ namespace TestCeleste
     MockManagedComponent component(ownerGameObject);
 
     AssertCel::IsActive(component);
-    Assert::AreNotEqual(&gameObject, component.getGameObject());
+    Assert::AreNotSame(gameObject, component.getGameObject());
 
     gameObject.removeComponent(&component);
 
@@ -887,7 +887,7 @@ namespace TestCeleste
 
     Assert::IsNotNull(component2);
     AssertCel::IsActive(component2);
-    Assert::AreNotEqual(&gameObject, component2->getGameObject());
+    Assert::AreNotSame(gameObject, component2->getGameObject());
 
     gameObject.removeComponent(component2);
 

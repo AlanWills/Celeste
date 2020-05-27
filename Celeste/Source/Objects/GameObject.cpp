@@ -19,16 +19,10 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   GameObject::~GameObject()
   {
-    // Deleting game objects is going to invalidate iterators, so we cache the children here before deleting
-    std::vector<GameObject*> children;
-    for (GameObject* child : *this)
+    // Deleting game objects is going to invalidate iterators, so reverse iterate
+    for (size_t i = getChildCount(); i > 0; --i)
     {
-      children.push_back(child);
-    }
-
-    for (GameObject* gameObject : children)
-    {
-      delete gameObject;
+      delete getChild(i - 1);
     }
 
     m_transform.reset();
@@ -257,8 +251,7 @@ namespace Celeste
   void GameObject::removeComponent(Component* component)
   {
 #if _DEBUG
-    if (component == nullptr || 
-        this != component->getGameObject())
+    if (component == nullptr || this != &component->getGameObject())
     {
       ASSERT_FAIL();
       return;

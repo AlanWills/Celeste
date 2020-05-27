@@ -7,24 +7,19 @@ namespace Celeste
 {
   //------------------------------------------------------------------------------------------------
   Component::Component(GameObject& gameObject) :
-    m_gameObject(&gameObject)
+    m_gameObject(gameObject)
   {
   }
 
   //------------------------------------------------------------------------------------------------
   Component::~Component()
   {
-    if (m_gameObject != nullptr)
-    {
-      m_gameObject->removeComponent(this);
-      m_gameObject = nullptr;
-    }
+    m_gameObject.removeComponent(this);
   }
 
   //------------------------------------------------------------------------------------------------
   Transform* Component::getTransform()
   {
-    ASSERT_NOT_NULL(m_gameObject);
-    return m_gameObject != nullptr ? m_gameObject->getTransform() : nullptr;
+    return m_gameObject.getTransform();
   }
 }

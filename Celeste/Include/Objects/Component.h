@@ -27,8 +27,8 @@ namespace Celeste
       virtual void trigger(Physics::Collider& /*collider*/) { }
       virtual void triggerExit(Physics::Collider& /*collider*/) { }
 
-      inline GameObject* getGameObject() { return m_gameObject; }
-      inline CelesteDllExport const GameObject* getGameObject() const { return const_cast<Component*>(this)->getGameObject(); }
+      inline GameObject& getGameObject() { return m_gameObject; }
+      inline CelesteDllExport const GameObject& getGameObject() const { return const_cast<Component*>(this)->getGameObject(); }
 
       inline CelesteDllExport Transform* getTransform();
       inline CelesteDllExport const Transform* getTransform() const { return const_cast<Component*>(this)->getTransform(); }
@@ -36,6 +36,6 @@ namespace Celeste
     private:
       using Inherited = Entity;
 
-      GameObject* m_gameObject = nullptr;
+      GameObject& m_gameObject;
   };
 }

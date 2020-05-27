@@ -22,7 +22,7 @@ namespace TestCeleste
     GameObject gameObject;
     MockComponent component(gameObject);
 
-    Assert::AreEqual(&gameObject, component.getGameObject());
+    Assert::AreSame(gameObject, component.getGameObject());
     Assert::AreEqual(gameObject.getTransform(), component.getTransform());
   }
 
@@ -58,12 +58,11 @@ namespace TestCeleste
 #pragma region Get Transform Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Component_GetTransform_WithParentSet_ReturnsParentsTransformHandle)
+  TEST_METHOD(Component_GetTransform_WithParentSet_ReturnsParentsTransform)
   {
     GameObject gameObject;
     observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
 
-    Assert::IsNotNull(component->getGameObject());
     Assert::IsTrue(component->getTransform() == gameObject.getTransform());
   }
 
@@ -72,17 +71,15 @@ namespace TestCeleste
 #pragma region Get Const Transform Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Component_GetConstTransform_WithParentSet_ReturnsParentsTransformHandle)
+  TEST_METHOD(Component_GetConstTransform_WithGameObjectSet_ReturnsGameObjectsTransform)
   {
     GameObject gameObject;
     observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
 
     const MockComponent& constComponent = *component;
-    const GameObject* constParent = constComponent.getGameObject();
-    const Transform* constParentTransform = constComponent.getTransform();
+    const Transform* constTransform = constComponent.getTransform();
 
-    Assert::IsNotNull(constParent);
-    Assert::IsTrue(constParentTransform == gameObject.getTransform());
+    Assert::IsTrue(constTransform == gameObject.getTransform());
   }
 
 #pragma endregion

@@ -31,7 +31,7 @@ namespace TestCeleste
 
     Assert::IsNotNull(component);
     Assert::IsNotNull(dynamic_cast<OpacityLerper*>(component));
-    Assert::IsTrue(&gameObject == component->getGameObject());
+    Assert::AreSame(gameObject, component->getGameObject());
   }
 
 #pragma endregion
@@ -58,12 +58,11 @@ namespace TestCeleste
 #pragma region Update Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(OpacityLerper_Update_WithGameObejctButNoRenderer_DoesNotThrow)
+    TEST_METHOD(OpacityLerper_Update_WithGameObjectButNoRenderer_DoesNotThrow)
     {
       GameObject gameObject;
       OpacityLerper opacityLerper(gameObject);
 
-      Assert::IsNotNull(opacityLerper.getGameObject());
       Assert::IsFalse(gameObject.hasComponent<Renderer>());
 
       // Check doesnt throw
@@ -97,7 +96,6 @@ namespace TestCeleste
       opacityLerper->setMaxOpacity(1.0f);
       renderer->setOpacity(0.5f);
       
-      Assert::IsNotNull(opacityLerper->getGameObject());
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
       Assert::IsTrue(opacityLerper->isLerpingUp());
 
@@ -124,7 +122,6 @@ namespace TestCeleste
       opacityLerper->setMaxOpacityWaitTime(1);
       renderer->setOpacity(0.5f);
 
-      Assert::IsNotNull(opacityLerper->getGameObject());
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
       Assert::IsTrue(opacityLerper->isLerpingUp());
 
@@ -166,7 +163,6 @@ namespace TestCeleste
       opacityLerper->setMinOpacity(0);
       renderer->setOpacity(0.5f);
       
-      Assert::IsNotNull(opacityLerper->getGameObject());
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
       Assert::IsFalse(opacityLerper->isLerpingUp());
 
@@ -193,7 +189,6 @@ namespace TestCeleste
       opacityLerper->setMinOpacityWaitTime(1);
       renderer->setOpacity(0.5f);
 
-      Assert::IsNotNull(opacityLerper->getGameObject());
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
       Assert::IsFalse(opacityLerper->isLerpingUp());
 

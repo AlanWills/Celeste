@@ -94,7 +94,6 @@ namespace TestCeleste
 
     observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
 
-    Assert::IsNotNull(component->getGameObject());
     AssertCel::IsActive(component);
 
     converter.setValues(*component);
@@ -119,7 +118,6 @@ namespace TestCeleste
     observer_ptr<MockComponent> component = gameObject.addComponent<MockComponent>();
     component->setActive(false);
 
-    Assert::IsNotNull(component->getGameObject());
     AssertCel::IsNotActive(component);
 
     converter.setValues(*component);

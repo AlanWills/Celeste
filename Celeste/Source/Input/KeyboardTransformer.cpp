@@ -29,7 +29,7 @@ namespace Celeste::Input
     Inherited::update(elapsedGameTime);
 
 #if _DEBUG
-    if (getGameObject() == nullptr || getGameObject()->getTransform() == nullptr)
+    if (getGameObject().getTransform() == nullptr)
     {
       ASSERT_FAIL();
       return;
@@ -79,7 +79,7 @@ namespace Celeste::Input
       m_deltaRotation += 1;
     }
 
-    observer_ptr<Transform> transform = getGameObject()->getTransform();
+    observer_ptr<Transform> transform = getGameObject().getTransform();
 
     if (m_deltaRotation != 0)
     {

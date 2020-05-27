@@ -43,7 +43,7 @@ namespace TestCeleste::Input
 
     Assert::IsNotNull(component);
     Assert::IsNotNull(dynamic_cast<KeyboardRigidBody2DController*>(component));
-    Assert::IsTrue(&gameObject == component->getGameObject());
+    Assert::AreSame(gameObject, component->getGameObject());
   }
 
 #pragma endregion

@@ -31,7 +31,7 @@ namespace Celeste
     stackPanel.setHorizontalAlignment(getHorizontalAlignment());
     stackPanel.setPadding(getPadding());
 
-    for (observer_ptr<GameObject> gameObject : *stackPanel.getGameObject())
+    for (observer_ptr<GameObject> gameObject : stackPanel.getGameObject())
     {
       stackPanel.addChildren(*gameObject);
     }

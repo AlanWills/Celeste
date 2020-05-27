@@ -30,7 +30,7 @@ namespace Celeste::UI
       return;
     }
 
-    if (&gameObject == getGameObject())
+    if (&gameObject == &getGameObject())
     {
       // Cannot add parent to ourself
       ASSERT_FAIL();
@@ -38,8 +38,7 @@ namespace Celeste::UI
     }
 #endif
 
-    ASSERT_NOT_NULL(getGameObject());
-    gameObject.setParent(getGameObject());
+    gameObject.setParent(&getGameObject());
     m_children.push_back(&gameObject);
     layout();
   }
