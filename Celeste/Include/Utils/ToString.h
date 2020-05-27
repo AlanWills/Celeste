@@ -12,15 +12,21 @@ namespace Celeste
     using std::to_string;
 
     template<class T>
-    std::string as_string(T t) 
+    inline std::string as_string(T t) 
     {
       return to_string(t);
+    }
+
+    template<>
+    inline std::string as_string(std::string t)
+    {
+      return t;
     }
   }
 
   //------------------------------------------------------------------------------------------------
   template<class T>
-  std::string to_string(T t) 
+  inline std::string to_string(T t) 
   {
     return adl_helper::as_string(t);
   }
