@@ -820,5 +820,149 @@ namespace TestCeleste
 
 #pragma endregion
 
+#pragma region Get Attribute Data (Vec3 Overload)
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_InputtingNullElement_ReturnskError)
+    {
+      glm::vec3 output = glm::vec3();
+
+      Assert::IsTrue(getAttributeData(nullptr, "test", output) == XMLValueError::kError);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_InputtingElementWithNoMatchingAttribute_ReturnskDoesNotExist)
+    {
+      glm::vec3 output = glm::vec3();
+      XMLDocument document;
+      const XMLElement* element = document.NewElement("Root");
+
+      Assert::IsNull(element->FindAttribute("test"));
+      Assert::IsTrue(getAttributeData(element, "test", output) == XMLValueError::kDoesNotExist);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_InputtingElementWithAttributeButNoText_ReturnskError)
+    {
+      glm::vec3 output = glm::vec3();
+      XMLDocument document;
+      XMLElement* element = document.NewElement("Root");
+      element->SetAttribute("test", "");
+
+      Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute("test"));
+      Assert::AreEqual("", static_cast<const XMLElement*>(element)->FindAttribute("test")->Value());
+      Assert::IsTrue(getAttributeData(element, "test", output) == XMLValueError::kError);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_AttributeHasInvalidValue_ReturnskError_AndDoesNotChangeValue)
+    {
+      glm::vec3 output = glm::vec3();
+      XMLDocument document;
+      XMLElement* element = document.NewElement("Root");
+      element->SetAttribute("test", "wubdubdub");
+
+      Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute("test"));
+      Assert::AreEqual("wubdubdub", static_cast<const XMLElement*>(element)->FindAttribute("test")->Value());
+      Assert::IsTrue(getAttributeData(element, "test", output) == XMLValueError::kError);
+      Assert::AreEqual(glm::vec3(), output);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_AttributeHasValidValue_ReturnskSuccess)
+    {
+      glm::vec3 output = glm::vec3();
+      XMLDocument document;
+      XMLElement* element = document.NewElement("Root");
+      element->SetAttribute("test", "1, -2, 3.123");
+
+      Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute("test"));
+      Assert::AreEqual("true", static_cast<const XMLElement*>(element)->FindAttribute("test")->Value());
+      Assert::IsTrue(getAttributeData(element, "test", output) == XMLValueError::kSuccess);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_AttributeHasValidValue_SetsOutputToCorrectValue)
+    {
+      glm::vec3 output = glm::vec3();
+      XMLDocument document;
+      XMLElement* element = document.NewElement("Root");
+      element->SetAttribute("test", "1, -2, 3.123");
+
+      Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute("test"));
+      Assert::AreEqual("true", static_cast<const XMLElement*>(element)->FindAttribute("test")->Value());
+      
+      getAttributeData(element, "test", output);
+
+      Assert::AreEqual(glm::vec3(1, -2, 3.123f), output);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_InputtingNullAttribute_ReturnskError)
+    {
+      glm::vec3 output = glm::vec3();
+
+      Assert::IsTrue(getAttributeData(nullptr, output) == XMLValueError::kError);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_InputtingNullAttribute_DoesNotChangeInputtedVec3)
+    {
+      glm::vec3 output = glm::vec3();
+      getAttributeData(nullptr, output);
+
+      Assert::AreEqual(glm::vec3(), output);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_InputtingAttribute_WithInvalidValue_ReturnskError)
+    {
+      glm::vec3 output = glm::vec3();
+      XMLDocument document;
+      XMLElement* element = document.NewElement("Test");
+      element->SetAttribute("Vec3Attr", "WubbaLubbaDubDub");
+
+      Assert::IsTrue(getAttributeData(element->FindAttribute("Vec3Attr"), output) == XMLValueError::kError);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_InputtingAttribute_WithInvalidValue_DoesNotChangeInputtedVec3)
+    {
+      glm::vec3 output = glm::vec3();
+      XMLDocument document;
+      XMLElement* element = document.NewElement("Test");
+      element->SetAttribute("Vec3Attr", "WubbaLubbaDubDub");
+
+      getAttributeData(element->FindAttribute("Vec3Attr"), output);
+
+      Assert::AreEqual(glm::vec3(), output);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_InputtingAttribute_WithValidValue_ReturnskSuccess)
+    {
+      glm::vec3 output = glm::vec3();
+      XMLDocument document;
+      XMLElement* element = document.NewElement("Test");
+      element->SetAttribute("Vec3Attr", "1, -2, 3.123");
+
+      Assert::IsTrue(getAttributeData(element->FindAttribute("Vec3Attr"), output) == XMLValueError::kSuccess);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(GetAttributeData_Vec3Overload_InputtingAttribute_WithValidValue_SetsInputtedVec3ToCorrectValue)
+    {
+      glm::vec3 output = glm::vec3();
+      XMLDocument document;
+      XMLElement* element = document.NewElement("Test");
+      element->SetAttribute("Vec3Attr", "1, -2, 3.123");
+
+      getAttributeData(element->FindAttribute("Vec3Attr"), output);
+
+      Assert::AreEqual(glm::vec3(1, -2, 3.123f), output);
+    }
+
+#pragma endregion
+
   };
 }
