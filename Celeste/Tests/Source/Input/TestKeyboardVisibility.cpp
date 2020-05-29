@@ -96,7 +96,7 @@ namespace TestCeleste
       keyboardVisibility.setInputMode(InputMode::kToggle);
       keyboardVisibility.setVisibilityKey(GLFW_KEY_A);
       keyboardVisibility.setInvisibilityKey(GLFW_KEY_D);
-      keyboardVisibility.update(0);  // Check this doesn't throw
+      keyboardVisibility.update();  // Check this doesn't throw
     }
 
     //------------------------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ namespace TestCeleste
       AssertCel::IsNotActive(*renderer);
 
       keyboardVisibility->setInputMode(InputMode::kToggle);
-      keyboardVisibility->update(0);
+      keyboardVisibility->update();
 
       AssertCel::IsNotActive(*renderer);
     }
@@ -132,7 +132,7 @@ namespace TestCeleste
       Assert::AreEqual(GLFW_KEY_D, keyboardVisibility->getInvisibilityKey());
       Assert::IsTrue(keyboardVisibility->getInputMode() == InputMode::kToggle);
 
-      keyboardVisibility->update(0);
+      keyboardVisibility->update();
 
       AssertCel::IsNotActive(*renderer);
     }
@@ -154,7 +154,7 @@ namespace TestCeleste
       Assert::IsTrue(keyboardVisibility->getInputMode() == InputMode::kToggle);
 
       simulateKeyTapped(GLFW_KEY_A);
-      keyboardVisibility->update(0);
+      keyboardVisibility->update();
 
       AssertCel::IsActive(*renderer);
     }
@@ -173,7 +173,7 @@ namespace TestCeleste
       Assert::AreEqual(GLFW_KEY_D, keyboardVisibility->getVisibilityKey());
       Assert::IsTrue(keyboardVisibility->getInputMode() == InputMode::kToggle);
 
-      keyboardVisibility->update(0);
+      keyboardVisibility->update();
 
       AssertCel::IsActive(*renderer);
     }
@@ -194,7 +194,7 @@ namespace TestCeleste
       Assert::IsTrue(keyboardVisibility->getInputMode() == InputMode::kToggle);
 
       simulateKeyTapped(GLFW_KEY_A);
-      keyboardVisibility->update(0);
+      keyboardVisibility->update();
 
       AssertCel::IsNotActive(*renderer);
     }
@@ -219,7 +219,7 @@ namespace TestCeleste
 
         Assert::IsTrue(getKeyboard().isKeyTapped(keyboardVisibility->getVisibilityKey()));
 
-        keyboardVisibility->update(0);
+        keyboardVisibility->update();
 
         AssertCel::IsActive(*renderer);
       }
@@ -233,7 +233,7 @@ namespace TestCeleste
 
         Assert::IsTrue(getKeyboard().isKeyTapped(keyboardVisibility->getInvisibilityKey()));
 
-        keyboardVisibility->update(0);
+        keyboardVisibility->update();
 
         AssertCel::IsNotActive(*renderer);
       }
@@ -254,7 +254,7 @@ namespace TestCeleste
       Assert::AreEqual(GLFW_KEY_A, keyboardVisibility->getInvisibilityKey());
       Assert::IsTrue(0 > keyboardVisibility->getVisibilityKey());
 
-      keyboardVisibility->update(0);
+      keyboardVisibility->update();
 
       AssertCel::IsNotActive(*renderer);
     }
@@ -278,7 +278,7 @@ namespace TestCeleste
 
         Assert::IsTrue(getKeyboard().isKeyPressed(keyboardVisibility->getVisibilityKey()));
 
-        keyboardVisibility->update(0);
+        keyboardVisibility->update();
 
         AssertCel::IsActive(*renderer);
       }
@@ -292,7 +292,7 @@ namespace TestCeleste
 
         Assert::IsFalse(getKeyboard().isKeyPressed(keyboardVisibility->getVisibilityKey()));
 
-        keyboardVisibility->update(0);
+        keyboardVisibility->update();
 
         AssertCel::IsNotActive(*renderer);
       }

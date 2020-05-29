@@ -23,7 +23,7 @@ namespace TestCeleste
     Assert::IsFalse(entity->isUpdateCalled());
     Assert::IsFalse(entity2->isUpdateCalled());
 
-    Algorithm::update(0, allocator);
+    Algorithm::update(allocator);
 
     Assert::IsTrue(entity->isUpdateCalled());
     Assert::IsTrue(entity2->isUpdateCalled());

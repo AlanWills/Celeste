@@ -101,7 +101,7 @@ namespace TestCeleste
 
       // Check with a game object to make sure it's a delta that is applied rather than a fixed value
       gameObject.getTransform()->setTranslation(50, -50);
-      collider->update(0);
+      collider->update();
 
       Assert::AreEqual(glm::vec2(250, 50), collider->getCentre());
 
@@ -145,7 +145,7 @@ namespace TestCeleste
       
       collider->setDimensions(10, 10);
       gameObject.getTransform()->setTranslation(10, 10);
-      collider->update(0);
+      collider->update();
       
       Assert::AreEqual(glm::vec2(5, 10), collider->getLeft());
       Assert::AreEqual(glm::vec2(10, 15), collider->getTop());
@@ -155,7 +155,7 @@ namespace TestCeleste
       parent.getTransform()->setTranslation(-20, 20);
       gameObject.getTransform()->setParent(parent.getTransform());
 
-      collider->update(0);
+      collider->update();
 
       Assert::AreEqual(glm::vec2(-15, 30), collider->getLeft());
       Assert::AreEqual(glm::vec2(-10, 35), collider->getTop());
@@ -173,7 +173,7 @@ namespace TestCeleste
       collider->setDimensions(10, 10);
       collider->setOffset(15, 5);
       gameObject.getTransform()->setTranslation(10, 10);
-      collider->update(0);
+      collider->update();
 
       Assert::AreEqual(glm::vec2(20, 15), collider->getLeft());
       Assert::AreEqual(glm::vec2(25, 20), collider->getTop());
@@ -183,7 +183,7 @@ namespace TestCeleste
       collider->setOffset(-10, -10);
       gameObject.getTransform()->setParent(parent.getTransform());
 
-      collider->update(0);
+      collider->update();
 
       Assert::AreEqual(glm::vec2(-5, 0), collider->getLeft());
       Assert::AreEqual(glm::vec2(0, 5), collider->getTop());
@@ -199,18 +199,18 @@ namespace TestCeleste
       observer_ptr<RectangleCollider> collider = gameObject.addComponent<RectangleCollider>();
 
       collider->setDimensions(10, 10);
-      collider->update(0);
+      collider->update();
 
       Assert::AreEqual(glm::vec2(10, 10), collider->getDimensions());
 
       parent.getTransform()->setScale(0.2f, 0.5f);
       gameObject.getTransform()->setParent(parent.getTransform());
-      collider->update(0);
+      collider->update();
 
       Assert::AreEqual(glm::vec2(2, 5), collider->getDimensions());
 
       gameObject.getTransform()->setScale(2, 0.5f);
-      collider->update(0);
+      collider->update();
 
       Assert::AreEqual(glm::vec2(4, 2.5f), collider->getDimensions());
     }

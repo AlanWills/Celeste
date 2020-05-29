@@ -52,7 +52,7 @@ namespace Celeste::Animation
       /// Will return true if this animation is playing
       inline bool isPlaying() const { return m_playing; }
 
-      CelesteDllExport void update(GLfloat secondsPerUpdate) override;
+      CelesteDllExport void update() override;
 
     protected:
       inline size_t getCurrentFrame() const { return m_currentFrame; }

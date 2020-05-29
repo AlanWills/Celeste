@@ -3,7 +3,8 @@
 #include "Clock.h"
 
 
-namespace Celeste
+namespace Celeste::Time
 {
   CelesteDllExport Clock& getClock();
+  CelesteDllExport float getElapsedDeltaTime();
 }

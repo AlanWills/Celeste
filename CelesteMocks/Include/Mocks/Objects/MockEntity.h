@@ -28,7 +28,7 @@ namespace CelesteMocks
       }
 
       void setActive(bool isActive) { Inherited::setActive(isActive); m_setActiveCalled = isActive; }
-      void update(float elapsedGameTime) override { Inherited::update(elapsedGameTime); m_updateCalled = true; }
+      void update() override { Inherited::update(); m_updateCalled = true; }
 
     private:
       bool m_setActiveCalled;

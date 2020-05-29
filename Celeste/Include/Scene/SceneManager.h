@@ -38,6 +38,6 @@ namespace Celeste
     private:
       using Inherited = System::ISystem;
 
-      void updateGameObjectHierarchy(GameObject& gameObject, float elapsedGameTime);
+      void updateGameObjectHierarchy(GameObject& gameObject);
   };
 }

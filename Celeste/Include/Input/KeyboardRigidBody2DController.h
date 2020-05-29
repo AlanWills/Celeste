@@ -49,7 +49,7 @@ namespace Celeste::Input
       inline IncrementMode getIncrementMode() const { return m_incrementMode; }
       inline void setIncrementMode(IncrementMode incrementMode) { m_incrementMode = incrementMode; }
 
-      CelesteDllExport void update(float elapsedGameTime) override;
+      CelesteDllExport void update() override;
 
     private:
       using Inherited = Component;

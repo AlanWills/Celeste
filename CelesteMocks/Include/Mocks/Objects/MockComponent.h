@@ -18,7 +18,7 @@ namespace CelesteMocks
         m_updateCalled = false;
       }
 
-      void update(float elapsedGameTime) override { Component::update(elapsedGameTime); m_updateCalled = true; }
+      void update() override { Component::update(); m_updateCalled = true; }
 
       static Celeste::ResizeableAllocator<MockComponent>& getAllocator() { return m_allocator; }
 

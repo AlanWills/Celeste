@@ -32,7 +32,7 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void InputManager::update(float elapsedGameTime)
+  void InputManager::update(float /*elapsedGameTime*/)
   {
     m_keyboard.update();
 
@@ -43,8 +43,8 @@ namespace Celeste::Input
 
     raycast();
 
-    Algorithm::update(elapsedGameTime, KeyboardActivator::m_allocator);
-    Algorithm::update(elapsedGameTime, MouseInteractionHandler::m_allocator);
+    Algorithm::update(KeyboardActivator::m_allocator);
+    Algorithm::update(MouseInteractionHandler::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------

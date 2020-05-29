@@ -19,9 +19,9 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void RectangleCollider::update(GLfloat secondsPerUpdate)
+  void RectangleCollider::update()
   {
-    Inherited::update(secondsPerUpdate);
+    Inherited::update();
 
     sync();
   }

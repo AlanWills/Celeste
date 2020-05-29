@@ -30,7 +30,7 @@ namespace TestCeleste
 
     Assert::IsFalse(entity.isUpdateCalled());
 
-    entity.update(0);
+    entity.update();
 
     Assert::IsTrue(entity.isUpdateCalled());
   }

@@ -17,9 +17,9 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void KeyboardActivator::update(float elapsedGameTime)
+  void KeyboardActivator::update()
   {
-    Inherited::update(elapsedGameTime);
+    Inherited::update();
 
     //ASSERT_FAIL_MSG("TODO - this won't work cos the script will be disabled when we disable it.");
 

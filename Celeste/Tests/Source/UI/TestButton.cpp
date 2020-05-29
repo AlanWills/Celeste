@@ -150,8 +150,8 @@ namespace TestCeleste
 
     Assert::IsTrue(handler->isMouseOver());
 
-    handler->update(0);
-    button->update(0);
+    handler->update();
+    button->update();
 
     Assert::AreEqual(button->getHighlightedTexture()->getDimensions(), spriteRenderer->getDimensions());
     Assert::AreEqual(button->getHighlightedTexture(), spriteRenderer->getTexture());
@@ -172,8 +172,8 @@ namespace TestCeleste
 
     Assert::IsTrue(handler->isMouseOver());
 
-    handler->update(0);
-    button->update(0);
+    handler->update();
+    button->update();
 
     Assert::IsTrue(button->getButtonState_Public() == Button::ButtonState::kHighlighted);
     Assert::AreEqual(button->getHighlightedTexture(), spriteRenderer->getTexture());
@@ -183,8 +183,8 @@ namespace TestCeleste
 
     Assert::IsFalse(handler->isMouseOver());
 
-    handler->update(0);
-    button->update(0);
+    handler->update();
+    button->update();
 
     Assert::AreEqual(button->getDefaultTexture()->getDimensions(), spriteRenderer->getDimensions());
     Assert::AreEqual(button->getDefaultTexture(), spriteRenderer->getTexture());
@@ -216,7 +216,7 @@ namespace TestCeleste
       
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kLeft));
 
-    handler->update(0);
+    handler->update();
 
     Assert::AreEqual(button->getClickedTexture()->getDimensions(), spriteRenderer->getDimensions());
     Assert::IsTrue(button->getButtonState_Public() == Button::ButtonState::kClicked);
@@ -257,7 +257,7 @@ namespace TestCeleste
 
     button->setButtonState_Public(Button::ButtonState::kIdle);
 
-    handler->update(0);
+    handler->update();
 
     Assert::IsFalse(called);
   }
@@ -291,7 +291,7 @@ namespace TestCeleste
 
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kLeft));
 
-    handler->update(0);
+    handler->update();
 
     Assert::IsTrue(Button::ButtonState::kIdle == button->getButtonState_Public());
 
@@ -300,7 +300,7 @@ namespace TestCeleste
     Assert::IsTrue(Button::ButtonState::kHighlighted == button->getButtonState_Public());
 
     simulateMouseButtonReleased(MouseButton::kLeft);
-    handler->update(0);
+    handler->update();
 
     Assert::IsFalse(called);
     Assert::IsTrue(Button::ButtonState::kHighlighted == button->getButtonState_Public());
@@ -337,12 +337,12 @@ namespace TestCeleste
 
     Assert::IsTrue(getMouse().isButtonClicked(MouseButton::kLeft));
 
-    handler->update(0);
+    handler->update();
 
     Assert::IsTrue(Button::ButtonState::kClicked == button->getButtonState_Public());
 
     simulateMouseButtonReleased(MouseButton::kLeft);
-    handler->update(0);
+    handler->update();
 
     Assert::IsTrue(called);
     Assert::IsTrue(Button::ButtonState::kIdle == button->getButtonState_Public());

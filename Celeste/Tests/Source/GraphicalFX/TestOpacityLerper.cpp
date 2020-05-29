@@ -5,9 +5,13 @@
 #include "Registries/ComponentRegistry.h"
 #include "Rendering/SpriteRenderer.h"
 #include "TestUtils/Assert/AssertCel.h"
+#include "TestUtils/Assert/AssertExt.h"
+#include "Time/TimeUtils.h"
+#include "Time/Clock.h"
 
 using namespace Celeste;
 using namespace Celeste::Rendering;
+using namespace Celeste::Time;
 
 
 namespace TestCeleste
@@ -66,7 +70,8 @@ namespace TestCeleste
       Assert::IsFalse(gameObject.hasComponent<Renderer>());
 
       // Check doesnt throw
-      opacityLerper.update(0);
+      getClock().update(1);
+      opacityLerper.update();
     }
 
     //------------------------------------------------------------------------------------------------
@@ -76,11 +81,15 @@ namespace TestCeleste
       observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       observer_ptr<OpacityLerper> opacityLerper = gameObject.addComponent<OpacityLerper>();
 
+      getClock().update(0);
+
+      AssertExt::AreAlmostEqual(0.0f, getElapsedDeltaTime());
+
       renderer->setOpacity(0);
       opacityLerper->setLerpingUp(true);
       opacityLerper->setMaxOpacity(1.0f);
       opacityLerper->setLerpUpTime(0);
-      opacityLerper->update(0);
+      opacityLerper->update();
 
       Assert::AreEqual(1.0f, renderer->getOpacity());
     }
@@ -99,12 +108,20 @@ namespace TestCeleste
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
       Assert::IsTrue(opacityLerper->isLerpingUp());
 
-      opacityLerper->update(0.5f);
+      getClock().update(0.5f);
+
+      AssertExt::AreAlmostEqual(0.5f, getElapsedDeltaTime());
+
+      opacityLerper->update();
 
       Assert::AreEqual(1.0f, renderer->getOpacity());
       Assert::IsFalse(opacityLerper->isLerpingUp());
 
-      opacityLerper->update(0.5f);
+      getClock().update(0.5f);
+
+      AssertExt::AreAlmostEqual(0.5f, getElapsedDeltaTime());
+
+      opacityLerper->update();
 
       Assert::AreEqual(0.5f, renderer->getOpacity());
       Assert::IsFalse(opacityLerper->isLerpingUp());
@@ -125,12 +142,20 @@ namespace TestCeleste
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
       Assert::IsTrue(opacityLerper->isLerpingUp());
 
-      opacityLerper->update(0.5f);
+      getClock().update(0.5f);
+
+      AssertExt::AreAlmostEqual(0.5f, getElapsedDeltaTime());
+
+      opacityLerper->update();
 
       Assert::AreEqual(1.0f, renderer->getOpacity());
       Assert::IsTrue(opacityLerper->isLerpingUp());
 
-      opacityLerper->update(0.2f);
+      getClock().update(0.2f);
+
+      AssertExt::AreAlmostEqual(0.2f, getElapsedDeltaTime());
+
+      opacityLerper->update();
 
       Assert::AreEqual(1.0f, renderer->getOpacity());
       Assert::IsTrue(opacityLerper->isLerpingUp());
@@ -143,11 +168,15 @@ namespace TestCeleste
       observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
       observer_ptr<OpacityLerper> opacityLerper = gameObject.addComponent<OpacityLerper>();
 
+      getClock().update(0);
+
+      Assert::AreEqual(0.0f, getElapsedDeltaTime());
+
       renderer->setOpacity(1.0f);
       opacityLerper->setLerpingUp(false);
       opacityLerper->setMinOpacity(0.0f);
       opacityLerper->setLerpDownTime(0);
-      opacityLerper->update(0);
+      opacityLerper->update();
 
       Assert::AreEqual(0.0f, renderer->getOpacity());
     }
@@ -166,12 +195,20 @@ namespace TestCeleste
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
       Assert::IsFalse(opacityLerper->isLerpingUp());
 
-      opacityLerper->update(0.5f);
+      getClock().update(0.5f);
+
+      AssertExt::AreAlmostEqual(0.5f, getElapsedDeltaTime());
+
+      opacityLerper->update();
 
       Assert::AreEqual(0.0f, renderer->getOpacity());
       Assert::IsTrue(opacityLerper->isLerpingUp());
 
-      opacityLerper->update(0.5f);
+      getClock().update(0.5f);
+
+      AssertExt::AreAlmostEqual(0.5f, getElapsedDeltaTime());
+
+      opacityLerper->update();
 
       Assert::AreEqual(0.5f, renderer->getOpacity());
       Assert::IsTrue(opacityLerper->isLerpingUp());
@@ -192,12 +229,20 @@ namespace TestCeleste
       Assert::IsTrue(gameObject.hasComponent<Renderer>());
       Assert::IsFalse(opacityLerper->isLerpingUp());
 
-      opacityLerper->update(0.5f);
+      getClock().update(0.5f);
+
+      AssertExt::AreAlmostEqual(0.5f, getElapsedDeltaTime());
+
+      opacityLerper->update();
 
       Assert::AreEqual(0.0f, renderer->getOpacity());
       Assert::IsFalse(opacityLerper->isLerpingUp());
 
-      opacityLerper->update(0.2f);
+      getClock().update(0.2f);
+
+      AssertExt::AreAlmostEqual(0.2f, getElapsedDeltaTime());
+
+      opacityLerper->update();
 
       Assert::AreEqual(0.0f, renderer->getOpacity());
       Assert::IsFalse(opacityLerper->isLerpingUp());

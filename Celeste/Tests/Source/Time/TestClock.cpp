@@ -52,19 +52,15 @@ namespace TestCeleste
     {
       Clock clock;
 
-      Clock::TimePoint previous = std::chrono::system_clock::now();
-      clock.update();
-      Clock::TimePoint current = std::chrono::system_clock::now();
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
 
-      AssertExt::AreAlmostEqual((uint64_t)((current - previous).count() * CLOCKS_PER_SEC), clock.getElapsedCycles(), 5);
+      clock.update(0.24f);
 
-      clock.update();
-      current = std::chrono::system_clock::now();
+      AssertExt::AreAlmostEqual(0.24f, clock.getElapsedDeltaTime());
 
-      AssertExt::AreAlmostEqual((uint64_t)((current - previous).count() * CLOCKS_PER_SEC), clock.getElapsedCycles(), 10); // Compound errors
+      clock.update(0.13f);
 
-      current = std::chrono::system_clock::now();
-      AssertExt::AreAlmostEqual((uint64_t)((current - previous).count() * CLOCKS_PER_SEC), clock.getElapsedCycles(), 15); // Compound errors
+      AssertExt::AreAlmostEqual(0.13f, clock.getElapsedDeltaTime());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -73,21 +69,15 @@ namespace TestCeleste
       Clock clock;
       clock.setTimeScale(0.5f);
 
-      Clock::TimePoint previous = std::chrono::system_clock::now();
-      clock.update();
-      Clock::TimePoint current = std::chrono::system_clock::now();
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
 
-      AssertExt::AreAlmostEqual((uint64_t)((current - previous).count() * CLOCKS_PER_SEC * 0.5f), clock.getElapsedCycles(), 1);
+      clock.update(0.24f);
 
-      clock.update();
-      current = std::chrono::system_clock::now();
+      AssertExt::AreAlmostEqual(0.12f, clock.getElapsedDeltaTime());
 
-      AssertExt::AreAlmostEqual((uint64_t)((current - previous).count() * CLOCKS_PER_SEC * 0.5f), clock.getElapsedCycles(), 2); // Compound errors
+      clock.update(0.06f);
 
-      clock.update();
-      current = std::chrono::system_clock::now();
-
-      AssertExt::AreAlmostEqual((uint64_t)((current - previous).count() * CLOCKS_PER_SEC * 0.5f), clock.getElapsedCycles(), 3); // Compound errors
+      AssertExt::AreAlmostEqual(0.03f, clock.getElapsedDeltaTime());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -96,21 +86,15 @@ namespace TestCeleste
       Clock clock;
       clock.setTimeScale(2.0f);
 
-      Clock::TimePoint previous = std::chrono::system_clock::now();
-      clock.update();
-      Clock::TimePoint current = std::chrono::system_clock::now();
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
 
-      AssertExt::AreAlmostEqual((uint64_t)((current - previous).count() * CLOCKS_PER_SEC * 2), clock.getElapsedCycles(), 10);
+      clock.update(0.24f);
 
-      clock.update();
-      current = std::chrono::system_clock::now();
+      AssertExt::AreAlmostEqual(0.48f, clock.getElapsedDeltaTime());
 
-      AssertExt::AreAlmostEqual((uint64_t)((current - previous).count() * CLOCKS_PER_SEC * 2), clock.getElapsedCycles(), 20); // Compound errors
+      clock.update(0.13f);
 
-      clock.update();
-      current = std::chrono::system_clock::now();
-
-      AssertExt::AreAlmostEqual((uint64_t)((current - previous).count() * CLOCKS_PER_SEC * 2), clock.getElapsedCycles(), 30); // Compound errors
+      AssertExt::AreAlmostEqual(0.26f, clock.getElapsedDeltaTime());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -119,29 +103,32 @@ namespace TestCeleste
       Clock clock;
       clock.setPaused(true);
 
-      clock.update();
-      Assert::AreEqual((uint64_t)0, clock.getElapsedCycles());
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
 
-      clock.update();
-      Assert::AreEqual((uint64_t)0, clock.getElapsedCycles());
+      clock.update(0.24f);
 
-      clock.update();
-      Assert::AreEqual((uint64_t)0, clock.getElapsedCycles());
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
+
+      clock.update(0.13f);
+
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Clock_SingleStep)
     {
       Clock clock(1);
+      clock.setTargetFramesPerSecond(10);
+
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
 
       clock.singleStep();
-      Assert::AreEqual((uint64_t)CLOCKS_PER_SEC, clock.getElapsedCycles());
+
+      Assert::AreEqual(0.1f, clock.getElapsedDeltaTime());
 
       clock.singleStep();
-      Assert::AreEqual((uint64_t)(2 * CLOCKS_PER_SEC), clock.getElapsedCycles());
 
-      clock.singleStep();
-      Assert::AreEqual((uint64_t)(3 * CLOCKS_PER_SEC), clock.getElapsedCycles());
+      Assert::AreEqual(0.1f, clock.getElapsedDeltaTime());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -150,18 +137,21 @@ namespace TestCeleste
       // Bump up the cpu cycles a little for this test (it will be reset)
       Clock clock(4);
       clock.setTimeScale(0.5f);
+      clock.setTargetFramesPerSecond(5);
+
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
 
       clock.singleStep();
-      AssertExt::AreAlmostEqual((uint64_t)(0.125f * CLOCKS_PER_SEC), clock.getElapsedCycles(), 2);
+
+      AssertExt::AreAlmostEqual(0.1f, clock.getElapsedDeltaTime());
 
       clock.singleStep();
-      AssertExt::AreAlmostEqual((uint64_t)(0.25f * CLOCKS_PER_SEC), clock.getElapsedCycles(), 4);
+
+      AssertExt::AreAlmostEqual(0.1f, clock.getElapsedDeltaTime());
 
       clock.singleStep();
-      AssertExt::AreAlmostEqual((uint64_t)(0.375f * CLOCKS_PER_SEC), clock.getElapsedCycles(), 6);
 
-      clock.singleStep();
-      AssertExt::AreAlmostEqual((uint64_t)(0.5f * CLOCKS_PER_SEC), clock.getElapsedCycles(), 8);
+      AssertExt::AreAlmostEqual(0.1f, clock.getElapsedDeltaTime());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -169,15 +159,17 @@ namespace TestCeleste
     {
       Clock clock(4);
       clock.setTimeScale(2.0f);
+      clock.setTargetFramesPerSecond(2);
+
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
 
       clock.singleStep();
-      AssertExt::AreAlmostEqual((uint64_t)(0.5f * CLOCKS_PER_SEC), clock.getElapsedCycles(), 2);
+
+      Assert::AreEqual(1.0f, clock.getElapsedDeltaTime());
 
       clock.singleStep();
-      AssertExt::AreAlmostEqual((uint64_t)CLOCKS_PER_SEC, clock.getElapsedCycles(), 4);
 
-      clock.singleStep();
-      AssertExt::AreAlmostEqual((uint64_t)(1.5f * CLOCKS_PER_SEC), clock.getElapsedCycles(), 6);
+      Assert::AreEqual(1.0f, clock.getElapsedDeltaTime());
     }
 
     //------------------------------------------------------------------------------------------------
@@ -185,47 +177,30 @@ namespace TestCeleste
     {
       Clock clock(4);
       clock.setPaused(true);
+      clock.setTargetFramesPerSecond(60);
+
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
 
       clock.singleStep();
-      Assert::AreEqual((uint64_t)0, clock.getElapsedCycles());
+
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
 
       clock.singleStep();
-      Assert::AreEqual((uint64_t)0, clock.getElapsedCycles());
 
-      clock.singleStep();
-      Assert::AreEqual((uint64_t)0, clock.getElapsedCycles());
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
     }
 
     //------------------------------------------------------------------------------------------------
     TEST_METHOD(Clock_Reset)
     {
       Clock clock;
-      
-      std::this_thread::sleep_for(std::chrono::seconds(1));
-      clock.update();
+      clock.update(12.1f);
 
-      Assert::AreNotEqual((uint64_t)0, clock.getElapsedCycles());
+      Assert::AreEqual(12.1f, clock.getElapsedDeltaTime());
 
       clock.reset();
-      Assert::AreEqual((uint64_t)0, clock.getElapsedCycles());
-    }
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Clock_Die_PausesAndResets)
-    {
-      Clock clock;
-
-      Assert::IsFalse(clock.getPaused());
-
-      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-      clock.update();
-
-      Assert::AreNotEqual((uint64_t)0, clock.getElapsedCycles());
-
-      clock.die();
-
-      Assert::IsTrue(clock.getPaused());
-      Assert::AreEqual((uint64_t)0, clock.getElapsedCycles());
+      Assert::AreEqual(0.0f, clock.getElapsedDeltaTime());
     }
   };
 }

@@ -4,9 +4,12 @@
 #include "Registries/ComponentRegistry.h"
 #include "Physics/RigidBody2D.h"
 #include "TestUtils/Assert/AssertCel.h"
+#include "Time/TimeUtils.h"
+#include "Time/TimeUtils.h"
 
 using namespace Celeste;
 using namespace Celeste::Animators;
+using namespace Celeste::Time;
 
 
 namespace TestCeleste
@@ -79,7 +82,11 @@ namespace TestCeleste
       
       Assert::AreEqual(glm::vec3(), gameObject.getTransform()->getTranslation());
 
-      animator.update(0);
+      getClock().update(0);
+
+      Assert::AreEqual(0.0f, getElapsedDeltaTime());
+
+      animator.update();
 
       Assert::AreEqual(glm::vec3(100, 200, 300), gameObject.getTransform()->getTranslation());
     }
@@ -95,7 +102,11 @@ namespace TestCeleste
 
       Assert::AreEqual(glm::vec3(1), gameObject.getTransform()->getTranslation());
 
-      animator.update(0.25f);
+      getClock().update(0.25f);
+
+      Assert::AreEqual(0.25f, getElapsedDeltaTime());
+
+      animator.update();
 
       Assert::AreEqual(glm::vec3(50.5f, 100.5f, 150.5f), gameObject.getTransform()->getTranslation());
     }
@@ -110,7 +121,11 @@ namespace TestCeleste
 
       Assert::AreEqual(glm::vec3(), gameObject.getTransform()->getTranslation());
 
-      animator.update(0.5f);
+      getClock().update(0.5f);
+
+      Assert::AreEqual(0.5f, getElapsedDeltaTime());
+
+      animator.update();
 
       Assert::AreEqual(glm::vec3(100, 200, 300), gameObject.getTransform()->getTranslation());
     }
@@ -124,7 +139,11 @@ namespace TestCeleste
 
       AssertCel::IsActive(animator);
 
-      animator.update(0.5f);
+      getClock().update(0.5f);
+
+      Assert::AreEqual(0.5f, getElapsedDeltaTime());
+
+      animator.update();
 
       AssertCel::IsNotActive(animator);
     }
@@ -139,7 +158,11 @@ namespace TestCeleste
 
       Assert::AreEqual(glm::vec3(), gameObject.getTransform()->getTranslation());
 
-      animator.update(1);
+      getClock().update(1);
+
+      Assert::AreEqual(1.0f, getElapsedDeltaTime());
+
+      animator.update();
 
       Assert::AreEqual(glm::vec3(100, 200, 300), gameObject.getTransform()->getTranslation());
     }
@@ -153,7 +176,11 @@ namespace TestCeleste
 
       AssertCel::IsActive(animator);
 
-      animator.update(1);
+      getClock().update(1);
+
+      Assert::AreEqual(1.0f, getElapsedDeltaTime());
+
+      animator.update();
 
       AssertCel::IsNotActive(animator);
     }

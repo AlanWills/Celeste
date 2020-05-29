@@ -6,11 +6,14 @@
 #include "FileSystem/Directory.h"
 #include "Input/Mouse.h"
 #include "Lua/LuaState.h"
+#include "Time/TimeUtils.h"
+#include "Time/Clock.h"
 
 #include <unordered_set>
 
 using namespace Celeste;
 using namespace Celeste::Input;
+using namespace Celeste::Time;
 
 
 namespace CelesteTestUtils
@@ -30,9 +33,16 @@ namespace CelesteTestUtils
   //------------------------------------------------------------------------------------------------
   void CelesteUnitTest::resetState()
   {
+    resetClock();
     resetMouse();
     resetKeyboard();
     resetLuaGlobals();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void CelesteUnitTest::resetClock()
+  {
+    getClock().reset();
   }
 
   //------------------------------------------------------------------------------------------------

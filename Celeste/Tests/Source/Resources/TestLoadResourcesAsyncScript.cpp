@@ -19,7 +19,7 @@ namespace TestCeleste
   {
     GameObject gameObject;
     observer_ptr<LoadResourcesAsyncScript> resourceLoader = gameObject.addComponent<LoadResourcesAsyncScript>();
-    resourceLoader->update(1);
+    resourceLoader->update();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ namespace TestCeleste
       called = true;
     });
 
-    resourceLoader->update(1);
+    resourceLoader->update();
 
     Assert::IsTrue(called);
   }
@@ -51,7 +51,7 @@ namespace TestCeleste
       called = true;
     });
 
-    resourceLoader->update(1);
+    resourceLoader->update();
 
     Assert::IsTrue(called);
 
@@ -69,7 +69,7 @@ namespace TestCeleste
 
     Assert::IsTrue(resourceLoader->isActive());
 
-    resourceLoader->update(1);
+    resourceLoader->update();
 
     Assert::IsFalse(resourceLoader->isActive());
   }

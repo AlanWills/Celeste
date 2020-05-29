@@ -342,12 +342,6 @@ namespace Celeste::XML
       return XMLValueError::kError;
     }
 
-    if (attribute->Value() != nullptr)
-    {
-      deserialize(attribute->Value(), output);
-      return XMLValueError::kSuccess;
-    }
-
-    return XMLValueError::kError;
+    return attribute->Value() != nullptr && deserialize(attribute->Value(), output) ? XMLValueError::kSuccess : XMLValueError::kError;
   }
 }

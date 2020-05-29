@@ -30,9 +30,9 @@ namespace Celeste::Audio
   }
 
   //------------------------------------------------------------------------------------------------
-  void AudioManager::update(float elapsedGameTime)
+  void AudioManager::update(float /*elapsedGameTime*/)
   {
-    Algorithm::update(elapsedGameTime, AudioSource::m_allocator);
+    Algorithm::update(AudioSource::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------

@@ -20,9 +20,9 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void KeyboardVisibility::update(float elapsedGameTime)
+  void KeyboardVisibility::update()
   {
-    Inherited::update(elapsedGameTime);
+    Inherited::update();
 
 #if _DEBUG
     if (m_visibilityKey < 0 && m_invisibilityKey < 0)

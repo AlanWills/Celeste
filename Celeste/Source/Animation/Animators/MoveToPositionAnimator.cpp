@@ -2,6 +2,7 @@
 #include "UtilityHeaders/ComponentHeaders.h"
 #include "Physics/RigidBody2D.h"
 #include "Maths/Vector.h"
+#include "Time/TimeUtils.h"
 
 
 namespace Celeste::Animators
@@ -19,11 +20,11 @@ namespace Celeste::Animators
   }
 
   //------------------------------------------------------------------------------------------------
-  void MoveToPositionAnimator::update(float elapsedGameTime)
+  void MoveToPositionAnimator::update()
   {
-    Inherited::update(elapsedGameTime);
+    Inherited::update();
 
-    m_elapsedTime += elapsedGameTime;
+    m_elapsedTime += Time::getElapsedDeltaTime();
     glm::vec3 newTranslation = (m_time == 0 || m_elapsedTime > m_time) ? m_targetPosition : m_startingPosition + ((m_targetPosition - m_startingPosition) * m_elapsedTime / m_time);
     getGameObject().getTransform()->setTranslation(newTranslation);
 

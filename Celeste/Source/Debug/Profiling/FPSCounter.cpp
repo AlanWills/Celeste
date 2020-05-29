@@ -1,6 +1,7 @@
 #include "Debug/Profiling/FPSCounter.h"
 #include "Rendering/TextRenderer.h"
 #include "UtilityHeaders/ComponentHeaders.h"
+#include "Time/TimeUtils.h"
 
 
 namespace Celeste::Debugging
@@ -17,9 +18,9 @@ namespace Celeste::Debugging
   }
 
   //------------------------------------------------------------------------------------------------
-  void FPSCounter::update(float elapsedGameTime)
+  void FPSCounter::update()
   {
-    Inherited::update(elapsedGameTime);
+    Inherited::update();
 
 #if _DEBUG
     if (m_textRenderer == nullptr)
@@ -29,6 +30,7 @@ namespace Celeste::Debugging
     }
 #endif
 
+    float elapsedGameTime = Time::getElapsedDeltaTime();
     m_current += elapsedGameTime;
 
     if (m_current > 0.5f)

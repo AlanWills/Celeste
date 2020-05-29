@@ -134,7 +134,7 @@ namespace TestCeleste::Lua
 
     Assert::IsFalse(luaComponent.getUpdateFunc().valid());
 
-    luaComponent.update(0);
+    luaComponent.update();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -151,7 +151,7 @@ namespace TestCeleste::Lua
 
     Assert::IsTrue(luaComponent.getUpdateFunc().valid());
 
-    luaComponent.update(0);
+    luaComponent.update();
 
     Assert::IsTrue(state["updateCalled"]);
   }

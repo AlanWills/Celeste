@@ -4,9 +4,13 @@
 #include "Rendering/TextRenderer.h"
 #include "Objects/GameObject.h"
 #include "TestUtils/Assert/AssertCel.h"
+#include "Time/TimeUtils.h"
+#include "Time/Clock.h"
+#include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;
 using namespace Celeste::Debugging;
+using namespace Celeste::Time;
 
 
 namespace TestCeleste
@@ -20,9 +24,13 @@ namespace TestCeleste
   {
     GameObject gameObject;
     FPSCounter fpsCounter(gameObject);
-    
+
+    getClock().update(1);
+
+    Assert::AreEqual(1.0f, getElapsedDeltaTime());
+
     // This shouldn't throw
-    fpsCounter.update(1);
+    fpsCounter.update();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -35,7 +43,11 @@ namespace TestCeleste
 
     Assert::AreEqual("Text", renderer->getText().c_str());
 
-    fpsCounter->update(0.25f);
+    getClock().update(0.25f);
+
+    Assert::AreEqual(0.25f, getElapsedDeltaTime());
+
+    fpsCounter->update();
 
     Assert::AreEqual("Text", renderer->getText().c_str());
   }
@@ -50,7 +62,11 @@ namespace TestCeleste
 
     Assert::AreEqual("Text", renderer->getText().c_str());
 
-    fpsCounter->update(0.55f);
+    getClock().update(0.55f);
+
+    AssertExt::AreAlmostEqual(0.55f, getElapsedDeltaTime());
+
+    fpsCounter->update();
 
     Assert::AreEqual(std::to_string(static_cast<size_t>(1 / 0.55f)), renderer->getText());
   }

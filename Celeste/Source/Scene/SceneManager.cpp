@@ -14,24 +14,24 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void SceneManager::update(float elapsedGameTime)
+  void SceneManager::update(float /*elapsedGameTime*/)
   {
     for (GameObject& gameObject : getRootGameObjects())
     {
-      updateGameObjectHierarchy(gameObject, elapsedGameTime);
+      updateGameObjectHierarchy(gameObject);
     }
   }
 
   //------------------------------------------------------------------------------------------------
-  void SceneManager::updateGameObjectHierarchy(GameObject& gameObject, float elapsedGameTime)
+  void SceneManager::updateGameObjectHierarchy(GameObject& gameObject)
   {
     if (gameObject.isActive())
     {
-      gameObject.update(elapsedGameTime);
+      gameObject.update();
 
       for (size_t i = 0; i < gameObject.getChildCount(); ++i)
       {
-        updateGameObjectHierarchy(*gameObject.getChild(i), elapsedGameTime);
+        updateGameObjectHierarchy(*gameObject.getChild(i));
       }
     }
   }

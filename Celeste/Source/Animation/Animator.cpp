@@ -1,5 +1,6 @@
 #include "Animation/Animator.h"
 #include "UtilityHeaders/ComponentHeaders.h"
+#include "Time/TimeUtils.h"
 
 using namespace Celeste::Resources;
 
@@ -44,9 +45,9 @@ namespace Celeste::Animation
   }
 
   //------------------------------------------------------------------------------------------------
-  void Animator::update(GLfloat secondsPerUpdate)
+  void Animator::update()
   {
-    Inherited::update(secondsPerUpdate);
+    Inherited::update();
 
 #if _DEBUG
     if (m_spriteRenderer == nullptr)
@@ -58,7 +59,7 @@ namespace Celeste::Animation
 
     if (m_playing)
     {
-      m_currentSecondsPerFrame += secondsPerUpdate;
+      m_currentSecondsPerFrame += Time::getElapsedDeltaTime();
 
       if (m_currentSecondsPerFrame >= m_secondsPerFrame)
       {

@@ -7,6 +7,7 @@
 #include "Rendering/SpriteRenderer.h"
 #include "Audio/AudioSource.h"
 #include "FileSystem/Path.h"
+#include "Time/TimeUtils.h"
 
 
 namespace Celeste
@@ -61,14 +62,6 @@ namespace Celeste
     }
 
     //------------------------------------------------------------------------------------------------
-    void Button::update(float secondsPerUpdate)
-    {
-      Inherited::update(secondsPerUpdate);
-
-      m_clickTimer += secondsPerUpdate;
-    }
-
-    //------------------------------------------------------------------------------------------------
     void Button::onEnter()
     {
       m_spriteRenderer->setTexture(m_highlightedTexture);
@@ -103,7 +96,6 @@ namespace Celeste
         }
 
         m_state = ButtonState::kClicked;
-        m_clickTimer = 0;
       }
     }
 

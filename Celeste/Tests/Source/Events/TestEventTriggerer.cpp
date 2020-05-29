@@ -5,9 +5,12 @@
 #include "Registries/ComponentRegistry.h"
 #include "TestUtils/Utils/InputUtils.h"
 #include "TestUtils/Assert/AssertCel.h"
+#include "Time/TimeUtils.h"
+#include "Time/Clock.h"
 
 using namespace Celeste;
 using namespace Celeste::Events;
+using namespace Celeste::Time;
 
 
 namespace TestCeleste::Events
@@ -65,11 +68,15 @@ namespace TestCeleste::Events
     GameObject gameObject;
     observer_ptr<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
 
+    getClock().update(0);
+
+    Assert::AreEqual(0.0f, getElapsedDeltaTime());
+
     bool called = false;
     auto f = [&called](const GameObject&) -> void { called = true; };
     eventTriggerer->setTriggerCondition([](const GameObject&) -> bool { return false; });
     eventTriggerer->getEvent().subscribe(f);
-    eventTriggerer->update(0);
+    eventTriggerer->update();
 
     Assert::IsFalse(called);
   }
@@ -80,11 +87,15 @@ namespace TestCeleste::Events
     GameObject gameObject;
     observer_ptr<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
 
+    getClock().update(0);
+
+    Assert::AreEqual(0.0f, getElapsedDeltaTime());
+
     bool called = false;
     auto f = [&called](const GameObject&) -> void { called = true; };
     eventTriggerer->setTriggerCondition([](const GameObject&) -> bool { return true; });
     eventTriggerer->getEvent().subscribe(f);
-    eventTriggerer->update(0);
+    eventTriggerer->update();
 
     Assert::IsTrue(called);
   }
@@ -98,8 +109,12 @@ namespace TestCeleste::Events
     Assert::IsTrue(eventTriggerer->getTriggerMode() == Celeste::Events::TriggerMode::kOnce);
     AssertCel::HasComponent<EventTriggerer>(gameObject);
 
+    getClock().update(0);
+
+    Assert::AreEqual(0.0f, getElapsedDeltaTime());
+
     eventTriggerer->setTriggerCondition([](const GameObject&) -> bool { return true; });
-    eventTriggerer->update(0);
+    eventTriggerer->update();
 
     AssertCel::DoesNotHaveComponent<EventTriggerer>(gameObject);
   }
@@ -113,17 +128,25 @@ namespace TestCeleste::Events
 
     Assert::IsTrue(eventTriggerer->getTriggerMode() == Celeste::Events::TriggerMode::kUnlimited);
 
+    getClock().update(0);
+
+    Assert::AreEqual(0.0f, getElapsedDeltaTime());
+
     bool called = false;
     auto f = [&called](const GameObject&) -> void { called = true; };
     eventTriggerer->setTriggerCondition([](const GameObject&) -> bool { return true; });
     eventTriggerer->getEvent().subscribe(f);
-    eventTriggerer->update(0);
+    eventTriggerer->update();
 
     AssertCel::HasComponent<EventTriggerer>(gameObject);
     Assert::IsTrue(called);
 
+    getClock().update(0);
+
+    Assert::AreEqual(0.0f, getElapsedDeltaTime());
+
     called = false;
-    eventTriggerer->update(0);
+    eventTriggerer->update();
 
     AssertCel::HasComponent<EventTriggerer>(gameObject);
     Assert::IsTrue(called);
@@ -139,11 +162,15 @@ namespace TestCeleste::Events
     GameObject gameObject;
     observer_ptr<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
 
+    getClock().update(1);
+
+    Assert::AreEqual(1.0f, getElapsedDeltaTime());
+
     bool called = false;
     auto f = [&called](const GameObject&) -> void { called = true; };
     eventTriggerer->getEvent().subscribe(f);
     eventTriggerer->setTriggerDelay(2);
-    eventTriggerer->update(1);
+    eventTriggerer->update();
 
     Assert::IsFalse(called);
   }
@@ -154,11 +181,15 @@ namespace TestCeleste::Events
     GameObject gameObject;
     observer_ptr<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
 
+    getClock().update(2);
+
+    Assert::AreEqual(2.0f, getElapsedDeltaTime());
+
     bool called = false;
     auto f = [&called](const GameObject&) -> void { called = true; };
     eventTriggerer->getEvent().subscribe(f);
     eventTriggerer->setTriggerDelay(2);
-    eventTriggerer->update(2);
+    eventTriggerer->update();
 
     Assert::IsTrue(called);
   }
@@ -169,11 +200,15 @@ namespace TestCeleste::Events
     GameObject gameObject;
     observer_ptr<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
 
+    getClock().update(4);
+
+    Assert::AreEqual(4.0f, getElapsedDeltaTime());
+
     bool called = false;
     auto f = [&called](const GameObject&) -> void { called = true; };
     eventTriggerer->getEvent().subscribe(f);
     eventTriggerer->setTriggerDelay(2);
-    eventTriggerer->update(4);
+    eventTriggerer->update();
 
     Assert::IsTrue(called);
   }
@@ -187,8 +222,12 @@ namespace TestCeleste::Events
     Assert::IsTrue(eventTriggerer->getTriggerMode() == Celeste::Events::TriggerMode::kOnce);
     AssertCel::HasComponent<EventTriggerer>(gameObject);
 
+    getClock().update(3);
+
+    Assert::AreEqual(3.0f, getElapsedDeltaTime());
+
     eventTriggerer->setTriggerDelay(2);
-    eventTriggerer->update(3);
+    eventTriggerer->update();
 
     AssertCel::DoesNotHaveComponent<EventTriggerer>(gameObject);
   }
@@ -202,17 +241,25 @@ namespace TestCeleste::Events
 
     Assert::IsTrue(eventTriggerer->getTriggerMode() == Celeste::Events::TriggerMode::kUnlimited);
 
+    getClock().update(3);
+
+    Assert::AreEqual(3.0f, getElapsedDeltaTime());
+
     bool called = false;
     auto f = [&called](const GameObject&) -> void { called = true; };
     eventTriggerer->getEvent().subscribe(f);
     eventTriggerer->setTriggerDelay(2);
-    eventTriggerer->update(3);
+    eventTriggerer->update();
 
     AssertCel::HasComponent<EventTriggerer>(gameObject);
     Assert::IsTrue(called);
 
+    getClock().update(3);
+
+    Assert::AreEqual(3.0f, getElapsedDeltaTime());
+
     called = false;
-    eventTriggerer->update(3);
+    eventTriggerer->update();
 
     AssertCel::HasComponent<EventTriggerer>(gameObject);
     Assert::IsTrue(called);
@@ -228,11 +275,15 @@ namespace TestCeleste::Events
     GameObject gameObject;
     observer_ptr<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
 
+    getClock().update(1);
+
+    Assert::AreEqual(1.0f, getElapsedDeltaTime());
+
     bool called = false;
     auto f = [&called](const GameObject&) -> void { called = true; };
     eventTriggerer->getEvent().subscribe(f);
     eventTriggerer->setTriggerKey(GLFW_KEY_A);
-    eventTriggerer->update(1);
+    eventTriggerer->update();
 
     Assert::IsFalse(called);
   }
@@ -243,12 +294,16 @@ namespace TestCeleste::Events
     GameObject gameObject;
     observer_ptr<EventTriggerer> eventTriggerer = gameObject.addComponent<EventTriggerer>();
 
+    getClock().update(2);
+
+    Assert::AreEqual(2.0f, getElapsedDeltaTime());
+
     bool called = false;
     auto f = [&called](const GameObject&) -> void { called = true; };
     eventTriggerer->getEvent().subscribe(f);
     eventTriggerer->setTriggerKey(GLFW_KEY_A);
     simulateKeyTapped(GLFW_KEY_A);
-    eventTriggerer->update(2);
+    eventTriggerer->update();
 
     Assert::IsTrue(called);
   }
@@ -262,9 +317,13 @@ namespace TestCeleste::Events
     Assert::IsTrue(eventTriggerer->getTriggerMode() == Celeste::Events::TriggerMode::kOnce);
     AssertCel::HasComponent<EventTriggerer>(gameObject);
 
+    getClock().update(2);
+
+    Assert::AreEqual(2.0f, getElapsedDeltaTime());
+
     eventTriggerer->setTriggerKey(GLFW_KEY_A);
     simulateKeyTapped(GLFW_KEY_A);
-    eventTriggerer->update(2);
+    eventTriggerer->update();
 
     AssertCel::DoesNotHaveComponent<EventTriggerer>(gameObject);
   }
@@ -278,18 +337,22 @@ namespace TestCeleste::Events
 
     Assert::IsTrue(eventTriggerer->getTriggerMode() == Celeste::Events::TriggerMode::kUnlimited);
 
+    getClock().update(3);
+
+    Assert::AreEqual(3.0f, getElapsedDeltaTime());
+
     bool called = false;
     auto f = [&called](const GameObject&) -> void { called = true; };
     eventTriggerer->getEvent().subscribe(f);
     eventTriggerer->setTriggerKey(GLFW_KEY_A);
     simulateKeyTapped(GLFW_KEY_A);
-    eventTriggerer->update(3);
+    eventTriggerer->update();
 
     AssertCel::HasComponent<EventTriggerer>(gameObject);
     Assert::IsTrue(called);
 
     called = false;
-    eventTriggerer->update(3);
+    eventTriggerer->update();
 
     AssertCel::HasComponent<EventTriggerer>(gameObject);
     Assert::IsTrue(called);

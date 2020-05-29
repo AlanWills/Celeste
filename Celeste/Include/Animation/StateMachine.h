@@ -29,7 +29,7 @@ namespace Celeste::Animation
 
       inline const States& getStates() const { return m_states; }
 
-      CelesteDllExport void update(float secondsPerUpdate) override;
+      CelesteDllExport void update() override;
 
     private:
       using Inherited = Component;

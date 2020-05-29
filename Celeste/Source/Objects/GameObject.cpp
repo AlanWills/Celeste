@@ -161,16 +161,16 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void GameObject::update(GLfloat elapsedGameTime)
+  void GameObject::update()
   {
-    Inherited::update(elapsedGameTime);
+    Inherited::update();
 
     // Act on a copy so we can remove components during the update step
     for (Component* component : std::vector<Component*>(m_unmanagedComponents))
     {
       if (component->isActive())
       {
-        component->update(elapsedGameTime);
+        component->update();
       }
     }
   }

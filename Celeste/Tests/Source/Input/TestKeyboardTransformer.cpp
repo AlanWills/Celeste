@@ -6,9 +6,11 @@
 #include "Registries/ComponentRegistry.h"
 #include "TestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/AssertExt.h"
+#include "Time/TimeUtils.h"
 
 using namespace Celeste;
 using namespace Celeste::Input;
+using namespace Celeste::Time;
 
 
 namespace TestCeleste
@@ -81,7 +83,7 @@ namespace TestCeleste
       MockKeyboardTransformer keyboardTransformer(gameObject);
 
       keyboardTransformer.setDirectionVector_Public(glm::vec2(1, -1));
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(glm::vec2(), keyboardTransformer.getDirectionVector_Public());
     }
@@ -96,7 +98,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getTranslateLeftKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(glm::vec2(-1, 0), keyboardTransformer.getDirectionVector_Public());
     }
@@ -112,7 +114,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getTranslateLeftKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(glm::vec2(-1, 0), keyboardTransformer.getDirectionVector_Public());
     }
@@ -127,7 +129,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getTranslateUpKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(glm::vec2(0, 1), keyboardTransformer.getDirectionVector_Public());
     }
@@ -143,7 +145,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getTranslateUpKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(glm::vec2(0, 1), keyboardTransformer.getDirectionVector_Public());
     }
@@ -158,7 +160,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getTranslateRightKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(glm::vec2(1, 0), keyboardTransformer.getDirectionVector_Public());
     }
@@ -174,7 +176,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getTranslateRightKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(glm::vec2(1, 0), keyboardTransformer.getDirectionVector_Public());
     }
@@ -189,7 +191,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getTranslateDownKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(glm::vec2(0, -1), keyboardTransformer.getDirectionVector_Public());
     }
@@ -205,7 +207,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getTranslateDownKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(glm::vec2(0, -1), keyboardTransformer.getDirectionVector_Public());
     }
@@ -220,7 +222,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getRotateLeftKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(-1.0f, keyboardTransformer.getRotationDelta_Public());
     }
@@ -236,7 +238,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getRotateLeftKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(-1.0f, keyboardTransformer.getRotationDelta_Public());
     }
@@ -251,7 +253,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getRotateRightKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(1.0f, keyboardTransformer.getRotationDelta_Public());
     }
@@ -267,7 +269,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getRotateRightKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(1.0f, keyboardTransformer.getRotationDelta_Public());
     }
@@ -284,7 +286,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getTranslateLeftKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(glm::vec2(-1, 0), keyboardTransformer.getDirectionVector_Public());
     }
@@ -300,7 +302,7 @@ namespace TestCeleste
       getKeyboard().setKeyPressed(keyboardTransformer.getRotateRightKey());
       getKeyboard().update();
 
-      keyboardTransformer.update(0);
+      keyboardTransformer.update();
 
       Assert::AreEqual(0.0f, keyboardTransformer.getRotationDelta_Public());
     }
@@ -319,8 +321,12 @@ namespace TestCeleste
 
       Assert::IsNotNull(keyboardTransformer->getTransform());
 
+      getClock().update(2);
+
+      Assert::AreEqual(2.0f, getElapsedDeltaTime());
+
       keyboardTransformer->setRotationDelta_Public(1);
-      keyboardTransformer->update(2);
+      keyboardTransformer->update();
 
       Assert::AreEqual(4.0f, gameObject.getTransform()->getRotation());
     }
@@ -336,8 +342,12 @@ namespace TestCeleste
 
       Assert::IsNotNull(keyboardTransformer->getTransform());
 
+      getClock().update(2);
+
+      Assert::AreEqual(2.0f, getElapsedDeltaTime());
+
       keyboardTransformer->setDirectionVector_Public(glm::vec2(0.5f, -1));
-      keyboardTransformer->update(2);
+      keyboardTransformer->update();
 
       AssertExt::AreAlmostEqual(glm::vec3(-4, -2, 0), gameObject.getTransform()->getTranslation(), 0.0001f);
     }

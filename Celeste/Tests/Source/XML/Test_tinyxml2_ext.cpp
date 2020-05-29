@@ -877,7 +877,7 @@ namespace TestCeleste
       element->SetAttribute("test", "1, -2, 3.123");
 
       Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute("test"));
-      Assert::AreEqual("true", static_cast<const XMLElement*>(element)->FindAttribute("test")->Value());
+      Assert::AreEqual("1, -2, 3.123", static_cast<const XMLElement*>(element)->FindAttribute("test")->Value());
       Assert::IsTrue(getAttributeData(element, "test", output) == XMLValueError::kSuccess);
     }
 
@@ -890,7 +890,7 @@ namespace TestCeleste
       element->SetAttribute("test", "1, -2, 3.123");
 
       Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute("test"));
-      Assert::AreEqual("true", static_cast<const XMLElement*>(element)->FindAttribute("test")->Value());
+      Assert::AreEqual("1, -2, 3.123", static_cast<const XMLElement*>(element)->FindAttribute("test")->Value());
       
       getAttributeData(element, "test", output);
 

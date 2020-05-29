@@ -4,10 +4,13 @@
 #include "Registries/ComponentRegistry.h"
 #include "TestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/AssertExt.h"
+#include "Time/TimeUtils.h"
+#include "Time/Clock.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::Animation;
 using namespace Celeste::Rendering;
+using namespace Celeste::Time;
 using LoopMode = Celeste::Animation::LoopMode;
 
 
@@ -348,7 +351,11 @@ namespace TestCeleste::Animation
 
     Assert::IsTrue(animator.isPlaying());
 
-    animator.update(0.1f);
+    getClock().update(0.1f);
+
+    AssertExt::AreAlmostEqual(0.1f, getElapsedDeltaTime());
+
+    animator.update();
     animator.stop();
 
     Assert::IsFalse(animator.isPlaying());
@@ -370,7 +377,11 @@ namespace TestCeleste::Animation
 
     Assert::IsTrue(animator.isPlaying());
 
-    animator.update(0.06f);
+    getClock().update(0.06f);
+
+    AssertExt::AreAlmostEqual(0.06f, getElapsedDeltaTime());
+
+    animator.update();
 
     Assert::AreEqual(static_cast<size_t>(1), animator.getCurrentFrame_Public());
 
@@ -395,7 +406,11 @@ namespace TestCeleste::Animation
 
     Assert::IsTrue(animator.isPlaying());
 
-    animator.update(0.12f);
+    getClock().update(0.12f);
+
+    AssertExt::AreAlmostEqual(0.12f, getElapsedDeltaTime());
+
+    animator.update();
 
     Assert::AreNotEqual(0.0f, animator.getCurrentSecondsPerFrame_Public());
 
@@ -420,7 +435,11 @@ namespace TestCeleste::Animation
     Assert::IsTrue(animator.isPlaying());
 
     float secondsPerFrame = animator.getSecondsPerFrame();
-    animator.update(secondsPerFrame);
+    getClock().update(secondsPerFrame);
+
+    AssertExt::AreAlmostEqual(secondsPerFrame, getElapsedDeltaTime());
+
+    animator.update();
 
     Assert::AreEqual(static_cast<size_t>(0), animator.getCurrentFrame_Public());
     Assert::AreEqual(0.0f, animator.getCurrentSecondsPerFrame_Public());
@@ -446,7 +465,11 @@ namespace TestCeleste::Animation
     Assert::AreEqual(0.0f, animator.getCurrentSecondsPerFrame_Public());
 
     float secondsPerFrame = animator.getSecondsPerFrame();
-    animator.update(secondsPerFrame);
+    getClock().update(secondsPerFrame);
+
+    AssertExt::AreAlmostEqual(secondsPerFrame, getElapsedDeltaTime());
+
+    animator.update();
 
     Assert::IsTrue(animator.isPlaying());
     Assert::IsTrue(texture1 == renderer->getTexture());
@@ -476,7 +499,11 @@ namespace TestCeleste::Animation
     Assert::AreEqual(0.0f, animator.getCurrentSecondsPerFrame_Public());
 
     float secondsPerFrame = animator.getSecondsPerFrame();
-    animator.update(1.5f * secondsPerFrame);
+    getClock().update(1.5f * secondsPerFrame);
+
+    AssertExt::AreAlmostEqual(1.5f * secondsPerFrame, getElapsedDeltaTime());
+
+    animator.update();
 
     Assert::IsTrue(animator.isPlaying());
     Assert::IsTrue(animator.isLooping());
@@ -484,7 +511,11 @@ namespace TestCeleste::Animation
     Assert::AreEqual((size_t)1, animator.getCurrentFrame_Public());
     AssertExt::AreAlmostEqual(0.5f * secondsPerFrame, animator.getCurrentSecondsPerFrame_Public());
 
-    animator.update(0.5f * secondsPerFrame);
+    getClock().update(0.5f * secondsPerFrame);
+
+    AssertExt::AreAlmostEqual(0.5f * secondsPerFrame, getElapsedDeltaTime());
+
+    animator.update();
 
     Assert::IsTrue(animator.isPlaying());
     Assert::IsTrue(animator.isLooping());
@@ -515,7 +546,11 @@ namespace TestCeleste::Animation
     Assert::AreEqual(0.0f, animator.getCurrentSecondsPerFrame_Public());
 
     float secondsPerFrame = animator.getSecondsPerFrame();
-    animator.update(1.5f * secondsPerFrame);
+    getClock().update(1.5f * secondsPerFrame);
+
+    AssertExt::AreAlmostEqual(1.5f * secondsPerFrame, getElapsedDeltaTime());
+
+    animator.update();
 
     Assert::IsFalse(animator.isPlaying());
     Assert::IsFalse(animator.isLooping());
@@ -523,7 +558,12 @@ namespace TestCeleste::Animation
     Assert::AreEqual((size_t)1, animator.getCurrentFrame_Public());
     Assert::AreEqual(0.0f, animator.getCurrentSecondsPerFrame_Public());
 
-    animator.update(0.5f * secondsPerFrame);
+    secondsPerFrame = animator.getSecondsPerFrame();
+    getClock().update(0.5f * secondsPerFrame);
+
+    AssertExt::AreAlmostEqual(0.5f * secondsPerFrame, getElapsedDeltaTime());
+
+    animator.update();
 
     Assert::IsFalse(animator.isPlaying());
     Assert::IsFalse(animator.isLooping());
@@ -553,7 +593,11 @@ namespace TestCeleste::Animation
     Assert::AreEqual(0.0f, animator.getCurrentSecondsPerFrame_Public());
 
     float secondsPerFrame = animator.getSecondsPerFrame();
-    animator.update(secondsPerFrame);
+    getClock().update(secondsPerFrame);
+
+    AssertExt::AreAlmostEqual(secondsPerFrame, getElapsedDeltaTime());
+
+    animator.update();
 
     Assert::IsFalse(animator.isLooping());
     Assert::IsFalse(animator.isPlaying());

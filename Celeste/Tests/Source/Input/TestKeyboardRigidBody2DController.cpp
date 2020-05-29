@@ -77,7 +77,7 @@ namespace TestCeleste::Input
   {
     GameObject gameObject;
     KeyboardRigidBody2DController controller(gameObject);
-    controller.update(0);
+    controller.update();
   }
 
 #pragma region (kLocal)
@@ -100,7 +100,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
     AssertExt::AreAlmostEqual(0.0f, rigidBody->getLinearVelocity().x);
@@ -124,7 +124,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(-controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
     AssertExt::AreAlmostEqual(0.0f, rigidBody->getLinearVelocity().x);
@@ -148,7 +148,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(-controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
     AssertExt::AreAlmostEqual(0.0f, rigidBody->getLinearVelocity().y);
@@ -172,7 +172,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
     AssertExt::AreAlmostEqual(0.0f, rigidBody->getLinearVelocity().y);
@@ -196,7 +196,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(-controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
   }
@@ -219,7 +219,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
   }
@@ -245,7 +245,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(0.0f, rigidBody->getLinearVelocity().x);
   }
@@ -271,7 +271,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(0.0f, rigidBody->getLinearVelocity().y);
   }
@@ -297,7 +297,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(0.0f, rigidBody->getAngularVelocity());
   }
@@ -323,7 +323,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
     AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
@@ -350,7 +350,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
     AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
@@ -380,7 +380,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
     AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
@@ -412,7 +412,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
@@ -427,7 +427,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(2 * controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(-2 * controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
@@ -444,7 +444,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
@@ -472,7 +472,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -484,7 +484,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(2 * controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -497,7 +497,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -528,7 +528,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
@@ -543,7 +543,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
@@ -560,7 +560,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
@@ -592,7 +592,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
@@ -606,7 +606,7 @@ namespace TestCeleste::Input
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       Assert::AreEqual(glm::vec2(), rigidBody->getLinearVelocity());
     }
@@ -620,7 +620,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().y);
@@ -634,7 +634,7 @@ namespace TestCeleste::Input
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       Assert::AreEqual(glm::vec2(), rigidBody->getLinearVelocity());
     }
@@ -661,7 +661,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -673,7 +673,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -686,7 +686,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(-controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -713,7 +713,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -724,7 +724,7 @@ namespace TestCeleste::Input
 
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       Assert::AreEqual(0.0f, rigidBody->getAngularVelocity());
     }
@@ -736,7 +736,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(-controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -747,7 +747,7 @@ namespace TestCeleste::Input
 
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       Assert::AreEqual(0.0f, rigidBody->getAngularVelocity());
     }
@@ -780,7 +780,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(-controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().x);
   }
@@ -808,7 +808,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().x);
   }
@@ -836,7 +836,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(-controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().y);
   }
@@ -864,7 +864,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().y);
   }
@@ -892,7 +892,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(-controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
   }
@@ -920,7 +920,7 @@ namespace TestCeleste::Input
 
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
   }
@@ -951,7 +951,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(0.0f, rigidBody->getLinearVelocity().x);
   }
@@ -982,7 +982,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(0.0f, rigidBody->getLinearVelocity().y);
   }
@@ -1013,7 +1013,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(0.0f, rigidBody->getAngularVelocity());
   }
@@ -1044,7 +1044,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(-controller->getLinearVelocityDelta(), rigidBody->getLinearVelocity());
   }
@@ -1075,7 +1075,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(controller->getLinearVelocityDelta(), rigidBody->getLinearVelocity());
   }
@@ -1109,7 +1109,7 @@ namespace TestCeleste::Input
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
     Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-    controller->update(0);
+    controller->update();
 
     Assert::AreEqual(controller->getLinearVelocityDelta(), rigidBody->getLinearVelocity());
     Assert::AreEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
@@ -1145,7 +1145,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().y);
@@ -1160,7 +1160,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(2 * controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(2 * controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().y);
@@ -1177,7 +1177,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().y);
@@ -1210,7 +1210,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -1222,7 +1222,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(2 * controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -1235,7 +1235,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -1271,7 +1271,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().y);
@@ -1286,7 +1286,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().y);
@@ -1303,7 +1303,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().y);
@@ -1340,7 +1340,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().y);
@@ -1354,7 +1354,7 @@ namespace TestCeleste::Input
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getIncreaseXLinearVelocityKey()));
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getIncreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       Assert::AreEqual(glm::vec2(), rigidBody->getLinearVelocity());
     }
@@ -1368,7 +1368,7 @@ namespace TestCeleste::Input
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().x, rigidBody->getLinearVelocity().x);
       AssertExt::AreAlmostEqual(-controller->getLinearVelocityDelta().y, rigidBody->getLinearVelocity().y);
@@ -1382,7 +1382,7 @@ namespace TestCeleste::Input
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getDecreaseXLinearVelocityKey()));
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getDecreaseYLinearVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       Assert::AreEqual(glm::vec2(), rigidBody->getLinearVelocity());
     }
@@ -1414,7 +1414,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -1426,7 +1426,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -1439,7 +1439,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(-controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -1471,7 +1471,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -1482,7 +1482,7 @@ namespace TestCeleste::Input
 
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getIncreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       Assert::AreEqual(0.0f, rigidBody->getAngularVelocity());
     }
@@ -1494,7 +1494,7 @@ namespace TestCeleste::Input
 
       Assert::IsTrue(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       AssertExt::AreAlmostEqual(-controller->getAngularVelocityDelta(), rigidBody->getAngularVelocity());
     }
@@ -1505,7 +1505,7 @@ namespace TestCeleste::Input
 
       Assert::IsFalse(getKeyboard().isKeyPressed(controller->getDecreaseAngularVelocityKey()));
 
-      controller->update(0);
+      controller->update();
 
       Assert::AreEqual(0.0f, rigidBody->getAngularVelocity());
     }

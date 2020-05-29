@@ -1,6 +1,7 @@
 #include "Input/KeyboardTransformer.h"
 #include "Input/InputManager.h"
 #include "UtilityHeaders/ComponentHeaders.h"
+#include "Time/TimeUtils.h"
 
 
 namespace Celeste::Input
@@ -24,9 +25,9 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void KeyboardTransformer::update(float elapsedGameTime)
+  void KeyboardTransformer::update()
   {
-    Inherited::update(elapsedGameTime);
+    Inherited::update();
 
 #if _DEBUG
     if (getGameObject().getTransform() == nullptr)
@@ -79,6 +80,7 @@ namespace Celeste::Input
       m_deltaRotation += 1;
     }
 
+    float elapsedGameTime = Time::getElapsedDeltaTime();
     observer_ptr<Transform> transform = getGameObject().getTransform();
 
     if (m_deltaRotation != 0)

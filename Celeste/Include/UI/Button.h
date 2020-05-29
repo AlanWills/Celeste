@@ -67,8 +67,6 @@ namespace Celeste
         void subscribeLeftClickCallback(const GameObjectClickCallback& callback, const Callbacks&... callbacks);
         CelesteDllExport void subscribeLeftClickCallback(const GameObjectClickCallback& callback);
 
-        CelesteDllExport void update(float secondsPerUpdate) override;
-
       protected:
         inline ButtonState getButtonState() const { return m_state; }
         inline void setButtonState(ButtonState state) { m_state = state; }
@@ -81,7 +79,6 @@ namespace Celeste
         void onLeftMouseButtonDown();
         void onLeftMouseButtonUp();
 
-        float m_clickTimer = 0;
         ButtonState m_state = ButtonState::kIdle;
 
         observer_ptr<Resources::Texture2D> m_defaultTexture = nullptr;

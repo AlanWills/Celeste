@@ -94,6 +94,7 @@ namespace CelesteTestUtils
       static void celesteTestClassCleanup();
 
       void resetState();
+      void resetClock();
       void resetMouse();
       void resetKeyboard();
       void resetLuaGlobals();

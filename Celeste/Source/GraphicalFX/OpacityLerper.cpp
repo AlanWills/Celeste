@@ -1,6 +1,7 @@
 #include "GraphicalFX/OpacityLerper.h"
 #include "UtilityHeaders/ComponentHeaders.h"
 #include "Rendering/Renderer.h"
+#include "Time/TimeUtils.h"
 
 
 namespace Celeste
@@ -24,9 +25,9 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void OpacityLerper::update(float elapsedGameTime)
+  void OpacityLerper::update()
   {
-    Inherited::update(elapsedGameTime);
+    Inherited::update();
 
 #if _DEBUG
     if (!getGameObject().hasComponent<Renderer>())
@@ -38,6 +39,7 @@ namespace Celeste
 
     observer_ptr<Renderer> renderer = getGameObject().findComponent<Renderer>();
     float currentOpacity = renderer->getOpacity();
+    float elapsedGameTime = Time::getElapsedDeltaTime();
 
     if (m_lerpingUp)
     {

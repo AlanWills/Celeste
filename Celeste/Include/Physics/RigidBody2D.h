@@ -44,10 +44,12 @@ namespace Celeste::Physics
 
       inline void incrementAngularVelocity(float angularVelocityDelta) { setAngularVelocity(m_angularVelocity + angularVelocityDelta); }
 
-      CelesteDllExport void update(float secondsPerUpdate) override;
+      CelesteDllExport void update(float elapsedGameTime);
 
     private:
       using Inherited = Component;
+
+      void update() override { }
 
       glm::vec2 m_linearVelocity;
       glm::vec2 m_minLinearVelocity;

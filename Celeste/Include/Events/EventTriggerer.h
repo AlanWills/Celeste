@@ -31,7 +31,7 @@ namespace Celeste::Events
 
       inline void setTriggerCondition(const Condition& triggerCondition) { m_triggerCondition = triggerCondition; }
 
-      CelesteDllExport void update(float elapsedGameTime) override;
+      CelesteDllExport void update() override;
 
     private:
       using Inherited = Component;

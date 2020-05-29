@@ -2,11 +2,17 @@
 #include "Game/Game.h"
 
 
-namespace Celeste
+namespace Celeste::Time
 {
   //------------------------------------------------------------------------------------------------
   Clock& getClock()
   {
     return Game::current().getClock();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  float getElapsedDeltaTime()
+  {
+    return getClock().getElapsedDeltaTime();
   }
 }

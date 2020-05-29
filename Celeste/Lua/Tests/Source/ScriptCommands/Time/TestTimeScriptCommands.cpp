@@ -49,14 +49,15 @@ namespace TestCelesteLua::Lua::ScriptCommands
   TEST_METHOD(TimeScriptCommands_getDeltaTime_ReturnsGameClockElapsedDeltaTime)
   {
     sol::state& state = LuaState::instance();
-    Clock& clock = getClock();
+    Clock& clock = Time::getClock();
 
     Celeste::Lua::Time::ScriptCommands::initialize(state);
 
-    clock.update();
+    clock.update(50.1f);
     auto result = state["Time"]["getDeltaTime"].get<sol::protected_function>().call();
 
     Assert::IsTrue(result.valid());
+    Assert::AreEqual(50.1f, clock.getElapsedDeltaTime());
     Assert::AreEqual(clock.getElapsedDeltaTime(), result.get<float>());
   }
 

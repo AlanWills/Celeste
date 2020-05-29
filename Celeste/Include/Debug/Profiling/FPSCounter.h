@@ -16,7 +16,7 @@ namespace Celeste::Debugging
     DECLARE_UNMANAGED_COMPONENT(FPSCounter, CelesteDllExport)
 
     public:
-      CelesteDllExport void update(float elapsedGameTime) override;
+      CelesteDllExport void update() override;
 
     private:
       using Inherited = Celeste::Component;

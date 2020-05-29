@@ -13,7 +13,7 @@ namespace TestCeleste
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GetClock_ShouldReturnGameClock)
   {
-    Assert::IsTrue(&Celeste::Game::current().getClock() == &Celeste::getClock());
+    Assert::IsTrue(&Celeste::Game::current().getClock() == &Celeste::Time::getClock());
   }
 
   #pragma endregion

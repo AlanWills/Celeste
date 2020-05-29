@@ -29,7 +29,7 @@ namespace Celeste::Physics
       CelesteDllExport void addSimulatedBody(RigidBody2D& rigidBody);
       CelesteDllExport void addSimulatedBody(Collider& collider, RigidBody2D& rigidBody);
 
-      void update(float elapsedGameTime) override;
+      CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
       using Inherited = System::ISystem;

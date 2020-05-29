@@ -19,10 +19,8 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void RigidBody2D::update(float secondsPerUpdate)
+  void RigidBody2D::update(float elapsedGameTime)
   {
-    Inherited::update(secondsPerUpdate);
-
 #if _DEBUG
     if (getTransform() == nullptr)
     {
@@ -33,12 +31,12 @@ namespace Celeste::Physics
 
     if (m_linearVelocity != glm::zero<glm::vec2>())
     {
-      getTransform()->translate(m_linearVelocity * secondsPerUpdate);
+      getTransform()->translate(m_linearVelocity * elapsedGameTime);
     }
 
     if (m_angularVelocity != 0)
     {
-      getTransform()->rotate(m_angularVelocity * secondsPerUpdate);
+      getTransform()->rotate(m_angularVelocity * elapsedGameTime);
     }
   }
 }

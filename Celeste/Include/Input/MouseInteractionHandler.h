@@ -48,7 +48,7 @@ namespace Celeste
         bool isMouseOver() const { return m_isMouseOver; }
         CelesteDllExport void setMouseOver(bool mouseOver);
 
-        CelesteDllExport void update(float elapsedGameTime) override;
+        CelesteDllExport void update() override;
 
       private:
         using Inherited = Component;

@@ -14,9 +14,9 @@ namespace Celeste::Animation
   }
 
   //------------------------------------------------------------------------------------------------
-  void StateMachine::update(float secondsPerUpdate)
+  void StateMachine::update()
   {
-    Inherited::update(secondsPerUpdate);
+    Inherited::update();
 
 #if _DEBUG
     if (m_currentAnimStateIndex >= m_states.size())

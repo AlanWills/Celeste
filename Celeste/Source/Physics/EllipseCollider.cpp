@@ -18,9 +18,9 @@ namespace Celeste::Physics
   }
 
   //------------------------------------------------------------------------------------------------
-  void EllipseCollider::update(float secondsPerUpdate)
+  void EllipseCollider::update()
   {
-    Inherited::update(secondsPerUpdate);
+    Inherited::update();
 
     sync();
   }

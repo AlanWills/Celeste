@@ -15,7 +15,7 @@ namespace Celeste
     public:
       const Event<>& getLoadCompleteEvent() const { return m_loadComplete; }
 
-      CelesteDllExport void update(float secondsPerUpdate) override;
+      CelesteDllExport void update() override;
 
     private:
       using Inherited = Component;

@@ -2,6 +2,7 @@
 #include "UtilityHeaders/ComponentHeaders.h"
 #include "Input/InputUtils.h"
 #include "Input/Keyboard.h"
+#include "Time/TimeUtils.h"
 
 
 namespace Celeste::Events
@@ -17,11 +18,11 @@ namespace Celeste::Events
   }
 
   //------------------------------------------------------------------------------------------------
-  void EventTriggerer::update(float elapsedGameTime)
+  void EventTriggerer::update()
   {
-    Inherited::update(elapsedGameTime);
+    Inherited::update();
 
-    m_currentTriggerTimer += elapsedGameTime;
+    m_currentTriggerTimer += Time::getElapsedDeltaTime();
 
     if ((m_triggerCondition && m_triggerCondition(getGameObject())) ||
         Input::getKeyboard().isKeyTapped(m_triggerKey) ||

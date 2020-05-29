@@ -31,7 +31,7 @@ namespace Celeste::Physics
       /// Use the attached game object to ensure the collider's values are up to date
       CelesteDllExport void sync();
 
-      CelesteDllExport void update(float secondsPerUpdate) override;
+      CelesteDllExport void update() override;
 
     protected:
       CelesteDllExport void onSetOffset(const glm::vec2& oldOffset, const glm::vec2& newOffset) override;

@@ -23,7 +23,7 @@ namespace Celeste::Lua
       void setUpdateFunc(const sol::function& func) { m_updateFunc = func; }
 
       CelesteDllExport void setActive(bool active) override;
-      CelesteDllExport void update(float elapsedGameTime) override;
+      CelesteDllExport void update() override;
 
     private:
       using Inherited = Component;

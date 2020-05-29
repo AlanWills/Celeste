@@ -27,8 +27,8 @@ namespace Celeste::Physics
   //------------------------------------------------------------------------------------------------
   void PhysicsManager::update(float elapsedGameTime)
   {
-    Algorithm::update(elapsedGameTime, RectangleCollider::m_allocator);
-    Algorithm::update(elapsedGameTime, EllipseCollider::m_allocator);
+    Algorithm::update(RectangleCollider::m_allocator);
+    Algorithm::update(EllipseCollider::m_allocator);
 
     if (!m_simulatedBodies.empty())
     {
@@ -73,7 +73,7 @@ namespace Celeste::Physics
       }
     }
 
-    Algorithm::update(elapsedGameTime, RigidBody2D::m_allocator);
+    Algorithm::update(RigidBody2D::m_allocator, elapsedGameTime);
   }
 
   //------------------------------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 #include "Animation/Animators/ChangeScaleAnimator.h"
 #include "UtilityHeaders/ComponentHeaders.h"
+#include "Time/TimeUtils.h"
 
 
 namespace Celeste::Animators
@@ -17,9 +18,9 @@ namespace Celeste::Animators
   }
 
   //------------------------------------------------------------------------------------------------
-  void ChangeScaleAnimator::update(float elapsedGameTime)
+  void ChangeScaleAnimator::update()
   {
-    Inherited::update(elapsedGameTime);
+    Inherited::update();
 
     // Has to be multiplicative to do lerping scale?
     // What does speed correspond to?
@@ -27,7 +28,7 @@ namespace Celeste::Animators
     // Add time to move to position animator too
     // Should move animator die too?
 
-    m_elapsedTime += elapsedGameTime;
+    m_elapsedTime += Time::getElapsedDeltaTime();
     glm::vec3 newScale = (m_time == 0 || m_elapsedTime >= m_time) ? m_targetScale : (m_startingScale + ((m_targetScale - m_startingScale) * m_elapsedTime / m_time));
     getGameObject().getTransform()->setScale(newScale);
 

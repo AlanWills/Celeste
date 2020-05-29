@@ -222,9 +222,7 @@ namespace Celeste
     // Game.lua script if we want to perform some CLI task
     m_running = true;
 
-    // Call awake on the clock to remove any wait time since start up
     initialize();
-    m_clock.awake();
 
     // Game loop:
     // Measure the time since last frame
@@ -235,32 +233,30 @@ namespace Celeste
     // The lag now is the amount leftover that the game is actually ahead of the simulation (i.e. realtime - elapsedgametime)
     // We can use that lag to compensate in the rendering by pretending that much extra simulation has occurred
     GLfloat elapsedRealTime = 0;
+    auto previous = std::chrono::system_clock::time_point();
 
     while (m_running)
     {
       glfwPollEvents();
 
-      m_clock.update();
+      auto current = std::chrono::system_clock::now();
+      m_clock.update(static_cast<float>((current - previous).count()));
+      previous = current;
 
       elapsedRealTime = m_clock.getElapsedDeltaTime();
 
-      // If we have spent more than 1 second paused for some reason
-      // we should not update the world - it will cause confusion in physics etc.
-      if (elapsedRealTime < 1)
+      //float targetGameTime = m_clock.getTargetSecondsPerFrame() * m_clock.getTimeScale();
+
+      //while (elapsedRealTime > targetGameTime)
       {
-        //float targetGameTime = m_clock.getTargetSecondsPerFrame() * m_clock.getTimeScale();
+        // Manage user input
+        update(elapsedRealTime);
 
-        //while (elapsedRealTime > targetGameTime)
-        {
-          // Manage user input
-          update(elapsedRealTime);
-
-          //elapsedRealTime -= targetGameTime;
-        }
-
-        //update(elapsedRealTime);
-        //elapsedRealTime = 0;
+        //elapsedRealTime -= targetGameTime;
       }
+
+      //update(elapsedRealTime);
+      //elapsedRealTime = 0;
 
       glClear(GL_COLOR_BUFFER_BIT);
 

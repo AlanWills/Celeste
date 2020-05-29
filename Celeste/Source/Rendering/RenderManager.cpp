@@ -18,9 +18,9 @@ namespace Celeste::Rendering
   }
 
   //------------------------------------------------------------------------------------------------
-  void RenderManager::update(float elapsedGameTime)
+  void RenderManager::update(float /*elapsedGameTime*/)
   {
-    Algorithm::update(elapsedGameTime, Canvas::m_allocator);
+    Algorithm::update(Canvas::m_allocator);
   }
 
   //------------------------------------------------------------------------------------------------

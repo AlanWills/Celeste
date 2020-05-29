@@ -131,7 +131,7 @@ namespace TestCeleste
     AssertCel::IsNotActive(component2);
 
     // Add components now
-    gameObject.update(0);
+    gameObject.update();
     gameObject.setActive(false);
 
     AssertCel::IsNotActive(gameObject);
@@ -153,7 +153,7 @@ namespace TestCeleste
     AssertCel::IsNotActive(component2);
 
     // Add components now
-    gameObject.update(0);
+    gameObject.update();
     gameObject.setActive(false);
 
     AssertCel::IsNotActive(gameObject);
@@ -217,7 +217,7 @@ namespace TestCeleste
     AssertCel::IsNotActive(component2);
 
     // Add components now
-    gameObject.update(0);
+    gameObject.update();
     gameObject.setActive(true);
 
     AssertCel::IsActive(gameObject);
@@ -239,7 +239,7 @@ namespace TestCeleste
     AssertCel::IsNotActive(component2);
 
     // Add components now
-    gameObject.update(0);
+    gameObject.update();
     gameObject.setActive(true);
 
     AssertCel::IsActive(gameObject);
@@ -960,7 +960,7 @@ namespace TestCeleste
     observer_ptr<MockUnmanagedComponent> script3 = gameObject.addComponent<MockUnmanagedComponent>();
 
     script2->setActive(false);
-    gameObject.update(0);
+    gameObject.update();
 
     Assert::IsTrue(script1->updateCalled());
     Assert::IsFalse(script2->updateCalled());
@@ -973,7 +973,7 @@ namespace TestCeleste
     GameObject gameObject;
     observer_ptr<MockManagedComponent> component = gameObject.addComponent<MockManagedComponent>();
 
-    gameObject.update(0);
+    gameObject.update();
 
     Assert::IsFalse(component->updateCalled());
   }

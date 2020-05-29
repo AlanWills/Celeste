@@ -109,7 +109,7 @@ namespace Celeste
       CelesteDllExport Component* getComponent(size_t index);
       CelesteDllExport const Component* getConstComponent(size_t index) const { return const_cast<GameObject*>(this)->getComponent(index); }
 
-      CelesteDllExport void update(GLfloat elapsedGameTime);
+      CelesteDllExport void update();
 
     private:
       using Inherited = Entity;

@@ -25,9 +25,9 @@ namespace Celeste::Input
   }
 
   //------------------------------------------------------------------------------------------------
-  void MouseInteractionHandler::update(float elapsedGameTime)
+  void MouseInteractionHandler::update()
   {
-    Inherited::update(elapsedGameTime);
+    Inherited::update();
 
     const Mouse& mouse = getMouse();
     bool leftMouseButtonPressed = mouse.isButtonPressed(MouseButton::kLeft);

@@ -31,7 +31,7 @@ namespace Celeste::Input
       inline void setTranslationSpeed(float translationSpeed) { m_translationSpeed = translationSpeed; }
       inline void setRotationSpeed(float rotationSpeed) { m_rotationSpeed = rotationSpeed; }
 
-      CelesteDllExport void update(float elapsedGameTime) override;
+      CelesteDllExport void update() override;
 
     protected:
       inline const glm::vec2& getDirectionVector() const { return m_directionVector; }

@@ -6,8 +6,8 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   Clock::Clock(float targetFramesPerSecond, float startTimeSeconds) :
     m_cycles(secondsToCycles(startTimeSeconds)),
-    m_current(std::chrono::system_clock::now()),
-    m_previous(std::chrono::system_clock::now()),
+    m_current(0.0f),
+    m_previous(0.0f),
     m_timeScale(1.0f),  // Default to unscaled
     m_targetSecondsPerFrame(1.0f / targetFramesPerSecond),
     m_paused(false)   // Default to running
@@ -15,20 +15,13 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Clock::awake()
-  {
-    m_previous = m_current;
-    m_current = std::chrono::system_clock::now();
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void Clock::update()
+  void Clock::update(float elapsedGameTime)
   {
     if (!m_paused)
     {
       m_previous = m_current;
-      m_current = std::chrono::system_clock::now();
-      m_cycles += secondsToCycles(static_cast<float>((m_current - m_previous).count()) * m_timeScale);
+      m_current += elapsedGameTime;
+      m_cycles += secondsToCycles((m_current - m_previous) * m_timeScale);
     }
   }
 
@@ -38,7 +31,7 @@ namespace Celeste
     if (!m_paused)
     {
       m_previous = m_current;
-      m_current += std::chrono::duration<float>(m_targetSecondsPerFrame);
+      m_current += m_targetSecondsPerFrame;
 
       // Add one target frame interval and scale by our current time scale
       m_cycles += secondsToCycles(m_targetSecondsPerFrame * m_timeScale);
@@ -49,7 +42,7 @@ namespace Celeste
   void Clock::reset()
   {
     m_cycles = 0;
-    m_previous = std::chrono::system_clock::now();
-    m_current = m_previous;
+    m_previous = 0;
+    m_current = 0;
   }
 }

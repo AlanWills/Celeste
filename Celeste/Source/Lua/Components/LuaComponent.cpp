@@ -27,13 +27,13 @@ namespace Celeste::Lua
   }
 
   //------------------------------------------------------------------------------------------------
-  void LuaComponent::update(float elapsedGameTime)
+  void LuaComponent::update()
   {
-    Inherited::update(elapsedGameTime);
+    Inherited::update();
 
     if (m_updateFunc.valid())
     {
-      m_updateFunc(m_instance, elapsedGameTime);
+      m_updateFunc(m_instance);
     }
   }
 

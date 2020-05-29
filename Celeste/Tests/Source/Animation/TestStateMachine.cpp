@@ -136,7 +136,7 @@ namespace TestCeleste
     Assert::IsNull(stateMachine.getCurrentAnimationState());
 
     // Check doesn't throw
-    stateMachine.update(0);
+    stateMachine.update();
   }
 
   //------------------------------------------------------------------------------------------------

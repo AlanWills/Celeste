@@ -13,15 +13,13 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void LoadResourcesAsyncScript::update(float secondsPerUpdate)
+  void LoadResourcesAsyncScript::update()
   {
-    Inherited::update(secondsPerUpdate);
+    Inherited::update();
 
-    {
-      m_loadComplete.invoke();
-      m_loadComplete.unsubscribeAll();
+    m_loadComplete.invoke();
+    m_loadComplete.unsubscribeAll();
 
-      setActive(false);
-    }
+    setActive(false);
   }
 }
