@@ -7,7 +7,7 @@ local PerformanceDolceWindow =
 
 ---------------------------------------------------------------------------------
 function PerformanceDolceWindow:render()
-    self:updateElapsedTime();
+    self:updateElapsedTime()
     
     ImGui.text(self.currentFpsString)
 end

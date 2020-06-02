@@ -233,14 +233,14 @@ namespace Celeste
     // The lag now is the amount leftover that the game is actually ahead of the simulation (i.e. realtime - elapsedgametime)
     // We can use that lag to compensate in the rendering by pretending that much extra simulation has occurred
     GLfloat elapsedRealTime = 0;
-    auto previous = std::chrono::system_clock::time_point();
+    auto previous = std::chrono::high_resolution_clock::now();
 
     while (m_running)
     {
       glfwPollEvents();
 
-      auto current = std::chrono::system_clock::now();
-      m_clock.update(static_cast<float>((current - previous).count()));
+      auto current = std::chrono::high_resolution_clock::now();
+      m_clock.update(std::chrono::duration<float, std::ratio<1, 1>>(current - previous).count());
       previous = current;
 
       elapsedRealTime = m_clock.getElapsedDeltaTime();
