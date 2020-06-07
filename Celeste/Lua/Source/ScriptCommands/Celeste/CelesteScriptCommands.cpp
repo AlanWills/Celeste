@@ -22,11 +22,8 @@
 #include "Lua/LuaState.h"
 
 #include "Resources/ResourceUtils.h"
-
-#if _DEBUG
 #include "Debug/DolceUtils.h"
 #include "ScriptCommands/Dolce/DolceScriptCommands.h"
-#endif
 
 
 namespace Celeste::Lua::CelesteScriptCommands

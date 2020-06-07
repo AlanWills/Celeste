@@ -2,6 +2,7 @@
 #include "Game/Game.h"
 #include "Assert/Assert.h"
 #include "Lua/LuaState.h"
+#include "CelesteStl/Templates/Unused.h"
 
 
 namespace Celeste::Lua::Core::ScriptCommands
@@ -14,7 +15,7 @@ namespace Celeste::Lua::Core::ScriptCommands
 #if _DEBUG
       ASSERT(condition);
 #else
-      UNUSED(condition);
+      celstl::unused(condition);
 #endif
     }
 
@@ -30,7 +31,7 @@ namespace Celeste::Lua::Core::ScriptCommands
 #if _DEBUG
       ASSERT_FAIL_MSG(message.c_str());
 #else
-      UNUSED(message);
+      celstl::unused(message);
 #endif
     }
 
