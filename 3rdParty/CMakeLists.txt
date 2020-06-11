@@ -196,12 +196,6 @@ set_target_properties(glm_static PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
-	
-set_target_properties(glm_shared PROPERTIES
-    FOLDER ${THIRD_PARTY_FOLDER}
-    RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
-    ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
-
 ##---------------------------- end glm ----------------------------##
 
 
