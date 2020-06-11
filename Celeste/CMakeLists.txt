@@ -24,14 +24,14 @@ set(LIBS
     Log
     CelesteStl
     FileSystem
-    FileSystemLua
+    FileSystemScriptCommands
     System
-    SystemLua
+    SystemScriptCommands
     Dolce
-    DolceLua)
+    DolceScriptCommands)
     
 set(TEST_LIBS
-    CelesteLua
+    CelesteScriptCommands
     CelesteMocks
     CelesteTestResources
     CelesteTestUtils)
