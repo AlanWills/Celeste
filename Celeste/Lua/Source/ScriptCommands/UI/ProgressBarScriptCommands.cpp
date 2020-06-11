@@ -22,6 +22,10 @@ namespace Celeste::Lua::UI::ProgressBarScriptCommands
       ProgressBar::type_name(),
       sol::base_classes, sol::bases<Component, Entity, Object>(),
       "getProgress", &ProgressBar::getProgress,
-      "setProgress", &ProgressBar::setProgress);
+      "setProgress", &ProgressBar::setProgress,
+      "getMin", &ProgressBar::getMin,
+      "setMin", &ProgressBar::setMin,
+      "getMax", &ProgressBar::getMax,
+      "setMax", &ProgressBar::setMax);
   }
 }

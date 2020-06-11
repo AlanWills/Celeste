@@ -57,6 +57,54 @@ namespace TestCelesteLua::Lua::UI::ProgressBarScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ProgressBarScriptCommands_Initialize_Adds_getMin_ToProgressBarTable)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state[ProgressBar::type_name()]["getMin"].valid());
+
+    Celeste::Lua::UI::ProgressBarScriptCommands::initialize(state);
+
+    Assert::IsTrue(state[ProgressBar::type_name()]["getMin"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ProgressBarScriptCommands_Initialize_Adds_setMin_ToProgressBarTable)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state[ProgressBar::type_name()]["setMin"].valid());
+
+    Celeste::Lua::UI::ProgressBarScriptCommands::initialize(state);
+
+    Assert::IsTrue(state[ProgressBar::type_name()]["setMin"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ProgressBarScriptCommands_Initialize_Adds_getMax_ToProgressBarTable)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state[ProgressBar::type_name()]["getMax"].valid());
+
+    Celeste::Lua::UI::ProgressBarScriptCommands::initialize(state);
+
+    Assert::IsTrue(state[ProgressBar::type_name()]["getMax"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ProgressBarScriptCommands_Initialize_Adds_setMax_ToProgressBarTable)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state[ProgressBar::type_name()]["setMax"].valid());
+
+    Celeste::Lua::UI::ProgressBarScriptCommands::initialize(state);
+
+    Assert::IsTrue(state[ProgressBar::type_name()]["setMax"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
   TEST_METHOD(ProgressBarScriptCommands_Initialize_Adds_as_ToProgressBarTable)
   {
     sol::state& state = LuaState::instance();
@@ -154,6 +202,138 @@ namespace TestCelesteLua::Lua::UI::ProgressBarScriptCommands
 
     Assert::IsTrue(result.valid());
     Assert::AreEqual(0.765f, progressBar.getProgress());
+  }
+
+#pragma endregion
+
+#pragma region Get Min Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ProgressBarScriptCommands_getMin_ReturnsCorrectMinValue)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::UI::ProgressBarScriptCommands::initialize(state);
+
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
+    progressBar.setMin(-12);
+
+    Assert::AreEqual(-12.0f, progressBar.getMin());
+
+    auto result = state[ProgressBar::type_name()]["getMin"].get<sol::protected_function>().call(progressBar);
+
+    Assert::IsTrue(result.valid());
+    Assert::AreEqual(-12.0f, result.get<float>());
+  }
+
+#pragma endregion
+
+#pragma region Set Min Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ProgressBarScriptCommands_setMin_UpdatesMinValue)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::UI::ProgressBarScriptCommands::initialize(state);
+
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
+    progressBar.setMin(0);
+    progressBar.setProgress(0.25f);
+
+    Assert::AreEqual(0.0f, progressBar.getMin());
+    Assert::AreEqual(0.25f, progressBar.getProgress());
+
+    auto result = state[ProgressBar::type_name()]["setMin"].get<sol::protected_function>().call(progressBar, -1);
+
+    Assert::IsTrue(result.valid());
+    Assert::AreEqual(-1.0f, progressBar.getMin());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ProgressBarScriptCommands_setMin_ClampsProgressToAtLeastNewMinValue)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::UI::ProgressBarScriptCommands::initialize(state);
+
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
+    progressBar.setMin(0);
+    progressBar.setProgress(0.25f);
+
+    Assert::AreEqual(0.0f, progressBar.getMin());
+    Assert::AreEqual(0.25f, progressBar.getProgress());
+
+    auto result = state[ProgressBar::type_name()]["setMin"].get<sol::protected_function>().call(progressBar, 0.35f);
+
+    Assert::IsTrue(result.valid());
+    Assert::AreEqual(0.35f, progressBar.getProgress());
+  }
+
+#pragma endregion
+
+#pragma region Get Max Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ProgressBarScriptCommands_getMax_ReturnsCorrectMaxValue)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::UI::ProgressBarScriptCommands::initialize(state);
+
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
+    progressBar.setMax(0.25f);
+
+    Assert::AreEqual(0.25f, progressBar.getMax());
+
+    auto result = state[ProgressBar::type_name()]["getMax"].get<sol::protected_function>().call(progressBar);
+
+    Assert::IsTrue(result.valid());
+    Assert::AreEqual(0.25f, result.get<float>());
+  }
+
+#pragma endregion
+
+#pragma region Set Max Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ProgressBarScriptCommands_setMax_UpdatesMaxValue)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::UI::ProgressBarScriptCommands::initialize(state);
+
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
+    progressBar.setMax(10);
+    progressBar.setProgress(0.25f);
+
+    Assert::AreEqual(10.0f, progressBar.getMax());
+    Assert::AreEqual(0.25f, progressBar.getProgress());
+
+    auto result = state[ProgressBar::type_name()]["setMax"].get<sol::protected_function>().call(progressBar, 8.12f);
+
+    Assert::IsTrue(result.valid());
+    Assert::AreEqual(8.12f, progressBar.getMax());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ProgressBarScriptCommands_setMax_ClampsProgressToAtMostNewMaxValue)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::UI::ProgressBarScriptCommands::initialize(state);
+
+    GameObject gameObject;
+    ProgressBar progressBar(gameObject);
+    progressBar.setMax(10);
+    progressBar.setProgress(0.25f);
+
+    Assert::AreEqual(10.0f, progressBar.getMax());
+    Assert::AreEqual(0.25f, progressBar.getProgress());
+
+    auto result = state[ProgressBar::type_name()]["setMax"].get<sol::protected_function>().call(progressBar, 0.15f);
+
+    Assert::IsTrue(result.valid());
+    Assert::AreEqual(0.15f, progressBar.getProgress());
   }
 
 #pragma endregion

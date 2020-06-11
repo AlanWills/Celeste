@@ -16,3 +16,6 @@ require "DataConverters.Physics.EllipseColliderDataConverter"
 
 -- Rendering
 require "DataConverters.Rendering.CanvasDataConverter"
+
+-- UI
+require "DataConverters.UI.ProgressBarDataConverter"
