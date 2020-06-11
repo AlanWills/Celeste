@@ -55,6 +55,7 @@ set_target_properties(crossguid PROPERTIES
 set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 set(BUILD_SHARED_LIBS ON)
 set(CURL_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/curl")
+set(CURL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/curl/include")
 add_subdirectory(${CURL_PROJECT_DIR} ${CURL_PROJECT_DIR}/build EXCLUDE_FROM_ALL)
 set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 
@@ -67,7 +68,6 @@ set_target_properties(libcurl PROPERTIES
 
 ##---------------------------- curlpp ----------------------------##
 set(CURLPP_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/curlpp")
-set(CURL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/curl/include")
 set(CURL_LIBRARY ${THIRD_PARTY_LIB_DIR}/${CMAKE_BUILD_TYPE}/libcurl_imp.lib)
 
 add_subdirectory(${CURLPP_PROJECT_DIR} ${CURLPP_PROJECT_DIR}/build EXCLUDE_FROM_ALL)
