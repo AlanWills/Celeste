@@ -68,10 +68,8 @@ set_target_properties(libcurl PROPERTIES
 
 ##---------------------------- curlpp ----------------------------##
 set(CURLPP_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/curlpp")
-set(CURL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/curl/include")
-set(CURL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/curl/CMake)
-set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/curl/CMake)
-set(CURL_LIBRARY ${THIRD_PARTY_LIB_DIR}/${CMAKE_BUILD_TYPE}/libcurl_imp.lib)
+set(CURL_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/curl/include")
+set(CURL_LIBRARIES libcurl)
 
 add_subdirectory(${CURLPP_PROJECT_DIR} ${CURLPP_PROJECT_DIR}/build EXCLUDE_FROM_ALL)
 
@@ -79,8 +77,6 @@ set_target_properties(curlpp PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
-
-add_dependencies(curlpp libcurl)
 ##---------------------------- end curlpp ----------------------------##
 
 
@@ -136,7 +132,7 @@ set_target_properties(alut PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
 
-    add_dependencies(alut OpenAL)
+add_dependencies(alut OpenAL)
 #---------------------------- end freealut ----------------------------##
 
 
