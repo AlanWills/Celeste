@@ -69,6 +69,8 @@ set_target_properties(libcurl PROPERTIES
 ##---------------------------- curlpp ----------------------------##
 set(CURLPP_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/curlpp")
 set(CURL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/curl/include")
+set(CURL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/curl/CMake)
+set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/curl/CMake)
 set(CURL_LIBRARY ${THIRD_PARTY_LIB_DIR}/${CMAKE_BUILD_TYPE}/libcurl_imp.lib)
 
 add_subdirectory(${CURLPP_PROJECT_DIR} ${CURLPP_PROJECT_DIR}/build EXCLUDE_FROM_ALL)
@@ -191,6 +193,11 @@ add_subdirectory(${GLM_PROJECT_DIR} ${GLM_PROJECT_DIR}/build)
 set(BUILD_STATIC_LIBS "${BUILD_STATIC_LIBS_SAVED}")
 
 set_target_properties(glm_static PROPERTIES
+    FOLDER ${THIRD_PARTY_FOLDER}
+    RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
+    ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
+	
+set_target_properties(glm_shared PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
