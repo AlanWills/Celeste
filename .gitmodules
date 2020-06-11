@@ -27,7 +27,7 @@
 	url = https://github.com/curl/curl.git
 [submodule "3rdParty/curlpp"]
 	path = 3rdParty/curlpp
-	url = https://github.com/jpbarrette/curlpp.git
+	url = https://github.com/AlanWills/curlpp.git
 [submodule "3rdParty/dirent"]
 	path = 3rdParty/dirent
 	url = https://github.com/AlanWills/dirent.git
