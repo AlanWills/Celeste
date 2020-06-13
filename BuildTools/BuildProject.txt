@@ -164,7 +164,7 @@ function(cbt_build_project)
                 FOLDER ${BUILD_PROJECT_FOLDER}/Lua)
         endif()
 
-		if (BUILD_TESTS)
+		if (${BUILD_TESTS})
 			if (EXISTS ${BUILD_PROJECT_SOURCE_DIR}/Tests)
 				if (NOT BUILD_PROJECT_TEST_LIBS)
 					set(BUILD_PROJECT_TEST_LIBS 
