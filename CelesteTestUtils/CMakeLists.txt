@@ -4,4 +4,6 @@ set(LIBS
     CelesteMocks
     CelesteTestResources)
 
-cbt_build_project(NAME CelesteTestUtils FOLDER Celeste/Tests TYPE STATIC LIBS "${LIBS}")
+if (BUILD_TESTS)
+    cbt_build_project(NAME CelesteTestUtils FOLDER Celeste/Tests TYPE STATIC LIBS "${LIBS}")
+endif()
