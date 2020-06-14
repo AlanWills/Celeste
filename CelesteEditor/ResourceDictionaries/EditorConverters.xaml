@@ -1,8 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:CelesteEditor.Converters">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/CelesteEditorLibrary;component/ResourceDictionaries/EditorConverters.xaml"/>
-    </ResourceDictionary.MergedDictionaries>
-    <converters:FileExtensionToIconConverter x:Key="FileExtensionToIcon"/>
-</ResourceDictionary>
