@@ -67,6 +67,14 @@ namespace TestCeleste::Settings
     Assert::AreEqual(1.0f, settings->getSFXVolume());
   }
 
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettings_Constructor_SetsIsVsyncEnabledToTrue)
+  {
+    std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
+
+    Assert::IsTrue(settings->isVsyncEnabled());
+  }
+
 #pragma endregion
 
 #pragma region Load Tests
@@ -116,6 +124,7 @@ namespace TestCeleste::Settings
     Assert::AreEqual(0.6f, settings->getMasterVolume());
     Assert::AreEqual(0.5f, settings->getMusicVolume());
     Assert::AreEqual(0.4f, settings->getSFXVolume());
+    Assert::IsFalse(settings->isVsyncEnabled());
   }
 
 #pragma endregion
@@ -139,6 +148,7 @@ namespace TestCeleste::Settings
     settings->setMasterVolume(0.5f);
     settings->setMusicVolume(0.25f);
     settings->setSFXVolume(0.1f);
+    settings->setVsyncEnabled(false);
     settings->save(destPath);
 
     std::unique_ptr<GameSettings> settings2(ScriptableObject::load<GameSettings>(destPath));
@@ -147,6 +157,7 @@ namespace TestCeleste::Settings
     Assert::AreEqual(0.5f, settings2->getMasterVolume());
     Assert::AreEqual(0.25f, settings2->getMusicVolume());
     Assert::AreEqual(0.1f, settings2->getSFXVolume());
+    Assert::IsFalse(settings->isVsyncEnabled());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -160,6 +171,7 @@ namespace TestCeleste::Settings
     settings->setMasterVolume(0.5f);
     settings->setMusicVolume(0.25f);
     settings->setSFXVolume(0.1f);
+    settings->setVsyncEnabled(false);
     settings->save(destPath);
 
     std::unique_ptr<GameSettings> settings2(ScriptableObject::load<GameSettings>(destPath));
@@ -168,12 +180,14 @@ namespace TestCeleste::Settings
     Assert::AreEqual(0.5f, settings2->getMasterVolume());
     Assert::AreEqual(0.25f, settings2->getMusicVolume());
     Assert::AreEqual(0.1f, settings2->getSFXVolume());
+    Assert::IsFalse(settings->isVsyncEnabled());
 
     FileAssert::FileExists(destPath);
 
     settings2->setMasterVolume(0.45f);
     settings2->setMusicVolume(0.65f);
     settings2->setSFXVolume(0.0f);
+    settings->setVsyncEnabled(true);
     settings2->save(destPath);
 
     std::unique_ptr<GameSettings> settings3(ScriptableObject::load<GameSettings>(destPath));
@@ -181,6 +195,7 @@ namespace TestCeleste::Settings
     Assert::AreEqual(0.45f, settings3->getMasterVolume());
     Assert::AreEqual(0.65f, settings3->getMusicVolume());
     Assert::AreEqual(0.0f, settings3->getSFXVolume());
+    Assert::IsTrue(settings->isVsyncEnabled());
   }
 
 #pragma endregion

@@ -29,7 +29,7 @@ namespace Celeste
 
     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
     ASSERT(mode != nullptr);
-
+    
     initWindow(mode->width, mode->height, windowTitle);
 
     // It's important that GLEW is initialized after the window is created (I have literally no fucking idea why, 

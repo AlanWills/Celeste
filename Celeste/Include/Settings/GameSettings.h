@@ -20,6 +20,9 @@ namespace Celeste::Settings
       inline float getSFXVolume() const { return m_sfxVolume.getValue(); }
       inline void setSFXVolume(float sfxVolume) { m_sfxVolume.setValue(sfxVolume); }
 
+      inline bool isVsyncEnabled() const { return m_vsyncEnabled.getValue(); }
+      inline void setVsyncEnabled(bool vsyncEnabled) { m_vsyncEnabled.setValue(vsyncEnabled); }
+
       CelesteDllExport void apply() const;
 
     private:
@@ -28,5 +31,6 @@ namespace Celeste::Settings
       ValueField<float>& m_masterVolume;
       ValueField<float>& m_musicVolume;
       ValueField<float>& m_sfxVolume;
+      ValueField<bool>& m_vsyncEnabled;
   };
 }
