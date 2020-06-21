@@ -24,9 +24,10 @@ namespace Celeste::Lua::Resources::ScriptCommands
     }
 
     //------------------------------------------------------------------------------------------------
-    observer_ptr<Celeste::Resources::Prefab> loadPrefab(const std::string& path)
+    template <class T>
+    observer_ptr<T> load(const std::string& path)
     {
-      return Celeste::Resources::getResourceManager().load<Celeste::Resources::Prefab>(path);
+      return Celeste::Resources::getResourceManager().load<T>(path);
     }
 
     //------------------------------------------------------------------------------------------------
@@ -187,7 +188,9 @@ namespace Celeste::Lua::Resources::ScriptCommands
 
     resourcesTable["getResourcesDirectory"] = &Internals::getResourcesDirectory;
 
-    resourcesTable["loadPrefab"] = &Internals::loadPrefab;
+    resourcesTable["loadSound"] = &Internals::load<Celeste::Resources::Sound>;
+    resourcesTable["loadPrefab"] = &Internals::load<Celeste::Resources::Prefab>;
+    resourcesTable["loadTexture2D"] = &Internals::load<Celeste::Resources::Texture2D>;
 
     resourcesTable["isVertexShaderLoaded"] = &Internals::isVertexShaderLoaded;
     resourcesTable["isFragmentShaderLoaded"] = &Internals::isFragmentShaderLoaded;

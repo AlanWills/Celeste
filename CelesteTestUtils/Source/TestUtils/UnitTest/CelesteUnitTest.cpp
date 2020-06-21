@@ -95,6 +95,7 @@ namespace CelesteTestUtils
       "print",
       "tostring",
       "base",
+      "coroutine",
     };
 
     sol::state& state = Lua::LuaState::instance();

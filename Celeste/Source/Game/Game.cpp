@@ -245,18 +245,9 @@ namespace Celeste
 
       elapsedRealTime = m_clock.getElapsedDeltaTime();
 
-      //float targetGameTime = m_clock.getTargetSecondsPerFrame() * m_clock.getTimeScale();
-
-      //while (elapsedRealTime > targetGameTime)
-      {
-        // Manage user input
-        update(elapsedRealTime);
-
-        //elapsedRealTime -= targetGameTime;
-      }
-
-      //update(elapsedRealTime);
-      //elapsedRealTime = 0;
+      // Can also implement fixed update here by performing as many fixed update calls as is required to get the elapsedRealTime below
+      // the target FPS in the clock
+      update(elapsedRealTime);
 
       glClear(GL_COLOR_BUFFER_BIT);
 
