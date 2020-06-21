@@ -191,6 +191,7 @@ namespace Celeste::Lua::Resources::ScriptCommands
     resourcesTable["loadSound"] = &Internals::load<Celeste::Resources::Sound>;
     resourcesTable["loadPrefab"] = &Internals::load<Celeste::Resources::Prefab>;
     resourcesTable["loadTexture2D"] = &Internals::load<Celeste::Resources::Texture2D>;
+    resourcesTable["loadData"] = &Internals::load<Celeste::Resources::Data>;
 
     resourcesTable["isVertexShaderLoaded"] = &Internals::isVertexShaderLoaded;
     resourcesTable["isFragmentShaderLoaded"] = &Internals::isFragmentShaderLoaded;
