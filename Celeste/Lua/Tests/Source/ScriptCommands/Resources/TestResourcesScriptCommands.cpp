@@ -51,12 +51,39 @@ namespace TestCelesteLua::Lua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ResourcesScriptCommands_Initialize_Adds_loadSound_ToResourcesTable)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Resources::ScriptCommands::initialize(state);
+
+    Assert::IsTrue(state.globals()["Resources"]["loadSound"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
   TEST_METHOD(ResourcesScriptCommands_Initialize_Adds_loadPrefab_ToResourcesTable)
   {
     sol::state& state = LuaState::instance();
     Celeste::Lua::Resources::ScriptCommands::initialize(state);
 
     Assert::IsTrue(state.globals()["Resources"]["loadPrefab"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ResourcesScriptCommands_Initialize_Adds_loadTexture2D_ToResourcesTable)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Resources::ScriptCommands::initialize(state);
+
+    Assert::IsTrue(state.globals()["Resources"]["loadTexture2D"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ResourcesScriptCommands_Initialize_Adds_loadData_ToResourcesTable)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Resources::ScriptCommands::initialize(state);
+
+    Assert::IsTrue(state.globals()["Resources"]["loadData"].valid());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -376,10 +403,49 @@ namespace TestCelesteLua::Lua::ScriptCommands
 
 #pragma endregion
 
+#pragma region Load Sound Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ResourcesScriptCommands_loadSound_InputtingInvalidPath_ReturnsNullptr)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Resources::ScriptCommands::initialize(state);
+    sol::protected_function function = state["Resources"]["loadSound"].get<sol::protected_function>();
+
+    Assert::IsTrue(function.valid());
+
+    auto result = function.call("Test");
+
+    Assert::IsTrue(result.valid());
+    Assert::IsNull(result.get<Resources::Sound*>());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ResourcesScriptCommands_loadPrefab_InputtingValidPath_ReturnsSound)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Resources::ScriptCommands::initialize(state);
+    sol::protected_function function = state["Resources"]["loadSound"].get<sol::protected_function>();
+
+    Assert::IsTrue(function.valid());
+
+    auto expected = getResourceManager().load<Resources::Sound>(TestResources::getButtonHoverWavRelativePath());
+    auto result = function.call(TestResources::getButtonHoverWavRelativePath());
+
+    Assert::IsTrue(result.valid());
+
+    Resources::Sound* actual = result.get<Resources::Sound*>();
+
+    Assert::IsNotNull(actual);
+    Assert::AreEqual(expected, actual);
+  }
+
+#pragma endregion
+
 #pragma region Load Prefab Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ResourcesScriptCommands_loadPrefab_InputtingInvalidPath_ReturnsNullHandle)
+  TEST_METHOD(ResourcesScriptCommands_loadPrefab_InputtingInvalidPath_ReturnsNullptr)
   {
     sol::state& state = LuaState::instance();
     Celeste::Lua::Resources::ScriptCommands::initialize(state);
@@ -394,7 +460,7 @@ namespace TestCelesteLua::Lua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ResourcesScriptCommands_loadPrefab_InputtingValidPath_ReturnsPrefabHandle)
+  TEST_METHOD(ResourcesScriptCommands_loadPrefab_InputtingValidPath_ReturnsPrefab)
   {
     sol::state& state = LuaState::instance();
     Celeste::Lua::Resources::ScriptCommands::initialize(state);
@@ -408,6 +474,84 @@ namespace TestCelesteLua::Lua::ScriptCommands
     Assert::IsTrue(result.valid());
 
     Resources::Prefab* actual = result.get<Resources::Prefab*>();
+
+    Assert::IsNotNull(actual);
+    Assert::AreEqual(expected, actual);
+  }
+
+#pragma endregion
+
+#pragma region Load Texture2D Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ResourcesScriptCommands_loadTexture2D_InputtingInvalidPath_ReturnsNullptr)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Resources::ScriptCommands::initialize(state);
+    sol::protected_function function = state["Resources"]["loadTexture2D"].get<sol::protected_function>();
+
+    Assert::IsTrue(function.valid());
+
+    auto result = function.call("Test");
+
+    Assert::IsTrue(result.valid());
+    Assert::IsNull(result.get<Resources::Texture2D*>());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ResourcesScriptCommands_loadTexture2D_InputtingValidPath_ReturnsTexture2D)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Resources::ScriptCommands::initialize(state);
+    sol::protected_function function = state["Resources"]["loadTexture2D"].get<sol::protected_function>();
+
+    Assert::IsTrue(function.valid());
+
+    auto expected = getResourceManager().load<Resources::Texture2D>(TestResources::getBlockPngRelativePath());
+    auto result = function.call(TestResources::getBlockPngRelativePath());
+
+    Assert::IsTrue(result.valid());
+
+    Resources::Texture2D* actual = result.get<Resources::Texture2D*>();
+
+    Assert::IsNotNull(actual);
+    Assert::AreEqual(expected, actual);
+  }
+
+#pragma endregion
+
+#pragma region Load Data Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ResourcesScriptCommands_loadData_InputtingInvalidPath_ReturnsNullptr)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Resources::ScriptCommands::initialize(state);
+    sol::protected_function function = state["Resources"]["loadData"].get<sol::protected_function>();
+
+    Assert::IsTrue(function.valid());
+
+    auto result = function.call("Test");
+
+    Assert::IsTrue(result.valid());
+    Assert::IsNull(result.get<Resources::Data*>());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ResourcesScriptCommands_loadData_InputtingValidPath_ReturnsData)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Resources::ScriptCommands::initialize(state);
+    sol::protected_function function = state["Resources"]["loadData"].get<sol::protected_function>();
+
+    Assert::IsTrue(function.valid());
+
+    auto expected = getResourceManager().load<Resources::Data>(TestResources::getDataXmlRelativePath());
+    auto result = function.call(TestResources::getDataXmlRelativePath());
+
+    Assert::IsTrue(result.valid());
+
+    Resources::Data* actual = result.get<Resources::Data*>();
 
     Assert::IsNotNull(actual);
     Assert::AreEqual(expected, actual);

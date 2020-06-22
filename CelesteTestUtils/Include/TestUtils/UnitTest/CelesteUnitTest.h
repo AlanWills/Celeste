@@ -38,6 +38,7 @@ namespace Celeste
     class Texture2D;
     class Prefab;
     class Sound;
+    class Data;
   }
 
   namespace Input
@@ -53,6 +54,7 @@ ARE_PTRS_EQUAL(Celeste::Screen);
 ARE_PTRS_EQUAL(Celeste::Resources::Texture2D);
 ARE_PTRS_EQUAL(Celeste::Resources::Prefab);
 ARE_PTRS_EQUAL(Celeste::Resources::Sound);
+ARE_PTRS_EQUAL(Celeste::Resources::Data);
 ARE_PTRS_EQUAL(Celeste::Input::MouseInteractionHandler);
 
 namespace CelesteTestUtils

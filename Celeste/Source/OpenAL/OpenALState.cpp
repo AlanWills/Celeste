@@ -16,7 +16,7 @@ namespace Celeste
     {
       // Initialize alut state here
       result = (alutInit(nullptr, nullptr) == AL_TRUE);
-
+      
       // Mark the state as now initialized
       m_initialized = true;
     }
