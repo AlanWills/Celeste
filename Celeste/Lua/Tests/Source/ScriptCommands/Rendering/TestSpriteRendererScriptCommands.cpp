@@ -15,7 +15,7 @@ using SpriteRenderer = Celeste::Rendering::SpriteRenderer;
 using namespace Celeste;
 
 
-namespace TestCelesteLua::Lua::Rendering::SpriteRendererScriptCommands
+namespace TestCeleste::Lua::Rendering::SpriteRendererScriptCommands
 {
   CELESTE_TEST_CLASS(TestSpriteRendererScriptCommands)
 

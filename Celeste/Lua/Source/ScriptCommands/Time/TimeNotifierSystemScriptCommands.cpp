@@ -45,8 +45,16 @@ namespace Celeste::Lua::Time::TimeNotifierSystemScriptCommands
   //------------------------------------------------------------------------------------------------
   void initialize(sol::state& state)
   {
-    ASSERT(state["System"].valid());
-    state["System"]["getTimeNotifierSystem"] = &Internals::getTimeNotifierSystem;
+    if (!state["System"].valid())
+    {
+      state.create_named_table(
+        "System",
+        "getTimeNotifierSystem", &Internals::getTimeNotifierSystem);
+    }
+    else
+    {
+      state["System"]["getTimeNotifierSystem"] = &Internals::getTimeNotifierSystem;
+    }
 
     state.new_usertype<TimeNotifierSystem>(
       "TimeNotifierSystem",

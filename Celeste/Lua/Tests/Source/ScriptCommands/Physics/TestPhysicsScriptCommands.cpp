@@ -10,7 +10,7 @@ using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;
 
 
-namespace TestCelesteLua::Lua::Physics
+namespace TestCeleste::Lua::Physics
 {
   CELESTE_TEST_CLASS(TestPhysicsScriptCommands)
 

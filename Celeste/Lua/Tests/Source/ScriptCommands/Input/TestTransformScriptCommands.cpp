@@ -8,7 +8,7 @@
 using namespace Celeste::Lua;
 
 
-namespace TestCelesteLua::Lua::Maths::TransformScriptCommands
+namespace TestCeleste::Lua::Maths::TransformScriptCommands
 {
   CELESTE_TEST_CLASS(TestTransformScriptCommands)
 

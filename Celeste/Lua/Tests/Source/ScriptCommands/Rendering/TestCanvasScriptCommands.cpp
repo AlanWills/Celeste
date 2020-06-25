@@ -14,7 +14,7 @@ using Canvas = Celeste::Rendering::Canvas;
 using namespace Celeste;
 
 
-namespace TestCelesteLua::Lua::Rendering::CanvasScriptCommands
+namespace TestCeleste::Lua::Rendering::CanvasScriptCommands
 {
   CELESTE_TEST_CLASS(TestCanvasScriptCommands)
 

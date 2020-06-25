@@ -10,7 +10,7 @@ using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;
 
 
-namespace TestCelesteLua::Lua::ScriptCommands
+namespace TestCeleste::Lua::ScriptCommands
 {
   CELESTE_TEST_CLASS(TestViewportScriptCommands)
 

@@ -17,6 +17,8 @@ namespace Celeste::Time
 
       CelesteDllExport StringId subscribe(TimeNotifierEvent::Function&& callback);
       CelesteDllExport void unsubscribe(StringId eventHandle);
+      
+      size_t getSubscriberCount() const { return m_timeNotifierEvent.getSubscriberCount(); }
 
     private:
       TimeNotifierEvent m_timeNotifierEvent;

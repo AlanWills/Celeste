@@ -15,7 +15,7 @@ using StackPanel = Celeste::UI::StackPanel;
 using namespace Celeste;
 
 
-namespace TestCelesteLua::Lua::UI::StackPanelScriptCommands
+namespace TestCeleste::Lua::UI::StackPanelScriptCommands
 {
   CELESTE_TEST_CLASS(TestStackPanelScriptCommands)
 

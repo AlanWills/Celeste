@@ -13,7 +13,7 @@
 using LuaState = Celeste::Lua::LuaState;
 
 
-namespace TestCelesteLua::Lua::Settings::WindowSettingsScriptCommands
+namespace TestCeleste::Lua::Settings::WindowSettingsScriptCommands
 {
   CELESTE_TEST_CLASS(TestWindowSettingsScriptCommands)
 

@@ -12,7 +12,7 @@ using namespace Celeste;
 using namespace Celeste::Lua;
 
 
-namespace TestCelesteLua::Lua::ScriptCommands
+namespace TestCeleste::Lua::ScriptCommands
 {
   CELESTE_TEST_CLASS(TestLuaComponentDataConverterScriptCommands)
 

@@ -11,7 +11,7 @@ using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;
 
 
-namespace TestCelesteLua::Lua::ScriptCommands
+namespace TestCeleste::LuaScriptCommands
 {
   CELESTE_TEST_CLASS(TestTimeScriptCommands)
 
@@ -39,6 +39,18 @@ namespace TestCelesteLua::Lua::ScriptCommands
     Celeste::Lua::Time::ScriptCommands::initialize(state);
 
     Assert::IsTrue(state["Time"]["getDeltaTime"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TimeScriptCommands_Initialize_InitializesTimeNotifierSystemScriptCommands)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state["TimeNotifierSystem"].valid());
+
+    Celeste::Lua::Time::ScriptCommands::initialize(state);
+
+    Assert::IsTrue(state["TimeNotifierSystem"].valid());
   }
 
 #pragma endregion

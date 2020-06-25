@@ -11,7 +11,7 @@ using namespace Celeste::Lua;
 using namespace Celeste::Events;
 
 
-namespace TestCelesteLua::Lua::ScriptCommands
+namespace TestCeleste::Lua::ScriptCommands
 {
   CELESTE_TEST_CLASS(TestEventTriggererScriptCommands)
 

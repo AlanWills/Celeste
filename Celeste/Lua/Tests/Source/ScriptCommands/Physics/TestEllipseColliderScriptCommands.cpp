@@ -14,7 +14,7 @@ using EllipseCollider = Celeste::Physics::EllipseCollider;
 using namespace Celeste;
 
 
-namespace TestCelesteLua::Lua::Physics::EllipseColliderScriptCommands
+namespace TestCeleste::Lua::Physics::EllipseColliderScriptCommands
 {
   CELESTE_TEST_CLASS(TestEllipseColliderScriptCommands)
 

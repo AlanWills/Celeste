@@ -14,7 +14,7 @@ using namespace Celeste;
 using namespace Celeste::Resources;
 
 
-namespace TestCelesteLua::Lua::ScriptCommands
+namespace TestCeleste::Lua::ScriptCommands
 {
   CELESTE_TEST_CLASS(TestModelScriptCommands)
 

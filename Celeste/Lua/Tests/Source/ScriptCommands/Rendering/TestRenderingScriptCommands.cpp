@@ -16,7 +16,7 @@ using TextRenderer = Celeste::Rendering::TextRenderer;
 using namespace Celeste;
 
 
-namespace TestCelesteLua::Lua::Rendering
+namespace TestCeleste::Lua::Rendering
 {
   CELESTE_TEST_CLASS(TestRenderingScriptCommands)
 

@@ -13,7 +13,7 @@ using LuaState = Celeste::Lua::LuaState;
 using Animator = Celeste::Animation::Animator;
 
 
-namespace TestCelesteLua::Lua::Animation::AnimatorScriptCommands
+namespace TestCeleste::Lua::Animation::AnimatorScriptCommands
 {
   CELESTE_TEST_CLASS(TestAnimatorScriptCommands)
 
