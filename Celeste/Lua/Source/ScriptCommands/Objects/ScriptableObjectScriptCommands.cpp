@@ -1,9 +1,7 @@
 #include "ScriptCommands/Objects/ScriptableObjectScriptCommands.h"
 #include "ScriptCommands/Settings/GameSettingsScriptCommands.h"
-#include "ScriptCommands/Settings/WindowSettingsScriptCommands.h"
 #include "Lua/LuaState.h"
 
-#include "Settings/GameSettings.h"
 #include "Registries/ScriptableObjectRegistry.h"
 
 
@@ -34,6 +32,5 @@ namespace Celeste::Lua::ScriptableObjectScriptCommands
       "getName", &ScriptableObject::getName);
 
     Settings::GameSettingsScriptCommands::initialize(state);
-    Settings::WindowSettingsScriptCommands::initialize(state);
   }
 }

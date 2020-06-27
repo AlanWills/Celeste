@@ -26,7 +26,6 @@
 #include "TestResources/Scene/SceneLoadingResources.h"
 
 #include "TestResources/Settings/GameSettingsLoadingResources.h"
-#include "TestResources/Settings/WindowSettingsLoadingResources.h"
 
 #include "TestResources/UI/ButtonLoadingResources.h"
 #include "TestResources/UI/SliderLoadingResources.h"
@@ -106,7 +105,6 @@ namespace CelesteTestResources
 
     // Settings
     GameSettingsLoadingResources::addAllResourcesToLua();
-    WindowSettingsLoadingResources::addAllResourcesToLua();
 
     ButtonLoadingResources::addAllResourcesToLua();
     SliderLoadingResources::addAllResourcesToLua();
@@ -168,7 +166,6 @@ namespace CelesteTestResources
 
     // Settings
     GameSettingsLoadingResources::unloadAllResources();
-    WindowSettingsLoadingResources::unloadAllResources();
 
     ButtonLoadingResources::unloadAllResources();
     SliderLoadingResources::unloadAllResources();

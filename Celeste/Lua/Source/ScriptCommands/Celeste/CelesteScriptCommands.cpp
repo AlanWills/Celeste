@@ -19,6 +19,7 @@
 #include "ScriptCommands/FileSystem/FileSystemScriptCommands.h"
 #include "ScriptCommands/Lua/Components/LuaComponentManifestRegistryScriptCommands.h"
 #include "ScriptCommands/System/SystemScriptCommands.h"
+#include "ScriptCommands/Layout/LayoutScriptCommands.h"
 #include "Lua/LuaState.h"
 
 #include "Resources/ResourceUtils.h"
@@ -55,6 +56,7 @@ namespace Celeste::Lua::CelesteScriptCommands
     Lua::Events::ScriptCommands::initialize(state);
     Lua::LuaComponentManifestRegistryScriptCommands::initialize(state);
     Lua::Time::ScriptCommands::initialize(state);
+    Lua::Layout::ScriptCommands::initialize(state);
     
     // Need these for both debug and release so our lua scripts will work no matter what
     Dolce::Lua::ScriptCommands::initialize(state, Debug::getDolce());

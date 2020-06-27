@@ -54,7 +54,7 @@ namespace Celeste::Input
     double x = 0, y = 0;
     glfwGetCursorPos(getWindow().getGLWindow(), &x, &y);
     
-    m_mouse.getTransform().setTranslation(static_cast<float>(x), getViewportDimensions().y - static_cast<float>(y));
+    m_mouse.getTransform().setTranslation(static_cast<float>(x), (getViewportDimensions().y - static_cast<float>(y)));
   }
 
   //------------------------------------------------------------------------------------------------

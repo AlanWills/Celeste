@@ -10,29 +10,28 @@ using namespace Celeste;
 
 namespace TestCeleste
 {
-
   CELESTE_TEST_CLASS(TestTransform)
 
 #pragma region Constructor Tests
 
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Transform_Constructor_SetsTransformValues)
-    {
-      Transform transform;
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(Transform_Constructor_SetsTransformValues)
+  {
+    Transform transform;
 
-      Assert::AreEqual(0.0f, transform.getRotation());
-      Assert::IsTrue(glm::vec3() == transform.getTranslation());
-      Assert::IsTrue(glm::vec3(1, 1, 1) == transform.getScale());
-      Assert::IsTrue(glm::identity<glm::mat4>() == transform.getLocalMatrix());
+    Assert::AreEqual(0.0f, transform.getRotation());
+    Assert::IsTrue(glm::vec3() == transform.getTranslation());
+    Assert::IsTrue(glm::vec3(1, 1, 1) == transform.getScale());
+    Assert::IsTrue(glm::identity<glm::mat4>() == transform.getLocalMatrix());
       
-      Assert::IsNull(transform.getParent());
-      Assert::IsNull(transform.getGameObject());
-      Assert::AreEqual((size_t)0, transform.getChildCount());
-      Assert::AreEqual(0.0f, transform.getWorldRotation());
-      Assert::IsTrue(glm::vec3() == transform.getWorldTranslation());
-      Assert::IsTrue(glm::vec3(1, 1, 1) == transform.getWorldScale());
-      Assert::IsTrue(glm::identity<glm::mat4>() == transform.getWorldMatrix());
-    }
+    Assert::IsNull(transform.getParent());
+    Assert::IsNull(transform.getGameObject());
+    Assert::AreEqual((size_t)0, transform.getChildCount());
+    Assert::AreEqual(0.0f, transform.getWorldRotation());
+    Assert::IsTrue(glm::vec3() == transform.getWorldTranslation());
+    Assert::IsTrue(glm::vec3(1, 1, 1) == transform.getWorldScale());
+    Assert::IsTrue(glm::identity<glm::mat4>() == transform.getWorldMatrix());
+  }
 
 #pragma endregion
 

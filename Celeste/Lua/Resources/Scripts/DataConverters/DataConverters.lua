@@ -11,6 +11,9 @@ require "DataConverters.Events.EventTriggererDataConverter"
 require "DataConverters.Input.KeyboardActivatorDataConverter"
 require "DataConverters.Input.KeyboardVisibilityDataConverter"
 
+-- Layout
+require "DataConverters.Layout.ResolutionScalerDataConverter"
+
 -- Physics
 require "DataConverters.Physics.EllipseColliderDataConverter"
 

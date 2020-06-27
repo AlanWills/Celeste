@@ -2,10 +2,14 @@
 
 #include "Settings/GameSettings.h"
 #include "Resources/ResourceManager.h"
-#include "TestResources/TestResources.h"
-#include "TestResources/Settings/GameSettingsLoadingResources.h"
+#include "Viewport/OpenGLWindow.h"
+#include "Scene/SceneUtils.h"
+#include "OpenGL/GL.h"
 #include "Audio/AudioManager.h"
 #include "XML/tinyxml2_ext.h"
+#include "Serialization/MathsSerializers.h"
+#include "TestResources/TestResources.h"
+#include "TestResources/Settings/GameSettingsLoadingResources.h"
 #include "TestUtils/Assert/FileAssert.h"
 
 using namespace Celeste::XML;
@@ -17,6 +21,9 @@ namespace TestCeleste::Settings
 {
   CELESTE_TEST_CLASS(TestGameSettings)
 
+  glm::vec2 originalResolution;
+  bool originalWindowed;
+
   float originalMasterVolume;
   float originalMusicVolume;
   float originalSFXVolume;
@@ -24,6 +31,11 @@ namespace TestCeleste::Settings
   //------------------------------------------------------------------------------------------------
   void testInitialize()
   {
+    OpenGLWindow& window = getWindow();
+
+    originalResolution = window.getViewportDimensions();
+    originalWindowed = window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed;
+
     Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 
     originalMasterVolume = audioSourceManager.getMasterVolume();
@@ -34,6 +46,8 @@ namespace TestCeleste::Settings
   //------------------------------------------------------------------------------------------------
   void testCleanup()
   {
+    resetWindow();
+
     Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
 
     audioSourceManager.setMasterVolume(originalMasterVolume);
@@ -41,7 +55,48 @@ namespace TestCeleste::Settings
     audioSourceManager.setSFXVolume(originalSFXVolume);
   }
 
+  //------------------------------------------------------------------------------------------------
+  void resetWindow()
+  {
+    OpenGLWindow& window = getWindow();
+
+    window.setViewportDimensions(originalResolution);
+    window.setWindowMode(originalWindowed ? OpenGLWindow::WindowMode::kWindowed : OpenGLWindow::WindowMode::kFullScreen);
+  }
+
 #pragma region Constructor Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettings_Constructor_SetsWindowTitleToEmptyString)
+  {
+    std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
+
+    Assert::IsTrue(settings->getWindowTitle().empty());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettings_Constructor_SetsWindowIconToEmptyString)
+  {
+    std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
+
+    Assert::IsTrue(settings->getWindowIcon().empty());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettings_Constructor_SetsResolutionToEmptyString)
+  {
+    std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
+
+    Assert::AreEqual(glm::vec2(), settings->getResolution());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettings_Constructor_SetsWindowed_ToFalse)
+  {
+    std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
+
+    Assert::IsFalse(settings->isWindowed());
+  }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameSettings_Constructor_SetsMasterVolumeToOne)
@@ -201,6 +256,42 @@ namespace TestCeleste::Settings
 #pragma endregion
 
 #pragma region Apply Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettings_Apply_SetsViewportDimensionsToValue)
+  {
+    if (GL::isInitialized())
+    {
+      std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
+      settings->setResolution(originalResolution + glm::vec2(100, 200));
+
+      OpenGLWindow& window = getWindow();
+
+      Assert::AreEqual(originalResolution, window.getViewportDimensions());
+
+      settings->apply();
+
+      Assert::AreEqual(originalResolution + glm::vec2(100, 200), window.getViewportDimensions());
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettings_Apply_SetsWindowModeToValue)
+  {
+    if (GL::isInitialized())
+    {
+      std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
+      settings->setWindowed(!originalWindowed);
+
+      OpenGLWindow& window = getWindow();
+
+      Assert::AreEqual(originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
+
+      settings->apply();
+
+      Assert::AreEqual(!originalWindowed, window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
+    }
+  }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameSettings_Apply_SetsAudioManagerMasterVolume_ToValue)

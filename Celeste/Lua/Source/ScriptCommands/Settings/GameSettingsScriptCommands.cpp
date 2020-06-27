@@ -2,6 +2,7 @@
 #include "ScriptCommands/Utils/ScriptCommandUtils.h"
 
 #include "Settings/GameSettings.h"
+#include "Serialization/MathsSerializers.h"
 
 using namespace Celeste::Settings;
 
@@ -36,6 +37,8 @@ namespace Celeste::Lua::Settings::GameSettingsScriptCommands
       "GameSettings",
       sol::base_classes, sol::bases<Celeste::ScriptableObject>(),
       "apply", &Internals::apply,
+      "getResolution", &GameSettings::getResolution,
+      "setResolution", &GameSettings::setResolution,
       "getMasterVolume", &GameSettings::getMasterVolume,
       "setMasterVolume", &GameSettings::setMasterVolume,
       "getMusicVolume", &GameSettings::getMusicVolume,

@@ -22,4 +22,10 @@ namespace Celeste
   {
     return getWindow().getViewportDimensions();
   }
+
+  //------------------------------------------------------------------------------------------------
+  void setViewportDimensions(const glm::vec2& viewportDimensions)
+  {
+    getWindow().setViewportDimensions(viewportDimensions);
+  }
 }

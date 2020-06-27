@@ -4,8 +4,8 @@
 #include "Lua/Components/LuaComponentManifestRegistry.h"
 #include "Lua/LuaState.h"
 
+#include "Serialization/MathsSerializers.h"
 #include "Settings/GameSettings.h"
-#include "Settings/WindowSettings.h"
 
 #include "Log/Log.h"
 #include "Scene/SceneManager.h"
@@ -13,6 +13,7 @@
 #include "Physics/PhysicsManager.h"
 #include "Rendering/RenderManager.h"
 #include "Audio/AudioManager.h"
+#include "Layout/LayoutSystem.h"
 
 #if _DEBUG
 #include "Dolce/Dolce.h"
@@ -120,6 +121,7 @@ namespace Celeste
     addSystem<Physics::PhysicsManager>();
     addSystem<Rendering::RenderManager>();
     addSystem<Audio::AudioManager>();
+    addSystem<Layout::LayoutSystem>(m_window);
 
 #if _DEBUG
     std::unique_ptr<System::ISystem> dolce = std::make_unique<Dolce::Dolce>(m_window.getGLWindow());
@@ -127,6 +129,13 @@ namespace Celeste
     std::unique_ptr<System::ISystem> dolce = std::make_unique<Dolce::DolceDummy>();
 #endif
     addSystem(static_type_info::getTypeIndex<Dolce::IDolce>(), std::move(dolce));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void Game::deregisterSystems()
+  {
+    // Can specify a custom deregistration order if we need it
+    m_systems.clear();
   }
 
   //------------------------------------------------------------------------------------------------
@@ -149,12 +158,6 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void Game::applySettings() const
   {
-    std::unique_ptr<Settings::WindowSettings> windowSettings = ScriptableObject::load<Settings::WindowSettings>(Path(Resources::getResourcesDirectory(), "Data", "Settings", "WindowSettings.asset"));
-    if (windowSettings != nullptr)
-    {
-      windowSettings->apply();
-    }
-
     std::unique_ptr<Settings::GameSettings> gameSettings = ScriptableObject::load<Settings::GameSettings>(Path(Resources::getResourcesDirectory(), "Data", "Settings", "GameSettings.asset"));
     if (gameSettings != nullptr)
     {
@@ -259,11 +262,13 @@ namespace Celeste
 
     onExit();
 
-    GL::terminate();
-
 #if _DEBUG
     shutdownDolce();
 #endif
+
+    deregisterSystems();
+
+    GL::terminate();
 
     // We flush the logger here to allow it to write any remaining information
     // Then we reset it to allow proper cleanup before the app terminates

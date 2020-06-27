@@ -27,6 +27,18 @@ namespace TestCeleste::Lua::Maths::TransformScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TransformScriptCommands_Initialize_Adds_setTranslation_ToTransformTable)
+  {
+    sol::state& state = Celeste::Lua::LuaState::instance();
+
+    Assert::IsFalse(state.globals()["Transform"]["setTranslation"].valid());
+
+    Celeste::Lua::Maths::TransformScriptCommands::initialize(state);
+
+    Assert::IsTrue(state.globals()["Transform"]["setTranslation"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
   TEST_METHOD(TransformScriptCommands_Initialize_Adds_getWorldTranslation_ToTransformTable)
   {
     sol::state& state = Celeste::Lua::LuaState::instance();
@@ -62,6 +74,39 @@ namespace TestCeleste::Lua::Maths::TransformScriptCommands
     Assert::IsTrue(state.globals()["Transform"]["translate"].valid());
   }
 
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TransformScriptCommands_Initialize_Adds_setScale_ToTransformTable)
+  {
+    sol::state& state = Celeste::Lua::LuaState::instance();
+
+    Assert::IsFalse(state.globals()["Transform"]["setScale"].valid());
+
+    Celeste::Lua::Maths::TransformScriptCommands::initialize(state);
+
+    Assert::IsTrue(state.globals()["Transform"]["setScale"].valid());
+  }
+
+#pragma endregion
+
+#pragma region Set Translation Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TransformScriptCommands_setTranslation_InputtingTwoFloats_SetsXYComponentsOfTranslationCorrectly)
+  {
+    Celeste::Transform transform;
+    transform.setTranslation(-3, -6, -9);
+
+    sol::state& state = Celeste::Lua::LuaState::instance();
+    Celeste::Lua::Maths::TransformScriptCommands::initialize(state);
+
+    Assert::AreEqual(glm::vec3(-3, -6, -9), transform.getTranslation());
+
+    auto result = state["Transform"]["setTranslation"].get<sol::protected_function>().call(transform, 12.0f, 11.0f);
+
+    Assert::IsTrue(result.valid());
+    Assert::AreEqual(glm::vec3(12, 11, -9), transform.getTranslation());
+  }
+
 #pragma endregion
 
 #pragma region Get World Translation Tests
@@ -93,7 +138,7 @@ namespace TestCeleste::Lua::Maths::TransformScriptCommands
 #pragma region Set World Translation Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(TransformScriptCommands_setWorldTranslation_ReturnsCorrectWorldTranslation)
+  TEST_METHOD(TransformScriptCommands_setWorldTranslation_SetsCorrectWorldTranslation)
   {
     Celeste::Transform parent;
     Celeste::Transform transform;
@@ -134,6 +179,27 @@ namespace TestCeleste::Lua::Maths::TransformScriptCommands
   }
 
 #pragma endregion
-  
+
+#pragma region Set Scale Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(TransformScriptCommands_setScale_InputtingTwoFloats_SetsXYComponentsOfScaleCorrectly)
+  {
+    Celeste::Transform transform;
+    transform.setScale(-3, -6, -9);
+
+    sol::state& state = Celeste::Lua::LuaState::instance();
+    Celeste::Lua::Maths::TransformScriptCommands::initialize(state);
+
+    Assert::AreEqual(glm::vec3(-3, -6, -9), transform.getScale());
+
+    auto result = state["Transform"]["setScale"].get<sol::protected_function>().call(transform, 12.0f, 11.0f);
+
+    Assert::IsTrue(result.valid());
+    Assert::AreEqual(glm::vec3(12, 11, -9), transform.getScale());
+  }
+
+#pragma endregion
+
   };
 }

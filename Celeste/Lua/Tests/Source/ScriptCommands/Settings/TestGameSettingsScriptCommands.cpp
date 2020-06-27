@@ -4,8 +4,9 @@
 #include "Lua/LuaState.h"
 
 #include "Settings/GameSettings.h"
-#include "TestResources/Settings/GameSettingsLoadingResources.h"
 #include "Audio/AudioManager.h"
+#include "Serialization/MathsSerializers.h"
+#include "TestResources/Settings/GameSettingsLoadingResources.h"
 #include "TestUtils/Assert/AssertExt.h"
 #include "TestUtils/Assert/FileAssert.h"
 

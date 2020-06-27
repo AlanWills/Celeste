@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GameSettings name="Valid" guid="34b0d489-8485-4391-b3b9-b3f062e90c4a"
-              master_volume="0.6" music_volume="0.5" sfx_volume="0.4"
-              vsync_enabled="false"/>
+              window_title="Test"
+              window_icon=""
+              resolution="1280,720"
+              windowed="true"
+              vsync_enabled="false"
+              master_volume="0.6" 
+              music_volume="0.5" 
+              sfx_volume="0.4"/>

@@ -96,9 +96,9 @@ namespace Celeste
       inline void scale(const glm::vec2& scalingFactor) { scale(glm::vec3(scalingFactor, 1)); }
       inline void scale(const glm::vec3& scalingFactor) { m_scale *= scalingFactor; }
 
-      inline void setScale(float x, float y) { setScale(x, y, 1); }
+      inline void setScale(float x, float y) { setScale(x, y, m_scale.z); }
       inline void setScale(float x, float y, float z) { setScale(glm::vec3(x, y, z)); }
-      inline void setScale(const glm::vec2& scaling) { setScale(glm::vec3(scaling, 1)); }
+      inline void setScale(const glm::vec2& scaling) { setScale(glm::vec3(scaling, m_scale.z)); }
       inline void setScale(const glm::vec3& scaling) { m_scale = scaling; }
       inline const glm::vec3& getScale() const { return m_scale; }
       inline glm::vec3 getInverseScale() const { return glm::vec3(1 / m_scale.x, 1 / m_scale.y, 1 / m_scale.z); }

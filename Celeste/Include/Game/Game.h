@@ -76,6 +76,7 @@ namespace Celeste
       Game& operator=(const Game&) = delete;
 
       void registerSystems();
+      void deregisterSystems();
       void initialize();
       void update(GLfloat elapsedGameTime);
       void render(GLfloat lag);

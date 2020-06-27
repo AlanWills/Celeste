@@ -10,5 +10,6 @@ namespace Celeste::Lua::Viewport::ScriptCommands
   {
     sol::table viewportTable = state.create_named_table("Viewport");
     viewportTable["getDimensions"] = &getViewportDimensions;
+    viewportTable["setDimensions"] = &setViewportDimensions;
   }
 }

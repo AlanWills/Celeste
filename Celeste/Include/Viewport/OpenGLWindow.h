@@ -51,9 +51,6 @@ namespace Celeste
 
       GLFWwindow* m_window;
 
-      /// Store the values of the window frame size
-      //int m_left, m_top, m_right, m_bottom;
-
       glm::vec2 m_viewportDimensions;
       WindowMode m_windowMode;
       Event<const glm::vec2&> m_viewportDimensionsChanged;

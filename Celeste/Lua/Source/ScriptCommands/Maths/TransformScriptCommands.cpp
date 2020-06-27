@@ -15,6 +15,11 @@ namespace Celeste::Lua::Maths::TransformScriptCommands
   namespace Internals
   {
     //------------------------------------------------------------------------------------------------
+    void setTranslation_TwoFloatsOverload(Transform& transform, float xTranslation, float yTranslation)
+    {
+      transform.setTranslation(xTranslation, yTranslation);
+    }
+    //------------------------------------------------------------------------------------------------
     void setWorldTranslation_vec3Overload(Transform& transform, const glm::vec3& worldTranslation)
     {
       transform.setWorldTranslation(worldTranslation);
@@ -25,6 +30,12 @@ namespace Celeste::Lua::Maths::TransformScriptCommands
     {
       transform.translate(xTranslation, yTranslation);
     }
+
+    //------------------------------------------------------------------------------------------------
+    void setScale_TwoFloatsOverload(Transform& transform, float xScale, float yScale)
+    {
+      transform.setScale(xScale, yScale);
+    }
   }
 
   //------------------------------------------------------------------------------------------------
@@ -34,8 +45,10 @@ namespace Celeste::Lua::Maths::TransformScriptCommands
       state,
       Transform::type_name(),
       sol::base_classes, sol::bases<Object>(),
+      "setTranslation", sol::overload(&Internals::setTranslation_TwoFloatsOverload),
       "getWorldTranslation", &Transform::getWorldTranslation,
       "setWorldTranslation", &Internals::setWorldTranslation_vec3Overload,
-      "translate", &Internals::translate_TwoFloatsOverload);
+      "translate", &Internals::translate_TwoFloatsOverload,
+      "setScale", sol::overload(&Internals::setScale_TwoFloatsOverload));
   }
 }

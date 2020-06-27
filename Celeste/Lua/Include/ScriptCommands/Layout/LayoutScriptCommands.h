@@ -1,14 +1,12 @@
 #pragma once
 
-#include <string>
-
 
 namespace sol
 {
   class state;
 }
 
-namespace Celeste::Lua::Settings::WindowSettingsScriptCommands
+namespace Celeste::Lua::Layout::ScriptCommands
 {
   void initialize(sol::state& state);
 }

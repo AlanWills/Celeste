@@ -122,7 +122,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   glm::vec3 Transform::getWorldTranslation() const
   {
-    return !hasParent() ? m_translation : m_parent->getWorldTranslation() + m_translation;
+    return !hasParent() ? m_translation : m_parent->getWorldTranslation() + m_parent->getWorldScale() * m_translation;
   }
 
   //------------------------------------------------------------------------------------------------

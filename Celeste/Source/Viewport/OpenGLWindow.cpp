@@ -87,9 +87,6 @@ namespace Celeste
     m_window = glfwCreateWindow(targetWidth, targetHeight, title.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(m_window);
 
-    int left = 0, right = 0, top = 0, bottom = 0;
-    glfwGetWindowFrameSize(m_window, &left, &top, &right, &bottom);
-
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = monitor != nullptr ? glfwGetVideoMode(monitor) : nullptr;
     int refreshRate = mode != nullptr ? mode->refreshRate : GLFW_DONT_CARE;
@@ -101,18 +98,13 @@ namespace Celeste
     }
     else
     {
+      int left = 0, right = 0, top = 0, bottom = 0;
+      glfwGetWindowFrameSize(m_window, &left, &top, &right, &bottom);
+
       glfwSetWindowPos(m_window, 0, top);
     }
 
-    int width = 0, height = 0;
-    glfwGetFramebufferSize(m_window, &width, &height);
-    glViewport(0, 0, width, height);
-    glCheckError();
-
-    m_viewportDimensions.x = static_cast<float>(width);
-    m_viewportDimensions.y = static_cast<float>(height);
-
-    // Don't bother calling event, because who will have subscribed?  We call this function from the constructor
+    setViewportDimensions(glm::vec2(targetWidth, targetHeight));
 
     // OpenGL configuration
     //enableViewportFlag(GL_CULL_FACE);
@@ -201,8 +193,6 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void OpenGLWindow::setViewportDimensions(const glm::vec2& viewportDimensions)
   {
-    // POSSIBLY NEED TO REVISIT THIS - don't think viewport calculation is correct
-
     if (!m_window)
     {
       ASSERT_FAIL();
@@ -212,23 +202,18 @@ namespace Celeste
     ASSERT(viewportDimensions.x > 0);
     ASSERT(viewportDimensions.y > 0);
 
-    int left = 0, right = 0, top = 0, bottom = 0;
-    glfwGetWindowFrameSize(m_window, &left, &top, &right, &bottom);
-
-    if (getWindowMode() == WindowMode::kWindowed)
-    {
-      // Adjust the dimensions for the window borders when in windowed mode
-      glfwSetWindowSize(m_window, static_cast<int>(viewportDimensions.x) + left + right, static_cast<int>(m_viewportDimensions.y + top + bottom));
-    }
-
     if (m_viewportDimensions != viewportDimensions)
     {
       // Only update if we are setting to different dimensions
-      m_viewportDimensions = viewportDimensions;
+      glfwSetWindowSize(m_window, static_cast<int>(viewportDimensions.x), static_cast<int>(viewportDimensions.y));
 
       // Update gl state so to reflect the new dimensions
-      glViewport(0, 0, static_cast<int>(m_viewportDimensions.x), static_cast<int>(m_viewportDimensions.y));
+      int width = 0, height = 0;
+      glfwGetFramebufferSize(m_window, &width, &height);
+      glViewport(0, 0, width, height);
 
+      m_viewportDimensions.x = static_cast<float>(width);
+      m_viewportDimensions.y = static_cast<float>(height);
       m_viewportDimensionsChanged.invoke(m_viewportDimensions);
     }
   }
