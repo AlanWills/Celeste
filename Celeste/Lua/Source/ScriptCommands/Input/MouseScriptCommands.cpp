@@ -10,6 +10,12 @@ namespace Celeste::Lua::Input::MouseScriptCommands
   namespace Internals
   {
     //------------------------------------------------------------------------------------------------
+    glm::vec2 getPosition()
+    {
+      return Celeste::Input::getMouse().getTransform().getWorldTranslation();
+    }
+
+    //------------------------------------------------------------------------------------------------
     void setCursor(const std::string& path)
     {
       Celeste::Input::getMouse().setCursor(path);
@@ -27,6 +33,7 @@ namespace Celeste::Lua::Input::MouseScriptCommands
   {
     state.create_named_table(
       "Mouse",
+      "getPosition", &Internals::getPosition,
       "setCursor", sol::overload(&Internals::setCursor, &Internals::setCursor_CursorHotSpot));
   }
 }

@@ -25,6 +25,12 @@ namespace Celeste::Lua::Layout::LayoutSystemScriptCommands
     if (!state["System"].valid())
     {
       ASSERT_FAIL();
+      state.create_named_table(
+        "System",
+        "getLayoutSystem", &Internals::getLayoutSystem);
+    }
+    else
+    {
       state["System"]["getLayoutSystem"] = &Internals::getLayoutSystem;
     }
 

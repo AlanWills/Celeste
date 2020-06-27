@@ -208,6 +208,20 @@ namespace TestCeleste::Lua::DataConverterScriptCommands
     Assert::IsTrue(state["package"]["loaded"]["DataConverters.UI.ProgressBarDataConverter"].valid());
   }
 
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(DataConverterScriptCommands_Initialize_RequiresResolutionScalerDataConverterModule)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::DataConverters::ScriptCommands::initialize(state);
+
+    // Ensure require is in the global namespace
+    state.open_libraries(sol::lib::package);
+
+    Assert::IsTrue(state["package"].valid());
+    Assert::IsTrue(state["package"]["loaded"].valid());
+    Assert::IsTrue(state["package"]["loaded"]["DataConverters.Layout.ResolutionScalerDataConverter"].valid());
+  }
+
 #pragma endregion
 
 #pragma region Convert From XML Tests

@@ -21,8 +21,8 @@ namespace Celeste
 
       CelesteDllExport OpenGLWindow(WindowMode windowMode = WindowMode::kWindowed, const std::string& windowTitle = "");
       CelesteDllExport OpenGLWindow(
-        int windowWidth, 
-        int windowHeight,
+        int resolutionX, 
+        int resolutionY,
         WindowMode windowMode = WindowMode::kWindowed,
         const std::string& windowTitle = "");
       CelesteDllExport ~OpenGLWindow();
@@ -30,9 +30,11 @@ namespace Celeste
       CelesteDllExport void show() const;
       CelesteDllExport void hide() const;
 
-      const glm::vec2& getViewportDimensions() const { return m_viewportDimensions; }
-      CelesteDllExport void setViewportDimensions(const glm::vec2& viewportDimensions);
-      void setViewportDimensions(int x, int y) { setViewportDimensions(glm::vec2(x, y)); }
+      const glm::vec2& getResolution() const { return m_resolution; }
+      CelesteDllExport void setResolution(const glm::vec2& resolution);
+      void setResolution(int x, int y) { setResolution(glm::vec2(x, y)); }
+
+      const glm::vec2& getContentArea() const { return m_contentArea; }
 
       GLFWwindow* getGLWindow() const { return m_window; }
 
@@ -44,15 +46,16 @@ namespace Celeste
       CelesteDllExport void setTitle(const std::string& windowTitle);
       CelesteDllExport void setIcon(const std::string& windowTitle);
 
-      const Event<const glm::vec2&>& getViewportDimensionsChangedEvent() const { return m_viewportDimensionsChanged; }
+      const Event<const glm::vec2&>& getResolutionChangedEvent() const { return m_resolutionChanged; }
 
     private:
-      void initWindow(int targetWidth, int targetHeight, const std::string& title);
+      void initWindow(int targetResolutionX, int targetResolutionY , const std::string& title);
 
       GLFWwindow* m_window;
 
-      glm::vec2 m_viewportDimensions;
+      glm::vec2 m_resolution;
+      glm::vec2 m_contentArea;
       WindowMode m_windowMode;
-      Event<const glm::vec2&> m_viewportDimensionsChanged;
+      Event<const glm::vec2&> m_resolutionChanged;
   };
 }

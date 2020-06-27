@@ -1042,7 +1042,7 @@ namespace TestCeleste
       transform->setParent(parent);
 
       glm::mat4 expected = glm::identity<glm::mat4>();
-      expected[3] = glm::vec4(1.75f, -3, 0, 1);
+      expected[3] = glm::vec4(9.75f, -3, -2, 1);
       expected = glm::rotate(expected, -glm::pi<float>(), glm::vec3(0, 0, 1));
       expected = glm::scale(expected, glm::vec3(2.5f, 0.25f, -1));
 

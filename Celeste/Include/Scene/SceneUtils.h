@@ -15,6 +15,6 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   CelesteDllExport SceneManager& getSceneManager();
   CelesteDllExport OpenGLWindow& getWindow();
-  CelesteDllExport glm::vec2 getViewportDimensions();
-  CelesteDllExport void setViewportDimensions(const glm::vec2& viewportDimensions);
+  CelesteDllExport glm::vec2 getResolution();
+  CelesteDllExport void setResolution(const glm::vec2& resolution);
 }

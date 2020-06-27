@@ -18,14 +18,14 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  glm::vec2 getViewportDimensions()
+  glm::vec2 getResolution()
   {
-    return getWindow().getViewportDimensions();
+    return getWindow().getResolution();
   }
 
   //------------------------------------------------------------------------------------------------
-  void setViewportDimensions(const glm::vec2& viewportDimensions)
+  void setResolution(const glm::vec2& resolution)
   {
-    getWindow().setViewportDimensions(viewportDimensions);
+    getWindow().setResolution(resolution);
   }
 }

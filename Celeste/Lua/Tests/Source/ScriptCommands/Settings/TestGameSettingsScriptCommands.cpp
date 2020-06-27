@@ -6,6 +6,8 @@
 #include "Settings/GameSettings.h"
 #include "Audio/AudioManager.h"
 #include "Serialization/MathsSerializers.h"
+#include "Scene/SceneUtils.h"
+
 #include "TestResources/Settings/GameSettingsLoadingResources.h"
 #include "TestUtils/Assert/AssertExt.h"
 #include "TestUtils/Assert/FileAssert.h"
@@ -18,6 +20,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
 {
   CELESTE_TEST_CLASS(TestGameSettingsScriptCommands)
 
+  glm::vec2 originalResolution;
   float originalMasterVolume;
   float originalMusicVolume;
   float originalSFXVolume;
@@ -25,6 +28,8 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
   //------------------------------------------------------------------------------------------------
   void testInitialize()
   {
+    originalResolution = getResolution();
+
     Celeste::Audio::AudioManager& audioSourceManager = Celeste::Audio::getAudioManager();
 
     originalMasterVolume = audioSourceManager.getMasterVolume();
@@ -35,6 +40,8 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
   //------------------------------------------------------------------------------------------------
   void testCleanup()
   {
+    setResolution(originalResolution);
+
     Celeste::Audio::AudioManager& audioSourceManager = Celeste::Audio::getAudioManager();
 
     audioSourceManager.setMasterVolume(originalMasterVolume);
@@ -102,6 +109,30 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
     Celeste::Lua::Settings::GameSettingsScriptCommands::initialize(state);
 
     Assert::IsTrue(state[GameSettings::type_name()]["apply"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettingsScriptCommands_Initialize_Adds_getResolution_ToGlobalTable)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state[GameSettings::type_name()]["getResolution"].valid());
+
+    Celeste::Lua::Settings::GameSettingsScriptCommands::initialize(state);
+
+    Assert::IsTrue(state[GameSettings::type_name()]["getResolution"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettingsScriptCommands_Initialize_Adds_setResolution_ToGlobalTable)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state[GameSettings::type_name()]["setResolution"].valid());
+
+    Celeste::Lua::Settings::GameSettingsScriptCommands::initialize(state);
+
+    Assert::IsTrue(state[GameSettings::type_name()]["setResolution"].valid());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -483,6 +514,46 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
     Assert::AreEqual(0.6f, audioSourceManager.getMasterVolume());
     Assert::AreEqual(0.5f, audioSourceManager.getMusicVolume());
     Assert::AreEqual(0.4f, audioSourceManager.getSFXVolume());
+  }
+
+#pragma endregion
+
+#pragma region Get Resolution Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettingsScriptCommands_GetResolution_ReturnsResolution)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Settings::GameSettingsScriptCommands::initialize(state);
+    auto gameSettings = ScriptableObject::create<GameSettings>("");
+    gameSettings->setResolution(glm::vec2(100, 200));
+
+    Assert::AreEqual(glm::vec2(100, 200), gameSettings->getResolution());
+
+    auto result = state["GameSettings"]["getResolution"].get<sol::protected_function>().call(*gameSettings);
+    
+    Assert::IsTrue(result.valid());
+    Assert::AreEqual(glm::vec2(100, 200), result.get<glm::vec2>());
+  }
+
+#pragma endregion
+
+#pragma region Set Resolution Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettingsScriptCommands_SetResolution_ReturnsCorrectValue)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Settings::GameSettingsScriptCommands::initialize(state);
+    auto gameSettings = ScriptableObject::create<GameSettings>("");
+    gameSettings->setResolution(glm::vec2(100, 200));
+
+    Assert::AreEqual(glm::vec2(100, 200), gameSettings->getResolution());
+
+    auto result = state["GameSettings"]["setResolution"].get<sol::protected_function>().call(*gameSettings, glm::vec2(300, 400));
+
+    Assert::IsTrue(result.valid());
+    Assert::AreEqual(glm::vec2(300, 400), gameSettings->getResolution());
   }
 
 #pragma endregion

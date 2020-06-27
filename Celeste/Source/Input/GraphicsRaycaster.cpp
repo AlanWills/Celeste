@@ -26,7 +26,7 @@ namespace Celeste::Input
   {
     std::vector<observer_ptr<GameObject>> hitGameObjects;
 
-    Ray ray = Ray(glm::vec3(Input::getMouse().getScreenPosition(), 0), glm::vec3(0, 0, -1));
+    Ray ray = Ray(Input::getMouse().getTransform().getWorldTranslation(), glm::vec3(0, 0, -1));
 
     if (getGameObject().isActive())
     {

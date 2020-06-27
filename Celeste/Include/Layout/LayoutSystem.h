@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CelesteDllExport.h"
 #include "System/ISystem.h"
 #include "UID/StringId.h"
 #include "glm/glm.hpp"
@@ -17,16 +18,16 @@ namespace Celeste::Layout
   class LayoutSystem : public System::ISystem
   {
     public:
-      LayoutSystem(const OpenGLWindow& glWindow);
-      ~LayoutSystem();
+      CelesteDllExport LayoutSystem(const OpenGLWindow& glWindow);
+      CelesteDllExport ~LayoutSystem();
 
-      void update(float elapsedGameTime) override;
+      CelesteDllExport void update(float elapsedGameTime) override;
 
     private:
-      void rescaleAll(const glm::vec2& newResolution);
+      void rescaleAll(const glm::vec2& newContentArea);
 
       const OpenGLWindow& m_glWindow;
-      StringId m_viewportChangedHandle = StringId();
-      glm::vec2 m_lastAppliedResolution;
+      StringId m_resolutionChangedHandle = StringId();
+      glm::vec2 m_lastAppliedContentArea;
   };
 }

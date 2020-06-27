@@ -2,6 +2,7 @@
 #include "UtilityHeaders/ComponentHeaders.h"
 #include "Scene/SceneUtils.h"
 #include "Rendering/Renderer.h"
+#include "Viewport/OpenGLWindow.h"
 
 
 namespace Celeste::Rendering
@@ -20,7 +21,7 @@ namespace Celeste::Rendering
   //------------------------------------------------------------------------------------------------
   void Canvas::render(float lag)
   {
-    glm::vec2 viewportDimensions = getViewportDimensions();
+    glm::vec2 viewportDimensions = getWindow().getContentArea();
     m_spriteBatch.begin(glm::ortho<float>(0, viewportDimensions.x, 0, viewportDimensions.y), glm::identity<glm::mat4>());
 
     // Breadth first walk this game object and it's children to find all game objects 

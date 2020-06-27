@@ -8,6 +8,7 @@
 #include "Scene/SceneUtils.h"
 #include "Debug/DolceUtils.h"
 #include "Dolce/Dolce.h"
+#include "Viewport/OpenGLWindow.h"
 
 #include <unordered_set>
 
@@ -54,7 +55,9 @@ namespace Celeste::Input
     double x = 0, y = 0;
     glfwGetCursorPos(getWindow().getGLWindow(), &x, &y);
     
-    m_mouse.getTransform().setTranslation(static_cast<float>(x), (getViewportDimensions().y - static_cast<float>(y)));
+    // We have to map the absolute mouse position into content space
+    // Do we have to scale things down too?  I feel like this is just shifting the mouse position down, but not compressing it into the smaller space
+    m_mouse.getTransform().setTranslation(static_cast<float>(x), (getWindow().getContentArea().y - static_cast<float>(y)));
   }
 
   //------------------------------------------------------------------------------------------------

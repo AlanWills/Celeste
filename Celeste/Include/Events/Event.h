@@ -32,16 +32,18 @@ namespace Celeste
       StringId subscribe(const Function& callback, StringId name) const
       {
         Event* e = const_cast<Event*>(this);
-
-        if (e->m_callbacks.find(name) != e->m_callbacks.end())
-        {
-          e->m_callbacks[name] = callback;
-        }
-        else
-        {
-          e->m_callbacks.insert(std::make_pair(name, callback));
-        }
+        e->m_callbacks[name] = callback;
       
+        return name;
+      }
+
+      StringId subscribe(Function&& callback) const { return subscribe(std::move(callback), generateUniqueId()); }
+      StringId subscribe(Function&& callback, const std::string& name) const { return subscribe(std::move(callback), internString(name)); }
+      StringId subscribe(Function&& callback, StringId name) const
+      {
+        Event* e = const_cast<Event*>(this);
+        e->m_callbacks[name] = std::move(callback);
+
         return name;
       }
  

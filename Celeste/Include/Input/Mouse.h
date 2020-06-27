@@ -40,8 +40,6 @@ namespace Celeste::Input
       CelesteDllExport void setCursor(const std::string& imageRelativePath, const glm::vec2& cursorHotSpot = glm::vec2());
       CelesteDllExport void setCursor(const Path& imageRelativePath, const glm::vec2& cursorHotSpot = glm::vec2());
 
-      inline glm::vec2 getScreenPosition() const { return glm::vec2(m_transform.getWorldTranslation()); }
-
     protected:
       // Latest holds the buttons we wish to be registered as done when we call handle input
       // Similar to a buffered message waiting to be processed

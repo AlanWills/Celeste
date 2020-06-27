@@ -8,18 +8,19 @@ namespace Celeste::Layout
   //------------------------------------------------------------------------------------------------
   LayoutSystem::LayoutSystem(const OpenGLWindow& glWindow) :
     m_glWindow(glWindow),
-    m_viewportChangedHandle(glWindow.getViewportDimensionsChangedEvent().subscribe(
-      [this](const glm::vec2& newResolution) 
+    m_resolutionChangedHandle(glWindow.getResolutionChangedEvent().subscribe(
+      [this](const glm::vec2& clientSafeArea)
       { 
-        rescaleAll(newResolution); 
+        rescaleAll(clientSafeArea);
       }))
+    , m_lastAppliedContentArea(glWindow.getContentArea())
   {
   }
 
   //------------------------------------------------------------------------------------------------
   LayoutSystem::~LayoutSystem()
   {
-    m_glWindow.getViewportDimensionsChangedEvent().unsubscribe(m_viewportChangedHandle);
+    m_glWindow.getResolutionChangedEvent().unsubscribe(m_resolutionChangedHandle);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -29,19 +30,19 @@ namespace Celeste::Layout
     {
       if (resolutionScaler.needsRescale())
       {
-        resolutionScaler.rescale(m_lastAppliedResolution, m_glWindow.getViewportDimensions());
+        resolutionScaler.rescale(m_lastAppliedContentArea, m_glWindow.getContentArea());
       }
     }
   }
 
   //------------------------------------------------------------------------------------------------
-  void LayoutSystem::rescaleAll(const glm::vec2& newResolution)
+  void LayoutSystem::rescaleAll(const glm::vec2& newContentArea)
   {
     for (auto& resolutionScaler : ResolutionScaler::m_allocator)
     {
-      resolutionScaler.rescale(m_lastAppliedResolution, newResolution);
+      resolutionScaler.rescale(m_lastAppliedContentArea, newContentArea);
     }
 
-    m_lastAppliedResolution = newResolution;
+    m_lastAppliedContentArea = newContentArea;
   }
 }

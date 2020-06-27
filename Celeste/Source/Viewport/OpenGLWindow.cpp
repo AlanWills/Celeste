@@ -13,9 +13,10 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   OpenGLWindow::OpenGLWindow(WindowMode windowMode, const std::string& windowTitle) :
     m_window(nullptr),
-    m_viewportDimensions(0),
+    m_resolution(0),
+    m_contentArea(0),
     m_windowMode(windowMode),
-    m_viewportDimensionsChanged()
+    m_resolutionChanged()
   {
     if (!GL::glfw_initialize())
     {
@@ -44,14 +45,14 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   OpenGLWindow::OpenGLWindow(
-    int screenWidth, 
-    int screenHeight,
+    int resolutionX, 
+    int resolutionY,
     WindowMode windowMode,
     const std::string& windowTitle) :
     m_window(nullptr),
-    m_viewportDimensions(0),
+    m_resolution(0),
     m_windowMode(windowMode),
-    m_viewportDimensionsChanged()
+    m_resolutionChanged()
   {
     if (!GL::glfw_initialize())
     {
@@ -60,7 +61,7 @@ namespace Celeste
       return;
     }
 
-    initWindow(screenWidth, screenHeight, windowTitle);
+    initWindow(resolutionX, resolutionY, windowTitle);
 
     // It's important that GLEW is initialized after the window is created (I have literally no fucking idea why, 
     // but it's been a pain to figure this out, so just trust me)
@@ -82,29 +83,38 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void OpenGLWindow::initWindow(int targetWidth, int targetHeight, const std::string& title)
+  void OpenGLWindow::initWindow(int targetResolutionX, int targetResolutionY, const std::string& title)
   {
-    m_window = glfwCreateWindow(targetWidth, targetHeight, title.c_str(), nullptr, nullptr);
+    m_window = glfwCreateWindow(targetResolutionX, targetResolutionY, title.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(m_window);
 
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = monitor != nullptr ? glfwGetVideoMode(monitor) : nullptr;
     int refreshRate = mode != nullptr ? mode->refreshRate : GLFW_DONT_CARE;
+    int monitorWidth = mode != nullptr ? mode->width : targetResolutionX;
+    int monitorHeight = mode != nullptr ? mode->height : targetResolutionY;
 
     if (m_windowMode == WindowMode::kFullScreen)
     {
       // Just use preset viewport dimensions if in full screen
-      glfwSetWindowMonitor(m_window, monitor, 0, 0, targetWidth, targetHeight, refreshRate);
+      glfwSetWindowMonitor(m_window, monitor, 0, 0, targetResolutionX, targetResolutionY, refreshRate);
     }
     else
     {
       int left = 0, right = 0, top = 0, bottom = 0;
       glfwGetWindowFrameSize(m_window, &left, &top, &right, &bottom);
-
-      glfwSetWindowPos(m_window, 0, top);
+      glfwSetWindowPos(m_window, (monitorWidth - targetResolutionX) / 2, top + (monitorHeight - targetResolutionY) / 2);
     }
 
-    setViewportDimensions(glm::vec2(targetWidth, targetHeight));
+    glfwSetWindowSize(m_window, targetResolutionX, targetResolutionY);
+
+    // Update gl state so to reflect the new content area dimensions
+    int width = 0, height = 0;
+    glfwGetFramebufferSize(m_window, &width, &height);
+    glViewport(0, 0, width, height);
+
+    m_resolution = glm::vec2(targetResolutionX, targetResolutionY);
+    m_contentArea = glm::vec2(width, height);
 
     // OpenGL configuration
     //enableViewportFlag(GL_CULL_FACE);
@@ -145,26 +155,26 @@ namespace Celeste
     const GLFWvidmode* mode = monitor != nullptr ? glfwGetVideoMode(monitor) : nullptr;
 
     int refreshRate = mode ? mode->refreshRate : GLFW_DONT_CARE;
-    int viewportDimensionsX = static_cast<int>(m_viewportDimensions.x);
-    int viewportDimensionsY = static_cast<int>(m_viewportDimensions.y);
+    int resolutionX = static_cast<int>(m_resolution.x);
+    int resolutionY = static_cast<int>(m_resolution.y);
 
     int left = 0, right = 0, top = 0, bottom = 0;
     glfwGetWindowFrameSize(m_window, &left, &top, &right, &bottom);
 
     if (windowMode == WindowMode::kFullScreen)
     {
-      glfwSetWindowMonitor(m_window, monitor, 0, 0, viewportDimensionsX, viewportDimensionsY, refreshRate);
+      glfwSetWindowMonitor(m_window, monitor, 0, 0, resolutionX, resolutionY, refreshRate);
     }
     else
     {
-      glfwSetWindowMonitor(m_window, nullptr, left, top, viewportDimensionsX, viewportDimensionsY, refreshRate);
+      glfwSetWindowMonitor(m_window, nullptr, left, top, resolutionX, resolutionY, refreshRate);
     }
 
-    glViewport(0, 0, viewportDimensionsX, viewportDimensionsY);
+    glViewport(0, 0, resolutionX, resolutionY);
     glCheckError();
 
     m_windowMode = windowMode;
-    m_viewportDimensionsChanged.invoke(m_viewportDimensions);
+    m_resolutionChanged.invoke(m_resolution);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -191,7 +201,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void OpenGLWindow::setViewportDimensions(const glm::vec2& viewportDimensions)
+  void OpenGLWindow::setResolution(const glm::vec2& resolution)
   {
     if (!m_window)
     {
@@ -199,22 +209,39 @@ namespace Celeste
       return;
     }
 
-    ASSERT(viewportDimensions.x > 0);
-    ASSERT(viewportDimensions.y > 0);
+    ASSERT(resolution.x > 0);
+    ASSERT(resolution.y > 0);
 
-    if (m_viewportDimensions != viewportDimensions)
+    if (m_resolution != resolution)
     {
       // Only update if we are setting to different dimensions
-      glfwSetWindowSize(m_window, static_cast<int>(viewportDimensions.x), static_cast<int>(viewportDimensions.y));
+      glfwSetWindowSize(m_window, static_cast<int>(resolution.x), static_cast<int>(resolution.y));
 
-      // Update gl state so to reflect the new dimensions
+      // Update gl state so to reflect the new content area dimensions
       int width = 0, height = 0;
       glfwGetFramebufferSize(m_window, &width, &height);
       glViewport(0, 0, width, height);
 
-      m_viewportDimensions.x = static_cast<float>(width);
-      m_viewportDimensions.y = static_cast<float>(height);
-      m_viewportDimensionsChanged.invoke(m_viewportDimensions);
+      if (m_windowMode == WindowMode::kWindowed)
+      {
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = monitor != nullptr ? glfwGetVideoMode(monitor) : nullptr;
+        int monitorWidth = mode != nullptr ? mode->width : static_cast<int>(resolution.x);
+        int monitorHeight = mode != nullptr ? mode->height : static_cast<int>(resolution.y);
+
+        int left = 0, right = 0, top = 0, bottom = 0;
+        glfwGetWindowFrameSize(m_window, &left, &top, &right, &bottom);
+        glfwSetWindowPos(
+          m_window, 
+          (monitorWidth - static_cast<int>(resolution.x)) / 2, 
+          top + (monitorHeight - static_cast<int>(resolution.y)) / 2);
+      }
+
+      m_resolution = resolution;
+      m_contentArea = glm::vec2(width, height);
+
+      // Pass the content area to the event
+      m_resolutionChanged.invoke(m_contentArea);
     }
   }
 }

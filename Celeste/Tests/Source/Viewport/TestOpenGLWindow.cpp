@@ -35,12 +35,10 @@ namespace TestCeleste
       Assert::IsNotNull(window.getGLWindow());
       Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
 
-      int left = 0, top = 0, right = 0, bottom = 0;
-      glfwGetWindowFrameSize(window.getGLWindow(), &left, &top, &right, &bottom);
       const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
-      glm::vec2 viewportDimensions(mode->width, mode->height - (bottom + top) / 2);
-      Assert::AreEqual(viewportDimensions, window.getViewportDimensions());
+      glm::vec2 viewportDimensions(mode->width, mode->height);
+      Assert::AreEqual(viewportDimensions, window.getResolution());
     }
   }
 
@@ -58,18 +56,8 @@ namespace TestCeleste
 
       Assert::IsNotNull(window.getGLWindow());
       Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
-      Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());
+      Assert::AreEqual(glm::vec2(800, 600), window.getResolution());
     }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(OpenGLWindow_FullScreen_PassingResolutionToConstructor_DoesNotAccountForWindowFrameSize)
-  {
-    /*OpenGLWindow window(800, 600, OpenGLWindow::WindowMode::kFullScreen);
-
-    Assert::IsNotNull(window.getGLWindow());
-    Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kFullScreen);
-    Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());*/
   }
 
   //------------------------------------------------------------------------------------------------
@@ -104,22 +92,22 @@ namespace TestCeleste
     glfwGetWindowFrameSize(window.getGLWindow(), &left, &top, &right, &bottom);
 
     Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
-    Assert::AreEqual(glm::vec2(800 - (left + right), 600 - (bottom + top)), window.getViewportDimensions());
+    Assert::AreEqual(glm::vec2(800 - (left + right), 600 - (bottom + top)), window.getResolution());
 
     window.setWindowMode(OpenGLWindow::WindowMode::kFullScreen);
 
     Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kFullScreen);
-    Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());*/
+    Assert::AreEqual(glm::vec2(800, 600), window.getResolution());*/
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(OpenGLWindow_SetWindowMode_kWindowed_TokFullScreen_CallsViewportDimensionsChangedEvent)
+  TEST_METHOD(OpenGLWindow_SetWindowMode_kWindowed_TokFullScreen_CallsResolutionChangedEvent)
   {
     /*OpenGLWindow window(800, 600, OpenGLWindow::WindowMode::kWindowed);
 
     glm::vec2 dims;
     auto f = [&dims](const glm::vec2& newDimensions) -> void { dims = newDimensions; };
-    window.getViewportDimensionsChangedEvent().subscribe(f);
+    window.getResolutionChangedEvent().subscribe(f);
 
     int left = 0, top = 0, right = 0, bottom = 0;
     glfwGetWindowFrameSize(window.getGLWindow(), &left, &top, &right, &bottom);
@@ -143,17 +131,17 @@ namespace TestCeleste
       glfwGetWindowFrameSize(window.getGLWindow(), &left, &top, &right, &bottom);
 
       Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
-      Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());
+      Assert::AreEqual(glm::vec2(800, 600), window.getResolution());
 
       window.setWindowMode(OpenGLWindow::WindowMode::kWindowed);
 
       Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
-      Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());
+      Assert::AreEqual(glm::vec2(800, 600), window.getResolution());
     }
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(OpenGLWindow_SetWindowMode_kWindowed_TokWindowed_DoesNotCallViewportDimensionsChangedEvent)
+  TEST_METHOD(OpenGLWindow_SetWindowMode_kWindowed_TokWindowed_DoesNotCallResolutionChangedEvent)
   {
     if (GL::isInitialized() && glfwGetPrimaryMonitor() != nullptr)
     {
@@ -161,7 +149,7 @@ namespace TestCeleste
 
       bool called = false;
       auto f = [&called](const glm::vec2& /*newDimensions*/) -> void { called = true; };
-      window.getViewportDimensionsChangedEvent().subscribe(f);
+      window.getResolutionChangedEvent().subscribe(f);
 
       Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
 
@@ -178,7 +166,7 @@ namespace TestCeleste
     /*OpenGLWindow window(800, 600, OpenGLWindow::WindowMode::kFullScreen);
 
     Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kFullScreen);
-    Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());
+    Assert::AreEqual(glm::vec2(800, 600), window.getResolution());
 
     window.setWindowMode(OpenGLWindow::WindowMode::kWindowed);
 
@@ -186,17 +174,17 @@ namespace TestCeleste
     glfwGetWindowFrameSize(window.getGLWindow(), &left, &top, &right, &bottom);
 
     Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
-    Assert::AreEqual(glm::vec2(800 - (left + right), 600 - (bottom + top)), window.getViewportDimensions());*/
+    Assert::AreEqual(glm::vec2(800 - (left + right), 600 - (bottom + top)), window.getResolution());*/
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(OpenGLWindow_SetWindowMode_kFullScreen_TokWindowed_CallsViewportDimensionsChangedEvent)
+  TEST_METHOD(OpenGLWindow_SetWindowMode_kFullScreen_TokWindowed_CallsResolutionChangedEvent)
   {
     /*OpenGLWindow window(800, 600, OpenGLWindow::WindowMode::kFullScreen);
 
     glm::vec2 dims;
     auto f = [&dims](const glm::vec2& newDimensions) -> void { dims = newDimensions; };
-    window.getViewportDimensionsChangedEvent().subscribe(f);
+    window.getResolutionChangedEvent().subscribe(f);
       
     Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kFullScreen);
 
@@ -206,7 +194,7 @@ namespace TestCeleste
     glfwGetWindowFrameSize(window.getGLWindow(), &left, &top, &right, &bottom);
 
     Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed);
-    Assert::AreEqual(glm::vec2(800 - (left + right), 600 - (bottom + top)), window.getViewportDimensions());*/
+    Assert::AreEqual(glm::vec2(800 - (left + right), 600 - (bottom + top)), window.getResolution());*/
   }
 
   //------------------------------------------------------------------------------------------------
@@ -215,22 +203,22 @@ namespace TestCeleste
     /*OpenGLWindow window(800, 600, OpenGLWindow::WindowMode::kFullScreen);
 
     Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kFullScreen);
-    Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());
+    Assert::AreEqual(glm::vec2(800, 600), window.getResolution());
 
     window.setWindowMode(OpenGLWindow::WindowMode::kFullScreen);
 
     Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kFullScreen);
-    Assert::AreEqual(glm::vec2(800, 600), window.getViewportDimensions());*/
+    Assert::AreEqual(glm::vec2(800, 600), window.getResolution());*/
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(OpenGLWindow_SetWindowMode_kFullScreen_TokFullScreen_DoesNotCallViewportDimensionsChangedEvent)
+  TEST_METHOD(OpenGLWindow_SetWindowMode_kFullScreen_TokFullScreen_DoesNotCallResolutionChangedEvent)
   {
     /*OpenGLWindow window(800, 600, OpenGLWindow::WindowMode::kFullScreen);
 
     bool called = false;
     auto f = [&called](const glm::vec2& newDimensions) -> void { called = true; };
-    window.getViewportDimensionsChangedEvent().subscribe(f);
+    window.getResolutionChangedEvent().subscribe(f);
 
     Assert::IsTrue(window.getWindowMode() == OpenGLWindow::WindowMode::kFullScreen);
 
@@ -242,66 +230,66 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Set Viewport Dimensions Tests
+#pragma region Set Resolution Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(OpenGLWindow_SetViewportDimensions_UpdatesViewportDimensionsCorrectly)
+  TEST_METHOD(OpenGLWindow_SetResolution_UpdatesResolutionCorrectly)
   {
     if (GL::isInitialized() && glfwGetPrimaryMonitor() != nullptr)
     {
       OpenGLWindow window;
-      window.setViewportDimensions(100, 100);
+      window.setResolution(100, 100);
 
-      Assert::AreEqual(glm::vec2(100, 100), window.getViewportDimensions());
+      Assert::AreEqual(glm::vec2(100, 100), window.getResolution());
     }
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(OpenGLWindow_SetViewportDimensions_ToDifferentDimensions_CallsViewportDimensionsChangedEvent)
+  TEST_METHOD(OpenGLWindow_SetResolution_ToDifferentResolution_CallsResolutionChangedEvent)
   {
     if (GL::isInitialized() && glfwGetPrimaryMonitor() != nullptr)
     {
       OpenGLWindow window;
-      window.setViewportDimensions(100, 100);
+      window.setResolution(100, 100);
 
       bool called = false;
       auto f = [&called](const glm::vec2&) -> void { called = true; };
-      window.getViewportDimensionsChangedEvent().subscribe(f);
-      window.setViewportDimensions(glm::vec2(200, 100));
+      window.getResolutionChangedEvent().subscribe(f);
+      window.setResolution(glm::vec2(200, 100));
 
       Assert::IsTrue(called);
     }
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(OpenGLWindow_SetViewportDimensions_ToDifferentDimensions_PassesViewportDimensionsToEvent)
+  TEST_METHOD(OpenGLWindow_SetResolution_ToDifferentResolution_PassesContentAreaToEvent)
   {
     if (GL::isInitialized() && glfwGetPrimaryMonitor() != nullptr)
     {
       OpenGLWindow window;
-      window.setViewportDimensions(100, 100);
+      window.setResolution(100, 100);
 
-      glm::vec2 newDims;
-      auto f = [&newDims](const glm::vec2 & newDimensions) -> void { newDims = newDimensions; };
-      window.getViewportDimensionsChangedEvent().subscribe(f);
-      window.setViewportDimensions(glm::vec2(200, 100));
+      glm::vec2 newDims = glm::vec2();
+      auto f = [&newDims](const glm::vec2& newDimensions) -> void { newDims = newDimensions; };
+      window.getResolutionChangedEvent().subscribe(f);
+      window.setResolution(glm::vec2(200, 100));
 
-      Assert::AreEqual(glm::vec2(200, 100), newDims);
+      Assert::AreEqual(window.getContentArea(), newDims);
     }
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(OpenGLWindow_SetViewportDimensions_ToSameDimensions_DoesNotCallViewportDimensionsChangedEvent)
+  TEST_METHOD(OpenGLWindow_SetResolution_ToSameResolution_DoesNotCallResolutionChangedEvent)
   {
     if (GL::isInitialized() && glfwGetPrimaryMonitor() != nullptr)
     {
       OpenGLWindow window;
-      window.setViewportDimensions(100, 100);
+      window.setResolution(100, 100);
 
       bool called = false;
       auto f = [&called](const glm::vec2&) -> void { called = true; };
-      window.getViewportDimensionsChangedEvent().subscribe(f);
-      window.setViewportDimensions(glm::vec2(100, 100));
+      window.getResolutionChangedEvent().subscribe(f);
+      window.setResolution(glm::vec2(100, 100));
 
       Assert::IsFalse(called);
     }

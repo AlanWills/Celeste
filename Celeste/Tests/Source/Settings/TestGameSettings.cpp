@@ -33,7 +33,7 @@ namespace TestCeleste::Settings
   {
     OpenGLWindow& window = getWindow();
 
-    originalResolution = window.getViewportDimensions();
+    originalResolution = window.getResolution();
     originalWindowed = window.getWindowMode() == OpenGLWindow::WindowMode::kWindowed;
 
     Audio::AudioManager& audioSourceManager = Audio::getAudioManager();
@@ -60,7 +60,7 @@ namespace TestCeleste::Settings
   {
     OpenGLWindow& window = getWindow();
 
-    window.setViewportDimensions(originalResolution);
+    window.setResolution(originalResolution);
     window.setWindowMode(originalWindowed ? OpenGLWindow::WindowMode::kWindowed : OpenGLWindow::WindowMode::kFullScreen);
   }
 
@@ -267,11 +267,11 @@ namespace TestCeleste::Settings
 
       OpenGLWindow& window = getWindow();
 
-      Assert::AreEqual(originalResolution, window.getViewportDimensions());
+      Assert::AreEqual(originalResolution, window.getResolution());
 
       settings->apply();
 
-      Assert::AreEqual(originalResolution + glm::vec2(100, 200), window.getViewportDimensions());
+      Assert::AreEqual(originalResolution + glm::vec2(100, 200), window.getResolution());
     }
   }
 

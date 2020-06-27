@@ -11,7 +11,7 @@ using TimeNotifierSystem = Celeste::Time::TimeNotifierSystem;
 using namespace Celeste;
 
 
-namespace TestCeleste::LuaTimeNotifierSystemScriptCommands
+namespace TestCeleste::Lua::TimeNotifierSystemScriptCommands
 {
   CELESTE_TEST_CLASS(TestTimeNotifierSystemScriptCommands)
 

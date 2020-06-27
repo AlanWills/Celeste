@@ -11,7 +11,7 @@ using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;
 
 
-namespace TestCeleste::LuaScriptCommands
+namespace TestCeleste::Lua::ScriptCommands
 {
   CELESTE_TEST_CLASS(TestTimeScriptCommands)
 
