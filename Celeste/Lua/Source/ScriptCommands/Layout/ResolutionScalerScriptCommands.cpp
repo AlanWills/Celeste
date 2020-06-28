@@ -7,6 +7,12 @@
 using ResolutionScaler = Celeste::Layout::ResolutionScaler;
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<ResolutionScaler> : std::false_type {};
+}
+
 namespace Celeste::Lua::Layout::ResolutionScalerScriptCommands
 {
   //------------------------------------------------------------------------------------------------

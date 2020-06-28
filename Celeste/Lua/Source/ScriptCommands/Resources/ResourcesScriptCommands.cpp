@@ -13,6 +13,15 @@
 #include "Resources/ResourceManager.h"
 
 
+namespace sol
+{
+  template <>
+  struct is_to_stringable<Celeste::Resources::Sound> : std::false_type {};
+
+  template <>
+  struct is_to_stringable<Celeste::Resources::Texture2D> : std::false_type {};
+}
+
 namespace Celeste::Lua::Resources::ScriptCommands
 {
   namespace Internals
