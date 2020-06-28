@@ -29,22 +29,28 @@ namespace Celeste::Layout
     ASSERT(m_targetResolution.x != 0);
     ASSERT(m_targetResolution.y != 0);
 
+    Transform* transform = getGameObject().getTransform();
+
     if (oldResolution != newResolution)
     {
       ASSERT(oldResolution.x != 0);
       ASSERT(oldResolution.y != 0);
 
       // Undo old resolution scaling effects
-      getGameObject().getTransform()->scale(m_targetResolution / oldResolution);
-      getGameObject().getTransform()->translate((m_targetResolution - oldResolution) * 0.5f);
+      transform->scale(m_targetResolution / oldResolution);
+
+      // Set translation back to original position
+      transform->setTranslation(glm::vec2(transform->getTranslation()) * m_targetResolution / oldResolution);
     }
 
     ASSERT(newResolution.x != 0);
     ASSERT(newResolution.y != 0);
 
     // Apply new resolution scaling effects
-    getGameObject().getTransform()->scale(newResolution / m_targetResolution);
-    getGameObject().getTransform()->translate((newResolution - m_targetResolution) * 0.5f);
+    transform->scale(newResolution / m_targetResolution);
+
+    // Shift position to account for scaling + current translation
+    transform->setTranslation(glm::vec2(transform->getTranslation()) * newResolution / m_targetResolution);
 
     m_needsRescale = false;
   }

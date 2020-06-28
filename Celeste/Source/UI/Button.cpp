@@ -104,7 +104,7 @@ namespace Celeste
     {
       if (m_state == ButtonState::kClicked)
       {
-        // Update loop will sort out proper texture
+        m_spriteRenderer->setTexture(m_defaultTexture);
         m_state = ButtonState::kIdle;
       }
     }
