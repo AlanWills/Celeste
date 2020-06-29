@@ -134,8 +134,8 @@ namespace Celeste::Lua
   }
 
   //------------------------------------------------------------------------------------------------
-  template <typename TEvent, typename ...ArgTypes>
-  void subscribeToEvent(
+  template <class TEvent, typename ...ArgTypes>
+  StringId subscribeToEvent(
     const TEvent& e,
     sol::protected_function function,
     sol::object extraArgs)
@@ -143,10 +143,10 @@ namespace Celeste::Lua
     if (!function.valid())
     {
       ASSERT_FAIL();
-      return;
+      return StringId();
     }
 
-    e.subscribe([function, extraArgs](ArgTypes... args) -> void
+    return e.subscribe([function, extraArgs](ArgTypes... args) -> void
       {
         ASSERT(function.valid());
         auto result = function.call(args..., extraArgs);
