@@ -149,6 +149,14 @@ namespace Celeste
 
   //------------------------------------------------------------------------------------------------
   template<>
+  bool deserialize<Resources::Sound*>(const std::string& text, Resources::Sound*& output)
+  {
+    output = Resources::getResourceManager().load<Resources::Sound>(text);
+    return true;
+  }
+
+  //------------------------------------------------------------------------------------------------
+  template<>
   bool deserialize(const std::string& /*text*/, std::vector<Resources::Texture2D>& /*output*/)
   {
 	  return true;
