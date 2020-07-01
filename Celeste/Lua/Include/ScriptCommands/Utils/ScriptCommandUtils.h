@@ -81,16 +81,23 @@ namespace Celeste::Lua
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  std::unique_ptr<T> loadScriptableObject(const std::string& path)
+  std::unique_ptr<T> createScriptableObject(const std::string& name)
   {
-    return ScriptableObject::load<T>(path);
+    return ScriptableObject::create<T>(name);
   }
 
   //------------------------------------------------------------------------------------------------
   template <typename T>
-  std::unique_ptr<T> createScriptableObject(const std::string& name)
+  void destroyScriptableObject(std::unique_ptr<T>& scriptableObject)
   {
-    return ScriptableObject::create<T>(name);
+    scriptableObject.reset();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  template <typename T>
+  std::unique_ptr<T> loadScriptableObject(const std::string& path)
+  {
+    return ScriptableObject::load<T>(path);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -127,6 +134,7 @@ namespace Celeste::Lua
       state.new_usertype<Class>(
         name,
         "create", sol::factories(&createScriptableObject<Class>),
+        "destroy", &destroyScriptableObject<Class>,
         "load", sol::factories(&loadScriptableObject<Class>),
         "save", &saveScriptableObject<Class>,
         std::forward<Args>(args)...);

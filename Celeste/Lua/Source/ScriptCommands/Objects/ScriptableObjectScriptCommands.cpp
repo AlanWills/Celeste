@@ -16,7 +16,7 @@ namespace Celeste::Lua::ScriptableObjectScriptCommands
     }
 
     //------------------------------------------------------------------------------------------------
-    void deleteScriptableObject(std::unique_ptr<ScriptableObject>& scriptableObject)
+    void destroyScriptableObject(std::unique_ptr<ScriptableObject>& scriptableObject)
     {
       scriptableObject.release();
     }
@@ -28,7 +28,7 @@ namespace Celeste::Lua::ScriptableObjectScriptCommands
     state.new_usertype<ScriptableObject>(
       "ScriptableObject",
       "load", sol::factories(&Internals::loadScriptableObject),
-      "delete", &Internals::deleteScriptableObject,
+      "destroy", &Internals::destroyScriptableObject,
       "getName", &ScriptableObject::getName);
 
     Settings::GameSettingsScriptCommands::initialize(state);
