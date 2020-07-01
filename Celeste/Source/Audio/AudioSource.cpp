@@ -53,11 +53,13 @@ namespace Celeste::Audio
   //------------------------------------------------------------------------------------------------
   void AudioSource::setSound(observer_ptr<Sound> sound)
   {
-    if (sound != nullptr)
+    if (sound == nullptr)
     {
-      m_sound = sound;
-      alSourcei(m_sourceHandle, AL_BUFFER, m_sound->getAudioHandle());
+      stop();
     }
+
+    m_sound = sound;
+    alSourcei(m_sourceHandle, AL_BUFFER, sound != nullptr ? m_sound->getAudioHandle() : ALint(0));
   }
 
   //------------------------------------------------------------------------------------------------

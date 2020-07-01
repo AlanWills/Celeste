@@ -18,7 +18,7 @@ namespace Celeste::Lua::ScriptableObjectScriptCommands
     //------------------------------------------------------------------------------------------------
     void destroyScriptableObject(std::unique_ptr<ScriptableObject>& scriptableObject)
     {
-      scriptableObject.release();
+      scriptableObject.reset();
     }
   }
 

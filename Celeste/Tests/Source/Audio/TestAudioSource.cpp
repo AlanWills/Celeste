@@ -150,12 +150,13 @@ namespace TestCeleste
 #pragma region Set Sound Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioSource_SetSound_InputtingNullptr_DoesNotUpdateSourceBuffer)
+    TEST_METHOD(AudioSource_SetSound_InputtingNullptr_SetsSourceBufferToZero)
     {
       GameObject gameObject;
       MockAudioSource audioSource(gameObject);
+      audioSource.setSound(getResourceManager().load<Sound>(TestResources::getButtonHoverWavFullPath()));
 
-      Assert::AreEqual(0, audioSource.getSourceBufferHandle());
+      Assert::AreNotEqual(0, audioSource.getSourceBufferHandle());
 
       audioSource.setSound(nullptr);
 
@@ -163,16 +164,47 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(AudioSource_SetSound_WithNonExistentSoundPath_DoesNotUpdateSourceBuffer)
+    TEST_METHOD(AudioSource_SetSound_InputtingNullptr_PausesAudio)
     {
       GameObject gameObject;
       MockAudioSource audioSource(gameObject);
+      audioSource.setSound(getResourceManager().load<Sound>(TestResources::getButtonHoverWavFullPath()));
+      audioSource.play();
 
-      Assert::AreEqual(0, audioSource.getSourceBufferHandle());
+      Assert::IsTrue(audioSource.isPlaying());
+
+      audioSource.setSound(nullptr);
+
+      Assert::IsFalse(audioSource.isPlaying());
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(AudioSource_SetSound_WithNonExistentSoundPath_SetsSourceBufferToZero)
+    {
+      GameObject gameObject;
+      MockAudioSource audioSource(gameObject);
+      audioSource.setSound(getResourceManager().load<Sound>(TestResources::getButtonHoverWavFullPath()));
+
+      Assert::AreNotEqual(0, audioSource.getSourceBufferHandle());
 
       audioSource.setSound("ThisAudioFileShouldn'tExist.wav");
 
       Assert::AreEqual(0, audioSource.getSourceBufferHandle());
+    }
+
+    //------------------------------------------------------------------------------------------------
+    TEST_METHOD(AudioSource_SetSound_InputtingNonExistentSoundPath_PausesAudio)
+    {
+      GameObject gameObject;
+      MockAudioSource audioSource(gameObject);
+      audioSource.setSound(getResourceManager().load<Sound>(TestResources::getButtonHoverWavFullPath()));
+      audioSource.play();
+
+      Assert::IsTrue(audioSource.isPlaying());
+
+      audioSource.setSound("ThisAudioFileShouldn'tExist.wav");
+  
+      Assert::IsFalse(audioSource.isPlaying());
     }
 
 #pragma endregion
