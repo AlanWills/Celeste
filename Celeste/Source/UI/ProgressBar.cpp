@@ -15,16 +15,7 @@ namespace Celeste::UI
     m_min(0),
     m_max(100)
   {
-#if _DEBUG
-    if (m_spriteRenderer == nullptr)
-    {
-      ASSERT_FAIL();
-      return;
-    }
-#endif
-
-    m_spriteRenderer->getScissorRectangle().setDimensions(0, m_spriteRenderer->getDimensions().y);
-    m_spriteRenderer->getScissorRectangle().setCentre(-m_spriteRenderer->getDimensions().x * 0.5f, 0);
+    setProgress(0);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -46,10 +37,19 @@ namespace Celeste::UI
   {
     m_progress = glm::clamp(progress, m_min, m_max);
 
-    if (m_spriteRenderer != nullptr)
+#if _DEBUG
+    if (m_spriteRenderer == nullptr)
     {
-      float newWidth = (m_max > m_min) ? (m_spriteRenderer->getDimensions().x * (m_progress - m_min)) / (m_max - m_min) : 0;
-      m_spriteRenderer->getScissorRectangle().stretchWidth(newWidth, UI::HorizontalAlignment::kLeft);
+      ASSERT_FAIL();
+      return;
     }
+#endif
+
+    auto scaledDimensions = m_spriteRenderer->getDimensions() * glm::vec2(m_spriteRenderer->getTransform()->getWorldScale());
+    m_spriteRenderer->getScissorRectangle().setDimensions(0, scaledDimensions.y);
+    m_spriteRenderer->getScissorRectangle().setCentre(-scaledDimensions.x * 0.5f, 0);
+
+    float newWidth = (m_max > m_min) ? (scaledDimensions.x * (m_progress - m_min)) / (m_max - m_min) : 0;
+    m_spriteRenderer->getScissorRectangle().stretchWidth(newWidth, UI::HorizontalAlignment::kLeft);
   }
 }

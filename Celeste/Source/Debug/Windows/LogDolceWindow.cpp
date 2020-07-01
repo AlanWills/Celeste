@@ -148,6 +148,8 @@ namespace Celeste::Debug
         renderLogLine(logLine);
       }
     }
+    
+    ImGui::SetScrollHere(1);
   }
 
   //------------------------------------------------------------------------------------------------

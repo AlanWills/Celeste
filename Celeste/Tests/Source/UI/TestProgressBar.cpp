@@ -253,6 +253,30 @@ namespace TestCeleste
     Assert::AreEqual(glm::vec2(texture->getDimensions().x * 0.3f, texture->getDimensions().y), renderer->getScissorRectangle().getDimensions());
   }
 
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ProgressBar_SetProgress_RespectsWorldScaling)
+  {
+    GameObject gameObject;
+    gameObject.getTransform()->setWorldScale(2, 4);
+    observer_ptr<SpriteRenderer> renderer = gameObject.addComponent<SpriteRenderer>();
+    observer_ptr<Texture2D> texture = getResourceManager().load<Texture2D>(TestResources::getBlockPngRelativePath());
+    renderer->setTexture(texture);
+    observer_ptr<ProgressBar> progressBar = gameObject.addComponent<ProgressBar>();
+
+    progressBar->setMin(0);
+    progressBar->setMax(100);
+
+    Assert::AreEqual(glm::vec2(-texture->getDimensions().x, 0), renderer->getScissorRectangle().getCentre());
+    Assert::AreEqual(glm::vec2(0, texture->getDimensions().y * 4), renderer->getScissorRectangle().getDimensions());
+
+    progressBar->setProgress(25);
+
+    Assert::AreEqual(25.0f, progressBar->getProgress());
+    Assert::AreEqual(glm::vec2(-texture->getDimensions().x * 0.75f, 0), renderer->getScissorRectangle().getCentre());
+    Assert::AreEqual(glm::vec2(texture->getDimensions().x * 0.5f, texture->getDimensions().y * 4), renderer->getScissorRectangle().getDimensions());
+  }
+
 #pragma endregion
+
   };
 }

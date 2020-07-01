@@ -27,15 +27,15 @@ namespace Celeste::Rendering
     }
 
     const Maths::Rectangle& rectangle = getScissorRectangle();
-    const glm::vec2& getDimensions = rectangle.getDimensions();
-    if (getDimensions != glm::vec2())
+    const glm::vec2& dimensions = rectangle.getDimensions();
+    if (dimensions != glm::vec2())
     {
       glEnable(GL_SCISSOR_TEST);
       glScissor(
         static_cast<GLint>(viewModelMatrix[3].x + rectangle.getLeft().x),
         static_cast<GLint>(viewModelMatrix[3].y + rectangle.getBottom().y),
-        static_cast<GLsizei>(getDimensions.x),
-        static_cast<GLsizei>(getDimensions.y));
+        static_cast<GLsizei>(dimensions.x),
+        static_cast<GLsizei>(dimensions.y));
     }
 
     shaderProgram.setVector4f("colour", getColour());

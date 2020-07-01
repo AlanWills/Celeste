@@ -31,7 +31,13 @@ namespace Celeste::Lua::Audio::AudioSourceScriptCommands
     }
 
     //------------------------------------------------------------------------------------------------
-    void setSound(AudioSource& audioSource, const std::string& soundStr)
+    void setSound_PtrOverload(AudioSource& audioSource, Resources::Sound* sound)
+    {
+      audioSource.setSound(sound);
+    }
+
+    //------------------------------------------------------------------------------------------------
+    void setSound_StringOverload(AudioSource& audioSource, const std::string& soundStr)
     {
       audioSource.setSound(soundStr);
     }
@@ -60,7 +66,7 @@ namespace Celeste::Lua::Audio::AudioSourceScriptCommands
       AudioSource::type_name(),
       sol::base_classes, sol::bases<Component, Entity, Object>(),
       "getSound", &AudioSource::getSound,
-      "setSound", &Internals::setSound,
+      "setSound", sol::overload(&Internals::setSound_PtrOverload, &Internals::setSound_StringOverload),
       "getAudioType", &Internals::getAudioType,
       "setAudioType", &Internals::setAudioType,
       "getVolume", &AudioSource::getVolume,

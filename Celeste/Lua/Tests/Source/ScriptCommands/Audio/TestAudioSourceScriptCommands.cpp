@@ -4,7 +4,9 @@
 #include "ScriptCommands/Audio/AudioSourceScriptCommands.h"
 #include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
+#include "Resources/ResourceManager.h"
 #include "TestUtils/Assert/AssertCel.h"
+#include "TestResources/TestResources.h"
 
 #include "Mocks/Audio/MockAudioSource.h"
 
@@ -13,6 +15,7 @@ using AudioSource = Celeste::Audio::AudioSource;
 
 using namespace Celeste;
 using namespace Celeste::Audio;
+using namespace Celeste::Resources;
 
 
 namespace TestCeleste::Lua::Audio::AudioSourceScriptCommands
@@ -217,6 +220,53 @@ namespace TestCeleste::Lua::Audio::AudioSourceScriptCommands
 
     Assert::IsTrue(functionResult.valid());
     Assert::AreEqual("SFX", functionResult.get<std::string>().c_str());
+  }
+
+#pragma endregion
+
+#pragma region Set Sound Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(AudioSourceScriptCommands_SetSound_InputtingNullptr_SetsSoundToNullptr)
+  {
+    sol::state& state = LuaState::instance();
+
+    Celeste::Lua::Audio::AudioSourceScriptCommands::initialize(state);
+
+    GameObject gameObject;
+    AudioSource audioSource(gameObject);
+
+    auto sound = getResourceManager().load<Sound>(TestResources::getButtonHoverWavRelativePath());
+    audioSource.setSound(sound);
+
+    Assert::IsNotNull(audioSource.getSound());
+
+    Sound* soundNullptr = nullptr;
+    auto functionResult = state.globals()["AudioSource"]["setSound"].get<sol::protected_function>().call(audioSource, soundNullptr);
+
+    Assert::IsTrue(functionResult.valid());
+    Assert::IsNull(audioSource.getSound());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(AudioSourceScriptCommands_SetSound_InputtingNonNullptr_SetsSoundToCorrectPtr)
+  {
+    sol::state& state = LuaState::instance();
+
+    Celeste::Lua::Audio::AudioSourceScriptCommands::initialize(state);
+
+    GameObject gameObject;
+    AudioSource audioSource(gameObject);
+
+    auto sound = getResourceManager().load<Sound>(TestResources::getButtonHoverWavRelativePath());
+    audioSource.setSound(nullptr);
+
+    Assert::IsNull(audioSource.getSound());
+
+    auto functionResult = state.globals()["AudioSource"]["setSound"].get<sol::protected_function>().call(audioSource, sound);
+
+    Assert::IsTrue(functionResult.valid());
+    Assert::IsTrue(sound == audioSource.getSound());
   }
 
 #pragma endregion

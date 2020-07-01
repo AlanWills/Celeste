@@ -13,6 +13,7 @@ namespace Celeste
   namespace Resources
   {
     class Texture2D;
+    class Sound;
   }
 
   //------------------------------------------------------------------------------------------------
@@ -53,6 +54,10 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   template<>
   CelesteDllExport bool deserialize<Resources::Texture2D*>(const std::string& text, Resources::Texture2D*& output);
+
+  //------------------------------------------------------------------------------------------------
+  template<>
+  CelesteDllExport bool deserialize<Resources::Sound*>(const std::string& text, Resources::Sound*& output);
 
   //------------------------------------------------------------------------------------------------
   template <>

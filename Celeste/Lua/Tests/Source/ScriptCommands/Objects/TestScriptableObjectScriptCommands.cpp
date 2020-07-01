@@ -58,15 +58,15 @@ namespace TestCelesteLua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ScriptableObjectScriptCommands_Initialize_Adds_delete_ScriptCommand_ToScriptableObjectTable)
+  TEST_METHOD(ScriptableObjectScriptCommands_Initialize_Adds_destroy_ScriptCommand_ToScriptableObjectTable)
   {
     sol::state& state = LuaState::instance();
 
-    Assert::IsFalse(state.globals()["ScriptableObject"]["delete"].valid());
+    Assert::IsFalse(state.globals()["ScriptableObject"]["destroy"].valid());
 
     Celeste::Lua::ScriptableObjectScriptCommands::initialize(state);
 
-    Assert::IsTrue(state.globals()["ScriptableObject"]["delete"].valid());
+    Assert::IsTrue(state.globals()["ScriptableObject"]["destroy"].valid());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -206,31 +206,6 @@ namespace TestCelesteLua::ScriptCommands
 
     Assert::AreEqual("Valid", ptr->getName().c_str());
     Assert::AreEqual("34b0d489-8485-4391-b3b9-b3f062e90c4a", ptr->getGuid().str().c_str());
-  }
-
-#pragma endregion
-
-#pragma region Scriptable Object Delete Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ScriptableObjectScriptCommands_Delete_InputtingNullptr_DoesNothing)
-  {
-    MockScriptableObject* scriptableObject = nullptr;
-
-    Assert::IsNull(scriptableObject);
-
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::ScriptableObjectScriptCommands::initialize(state);
-    state["ScriptableObject"]["delete"].get<sol::protected_function>().call(scriptableObject);
-
-    Assert::IsNull(scriptableObject);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ScriptableObjectScriptCommands_Delete_InputtingNonNullptr_DeletesNullptr)
-  {
-    // Cannot test this situation - no way to know a pointer has been deleted
-    // We leave it to show it has been considered
   }
 
 #pragma endregion

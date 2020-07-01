@@ -52,6 +52,15 @@ namespace TestCeleste::Lua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ScriptCommandUtils_RegisterScriptableObjectUserType_AddsDestroy_ToScriptableObjectTypeTable)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::registerScriptableObjectUserType<MockScriptableObject>(state, "MockScriptableObject");
+
+    Assert::IsTrue(state[MockScriptableObject::type_name()]["destroy"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
   TEST_METHOD(ScriptCommandUtils_RegisterScriptableObjectUserType_AddsLoad_ToScriptableObjectTypeTable)
   {
     sol::state& state = LuaState::instance();
