@@ -36,6 +36,8 @@ namespace Celeste::UI
   private:
     using Inherited = Component;
 
+    Transform* getHandle();
+
     bool m_sliderClicked;
     float m_min;
     float m_max;

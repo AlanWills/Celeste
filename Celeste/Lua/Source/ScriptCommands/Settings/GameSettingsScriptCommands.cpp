@@ -37,6 +37,8 @@ namespace Celeste::Lua::Settings::GameSettingsScriptCommands
       "GameSettings",
       sol::base_classes, sol::bases<Celeste::ScriptableObject>(),
       "apply", &Internals::apply,
+      "isWindowed", &GameSettings::isWindowed,
+      "setWindowed", &GameSettings::setWindowed,
       "getResolution", &GameSettings::getResolution,
       "setResolution", &GameSettings::setResolution,
       "getMasterVolume", &GameSettings::getMasterVolume,

@@ -28,6 +28,7 @@ namespace Celeste::Rendering
 
     const Maths::Rectangle& rectangle = getScissorRectangle();
     const glm::vec2& dimensions = rectangle.getDimensions();
+
     if (dimensions != glm::vec2())
     {
       glEnable(GL_SCISSOR_TEST);

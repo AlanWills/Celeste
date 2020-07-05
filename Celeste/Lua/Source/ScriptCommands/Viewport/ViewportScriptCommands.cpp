@@ -9,6 +9,18 @@ namespace Celeste::Lua::Viewport::ScriptCommands
   namespace Internals
   {
     //------------------------------------------------------------------------------------------------
+    bool isWindowed()
+    {
+      return getWindow().getWindowMode() == OpenGLWindow::WindowMode::kWindowed;
+    }
+
+    //------------------------------------------------------------------------------------------------
+    void setWindowed(bool windowed)
+    {
+      return getWindow().setWindowMode(windowed ? OpenGLWindow::WindowMode::kWindowed : OpenGLWindow::WindowMode::kFullScreen);
+    }
+
+    //------------------------------------------------------------------------------------------------
     glm::vec2 getContentArea()
     {
       return getWindow().getContentArea();
@@ -22,6 +34,8 @@ namespace Celeste::Lua::Viewport::ScriptCommands
       "Viewport",
       "getResolution", &getResolution,
       "setResolution", &setResolution,
+      "isWindowed", &Internals::isWindowed,
+      "setWindowed", &Internals::setWindowed,
       "getContentArea", &Internals::getContentArea);
   }
 }

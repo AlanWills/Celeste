@@ -29,7 +29,8 @@ namespace Celeste::UI
     Inherited::update();
 
 #if _DEBUG
-    if (!getGameObject().hasComponent<MouseInteractionHandler>())
+    if (!getGameObject().hasComponent<MouseInteractionHandler>() ||
+        !getGameObject().hasComponent<SpriteRenderer>())
     {
       ASSERT_FAIL();
       return;
@@ -40,10 +41,13 @@ namespace Celeste::UI
     {
       // Calculate based on mouse position relative to this game object
       // In the range [-0.5, 0.5]
-      float diff = (getMouse().getTransform().getWorldTranslation().x - getTransform()->getWorldTranslation().x);
+      glm::vec4 mouseWorldPosition = glm::vec4(getMouse().getTransform().getWorldTranslation(), 1);
+      glm::vec4 transformedPosition = getTransform()->getInverseWorldMatrix() * mouseWorldPosition;
 
+      float diff = (transformedPosition.x - getTransform()->getTranslation().x);
       observer_ptr<SpriteRenderer> spriteRenderer = getGameObject().findComponent<SpriteRenderer>();
-      setCurrentValue((diff / (spriteRenderer->getDimensions().x - spriteRenderer->getScissorRectangle().getDimensions().x)) + 0.5f);
+      
+      setCurrentValue((diff / spriteRenderer->getDimensions().x) + 0.5f);
       m_sliderClicked = getMouse().isButtonPressed(MouseButton::kLeft);
     }
     else
@@ -64,11 +68,18 @@ namespace Celeste::UI
       float offset = (m_currentValue - (m_max + m_min) * 0.5f) / (m_max - m_min);
 
       observer_ptr<SpriteRenderer> spriteRenderer = getGameObject().findComponent<SpriteRenderer>();
-      Maths::Rectangle& scissorRectangle = spriteRenderer->getScissorRectangle();
-      spriteRenderer->getScissorRectangle().setCentreX((spriteRenderer->getDimensions().x - scissorRectangle.getDimensions().x) * offset);
+      Transform* handle = getHandle();
+      const glm::vec3& translation = handle->getTranslation();
+      handle->setTranslation(glm::vec3(offset * spriteRenderer->getDimensions().x, translation.y, translation.z));
     }
 
     // Trigger event
     m_valueChanged.invoke(getGameObject(), m_currentValue);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  Transform* Slider::getHandle()
+  {
+    return getTransform()->getChildTransform(0);
   }
 }

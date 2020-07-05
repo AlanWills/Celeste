@@ -50,6 +50,7 @@ namespace Celeste
 
     private:
       void initWindow(int targetResolutionX, int targetResolutionY , const std::string& title);
+      void setResolutionImpl(const glm::vec2& resolution);
 
       GLFWwindow* m_window;
 
