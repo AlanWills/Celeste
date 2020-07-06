@@ -33,6 +33,8 @@ set_target_properties(zlibstatic PROPERTIES
 
 set_target_properties(UpdateAssimpLibsDebugSymbolsAndDLLs PROPERTIES 
     FOLDER ${THIRD_PARTY_FOLDER})
+
+install(TARGETS assimp RUNTIME DESTINATION "bin")
 #---------------------------- end assimp ----------------------------##
 
 
@@ -63,6 +65,8 @@ set_target_properties(libcurl PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
+
+install(TARGETS libcurl RUNTIME DESTINATION "bin")
 ##---------------------------- end curl ----------------------------##
 
 
@@ -77,6 +81,8 @@ set_target_properties(curlpp PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
+
+install(TARGETS curlpp RUNTIME DESTINATION "bin")
 ##---------------------------- end curlpp ----------------------------##
 
 
@@ -118,6 +124,8 @@ set_target_properties(common PROPERTIES
 
 set_target_properties(native-tools PROPERTIES 
     FOLDER ${THIRD_PARTY_FOLDER})
+
+install(TARGETS OpenAL RUNTIME DESTINATION "bin")
 #---------------------------- end openal-soft ----------------------------##
 
 
@@ -133,6 +141,8 @@ set_target_properties(alut PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
 
 add_dependencies(alut OpenAL)
+
+install(TARGETS alut RUNTIME DESTINATION "bin")
 #---------------------------- end freealut ----------------------------##
 
 
@@ -164,6 +174,8 @@ set_target_properties(glew PROPERTIES
 
 set_target_properties(glewinfo PROPERTIES 
     FOLDER ${THIRD_PARTY_FOLDER})
+
+install(TARGETS glew RUNTIME DESTINATION "bin")
 ##---------------------------- end glew ----------------------------##
 
 
@@ -178,15 +190,20 @@ set_target_properties(glfw PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
+
+install(TARGETS glfw RUNTIME DESTINATION "bin")
 ##---------------------------- end glfw ----------------------------##
 
 
 ##---------------------------- glm ----------------------------##
 set(BUILD_STATIC_LIBS_SAVED "${BUILD_STATIC_LIBS}")
+set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 set(BUILD_STATIC_LIBS ON)
+set(BUILD_SHARED_LIBS OFF)
 set(GLM_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/glm")
 add_subdirectory(${GLM_PROJECT_DIR} ${GLM_PROJECT_DIR}/build)
 set(BUILD_STATIC_LIBS "${BUILD_STATIC_LIBS_SAVED}")
+set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 
 set_target_properties(glm_static PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
@@ -203,6 +220,8 @@ set_target_properties(imgui PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
+
+install(TARGETS imgui RUNTIME DESTINATION "bin")
 #---------------------------- end lua ----------------------------##
 
 
@@ -253,4 +272,6 @@ set_target_properties(tinyxml2 PROPERTIES
     FOLDER ${THIRD_PARTY_FOLDER}
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
+
+install(TARGETS tinyxml2 RUNTIME DESTINATION "bin")
 #---------------------------- end tinyxml2 ----------------------------##

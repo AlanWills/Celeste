@@ -95,6 +95,7 @@ function(cbt_build_library)
     if ("${BUILD_LIBRARY_TYPE}" STREQUAL "SHARED")
         string(TOUPPER "${PROJECT_NAME}" UPPER_CASE_PROJECT_NAME)
         target_compile_definitions(${PROJECT_NAME} PRIVATE -DBUILDING_${UPPER_CASE_PROJECT_NAME}_DLL)
+        install(TARGETS "${PROJECT_NAME}" RUNTIME DESTINATION "bin")
     endif()
 endfunction()
 
