@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 
 function(cbt_build_executable)
-    #et(oneValueArgs NAME FOLDER SOURCE_DIR RUNTIME_OUTPUT_DIRECTORY)
+    #et(oneValueArgs NAME FOLDER SOURCE_DIR APP_FILE RUNTIME_OUTPUT_DIRECTORY)
     set(multiValueArgs INCLUDES LIBS)
     cmake_parse_arguments(BUILD_EXECUTABLE "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN} )
@@ -15,10 +15,14 @@ function(cbt_build_executable)
     source_group(TREE ${BUILD_EXECUTABLE_SOURCE_DIR} PREFIX Source FILES ${SOURCE_FILES})						   
     source_group(TREE ${BUILD_EXECUTABLE_SOURCE_DIR} PREFIX Include FILES ${HEADER_FILES})
     source_group(TREE ${BUILD_EXECUTABLE_SOURCE_DIR} FILES ${RESOURCE_FILES})
+    
+    if (BUILD_EXECUTABLE_APP_FILE)
+        source_group(TREE ${BUILD_EXECUTABLE_SOURCE_DIR} FILES ${BUILD_EXECUTABLE_APP_FILE})
+    endif()
 
     set_source_files_properties(${RESOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
     
-    add_executable(${PROJECT_NAME} ${BUILD_EXECUTABLE_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${RESOURCE_FILES})
+    add_executable(${PROJECT_NAME} ${BUILD_EXECUTABLE_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${RESOURCE_FILES} ${BUILD_EXECUTABLE_APP_FILE})
 
     IF(NOT BUILD_EXECUTABLE_RUNTIME_OUTPUT_DIRECTORY)
         set(BUILD_EXECUTABLE_RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR})
@@ -95,12 +99,12 @@ function(cbt_build_library)
     if ("${BUILD_LIBRARY_TYPE}" STREQUAL "SHARED")
         string(TOUPPER "${PROJECT_NAME}" UPPER_CASE_PROJECT_NAME)
         target_compile_definitions(${PROJECT_NAME} PRIVATE -DBUILDING_${UPPER_CASE_PROJECT_NAME}_DLL)
-        install(TARGETS "${PROJECT_NAME}" RUNTIME DESTINATION "bin")
+        install(TARGETS "${PROJECT_NAME}" RUNTIME DESTINATION . COMPONENT applications)
     endif()
 endfunction()
 
 function(cbt_build_project)
-    set(oneValueArgs NAME FOLDER TYPE SOURCE_DIR RESOURCES_DIR RUNTIME_OUTPUT_DIRECTORY)
+    set(oneValueArgs NAME FOLDER TYPE SOURCE_DIR RESOURCES_DIR APP_FILE RUNTIME_OUTPUT_DIRECTORY)
     set(multiValueArgs INCLUDES LIBS TEST_LIBS)
     cmake_parse_arguments(BUILD_PROJECT "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN})
@@ -129,6 +133,7 @@ function(cbt_build_project)
             SOURCE_DIR ${BUILD_PROJECT_SOURCE_DIR}
             INCLUDES "${BUILD_PROJECT_INCLUDES}"
             LIBS "${EXECUTABLE_LIBS}"
+            APP_FILE "${BUILD_PROJECT_APP_FILE}"
             RUNTIME_OUTPUT_DIRECTORY ${BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY})
     else()
         cbt_build_library(

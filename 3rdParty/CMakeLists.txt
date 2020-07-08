@@ -34,7 +34,7 @@ set_target_properties(zlibstatic PROPERTIES
 set_target_properties(UpdateAssimpLibsDebugSymbolsAndDLLs PROPERTIES 
     FOLDER ${THIRD_PARTY_FOLDER})
 
-install(TARGETS assimp RUNTIME DESTINATION "bin")
+install(TARGETS assimp RUNTIME DESTINATION . COMPONENT applications)
 #---------------------------- end assimp ----------------------------##
 
 
@@ -66,7 +66,7 @@ set_target_properties(libcurl PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
 
-install(TARGETS libcurl RUNTIME DESTINATION "bin")
+install(TARGETS libcurl RUNTIME DESTINATION . COMPONENT applications)
 ##---------------------------- end curl ----------------------------##
 
 
@@ -82,7 +82,7 @@ set_target_properties(curlpp PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
 
-install(TARGETS curlpp RUNTIME DESTINATION "bin")
+install(TARGETS curlpp RUNTIME DESTINATION . COMPONENT applications)
 ##---------------------------- end curlpp ----------------------------##
 
 
@@ -125,7 +125,7 @@ set_target_properties(common PROPERTIES
 set_target_properties(native-tools PROPERTIES 
     FOLDER ${THIRD_PARTY_FOLDER})
 
-install(TARGETS OpenAL RUNTIME DESTINATION "bin")
+install(TARGETS OpenAL RUNTIME DESTINATION . COMPONENT applications)
 #---------------------------- end openal-soft ----------------------------##
 
 
@@ -142,7 +142,7 @@ set_target_properties(alut PROPERTIES
 
 add_dependencies(alut OpenAL)
 
-install(TARGETS alut RUNTIME DESTINATION "bin")
+install(TARGETS alut RUNTIME DESTINATION . COMPONENT applications)
 #---------------------------- end freealut ----------------------------##
 
 
@@ -175,7 +175,7 @@ set_target_properties(glew PROPERTIES
 set_target_properties(glewinfo PROPERTIES 
     FOLDER ${THIRD_PARTY_FOLDER})
 
-install(TARGETS glew RUNTIME DESTINATION "bin")
+install(TARGETS glew RUNTIME DESTINATION . COMPONENT applications)
 ##---------------------------- end glew ----------------------------##
 
 
@@ -191,7 +191,7 @@ set_target_properties(glfw PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
 
-install(TARGETS glfw RUNTIME DESTINATION "bin")
+install(TARGETS glfw RUNTIME DESTINATION . COMPONENT applications)
 ##---------------------------- end glfw ----------------------------##
 
 
@@ -221,7 +221,7 @@ set_target_properties(imgui PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
 
-install(TARGETS imgui RUNTIME DESTINATION "bin")
+install(TARGETS imgui RUNTIME DESTINATION . COMPONENT applications)
 #---------------------------- end lua ----------------------------##
 
 
@@ -273,5 +273,5 @@ set_target_properties(tinyxml2 PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
 
-install(TARGETS tinyxml2 RUNTIME DESTINATION "bin")
+install(TARGETS tinyxml2 RUNTIME DESTINATION . COMPONENT applications)
 #---------------------------- end tinyxml2 ----------------------------##
