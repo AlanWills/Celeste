@@ -27,6 +27,7 @@ namespace TestCeleste::Lua::ScriptCommands
   void testCleanup()
   {
     setResolution(resolution);
+    getWindow().setWindowMode(OpenGLWindow::WindowMode::kWindowed);
   }
 
 #pragma region Initialize Tests
@@ -65,6 +66,30 @@ namespace TestCeleste::Lua::ScriptCommands
     Celeste::Lua::Viewport::ScriptCommands::initialize(state);
 
     Assert::IsTrue(state.globals()["Viewport"]["setResolution"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ViewportScriptCommands_Initialize_Adds_isWindowed_ToViewportTable)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state.globals()["Viewport"]["isWindowed"].valid());
+
+    Celeste::Lua::Viewport::ScriptCommands::initialize(state);
+
+    Assert::IsTrue(state.globals()["Viewport"]["isWindowed"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ViewportScriptCommands_Initialize_Adds_setWindowed_ToViewportTable)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state.globals()["Viewport"]["setWindowed"].valid());
+
+    Celeste::Lua::Viewport::ScriptCommands::initialize(state);
+
+    Assert::IsTrue(state.globals()["Viewport"]["setWindowed"].valid());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -111,6 +136,43 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::IsTrue(result.valid());
     Assert::AreEqual(glm::vec2(200, 400), getResolution());
+  }
+
+#pragma endregion
+
+#pragma region Is Windowed Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ViewportScriptCommands_isWindowed_ReturnsCorrectWindowedState)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Viewport::ScriptCommands::initialize(state);
+
+    auto result = state.globals()["Viewport"]["isWindowed"].get<sol::protected_function>().call();
+
+    Assert::IsTrue(result.valid());
+    Assert::AreEqual(getWindow().getWindowMode() == OpenGLWindow::WindowMode::kWindowed, result.get<bool>());
+  }
+
+#pragma endregion
+
+#pragma region Set Windowed Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(ViewportScriptCommands_setWindowed_ModifiesWindowMode)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Viewport::ScriptCommands::initialize(state);
+
+    auto result = state.globals()["Viewport"]["setWindowed"].get<sol::protected_function>().call(true);
+
+    Assert::IsTrue(result.valid());
+    Assert::IsTrue(OpenGLWindow::WindowMode::kWindowed == getWindow().getWindowMode());
+
+    result = state.globals()["Viewport"]["setWindowed"].get<sol::protected_function>().call(false);
+
+    Assert::IsTrue(result.valid());
+    Assert::IsTrue(OpenGLWindow::WindowMode::kFullScreen == getWindow().getWindowMode());
   }
 
 #pragma endregion

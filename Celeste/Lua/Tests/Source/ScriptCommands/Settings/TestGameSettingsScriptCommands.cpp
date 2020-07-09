@@ -112,15 +112,27 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameSettingsScriptCommands_Initialize_Adds_getResolution_ToGlobalTable)
+  TEST_METHOD(GameSettingsScriptCommands_Initialize_Adds_isWindowed_ToGlobalTable)
   {
     sol::state& state = LuaState::instance();
 
-    Assert::IsFalse(state[GameSettings::type_name()]["getResolution"].valid());
+    Assert::IsFalse(state[GameSettings::type_name()]["isWindowed"].valid());
 
     Celeste::Lua::Settings::GameSettingsScriptCommands::initialize(state);
 
-    Assert::IsTrue(state[GameSettings::type_name()]["getResolution"].valid());
+    Assert::IsTrue(state[GameSettings::type_name()]["isWindowed"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettingsScriptCommands_Initialize_Adds_setWindowed_ToGlobalTable)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state[GameSettings::type_name()]["setWindowed"].valid());
+
+    Celeste::Lua::Settings::GameSettingsScriptCommands::initialize(state);
+
+    Assert::IsTrue(state[GameSettings::type_name()]["setWindowed"].valid());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -396,7 +408,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
 
 #pragma endregion
 
-#pragma region Get Apply Tests
+#pragma region Apply Tests
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameSettingsScriptCommands_Apply_InputtingNonExistentRelativePath_DoesNothing)
@@ -518,6 +530,60 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
 
 #pragma endregion
 
+#pragma region Is Windowed Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettingsScriptCommands_IsWindowed_ReturnsWhetherWindowIsWindowed)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Settings::GameSettingsScriptCommands::initialize(state);
+    auto gameSettings = ScriptableObject::create<GameSettings>("");
+    gameSettings->setWindowed(false);
+
+    Assert::IsFalse(gameSettings->isWindowed());
+
+    auto result = state["GameSettings"]["isWindowed"].get<sol::protected_function>().call(*gameSettings);
+
+    Assert::IsTrue(result.valid());
+    Assert::IsFalse(result.get<bool>());
+
+    gameSettings->setWindowed(true);
+
+    Assert::IsTrue(gameSettings->isWindowed());
+
+    result = state["GameSettings"]["isWindowed"].get<sol::protected_function>().call(*gameSettings);
+
+    Assert::IsTrue(result.valid());
+    Assert::IsTrue(result.get<bool>());
+  }
+
+#pragma endregion
+
+#pragma region Set Windowed Tests
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(GameSettingsScriptCommands_SetWindowed_UpdatesValueCorrectly)
+  {
+    sol::state& state = LuaState::instance();
+    Celeste::Lua::Settings::GameSettingsScriptCommands::initialize(state);
+    auto gameSettings = ScriptableObject::create<GameSettings>("");
+    gameSettings->setWindowed(false);
+
+    Assert::IsFalse(gameSettings->isWindowed());
+
+    auto result = state["GameSettings"]["setWindowed"].get<sol::protected_function>().call(*gameSettings, true);
+
+    Assert::IsTrue(result.valid());
+    Assert::IsTrue(gameSettings->isWindowed());
+
+    result = state["GameSettings"]["setWindowed"].get<sol::protected_function>().call(*gameSettings, false);
+
+    Assert::IsTrue(result.valid());
+    Assert::IsFalse(gameSettings->isWindowed());
+  }
+
+#pragma endregion
+
 #pragma region Get Resolution Tests
 
   //------------------------------------------------------------------------------------------------
@@ -541,7 +607,7 @@ namespace TestCeleste::Lua::GameSettingsScriptCommands
 #pragma region Set Resolution Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameSettingsScriptCommands_SetResolution_ReturnsCorrectValue)
+  TEST_METHOD(GameSettingsScriptCommands_SetResolution_UpdatesValueCorrectly)
   {
     sol::state& state = LuaState::instance();
     Celeste::Lua::Settings::GameSettingsScriptCommands::initialize(state);

@@ -117,8 +117,6 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void Game::registerSystems()
   {
-    Celeste::Log::Logging::setLogger(std::make_unique<Log::FileLogger>(Path(Directory::getExecutingAppDirectory(), "Log.txt")));
-
     addSystem<SceneManager>();
     addSystem<Input::InputManager>(m_window.getGLWindow());
     addSystem<Physics::PhysicsManager>();
