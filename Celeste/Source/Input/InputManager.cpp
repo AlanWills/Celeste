@@ -151,11 +151,6 @@ namespace Celeste::Input
     {
       mButton = MouseButton::kRight;
     }
-    else
-    {
-      ASSERT_FAIL();
-      return;
-    }
 
     if (action == GLFW_PRESS)
     {
@@ -164,10 +159,6 @@ namespace Celeste::Input
     else if (action == GLFW_RELEASE)
     {
       getMouse().setButtonReleased(mButton);
-    }
-    else
-    {
-      ASSERT_FAIL();
     }
   }
 }

@@ -35,8 +35,8 @@ namespace Celeste::Rendering
       glScissor(
         static_cast<GLint>(viewModelMatrix[3].x + rectangle.getLeft().x),
         static_cast<GLint>(viewModelMatrix[3].y + rectangle.getBottom().y),
-        static_cast<GLsizei>(dimensions.x),
-        static_cast<GLsizei>(dimensions.y));
+        static_cast<GLsizei>(std::ceil(dimensions.x)),
+        static_cast<GLsizei>(std::ceil(dimensions.y)));
     }
 
     shaderProgram.setVector4f("colour", getColour());

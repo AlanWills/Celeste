@@ -27,6 +27,7 @@ namespace Celeste::Settings
       static const char* const ENABLED_ATTRIBUTE_NAME;
       static const char* const OPEN_WINDOWS_ELEMENT_NAME;
       static const char* const OPEN_WINDOW_ELEMENT_NAME;
+      static const Path SETTINGS_RELATIVE_PATH;
 
     protected:
       bool doDeserialize(const tinyxml2::XMLElement* element) override;

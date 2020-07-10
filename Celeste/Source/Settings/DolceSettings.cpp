@@ -13,9 +13,11 @@ namespace Celeste::Settings
 {
   REGISTER_SCRIPTABLE_OBJECT(DolceSettings)
 
+  //------------------------------------------------------------------------------------------------
   const char* const DolceSettings::ENABLED_ATTRIBUTE_NAME = "enabled";
   const char* const DolceSettings::OPEN_WINDOWS_ELEMENT_NAME = "OpenWindows";
   const char* const DolceSettings::OPEN_WINDOW_ELEMENT_NAME = "OpenWindow";
+  const Path DolceSettings::SETTINGS_RELATIVE_PATH = Path("Data", "AppData", "DolceSettings.asset");
 
   //------------------------------------------------------------------------------------------------
   DolceSettings::DolceSettings() :

@@ -159,7 +159,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void Game::applySettings() const
   {
-    std::unique_ptr<Settings::GameSettings> gameSettings = ScriptableObject::load<Settings::GameSettings>(Path(Resources::getResourcesDirectory(), "Data", "Settings", "GameSettings.asset"));
+    std::unique_ptr<Settings::GameSettings> gameSettings = ScriptableObject::load<Settings::GameSettings>(Settings::GameSettings::SETTINGS_RELATIVE_PATH);
     if (gameSettings != nullptr)
     {
       gameSettings->apply();
@@ -196,7 +196,7 @@ namespace Celeste
 
     onInitializeDolce(dolce);
 
-    std::unique_ptr<Settings::DolceSettings> dolceSettings = ScriptableObject::load<Settings::DolceSettings>(Path(Resources::getResourcesDirectory(), "Data", "Settings", "DolceSettings.asset"));
+    std::unique_ptr<Settings::DolceSettings> dolceSettings = ScriptableObject::load<Settings::DolceSettings>(Settings::DolceSettings::SETTINGS_RELATIVE_PATH);
     if (dolceSettings != nullptr)
     {
       dolceSettings->applyTo(dolce);
@@ -206,16 +206,15 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void Game::shutdownDolce()
   {
-    Path dolcePath(Resources::getResourcesDirectory(), "Data", "Settings", "DolceSettings.asset");
-    std::unique_ptr<Settings::DolceSettings> dolceSettings = ScriptableObject::load<Settings::DolceSettings>(dolcePath);
+    std::unique_ptr<Settings::DolceSettings> dolceSettings = ScriptableObject::load<Settings::DolceSettings>(Settings::DolceSettings::SETTINGS_RELATIVE_PATH);
 
     if (dolceSettings == nullptr)
     {
-      dolceSettings = std::move(ScriptableObject::create<Settings::DolceSettings>("DolceSettings"));
+      dolceSettings = ScriptableObject::create<Settings::DolceSettings>("DolceSettings");
     }
 
     dolceSettings->applyFrom(*getSystem<Dolce::IDolce>());
-    dolceSettings->save(dolcePath);
+    dolceSettings->save(Settings::DolceSettings::SETTINGS_RELATIVE_PATH);
   }
 #endif
 

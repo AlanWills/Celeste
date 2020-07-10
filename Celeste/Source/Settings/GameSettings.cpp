@@ -12,6 +12,9 @@ namespace Celeste::Settings
 {
   REGISTER_SCRIPTABLE_OBJECT(GameSettings)
 
+    //------------------------------------------------------------------------------------------------
+    const Path GameSettings::SETTINGS_RELATIVE_PATH = Path("Data", "AppData", "GameSettings.asset");
+
   //------------------------------------------------------------------------------------------------
   GameSettings::GameSettings() :
     Inherited(),

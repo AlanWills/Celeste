@@ -36,6 +36,8 @@ namespace Celeste::Settings
 
       CelesteDllExport void apply() const;
 
+      static const Path SETTINGS_RELATIVE_PATH;
+
     private:
       using Inherited = ScriptableObject;
 
