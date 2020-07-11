@@ -1,6 +1,5 @@
 #include "Lua/DataConverters/LuaComponentDataConverter.h"
 #include "Deserialization/MathsDeserializers.h"
-#include "Bindings/MathsDataBindingGenerators.h"
 #include "Objects/Component.h"
 
 #include "Lua/LuaState.h"

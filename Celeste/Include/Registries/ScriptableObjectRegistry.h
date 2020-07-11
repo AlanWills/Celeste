@@ -4,7 +4,7 @@
 #include "FileSystem/Path.h"
 #include "tinyxml2.h"
 #include "Objects/ScriptableObject.h"
-#include "Bindings/BindingsGenerator.h"
+#include "Reflection/Type.h"
 
 #include <functional>
 #include <unordered_map>
@@ -17,36 +17,6 @@ namespace Celeste
     public:
       using CreateFactoryFunction = std::function<std::unique_ptr<ScriptableObject>(const std::string&)>;
       using LoadFactoryFunction = std::function<std::unique_ptr<ScriptableObject>(const Path&)>;
-
-#if _DEBUG
-    public:
-      using BindingsFactoryFunction = std::function<void(const Directory& parentDirectory)>;
-      using BindingCallback = std::function<void(const std::string&, const Path& filePath)>;
-
-    private:
-      using BindingsMapKey = std::string;
-      using BindingsMapValue = std::pair<std::string, BindingsFactoryFunction>;
-      using BindingsMap = std::unordered_map<BindingsMapKey, BindingsMapValue>;
-      using BindingsMapPair = std::pair<BindingsMapKey, BindingsMapValue>;
-
-    public:
-      static void generateAllBindings(const Directory& destinationDirectory, const BindingCallback& onBindingGenerated);
-      static void generateAllBindings(const Directory& destinationDirectory)
-      {
-        generateAllBindings(destinationDirectory, [](const std::string&, const Path&) -> void {});
-      }
-
-      static void generateBindingsForAssembly(const std::string& assemblyName, const Directory& destinationDirectory, const BindingCallback& onBindingGenerated);
-      static void generateBindingsForAssembly(const std::string& assemblyName, const Directory& destinationDirectory)
-      {
-        generateBindingsForAssembly(assemblyName, destinationDirectory, [](const std::string&, const Path&) -> void {});
-      }
-
-      //static const BindingsMap& getBindingsMapConst();
-
-    private:
-      //static BindingsMap& getBindingsMap();
-#endif
 
     private:
       using InstantiationMapKey = std::string;
@@ -92,9 +62,6 @@ namespace Celeste
         }
 
         getInstantiationMap().erase(objectName);
-  #if _DEBUG
-        //getBindingsMap().erase(objectName);
-  #endif
       }
 
       static bool hasScriptableObject(const std::string& objectName) 
@@ -124,13 +91,6 @@ namespace Celeste
 
     if (!hasScriptableObject(typeInfo.getName()))
     {
-  #if _DEBUG
-      /*getBindingsMap().emplace(typeInfo.getName(), std::pair<std::string, BindingsFactoryFunction>(typeInfo.getAssembly(), [](const Directory& parentDirectory) -> void
-      {
-        Bindings::BindingsGenerator::generateScriptableObjectBindings<T>(parentDirectory);
-      }));*/
-  #endif
-
       getInstantiationMap().emplace(typeInfo.getName(), std::make_pair(
         &ScriptableObject::create<T>,
         &ScriptableObject::load<T>));

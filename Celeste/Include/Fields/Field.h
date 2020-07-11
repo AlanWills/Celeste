@@ -8,11 +8,6 @@
 
 namespace Celeste
 {
-  namespace Bindings
-  {
-    class BindingsGenerator;
-  }
-
   class Field
   {
     public:
@@ -53,14 +48,9 @@ namespace Celeste
       virtual bool doDeserialize(const tinyxml2::XMLElement* element) = 0;
       virtual void doSerialize(tinyxml2::XMLElement* element) const = 0;
 
-  #if _DEBUG
-      virtual void generateBinding(std::string& output) const = 0;
-  #endif
-
     private:
       std::string m_name;
 
       friend class ScriptableObject;
-      friend class Bindings::BindingsGenerator;
   };
 }

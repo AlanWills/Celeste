@@ -7,65 +7,51 @@
 #include <string>
 
 
-namespace Celeste
+namespace Celeste::XML
 {
-  namespace Bindings
+  class Attribute : public XMLObject
   {
-    class BindingsGenerator;
-  }
+    public:
+      virtual ~Attribute() { }
+      virtual Attribute* clone() const = 0;
 
-  namespace XML
-  {
-    class Attribute : public XMLObject
-    {
-      public:
-        virtual ~Attribute() { }
-        virtual Attribute* clone() const = 0;
-
-        bool convertFromXML(const tinyxml2::XMLAttribute* attribute)
+      bool convertFromXML(const tinyxml2::XMLAttribute* attribute)
+      {
+        if (attribute == nullptr)
         {
-          if (attribute == nullptr)
-          {
-            ASSERT_FAIL();
-            return false;
-          }
-
-          const char* text = attribute->Value();
-          if (text == nullptr)
-          {
-            ASSERT_FAIL();
-            return false;
-          }
-
-          m_usingDefaultValue = !doConvertFromXML(text);
-          return !m_usingDefaultValue;
+          ASSERT_FAIL();
+          return false;
         }
 
-        const std::string& getAttributeName() const { return m_attributeName; }
-
-        /// A flag to indicate whether this attribute had a valid value that it converted
-        /// or is using it's default value because it was missing or had an invalid value.
-        bool isUsingDefaultValue() const { return m_usingDefaultValue; }
-
-      protected:
-        Attribute(const std::string& attributeName, DeserializationRequirement required = DeserializationRequirement::kNotRequired) :
-          XMLObject(required),
-          m_attributeName(attributeName),
-          m_usingDefaultValue(true)
+        const char* text = attribute->Value();
+        if (text == nullptr)
         {
+          ASSERT_FAIL();
+          return false;
         }
 
-        virtual bool doConvertFromXML(const std::string& attributeText) = 0;
+        m_usingDefaultValue = !doConvertFromXML(text);
+        return !m_usingDefaultValue;
+      }
 
-#if _DEBUG
-        virtual void generateBinding(std::string& output) const = 0;
-#endif
+      const std::string& getAttributeName() const { return m_attributeName; }
 
-      private:
-        std::string m_attributeName;
-        bool m_usingDefaultValue;
+      /// A flag to indicate whether this attribute had a valid value that it converted
+      /// or is using it's default value because it was missing or had an invalid value.
+      bool isUsingDefaultValue() const { return m_usingDefaultValue; }
 
-        friend class Bindings::BindingsGenerator;
-    };
-  }
+    protected:
+      Attribute(const std::string& attributeName, DeserializationRequirement required = DeserializationRequirement::kNotRequired) :
+        XMLObject(required),
+        m_attributeName(attributeName),
+        m_usingDefaultValue(true)
+      {
+      }
+
+      virtual bool doConvertFromXML(const std::string& attributeText) = 0;
+
+    private:
+      std::string m_attributeName;
+      bool m_usingDefaultValue;
+  };
 }

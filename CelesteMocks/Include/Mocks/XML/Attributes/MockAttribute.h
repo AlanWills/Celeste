@@ -27,10 +27,6 @@ namespace CelesteMocks
         return m_doConvertResult;
       }
 
-  #if _DEBUG
-      void generateBinding(std::string& /*output*/) const override { }
-  #endif
-
     private:
       bool m_isDoConvertFromXMLCalled;
       bool m_doConvertResult;

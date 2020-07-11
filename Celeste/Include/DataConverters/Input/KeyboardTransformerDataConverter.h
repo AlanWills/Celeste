@@ -3,7 +3,6 @@
 #include "DataConverters/Objects/ComponentDataConverter.h"
 #include "Input/Key.h"
 #include "Deserialization/InputDeserializers.h"
-#include "Bindings/InputDataBindingGenerators.h"
 
 
 namespace Celeste::Input

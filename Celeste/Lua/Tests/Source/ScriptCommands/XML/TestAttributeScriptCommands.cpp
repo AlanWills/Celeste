@@ -5,7 +5,6 @@
 
 #include "DataConverters/DataConverter.h"
 #include "Deserialization/MathsDeserializers.h"
-#include "Bindings/MathsDataBindingGenerators.h"
 
 using namespace Celeste;
 using LuaState = Celeste::Lua::LuaState;

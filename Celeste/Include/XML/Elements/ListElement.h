@@ -3,7 +3,6 @@
 #include "Element.h"
 #include "XML/ChildXMLElementWalker.h"
 #include "XML/tinyxml2_ext.h"
-#include "Reflection/Type.h"
 
 #include <vector>
 
@@ -35,26 +34,6 @@ namespace Celeste::XML
       XMLValueError result = getElementDataAsVector<T>(element, getChildElementName(), m_children, !isRequired());
       return result == XML::XMLValueError::kSuccess || (result == XML::XMLValueError::kDoesNotExist && !isRequired());
     }
-
-#if _DEBUG
-    void generateBinding(std::string& output) const override
-    {
-      // Do child element name
-      const Reflection::Type<T>& type = Reflection::Type<T>();
-
-      output.append("\t\t[XmlChildElementName(\"");
-      output.append(getChildElementName());
-      output.append("\")]");
-      output.append("\n\t\t");
-      output.append("public List<");
-      output.append(type.getName());
-      output.append("> ");
-      output.append(getElementName());
-      output.append(" { get; set; } = new List<");
-      output.append(type.getName());
-      output.append(">();");
-    }
-#endif
 
   private:
     using Inherited = Element;

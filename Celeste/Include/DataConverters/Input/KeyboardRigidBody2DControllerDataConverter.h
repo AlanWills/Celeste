@@ -5,8 +5,6 @@
 #include "Input/Key.h"
 #include "Deserialization/InputDeserializers.h"
 #include "Deserialization/MathsDeserializers.h"
-#include "Bindings/MathsDataBindingGenerators.h"
-#include "Bindings/InputDataBindingGenerators.h"
 
 
 namespace Celeste::Input

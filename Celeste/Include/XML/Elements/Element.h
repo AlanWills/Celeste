@@ -51,10 +51,6 @@ namespace Celeste
 
         virtual bool doConvertFromXML(const tinyxml2::XMLElement* childElement) = 0;
 
-#if _DEBUG
-        virtual void generateBinding(std::string& output) const = 0;
-#endif
-
       private:
         std::string m_elementName;
         bool m_usingDefaultValue;

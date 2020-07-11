@@ -4,7 +4,6 @@
 #include "XML/Attributes/DataAttribute.h"
 #include "XML/Elements/DataConverterListElement.h"
 #include "Deserialization/InputDeserializers.h"
-#include "Bindings/InputDataBindingGenerators.h"
 
 
 namespace Celeste

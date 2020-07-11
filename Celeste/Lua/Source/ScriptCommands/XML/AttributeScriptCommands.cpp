@@ -3,7 +3,6 @@
 
 // DON'T delete these
 #include "Deserialization/MathsDeserializers.h"
-#include "Bindings/MathsDataBindingGenerators.h"
 
 
 namespace sol

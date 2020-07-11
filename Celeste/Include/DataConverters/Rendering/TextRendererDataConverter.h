@@ -5,8 +5,6 @@
 #include "XML/Elements/ListElement.h"
 #include "Deserialization/MathsDeserializers.h"
 #include "Deserialization/UIDeserializers.h"
-#include "Bindings/MathsDataBindingGenerators.h"
-#include "Bindings/UIDataBindingGenerators.h"
 
 
 namespace Celeste::Rendering

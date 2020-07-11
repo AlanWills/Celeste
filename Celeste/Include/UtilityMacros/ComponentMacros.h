@@ -9,8 +9,7 @@
     DllExport ComponentType(Celeste::GameObject& gameObject); \
     \
   private: \
-    static bool m_registered; \
-    static bool m_bindingsRegistered;
+    static bool m_registered;
 
   //------------------------------------------------------------------------------------------------
 #define DECLARE_MANAGED_COMPONENT(ComponentType, Manager, DllExport) \
@@ -36,17 +35,7 @@
 #define ADD_COMPONENT_TO_REGISTRY(ComponentType) \
   bool ComponentType::m_registered = Celeste::ComponentRegistry::registerComponent(ComponentType::type_name(), [](Celeste::GameObject& gameObject) { return gameObject.addComponent<ComponentType>(); });
 
-  //------------------------------------------------------------------------------------------------
-#if _DEBUG
-#define BINDINGS_GENERATION(ComponentType) \
-  bool ComponentType::m_bindingsRegistered = ComponentRegistry::addBindings<ComponentType>();
-#else
-#define BINDINGS_GENERATION(ComponentType) \
-  bool ComponentType::m_bindingsRegistered = false;
-#endif
-
 //------------------------------------------------------------------------------------------------
 #define REGISTER_COMPONENT(ComponentType, PoolSize) \
   CUSTOM_MEMORY_CREATION(ComponentType, PoolSize) \
-  ADD_COMPONENT_TO_REGISTRY(ComponentType) \
-  BINDINGS_GENERATION(ComponentType)
+  ADD_COMPONENT_TO_REGISTRY(ComponentType)

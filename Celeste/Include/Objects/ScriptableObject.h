@@ -6,8 +6,6 @@
 #include "crossguid/guid.hpp"
 #include "Resources/ResourceUtils.h"
 #include "Resources/ResourceManager.h"
-#include "Reflection/Type.h"
-#include "Bindings/BindingUtils.h"
 #include "XML/ChildXMLElementWalker.h"
 #include "UtilityMacros/ScriptableObjectMacros.h"
 
@@ -20,11 +18,6 @@
 
 namespace Celeste
 {
-  namespace Bindings
-  {
-    class BindingsGenerator;
-  }
-
   class ScriptableObject
   {
     public:
@@ -78,15 +71,6 @@ namespace Celeste
       size_t getFieldsSize() const { return m_fields.size(); }
       size_t getScriptableObjectsSize() const { return m_scriptableObjects.size(); }
 
-  #if _DEBUG
-      virtual void generateBinding(std::string& output) const = 0;
-  #endif
-
-  #if _DEBUG
-      /// DEBUG ONLY!  Do not use in release code - should be for tool code only
-      virtual void type_info_i(std::unique_ptr<Reflection::ITypeInfo>& output) const = 0;
-  #endif
-
       virtual const std::string getTypeName() const = 0;
       
     private:
@@ -105,9 +89,6 @@ namespace Celeste
 
       std::string m_name;
       xg::Guid m_guid;
-
-      // Need this to allow bindings generator to access all members
-      friend class Bindings::BindingsGenerator;
   };
 
   //------------------------------------------------------------------------------------------------

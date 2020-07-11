@@ -4,7 +4,6 @@
 #include "XML/Attributes/DataAttribute.h"
 #include "XML/Elements/ListElement.h"
 #include "Deserialization/UIDeserializers.h"
-#include "Bindings/UIDataBindingGenerators.h"
 
 
 namespace Celeste::UI

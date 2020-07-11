@@ -3,7 +3,6 @@
 #include "DataConverters/Objects/ComponentDataConverter.h"
 #include "XML/Attributes/DataAttribute.h"
 #include "Deserialization/AudioDeserializers.h"
-#include "Bindings/AudioDataBindingGenerators.h"
 #include "Audio/AudioEnums.h"
 
 

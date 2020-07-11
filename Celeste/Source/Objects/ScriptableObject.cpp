@@ -212,7 +212,6 @@ namespace Celeste
       {
         // ERROR - COULD HAVE RECURSIVE LOOP
         // NEED TO COLLECT ALL THE OBJECTS BY PASSING A DICTIONARY OR SOMETHING TO GET A LIST OF ALL CHILDREN THAT NEED SERIALIZING
-        // Copy the C# implementation
 
         const std::unique_ptr<ScriptableObject>& scriptableObject = std::get<0>(embeddedScriptableObject);
         const std::string& embeddedLink = std::get<1>(embeddedScriptableObject);

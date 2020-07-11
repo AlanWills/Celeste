@@ -38,15 +38,6 @@ namespace Celeste
 
         static constexpr bool isReference() { return false; }
 
-  #if _DEBUG
-        void generateBinding(std::string& output) const override
-        {
-          output.append("\t\tpublic List<Component> ");
-          output.append(getElementName());
-          output.append(" { get; set; } = new List<Component>();");
-        }
-  #endif
-
       protected:
         bool doConvertFromXML(const tinyxml2::XMLElement* listElement) override;
 
@@ -138,10 +129,6 @@ namespace Celeste
 
         static constexpr bool isReference() { return false; }
 
-  #if _DEBUG
-        void generateBinding(std::string& /*output*/) const override { }
-  #endif
-
         CelesteDllExport static const char* const GAME_OBJECT_ELEMENT_NAME;
         CelesteDllExport static const char* const PREFAB_ELEMENT_NAME;
 
@@ -187,10 +174,6 @@ namespace Celeste
         CelesteDllExport DataConverterListElement<ComponentDataConverter>* clone() const override;
 
         static constexpr bool isReference() { return false; }
-
-  #if _DEBUG
-        void generateBinding(std::string& /*output*/) const override { }
-  #endif
 
       protected:
         DataConverterListElement(const DataConverterListElement&) = default;

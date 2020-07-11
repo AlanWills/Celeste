@@ -3,7 +3,6 @@
 #include "DataConverters/Objects/ComponentDataConverter.h"
 #include "XML/Attributes/DataAttribute.h"
 #include "Deserialization/MathsDeserializers.h"
-#include "Bindings/MathsDataBindingGenerators.h"
 
 
 namespace Celeste::Physics
