@@ -89,51 +89,51 @@ namespace TestCeleste
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_Constructor_SetsDefaultTexturePath_ToDefaultTextureDefaultPath)
+  TEST_METHOD(ButtonDataConverter_Constructor_SetsIdleTexturePath_ToEmptyPath)
   {
     ButtonDataConverter converter;
 
-    Assert::AreEqual(ButtonDataConverter::getDefaultTextureDefaultPath(), converter.getDefaultTexturePath());
+    Assert::IsTrue(converter.getIdleTexturePath().as_string().empty());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_Constructor_SetsHighlightedTexturePath_ToHighlightedTextureDefaultPath)
+  TEST_METHOD(ButtonDataConverter_Constructor_SetsHighlightedTexturePath_ToEmptyPath)
   {
     ButtonDataConverter converter;
 
-    Assert::AreEqual(ButtonDataConverter::getHighlightedTextureDefaultPath(), converter.getHighlightedTexturePath());
+    Assert::IsTrue(converter.getHighlightedTexturePath().as_string().empty());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_Constructor_SetsClickedTexturePath_ToClickedTextureDefaultPath)
+  TEST_METHOD(ButtonDataConverter_Constructor_SetsClickedTexturePath_ToEmptyPath)
   {
     ButtonDataConverter converter;
 
-    Assert::AreEqual(ButtonDataConverter::getClickedTextureDefaultPath(), converter.getClickedTexturePath());
+    Assert::IsTrue(converter.getClickedTexturePath().as_string().empty());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_Constructor_SetsHighlightedSoundPath_ToHighlightedSoundDefaultPath)
+  TEST_METHOD(ButtonDataConverter_Constructor_SetsHighlightedSoundPath_ToEmptyPath)
   {
     ButtonDataConverter converter;
 
-    Assert::AreEqual(ButtonDataConverter::getHighlightedSoundDefaultPath(), converter.getHighlightedSoundPath());
+    Assert::IsTrue(converter.getHighlightedSoundPath().as_string().empty());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_Constructor_SetsClickedSoundPath_ToClickedSoundDefaultPath)
+  TEST_METHOD(ButtonDataConverter_Constructor_SetsClickedSoundPath_ToEmptyPath)
   {
     ButtonDataConverter converter;
 
-    Assert::AreEqual(ButtonDataConverter::getClickedSoundDefaultPath(), converter.getClickedSoundPath());
+    Assert::IsTrue(converter.getClickedSoundPath().as_string().empty());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_Constructor_AddsDefaultTexturePathAttribute)
+  TEST_METHOD(ButtonDataConverter_Constructor_AddsIdleTexturePathAttribute)
   {
     const MockButtonDataConverter converter;
     
-    Assert::IsTrue(converter.findAttribute(ButtonDataConverter::DEFAULT_TEXTURE_ATTRIBUTE_NAME));
+    Assert::IsTrue(converter.findAttribute(ButtonDataConverter::IDLE_TEXTURE_ATTRIBUTE_NAME));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -229,19 +229,19 @@ namespace TestCeleste
 
 #pragma endregion
 
-#pragma region Convert Default Texture Path Tests
+#pragma region Convert Idle Texture Path Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(ButtonDataConverter_ConvertFromXML_NoDefaultTexturePathAttribute_DoesNothing_ReturnsTrue)
+  TEST_METHOD(ButtonDataConverter_ConvertFromXML_NoIdleTexturePathAttribute_DoesNothing_ReturnsTrue)
   {
     ButtonDataConverter converter;
     XMLDocument document;
     const XMLElement* element = document.NewElement("Button");
 
-    Assert::IsNull(element->FindAttribute(ButtonDataConverter::DEFAULT_TEXTURE_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getDefaultTextureDefaultPath(), converter.getDefaultTexturePath());
+    Assert::IsNull(element->FindAttribute(ButtonDataConverter::IDLE_TEXTURE_ATTRIBUTE_NAME));
+    Assert::IsTrue(converter.getIdleTexturePath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(ButtonDataConverter::getDefaultTextureDefaultPath(), converter.getDefaultTexturePath());
+    Assert::IsTrue(converter.getIdleTexturePath().as_string().empty());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -250,12 +250,12 @@ namespace TestCeleste
     ButtonDataConverter converter;
     XMLDocument document;
     XMLElement* element = document.NewElement("Button");
-    element->SetAttribute(ButtonDataConverter::DEFAULT_TEXTURE_ATTRIBUTE_NAME, "");
+    element->SetAttribute(ButtonDataConverter::IDLE_TEXTURE_ATTRIBUTE_NAME, "");
 
-    Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::DEFAULT_TEXTURE_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getDefaultTextureDefaultPath(), converter.getDefaultTexturePath());
+    Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::IDLE_TEXTURE_ATTRIBUTE_NAME));
+    Assert::IsTrue(converter.getIdleTexturePath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
-    Assert::IsTrue(converter.getDefaultTexturePath().as_string().empty());
+    Assert::IsTrue(converter.getIdleTexturePath().as_string().empty());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -264,12 +264,12 @@ namespace TestCeleste
     ButtonDataConverter converter;
     XMLDocument document;
     XMLElement* element = document.NewElement("Button");
-    element->SetAttribute(ButtonDataConverter::DEFAULT_TEXTURE_ATTRIBUTE_NAME, "TexturePath.png");
+    element->SetAttribute(ButtonDataConverter::IDLE_TEXTURE_ATTRIBUTE_NAME, "TexturePath.png");
 
-    Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::DEFAULT_TEXTURE_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getDefaultTextureDefaultPath(), converter.getDefaultTexturePath());
+    Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::IDLE_TEXTURE_ATTRIBUTE_NAME));
+    Assert::IsTrue(converter.getIdleTexturePath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual("TexturePath.png", converter.getDefaultTexturePath().c_str());
+    Assert::AreEqual("TexturePath.png", converter.getIdleTexturePath().c_str());
   }
 
 #pragma endregion
@@ -284,9 +284,9 @@ namespace TestCeleste
     const XMLElement* element = document.NewElement("Button");
 
     Assert::IsNull(element->FindAttribute(ButtonDataConverter::HIGHLIGHTED_TEXTURE_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getHighlightedTextureDefaultPath(), converter.getHighlightedTexturePath());
+    Assert::IsTrue(converter.getHighlightedTexturePath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(ButtonDataConverter::getHighlightedTextureDefaultPath(), converter.getHighlightedTexturePath());
+    Assert::IsTrue(converter.getHighlightedTexturePath().as_string().empty());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -298,7 +298,7 @@ namespace TestCeleste
     element->SetAttribute(ButtonDataConverter::HIGHLIGHTED_TEXTURE_ATTRIBUTE_NAME, "");
 
     Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::HIGHLIGHTED_TEXTURE_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getHighlightedTextureDefaultPath(), converter.getHighlightedTexturePath());
+    Assert::IsTrue(converter.getHighlightedTexturePath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::IsTrue(converter.getHighlightedTexturePath().as_string().empty());
   }
@@ -312,7 +312,7 @@ namespace TestCeleste
     element->SetAttribute(ButtonDataConverter::HIGHLIGHTED_TEXTURE_ATTRIBUTE_NAME, "TexturePath.png");
 
     Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::HIGHLIGHTED_TEXTURE_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getHighlightedTextureDefaultPath(), converter.getHighlightedTexturePath());
+    Assert::IsTrue(converter.getHighlightedTexturePath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::AreEqual("TexturePath.png", converter.getHighlightedTexturePath().c_str());
   }
@@ -329,9 +329,9 @@ namespace TestCeleste
     const XMLElement* element = document.NewElement("Button");
 
     Assert::IsNull(element->FindAttribute(ButtonDataConverter::CLICKED_TEXTURE_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getClickedTextureDefaultPath(), converter.getClickedTexturePath());
+    Assert::IsTrue(converter.getClickedTexturePath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(ButtonDataConverter::getClickedTextureDefaultPath(), converter.getClickedTexturePath());
+    Assert::IsTrue(converter.getClickedTexturePath().as_string().empty());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -343,7 +343,7 @@ namespace TestCeleste
     element->SetAttribute(ButtonDataConverter::CLICKED_TEXTURE_ATTRIBUTE_NAME, "");
 
     Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::CLICKED_TEXTURE_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getClickedTextureDefaultPath(), converter.getClickedTexturePath());
+    Assert::IsTrue(converter.getClickedTexturePath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::IsTrue(converter.getClickedTexturePath().as_string().empty());
   }
@@ -357,7 +357,7 @@ namespace TestCeleste
     element->SetAttribute(ButtonDataConverter::CLICKED_TEXTURE_ATTRIBUTE_NAME, "TexturePath.png");
 
     Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::CLICKED_TEXTURE_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getClickedTextureDefaultPath(), converter.getClickedTexturePath());
+    Assert::IsTrue(converter.getClickedTexturePath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::AreEqual("TexturePath.png", converter.getClickedTexturePath().c_str());
   }
@@ -374,9 +374,9 @@ namespace TestCeleste
     const XMLElement* element = document.NewElement("Button");
 
     Assert::IsNull(element->FindAttribute(ButtonDataConverter::HIGHLIGHTED_SOUND_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getHighlightedSoundDefaultPath(), converter.getHighlightedSoundPath());
+    Assert::IsTrue(converter.getHighlightedSoundPath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(ButtonDataConverter::getHighlightedSoundDefaultPath(), converter.getHighlightedSoundPath());
+    Assert::IsTrue(converter.getHighlightedSoundPath().as_string().empty());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -388,7 +388,7 @@ namespace TestCeleste
     element->SetAttribute(ButtonDataConverter::HIGHLIGHTED_SOUND_ATTRIBUTE_NAME, "");
 
     Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::HIGHLIGHTED_SOUND_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getHighlightedSoundDefaultPath(), converter.getHighlightedSoundPath());
+    Assert::IsTrue(converter.getHighlightedSoundPath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::IsTrue(converter.getHighlightedSoundPath().as_string().empty());
   }
@@ -402,7 +402,7 @@ namespace TestCeleste
     element->SetAttribute(ButtonDataConverter::HIGHLIGHTED_SOUND_ATTRIBUTE_NAME, "SoundPath.png");
 
     Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::HIGHLIGHTED_SOUND_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getHighlightedSoundDefaultPath(), converter.getHighlightedSoundPath());
+    Assert::IsTrue(converter.getHighlightedSoundPath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::AreEqual("SoundPath.png", converter.getHighlightedSoundPath().c_str());
   }
@@ -419,9 +419,9 @@ namespace TestCeleste
     const XMLElement* element = document.NewElement("Button");
 
     Assert::IsNull(element->FindAttribute(ButtonDataConverter::CLICKED_SOUND_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getClickedSoundDefaultPath(), converter.getClickedSoundPath());
+    Assert::IsTrue(converter.getClickedSoundPath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
-    Assert::AreEqual(ButtonDataConverter::getClickedSoundDefaultPath(), converter.getClickedSoundPath());
+    Assert::IsTrue(converter.getClickedSoundPath().as_string().empty());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -433,7 +433,7 @@ namespace TestCeleste
     element->SetAttribute(ButtonDataConverter::CLICKED_SOUND_ATTRIBUTE_NAME, "");
 
     Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::CLICKED_SOUND_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getClickedSoundDefaultPath(), converter.getClickedSoundPath());
+    Assert::IsTrue(converter.getClickedSoundPath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::IsTrue(converter.getClickedSoundPath().as_string().empty());
   }
@@ -447,7 +447,7 @@ namespace TestCeleste
     element->SetAttribute(ButtonDataConverter::CLICKED_SOUND_ATTRIBUTE_NAME, "SoundPath.png");
 
     Assert::IsNotNull(static_cast<const XMLElement*>(element)->FindAttribute(ButtonDataConverter::CLICKED_SOUND_ATTRIBUTE_NAME));
-    Assert::AreEqual(ButtonDataConverter::getClickedSoundDefaultPath(), converter.getClickedSoundPath());
+    Assert::IsTrue(converter.getClickedSoundPath().as_string().empty());
     Assert::IsTrue(converter.convertFromXML(element));
     Assert::AreEqual("SoundPath.png", converter.getClickedSoundPath().c_str());
   }
@@ -497,12 +497,12 @@ namespace TestCeleste
     converter.setValues(*button);
 
     AssertCel::IsActive(*button);
-    Assert::IsNotNull(button->getDefaultTexture());
+    Assert::IsNotNull(button->getIdleTexture());
     Assert::IsNotNull(button->getHighlightedTexture());
     Assert::IsNotNull(button->getClickedTexture());
     Assert::IsNotNull(button->getHighlightedSound());
     Assert::IsNotNull(button->getClickedSound());
-    Assert::IsTrue(getResourceManager().load<Texture2D>(converter.getDefaultTexturePath()) == button->getDefaultTexture());
+    Assert::IsTrue(getResourceManager().load<Texture2D>(converter.getIdleTexturePath()) == button->getIdleTexture());
     Assert::IsTrue(getResourceManager().load<Texture2D>(converter.getHighlightedTexturePath()) == button->getHighlightedTexture());
     Assert::IsTrue(getResourceManager().load<Texture2D>(converter.getClickedTexturePath()) == button->getClickedTexture());
     Assert::IsTrue(getResourceManager().load<Sound>(converter.getHighlightedSoundPath()) == button->getHighlightedSound());

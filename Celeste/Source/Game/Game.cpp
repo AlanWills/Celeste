@@ -6,6 +6,7 @@
 
 #include "Serialization/MathsSerializers.h"
 #include "Settings/GameSettings.h"
+#include "Settings/StartupSettings.h"
 
 #include "Log/Log.h"
 #include "Debug/Logging/FileLogger.h"
@@ -159,6 +160,12 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void Game::applySettings() const
   {
+    std::unique_ptr<Settings::StartupSettings> startupSettings = ScriptableObject::load<Settings::StartupSettings>(Settings::StartupSettings::SETTINGS_RELATIVE_PATH);
+    if (startupSettings != nullptr)
+    {
+      startupSettings->apply();
+    }
+
     std::unique_ptr<Settings::GameSettings> gameSettings = ScriptableObject::load<Settings::GameSettings>(Settings::GameSettings::SETTINGS_RELATIVE_PATH);
     if (gameSettings != nullptr)
     {

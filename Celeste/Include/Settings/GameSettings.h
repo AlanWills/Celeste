@@ -11,11 +11,6 @@ namespace Celeste::Settings
     DECLARE_SCRIPTABLE_OBJECT(GameSettings, CelesteDllExport)
 
     public:
-      const std::string& getWindowTitle() const { return m_windowTitle.getValue(); }
-      void setWindowTitle(const std::string& windowTitle) { m_windowTitle.setValue(windowTitle); }
-
-      const std::string& getWindowIcon() const { return m_windowIcon.getValue(); }
-
       const glm::vec2& getResolution() const { return m_resolution.getValue(); }
       void setResolution(const glm::vec2& resolution) { m_resolution.setValue(resolution); }
 
@@ -41,8 +36,6 @@ namespace Celeste::Settings
     private:
       using Inherited = ScriptableObject;
 
-      ReferenceField<std::string>& m_windowTitle;
-      ReferenceField<std::string>& m_windowIcon;
       ReferenceField<glm::vec2>& m_resolution;
       ValueField<bool>& m_windowed;
       ValueField<bool>& m_vsyncEnabled;

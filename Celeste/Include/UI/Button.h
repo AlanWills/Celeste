@@ -48,8 +48,8 @@ namespace Celeste
           kClicked,
         };
 
-        inline observer_ptr<Resources::Texture2D> getDefaultTexture() const { return m_defaultTexture; }
-        CelesteDllExport void setDefaultTexture(const Path& texturePath);
+        inline observer_ptr<Resources::Texture2D> getIdleTexture() const { return m_idleTexture; }
+        CelesteDllExport void setIdleTexture(const Path& texturePath);
 
         inline observer_ptr<Resources::Texture2D> getHighlightedTexture() const { return m_highlightedTexture; }
         CelesteDllExport void setHighlightedTexture(const Path& texturePath);
@@ -81,7 +81,7 @@ namespace Celeste
 
         ButtonState m_state = ButtonState::kIdle;
 
-        observer_ptr<Resources::Texture2D> m_defaultTexture = nullptr;
+        observer_ptr<Resources::Texture2D> m_idleTexture = nullptr;
         observer_ptr<Resources::Texture2D> m_highlightedTexture = nullptr;
         observer_ptr<Resources::Texture2D> m_clickedTexture = nullptr;
 

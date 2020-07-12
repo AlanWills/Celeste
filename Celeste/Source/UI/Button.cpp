@@ -28,25 +28,6 @@ namespace Celeste
       m_mouseInteraction(gameObject.findComponent<MouseInteractionHandler>()),
       m_audio(gameObject.findComponent<Audio::AudioSource>())
     {
-      setDefaultTexture(ButtonDataConverter::getDefaultTextureDefaultPath());
-      ASSERT_NOT_NULL(m_defaultTexture);
-
-      setHighlightedTexture(ButtonDataConverter::getHighlightedTextureDefaultPath());
-      ASSERT_NOT_NULL(m_highlightedTexture);
-
-      setClickedTexture(ButtonDataConverter::getClickedTextureDefaultPath());
-      ASSERT_NOT_NULL(m_clickedTexture);
-
-      setHighlightedSound(ButtonDataConverter::getHighlightedSoundDefaultPath());
-      ASSERT_NOT_NULL(m_highlightedSound);
-
-      setClickedSound(ButtonDataConverter::getClickedSoundDefaultPath());
-      ASSERT_NOT_NULL(m_clickedSound);
-
-      // Set the default texture on the sprite renderer for this button
-      ASSERT_NOT_NULL(m_spriteRenderer);
-      m_spriteRenderer->setTexture(m_defaultTexture);
-
       // Set up the events for mouse interaction
       ASSERT_NOT_NULL(m_mouseInteraction);
       m_mouseInteraction->getOnEnterEvent().subscribe([this](GameObject&) -> void { onEnter(); });
@@ -78,7 +59,7 @@ namespace Celeste
     //------------------------------------------------------------------------------------------------
     void Button::onLeave()
     {
-      m_spriteRenderer->setTexture(m_defaultTexture);
+      m_spriteRenderer->setTexture(m_idleTexture);
       m_state = ButtonState::kIdle;
     }
 
@@ -88,13 +69,6 @@ namespace Celeste
       if (m_state != ButtonState::kClicked)
       {
         m_spriteRenderer->setTexture(m_clickedTexture);
-
-        if (m_audio != nullptr)
-        {
-          m_audio->setSound(m_clickedSound);
-          m_audio->play();
-        }
-
         m_state = ButtonState::kClicked;
       }
     }
@@ -104,7 +78,13 @@ namespace Celeste
     {
       if (m_state == ButtonState::kClicked)
       {
-        m_spriteRenderer->setTexture(m_defaultTexture);
+        if (m_audio != nullptr)
+        {
+          m_audio->setSound(m_clickedSound);
+          m_audio->play();
+        }
+
+        m_spriteRenderer->setTexture(m_idleTexture);
         m_state = ButtonState::kIdle;
       }
     }
@@ -124,38 +104,48 @@ namespace Celeste
     }
 
     //------------------------------------------------------------------------------------------------
-    void Button::setDefaultTexture(const Path& path)
+    void Button::setIdleTexture(const Path& path)
     {
-      m_defaultTexture = getResourceManager().load<Texture2D>(path);
-      ASSERT_NOT_NULL(m_defaultTexture);
+      m_idleTexture = getResourceManager().load<Texture2D>(path);
+
+      if (m_state == ButtonState::kIdle)
+      {
+        m_spriteRenderer->setTexture(m_idleTexture);
+      }
     }
 
     //------------------------------------------------------------------------------------------------
     void Button::setHighlightedTexture(const Path& path)
     {
       m_highlightedTexture = getResourceManager().load<Texture2D>(path);
-      ASSERT_NOT_NULL(m_highlightedTexture);
+
+      if (m_state == ButtonState::kHighlighted)
+      {
+        m_spriteRenderer->setTexture(m_highlightedTexture);
+      }
     }
 
     //------------------------------------------------------------------------------------------------
     void Button::setClickedTexture(const Path& path)
     {
       m_clickedTexture = getResourceManager().load<Texture2D>(path);
-      ASSERT_NOT_NULL(m_clickedTexture);
+
+      if (m_state == ButtonState::kClicked)
+      {
+        m_spriteRenderer->setTexture(m_clickedTexture);
+      }
     }
 
     //------------------------------------------------------------------------------------------------
     void Button::setHighlightedSound(const Path& path)
     {
       m_highlightedSound = getResourceManager().load<Sound>(path);
-      ASSERT_NOT_NULL(m_highlightedSound);
     }
 
     //------------------------------------------------------------------------------------------------
     void Button::setClickedSound(const Path& path)
     {
       m_clickedSound = getResourceManager().load<Sound>(path);
-      ASSERT_NOT_NULL(m_clickedSound);
     }
   }
 }

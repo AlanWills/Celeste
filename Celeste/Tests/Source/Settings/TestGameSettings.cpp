@@ -67,22 +67,6 @@ namespace TestCeleste::Settings
 #pragma region Constructor Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameSettings_Constructor_SetsWindowTitleToEmptyString)
-  {
-    std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
-
-    Assert::IsTrue(settings->getWindowTitle().empty());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameSettings_Constructor_SetsWindowIconToEmptyString)
-  {
-    std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");
-
-    Assert::IsTrue(settings->getWindowIcon().empty());
-  }
-
-  //------------------------------------------------------------------------------------------------
   TEST_METHOD(GameSettings_Constructor_SetsResolutionToEmptyString)
   {
     std::unique_ptr<GameSettings> settings = ScriptableObject::create<GameSettings>("");

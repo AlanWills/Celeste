@@ -12,14 +12,12 @@ namespace Celeste::Settings
 {
   REGISTER_SCRIPTABLE_OBJECT(GameSettings)
 
-    //------------------------------------------------------------------------------------------------
-    const Path GameSettings::SETTINGS_RELATIVE_PATH = Path("Data", "AppData", "GameSettings.asset");
+  //------------------------------------------------------------------------------------------------
+  const Path GameSettings::SETTINGS_RELATIVE_PATH = Path("Data", "AppData", "GameSettings.asset");
 
   //------------------------------------------------------------------------------------------------
   GameSettings::GameSettings() :
     Inherited(),
-    m_windowTitle(createReferenceField<std::string>("window_title")),
-    m_windowIcon(createReferenceField<std::string>("window_icon")),
     m_resolution(createReferenceField<glm::vec2>("resolution")),
     m_windowed(createValueField<bool>("windowed")),
     m_vsyncEnabled(createValueField("vsync_enabled", true)),
@@ -33,8 +31,6 @@ namespace Celeste::Settings
   void GameSettings::apply() const
   {
     OpenGLWindow& window = getWindow();
-    window.setTitle(getWindowTitle());
-    window.setIcon(Path(Resources::getResourcesDirectory(), getWindowIcon()).as_string());
     window.setWindowMode(isWindowed() ? OpenGLWindow::WindowMode::kWindowed : OpenGLWindow::WindowMode::kFullScreen);
 
     // Set window dimensions after we set window mode because the order matters
