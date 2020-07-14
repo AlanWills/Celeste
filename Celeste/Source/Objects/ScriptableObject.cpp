@@ -263,7 +263,7 @@ namespace Celeste
     {
       if (std::get<0>(m_scriptableObjects[i - 1]).get() == &scriptableObject)
       {
-        m_scriptableObjects.erase(m_scriptableObjects.begin() + i);
+        m_scriptableObjects.erase(m_scriptableObjects.begin() + i - 1);
         return;
       }
     }
