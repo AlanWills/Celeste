@@ -255,4 +255,29 @@ namespace Celeste
 
     return addScriptableObject(std::move(scriptableObject));
   }
+
+  //------------------------------------------------------------------------------------------------
+  void ScriptableObject::removeScriptableObject(const ScriptableObject& scriptableObject)
+  {
+    for (size_t i = m_scriptableObjects.size(); i > 0; --i)
+    {
+      if (std::get<0>(m_scriptableObjects[i - 1]).get() == &scriptableObject)
+      {
+        m_scriptableObjects.erase(m_scriptableObjects.begin() + i);
+        return;
+      }
+    }
+
+    ASSERT_FAIL();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void ScriptableObject::removeScriptableObject(size_t removeIndex)
+  {
+    ASSERT(removeIndex < m_scriptableObjects.size());
+    if (removeIndex < m_scriptableObjects.size())
+    {
+      m_scriptableObjects.erase(m_scriptableObjects.begin() + removeIndex);
+    }
+  }
 }

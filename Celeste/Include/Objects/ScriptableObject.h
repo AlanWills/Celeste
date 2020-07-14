@@ -63,6 +63,9 @@ namespace Celeste
       template <typename T>
       T& createScriptableObject(const std::string& name);
 
+      CelesteDllExport void removeScriptableObject(const ScriptableObject& scriptableObject);
+      CelesteDllExport void removeScriptableObject(size_t removeIndex);
+
       template <typename T>
       T& deserializeScriptableObject(const tinyxml2::XMLElement* element);
 
