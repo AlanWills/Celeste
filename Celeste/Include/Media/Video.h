@@ -2,24 +2,22 @@
 
 #include "CelesteDllExport.h"
 #include "VideoSettings.h"
+#include "FileSystem/Path.h"
 
 #include <string>
 
 
-namespace Celeste
+namespace Celeste::Media
 {
-  namespace Media
+  class Video
   {
-    class Video
-    {
-      public:
-        CelesteDllExport static void play(const std::string& videoPath, const VideoSettings& videoSettings);
-        CelesteDllExport static void playAsync(const std::string& videoPath, const VideoSettings& videoSettings);
+    public:
+      CelesteDllExport static void play(const std::string& videoPath, const VideoSettings& videoSettings);
+      CelesteDllExport static void playAsync(const std::string& videoPath, const VideoSettings& videoSettings);
 
-      private:
-        Video() = default;
+    private:
+      Video() = default;
 
-        static std::string m_ffplayExecutableName;
-    };
-  }
+      static Path m_ffplayExecutablePath;
+  };
 }
