@@ -27,35 +27,29 @@ namespace Celeste
       /// These methods are const so that we can expose the subscribe and unsubscribe through a const reference
       /// This saves a lot of boilerplate wrapper code in classes which use events
 
-      StringId subscribe(const Function& callback) const { return subscribe(callback, generateUniqueId()); }
-      StringId subscribe(const Function& callback, const std::string& name) const { return subscribe(callback, internString(name)); }
-      StringId subscribe(const Function& callback, StringId name) const
+      StringId subscribe(const Function& callback) { return subscribe(callback, generateUniqueId()); }
+      StringId subscribe(const Function& callback, const std::string& name) { return subscribe(callback, internString(name)); }
+      StringId subscribe(const Function& callback, StringId name)
       {
-        Event* e = const_cast<Event*>(this);
-        e->m_callbacks[name] = callback;
-      
+        m_callbacks[name] = callback;
         return name;
       }
 
-      StringId subscribe(Function&& callback) const { return subscribe(std::move(callback), generateUniqueId()); }
-      StringId subscribe(Function&& callback, const std::string& name) const { return subscribe(std::move(callback), internString(name)); }
-      StringId subscribe(Function&& callback, StringId name) const
+      StringId subscribe(Function&& callback) { return subscribe(std::move(callback), generateUniqueId()); }
+      StringId subscribe(Function&& callback, const std::string& name) { return subscribe(std::move(callback), internString(name)); }
+      StringId subscribe(Function&& callback, StringId name)
       {
-        Event* e = const_cast<Event*>(this);
-        e->m_callbacks[name] = std::move(callback);
-
+        m_callbacks[name] = std::move(callback);
         return name;
       }
  
-      void unsubscribe(const std::string& name) const { unsubscribe(internString(name)); }
-      void unsubscribe(StringId callbackId) const
+      void unsubscribe(const std::string& name) { unsubscribe(internString(name)); }
+      void unsubscribe(StringId callbackId)
       { 
-        Event* e = const_cast<Event*>(this);
-
-        auto it = e->m_callbacks.find(callbackId);
-        if (it != e->m_callbacks.end())
+        auto it = m_callbacks.find(callbackId);
+        if (it != m_callbacks.end())
         {
-          e->m_callbacks.erase(it);
+          m_callbacks.erase(it);
         }
       }
 

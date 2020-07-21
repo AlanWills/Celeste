@@ -13,7 +13,7 @@ namespace Celeste
     DECLARE_UNMANAGED_COMPONENT(LoadResourcesAsyncScript, CelesteDllExport)
 
     public:
-      const Event<>& getLoadCompleteEvent() const { return m_loadComplete; }
+      Event<>& getLoadCompleteEvent() { return m_loadComplete; }
 
       CelesteDllExport void update() override;
 

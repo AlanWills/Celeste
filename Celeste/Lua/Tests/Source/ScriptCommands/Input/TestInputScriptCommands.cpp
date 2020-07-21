@@ -35,6 +35,30 @@ namespace TestCeleste::Lua::ScriptCommands
   }
 
   //------------------------------------------------------------------------------------------------
+  TEST_METHOD(InputScriptCommands_Initialize_InitializesKeyboardScriptCommands)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state["Keyboard"].valid());
+
+    Celeste::Lua::Input::ScriptCommands::initialize(state);
+
+    Assert::IsTrue(state["Keyboard"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(InputScriptCommands_Initialize_InitializesKeyScriptCommands)
+  {
+    sol::state& state = LuaState::instance();
+
+    Assert::IsFalse(state["Key"].valid());
+
+    Celeste::Lua::Input::ScriptCommands::initialize(state);
+
+    Assert::IsTrue(state["Key"].valid());
+  }
+
+  //------------------------------------------------------------------------------------------------
   TEST_METHOD(InputScriptCommands_Initialize_InitializesKeyboardActivatorScriptCommands)
   {
     sol::state& state = LuaState::instance();

@@ -17,7 +17,7 @@ namespace Celeste::Events
       using GameObjectEvent = Event<GameObject&>;
       using Condition = std::function<bool(GameObject&)>;
 
-      inline const GameObjectEvent& getEvent() const { return m_event; }
+      inline GameObjectEvent& getEvent() { return m_event; }
       inline float getCurrentTriggerTimer() const { return m_currentTriggerTimer; }
 
       inline float getTriggerDelay() const { return m_triggerDelay; }

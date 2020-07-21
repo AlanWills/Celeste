@@ -22,7 +22,7 @@ namespace Celeste::UI
     inline float getCurrentValue() const { return m_currentValue; }
     CelesteDllExport void setCurrentValue(float currentValue);
 
-    inline const ValueChangedEvent& getValueChangedEvent() const { return m_valueChanged; }
+    inline ValueChangedEvent& getValueChangedEvent() { return m_valueChanged; }
 
     template <typename ...Callbacks>
     void subscribeValueChangedCallback(const Event<GameObject&, float>::Function& callback, const Callbacks&... callbacks);

@@ -18,7 +18,7 @@ namespace Celeste::Layout
   class LayoutSystem : public System::ISystem
   {
     public:
-      CelesteDllExport LayoutSystem(const OpenGLWindow& glWindow);
+      CelesteDllExport LayoutSystem(OpenGLWindow& glWindow);
       CelesteDllExport ~LayoutSystem();
 
       CelesteDllExport void update(float elapsedGameTime) override;
@@ -26,7 +26,7 @@ namespace Celeste::Layout
     private:
       void rescaleAll(const glm::vec2& newContentArea);
 
-      const OpenGLWindow& m_glWindow;
+      OpenGLWindow& m_glWindow;
       StringId m_resolutionChangedHandle = StringId();
       glm::vec2 m_lastAppliedContentArea;
   };

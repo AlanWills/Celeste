@@ -6,7 +6,7 @@
 namespace Celeste::Layout
 {
   //------------------------------------------------------------------------------------------------
-  LayoutSystem::LayoutSystem(const OpenGLWindow& glWindow) :
+  LayoutSystem::LayoutSystem(OpenGLWindow& glWindow) :
     m_glWindow(glWindow),
     m_resolutionChangedHandle(glWindow.getResolutionChangedEvent().subscribe(
       [this](const glm::vec2& clientSafeArea)

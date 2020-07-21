@@ -144,7 +144,7 @@ namespace Celeste::Lua
   //------------------------------------------------------------------------------------------------
   template <class TEvent, typename ...ArgTypes>
   StringId subscribeToEvent(
-    const TEvent& e,
+    TEvent& e,
     sol::protected_function function,
     sol::object extraArgs)
   {

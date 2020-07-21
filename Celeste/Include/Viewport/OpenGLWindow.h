@@ -46,7 +46,7 @@ namespace Celeste
       CelesteDllExport void setTitle(const std::string& windowTitle);
       CelesteDllExport void setIcon(const std::string& windowTitle);
 
-      const Event<const glm::vec2&>& getResolutionChangedEvent() const { return m_resolutionChanged; }
+      Event<const glm::vec2&>& getResolutionChangedEvent() { return m_resolutionChanged; }
 
     private:
       void initWindow(int targetResolutionX, int targetResolutionY , const std::string& title);

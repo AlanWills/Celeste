@@ -5,17 +5,15 @@
 #include "UtilityHeaders/GLHeaders.h"
 
 
-namespace Celeste
+namespace Celeste::Input
 {
-  namespace Input
-  {
-    #define KEYBOARD_KEY_COUNT GLFW_KEY_LAST + 1
+#define KEYBOARD_KEY_COUNT GLFW_KEY_LAST + 1
 
-    class Keyboard
-    {
+  class Keyboard
+  {
     public:
       CelesteDllExport Keyboard();
-      
+
       CelesteDllExport void update();
 
       CelesteDllExport void setKeyPressed(int key);
@@ -31,9 +29,9 @@ namespace Celeste
 
       void onTextInputted(char c) { m_textInputted.invoke(c); }
 
-      const Event<char>& getTextInputtedEvent() const { return m_textInputted; }
-      const Event<int>& getKeyPressedEvent() const { return m_keyPressed; }
-      const Event<int>& getKeyReleasedEvent() const { return m_keyReleased; }
+      Event<char>& getTextInputtedEvent() { return m_textInputted; }
+      Event<int>& getKeyPressedEvent() { return m_keyPressed; }
+      Event<int>& getKeyReleasedEvent() { return m_keyReleased; }
 
     protected:
       const GLboolean* getLatestKeys() const { return m_latestKeys; }
@@ -48,6 +46,5 @@ namespace Celeste
       Event<char> m_textInputted;
       Event<int> m_keyPressed;
       Event<int> m_keyReleased;
-    };
-  }
+  };
 }
