@@ -37,6 +37,7 @@ namespace Celeste::Lua::Input::KeyScriptCommands
       "Num5", GLFW_KEY_5,
       "Num6", GLFW_KEY_6,
       "Num7", GLFW_KEY_7,
-      "Num8", GLFW_KEY_8);
+      "Num8", GLFW_KEY_8,
+      "Num9", GLFW_KEY_9);
   }
 }
