@@ -1,6 +1,3 @@
-Build/
-bin/
-obj/
 dll/
 lib/
 *.tlog
@@ -19,3 +16,27 @@ Temp/
 .vs/
 *.ilk
 *.exp
+
+# Celeste Engine files
+*Log.txt
+*Profiler.txt
+
+# Dolce files
+*imgui.ini
+DolceSettings.asset
+
+# Installer files
+Install/
+
+# Build results
+CMakeFiles/
+[Bb]uild/
+[Bb]uilds/
+[Pp]roject/
+[Pp]rojects/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
