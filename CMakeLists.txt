@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.6)
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-	# We are building as stand-alone project
+	set(CELESTE_STANDALONE ON)
+	
 	project(Celeste)
+else()
+	set(CELESTE_STANDALONE OFF)
 endif()
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/BuildTools/BuildProject.txt)
@@ -59,47 +62,7 @@ cbt_add_packages(PACKAGES
 	CelesteTestResources
 	TestUtils
 	CelesteTestUtils)
-
-
-##------------------------------ Dev Tools ------------------------------##
-#INCLUDE_EXTERNAL_MSPROJECT(GuidGenerator ${CMAKE_CURRENT_SOURCE_DIR}/GuidGenerator/GuidGenerator.vcxproj)
-#set_target_properties(GuidGenerator PROPERTIES FOLDER DevTools)
-
-
-##------------------------------ Bindings ------------------------------##
-#INCLUDE_EXTERNAL_MSPROJECT(BindingsGenerator ${CMAKE_CURRENT_SOURCE_DIR}/BindingsGenerator/BindingsGenerator.vcxproj)
-#set_target_properties(BindingsGenerator PROPERTIES FOLDER Bindings)
-
-#INCLUDE_EXTERNAL_MSPROJECT(CelesteBindingsGenerator ${CMAKE_CURRENT_SOURCE_DIR}/CelesteBindingsGenerator/CelesteBindingsGenerator.vcxproj)
-#set_target_properties(CelesteBindingsGenerator PROPERTIES FOLDER Bindings)
-#add_dependencies(CelesteBindingsGenerator 
-#	BindingsGenerator)
 	
-#INCLUDE_EXTERNAL_MSPROJECT(BindingsKernel ${CMAKE_CURRENT_SOURCE_DIR}/BindingsKernel/BindingsKernel.csproj)
-#set_target_properties(BindingsKernel PROPERTIES FOLDER Bindings)
-
-#INCLUDE_EXTERNAL_MSPROJECT(CelesteBindingsLib ${CMAKE_CURRENT_SOURCE_DIR}/CelesteBindingsLib/CelesteBindingsLib.csproj)
-#set_target_properties(CelesteBindingsLib PROPERTIES FOLDER Bindings)
-
-#INCLUDE_EXTERNAL_MSPROJECT(CelesteBindings ${CMAKE_CURRENT_SOURCE_DIR}/CelesteBindings/CelesteBindings.csproj)
-#set_target_properties(CelesteBindings PROPERTIES FOLDER Bindings)
-#add_dependencies(CelesteBindings 
-#	BindingsKernel
-#	CelesteBindingsLib)
-	
-
-##------------------------------ Editor ------------------------------##
-#INCLUDE_EXTERNAL_MSPROJECT(CelesteEditorLibrary ${CMAKE_CURRENT_SOURCE_DIR}/CelesteEditorLibrary/CelesteEditorLibrary.csproj)
-#set_target_properties(CelesteEditorLibrary PROPERTIES FOLDER Editor)
-#add_dependencies(CelesteEditorLibrary
-#	BindingsKernel
-#	CelesteBindingsLib
-#	CelesteBindings)
-
-#INCLUDE_EXTERNAL_MSPROJECT(CelesteEditor ${CMAKE_CURRENT_SOURCE_DIR}/CelesteEditor/CelesteEditor.csproj)
-#set_target_properties(CelesteEditor PROPERTIES FOLDER Editor)
-#add_dependencies(CelesteEditor
-#	BindingsKernel
-#	CelesteBindingsLib
-#	CelesteBindings
-#	CelesteEditorLibrary)
+if(${CELESTE_STANDALONE})
+	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Celeste)
+endif()
