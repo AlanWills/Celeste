@@ -53,6 +53,7 @@ cbt_add_packages(PACKAGES
 	CelesteStl
 	Assert
 	Log
+	StringId
 	FileSystem
 	Lua
 	System

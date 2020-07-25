@@ -22,6 +22,7 @@ set(LIBS
     Platform
     Assert
     Log
+	StringId
     CelesteStl
     FileSystem
     FileSystemScriptCommands
