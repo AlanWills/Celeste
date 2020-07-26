@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UID/StringId.h"
+#include "StringId/string_id.h"
 #include "FileSystem/Directory.h"
 #include "Memory/Allocators/ResizeableAllocator.h"
 #include "CelesteStl/Memory/ObserverPtr.h"
@@ -40,7 +40,7 @@ namespace Celeste::Resources
       inline size_t size() const { return m_map.size(); }
 
     protected:
-      using Map = std::unordered_map<StringId, observer_ptr<T>>;
+      using Map = std::unordered_map<string_id, observer_ptr<T>>;
       using Memory = ResizeableAllocator<T>;
 
       Map m_map;
@@ -65,14 +65,14 @@ namespace Celeste::Resources
   bool ResourceLoader<T>::isResourceLoaded(const Path& relativeOrFullPath) const
   {
     // Check relative path first
-    StringId name = internString(relativeOrFullPath.as_string());
+    string_id name(relativeOrFullPath.as_string());
     if (m_map.find(name) != m_map.end())
     {
       return true;
     }
 
     // Then attempt to check the full path too
-    name = internString(Path(m_resourceDirectory.getDirectoryPath().as_string(), relativeOrFullPath).as_string());
+    name = string_id(Path(m_resourceDirectory.getDirectoryPath().as_string(), relativeOrFullPath).as_string());
     return m_map.find(name) != m_map.end();
   }
 
@@ -92,7 +92,7 @@ namespace Celeste::Resources
       }
     }
 
-    StringId name = internString(file.getFilePath().as_string());
+    string_id name(file.getFilePath().as_string());
     if (m_map.find(name) != m_map.end())
     {
       // If the name already exists in our dictionary just return it rather than loading it
@@ -131,7 +131,7 @@ namespace Celeste::Resources
   template <typename T>
   void ResourceLoader<T>::unloadResource(T& resource)
   {
-    StringId resourceId = resource.getResourceId();
+    string_id resourceId = resource.getResourceId();
 
     if (m_map.find(resourceId) == m_map.end())
     {
@@ -151,10 +151,10 @@ namespace Celeste::Resources
   template <typename T>
   void ResourceLoader<T>::unloadResource(const Path& relativeOrFullPath)
   {
-    StringId name = internString(relativeOrFullPath.as_string());
+    string_id name(relativeOrFullPath.as_string());
     if (m_map.find(name) == m_map.end())
     {
-      name = internString(Path(m_resourceDirectory.getDirectoryPath(), relativeOrFullPath).as_string());
+      name = string_id(Path(m_resourceDirectory.getDirectoryPath(), relativeOrFullPath).as_string());
       if (m_map.find(name) == m_map.end())
       {
         ASSERT_FAIL_MSG("Resource not in map.  Consider using the unloadResource overload which takes a handle to the resource");
@@ -188,8 +188,7 @@ namespace Celeste::Resources
   {
     for (T& resource : m_memory)
     {
-      // Guaranteed non-null by iterator
-      if (resource.getResourceId() == (StringId)0)
+      if (resource.getResourceId() == "")
       {
         // Only iterate over resources that are loaded
         continue;

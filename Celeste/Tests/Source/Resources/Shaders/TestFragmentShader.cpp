@@ -80,16 +80,16 @@ namespace TestCeleste
     }
 
     //----------------------------------------------------------------------------------------------------------
-    TEST_METHOD(FragmentShader_Unload_SetsResourceIdToZero)
+    TEST_METHOD(FragmentShader_Unload_SetsResourceIdToEmptyStringId)
     {
       MockFragmentShader shader;
       shader.loadFromFile(TestResources::getSpriteFragmentShaderFullPath());
 
-      Assert::AreNotEqual(static_cast<StringId>(0), shader.getResourceId());
+      Assert::AreNotEqual(string_id(), shader.getResourceId());
 
       shader.unload();
 
-      Assert::AreEqual(static_cast<StringId>(0), shader.getResourceId());
+      Assert::AreEqual(string_id(), shader.getResourceId());
     }
 
 #pragma endregion

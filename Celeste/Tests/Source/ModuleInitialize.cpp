@@ -23,10 +23,6 @@ namespace TestCeleste
 
     game = std::make_unique<Game>(1920, 1080, OpenGLWindow::WindowMode::kWindowed, "Test Celeste");
     game->getResourceManager().setResourcesDirectory(TestResources::getResourcesDirectory());
-
-    Celeste::Path celesteLuaScripts(Directory::getExecutingAppDirectory(), UPDIR_STRING, UPDIR_STRING, UPDIR_STRING,
-      "Celeste", "Celeste", "Lua", "Resources", "Scripts", "?.lua;");
-    Lua::LuaState::appendToLuaPackagePath(celesteLuaScripts);
   }
 
   //------------------------------------------------------------------------------------------------

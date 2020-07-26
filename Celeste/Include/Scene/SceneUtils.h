@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CelesteDllExport.h"
-#include "UID/StringId.h"
 #include "glm/glm.hpp"
 
 #include <string>

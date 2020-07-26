@@ -51,16 +51,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  GameObject* SceneManager::findWithTag(StringId tag)
-  {
-    return find([tag](const GameObject& gameObject)
-      {
-        return gameObject.getTag() == tag;
-      });
-  }
-
-  //------------------------------------------------------------------------------------------------
-  GameObject* SceneManager::find(StringId name)
+  GameObject* SceneManager::find(string_id name)
   {
     return find([name](const GameObject& gameObject)
       {

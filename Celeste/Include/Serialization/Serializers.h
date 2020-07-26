@@ -40,8 +40,4 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   template <>
   CelesteDllExport void serialize(Resources::Texture2D* value, std::string& output);
-
-  //------------------------------------------------------------------------------------------------
-  template <>
-  CelesteDllExport void serialize(const std::vector<Resources::Texture2D>& value, std::string& output);
 }

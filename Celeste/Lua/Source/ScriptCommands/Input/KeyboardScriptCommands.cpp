@@ -13,13 +13,13 @@ namespace Celeste::Lua::Input::KeyboardScriptCommands
   namespace Internals
   {
     //------------------------------------------------------------------------------------------------
-    StringId subscribeOnKeyPressedCallback(sol::protected_function function, sol::object extraArgs)
+    EventHandle subscribeOnKeyPressedCallback(sol::protected_function function, sol::object extraArgs)
     {
-      return Celeste::Lua::subscribeToEvent<Event<int>, int>(getKeyboard().getKeyPressedEvent(), function, extraArgs);
+      return Celeste::Lua::subscribeToEvent<int>(getKeyboard().getKeyPressedEvent(), function, extraArgs);
     }
 
     //------------------------------------------------------------------------------------------------
-    void unsubscribeOnKeyPressedCallback(Celeste::StringId eventHandle)
+    void unsubscribeOnKeyPressedCallback(EventHandle eventHandle)
     {
       getKeyboard().getKeyPressedEvent().unsubscribe(eventHandle);
     }

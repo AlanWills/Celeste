@@ -3,6 +3,7 @@
 #include "Objects/ScriptableObject.h"
 #include "Objects/Object.h"
 #include "Lua/LuaState.h"
+#include "Events/Event.h"
 #include "sol/sol.hpp"
 
 
@@ -142,16 +143,16 @@ namespace Celeste::Lua
   }
 
   //------------------------------------------------------------------------------------------------
-  template <class TEvent, typename ...ArgTypes>
-  StringId subscribeToEvent(
-    TEvent& e,
+  template <typename ...ArgTypes>
+  EventHandle subscribeToEvent(
+    Event<ArgTypes...>& e,
     sol::protected_function function,
     sol::object extraArgs)
   {
     if (!function.valid())
     {
       ASSERT_FAIL();
-      return StringId();
+      return EventHandle();
     }
 
     return e.subscribe([function, extraArgs](ArgTypes... args) -> void

@@ -201,7 +201,7 @@ namespace TestCeleste::Lua::ScriptCommands
     GameObject gameObject;
     gameObject.setName("");
 
-    Assert::AreEqual(internString(""), gameObject.getName());
+    Assert::AreEqual(string_id(""), gameObject.getName());
 
     auto functionResult = state.globals()["GameObject"]["getName"].get<sol::protected_function>().call(
       gameObject);
@@ -219,7 +219,7 @@ namespace TestCeleste::Lua::ScriptCommands
     GameObject gameObject;
     gameObject.setName("Test");
 
-    Assert::AreEqual(internString("Test"), gameObject.getName());
+    Assert::AreEqual(string_id("Test"), gameObject.getName());
 
     auto functionResult = state.globals()["GameObject"]["getName"].get<sol::protected_function>().call(
       gameObject);
@@ -241,19 +241,19 @@ namespace TestCeleste::Lua::ScriptCommands
     GameObject gameObject;
     gameObject.setName("Test");
 
-    Assert::AreEqual(internString("Test"), gameObject.getName());
+    Assert::AreEqual(string_id("Test"), gameObject.getName());
 
     auto functionResult = state.globals()["GameObject"]["setName"].get<sol::protected_function>().call(
       gameObject, "");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(internString(""), gameObject.getName());
+    Assert::AreEqual(string_id(""), gameObject.getName());
 
     functionResult = state.globals()["GameObject"]["setName"].get<sol::protected_function>().call(
       gameObject, "");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(internString(""), gameObject.getName());
+    Assert::AreEqual(string_id(""), gameObject.getName());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -264,19 +264,19 @@ namespace TestCeleste::Lua::ScriptCommands
 
     GameObject gameObject;
 
-    Assert::AreEqual(internString(""), gameObject.getName());
+    Assert::AreEqual(string_id(""), gameObject.getName());
 
     auto functionResult = state.globals()["GameObject"]["setName"].get<sol::protected_function>().call(
       gameObject, "Test");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(internString("Test"), gameObject.getName());
+    Assert::AreEqual(string_id("Test"), gameObject.getName());
 
     functionResult = state.globals()["GameObject"]["setName"].get<sol::protected_function>().call(
       gameObject, "Test2");
 
     Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual(internString("Test2"), gameObject.getName());
+    Assert::AreEqual(string_id("Test2"), gameObject.getName());
   }
 
 #pragma endregion

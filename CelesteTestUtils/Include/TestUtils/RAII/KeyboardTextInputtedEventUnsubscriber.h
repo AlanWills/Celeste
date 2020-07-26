@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UID/StringId.h"
+#include "Events/EventHandle.h"
 
 
 namespace CelesteTestUtils
@@ -8,10 +8,10 @@ namespace CelesteTestUtils
   class KeyboardTextInputtedEventUnsubscriber
   {
     public:
-      KeyboardTextInputtedEventUnsubscriber(Celeste::StringId eventId);
+      KeyboardTextInputtedEventUnsubscriber(Celeste::EventHandle eventHandle);
       ~KeyboardTextInputtedEventUnsubscriber();
 
     private:
-      Celeste::StringId m_eventHandle;
+      Celeste::EventHandle m_eventHandle;
   };
 }

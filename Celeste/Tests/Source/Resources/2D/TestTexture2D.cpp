@@ -109,11 +109,11 @@ namespace TestCeleste::Resources
     Texture2D texture;
     texture.loadFromFile(Path("ThisFileShouldntExist.png"));
 
-    Assert::AreEqual(static_cast<StringId>(0), texture.getResourceId());
+    Assert::AreEqual(string_id(), texture.getResourceId());
 
     texture.unload();
 
-    Assert::AreEqual(static_cast<StringId>(0), texture.getResourceId());
+    Assert::AreEqual(string_id(), texture.getResourceId());
   }
 
   //----------------------------------------------------------------------------------------------------------
@@ -122,11 +122,11 @@ namespace TestCeleste::Resources
     Texture2D texture;
     texture.loadFromFile(TestResources::getBlockPngFullPath());
 
-    Assert::AreNotEqual(static_cast<StringId>(0), texture.getResourceId());
+    Assert::AreNotEqual(string_id(), texture.getResourceId());
 
     texture.unload();
 
-    Assert::AreEqual(static_cast<StringId>(0), texture.getResourceId());
+    Assert::AreEqual(string_id(), texture.getResourceId());
   }
 
 #pragma endregion

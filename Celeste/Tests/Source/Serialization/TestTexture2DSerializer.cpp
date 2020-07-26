@@ -14,12 +14,14 @@ namespace TestCeleste::Serialization
 
 #pragma region Serialize Tests
 
+#pragma region Const Ref
+
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Texture2DSerializer_Serialize_InputtingTexture2D_WithNoResourceIdSet_SetsOutputToEmptyString)
+  TEST_METHOD(Texture2DSerializer_Serialize_InputtingUnloadedTexture2DRef_SetsOutputToEmptyString)
   {
     Texture2D texture;
 
-    Assert::AreEqual(static_cast<StringId>(0), texture.getResourceId());
+    Assert::AreEqual(string_id(), texture.getResourceId());
 
     std::string output;
     serialize<const Texture2D&>(texture, output);
@@ -37,7 +39,7 @@ namespace TestCeleste::Serialization
   {
     observer_ptr<Texture2D> texture = getResourceManager().load<Texture2D>(TestResources::getBlockPngRelativePath());
 
-    Assert::AreEqual(internString(TestResources::getBlockPngFullPath().as_string()), texture->getResourceId());
+    Assert::AreEqual(string_id(TestResources::getBlockPngFullPath().as_string()), texture->getResourceId());
 
     std::string output;
     serialize<const Texture2D&>(*texture, output);
@@ -49,6 +51,48 @@ namespace TestCeleste::Serialization
 
     Assert::AreEqual(TestResources::getBlockPngFullPath().as_string(), output);
   }
+
+#pragma endregion
+
+#pragma region Ptr
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(Texture2DSerializer_Serialize_InputtingUnloadedTexture2DPtr_SetsOutputToEmptyString)
+  {
+    Texture2D texture;
+
+    Assert::AreEqual(string_id(), texture.getResourceId());
+
+    std::string output;
+    serialize(&texture, output);
+
+    Assert::IsTrue(output.empty());
+
+    output.append("Wubba");
+    serialize(&texture, output);
+
+    Assert::IsTrue(output.empty());
+  }
+
+  //------------------------------------------------------------------------------------------------
+  TEST_METHOD(Texture2DSerializer_Serialize_InputtingLoadedTexture2DPtr_SetsOutputToFilePath)
+  {
+    observer_ptr<Texture2D> texture = getResourceManager().load<Texture2D>(TestResources::getBlockPngRelativePath());
+
+    Assert::AreEqual(string_id(TestResources::getBlockPngFullPath().as_string()), texture->getResourceId());
+
+    std::string output;
+    serialize(texture, output);
+
+    Assert::AreEqual(TestResources::getBlockPngFullPath().as_string(), output);
+
+    output.append("Wubba");
+    serialize(texture, output);
+
+    Assert::AreEqual(TestResources::getBlockPngFullPath().as_string(), output);
+  }
+
+#pragma endregion
 
 #pragma endregion
 

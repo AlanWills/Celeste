@@ -16,7 +16,7 @@ namespace Celeste::Resources
   class Font : public Resource
   {
     public:
-      CelesteDllExport FontInstance createInstance(float height);
+      CelesteDllExport std::unique_ptr<FontInstance> createInstance(float height);
 
     protected:
       size_t getNumberOfHeightsLoaded() const { return m_charactersLookup.size(); }
@@ -25,9 +25,9 @@ namespace Celeste::Resources
       CelesteDllExport void doUnload() override;
 
     private:
-      typedef std::unordered_map<char, Character> Characters;
-      typedef std::unordered_map<float, Characters> CharactersLookup;
-      typedef Resource Inherited;
+      using Characters = std::unordered_map<char, Character>;
+      using CharactersLookup = std::unordered_map<float, Characters>;
+      using Inherited = Resource;
 
       /// Load the characters, create textures for the inputted height and add to the characters lookup.
       /// If the characters already exist for the inputted height, do nothing.

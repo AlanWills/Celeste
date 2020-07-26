@@ -81,7 +81,7 @@ namespace TestCeleste
     GameObject gameObject;
     MockTextRenderer textRenderer(gameObject);
 
-    Assert::AreEqual(12.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(12.0f, textRenderer.getFontInstance()->getHeight());
   }
 
 #pragma endregion
@@ -95,11 +95,11 @@ namespace TestCeleste
     MockTextRenderer textRenderer(gameObject);
     textRenderer.setFontHeight(20);
 
-    Assert::AreEqual(20.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(20.0f, textRenderer.getFontInstance()->getHeight());
 
     textRenderer.setFont(TestResources::getArialTtfRelativePath().c_str());
 
-    Assert::AreEqual(12.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(12.0f, textRenderer.getFontInstance()->getHeight());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -109,11 +109,11 @@ namespace TestCeleste
     MockTextRenderer textRenderer(gameObject);
     textRenderer.setFontHeight(20);
 
-    Assert::AreEqual(20.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(20.0f, textRenderer.getFontInstance()->getHeight());
 
     textRenderer.setFont(TestResources::getArialTtfRelativePath());
 
-    Assert::AreEqual(12.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(12.0f, textRenderer.getFontInstance()->getHeight());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -123,11 +123,11 @@ namespace TestCeleste
     MockTextRenderer textRenderer(gameObject);
     textRenderer.setFontHeight(20);
 
-    Assert::AreEqual(20.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(20.0f, textRenderer.getFontInstance()->getHeight());
 
     textRenderer.setFont(Path(TestResources::getArialTtfRelativePath()));
 
-    Assert::AreEqual(12.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(12.0f, textRenderer.getFontInstance()->getHeight());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -136,11 +136,11 @@ namespace TestCeleste
     GameObject gameObject;
     MockTextRenderer textRenderer(gameObject);
 
-    Assert::AreEqual(12.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(12.0f, textRenderer.getFontInstance()->getHeight());
 
     textRenderer.setFont(TestResources::getArialTtfRelativePath().c_str(), 5);
 
-    Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(5.0f, textRenderer.getFontInstance()->getHeight());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -149,11 +149,11 @@ namespace TestCeleste
     GameObject gameObject;
     MockTextRenderer textRenderer(gameObject);
 
-    Assert::AreEqual(12.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(12.0f, textRenderer.getFontInstance()->getHeight());
 
     textRenderer.setFont(TestResources::getArialTtfRelativePath(), 5);
 
-    Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(5.0f, textRenderer.getFontInstance()->getHeight());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -162,11 +162,11 @@ namespace TestCeleste
     GameObject gameObject;
     MockTextRenderer textRenderer(gameObject);
 
-    Assert::AreEqual(12.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(12.0f, textRenderer.getFontInstance()->getHeight());
 
     textRenderer.setFont(Path(TestResources::getArialTtfRelativePath()), 5);
 
-    Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(5.0f, textRenderer.getFontInstance()->getHeight());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -177,11 +177,11 @@ namespace TestCeleste
 
     textRenderer.setFont(TestResources::getArialTtfRelativePath(), 5.0f);
 
-    Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(5.0f, textRenderer.getFontInstance()->getHeight());
 
     textRenderer.setFont("ThisFontDoesn'tExist.ttf");
 
-    Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(5.0f, textRenderer.getFontInstance()->getHeight());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -192,11 +192,11 @@ namespace TestCeleste
 
     textRenderer.setFont(TestResources::getArialTtfRelativePath(), 5.0f);
 
-    Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(5.0f, textRenderer.getFontInstance()->getHeight());
 
     textRenderer.setFont(std::string("ThisFontDoesn'tExist.ttf"));
 
-    Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(5.0f, textRenderer.getFontInstance()->getHeight());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -207,11 +207,11 @@ namespace TestCeleste
 
     textRenderer.setFont(TestResources::getArialTtfRelativePath(), 5.0f);
 
-    Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(5.0f, textRenderer.getFontInstance()->getHeight());
 
     textRenderer.setFont(Path("ThisFontDoesn'tExist.ttf"));
 
-    Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(5.0f, textRenderer.getFontInstance()->getHeight());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -223,14 +223,14 @@ namespace TestCeleste
 
     glm::vec2 dimensions = textRenderer.getDimensions();
 
-    Assert::AreEqual(textRenderer.getFont().measureString("Test").x, textRenderer.getDimensions().x);
-    Assert::AreEqual(textRenderer.getFont().getHeight(), textRenderer.getDimensions().y);
+    Assert::AreEqual(textRenderer.getFontInstance()->measureString("Test").x, textRenderer.getDimensions().x);
+    Assert::AreEqual(textRenderer.getFontInstance()->getHeight(), textRenderer.getDimensions().y);
 
-    textRenderer.setFont(TestResources::getArialTtfRelativePath().c_str(), textRenderer.getFont().getHeight() * 2);
+    textRenderer.setFont(TestResources::getArialTtfRelativePath().c_str(), textRenderer.getFontInstance()->getHeight() * 2);
 
     Assert::AreNotEqual(dimensions, textRenderer.getDimensions());
-    Assert::AreEqual(textRenderer.getFont().measureString("Test").x, textRenderer.getDimensions().x);
-    Assert::AreEqual(textRenderer.getFont().getHeight(), textRenderer.getDimensions().y);
+    Assert::AreEqual(textRenderer.getFontInstance()->measureString("Test").x, textRenderer.getDimensions().x);
+    Assert::AreEqual(textRenderer.getFontInstance()->getHeight(), textRenderer.getDimensions().y);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -242,10 +242,10 @@ namespace TestCeleste
 
     glm::vec2 dimensions = textRenderer.getDimensions();
 
-    Assert::AreEqual(textRenderer.getFont().measureString("Test").x, textRenderer.getDimensions().x);
-    Assert::AreEqual(textRenderer.getFont().getHeight(), textRenderer.getDimensions().y);
+    Assert::AreEqual(textRenderer.getFontInstance()->measureString("Test").x, textRenderer.getDimensions().x);
+    Assert::AreEqual(textRenderer.getFontInstance()->getHeight(), textRenderer.getDimensions().y);
 
-    textRenderer.setFont("WubbaLubbaDubDub", textRenderer.getFont().getHeight() * 2);
+    textRenderer.setFont("WubbaLubbaDubDub", textRenderer.getFontInstance()->getHeight() * 2);
 
     Assert::AreEqual(dimensions, textRenderer.getDimensions());
   }
@@ -261,25 +261,25 @@ namespace TestCeleste
     MockTextRenderer textRenderer(gameObject);
     textRenderer.setFont(TestResources::getArialTtfRelativePath(), 6.0f);
 
-    Assert::AreEqual(6.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(6.0f, textRenderer.getFontInstance()->getHeight());
 
     textRenderer.setFontHeight(10);
 
-    Assert::AreEqual(10.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(10.0f, textRenderer.getFontInstance()->getHeight());
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(TextRenderer_SetFontHeight_InputtingInvalidHeight_ChangesFontHeightToZero)
+  TEST_METHOD(TextRenderer_SetFontHeight_InputtingInvalidHeight_SetsFontInstanceToNullptr)
   {
     GameObject gameObject;
     MockTextRenderer textRenderer(gameObject);
     textRenderer.setFont(TestResources::getArialTtfRelativePath(), 6.0f);
 
-    Assert::AreEqual(6.0f, textRenderer.getFont().getHeight());
+    Assert::AreEqual(6.0f, textRenderer.getFontInstance()->getHeight());
 
     textRenderer.setFontHeight(-10);
 
-    Assert::AreEqual(0.0f, textRenderer.getFont().getHeight());
+    Assert::IsNull(textRenderer.getFontInstance());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -291,14 +291,14 @@ namespace TestCeleste
 
     glm::vec2 dimensions = textRenderer.getDimensions();
 
-    Assert::AreEqual(textRenderer.getFont().measureString("Test").x, textRenderer.getDimensions().x);
-    Assert::AreEqual(textRenderer.getFont().getHeight(), textRenderer.getDimensions().y);
+    Assert::AreEqual(textRenderer.getFontInstance()->measureString("Test").x, textRenderer.getDimensions().x);
+    Assert::AreEqual(textRenderer.getFontInstance()->getHeight(), textRenderer.getDimensions().y);
 
-    textRenderer.setFontHeight(textRenderer.getFont().getHeight() * 2);
+    textRenderer.setFontHeight(textRenderer.getFontInstance()->getHeight() * 2);
 
     Assert::AreNotEqual(dimensions, textRenderer.getDimensions());
-    Assert::AreEqual(textRenderer.getFont().measureString("Test").x, textRenderer.getDimensions().x);
-    Assert::AreEqual(textRenderer.getFont().getHeight(), textRenderer.getDimensions().y);
+    Assert::AreEqual(textRenderer.getFontInstance()->measureString("Test").x, textRenderer.getDimensions().x);
+    Assert::AreEqual(textRenderer.getFontInstance()->getHeight(), textRenderer.getDimensions().y);
   }
 
 #pragma endregion
@@ -404,7 +404,7 @@ namespace TestCeleste
     MockTextRenderer textRenderer(gameObject);
 
     Assert::AreEqual("", textRenderer.getText().c_str());
-    Assert::AreNotEqual(0.0f, textRenderer.getFont().getHeight());
+    Assert::AreNotEqual(0.0f, textRenderer.getFontInstance()->getHeight());
     Assert::AreEqual(glm::zero<glm::vec2>(), textRenderer.getDimensions());
   }
 
@@ -418,8 +418,8 @@ namespace TestCeleste
     textRenderer.setFont(TestResources::getArialTtfRelativePath(), 5);
     textRenderer.setText("Hello");
 
-    Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
-    Assert::AreEqual(font->createInstance(5).measureString("Hello"), textRenderer.getDimensions());
+    Assert::AreEqual(5.0f, textRenderer.getFontInstance()->getHeight());
+    Assert::AreEqual(font->createInstance(5)->measureString("Hello"), textRenderer.getDimensions());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -432,8 +432,8 @@ namespace TestCeleste
     textRenderer.setFont(TestResources::getArialTtfRelativePath(), 5);
     textRenderer.setText("Hello");
 
-    Assert::AreEqual(5.0f, textRenderer.getFont().getHeight());
-    Assert::AreEqual(font->createInstance(5).measureString("Hello"), textRenderer.getDimensions());
+    Assert::AreEqual(5.0f, textRenderer.getFontInstance()->getHeight());
+    Assert::AreEqual(font->createInstance(5)->measureString("Hello"), textRenderer.getDimensions());
   }
 
 #pragma endregion
@@ -489,11 +489,11 @@ namespace TestCeleste
     MockTextRenderer renderer(gameObject);
     renderer.setText("Test");
 
-    Assert::AreEqual(renderer.getFont().measureString("Test"), renderer.getDimensions());
+    Assert::AreEqual(renderer.getFontInstance()->measureString("Test"), renderer.getDimensions());
 
     renderer.setText("WubbaLubbaDubDub");
 
-    Assert::AreEqual(renderer.getFont().measureString("WubbaLubbaDubDub"), renderer.getDimensions());
+    Assert::AreEqual(renderer.getFontInstance()->measureString("WubbaLubbaDubDub"), renderer.getDimensions());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -517,11 +517,11 @@ namespace TestCeleste
     MockTextRenderer renderer(gameObject);
     renderer.setText("Test");
 
-    Assert::AreEqual(renderer.getFont().measureString("Test"), renderer.getDimensions());
+    Assert::AreEqual(renderer.getFontInstance()->measureString("Test"), renderer.getDimensions());
 
     renderer.setText("Wubba\nLubba\nDub\nDub");
 
-    Assert::AreEqual(renderer.getFont().measureString("Wubba\nLubba\nDub\nDub"), renderer.getDimensions());
+    Assert::AreEqual(renderer.getFontInstance()->measureString("Wubba\nLubba\nDub\nDub"), renderer.getDimensions());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -542,7 +542,7 @@ namespace TestCeleste
     GameObject gameObject;
     MockTextRenderer renderer(gameObject);
     renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kWrap);
-    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+    renderer.setMaxWidth(renderer.getFontInstance()->measureString("Wubba Lubba D").x);
     renderer.setText("Wubba Lubba Dub Dub");
 
     Assert::AreEqual("Wubba Lubba\nDub Dub", renderer.getText().c_str());
@@ -566,7 +566,7 @@ namespace TestCeleste
     GameObject gameObject;
     MockTextRenderer renderer(gameObject);
     renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kOverflow);
-    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+    renderer.setMaxWidth(renderer.getFontInstance()->measureString("Wubba Lubba D").x);
     renderer.setText("Wubba Lubba Dub Dub");
 
     Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());
@@ -595,7 +595,7 @@ namespace TestCeleste
     MockTextRenderer renderer(gameObject);
     renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kWrap);
     renderer.setText("Wubba Lubba Dub Dub");
-    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+    renderer.setMaxWidth(renderer.getFontInstance()->measureString("Wubba Lubba D").x);
 
     Assert::AreEqual("Wubba Lubba\nDub Dub", renderer.getText().c_str());
   }
@@ -619,7 +619,7 @@ namespace TestCeleste
     MockTextRenderer renderer(gameObject);
     renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kOverflow);
     renderer.setText("Wubba Lubba Dub Dub");
-    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+    renderer.setMaxWidth(renderer.getFontInstance()->measureString("Wubba Lubba D").x);
 
     Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());
   }
@@ -646,7 +646,7 @@ namespace TestCeleste
     GameObject gameObject;
     MockTextRenderer renderer(gameObject);
     renderer.setText("Wubba Lubba Dub Dub");
-    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+    renderer.setMaxWidth(renderer.getFontInstance()->measureString("Wubba Lubba D").x);
     renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kWrap);
 
     Assert::AreEqual("Wubba Lubba\nDub Dub", renderer.getText().c_str());
@@ -670,7 +670,7 @@ namespace TestCeleste
     GameObject gameObject;
     MockTextRenderer renderer(gameObject);
     renderer.setText("Wubba Lubba Dub Dub");
-    renderer.setMaxWidth(renderer.getFont().measureString("Wubba Lubba D").x);
+    renderer.setMaxWidth(renderer.getFontInstance()->measureString("Wubba Lubba D").x);
     renderer.setHorizontalWrapMode(UI::HorizontalWrapMode::kOverflow);
 
     Assert::AreEqual("Wubba Lubba Dub Dub", renderer.getText().c_str());

@@ -14,7 +14,7 @@ namespace Celeste::Rendering
   //------------------------------------------------------------------------------------------------
   TextRenderer::TextRenderer(GameObject& gameObject) :
     Inherited(gameObject),
-    m_font(),
+    m_fontInstance(),
     m_text(),
     m_dimensions()
   {
@@ -24,10 +24,15 @@ namespace Celeste::Rendering
   //------------------------------------------------------------------------------------------------
   void TextRenderer::render(const Program& shaderProgram, const glm::mat4& viewModelMatrix) const
   {
+    if (getFontInstance() == nullptr)
+    {
+      return;
+    }
+
     shaderProgram.setVector4f("colour", getColour());
 
     glm::vec2 halfTextSize = getDimensions() * 0.5f;
-    const FontInstance& font = getFont();
+    const FontInstance& font = *getFontInstance();
     float fontHeight = font.getHeight();
 
     // Cache this location here so it's not evaluated for every letter
@@ -100,22 +105,36 @@ namespace Celeste::Rendering
       return;
     }
 
-    m_font = font->createInstance(height);
+    m_fontInstance = font->createInstance(height);
     recalculateDimensions();
+  }
+
+  //------------------------------------------------------------------------------------------------
+  void TextRenderer::setFontHeight(float height)
+  { 
+    if (m_fontInstance != nullptr)
+    {
+      setFont(m_fontInstance->getFont().getFilePath(), height);
+    }
   }
 
   //------------------------------------------------------------------------------------------------
   void TextRenderer::recalculateDimensions()
   {
+    if (m_fontInstance == nullptr)
+    {
+      return;
+    }
+
     std::vector<std::string> lines;
     split(m_text, lines);
 
     m_dimensions.x = 0;
-    m_dimensions.y = lines.size() * m_font.getHeight();
+    m_dimensions.y = lines.size() * m_fontInstance->getHeight();
 
     for (const std::string& line : lines)
     {
-      m_dimensions.x = (std::max)(m_dimensions.x, m_font.measureString(line).x);
+      m_dimensions.x = (std::max)(m_dimensions.x, m_fontInstance->measureString(line).x);
     }
   }
 
@@ -163,7 +182,7 @@ namespace Celeste::Rendering
 
     while (nextOffset < m_text.npos)
     {
-      float extraWidth = m_font.measureString(m_text.begin() + currentOffset, m_text.begin() + nextOffset).x;
+      float extraWidth = m_fontInstance->measureString(m_text.begin() + currentOffset, m_text.begin() + nextOffset).x;
       
       if (currentWidth + extraWidth > m_maxWidth)
       {
@@ -178,7 +197,7 @@ namespace Celeste::Rendering
     }
 
     // Finally, have to check the last word
-    if (currentWidth + m_font.measureString(m_text.begin() + currentOffset, m_text.end()).x > m_maxWidth)
+    if (currentWidth + m_fontInstance->measureString(m_text.begin() + currentOffset, m_text.end()).x > m_maxWidth)
     {
       // We have gone over our max width so we move the word to the next line
       m_text[currentOffset] = '\n';

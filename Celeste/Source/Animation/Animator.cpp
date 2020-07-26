@@ -19,8 +19,7 @@ namespace Celeste::Animation
     m_loop(true),
     m_playing(false),
     m_currentSecondsPerFrame(0),
-    m_secondsPerFrame(0.1f),
-    m_name(0)
+    m_secondsPerFrame(0.1f)
   {
     ASSERT_NOT_NULL(m_spriteRenderer);
   }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UID/StringId.h"
+#include "StringId/string_id.h"
 #include "Debug/Logging/FileLogger.h"
 #include "Debug/Profiling/ProfilingBlock.h"
 #include "Memory/Allocators/PoolAllocator.h"
@@ -41,10 +41,10 @@ namespace Celeste
 
     private:
       /// \brief Build our profiling information into a string and write it to our log
-      void logProfilingBlockInfo(const std::pair<StringId, ProfilingBlock>& profilingInfo);
+      void logProfilingBlockInfo(const std::pair<const string_id, ProfilingBlock>& profilingInfo);
 
       /// The map we will store profiling information in
-      std::unordered_map<StringId, ProfilingBlock> m_profilingInfo;
+      std::unordered_map<string_id, ProfilingBlock> m_profilingInfo;
 
       /// Not necessary, but useful for debugging to make people aware they have closed off profiling blocks incorrectly
       std::string m_currentBlockName;

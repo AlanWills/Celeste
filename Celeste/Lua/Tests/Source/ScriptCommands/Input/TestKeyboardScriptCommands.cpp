@@ -98,7 +98,7 @@ namespace TestCeleste::Lua::ScriptCommands
 
     Assert::AreEqual(static_cast<size_t>(1), getKeyboard().getKeyPressedEvent().getSubscriberCount());
 
-    auto result = state["Keyboard"]["unsubscribeOnKeyPressedCallback"].get<sol::protected_function>().call(StringId());
+    auto result = state["Keyboard"]["unsubscribeOnKeyPressedCallback"].get<sol::protected_function>().call(EventHandle());
 
     Assert::IsTrue(result.valid());
     Assert::AreEqual(static_cast<size_t>(1), getKeyboard().getKeyPressedEvent().getSubscriberCount());
@@ -110,7 +110,7 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Input::KeyboardScriptCommands::initialize(state);
 
-    StringId id = getKeyboard().getKeyPressedEvent().subscribe([](int) {});
+    EventHandle id = getKeyboard().getKeyPressedEvent().subscribe([](int) {});
 
     Assert::AreEqual(static_cast<size_t>(1), getKeyboard().getKeyPressedEvent().getSubscriberCount());
 

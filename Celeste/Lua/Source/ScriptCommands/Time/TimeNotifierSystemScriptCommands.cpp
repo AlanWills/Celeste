@@ -20,12 +20,12 @@ namespace Celeste::Lua::Time::TimeNotifierSystemScriptCommands
     }
 
     //------------------------------------------------------------------------------------------------
-    StringId subscribeTimePassedCallback(TimeNotifierSystem& timeNotifierSystem, sol::protected_function function, sol::object extraArgs)
+    EventHandle subscribeTimePassedCallback(TimeNotifierSystem& timeNotifierSystem, sol::protected_function function, sol::object extraArgs)
     {
       if (!function.valid())
       {
         ASSERT_FAIL();
-        return StringId();
+        return EventHandle();
       }
 
       return timeNotifierSystem.subscribe([function, extraArgs](float deltaTime) -> void

@@ -23,7 +23,7 @@ namespace Celeste::Lua::Input::MouseInteractionHandlerScriptCommands
       sol::protected_function function,
       sol::object extraArgs)
     {
-      Celeste::Lua::subscribeToEvent<Celeste::Input::GameObjectEvent, GameObject&>(handler.getOnLeftButtonUpEvent(), function, extraArgs);
+      Celeste::Lua::subscribeToEvent<GameObject&>(handler.getOnLeftButtonUpEvent(), function, extraArgs);
     }
 
     //------------------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ namespace Celeste::Lua::Input::MouseInteractionHandlerScriptCommands
       sol::protected_function function,
       sol::object extraArgs)
     {
-      Celeste::Lua::subscribeToEvent<Celeste::Input::GameObjectEvent, GameObject&>(handler.getOnRightButtonUpEvent(), function, extraArgs);
+      Celeste::Lua::subscribeToEvent<GameObject&>(handler.getOnRightButtonUpEvent(), function, extraArgs);
     }
 
     //------------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ namespace Celeste::Lua::Input::MouseInteractionHandlerScriptCommands
       sol::protected_function function,
       sol::object extraArgs)
     {
-      Celeste::Lua::subscribeToEvent<Celeste::Input::GameObjectEvent, GameObject&>(handler.getOnEnterEvent(), function, extraArgs);
+      Celeste::Lua::subscribeToEvent<GameObject&>(handler.getOnEnterEvent(), function, extraArgs);
     }
 
     //------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ namespace Celeste::Lua::Input::MouseInteractionHandlerScriptCommands
       sol::protected_function function, 
       sol::object extraArgs)
     {
-      Celeste::Lua::subscribeToEvent<Celeste::Input::GameObjectEvent, GameObject&>(handler.getOnLeaveEvent(), function, extraArgs);
+      Celeste::Lua::subscribeToEvent<GameObject&>(handler.getOnLeaveEvent(), function, extraArgs);
     }
   }
 

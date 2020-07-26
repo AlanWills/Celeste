@@ -96,33 +96,7 @@ namespace TestCeleste::Animation
     Assert::AreEqual(0.1f, animator.getSecondsPerFrame());
   }
 
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Animator_Constructor_SetsNameToZero)
-  {
-    GameObject gameObject;
-    MockAnimator animator(gameObject);
-
-    Assert::AreEqual(static_cast<StringId>(0), animator.getName());
-  }
-
 #pragma endregion
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Animator_SetName)
-  {
-    GameObject gameObject;
-    MockAnimator animator(gameObject);
-
-    StringId nameId = internString("Test Animation");
-    animator.setName(nameId);
-
-    Assert::AreEqual(nameId, animator.getName());
-
-    nameId = internString("Test Animation 2");
-    animator.setName("Test Animation 2");
-
-    Assert::AreEqual(nameId, animator.getName());
-  }
 
   //------------------------------------------------------------------------------------------------
   TEST_METHOD(Animator_GetFrameCount_ReturnsSpriteSheetDimensionsMultipled)

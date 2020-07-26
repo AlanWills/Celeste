@@ -2,8 +2,8 @@
 
 #include "CelesteDllExport.h"
 #include "System/ISystem.h"
-#include "UID/StringId.h"
 #include "glm/glm.hpp"
+#include "Events/EventHandle.h"
 
 #include <vector>
 
@@ -27,7 +27,7 @@ namespace Celeste::Layout
       void rescaleAll(const glm::vec2& newContentArea);
 
       OpenGLWindow& m_glWindow;
-      StringId m_resolutionChangedHandle = StringId();
+      EventHandle m_resolutionChangedHandle = EventHandle();
       glm::vec2 m_lastAppliedContentArea;
   };
 }

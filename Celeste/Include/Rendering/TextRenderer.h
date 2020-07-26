@@ -21,10 +21,10 @@ namespace Celeste::Rendering
       void setFont(const char* relativePathToFont, float height = 12) { setFont(std::string(relativePathToFont), height); }
       void setFont(const Path& relativePathToFont, float height = 12) { setFont(relativePathToFont.as_string(), height); }
 
-      inline const Resources::FontInstance& getFont() const { return m_font; }
+      inline const Resources::FontInstance* getFontInstance() const { return m_fontInstance.get(); }
 
-      void setFontHeight(float height) { setFont(deinternString(m_font.getFontName()), height); }
-      inline float getFontHeight() const { return m_font.getHeight(); }
+      CelesteDllExport void setFontHeight(float height);
+      inline float getFontHeight() const { return m_fontInstance->getHeight(); }
 
       inline glm::vec2 getDimensions() const override { return m_dimensions; }
 
@@ -53,7 +53,7 @@ namespace Celeste::Rendering
       void layoutText();
       void recalculateDimensions();
 
-      Resources::FontInstance m_font;
+      std::unique_ptr<Resources::FontInstance> m_fontInstance;
 
       UI::HorizontalWrapMode m_horizontalWrapMode = UI::HorizontalWrapMode::kOverflow;
       UI::HorizontalAlignment m_horizontalAlignment = UI::HorizontalAlignment::kCentre;

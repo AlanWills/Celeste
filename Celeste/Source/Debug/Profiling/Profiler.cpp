@@ -19,7 +19,7 @@ namespace Celeste
   Profiler::~Profiler()
   {
     /// Write all information to log here
-    for (std::pair<const StringId, ProfilingBlock>& pair : m_profilingInfo)
+    for (auto& pair : m_profilingInfo)
     {
       // Close any open blocks
       if (!pair.second.isClosed())
@@ -36,7 +36,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  void Profiler::logProfilingBlockInfo(const std::pair<StringId, ProfilingBlock>& profilingInfo)
+  void Profiler::logProfilingBlockInfo(const std::pair<const string_id, ProfilingBlock>& profilingInfo)
   {
     // Write in chunks so we do not overflow the buffer
 
@@ -85,7 +85,7 @@ namespace Celeste
   {
     m_currentBlockName = profilingBlockName;
 
-    StringId blockStringId = internString(profilingBlockName);
+    string_id blockStringId(profilingBlockName);
     ProfilingBlock& profilingBlock = m_profilingInfo[blockStringId];
     profilingBlock.m_name = profilingBlockName;
     profilingBlock.m_startTime = std::chrono::system_clock::now();
@@ -100,7 +100,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   void Profiler::endProfilingBlock(const std::string& profilingBlockName)
   {
-    StringId blockStringId = internString(profilingBlockName);
+    string_id blockStringId(profilingBlockName);
 
     ASSERT(m_profilingInfo.find(blockStringId) != m_profilingInfo.end());
 
@@ -125,7 +125,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   const ProfilingBlock* Profiler::getProfilingBlock(const std::string& profilingBlockName)
   {
-    StringId blockStringId = internString(profilingBlockName);
+    string_id blockStringId(profilingBlockName);
 
     if (m_profilingInfo.find(blockStringId) == m_profilingInfo.end())
     {

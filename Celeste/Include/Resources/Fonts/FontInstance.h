@@ -2,44 +2,39 @@
 
 #include "CelesteDllExport.h"
 #include "Character.h"
-#include "UID/StringId.h"
+#include "StringId/string_id.h"
+
+#include <unordered_map>
 
 
-namespace Celeste
+namespace Celeste::Resources
 {
-  namespace Resources
+  class Font;
+
+  class FontInstance
   {
-    class Font;
+    public:
+      CelesteDllExport const Character* getCharacter(GLchar character) const;
+      float getHeight() const { return m_height; }
+      const Font& getFont() const { return m_font; }
 
-    class FontInstance
-    {
-      public:
-        CelesteDllExport FontInstance();
+      CelesteDllExport glm::vec2 measureString(std::string::const_iterator start, std::string::const_iterator end) const;
+      CelesteDllExport glm::vec2 measureString(const std::string& text) const;
+      CelesteDllExport void getLines(const std::string& text, float m_maxWidth, std::vector<std::string>& outputLines) const;
 
-        CelesteDllExport const Character* getCharacter(GLchar character) const;
-        float getHeight() const { return m_height; }
-        StringId getFontName() const { return m_fontName; }
+    protected:
+      size_t getNumberOfCharacters() const { return m_characters.size(); }
 
-        CelesteDllExport glm::vec2 measureString(std::string::const_iterator start, std::string::const_iterator end) const;
-        CelesteDllExport glm::vec2 measureString(const std::string& text) const;
-        CelesteDllExport void getLines(const std::string& text, float m_maxWidth, std::vector<std::string>& outputLines) const;
+    private:
+      using Characters = std::unordered_map<GLchar, Character> ;
 
-        CelesteDllExport void reset();
+      /// Only create FontInstances through a Font class
+      FontInstance(const Characters& fontCharacters, float height, const Font& font);
 
-      protected:
-        size_t getNumberOfCharacters() const { return m_characters.size(); }
+      Characters m_characters;
+      float m_height;
+      const Font& m_font;
 
-      private:
-        typedef std::unordered_map<GLchar, Character> Characters;
-
-        /// Only create FontInstances through a Font class
-        FontInstance(const Characters& fontCharacters, float height, StringId fontName);
-
-        Characters m_characters;
-        float m_height;
-        StringId m_fontName;
-
-        friend class Font;
-    };
-  }
+      friend class Font;
+  };
 }

@@ -1,6 +1,7 @@
 #include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "Time/TimeNotifierSystem.h"
 
+using namespace Celeste;
 using namespace Celeste::Time;
 
 
@@ -30,7 +31,7 @@ namespace TestCeleste::Time
   TEST_METHOD(TimeNotifierSystem_Unsubscribe_InputtingInvalidHandle_DoesNothing)
   {
     TimeNotifierSystem notifierSystem;
-    Celeste::StringId validHandle = notifierSystem.subscribe([](float) {});
+    EventHandle validHandle = notifierSystem.subscribe([](float) {});
 
     Assert::AreEqual(static_cast<size_t>(1), notifierSystem.getSubscriberCount());
 
@@ -43,7 +44,7 @@ namespace TestCeleste::Time
   TEST_METHOD(TimeNotifierSystem_Unsubscribe_InputtingValidHandle_RemovesCorrespondingCallback)
   {
     TimeNotifierSystem notifierSystem;
-    Celeste::StringId validHandle = notifierSystem.subscribe([](float) {});
+    EventHandle validHandle = notifierSystem.subscribe([](float) {});
 
     Assert::AreEqual(static_cast<size_t>(1), notifierSystem.getSubscriberCount());
 

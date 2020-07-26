@@ -74,7 +74,7 @@ namespace Celeste::Lua::Events::EventTriggererScriptCommands
       sol::protected_function callback,
       sol::object extraArgs)
     {
-      Celeste::Lua::subscribeToEvent<EventTriggerer::GameObjectEvent, GameObject&>(eventTriggerer.getEvent(), callback, extraArgs);
+      Celeste::Lua::subscribeToEvent<GameObject&>(eventTriggerer.getEvent(), callback, extraArgs);
     }
   }
 

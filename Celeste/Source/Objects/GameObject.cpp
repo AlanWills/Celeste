@@ -11,8 +11,7 @@ namespace Celeste
   //------------------------------------------------------------------------------------------------
   GameObject::GameObject() :
     m_transform(new Transform(*this)),
-    m_name(0),
-    m_tag(0)
+    m_name("")
   {
   }
 
@@ -218,7 +217,7 @@ namespace Celeste
   }
 
   //------------------------------------------------------------------------------------------------
-  GameObject* GameObject::findChild(StringId name)
+  GameObject* GameObject::findChild(string_id name)
   { 
     for (GameObject* gameObject : *this)
     {

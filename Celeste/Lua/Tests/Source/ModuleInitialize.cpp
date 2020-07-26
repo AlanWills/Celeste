@@ -4,7 +4,6 @@
 #include "Assert/Assert.h"
 #include "Assert/NullAsserter.h"
 #include "OpenGL/GL.h"
-#include "Lua/LuaState.h"
 #include "TestResources/TestResources.h"
 
 
@@ -23,10 +22,6 @@ namespace TestCelesteLua
 
     game = std::make_unique<Game>(50, 50, OpenGLWindow::WindowMode::kWindowed, "Test Celeste Lua");
     game->getResourceManager().setResourcesDirectory(TestResources::getResourcesDirectory());
-
-    Celeste::Path celesteLuaScripts(Directory::getExecutingAppDirectory(), UPDIR_STRING, UPDIR_STRING, UPDIR_STRING, 
-      "Celeste", "Celeste", "Lua", "Resources", "Scripts", "?.lua;");
-    Lua::LuaState::appendToLuaPackagePath(celesteLuaScripts);
   }
 
   //------------------------------------------------------------------------------------------------

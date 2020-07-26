@@ -23,10 +23,6 @@ namespace Celeste::Animation
       inline void setLooping(LoopMode shouldLoop) { m_loop = shouldLoop == LoopMode::kLooping; }
       inline bool isLooping() const { return m_loop; }
 
-      inline StringId getName() const { return m_name; }
-      inline void setName(StringId name) { m_name = name; }
-      inline void setName(const std::string& name) { m_name = internString(name); }
-
       inline size_t getFrameCount() const
       {
         return static_cast<size_t>(m_spriteSheetDimensions.x)* static_cast<size_t>(m_spriteSheetDimensions.y);
@@ -79,7 +75,5 @@ namespace Celeste::Animation
 
       float m_currentSecondsPerFrame;
       float m_secondsPerFrame;
-
-      StringId m_name;
   };
 }

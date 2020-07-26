@@ -128,32 +128,32 @@ namespace TestCeleste::Resources
   }
 
   //----------------------------------------------------------------------------------------------------------
-  TEST_METHOD(Sound_UnloadFromFile_WithNonLoadedSound_SetsResourceIdToZero)
+  TEST_METHOD(Sound_UnloadFromFile_WithNonLoadedSound_SetsResourceIdToEmptyStringId)
   {
     Sound sound;
     sound.loadFromFile(Path("ThisFileShouldntExist.wav"));
 
-    Assert::AreEqual(static_cast<StringId>(0), sound.getResourceId());
+    Assert::AreEqual(string_id(), sound.getResourceId());
 
     sound.unload();
 
-    Assert::AreEqual(static_cast<StringId>(0), sound.getResourceId());
+    Assert::AreEqual(string_id(), sound.getResourceId());
   }
 
   //----------------------------------------------------------------------------------------------------------
-  TEST_METHOD(Sound_UnloadFromFile_WithLoadedSound_SetsResourceIdToZero)
+  TEST_METHOD(Sound_UnloadFromFile_WithLoadedSound_SetsResourceIdToEmptyStringId)
   {
     Sound sound;
     sound.loadFromFile(TestResources::getButtonHoverWavFullPath());
 
-    Assert::AreNotEqual(static_cast<StringId>(0), sound.getResourceId());
+    Assert::AreNotEqual(string_id(), sound.getResourceId());
 
     sound.unload();
 
-    Assert::AreEqual(static_cast<StringId>(0), sound.getResourceId());
+    Assert::AreEqual(string_id(), sound.getResourceId());
   }
 
 #pragma endregion
 
-};
+  };
 }

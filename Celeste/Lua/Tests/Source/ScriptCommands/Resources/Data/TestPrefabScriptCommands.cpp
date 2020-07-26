@@ -71,7 +71,7 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Resources::PrefabScriptCommands::initialize(state);
 
-    Assert::AreEqual(static_cast<StringId>(0), prefab.getResourceId());
+    Assert::AreEqual(string_id(), prefab.getResourceId());
 
     sol::protected_function_result result = state["Prefab"]["instantiate"].get<sol::protected_function>().call(prefab);
 
@@ -88,7 +88,7 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Resources::PrefabScriptCommands::initialize(state);
 
-    Assert::AreNotEqual(static_cast<StringId>(0), prefab.getResourceId());
+    Assert::AreNotEqual(string_id(), prefab.getResourceId());
 
     sol::protected_function_result result = state["Prefab"]["instantiate"].get<sol::protected_function>().call(prefab);
 
@@ -105,7 +105,7 @@ namespace TestCeleste::Lua::ScriptCommands
     sol::state& state = LuaState::instance();
     Celeste::Lua::Resources::PrefabScriptCommands::initialize(state);
 
-    Assert::AreNotEqual(static_cast<StringId>(0), prefab.getResourceId());
+    Assert::AreNotEqual(string_id(), prefab.getResourceId());
 
     sol::protected_function_result result = state["Prefab"]["instantiate"].get<sol::protected_function>().call(prefab);
 
@@ -114,7 +114,7 @@ namespace TestCeleste::Lua::ScriptCommands
     observer_ptr<GameObject> gameObject = result.get<observer_ptr<GameObject>>();
 
     Assert::IsNotNull(gameObject);
-    Assert::AreEqual(internString("GameObject1"), gameObject->getName());
+    Assert::AreEqual(string_id("GameObject1"), gameObject->getName());
     AssertCel::HasComponent<Rendering::TextRenderer>(gameObject);
   }
 

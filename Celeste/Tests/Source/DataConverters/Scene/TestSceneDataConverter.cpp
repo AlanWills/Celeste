@@ -1256,7 +1256,6 @@ namespace TestCeleste
     tinyxml2::XMLElement* element = createGameObjectElement(document, "Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
     tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child", gameObjects);
-    gameObject->SetAttribute(GameObjectDataConverter::TAG_ATTRIBUTE_NAME, "UI");
     gameObject->SetAttribute(GameObjectDataConverter::POSITION_ATTRIBUTE_NAME, "1, 2, 3");
 
     Assert::IsTrue(converter.getGameObjects().empty());
@@ -1268,7 +1267,6 @@ namespace TestCeleste
     const GameObjectDataConverter& childConverter = *converter.getGameObjects()[0];
 
     Assert::AreEqual("Child", childConverter.getName().c_str());
-    Assert::AreEqual("UI", childConverter.getTag().c_str());
     Assert::AreEqual(glm::vec3(1, 2, 3), childConverter.getPosition());
   }
 
@@ -1339,10 +1337,8 @@ namespace TestCeleste
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
     tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child1", gameObjects);
-    gameObject->SetAttribute(GameObjectDataConverter::TAG_ATTRIBUTE_NAME, "UI");
     gameObject->SetAttribute(GameObjectDataConverter::POSITION_ATTRIBUTE_NAME, "1, 2, 3");
     tinyxml2::XMLElement* gameObject2 = createGameObjectElement(document, "Child2", gameObjects);
-    gameObject2->SetAttribute(GameObjectDataConverter::TAG_ATTRIBUTE_NAME, "World");
     gameObject2->SetAttribute(GameObjectDataConverter::POSITION_ATTRIBUTE_NAME, "4, 5, 6");
 
     Assert::IsTrue(converter.getGameObjects().empty());
@@ -1354,13 +1350,11 @@ namespace TestCeleste
     const GameObjectDataConverter& childConverter1 = *converter.getGameObjects()[0];
 
     Assert::AreEqual("Child1", childConverter1.getName().c_str());
-    Assert::AreEqual("UI", childConverter1.getTag().c_str());
     Assert::AreEqual(glm::vec3(1, 2, 3), childConverter1.getPosition());
 
     const GameObjectDataConverter& childConverter2 = *converter.getGameObjects()[1];
 
     Assert::AreEqual("Child2", childConverter2.getName().c_str());
-    Assert::AreEqual("World", childConverter2.getTag().c_str());
     Assert::AreEqual(glm::vec3(4, 5, 6), childConverter2.getPosition());
   }
 
@@ -1630,7 +1624,6 @@ namespace TestCeleste
     tinyxml2::XMLElement* element = document.NewElement("Test");
     tinyxml2::XMLElement* gameObjects = createGameObjectsElement(document, element);
     tinyxml2::XMLElement* gameObject = createGameObjectElement(document, "Child", gameObjects);
-    gameObject->SetAttribute(GameObjectDataConverter::TAG_ATTRIBUTE_NAME, "UI");
     gameObject->SetAttribute(GameObjectDataConverter::POSITION_ATTRIBUTE_NAME, "1, 2, 3");
     tinyxml2::XMLElement* prefab = createPrefabElement(document, "Child2", gameObjects);
     prefab->SetAttribute(PrefabDataConverter::PATH_ATTRIBUTE_NAME, PrefabLoadingResources::getValidSingleGameObjectRelativePath().c_str());
@@ -1646,7 +1639,6 @@ namespace TestCeleste
     const GameObjectDataConverter& gameObjectConverter = *converter.getGameObjects()[0];
 
     Assert::AreEqual("Child", gameObjectConverter.getName().c_str());
-    Assert::AreEqual("UI", gameObjectConverter.getTag().c_str());
     Assert::AreEqual(glm::vec3(1, 2, 3), gameObjectConverter.getPosition());
   }
 
@@ -1697,8 +1689,8 @@ namespace TestCeleste
 
     Assert::AreEqual(static_cast<size_t>(2), converter.getGameObjects().size());
     Assert::AreEqual(static_cast<size_t>(2), destroyer.m_gameObjects.size());
-    Assert::AreEqual(internString("Child1"), destroyer.m_gameObjects[0]->getName());
-    Assert::AreEqual(internString("Child2"), destroyer.m_gameObjects[1]->getName());
+    Assert::AreEqual(string_id("Child1"), destroyer.m_gameObjects[0]->getName());
+    Assert::AreEqual(string_id("Child2"), destroyer.m_gameObjects[1]->getName());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1743,8 +1735,8 @@ namespace TestCeleste
 
     Assert::AreEqual(static_cast<size_t>(2), converter.getGameObjects().size());
     Assert::AreEqual(static_cast<size_t>(2), destroyer.m_gameObjects.size());
-    Assert::AreEqual(internString("GameObject1"), destroyer.m_gameObjects[0]->getName());
-    Assert::AreEqual(internString("GameObject1"), destroyer.m_gameObjects[1]->getName());
+    Assert::AreEqual(string_id("GameObject1"), destroyer.m_gameObjects[0]->getName());
+    Assert::AreEqual(string_id("GameObject1"), destroyer.m_gameObjects[1]->getName());
     Assert::AreNotEqual(destroyer.m_gameObjects[0].get(), destroyer.m_gameObjects[1].get());
   }
 
@@ -1789,8 +1781,8 @@ namespace TestCeleste
 
     Assert::AreEqual(static_cast<size_t>(2), converter.getGameObjects().size());
     Assert::AreEqual(static_cast<size_t>(2), destroyer.m_gameObjects.size());
-    Assert::AreEqual(internString("Child1"), destroyer.m_gameObjects[0]->getName());
-    Assert::AreEqual(internString("GameObject1"), destroyer.m_gameObjects[1]->getName());
+    Assert::AreEqual(string_id("Child1"), destroyer.m_gameObjects[0]->getName());
+    Assert::AreEqual(string_id("GameObject1"), destroyer.m_gameObjects[1]->getName());
   }
 
   //------------------------------------------------------------------------------------------------

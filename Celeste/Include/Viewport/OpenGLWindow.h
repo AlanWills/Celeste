@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CelesteDllExport.h"
 #include "Events/Event.h"
 
 #include <glm/glm.hpp>

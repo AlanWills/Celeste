@@ -22,8 +22,7 @@ namespace Celeste::Lua::UI::SliderScriptCommands
       sol::protected_function function,
       sol::object extraArgs)
     {
-      Celeste::Lua::subscribeToEvent<Slider::ValueChangedEvent, GameObject&, float>(
-        slider.getValueChangedEvent(), function, extraArgs);
+      Celeste::Lua::subscribeToEvent<GameObject&, float>(slider.getValueChangedEvent(), function, extraArgs);
     }
   }
 

@@ -34,13 +34,13 @@ namespace Celeste::Maths
 
       void stretchWidth(float newWidth, UI::HorizontalAlignment anchor = UI::HorizontalAlignment::kCentre)
       {
-        m_centre.x -= ((int)anchor - 1) * (newWidth - m_dimensions.x) * 0.5f;
+        m_centre.x -= (static_cast<int>(anchor) - 1) * (newWidth - m_dimensions.x) * 0.5f;
         m_dimensions.x = newWidth;
       }
 
       void stretchHeight(float newHeight, UI::VerticalAlignment anchor = UI::VerticalAlignment::kCentre)
       {
-        m_centre.y -= ((int)anchor - 1) * (newHeight - m_dimensions.y) * 0.5f;
+        m_centre.y -= (static_cast<int>(anchor) - 1) * (newHeight - m_dimensions.y) * 0.5f;
         m_dimensions.y = newHeight;
       }
 

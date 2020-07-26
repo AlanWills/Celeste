@@ -11,7 +11,6 @@ namespace Celeste
 {
   //------------------------------------------------------------------------------------------------
   const char* const GameObjectDataConverter::NAME_ATTRIBUTE_NAME = "name";
-  const char* const GameObjectDataConverter::TAG_ATTRIBUTE_NAME = "tag";
   const char* const GameObjectDataConverter::POSITION_ATTRIBUTE_NAME = "position";
   const char* const GameObjectDataConverter::COMPONENTS_ELEMENT_NAME = "Components";
   const char* const GameObjectDataConverter::CHILD_GAME_OBJECTS_ELEMENT_NAME = "GameObjects";
@@ -20,7 +19,6 @@ namespace Celeste
   GameObjectDataConverter::GameObjectDataConverter(const std::string& elementName) :
     Inherited(elementName),
     m_name(createReferenceAttribute<std::string>(NAME_ATTRIBUTE_NAME, "", DeserializationRequirement::kRequired)),
-    m_tag(createReferenceAttribute<std::string>(TAG_ATTRIBUTE_NAME, "", DeserializationRequirement::kNotRequired)),
     m_position(createReferenceAttribute<glm::vec3>(POSITION_ATTRIBUTE_NAME)),
     m_components(createDataConverterListElement<ComponentDataConverter>(COMPONENTS_ELEMENT_NAME, DeserializationRequirement::kNotRequired)),
     m_childGameObjects(createDataConverterListElement<GameObjectDataConverter>(CHILD_GAME_OBJECTS_ELEMENT_NAME, DeserializationRequirement::kNotRequired))
@@ -36,11 +34,6 @@ namespace Celeste
 
     gameObject.setName(getName());
     gameObject.getTransform()->setTranslation(getPosition());
-
-    if (!getTag().empty())
-    {
-      gameObject.setTag(getTag());
-    }
 
     // Set up the hierarchy here first
     // Components can do name lookup and require these objects to all be created

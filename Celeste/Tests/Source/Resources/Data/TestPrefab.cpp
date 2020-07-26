@@ -193,7 +193,7 @@ namespace TestCeleste::Resources
   {
     Prefab prefab;
 
-    Assert::AreEqual(static_cast<StringId>(0), prefab.getResourceId());
+    Assert::AreEqual(string_id(), prefab.getResourceId());
     Assert::IsNull(prefab.instantiate());
   }
 
@@ -203,7 +203,7 @@ namespace TestCeleste::Resources
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getTwoParentGameObjectsFullPath());
 
-    Assert::AreNotEqual(static_cast<StringId>(0), prefab.getResourceId());
+    Assert::AreNotEqual(string_id(), prefab.getResourceId());
     Assert::IsFalse(prefab.getGameObjects().empty());
     Assert::AreEqual(static_cast<size_t>(2), prefab.getGameObjects().size());
     Assert::IsNull(prefab.instantiate());
@@ -215,7 +215,7 @@ namespace TestCeleste::Resources
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getValidSingleGameObjectFullPath());
 
-    Assert::AreNotEqual(static_cast<StringId>(0), prefab.getResourceId());
+    Assert::AreNotEqual(string_id(), prefab.getResourceId());
     Assert::IsFalse(prefab.getGameObjects().empty());
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects().size());
 
@@ -223,7 +223,7 @@ namespace TestCeleste::Resources
 
     Assert::IsNotNull(gameObject.get());
 
-    Assert::AreEqual(gameObject->getName(), internString(prefab.getGameObjects()[0]->getName()));
+    Assert::AreEqual(gameObject->getName(), string_id(prefab.getGameObjects()[0]->getName()));
   }
 
   //----------------------------------------------------------------------------------------------------------
@@ -232,7 +232,7 @@ namespace TestCeleste::Resources
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getValidMultipleGameObjectsFullPath());
 
-    Assert::AreNotEqual(static_cast<StringId>(0), prefab.getResourceId());
+    Assert::AreNotEqual(string_id(), prefab.getResourceId());
     Assert::IsFalse(prefab.getGameObjects().empty());
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects().size());
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects()[0]->getChildGameObjects().size());
@@ -251,7 +251,7 @@ namespace TestCeleste::Resources
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getValidMultipleChildrenForSingleParentFullPath());
 
-    Assert::AreNotEqual(static_cast<StringId>(0), prefab.getResourceId());
+    Assert::AreNotEqual(string_id(), prefab.getResourceId());
     Assert::IsFalse(prefab.getGameObjects().empty());
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects().size());
 
@@ -259,8 +259,8 @@ namespace TestCeleste::Resources
 
     Assert::IsNotNull(gameObject.get());
     Assert::AreEqual(static_cast<size_t>(2), gameObject->getChildCount());
-    Assert::AreEqual(internString("Child1"), gameObject->getChild(0)->getName());
-    Assert::AreEqual(internString("Child2"), gameObject->getChild(1)->getName());
+    Assert::AreEqual(string_id("Child1"), gameObject->getChild(0)->getName());
+    Assert::AreEqual(string_id("Child2"), gameObject->getChild(1)->getName());
   }
 
   //----------------------------------------------------------------------------------------------------------
@@ -269,7 +269,7 @@ namespace TestCeleste::Resources
     Prefab prefab;
     prefab.loadFromFile(PrefabLoadingResources::getValidMultipleGameObjectsFullPath());
 
-    Assert::AreNotEqual(static_cast<StringId>(0), prefab.getResourceId());
+    Assert::AreNotEqual(string_id(), prefab.getResourceId());
     Assert::IsFalse(prefab.getGameObjects().empty());
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects().size());
     Assert::AreEqual(static_cast<size_t>(1), prefab.getGameObjects()[0]->getChildGameObjects().size());

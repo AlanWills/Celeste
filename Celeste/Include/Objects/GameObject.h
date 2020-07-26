@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Entity.h"
-#include "UID/StringId.h"
+#include "StringId/string_id.h"
 #include "Maths/Transform.h"
 #include "Memory/Iterators/GameObjectIterator.h"
 #include "UtilityMacros/CustomMemoryMacros.h"
@@ -71,19 +71,15 @@ namespace Celeste
 
       CelesteDllExport void setActive(bool isActive) override;
 
-      inline void setName(const std::string& name) { m_name = internString(name); }
-      inline void setName(StringId name) { m_name = name; }
-      inline StringId getName() const { return m_name; }
-
-      inline void setTag(const std::string& tag) { m_tag = internString(tag); }
-      inline void setTag(StringId tag) { m_tag = tag; }
-      inline StringId getTag() const { return m_tag; }
+      inline void setName(const std::string& name) { m_name = string_id(name); }
+      inline void setName(string_id name) { m_name = std::move(name); }
+      inline string_id getName() const { return m_name; }
 
       inline size_t getChildCount() const { return m_transform != nullptr ? m_transform->getChildCount() : 0; }
       inline GameObject* getChild(size_t index) { return m_transform != nullptr ? m_transform->getChildGameObject(index) : nullptr; }
     
-      CelesteDllExport GameObject* findChild(StringId name);
-      GameObject* findChild(const std::string& name) { return findChild(internString(name)); }
+      CelesteDllExport GameObject* findChild(string_id name);
+      GameObject* findChild(const std::string& name) { return findChild(string_id(name)); }
 
       inline GameObjectIterator begin() const { return m_transform != nullptr ? m_transform->begin() : GameObjectIterator(std::vector<Transform*>::const_iterator()); }
       inline GameObjectIterator end() const { return m_transform != nullptr ? m_transform->end() : GameObjectIterator(std::vector<Transform*>::const_iterator()); }
@@ -116,11 +112,7 @@ namespace Celeste
 
       std::unique_ptr<Transform> m_transform;
 
-      /// Name should be a unique identifier
-      StringId m_name = 0;
-
-      /// Tag can be applied to more than one game object for identifying a type of object
-      StringId m_tag = 0;
+      string_id m_name;
 
       std::vector<Component*> m_managedComponents;
       std::vector<Component*> m_unmanagedComponents;

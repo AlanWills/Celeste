@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 
 function(cbt_build_executable)
-    #et(oneValueArgs NAME FOLDER SOURCE_DIR APP_FILE RUNTIME_OUTPUT_DIRECTORY)
+    set(oneValueArgs NAME FOLDER SOURCE_DIR APP_FILE RUNTIME_OUTPUT_DIRECTORY)
     set(multiValueArgs INCLUDES LIBS)
     cmake_parse_arguments(BUILD_EXECUTABLE "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN} )
@@ -16,6 +16,15 @@ function(cbt_build_executable)
     source_group(TREE ${BUILD_EXECUTABLE_SOURCE_DIR} PREFIX Include FILES ${HEADER_FILES})
     source_group(TREE ${BUILD_EXECUTABLE_SOURCE_DIR} FILES ${RESOURCE_FILES})
     
+    if (EXISTS ${BUILD_EXECUTABLE_SOURCE_DIR}/Schema)
+        file(GLOB_RECURSE SCHEMA_FILES ${BUILD_EXECUTABLE_SOURCE_DIR}/Schema/*.*)
+
+        source_group(TREE ${BUILD_EXECUTABLE_SOURCE_DIR} FILES ${SCHEMA_FILES})
+        set_source_files_properties(${SCHEMA_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+    else()
+        set(SCHEMA_FILES "")
+    endif()
+
     if (BUILD_EXECUTABLE_APP_FILE)
         source_group(TREE ${BUILD_EXECUTABLE_SOURCE_DIR} FILES ${BUILD_EXECUTABLE_APP_FILE})
     endif()
@@ -41,7 +50,7 @@ function(cbt_build_executable)
 
     target_include_directories(${PROJECT_NAME} PUBLIC "${BUILD_EXECUTABLE_INCLUDES}")
        
-    if (BUILD_EXECUTABLE_LIBS)
+    if(BUILD_EXECUTABLE_LIBS)
         target_link_libraries(${PROJECT_NAME} PUBLIC "${BUILD_EXECUTABLE_LIBS}")
     endif()
 
@@ -58,7 +67,7 @@ function(cbt_build_library)
 
     file(GLOB_RECURSE SOURCE_FILES ${BUILD_LIBRARY_SOURCE_DIR}/Source/*.c ${BUILD_LIBRARY_SOURCE_DIR}/Source/*.cpp)
     file(GLOB_RECURSE HEADER_FILES ${BUILD_LIBRARY_SOURCE_DIR}/Include/*.h ${BUILD_LIBRARY_SOURCE_DIR}/Include/*.hpp)
-    
+
     source_group(TREE ${BUILD_LIBRARY_SOURCE_DIR} FILES ${SOURCE_FILES})						   
     source_group(TREE ${BUILD_LIBRARY_SOURCE_DIR} FILES ${HEADER_FILES})
 
@@ -71,7 +80,16 @@ function(cbt_build_library)
         set(RESOURCE_FILES "")
     endif()
 
-    add_library(${PROJECT_NAME} ${BUILD_LIBRARY_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${RESOURCE_FILES})
+    if (EXISTS ${BUILD_LIBRARY_SOURCE_DIR}/Schema)
+        file(GLOB_RECURSE SCHEMA_FILES ${BUILD_LIBRARY_SOURCE_DIR}/Schema/*.*)
+
+        source_group(TREE ${BUILD_LIBRARY_SOURCE_DIR} FILES ${SCHEMA_FILES})
+        set_source_files_properties(${SCHEMA_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+    else()
+        set(SCHEMA_FILES "")
+    endif()
+
+    add_library(${PROJECT_NAME} ${BUILD_LIBRARY_TYPE} ${HEADER_FILES} ${SOURCE_FILES} ${RESOURCE_FILES} ${SCHEMA_FILES})
 
     IF(NOT BUILD_LIBRARY_RUNTIME_OUTPUT_DIRECTORY)
         set(BUILD_LIBRARY_RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR})
@@ -136,6 +154,10 @@ function(cbt_build_project)
             APP_FILE "${BUILD_PROJECT_APP_FILE}"
             RUNTIME_OUTPUT_DIRECTORY ${BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY})
     else()
+        if (NOT BUILD_PROJECT_RESOURCES_DIR)
+            set(BUILD_PROJECT_RESOURCES_DIR ${BUILD_PROJECT_SOURCE_DIR}/Resources)
+        endif()
+
         cbt_build_library(
             NAME ${BUILD_PROJECT_NAME}
             FOLDER ${BUILD_PROJECT_FOLDER}

@@ -41,7 +41,7 @@ namespace Celeste::Debug
     ImGui::SameLine();
 
     bool isActive = gameObject.isActive();
-    if (ImGui::Checkbox(deinternString(gameObject.getName()).c_str(), &isActive))
+    if (ImGui::Checkbox(gameObject.getName().debug_string(), &isActive))
     {
       gameObject.setActive(isActive);
     }

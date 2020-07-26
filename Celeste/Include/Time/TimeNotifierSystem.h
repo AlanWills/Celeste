@@ -15,8 +15,8 @@ namespace Celeste::Time
     public:
       CelesteDllExport void update(float elapsedGameTime) override;
 
-      CelesteDllExport StringId subscribe(TimeNotifierEvent::Function&& callback);
-      CelesteDllExport void unsubscribe(StringId eventHandle);
+      CelesteDllExport EventHandle subscribe(TimeNotifierEvent::Function&& callback);
+      CelesteDllExport void unsubscribe(EventHandle eventHandle);
       
       size_t getSubscriberCount() const { return m_timeNotifierEvent.getSubscriberCount(); }
 

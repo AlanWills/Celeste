@@ -2,7 +2,7 @@
 #include "UtilityMacros/Unused.h"
 
 #include "Objects/GameObject.h"
-#include "UID/StringId.h"
+#include "StringId/string_id.h"
 #include "Mocks/Objects/MockManagedComponent.h"
 #include "Mocks/Objects/MockUnmanagedComponent.h"
 #include "Mocks/Rendering/MockSpriteBatch.h"
@@ -27,40 +27,9 @@ namespace TestCeleste
   {
     GameObject gameObject;
 
-    Assert::AreEqual((StringId)0, gameObject.getName());
-    Assert::AreEqual((StringId)0, gameObject.getTag());
+    Assert::AreEqual(string_id(), gameObject.getName());
     Assert::AreEqual((size_t)0, gameObject.getChildCount());
     Assert::IsNotNull(gameObject.getTransform());
-  }
-
-#pragma endregion
-
-#pragma region Set Tag Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObject_SetTag_WithStringId)
-  {
-    GameObject gameObject;
-      
-    Assert::AreEqual((StringId)0, gameObject.getTag());
-
-    StringId id = internString("Test");
-    gameObject.setTag(id);
-
-    Assert::AreEqual(id, gameObject.getTag());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObject_SetTag_WithString)
-  {
-    GameObject gameObject;
-
-    Assert::AreEqual((StringId)0, gameObject.getTag());
-
-    StringId id = internString("Test");
-    gameObject.setTag("Test");
-
-    Assert::AreEqual(id, gameObject.getTag());
   }
 
 #pragma endregion
@@ -72,9 +41,9 @@ namespace TestCeleste
   {
     GameObject gameObject;
 
-    Assert::AreEqual((StringId)0, gameObject.getName());
+    Assert::AreEqual(string_id(), gameObject.getName());
 
-    StringId id = internString("Test");
+    string_id id("Test");
     gameObject.setName(id);
 
     Assert::AreEqual(id, gameObject.getName());
@@ -85,9 +54,9 @@ namespace TestCeleste
   {
     GameObject gameObject;
 
-    Assert::AreEqual((StringId)0, gameObject.getName());
+    Assert::AreEqual(string_id(), gameObject.getName());
 
-    StringId id = internString("Test");
+    string_id id("Test");
     gameObject.setName("Test");
 
     Assert::AreEqual(id, gameObject.getName());
@@ -470,7 +439,7 @@ namespace TestCeleste
     GameObject gameObject;
 
     Assert::AreEqual((size_t)0, gameObject.getChildCount());
-    Assert::IsNull(gameObject.findChild(internString("Test")));
+    Assert::IsNull(gameObject.findChild(string_id("Test")));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -483,7 +452,7 @@ namespace TestCeleste
     child1.setName("Test_2");
 
     Assert::AreEqual((size_t)1, gameObject.getChildCount());
-    Assert::IsNull(gameObject.findChild(internString("Test")));
+    Assert::IsNull(gameObject.findChild(string_id("Test")));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -496,7 +465,7 @@ namespace TestCeleste
     child1.setName("Test");
 
     Assert::AreEqual((size_t)1, gameObject.getChildCount());
-    Assert::IsTrue(&child1 == gameObject.findChild(internString("Test")));
+    Assert::IsTrue(&child1 == gameObject.findChild(string_id("Test")));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -512,7 +481,7 @@ namespace TestCeleste
     child2.setName("Test");
 
     Assert::AreEqual((size_t)2, gameObject.getChildCount());
-    Assert::IsTrue(&child1 == gameObject.findChild(internString("Test")));
+    Assert::IsTrue(&child1 == gameObject.findChild(string_id("Test")));
   }
 
 #pragma endregion

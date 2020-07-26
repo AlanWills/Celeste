@@ -158,7 +158,7 @@ namespace TestCeleste
   {
     SceneManager sceneManager;
 
-    Assert::IsNull(sceneManager.find(internString("Test")));
+    Assert::IsNull(sceneManager.find(string_id("Test")));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -166,9 +166,9 @@ namespace TestCeleste
   {
     SceneManager sceneManager;
     std::unique_ptr<GameObject> gameObject(new GameObject());
-    gameObject->setName(internString("Test"));
+    gameObject->setName(string_id("Test"));
 
-    Assert::AreEqual(gameObject.get(), sceneManager.find(internString("Test")));
+    Assert::AreEqual(gameObject.get(), sceneManager.find(string_id("Test")));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -178,11 +178,11 @@ namespace TestCeleste
     std::unique_ptr<GameObject> gameObject(new GameObject());
     std::unique_ptr<GameObject> gameObject2(new GameObject());
     std::unique_ptr<GameObject> gameObject3(new GameObject());
-    gameObject->setName(internString("Test"));
-    gameObject2->setName(internString("Test2"));
-    gameObject3->setName(internString("Test2"));
+    gameObject->setName(string_id("Test"));
+    gameObject2->setName(string_id("Test2"));
+    gameObject3->setName(string_id("Test2"));
 
-    Assert::AreEqual(gameObject2.get(), sceneManager.find(internString("Test2")));
+    Assert::AreEqual(gameObject2.get(), sceneManager.find(string_id("Test2")));
   }
 
 #pragma endregion
@@ -219,82 +219,6 @@ namespace TestCeleste
     gameObject3->setName("Test2");
 
     Assert::AreEqual(gameObject2.get(), sceneManager.find("Test2"));
-  }
-
-#pragma endregion
-
-#pragma endregion
-
-#pragma region Find With Tag Tests
-
-#pragma region StringId Overload
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SceneManager_FindWithTag_InputtingStringId_NoMatchingGameObject_ReturnsNullptr)
-  {
-    SceneManager sceneManager;
-
-    Assert::IsNull(sceneManager.findWithTag(internString("Test")));
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SceneManager_FindWithTag_InputtingStringId_OneMatchingGameObject_ReturnsCorrectPtr)
-  {
-    SceneManager sceneManager;
-    std::unique_ptr<GameObject> gameObject(new GameObject());
-    gameObject->setTag(internString("Test"));
-
-    Assert::AreEqual(gameObject.get(), sceneManager.findWithTag(internString("Test")));
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SceneManager_FindWithTag_InputtingStringId_MultipleMatchingGameObjects_ReturnsFirstMatchingPtr)
-  {
-    SceneManager sceneManager;
-    std::unique_ptr<GameObject> gameObject(new GameObject());
-    std::unique_ptr<GameObject> gameObject2(new GameObject());
-    std::unique_ptr<GameObject> gameObject3(new GameObject());
-    gameObject->setTag(internString("Test"));
-    gameObject2->setTag(internString("Test2"));
-    gameObject3->setTag(internString("Test2"));
-
-    Assert::AreEqual(gameObject2.get(), sceneManager.findWithTag(internString("Test2")));
-  }
-
-#pragma endregion
-
-#pragma region String Overload
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SceneManager_FindWithTag_InputtingString_NoMatchingGameObject_ReturnsNullptr)
-  {
-    SceneManager sceneManager;
-
-    Assert::IsNull(sceneManager.findWithTag("Test"));
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SceneManager_FindWithTag_InputtingString_OneMatchingGameObject_ReturnsCorrectPtr)
-  {
-    SceneManager sceneManager;
-    std::unique_ptr<GameObject> gameObject(new GameObject());
-    gameObject->setTag("Test");
-
-    Assert::AreEqual(gameObject.get(), sceneManager.findWithTag("Test"));
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(SceneManager_FindWithTag_InputtingString_MultipleMatchingGameObjects_ReturnsFirstMatchingPtr)
-  {
-    SceneManager sceneManager;
-    std::unique_ptr<GameObject> gameObject(new GameObject());
-    std::unique_ptr<GameObject> gameObject2(new GameObject());
-    std::unique_ptr<GameObject> gameObject3(new GameObject());
-    gameObject->setTag("Test");
-    gameObject2->setTag("Test2");
-    gameObject3->setTag("Test2");
-
-    Assert::AreEqual(gameObject2.get(), sceneManager.findWithTag("Test2"));
   }
 
 #pragma endregion

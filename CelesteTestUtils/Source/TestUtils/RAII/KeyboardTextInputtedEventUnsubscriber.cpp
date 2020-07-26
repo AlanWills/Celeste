@@ -6,7 +6,7 @@
 namespace CelesteTestUtils
 {
   //------------------------------------------------------------------------------------------------
-  KeyboardTextInputtedEventUnsubscriber::KeyboardTextInputtedEventUnsubscriber(Celeste::StringId eventId) :
+  KeyboardTextInputtedEventUnsubscriber::KeyboardTextInputtedEventUnsubscriber(Celeste::EventHandle eventId) :
     m_eventHandle(eventId) 
   { 
   }

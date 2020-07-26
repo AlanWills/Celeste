@@ -91,28 +91,28 @@ namespace TestCeleste
 #pragma region Subscribe Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_Subscribe_InputtingStringId_NotInMap_AddsFunctionToSubscriberList_AndReturnsStringId)
+    TEST_METHOD(Event_Subscribe_InputtingEventHandle_NotInMap_AddsFunctionToSubscriberList_AndReturnsEventHandle)
     {
       Event<int> event;
 
       bool called = false;
       auto f = [&called](int) -> void { called = true; };
-      StringId id = event.subscribe(f, 0);
+      EventHandle id = event.subscribe(f, EventHandle(1));
       event.invoke(5);
 
-      Assert::AreEqual((StringId)0, id);
+      Assert::AreEqual(EventHandle(), id);
       Assert::IsTrue(called);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_Subscribe_InputtingStringId_InMap_ChangesCallbackForSubscriber_AndReturnsStringId)
+    TEST_METHOD(Event_Subscribe_InputtingEventHandle_InMap_ChangesCallbackForSubscriber_AndReturnsEventHandle)
     {
       Event<int> event;
 
       bool called = false;
       auto f = [&called](int) -> void { called = true; };
       auto f2 = [&called](int) -> void { called = false; };
-      StringId id = event.subscribe(f, 0);
+      EventHandle id = event.subscribe(f, EventHandle(1));
       event.invoke(5);
 
       Assert::IsTrue(called);
@@ -124,25 +124,14 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_Subscribe_InputtingString_UsesAndReturnsStringId)
-    {
-      Event<int> event;
-
-      auto f = [](int) -> void { };
-      StringId id = event.subscribe(f, "Test");
-
-      Assert::AreEqual(internString("Test"), id);
-    }
-
-    //------------------------------------------------------------------------------------------------
     TEST_METHOD(Event_Subscribe_InputtingNoKey_CalculatesKeyNotInUse)
     {
       Event<int> event;
 
       auto f = [](int) -> void {};
-      StringId id = event.subscribe(f, "Test");
+      EventHandle id = event.subscribe(f);
 
-      Assert::AreNotEqual((StringId)0, id);
+      Assert::AreNotEqual(EventHandle(), id);
     }
 
 #pragma endregion
@@ -177,14 +166,14 @@ namespace TestCeleste
 #pragma region Unsubscribe Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_Unsubscribe_InputtingExistentStringId_RemovesEvent)
+    TEST_METHOD(Event_Unsubscribe_InputtingExistentEventHandle_RemovesEvent)
     {
       Event<int> event;
 
       bool called = false;
       auto f = [&called](int) -> void { called = true; };
 
-      StringId id = event.subscribe(f);
+      EventHandle id = event.subscribe(f);
       event.invoke(5);
 
       Assert::IsTrue(called);
@@ -197,60 +186,20 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_Unsubscribe_InputtingNonExistentStringId_DoesNothing)
+    TEST_METHOD(Event_Unsubscribe_InputtingNonExistentEventHandle_DoesNothing)
     {
       Event<int> event;
 
       bool called = false;
       auto f = [&called](int) -> void { called = true; };
 
-      StringId id = event.subscribe(f);
+      EventHandle id = event.subscribe(f);
       event.invoke(5);
 
       Assert::IsTrue(called);
 
       called = false;
       event.unsubscribe(id + 1);
-      event.invoke(5);
-
-      Assert::IsTrue(called);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_Unsubscribe_InputtingExistentString_RemovesEvent)
-    {
-      Event<int> event;
-
-      bool called = false;
-      auto f = [&called](int) -> void { called = true; };
-
-      event.subscribe(f, "Test");
-      event.invoke(5);
-
-      Assert::IsTrue(called);
-
-      called = false;
-      event.unsubscribe("Test");
-      event.invoke(5);
-
-      Assert::IsFalse(called);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_Unsubscribe_InputtingNonExistentString_DoesNothing)
-    {
-      Event<int> event;
-
-      bool called = false;
-      auto f = [&called](int) -> void { called = true; };
-
-      event.subscribe(f, "Test");
-      event.invoke(5);
-
-      Assert::IsTrue(called);
-
-      called = false;
-      event.unsubscribe("Test2");
       event.invoke(5);
 
       Assert::IsTrue(called);
@@ -298,28 +247,28 @@ namespace TestCeleste
 #pragma region Subscribe Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_MultiParam_Subscribe_InputtingStringId_NotInMap_AddsFunctionToSubscriberList_AndReturnsStringId)
+    TEST_METHOD(Event_MultiParam_Subscribe_InputtingEventHandle_NotInMap_AddsFunctionToSubscriberList_AndReturnsEventHandle)
     {
       Event<int, float> event;
 
       bool called = false;
       auto f = [&called](int, float) -> void { called = true; };
-      StringId id = event.subscribe(f, 0);
+      EventHandle id = event.subscribe(f, EventHandle(1));
       event.invoke(5, 0.1f);
 
-      Assert::AreEqual((StringId)0, id);
+      Assert::AreEqual(EventHandle(1), id);
       Assert::IsTrue(called);
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_MultiParam_Subscribe_InputtingStringId_InMap_ChangesCallbackForSubscriber_AndReturnsStringId)
+    TEST_METHOD(Event_MultiParam_Subscribe_InputtingEventHandle_InMap_ChangesCallbackForSubscriber_AndReturnsEventHandle)
     {
       Event<int, float> event;
 
       bool called = false;
       auto f = [&called](int, float) -> void { called = true; };
       auto f2 = [&called](int, float) -> void { called = false; };
-      StringId id = event.subscribe(f, 0);
+      EventHandle id = event.subscribe(f, EventHandle(1));
       event.invoke(5, 0.1f);
 
       Assert::IsTrue(called);
@@ -331,25 +280,14 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_MultiParam_Subscribe_InputtingString_UsesAndReturnsStringId)
-    {
-      Event<int, float> event;
-
-      auto f = [](int, float) -> void {};
-      StringId id = event.subscribe(f, "Test");
-
-      Assert::AreEqual(internString("Test"), id);
-    }
-
-    //------------------------------------------------------------------------------------------------
     TEST_METHOD(Event_MultiParam_Subscribe_InputtingNoKey_CalculatesKeyNotInUse)
     {
       Event<int, float> event;
 
       auto f = [](int, float) -> void {};
-      StringId id = event.subscribe(f, "Test");
+      EventHandle id = event.subscribe(f);
 
-      Assert::AreNotEqual((StringId)0, id);
+      Assert::AreNotEqual(EventHandle(), id);
     }
 
 #pragma endregion
@@ -384,14 +322,14 @@ namespace TestCeleste
 #pragma region Unsubscribe Tests
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_MultiParam_Unsubscribe_InputtingExistentStringId_RemovesEvent)
+    TEST_METHOD(Event_MultiParam_Unsubscribe_InputtingExistentEventHandle_RemovesEvent)
     {
       Event<int, float> event;
 
       bool called = false;
       auto f = [&called](int, float) -> void { called = true; };
 
-      StringId id = event.subscribe(f);
+      EventHandle id = event.subscribe(f);
       event.invoke(5, 0.1f);
 
       Assert::IsTrue(called);
@@ -404,60 +342,20 @@ namespace TestCeleste
     }
 
     //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_MultiParam_Unsubscribe_InputtingNonExistentStringId_DoesNothing)
+    TEST_METHOD(Event_MultiParam_Unsubscribe_InputtingNonExistentEventHandle_DoesNothing)
     {
       Event<int, float> event;
 
       bool called = false;
       auto f = [&called](int, float) -> void { called = true; };
 
-      StringId id = event.subscribe(f);
+      EventHandle id = event.subscribe(f);
       event.invoke(5, 0.1f);
 
       Assert::IsTrue(called);
 
       called = false;
       event.unsubscribe(id + 1);
-      event.invoke(5, 0.1f);
-
-      Assert::IsTrue(called);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_MultiParam_Unsubscribe_InputtingExistentString_RemovesEvent)
-    {
-      Event<int, float> event;
-
-      bool called = false;
-      auto f = [&called](int, float) -> void { called = true; };
-
-      event.subscribe(f, "Test");
-      event.invoke(5, 0.1f);
-
-      Assert::IsTrue(called);
-
-      called = false;
-      event.unsubscribe("Test");
-      event.invoke(5, 0.1f);
-
-      Assert::IsFalse(called);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    TEST_METHOD(Event_MultiParam_Unsubscribe_InputtingNonExistentString_DoesNothing)
-    {
-      Event<int, float> event;
-
-      bool called = false;
-      auto f = [&called](int, float) -> void { called = true; };
-
-      event.subscribe(f, "Test");
-      event.invoke(5, 0.1f);
-
-      Assert::IsTrue(called);
-
-      called = false;
-      event.unsubscribe("Test2");
       event.invoke(5, 0.1f);
 
       Assert::IsTrue(called);

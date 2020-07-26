@@ -99,7 +99,7 @@ namespace TestCeleste::Lua::TimeNotifierSystemScriptCommands
     Celeste::Lua::Time::TimeNotifierSystemScriptCommands::initialize(state);
 
     TimeNotifierSystem notifierSystem;
-    StringId validHandle = notifierSystem.subscribe([](float) {});
+    EventHandle validHandle = notifierSystem.subscribe([](float) {});
 
     Assert::AreEqual(static_cast<size_t>(1), notifierSystem.getSubscriberCount());
 
@@ -116,7 +116,7 @@ namespace TestCeleste::Lua::TimeNotifierSystemScriptCommands
     Celeste::Lua::Time::TimeNotifierSystemScriptCommands::initialize(state);
 
     TimeNotifierSystem notifierSystem;
-    StringId validHandle = notifierSystem.subscribe([](float) {});
+    EventHandle validHandle = notifierSystem.subscribe([](float) {});
 
     Assert::AreEqual(static_cast<size_t>(1), notifierSystem.getSubscriberCount());
 

@@ -22,12 +22,6 @@ namespace Celeste::Lua::GameObjectScriptCommands
   namespace Internals
   {
     //------------------------------------------------------------------------------------------------
-    std::string getName(GameObject& gameObject)
-    {
-      return deinternString(gameObject.getName());
-    }
-
-    //------------------------------------------------------------------------------------------------
     void setName_String(GameObject& gameObject, const std::string& name)
     {
       gameObject.setName(name);
@@ -62,12 +56,6 @@ namespace Celeste::Lua::GameObjectScriptCommands
     {
       return getSceneManager().find(childName);
     }
-
-    //------------------------------------------------------------------------------------------------
-    observer_ptr<GameObject> findGameObject_StringIdOverload(StringId childName)
-    {
-      return getSceneManager().find(childName);
-    }
   }
 
   //------------------------------------------------------------------------------------------------
@@ -77,7 +65,6 @@ namespace Celeste::Lua::GameObjectScriptCommands
       state,
       "GameObject",
       sol::base_classes, sol::bases<Entity, Object>(),
-      "getName", &Internals::getName,
       "setName", &Internals::setName_String,
       "getParent", &Internals::getParent,
       "setParent", &GameObject::setParent,
@@ -88,7 +75,7 @@ namespace Celeste::Lua::GameObjectScriptCommands
       "getChildCount", &GameObject::getChildCount,
       "getChild", &GameObject::getChild,
       "findChild", &Internals::findChildGameObject,
-      "find", sol::overload(&Internals::findGameObject_StringOverload, Internals::findGameObject_StringIdOverload));
+      "find", &Internals::findGameObject_StringOverload);
 
     LuaState::requireModule("Objects.GameObject");
   }

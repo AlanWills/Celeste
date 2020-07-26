@@ -4,77 +4,117 @@
 #include "TestResources/TestResources.h"
 
 
-namespace TestCeleste
+namespace TestCeleste::Resources
 {
-  namespace Resources
-  {
-    CELESTE_TEST_CLASS(TestResource)
+  CELESTE_TEST_CLASS(TestResource)
 
 #pragma region Load From File Tests
 
     //----------------------------------------------------------------------------------------------------------
     TEST_METHOD(Resource_LoadFromFile_PathThatDoesntExist_ReturnsFalse)
-    {
-      MockResource resource;
-      Assert::IsFalse(resource.loadFromFile(Path("ThisPathDoesntExist")));
-    }
+  {
+    MockResource resource;
+    Assert::IsFalse(resource.loadFromFile(Path("ThisPathDoesntExist")));
+  }
 
-    //----------------------------------------------------------------------------------------------------------
-    TEST_METHOD(Resource_LoadFromFile_PathThatDoesntExist_DoesNotSetResourceId)
-    {
-      MockResource resource;
-      resource.loadFromFile(Path("ThisPathDoesntExist"));
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Resource_LoadFromFile_PathThatDoesntExist_DoesNotSetResourceId)
+  {
+    MockResource resource;
+    resource.loadFromFile(Path("ThisPathDoesntExist"));
 
-      Assert::AreEqual(static_cast<StringId>(0), resource.getResourceId());
-    }
+    Assert::AreEqual(string_id(), resource.getResourceId());
+  }
 
-    //----------------------------------------------------------------------------------------------------------
-    TEST_METHOD(Resource_LoadFromFile_PathThatDoesExist_ReturnsTrue)
-    {
-      MockResource resource;
-      Assert::IsTrue(resource.loadFromFile(Path(TestResources::getSpriteVertexShaderFullPath())));
-    }
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Resource_LoadFromFile_PathThatDoesntExist_DoesNotSetFilePath)
+  {
+    MockResource resource;
+    resource.loadFromFile(Path("ThisPathDoesntExist"));
 
-    //----------------------------------------------------------------------------------------------------------
-    TEST_METHOD(Resource_LoadFromFile_PathThatDoesExist_SetsResourceIdToFilePath)
-    {
-      MockResource resource;
-      resource.loadFromFile(Path(TestResources::getSpriteVertexShaderFullPath()));
+    Assert::AreEqual("", resource.getFilePath().c_str());
+  }
 
-      Assert::AreEqual(internString(TestResources::getSpriteVertexShaderFullPath().as_string()), resource.getResourceId());
-    }
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Resource_LoadFromFile_PathThatDoesExist_ReturnsTrue)
+  {
+    MockResource resource;
+    Assert::IsTrue(resource.loadFromFile(Path(TestResources::getSpriteVertexShaderFullPath())));
+  }
+
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Resource_LoadFromFile_PathThatDoesExist_SetsResourceIdToFilePath)
+  {
+    MockResource resource;
+    resource.loadFromFile(TestResources::getSpriteVertexShaderFullPath());
+
+    Assert::AreEqual(string_id(TestResources::getSpriteVertexShaderFullPath().as_string()), resource.getResourceId());
+  }
+
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Resource_LoadFromFile_PathThatDoesExist_SetFilePath)
+  {
+    MockResource resource;
+    resource.loadFromFile(TestResources::getSpriteVertexShaderFullPath());
+
+    Assert::AreEqual(TestResources::getSpriteVertexShaderFullPath(), resource.getFilePath());
+  }
 
 #pragma endregion
 
 #pragma region Unload Tests
 
-    //----------------------------------------------------------------------------------------------------------
-    TEST_METHOD(Resource_UnloadFromFile_NotLoadedResource_SetsResourceIdToZero)
-    {
-      MockResource resource;
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Resource_UnloadFromFile_NotLoadedResource_SetsResourceIdToEmptyStringId)
+  {
+    MockResource resource;
 
-      Assert::AreEqual(static_cast<StringId>(0), resource.getResourceId());
+    Assert::AreEqual(string_id(), resource.getResourceId());
 
-      resource.unload();
+    resource.unload();
 
-      Assert::AreEqual(static_cast<StringId>(0), resource.getResourceId());
-    }
+    Assert::AreEqual(string_id(), resource.getResourceId());
+  }
 
-    //----------------------------------------------------------------------------------------------------------
-    TEST_METHOD(Resource_UnloadFromFile_LoadedResource_SetsResourceIdToZero)
-    {
-      MockResource resource;
-      resource.loadFromFile(Path(TestResources::getSpriteVertexShaderFullPath()));
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Resource_UnloadFromFile_NotLoadedResource_SetsFilePathToEmptyPath)
+  {
+    MockResource resource;
 
-      Assert::AreEqual(internString(TestResources::getSpriteVertexShaderFullPath().as_string()), resource.getResourceId());
+    Assert::AreEqual("", resource.getFilePath().c_str());
 
-      resource.unload();
+    resource.unload();
 
-      Assert::AreEqual(static_cast<StringId>(0), resource.getResourceId());
-    }
+    Assert::AreEqual("", resource.getFilePath().c_str());
+  }
+
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Resource_UnloadFromFile_LoadedResource_SetsResourceIdToEmptyStringId)
+  {
+    MockResource resource;
+    resource.loadFromFile(TestResources::getSpriteVertexShaderFullPath());
+
+    Assert::AreEqual(string_id(TestResources::getSpriteVertexShaderFullPath().as_string()), resource.getResourceId());
+
+    resource.unload();
+
+    Assert::AreEqual(string_id(), resource.getResourceId());
+  }
+
+  //----------------------------------------------------------------------------------------------------------
+  TEST_METHOD(Resource_UnloadFromFile_LoadedResource_SetsFilePathToEmptyPath)
+  {
+    MockResource resource;
+    resource.loadFromFile(TestResources::getSpriteVertexShaderFullPath());
+
+    Assert::AreEqual(TestResources::getSpriteVertexShaderFullPath(), resource.getFilePath());
+
+    resource.unload();
+
+    Assert::AreEqual("", resource.getFilePath().c_str());
+  }
 
 #pragma endregion
 
-    };
-  }
+  };
 }

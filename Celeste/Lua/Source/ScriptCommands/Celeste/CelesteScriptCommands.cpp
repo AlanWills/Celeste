@@ -20,6 +20,7 @@
 #include "ScriptCommands/Lua/Components/LuaComponentManifestRegistryScriptCommands.h"
 #include "ScriptCommands/System/SystemScriptCommands.h"
 #include "ScriptCommands/Layout/LayoutScriptCommands.h"
+#include "ScriptCommands/CelesteScriptCommandsConfig.h"
 #include "Lua/LuaState.h"
 
 #include "Resources/ResourceUtils.h"
@@ -33,7 +34,7 @@ namespace Celeste::Lua::CelesteScriptCommands
   void initialize(sol::state& state)
   {
     // Update lua path to ensure scripts in resources directory will be found will be found
-    Lua::LuaState::appendToLuaPackagePath(Path(Celeste::Resources::getResourcesDirectory(), "Scripts", "?.lua;"));
+    Lua::LuaState::appendToLuaPackagePath(Path(LUA_SCRIPTS_DIRECTORY, "?.lua"));
 
     // Now initialize all lua scripts and API
     Lua::System::ScriptCommands::initialize(state);

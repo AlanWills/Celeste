@@ -36,6 +36,10 @@ set(TEST_LIBS
     CelesteMocks
     CelesteTestResources
     CelesteTestUtils)
+    
+set(LUA_SCRIPTS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Lua/Resources/Scripts")
+string(REPLACE "/" "\\\\" LUA_SCRIPTS_DIRECTORY ${LUA_SCRIPTS_DIRECTORY})
+configure_file("Lua/Include/ScriptCommands/CelesteScriptCommandsConfig.h.in" "${CMAKE_CURRENT_SOURCE_DIR}/Lua/Include/ScriptCommands/CelesteScriptCommandsConfig.h" @ONLY)
 
 cbt_build_project(
     NAME Celeste 

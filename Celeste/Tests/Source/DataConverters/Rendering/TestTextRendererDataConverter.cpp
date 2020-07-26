@@ -715,7 +715,7 @@ namespace TestCeleste
 
     converter.setValues(renderer);
 
-    Assert::AreEqual(internString(Path(getResourcesDirectory(), "Fonts", "Arial.ttf").as_string()), renderer.getFont().getFontName());
+    Assert::AreEqual(Path(getResourcesDirectory(), "Fonts", "Arial.ttf"), renderer.getFontInstance()->getFont().getFilePath());
     Assert::AreEqual(20.0f, renderer.getFontHeight());
     Assert::AreEqual(123456789.0f, renderer.getMaxWidth());
     Assert::AreEqual(glm::vec4(1), renderer.getColour());
@@ -737,7 +737,7 @@ namespace TestCeleste
 
     converter.setValues(renderer);
 
-    Assert::AreEqual(internString(Path(getResourcesDirectory(), "Fonts", "Arial.ttf").as_string()), renderer.getFont().getFontName());
+    Assert::AreEqual(Path(getResourcesDirectory(), "Fonts", "Arial.ttf"), renderer.getFontInstance()->getFont().getFilePath());
     Assert::AreEqual(20.0f, renderer.getFontHeight());
     Assert::AreEqual(123456789.0f, renderer.getMaxWidth());
     Assert::AreEqual(glm::vec4(1), renderer.getColour());

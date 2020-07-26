@@ -344,13 +344,13 @@ namespace TestCeleste
       bool called = false;
       auto f = [&called](char) -> void { called = true; };
 
-      keyboard.getTextInputtedEvent().subscribe(f, "Test");
+      EventHandle handle = keyboard.getTextInputtedEvent().subscribe(f);
       keyboard.onTextInputted('c');
 
       Assert::IsTrue(called);
 
       called = false;
-      keyboard.getTextInputtedEvent().unsubscribe("Test");
+      keyboard.getTextInputtedEvent().unsubscribe(handle);
       keyboard.onTextInputted('c');
 
       Assert::IsFalse(called);
@@ -360,7 +360,7 @@ namespace TestCeleste
     TEST_METHOD(Keyboard_UnsubscribeToOnTextInputted_InputtingUnsubscribedEvent_DoesNothing)
     {
       Keyboard keyboard;
-      keyboard.getTextInputtedEvent().unsubscribe("Wubba Lubba Dub Dub");
+      keyboard.getTextInputtedEvent().unsubscribe(EventHandle());
     }
 
 #pragma endregion
@@ -434,13 +434,13 @@ namespace TestCeleste
       bool called = false;
       auto f = [&called](int) -> void { called = true; };
 
-      keyboard.getKeyPressedEvent().subscribe(f, "Test");
+      EventHandle handle = keyboard.getKeyPressedEvent().subscribe(f);
       keyboard.setKeyPressed(GLFW_KEY_A);
 
       Assert::IsTrue(called);
 
       called = false;
-      keyboard.getKeyPressedEvent().unsubscribe("Test");
+      keyboard.getKeyPressedEvent().unsubscribe(handle);
       keyboard.setKeyPressed(GLFW_KEY_A);
 
       Assert::IsFalse(called);
@@ -450,7 +450,7 @@ namespace TestCeleste
     TEST_METHOD(Keyboard_UnsubscribeToKeyPressed_InputtingUnSubscribedEvent_DoesNothing)
     {
       Keyboard keyboard;
-      keyboard.getKeyPressedEvent().unsubscribe("Wubba Lubba Dub Dub");
+      keyboard.getKeyPressedEvent().unsubscribe(EventHandle());
     }
 
 #pragma endregion
@@ -524,14 +524,14 @@ namespace TestCeleste
       bool called = false;
       auto f = [&called](int) -> void { called = true; };
 
-      keyboard.getKeyReleasedEvent().subscribe(f, "Test");
+      EventHandle handle = keyboard.getKeyReleasedEvent().subscribe(f);
       keyboard.setKeyReleased(GLFW_KEY_A);
 
       Assert::IsTrue(called);
 
       called = false;
 
-      keyboard.getKeyReleasedEvent().unsubscribe("Test");
+      keyboard.getKeyReleasedEvent().unsubscribe(handle);
       keyboard.setKeyReleased(GLFW_KEY_A);
 
       Assert::IsFalse(called);
@@ -541,7 +541,7 @@ namespace TestCeleste
     TEST_METHOD(Keyboard_UnsubscribeToKeyReleased_InputtingUnSubscribedEvent_DoesNothing)
     {
       Keyboard keyboard;
-      keyboard.getKeyReleasedEvent().unsubscribe("Wubba Lubba Dub Dub");
+      keyboard.getKeyReleasedEvent().unsubscribe(EventHandle());
     }
 
 #pragma endregion

@@ -24,20 +24,19 @@ namespace Celeste::Resources
   }
 
   //------------------------------------------------------------------------------------------------
-  FontInstance Font::createInstance(float height)
+  std::unique_ptr<FontInstance> Font::createInstance(float height)
   {
-    if (height <= 0 ||
-      getResourceId() == (StringId)0)
+    if (height <= 0 || getResourceId() == "")
     {
       ASSERT_FAIL();
-      return FontInstance(Characters(), 0, getResourceId());
+      return std::unique_ptr<FontInstance>();
     }
 
     loadCharacters(height);
 
     // Ensure the characters have been loaded
     ASSERT(m_charactersLookup.find(height) != m_charactersLookup.end());
-    return FontInstance(m_charactersLookup.at(height), height, getResourceId());
+    return std::unique_ptr<FontInstance>(new FontInstance(m_charactersLookup.at(height), height, *this));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -55,9 +54,7 @@ namespace Celeste::Resources
       return;
     }
 
-    std::string fontFilePath = deinternString(getResourceId());
-
-    if (!File(fontFilePath).exists())
+    if (!File(getFilePath()).exists())
     {
       // If the file doesn't exist, we should return here
       ASSERT_FAIL();
@@ -72,7 +69,7 @@ namespace Celeste::Resources
     }
 
     FT_Face face;
-    if (FT_New_Face(ft, fontFilePath.c_str(), 0, &face))
+    if (FT_New_Face(ft, getFilePath().c_str(), 0, &face))
     {
       ASSERT_FAIL();
       std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;

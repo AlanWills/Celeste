@@ -1,5 +1,6 @@
 #include "Resources/ResourceManager.h"
 #include "TestResources/TestResources.h"
+#include "TestResources/TestResourcesConfig.h"
 #include "TestResources/Animation/AnimatorLoadingResources.h"
 #include "TestResources/Audio/AudioSourceLoadingResources.h"
 #include "TestResources/GraphicalFX/OpacityLerperLoadingResources.h"
@@ -34,8 +35,7 @@
 
 namespace CelesteTestResources
 {
-  Path TestResources::m_resourcesDirectory(Path(Directory::getExecutingAppDirectory(), UPDIR_STRING, UPDIR_STRING, UPDIR_STRING, 
-    "Celeste", "Celeste", "Tests", "Resources"));
+  Path TestResources::m_resourcesDirectory(TEST_RESOURCES_DIRECTORY);
 
   REGISTER_TEST_RESOURCE_CLASS(TestResources)
 

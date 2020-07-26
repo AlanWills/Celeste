@@ -48,11 +48,11 @@ namespace TestCeleste
       MockData data;
       data.loadFromFile(Path("ThisFileShouldntExist.xml"));
 
-      Assert::AreEqual(static_cast<StringId>(0), data.getResourceId());
+      Assert::AreEqual(string_id(), data.getResourceId());
 
       data.unload();
 
-      Assert::AreEqual(static_cast<StringId>(0), data.getResourceId());
+      Assert::AreEqual(string_id(), data.getResourceId());
     }
 
     //----------------------------------------------------------------------------------------------------------
@@ -61,11 +61,11 @@ namespace TestCeleste
       MockData data;
       data.loadFromFile(TestResources::getDataXmlFullPath());
 
-      Assert::AreNotEqual(static_cast<StringId>(0), data.getResourceId());
+      Assert::AreNotEqual(string_id(), data.getResourceId());
 
       data.unload();
 
-      Assert::AreEqual(static_cast<StringId>(0), data.getResourceId());
+      Assert::AreEqual(string_id(), data.getResourceId());
     }
 
 #pragma endregion
@@ -230,90 +230,6 @@ namespace TestCeleste
 
       // Check root
       Assert::AreEqual("NewRoot", loadedDocument.RootElement()->Name());
-    }
-
-#pragma endregion
-
-#pragma region Overwrite File Tests
-
-    //----------------------------------------------------------------------------------------------------------
-    TEST_METHOD(Data_OverwriteFile_DataNotLoadedFromFile_ReturnsTrueFalse)
-    {
-      MockData data;
-
-      Assert::AreEqual((StringId)0, data.getResourceId());
-      Assert::IsFalse(data.overwriteFile());
-    }
-
-    //----------------------------------------------------------------------------------------------------------
-    TEST_METHOD(Data_OverwriteFile_DataLoadedFromFile_FileDoesNotExist_CreatesCorrectXmlDocument)
-    {
-      MockData data;
-
-      File dataFile(Path(TempDirectory::getFullPath(), "Data.xml"));
-      File(TestResources::getDataXmlFullPath()).copy(dataFile.getFilePath());
-
-      Assert::IsTrue(dataFile.exists());
-
-      data.loadFromFile(dataFile.getFilePath());
-      dataFile.remove();
-
-      Assert::IsFalse(dataFile.exists());
-
-      data.overwriteFile();
-
-      Assert::IsTrue(dataFile.exists());
-
-      std::string expectedXML, actualXML;
-      File(TestResources::getDataXmlFullPath()).read(expectedXML);
-      dataFile.read(actualXML);
-
-      // Remove white space because it causes problems where there are none
-      expectedXML.erase(std::remove_if(expectedXML.begin(), expectedXML.end(), [](char c)-> bool { return std::isspace(c); }), expectedXML.end());
-      actualXML.erase(std::remove_if(actualXML.begin(), actualXML.end(), [](char c)-> bool { return std::isspace(c); }), actualXML.end());
-
-      Assert::AreEqual(expectedXML, actualXML);
-    }
-
-    //----------------------------------------------------------------------------------------------------------
-    TEST_METHOD(Data_OverwriteFile_DataLoadedFromFile_FileExists_OverwritesPreviousDocument)
-    {
-      MockData data;
-
-      File dataFile(Path(TempDirectory::getFullPath(), "Data.xml"));
-      File(TestResources::getDataXmlFullPath()).copy(dataFile.getFilePath());
-
-      Assert::IsTrue(dataFile.exists());
-
-      data.loadFromFile(dataFile.getFilePath());
-      data.getDocumentRoot()->DeleteChildren();
-      data.overwriteFile();
-
-      Assert::IsTrue(dataFile.exists());
-
-      std::string expectedXML = "<Root/>", actualXML;
-      dataFile.read(actualXML);
-
-      // Remove white space because it causes problems where there are none
-      expectedXML.erase(std::remove_if(expectedXML.begin(), expectedXML.end(), [](char c)-> bool { return std::isspace(c); }), expectedXML.end());
-      actualXML.erase(std::remove_if(actualXML.begin(), actualXML.end(), [](char c)-> bool { return std::isspace(c); }), actualXML.end());
-
-      Assert::AreEqual(expectedXML, actualXML);
-    }
-
-    //----------------------------------------------------------------------------------------------------------
-    TEST_METHOD(Data_OverwriteFile_DataLoadedFromFile_ReturnsTrue)
-    {
-      MockData data;
-
-      File dataFile(Path(TempDirectory::getFullPath(), "Data.xml"));
-      File(TestResources::getDataXmlFullPath()).copy(dataFile.getFilePath());
-
-      Assert::IsTrue(dataFile.exists());
-
-      data.loadFromFile(dataFile.getFilePath());
-
-      Assert::IsTrue(data.overwriteFile());
     }
 
 #pragma endregion

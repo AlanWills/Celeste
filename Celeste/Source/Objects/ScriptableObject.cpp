@@ -181,12 +181,9 @@ namespace Celeste
     document.InsertFirstChild(document.NewDeclaration());
 
     // Now, save the data again
-#if _DEBUG
-    bool result = data->overwriteFile();
+    bool result = data->saveToFile(pathToFile);
     ASSERT(result);
-#else
-    data->overwriteFile();
-#endif
+    celstl::unused(result);
   }
 
   //------------------------------------------------------------------------------------------------
