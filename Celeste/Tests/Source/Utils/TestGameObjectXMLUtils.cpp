@@ -1,6 +1,6 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
-#include "TestUtils/Utils/GameObjectXMLUtils.h"
+#include "CelesteTestUtils/Utils/GameObjectXMLUtils.h"
 #include "XML/Elements/DataConverterListElement.h"
 #include "DataConverters/Objects/GameObjectDataConverter.h"
 #include "DataConverters/Resources/PrefabDataConverter.h"

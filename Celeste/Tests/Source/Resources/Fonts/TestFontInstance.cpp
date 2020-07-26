@@ -1,6 +1,6 @@
 #define NOMINMAX
 
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Resources/Fonts/MockFontInstance.h"
 #include "Resources/ResourceManager.h"

@@ -1,13 +1,13 @@
 #define NOMINMAX  // Disable windows.h min/max macros
 
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Physics/MockRigidBody2DDataConverter.h"
 #include "TestResources/Physics/RigidBody2DLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Physics/RigidBody2D.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::Physics;

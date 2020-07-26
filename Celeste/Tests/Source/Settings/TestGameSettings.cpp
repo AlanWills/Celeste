@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Settings/GameSettings.h"
 #include "Resources/ResourceManager.h"

@@ -1,11 +1,11 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Physics/PhysicsManager.h"
 #include "Game/Game.h"
 #include "Physics/RectangleCollider.h"
 #include "Physics/RigidBody2D.h"
 #include "Mocks/Physics/CollisionDetector.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Physics;

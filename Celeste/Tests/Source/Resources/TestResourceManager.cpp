@@ -1,11 +1,11 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Resources/MockResourceManager.h"
 #include "TestResources/Animation/AnimatorLoadingResources.h"
 #include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "TestResources/Resources/Models/ModelLoadingResources.h"
 #include "OpenAL/OpenALState.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestUtils/AssertSpecialization/FileSystem.h"
 
 using namespace Celeste::Resources;

@@ -21,25 +21,25 @@ class string_id
     explicit string_id(hash_type hash)
       : m_id(hash)
 #if _DEBUG
+      , m_debugStringLength(1)
       , m_debugString()
 #endif
     {
 #if _DEBUG
-      m_debugString = std::make_unique<char[]>(1);
-      m_debugString[0] = static_cast<char>(0);
+      m_debugString = new char[m_debugStringLength] { 0 };
 #endif
     }
 
     explicit string_id(const char* str)
       : m_id(fvn::hash(str))
 #if _DEBUG
+      , m_debugStringLength(strlen(str) + 1)
       , m_debugString()
 #endif
     {
 #if _DEBUG
-      auto strLength = strlen(str) + 1; // +1 for null termination
-      m_debugString = std::make_unique<char[]>(strLength);
-      strncpy_s(m_debugString.get(), strLength, str, strLength);
+      m_debugString = new char[m_debugStringLength];
+      strncpy_s(m_debugString, m_debugStringLength, str, m_debugStringLength);
 #endif
     }
 
@@ -61,25 +61,53 @@ class string_id
     string_id(const string_id& stringId)
       : m_id(stringId.m_id)
 #if _DEBUG
+      , m_debugStringLength(stringId.m_debugStringLength)
       , m_debugString()
 #endif
     {
 #if _DEBUG
-      auto strLength = strlen(stringId.debug_string()) + 1; // +1 for null termination
-      m_debugString = std::make_unique<char[]>(strLength);
-      strncpy_s(m_debugString.get(), strLength, stringId.debug_string(), strLength);
+      m_debugString = new char[m_debugStringLength];
+      strncpy_s(m_debugString, m_debugStringLength, stringId.debug_string(), m_debugStringLength);
 #endif
     }
 
-    string_id(string_id&& stringId) = default;
+    string_id(string_id&& stringId) noexcept
+      : m_id(stringId.m_id)
+#if _DEBUG
+      , m_debugStringLength(stringId.m_debugStringLength)
+      , m_debugString(stringId.m_debugString)
+#endif
+    {
+#if _DEBUG
+      stringId.m_debugString = nullptr;
+#endif
+    }
+
+#if _DEBUG
+    ~string_id()
+    {
+      delete[] m_debugString;
+    }
+#else
+    ~string_id() = default;
+#endif
 
     string_id& operator=(const string_id& stringId) = delete;
-    string_id& operator=(string_id&& stringId) = default;
+    string_id& operator=(string_id&& stringId) noexcept
+    {
+      m_id = stringId.m_id;
+#if _DEBUG
+      m_debugStringLength = stringId.m_debugStringLength;
+      m_debugString = stringId.m_debugString;
+      stringId.m_debugString = nullptr;
+#endif
+      return *this;
+    }
 
     hash_type id() const noexcept { return m_id; }
 
 #if _DEBUG
-    const char* const debug_string() const noexcept { return m_debugString.get(); }
+    const char* const debug_string() const noexcept { return m_debugString; }
 #endif
 
     friend bool operator==(const string_id& a, const string_id& b) noexcept { return a.m_id == b.m_id; }
@@ -106,7 +134,8 @@ class string_id
     hash_type m_id;
 
 #if _DEBUG
-    std::unique_ptr<char[]> m_debugString;
+    size_t m_debugStringLength;
+    char* m_debugString;
 #endif
 };
 

@@ -1,9 +1,9 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Debug/Profiling/FPSCounter.h"
 #include "Rendering/TextRenderer.h"
 #include "Objects/GameObject.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "Time/TimeUtils.h"
 #include "Time/Clock.h"
 #include "TestUtils/Assert/AssertExt.h"

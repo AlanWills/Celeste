@@ -1,10 +1,10 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Resources/MockPrefabDataConverter.h"
 #include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "Resources/Data/Prefab.h"
-#include "TestUtils/Utils/GameObjectXMLUtils.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Utils/GameObjectXMLUtils.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 
 namespace TestCeleste

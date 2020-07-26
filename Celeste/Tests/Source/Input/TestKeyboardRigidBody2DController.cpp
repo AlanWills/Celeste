@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Input/KeyboardRigidBody2DController.h"
 #include "Physics/RigidBody2D.h"
@@ -7,7 +7,7 @@
 #include "Input/InputUtils.h"
 #include "Input/InputEnums.h"
 #include "Input/Keyboard.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;

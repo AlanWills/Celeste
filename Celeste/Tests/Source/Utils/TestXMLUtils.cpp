@@ -1,6 +1,5 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
-
-#include "TestUtils/Utils/XMLUtils.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/Utils/XMLUtils.h"
 
 using namespace tinyxml2;
 

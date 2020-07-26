@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Objects/GameObject.h"
 #include "Lua/LuaState.h"
@@ -6,7 +6,7 @@
 #include "Lua/Components/LuaComponent.h"
 #include "Registries/ComponentRegistry.h"
 
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Lua;

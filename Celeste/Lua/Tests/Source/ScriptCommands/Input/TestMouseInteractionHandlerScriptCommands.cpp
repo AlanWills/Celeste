@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Input/MouseInteractionHandlerScriptCommands.h"
 #include "ScriptCommands/Utils/ScriptCommandUtils.h"
@@ -6,7 +6,7 @@
 
 #include "Input/MouseInteractionHandler.h"
 
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Lua;

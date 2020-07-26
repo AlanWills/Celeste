@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Lua/Components/LuaComponentManifestRegistryScriptCommands.h"
 #include "Lua/Components/LuaComponentManifestRegistry.h"

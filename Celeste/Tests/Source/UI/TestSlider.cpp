@@ -1,14 +1,14 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "UI/Slider.h"
 #include "Rendering/SpriteRenderer.h"
 #include "TestResources/TestResources.h"
 #include "Input/InputManager.h"
 #include "Input/MouseInteractionHandler.h"
-#include "TestUtils/Utils/InputUtils.h"
+#include "CelesteTestUtils/Utils/InputUtils.h"
 #include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/AssertExt.h"
 
 

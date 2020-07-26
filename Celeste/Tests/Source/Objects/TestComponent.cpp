@@ -1,9 +1,9 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Objects/MockComponent.h"
 #include "Objects/GameObject.h"
 #include "Rendering/SpriteRenderer.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Rendering;

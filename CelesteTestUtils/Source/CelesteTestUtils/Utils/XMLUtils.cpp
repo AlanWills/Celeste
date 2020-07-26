@@ -1,4 +1,4 @@
-#include "TestUtils/Utils/XMLUtils.h"
+#include "CelesteTestUtils/Utils/XMLUtils.h"
 
 
 namespace CelesteTestUtils

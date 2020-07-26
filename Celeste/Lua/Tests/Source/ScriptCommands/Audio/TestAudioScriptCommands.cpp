@@ -5,7 +5,7 @@
 #include "Audio/AudioUtils.h"
 #include "Audio/AudioManager.h"
 
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "Objects/Component.h"
 
 using LuaState = Celeste::Lua::LuaState;

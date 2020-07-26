@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Objects/GameObjectScriptCommands.h"
 #include "ScriptCommands/Physics/EllipseColliderScriptCommands.h"
@@ -6,7 +6,7 @@
 #include "Lua/LuaState.h"
 
 #include "Physics/EllipseCollider.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using EllipseCollider = Celeste::Physics::EllipseCollider;

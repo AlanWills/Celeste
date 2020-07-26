@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Physics/PhysicsScriptCommands.h"
 #include "ScriptCommands/Objects/ComponentScriptCommands.h"

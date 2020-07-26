@@ -6,7 +6,7 @@ using namespace celstl;
 
 namespace Testcelstl
 {
-  TEST_UTILS_TEST_CLASS(TestString)
+  BASE_TEST_CLASS(TestString)
 
 #pragma region Empty Wchar to Char Tests
 

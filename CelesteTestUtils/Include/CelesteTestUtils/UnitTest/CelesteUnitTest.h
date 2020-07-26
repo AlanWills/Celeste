@@ -2,7 +2,7 @@
 
 #include "TestUtils/UnitTest/BaseUnitTest.h"
 #include "CppUnitTest.h"
-#include "TestUtils/AssertSpecialization/glm.h"
+#include "CelesteTestUtils/AssertSpecialization/glm.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

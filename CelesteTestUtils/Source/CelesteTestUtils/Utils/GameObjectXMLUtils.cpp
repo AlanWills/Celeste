@@ -1,5 +1,5 @@
-#include "TestUtils/Utils/GameObjectXMLUtils.h"
-#include "TestUtils/Utils/XMLUtils.h"
+#include "CelesteTestUtils/Utils/GameObjectXMLUtils.h"
+#include "CelesteTestUtils/Utils/XMLUtils.h"
 #include "XML/Elements/DataConverterListElement.h"
 #include "DataConverters/Objects/GameObjectDataConverter.h"
 #include "DataConverters/Resources/PrefabDataConverter.h"

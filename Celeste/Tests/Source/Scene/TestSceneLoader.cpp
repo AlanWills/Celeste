@@ -1,11 +1,11 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Scene/SceneLoader.h"
 #include "TestResources/Scene/SceneLoadingResources.h"
 #include "Objects/GameObject.h"
 #include "tinyxml2.h"
 
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/FileAssert.h"
 
 using namespace tinyxml2;

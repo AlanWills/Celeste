@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Rendering/MockSpriteRendererDataConverter.h"
 #include "TestResources/Rendering/SpriteRendererLoadingResources.h"
@@ -6,7 +6,7 @@
 #include "Rendering/SpriteRenderer.h"
 #include "Registries/ComponentDataConverterRegistry.h"
 #include "Scene/SceneUtils.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::Rendering;

@@ -1,11 +1,11 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/Physics/MockRectangleColliderDataConverter.h"
 #include "TestResources/Physics/RectangleColliderLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Physics/RectangleCollider.h"
 #include "Registries/ComponentDataConverterRegistry.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::Physics;

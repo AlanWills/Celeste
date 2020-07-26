@@ -4,7 +4,7 @@
 
 namespace TestStringId
 {		
-  TEST_UTILS_TEST_CLASS(TestStringId)
+  BASE_TEST_CLASS(TestStringId)
 		
 #pragma region Constructor Tests
 

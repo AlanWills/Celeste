@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Registries/ScriptableObjectRegistry.h"
 #include "Mocks/Objects/MockScriptableObject.h"

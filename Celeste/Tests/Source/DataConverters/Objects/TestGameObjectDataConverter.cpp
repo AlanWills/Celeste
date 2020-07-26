@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "DataConverters/Objects/GameObjectDataConverter.h"
 #include "TestResources/Objects/GameObjectLoadingResources.h"
@@ -7,9 +7,9 @@
 #include "Rendering/SpriteRenderer.h"
 #include "DataConverters/Rendering/SpriteRendererDataConverter.h"
 #include "DataConverters/Resources/PrefabDataConverter.h"
-#include "TestUtils/Utils/GameObjectXMLUtils.h"
+#include "CelesteTestUtils/Utils/GameObjectXMLUtils.h"
 #include "Scene/SceneUtils.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "Lua/Components/LuaComponentManifestRegistry.h"
 #include "Lua/Components/LuaComponent.h"
 

@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/UI/MockButton.h"
 #include "Resources/ResourceManager.h"
@@ -8,8 +8,8 @@
 #include "Audio/AudioSource.h"
 #include "DataConverters/UI/ButtonDataConverter.h"
 #include "Registries/ComponentRegistry.h"
-#include "TestUtils/Utils/InputUtils.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Utils/InputUtils.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestResources/TestResources.h"
 
 using namespace Celeste;
@@ -133,6 +133,9 @@ namespace TestCeleste
     observer_ptr<AudioSource> audioSource = gameObject.findComponent<AudioSource>();
 
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
+    button->setIdleTexture(TestResources::getContainerJpgRelativePath());
+    button->setHighlightedTexture(TestResources::getBlockPngRelativePath());
+    button->setHighlightedSound(TestResources::getButtonHoverWavRelativePath());
     handler->setMouseOver(true);
 
     Assert::IsTrue(handler->isMouseOver());
@@ -140,7 +143,6 @@ namespace TestCeleste
     handler->update();
     button->update();
 
-    Assert::AreEqual(button->getHighlightedTexture()->getDimensions(), spriteRenderer->getDimensions());
     Assert::AreEqual(button->getHighlightedTexture(), spriteRenderer->getTexture());
     Assert::IsTrue(audioSource->isPlaying());
     Assert::IsTrue(button->getButtonState_Public() == Button::ButtonState::kHighlighted);
@@ -150,10 +152,15 @@ namespace TestCeleste
   TEST_METHOD(Button_OnMouseLeave_SetsTextureToIdle)
   {
     GameObject gameObject;
-    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-    observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
-    observer_ptr<AudioSource> audioSource = gameObject.addComponent<AudioSource>();
+    setUpButtonComponents(gameObject);
+    observer_ptr<MouseInteractionHandler> handler = gameObject.findComponent<MouseInteractionHandler>();
+    observer_ptr<SpriteRenderer> spriteRenderer = gameObject.findComponent<SpriteRenderer>();
+    observer_ptr<AudioSource> audioSource = gameObject.findComponent<AudioSource>();
+
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();  // Make sure this is last so it doesn't create components
+    button->setIdleTexture(TestResources::getContainerJpgRelativePath());
+    button->setHighlightedTexture(TestResources::getBlockPngRelativePath());
+    button->setHighlightedSound(TestResources::getButtonHoverWavRelativePath());
 
     handler->setMouseOver(true);
 
@@ -185,8 +192,11 @@ namespace TestCeleste
     observer_ptr<SpriteRenderer> spriteRenderer = gameObject.addComponent<SpriteRenderer>();
     observer_ptr<MouseInteractionHandler> handler = gameObject.addComponent<MouseInteractionHandler>();
     observer_ptr<AudioSource> audioSource = gameObject.addComponent<AudioSource>();
-    observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
 
+    observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
+    button->setIdleTexture(TestResources::getContainerJpgRelativePath());
+    button->setHighlightedTexture(TestResources::getBlockPngRelativePath());
+    button->setHighlightedSound(TestResources::getButtonHoverWavRelativePath());
     button->setButtonState_Public(Button::ButtonState::kIdle);
 
     Assert::AreEqual(button->getIdleTexture(), spriteRenderer->getTexture());
@@ -205,7 +215,6 @@ namespace TestCeleste
 
     handler->update();
 
-    Assert::AreEqual(button->getClickedTexture()->getDimensions(), spriteRenderer->getDimensions());
     Assert::IsTrue(button->getButtonState_Public() == Button::ButtonState::kClicked);
     Assert::AreEqual(button->getClickedTexture(), spriteRenderer->getTexture());
     Assert::IsTrue(audioSource->isPlaying());
@@ -380,7 +389,7 @@ namespace TestCeleste
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
     button->setIdleTexture(TestResources::getBlockPngRelativePath());
 
-    Assert::IsNotNull(button->getHighlightedTexture());
+    Assert::IsNotNull(button->getIdleTexture());
 
     button->setIdleTexture("WubbaLubbaDubDub.png");
 
@@ -411,7 +420,7 @@ namespace TestCeleste
     setUpButtonComponents(gameObject);
 
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
-    button->setIdleTexture(TestResources::getBlockPngRelativePath());
+    button->setHighlightedTexture(TestResources::getBlockPngRelativePath());
 
     Assert::IsNotNull(button->getHighlightedTexture());
 
@@ -444,9 +453,9 @@ namespace TestCeleste
     setUpButtonComponents(gameObject);
 
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
-    button->setIdleTexture(TestResources::getBlockPngRelativePath());
+    button->setClickedTexture(TestResources::getBlockPngRelativePath());
 
-    Assert::IsNotNull(button->getHighlightedTexture());
+    Assert::IsNotNull(button->getClickedTexture());
 
     button->setClickedTexture("WubbaLubbaDubDub.png");
 
@@ -510,7 +519,7 @@ namespace TestCeleste
     setUpButtonComponents(gameObject);
 
     observer_ptr<MockButton> button = gameObject.addComponent<MockButton>();
-    button->setHighlightedSound(TestResources::getButtonHoverWavRelativePath());
+    button->setClickedSound(TestResources::getButtonHoverWavRelativePath());
 
     Assert::IsNotNull(button->getClickedSound());
 

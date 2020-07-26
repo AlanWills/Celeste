@@ -1,4 +1,4 @@
-#include "TestUtils/Utils/InputUtils.h"
+#include "CelesteTestUtils/Utils/InputUtils.h"
 #include "Input/Mouse.h"
 #include "Input/Keyboard.h"
 #include "Input/InputUtils.h"

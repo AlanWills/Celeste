@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
@@ -6,7 +6,7 @@
 #include "Scene/SceneUtils.h"
 #include "Input/Mouse.h"
 #include "Input/InputUtils.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;

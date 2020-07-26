@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/UI/SliderScriptCommands.h"
 #include "ScriptCommands/Utils/ScriptCommandUtils.h"
@@ -6,7 +6,7 @@
 
 #include "UI/Slider.h"
 #include "Rendering/SpriteRenderer.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using Slider = Celeste::UI::Slider;

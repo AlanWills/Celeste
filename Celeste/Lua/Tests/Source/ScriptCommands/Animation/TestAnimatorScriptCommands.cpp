@@ -3,8 +3,8 @@
 #include "ScriptCommands/Utils/ScriptCommandUtils.h"
 #include "Lua/LuaState.h"
 
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 #include "Mocks/Animation/MockAnimator.h"
 

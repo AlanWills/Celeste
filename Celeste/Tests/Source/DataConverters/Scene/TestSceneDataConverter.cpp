@@ -1,13 +1,13 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "DataConverters/Scene/SceneDataConverter.h"
 #include "TestResources/Scene/SceneLoadingResources.h"
 #include "TestResources/Resources/Data/PrefabLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "Objects/GameObject.h"
-#include "TestUtils/Utils/GameObjectXMLUtils.h"
+#include "CelesteTestUtils/Utils/GameObjectXMLUtils.h"
 #include "Scene/SceneManager.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 #include <numeric>
 

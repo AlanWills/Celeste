@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Objects/GameObjectScriptCommands.h"
 #include "ScriptCommands/Scene/SceneScriptCommands.h"
@@ -6,7 +6,7 @@
 #include "Lua/LuaState.h"
 
 #include "TestResources/Scene/SceneLoadingResources.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/FileAssert.h"
 
 using LuaState = Celeste::Lua::LuaState;

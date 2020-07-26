@@ -1,11 +1,11 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Objects/MockScriptableObject.h"
 #include "Mocks/Objects/FailDeserializationScriptableObject.h"
 #include "Mocks/Fields/FailDeserializationField.h"
 #include "Registries/ScriptableObjectRegistry.h"
 #include "TestResources/TestResources.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/FileAssert.h"
 #include "TestUtils/Assert/AssertExt.h"
 
@@ -1044,14 +1044,14 @@ namespace TestCeleste::Objects
     Path path(TempDirectory::getFullPath(), "Test.xml");
     File file(path);
     file.create();
-    file.append("Test");
+    file.append("<Test/>");
 
-    FileAssert::FileContentsEqual(path.as_string(), "Test");
+    FileAssert::FileContentsEqual(path.as_string(), "<Test/>");
 
     std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
     scriptableObject->save(path);
 
-    FileAssert::FileContentsNotEqual(path.as_string(), "Test");
+    FileAssert::FileContentsNotEqual(path.as_string(), "<Test/>");
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1080,14 +1080,14 @@ namespace TestCeleste::Objects
     Path fullFilePath(TestResources::getResourcesDirectory(), path);
     File file(fullFilePath);
     file.create();
-    file.append("Test");
+    file.append("<Test/>");
 
-    FileAssert::FileContentsEqual(fullFilePath.as_string(), "Test");
+    FileAssert::FileContentsEqual(fullFilePath.as_string(), "<Test/>");
 
     std::unique_ptr<MockScriptableObject> scriptableObject = ScriptableObject::create<MockScriptableObject>("");
     scriptableObject->save(path);
 
-    FileAssert::FileContentsNotEqual(fullFilePath.as_string(), "Test");
+    FileAssert::FileContentsNotEqual(fullFilePath.as_string(), "<Test/>");
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1102,7 +1102,7 @@ namespace TestCeleste::Objects
 
     Assert::IsNotNull(data);
     Assert::IsNotNull(data->getDocumentRoot());
-    Assert::AreEqual("Test", data->getDocumentRoot()->Name());
+    Assert::AreEqual(MockScriptableObject::type_name(), data->getDocumentRoot()->Name());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -1152,7 +1152,7 @@ namespace TestCeleste::Objects
 
     Assert::IsNotNull(data);
 
-    const tinyxml2::XMLElement* testChild = data->getDocumentRoot()->FirstChildElement("TestChild");
+    const tinyxml2::XMLElement* testChild = data->getDocumentRoot()->FirstChildElement(MockScriptableObject::type_name());
 
     Assert::IsNotNull(testChild);
     Assert::AreEqual("TestChild", testChild->Attribute("name"));
@@ -1160,6 +1160,14 @@ namespace TestCeleste::Objects
     Assert::AreEqual(5, testChild->IntAttribute("IntField"));
     Assert::AreEqual("Test Value", testChild->Attribute("StringField"));
   }
+
+#pragma endregion
+
+#pragma region Remove Scriptable Object Tests
+
+#pragma region Scriptable Object
+
+#pragma endregion
 
 #pragma endregion
 

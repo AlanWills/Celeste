@@ -1,9 +1,9 @@
 #include "Animation/Animators/MoveToPositionAnimator.h"
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
 #include "Physics/RigidBody2D.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "Time/TimeUtils.h"
 #include "Time/TimeUtils.h"
 

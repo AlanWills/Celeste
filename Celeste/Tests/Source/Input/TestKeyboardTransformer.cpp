@@ -1,10 +1,10 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Input/MockKeyboardTransformer.h"
 #include "Input/InputManager.h"
 #include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/AssertExt.h"
 #include "Time/TimeUtils.h"
 

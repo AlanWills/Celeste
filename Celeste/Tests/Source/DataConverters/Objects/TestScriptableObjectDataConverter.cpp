@@ -1,10 +1,10 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "DataConverters/Objects/ScriptableObjectDataConverter.h"
 #include "Registries/ScriptableObjectRegistry.h"
 #include "TestResources/Objects/MockScriptableObjectLoadingResources.h"
 #include "Mocks/Objects/MockScriptableObject.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;

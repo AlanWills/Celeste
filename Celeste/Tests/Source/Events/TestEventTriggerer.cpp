@@ -1,10 +1,10 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Events/EventTriggerer.h"
 #include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
-#include "TestUtils/Utils/InputUtils.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Utils/InputUtils.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "Time/TimeUtils.h"
 #include "Time/Clock.h"
 

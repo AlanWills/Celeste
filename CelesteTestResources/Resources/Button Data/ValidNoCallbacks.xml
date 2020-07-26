@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Button active="true"
-        default_texture="Textures\UI\ButtonDefault.png" 
+        idle_texture="Textures\UI\ButtonDefault.png" 
         highlighted_texture="Textures\UI\ButtonHighlighted.png" 
         clicked_texture="Textures\UI\ButtonClicked.png" 
         clicked_sound="Audio\SFX\ButtonHover.wav"

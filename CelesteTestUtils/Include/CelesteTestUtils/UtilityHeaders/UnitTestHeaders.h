@@ -2,7 +2,7 @@
 
 #include "Mocks/CelesteMocksNamespace.h"
 #include "TestResources/CelesteTestResourcesNamespace.h"
-#include "TestUtils/UnitTest/CelesteUnitTest.h"
+#include "CelesteTestUtils/UnitTest/CelesteUnitTest.h"
 
 using namespace TestUtils;
 using namespace CelesteMocks;

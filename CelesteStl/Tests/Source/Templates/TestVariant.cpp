@@ -6,7 +6,7 @@ using namespace celstl;
 
 namespace Testcelstl
 {
-  TEST_UTILS_TEST_CLASS(TestVariant)
+  BASE_TEST_CLASS(TestVariant)
 
 #pragma region Variant Index Tests
 

@@ -1,7 +1,7 @@
 #include "ScriptCommands/DataConverters/DataConverterScriptCommands.h"
 #include "Lua/LuaState.h"
 
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "TestUtils/Assert/FileAssert.h"
 
 #include "Mocks/DataConverters/MockDataConverter.h"

@@ -1,12 +1,12 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Input/KeyboardVisibility.h"
 #include "Input/InputManager.h"
 #include "Objects/GameObject.h"
 #include "Registries/ComponentRegistry.h"
 #include "Mocks/Rendering/MockRenderer.h"
-#include "TestUtils/Utils/InputUtils.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Utils/InputUtils.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using namespace Celeste;
 using namespace Celeste::Input;

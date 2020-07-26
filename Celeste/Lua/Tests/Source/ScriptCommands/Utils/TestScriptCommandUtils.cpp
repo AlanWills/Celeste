@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/Objects/MockScriptableObject.h"
 
@@ -8,7 +8,7 @@
 #include "TestResources/Objects/MockScriptableObjectLoadingResources.h"
 #include "Resources/ResourceManager.h"
 #include "TestUtils/Assert/AssertExt.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/FileAssert.h"
 
 using LuaState = Celeste::Lua::LuaState;

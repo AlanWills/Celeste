@@ -17,7 +17,7 @@ namespace TestLog
 {
   static Path logFilePath(Directory::getExecutingAppDirectory(), "Log.txt");
 
-  TEST_UTILS_TEST_CLASS(TestLog)
+  BASE_TEST_CLASS(TestLog)
     
   //------------------------------------------------------------------------------------------------
   void TestLog::testInitialize()

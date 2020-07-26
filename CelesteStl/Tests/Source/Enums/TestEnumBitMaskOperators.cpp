@@ -25,7 +25,7 @@ using namespace celstl;
 
 namespace Testcelstl
 {
-  TEST_UTILS_TEST_CLASS(TestEnumBitMaskOperators)
+  BASE_TEST_CLASS(TestEnumBitMaskOperators)
 
 #pragma region Inclusive Or Operator Tests
 

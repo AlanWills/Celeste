@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Objects/GameObjectScriptCommands.h"
 #include "ScriptCommands/Utils/ScriptCommandUtils.h"
@@ -8,7 +8,7 @@
 #include "Mocks/Objects/MockComponent.h"
 #include "Mocks/Rendering/MockRenderer.h"
 #include "Objects/GameObject.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using namespace Celeste;
@@ -42,18 +42,6 @@ namespace TestCeleste::Lua::ScriptCommands
     Celeste::Lua::GameObjectScriptCommands::initialize(state);
 
     Assert::IsTrue(state.globals()["GameObject"].valid());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_Initialize_Adds_getName_ToGameObjectTable)
-  {
-    sol::state& state = LuaState::instance();
-
-    Assert::IsFalse(state.globals()["GameObject"]["getName"].valid());
-
-    Celeste::Lua::GameObjectScriptCommands::initialize(state);
-
-    Assert::IsTrue(state.globals()["GameObject"]["getName"].valid());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -186,46 +174,6 @@ namespace TestCeleste::Lua::ScriptCommands
     Celeste::Lua::GameObjectScriptCommands::initialize(state);
 
     Assert::IsTrue(state.globals()["GameObject"]["as"].valid());
-  }
-
-#pragma endregion
-
-#pragma region Get Name Tests
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_getName_NameIsEmptyString_ReturnsEmptyString)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::GameObjectScriptCommands::initialize(state);
-
-    GameObject gameObject;
-    gameObject.setName("");
-
-    Assert::AreEqual(string_id(""), gameObject.getName());
-
-    auto functionResult = state.globals()["GameObject"]["getName"].get<sol::protected_function>().call(
-      gameObject);
-
-    Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual("", functionResult.get<std::string>().c_str());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(GameObjectScriptCommands_getName_NameIsNonEmptyString_ReturnsCorrectString)
-  {
-    sol::state& state = LuaState::instance();
-    Celeste::Lua::GameObjectScriptCommands::initialize(state);
-
-    GameObject gameObject;
-    gameObject.setName("Test");
-
-    Assert::AreEqual(string_id("Test"), gameObject.getName());
-
-    auto functionResult = state.globals()["GameObject"]["getName"].get<sol::protected_function>().call(
-      gameObject);
-
-    Assert::IsTrue(functionResult.valid());
-    Assert::AreEqual("Test", functionResult.get<std::string>().c_str());
   }
 
 #pragma endregion

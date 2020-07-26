@@ -158,10 +158,24 @@ namespace Celeste
       return;
     }
 
-    observer_ptr<Data> data = getResourceManager().load<Data>(pathToFile);
+    Path savePath;
+    if (!getResourcesDirectory().isAncestorOf(pathToFile))
+    {
+      // A fairly vague attempt at handling relative and absolute paths
+      // This currently enforces data must be saved within resources
+      // as we see if the path we have is a full path relative to the resources directory
+      // or does not contain the resources directory path
+      savePath.combine(getResourcesDirectory(), pathToFile);
+    }
+    else
+    {
+      savePath.combine(pathToFile);
+    }
+
+    observer_ptr<Data> data = getResourceManager().load<Data>(savePath);
     if (data == nullptr)
     {
-      data = getResourceManager().create(pathToFile);
+      data = getResourceManager().create(savePath);
       if (data == nullptr)
       {
         ASSERT_FAIL();
@@ -181,7 +195,7 @@ namespace Celeste
     document.InsertFirstChild(document.NewDeclaration());
 
     // Now, save the data again
-    bool result = data->saveToFile(pathToFile);
+    bool result = data->saveToFile(savePath);
     ASSERT(result);
     celstl::unused(result);
   }

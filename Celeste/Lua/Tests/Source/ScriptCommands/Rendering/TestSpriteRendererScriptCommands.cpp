@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Objects/GameObjectScriptCommands.h"
 #include "ScriptCommands/Rendering/SpriteRendererScriptCommands.h"
@@ -7,7 +7,7 @@
 
 #include "Mocks/Rendering/MockSpriteRenderer.h"
 #include "TestResources/TestResources.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using LuaState = Celeste::Lua::LuaState;
 using SpriteRenderer = Celeste::Rendering::SpriteRenderer;

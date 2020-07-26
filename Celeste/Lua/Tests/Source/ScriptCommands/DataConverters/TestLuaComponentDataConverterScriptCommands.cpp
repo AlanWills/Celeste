@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/DataConverters/LuaComponentDataConverterScriptCommands.h"
 #include "Lua/DataConverters/LuaComponentDataConverterRegistry.h"

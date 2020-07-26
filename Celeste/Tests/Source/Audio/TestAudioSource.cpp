@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "Mocks/Audio/MockAudioSource.h"
 #include "Resources/ResourceManager.h"
 #include "TestResources/TestResources.h"
@@ -6,7 +6,7 @@
 #include "Audio/AudioManager.h"
 #include "OpenAL/OpenALState.h"
 #include "Registries/ComponentRegistry.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 #include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;

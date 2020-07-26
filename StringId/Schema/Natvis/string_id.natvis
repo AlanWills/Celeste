@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
   <Type Name="string_id">
-    <DisplayString Optional="true">{ m_debugString }</DisplayString>
+    <DisplayString Optional="true" Condition="m_debugString==0">empty</DisplayString>
+    <DisplayString Optional="true" Condition="m_debugString[0]==0">empty</DisplayString>
+    <DisplayString Optional="true">{ m_debugString,sb }</DisplayString>
+    <StringView Optional="true">m_debugString,sb</StringView>
     <Expand>
       <Item Name="Debug String" Optional="true">m_debugString</Item>
       <Item Name="Id">m_id</Item>

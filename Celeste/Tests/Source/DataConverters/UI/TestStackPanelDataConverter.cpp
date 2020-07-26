@@ -1,4 +1,4 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "Mocks/DataConverters/UI/MockStackPanelDataConverter.h"
 #include "TestResources/UI/StackPanelLoadingResources.h"
@@ -6,7 +6,7 @@
 #include "UI/StackPanel.h"
 #include "Mocks/Rendering/MockRenderer.h"
 #include "Registries/ComponentDataConverterRegistry.h"
-#include "TestUtils/Assert/AssertCel.h"
+#include "CelesteTestUtils/Assert/AssertCel.h"
 
 using namespace Celeste::Resources;
 using namespace Celeste::UI;

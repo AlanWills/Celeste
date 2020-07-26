@@ -1,9 +1,9 @@
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/RAII/AutoALDeallocator.h"
 
 #include "Resources/Audio/Sound.h"
 #include "Resources/ResourceManager.h"
 #include "TestResources/TestResources.h"
-#include "TestUtils/RAII/AutoALDeallocator.h"
 
 using namespace Celeste::Resources;
 

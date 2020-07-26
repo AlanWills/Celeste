@@ -1,7 +1,7 @@
 #include "Lua/DataConverters/LuaComponentDataConverterRegistry.h"
 #include "Lua/LuaState.h"
 
-#include "TestUtils/UtilityHeaders/UnitTestHeaders.h"
+#include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 #include "TestUtils/Assert/AssertExt.h"
 
 using namespace Celeste;

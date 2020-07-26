@@ -4,7 +4,7 @@
 
 namespace Testcelstl
 {
-  TEST_UTILS_TEST_CLASS(TestAlgorithmString)
+  BASE_TEST_CLASS(TestAlgorithmString)
 
 #pragma region Replace Tests
 
