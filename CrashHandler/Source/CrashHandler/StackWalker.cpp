@@ -82,7 +82,7 @@
  *
  **********************************************************************/
 
-#include "StackWalker.h"
+#include "CrashHandler/StackWalker.h"
 
 #include <stdio.h>
 #include <stdlib.h>

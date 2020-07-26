@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StackWalker/StackWalker.h"
+#include "CrashHandler/StackWalker.h"
 
 
 namespace CrashHandler
