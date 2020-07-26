@@ -275,3 +275,19 @@ set_target_properties(tinyxml2 PROPERTIES
 
 install(TARGETS tinyxml2 RUNTIME DESTINATION . COMPONENT applications)
 #---------------------------- end tinyxml2 ----------------------------##
+
+
+##---------------------------- StackWalker ----------------------------##
+## Originally just 1 header and 1 cpp, but not really set up for integration
+## I decided to just copy the files to the CrashHandler package
+
+#set(STACK_WALKER_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/StackWalker")
+#set(StackWalker_DISABLE_TESTS ON)
+
+#add_library(StackWalker STATIC 
+#    "${STACK_WALKER_PROJECT_DIR}/Main/StackWalker/StackWalker.h"
+#    "${STACK_WALKER_PROJECT_DIR}/Main/StackWalker/StackWalker.cpp")
+#target_include_directories(StackWalker PUBLIC "${STACK_WALKER_PROJECT_DIR}/Main")
+#set_target_properties(StackWalker PROPERTIES
+#    FOLDER ${THIRD_PARTY_FOLDER})
+#---------------------------- end tinyxml2 ----------------------------##

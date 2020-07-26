@@ -64,3 +64,6 @@
 [submodule "3rdParty/StaticTypeInfo"]
 	path = 3rdParty/StaticTypeInfo
 	url = https://github.com/TheLartians/StaticTypeInfo.git
+[submodule "3rdParty/StackWalker"]
+	path = 3rdParty/StackWalker
+	url = https://github.com/JochenKalmbach/StackWalker.git

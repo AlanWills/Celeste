@@ -21,6 +21,7 @@ set(LIBS
     StaticTypeInfo
     Platform
     Assert
+    CrashHandler
     Log
 	StringId
     CelesteStl

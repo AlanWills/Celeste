@@ -52,6 +52,7 @@ cbt_add_packages(PACKAGES
 	Platform
 	CelesteStl
 	Assert
+	CrashHandler
 	Log
 	StringId
 	FileSystem
