@@ -91,7 +91,7 @@ namespace Celeste::Resources
     tinyxml2::XMLError error = document.SaveFile(savePath.c_str());
     if (error != tinyxml2::XMLError::XML_SUCCESS)
     {
-      LOG(std::to_string(error));
+      Celeste::Log::error(error);
       ASSERT_FAIL();
       return nullptr;
     }

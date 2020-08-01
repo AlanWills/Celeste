@@ -1,37 +1,31 @@
 #pragma once
 
 #include "Dolce/DolceWindow.h"
-#include "Log/Verbosity.h"
+#include "spdlog/common.h"
 
 #include <vector>
+#include <memory>
+#include <bitset>
 
 
 namespace Celeste::Debug
 {
+  class DolceSink_st;
+
   class LogDolceWindow : public Dolce::DolceWindow
   {
     public:
       LogDolceWindow();
-      ~LogDolceWindow() override = default;
+      ~LogDolceWindow() override;
 
       void render() override;
 
-      void log(
-        const std::string& message,
-        Log::Verbosity verbosity,
-        const char* function,
-        const char* file,
-        int line);
-
     private:
-      void toggleLogFlag(Log::Verbosity verbosity);
-
       void clearLog();
+      void renderLogLine(const std::tuple<spdlog::level::level_enum, std::string>& logLine);
+      void renderLogFlag(const char* label, spdlog::level::level_enum level);
 
-      void renderLogFlag(const char* label, Log::Verbosity verbosity);
-      void renderLogLine(const std::tuple<Log::Verbosity, std::string>& logLine);
-
-      std::vector<std::tuple<Log::Verbosity, std::string>> m_logLines;
-      Log::Verbosity m_logFlags;
+      std::shared_ptr<DolceSink_st> m_dolceLogSink;
+      std::bitset<spdlog::level::level_enum::n_levels> m_logFlags;
   };
 }

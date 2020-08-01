@@ -1,6 +1,7 @@
 #include "Debug/Profiling/Profiler.h"
 #include "Time/Clock.h"
 #include "Utils/StringUtils.h"
+#include "spdlog/sinks/basic_file_sink.h"
 
 #include <chrono>
 
@@ -12,7 +13,7 @@ namespace Celeste
     m_logger(profilingFileFullPath),
     m_profilingInfo(MAX_PROFILING_BLOCKS)
   {
-    // We have a fixed max size so we can just reserve our map size straightaway to avoid runtime allocations
+    m_logger.sinks().push_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>(profilingFileFullPath));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -48,7 +49,7 @@ namespace Celeste
       logString.append("Profiling Block: ");
       logString.append(profilingInfo.second.getName());
 
-      m_logger.log(logString, Log::Verbosity::kRaw, profilingInfo.second.getName().c_str(), "", 0);
+      m_logger.info("{0} {1}", logString, profilingInfo.second.getName().c_str());
       logString.clear();
     }
 
@@ -57,7 +58,7 @@ namespace Celeste
       logString.append("Number of calls: ");
       numericToStringAppend(profilingInfo.second.m_numCalls, logString);
 
-      m_logger.log(logString, Log::Verbosity::kRaw, profilingInfo.second.getName().c_str(), "", 0);
+      m_logger.info("{0} {1}", logString, profilingInfo.second.getName().c_str());
       logString.clear();
     }
 
@@ -66,7 +67,7 @@ namespace Celeste
       logString.append("Average time (s): ");
       numericToStringAppend(Clock::systemSeconds(profilingInfo.second.m_averageTimeTaken), logString);
 
-      m_logger.log(logString, Log::Verbosity::kRaw, profilingInfo.second.getName().c_str(), "", 0);
+      m_logger.info("{0} {1}", logString, profilingInfo.second.getName().c_str());
       logString.clear();
     }
 
@@ -75,7 +76,7 @@ namespace Celeste
       logString.append("Last call time (s): ");
       numericToStringAppend(Clock::systemSeconds(profilingInfo.second.m_lastCallTimeTaken), logString);
 
-      m_logger.log(logString, Log::Verbosity::kRaw, profilingInfo.second.getName().c_str(), "", 0);
+      m_logger.info("{0} {1}", logString, profilingInfo.second.getName().c_str());
       logString.clear();
     }
   }

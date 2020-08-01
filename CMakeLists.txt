@@ -39,7 +39,15 @@ if (NOT DEFINED BUILDS_DIR)
     set(BUILDS_DIR ${PROJECT_SOURCE_DIR}/Build/${CMAKE_VS_PLATFORM_NAME})
 endif()
 
-set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty)
+if (NOT DEFINED CELESTE_DIR)
+    set(CELESTE_DIR ${PROJECT_SOURCE_DIR})
+endif()
+
+if (NOT DEFINED WORKING_DIR)
+    set(WORKING_DIR ${PROJECT_SOURCE_DIR})
+endif()
+
+set(THIRD_PARTY_DIR ${CELESTE_DIR}/3rdParty)
 #---------------------------- end Globals ----------------------------##
 
 
@@ -66,5 +74,6 @@ cbt_add_packages(PACKAGES
 	CelesteTestUtils)
 	
 if(${CELESTE_STANDALONE})
-	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Celeste)
+	cbt_add_packages(PACKAGES TestGame)
+	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT TestGame)
 endif()

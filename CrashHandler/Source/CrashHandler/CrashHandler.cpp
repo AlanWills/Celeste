@@ -12,7 +12,7 @@ namespace CrashHandler
   //------------------------------------------------------------------------------------------------
   void defaultSegmentationFaultHandler(int seg)
   {
-    LOG_CRITICAL_ERROR("Error Signal: " + std::to_string(seg));
+    Celeste::Log::critical("Error Signal: {0}", seg);
     LogStackWalker().ShowCallstack();
     std::abort();
   }

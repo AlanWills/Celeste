@@ -7,7 +7,7 @@ namespace CrashHandler
   //------------------------------------------------------------------------------------------------
   void LogStackWalker::OnOutput(LPCSTR szText)
   {
-    LOG_CRITICAL_ERROR(szText);
-    Celeste::Log::Logging::getLogger().flush();
+    Celeste::Log::critical(szText);
+    Celeste::Log::flush();
   }
 }

@@ -16,10 +16,10 @@ namespace Celeste
       int major = 0, minor = 0, revision = 0;
       glfwGetVersion(&major, &minor, &revision);
       
-      LOG("glfw Min Major Version: 3");
-      LOG("glfw Min Minor Version: 2");
-      LOG("glfw Device Major Version: " + std::to_string(major));
-      LOG("glfw Device Minor Version: " + std::to_string(minor));
+      Celeste::Log::info("glfw Min Major Version: 3");
+      Celeste::Log::info("glfw Min Minor Version: 2");
+      Celeste::Log::info("glfw Device Major Version: {0}", major);
+      Celeste::Log::info("glfw Device Minor Version: {0}", minor);
       
 #if GL_VERSION_3_0
       // If we have not yet initialized the glfw state, we do so now

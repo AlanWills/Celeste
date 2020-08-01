@@ -51,7 +51,7 @@ function(cbt_build_executable)
     target_include_directories(${PROJECT_NAME} PUBLIC "${BUILD_EXECUTABLE_INCLUDES}")
        
     if(BUILD_EXECUTABLE_LIBS)
-        target_link_libraries(${PROJECT_NAME} PUBLIC "${BUILD_EXECUTABLE_LIBS}")
+        target_link_libraries(${PROJECT_NAME} PUBLIC "${BUILD_EXECUTABLE_LIBS}" PRIVATE "${BUILD_EXECUTABLE_PRIVATE_LIBS}")
     endif()
 
     target_compile_options(${PROJECT_NAME} PRIVATE /MP4 /W4 /WX)
@@ -59,7 +59,7 @@ endfunction()
 
 function(cbt_build_library)
     set(oneValueArgs NAME FOLDER TYPE SOURCE_DIR RESOURCES_DIR RUNTIME_OUTPUT_DIRECTORY)
-    set(multiValueArgs INCLUDES LIBS)
+    set(multiValueArgs INCLUDES LIBS PRIVATE_LIBS)
     cmake_parse_arguments(BUILD_LIBRARY "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN} )
 
@@ -67,6 +67,10 @@ function(cbt_build_library)
 
     file(GLOB_RECURSE SOURCE_FILES ${BUILD_LIBRARY_SOURCE_DIR}/Source/*.c ${BUILD_LIBRARY_SOURCE_DIR}/Source/*.cpp)
     file(GLOB_RECURSE HEADER_FILES ${BUILD_LIBRARY_SOURCE_DIR}/Include/*.h ${BUILD_LIBRARY_SOURCE_DIR}/Include/*.hpp)
+    
+    if (NOT SOURCE_FILES AND NOT HEADER_FILES)
+        return()
+    endif()
 
     source_group(TREE ${BUILD_LIBRARY_SOURCE_DIR} FILES ${SOURCE_FILES})						   
     source_group(TREE ${BUILD_LIBRARY_SOURCE_DIR} FILES ${HEADER_FILES})
@@ -107,10 +111,7 @@ function(cbt_build_library)
     ENDIF()
 
     target_include_directories(${PROJECT_NAME} PUBLIC "${BUILD_LIBRARY_INCLUDES}")
-       
-    if (BUILD_LIBRARY_LIBS)
-        target_link_libraries(${PROJECT_NAME} PUBLIC "${BUILD_LIBRARY_LIBS}")
-    endif()
+    target_link_libraries(${PROJECT_NAME} PUBLIC "${BUILD_LIBRARY_LIBS}" PRIVATE "${BUILD_LIBRARY_PRIVATE_LIBS}")
 
     target_compile_options(${PROJECT_NAME} PRIVATE /MP4 /W4 /WX)
 
@@ -123,7 +124,7 @@ endfunction()
 
 function(cbt_build_project)
     set(oneValueArgs NAME FOLDER TYPE SOURCE_DIR RESOURCES_DIR APP_FILE RUNTIME_OUTPUT_DIRECTORY)
-    set(multiValueArgs INCLUDES LIBS TEST_LIBS)
+    set(multiValueArgs INCLUDES LIBS PRIVATE_LIBS TEST_LIBS)
     cmake_parse_arguments(BUILD_PROJECT "${options}" "${oneValueArgs}"
                           "${multiValueArgs}" ${ARGN})
     
@@ -138,12 +139,21 @@ function(cbt_build_project)
             TYPE SHARED
             SOURCE_DIR ${BUILD_PROJECT_SOURCE_DIR}
             LIBS ${BUILD_PROJECT_LIBS}
+            PRIVATE_LIBS "${BUILD_PROJECT_PRIVATE_LIBS}"
             TEST_LIBS ${BUILD_PROJECT_TEST_LIBS}
             RUNTIME_OUTPUT_DIRECTORY ${BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY})
 
-        set(EXECUTABLE_LIBS 
-            ${BUILD_PROJECT_NAME}Library
-            ${BUILD_PROJECT_NAME}LibraryScriptCommands)   # May have to check here that the library and lib projects exists
+        set(EXECUTABLE_LIBS "${BUILD_PROJECT_LIBS}")
+
+        if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/Source)
+            list(APPEND EXECUTABLE_LIBS ${BUILD_PROJECT_NAME}Library)
+        elseif (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/Include)
+            list(APPEND EXECUTABLE_LIBS ${BUILD_PROJECT_NAME}Library)
+        endif()
+
+        if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/Lua)
+            list(APPEND EXECUTABLE_LIBS ${BUILD_PROJECT_NAME}LibraryScriptCommands)
+        endif()
 
         cbt_build_executable(
             NAME ${BUILD_PROJECT_NAME}
@@ -166,6 +176,7 @@ function(cbt_build_project)
             RESOURCES_DIR ${BUILD_PROJECT_RESOURCES_DIR}
             INCLUDES "${BUILD_PROJECT_INCLUDES}"
             LIBS "${BUILD_PROJECT_LIBS}"
+            PRIVATE_LIBS "${BUILD_PROJECT_PRIVATE_LIBS}"
             RUNTIME_OUTPUT_DIRECTORY ${BUILD_PROJECT_RUNTIME_OUTPUT_DIRECTORY})
 
         # Lua Before Tests so that we don't get modification of parameters like tests libs

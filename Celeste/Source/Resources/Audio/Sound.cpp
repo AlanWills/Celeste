@@ -23,7 +23,7 @@ namespace Celeste::Resources
     if (m_audioHandle == AL_NONE)
     {
       const char* error = alutGetErrorString(alutGetError());
-      LOG_ERROR(error);
+      Celeste::Log::error(error);
       ASSERT_FAIL_MSG(error);
     }
 

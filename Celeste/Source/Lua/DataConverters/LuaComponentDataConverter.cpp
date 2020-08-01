@@ -276,7 +276,7 @@ namespace Celeste::Lua
     if (!doSetValuesResult.valid())
     {
       sol::error e = doSetValuesResult;
-      LOG(e.what());
+      Celeste::Log::error(e.what());
       ASSERT_FAIL();
     }
 #endif

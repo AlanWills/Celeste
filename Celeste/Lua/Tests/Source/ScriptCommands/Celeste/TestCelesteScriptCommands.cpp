@@ -1,7 +1,7 @@
 #include "CelesteTestUtils/UtilityHeaders/UnitTestHeaders.h"
 
 #include "ScriptCommands/Celeste/CelesteScriptCommands.h"
-#include "ScriptCommands/CelesteScriptCommandsConfig.h"
+#include "CelesteConfig.h"
 #include "Lua/LuaState.h"
 
 #include "Resources/ResourceUtils.h"
@@ -27,7 +27,7 @@ namespace TestCeleste::Lua::ScriptCommands
     Celeste::Lua::CelesteScriptCommands::initialize(state);
 
     std::string newPath = state["package"]["path"].get_or<std::string>("");
-    std::string expectedAddition = ";" + Path(LUA_SCRIPTS_DIRECTORY, "?.lua").as_string();
+    std::string expectedAddition = ";" + Path(CELESTE_DIR_FROM_WD, "Celeste", "Lua", "Resources", "Scripts", "?.lua").as_string();
 
     Assert::AreEqual(expectedAddition.size(), newPath.size() - oldPath.size());
     Assert::AreEqual(expectedAddition, newPath.substr(oldPath.size()));

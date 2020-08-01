@@ -36,7 +36,7 @@ namespace Celeste::Lua::Time::TimeNotifierSystemScriptCommands
           if (!result.valid())
           {
             sol::error error = result;
-            LOG(error.what());
+            Celeste::Log::info(error.what());
           }
         });
     }

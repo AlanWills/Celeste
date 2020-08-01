@@ -277,6 +277,18 @@ install(TARGETS tinyxml2 RUNTIME DESTINATION . COMPONENT applications)
 #---------------------------- end tinyxml2 ----------------------------##
 
 
+##---------------------------- spdlog ----------------------------##
+set(SPDLOG_PROJECT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/spdlog")
+set(SPDLOG_BUILD_SHARED true)
+add_subdirectory(${SPDLOG_PROJECT_DIR} ${SPDLOG_PROJECT_DIR}/build)
+
+set_target_properties(spdlog PROPERTIES
+    FOLDER ${THIRD_PARTY_FOLDER}
+    RUNTIME_OUTPUT_DIRECTORY ${BUILDS_DIR}
+    ARCHIVE_OUTPUT_DIRECTORY ${THIRD_PARTY_LIB_DIR})
+#---------------------------- end spdlog ----------------------------##
+
+
 ##---------------------------- StackWalker ----------------------------##
 ## Originally just 1 header and 1 cpp, but not really set up for integration
 ## I decided to just copy the files to the CrashHandler package

@@ -39,42 +39,42 @@ namespace Celeste::Lua::Core::ScriptCommands
     template <typename T>
     void log(T message)
     {
-      LOG(Celeste::to_string<T>(message));
+      Celeste::Log::info(Celeste::to_string<T>(message));
     }
 
     //------------------------------------------------------------------------------------------------
     template <>
     void log(const std::string& message)
     {
-      LOG(message);
+      Celeste::Log::info(message);
     }
 
     //------------------------------------------------------------------------------------------------
     template <typename T>
     void logWarning(T message)
     {
-      LOG_WARNING(Celeste::to_string<T>(message));
+      Celeste::Log::warn(Celeste::to_string<T>(message));
     }
 
     //------------------------------------------------------------------------------------------------
     template <>
     void logWarning(const std::string& message)
     {
-      LOG_WARNING(message);
+      Celeste::Log::warn(message);
     }
 
     //------------------------------------------------------------------------------------------------
     template <typename T>
     void logError(T message)
     {
-      LOG_ERROR(Celeste::to_string<T>(message));
+      Celeste::Log::error(Celeste::to_string<T>(message));
     }
 
     //------------------------------------------------------------------------------------------------
     template <>
     void logError(const std::string& message)
     {
-      LOG_ERROR(message);
+      Celeste::Log::error(message);
     }
 
     //------------------------------------------------------------------------------------------------

@@ -163,7 +163,7 @@ namespace Celeste::Lua
         if (!result.valid())
         {
           sol::error error = result;
-          LOG(error.what());
+          Celeste::Log::info(error.what());
         }
       });
   }

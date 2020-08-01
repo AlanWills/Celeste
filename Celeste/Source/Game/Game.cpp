@@ -9,20 +9,19 @@
 #include "Settings/StartupSettings.h"
 
 #include "Log/Log.h"
-#include "Debug/Logging/FileLogger.h"
 #include "Scene/SceneManager.h"
 #include "Input/InputManager.h"
 #include "Physics/PhysicsManager.h"
 #include "Rendering/RenderManager.h"
 #include "Audio/AudioManager.h"
 #include "Layout/LayoutSystem.h"
+#include "Time/TimeNotifierSystem.h"
 
 #if _DEBUG
 #include "Dolce/Dolce.h"
 #include "Debug/Windows/HierarchyDolceWindow.h"
 #include "Debug/Windows/LuaScriptDolceWindow.h"
 #include "Debug/Windows/LogDolceWindow.h"
-#include "Debug/Logging/DolceLogger.h"
 #include "Settings/DolceSettings.h"
 
 #include "imgui/imgui.h"
@@ -124,6 +123,7 @@ namespace Celeste
     addSystem<Rendering::RenderManager>();
     addSystem<Audio::AudioManager>();
     addSystem<Layout::LayoutSystem>(m_window);
+    addSystem<Time::TimeNotifierSystem>();
 
 #if _DEBUG
     std::unique_ptr<System::ISystem> dolce = std::make_unique<Dolce::Dolce>(m_window.getGLWindow());
@@ -196,10 +196,7 @@ namespace Celeste
 
     dolce.addWindow(std::make_unique<Debug::HierarchyDolceWindow>(*getSystem<SceneManager>()));
     dolce.addWindow(std::make_unique<Debug::LuaScriptDolceWindow>());
-    auto logWindow = dolce.addWindow(std::make_unique<Debug::LogDolceWindow>());
-
-    Path logPath(Directory::getExecutingAppDirectory(), "Log.txt");
-    Celeste::Log::Logging::setLogger(std::make_unique<Log::DolceLogger>(*logWindow, logPath));
+    dolce.addWindow(std::make_unique<Debug::LogDolceWindow>());
 
     onInitializeDolce(dolce);
 
@@ -278,9 +275,7 @@ namespace Celeste
     GL::terminate();
 
     // We flush the logger here to allow it to write any remaining information
-    // Then we reset it to allow proper cleanup before the app terminates
-    Log::Logging::getLogger().flush();
-    Log::Logging::setLogger(std::unique_ptr<Log::ILogger>(nullptr));
+    Log::flush();
   }
 
   //------------------------------------------------------------------------------------------------

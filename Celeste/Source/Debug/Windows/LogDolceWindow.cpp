@@ -1,62 +1,56 @@
 #include "Debug/Windows/LogDolceWindow.h"
+#include "spdlog/sinks/base_sink.h"
 #include "Assert/Assert.h"
+#include "Log/Log.h"
 
 using namespace celstl;
 
 
 namespace Celeste::Debug
 {
+  //------------------------------------------------------------------------------------------------
+  class DolceSink_st : public spdlog::sinks::base_sink<spdlog::details::null_mutex>
+  {
+    public:
+      using LogLine = std::tuple<spdlog::level::level_enum, std::string>;
+      using LogLines = std::vector<LogLine>;
+
+      const LogLines& getLogLines() const { return m_logLines; }
+      void clear() { m_logLines.clear(); }
+
+    protected:
+      void sink_it_(const spdlog::details::log_msg& msg) override 
+      { 
+        m_logLines.emplace_back(msg.level, msg.payload.data());
+      }
+      void flush_() override {}
+
+    private:
+      std::vector<std::tuple<spdlog::level::level_enum, std::string>> m_logLines;
+  };
+
   namespace Internals
   {
     //------------------------------------------------------------------------------------------------
-    std::string getVerbosityString(Log::Verbosity verbosity)
+    ImVec4 getLevelColour(spdlog::level::level_enum level)
     {
-      switch (verbosity)
+      switch (level)
       {
-      case Log::Verbosity::kInfo:
-        return "INFO";
-
-      case Log::Verbosity::kWarning:
-        return "WARNING";
-
-      case Log::Verbosity::kError:
-        return "ERROR";
-
-      case Log::Verbosity::kCriticalError:
-        return "CRITICAL ERROR";
-
-      case Log::Verbosity::kRaw:
-        return "";
-
-      default:
-        ASSERT_FAIL();
-        return "";
-      }
-    }
-
-    //------------------------------------------------------------------------------------------------
-    ImVec4 getVerbosityColour(Log::Verbosity verbosity)
-    {
-      switch (verbosity)
-      {
-      case Log::Verbosity::kInfo:
+      case spdlog::level::level_enum::info:
         return ImVec4(1, 1, 1, 1);
 
-      case Log::Verbosity::kWarning:
+      case spdlog::level::level_enum::warn:
         return ImVec4(1, 1, 0, 1);
 
-      case Log::Verbosity::kError:
+      case spdlog::level::level_enum::err:
         return ImVec4(1, 0, 0, 1);
 
-      case Log::Verbosity::kCriticalError:
+      case spdlog::level::level_enum::critical:
         return ImVec4(0.25f, 0, 0, 1);
-
-      case Log::Verbosity::kRaw:
-        return ImVec4(1, 1, 1, 1);
 
       default:
         ASSERT_FAIL();
-        return ImVec4(0, 0, 0, 0);
+        return ImVec4(1, 1, 1, 1);
       }
     }
   }
@@ -64,70 +58,42 @@ namespace Celeste::Debug
   //------------------------------------------------------------------------------------------------
   LogDolceWindow::LogDolceWindow() :
     DolceWindow("Log"),
-    m_logFlags(Log::Verbosity::kRaw | 
-               Log::Verbosity::kInfo | 
-               Log::Verbosity::kWarning | 
-               Log::Verbosity::kError | 
-               Log::Verbosity::kCriticalError)
+    m_dolceLogSink(std::make_shared<DolceSink_st>()),
+    m_logFlags()
   {
+    m_logFlags.set();
+    Log::addSink(m_dolceLogSink);
   }
 
   //------------------------------------------------------------------------------------------------
-  void LogDolceWindow::log(
-    const std::string& message,
-    Log::Verbosity verbosity,
-    const char* function,
-    const char* file,
-    int line)
+  LogDolceWindow::~LogDolceWindow()
   {
-    std::string logLine;
-
-    if (verbosity != Log::Verbosity::kRaw)
-    {
-      logLine.append(Internals::getVerbosityString(verbosity));
-      logLine.append(": ");
-    }
-
-    logLine.append(message);
-    logLine.append(" in ");
-    logLine.append(function);
-    logLine.append(", line ");
-    logLine.append(std::to_string(line));
-    logLine.append(", file ");
-    logLine.append(file);
-
-    m_logLines.emplace_back(verbosity, logLine);
+    Log::removeSink(m_dolceLogSink);
   }
 
   //------------------------------------------------------------------------------------------------
   void LogDolceWindow::render()
-  {
-    renderLogFlag("Raw", Log::Verbosity::kRaw);
+  { 
+    renderLogFlag("Info", spdlog::level::level_enum::info);
     
     ImGui::SameLine();
     ImGui::Spacing();
     ImGui::SameLine();
-
-    renderLogFlag("Info", Log::Verbosity::kInfo);
-
+    
+    renderLogFlag("Warning", spdlog::level::level_enum::warn);
+    
     ImGui::SameLine();
     ImGui::Spacing();
     ImGui::SameLine();
-
-    renderLogFlag("Warning", Log::Verbosity::kWarning);
-
+    
+    renderLogFlag("Error", spdlog::level::level_enum::err);
+    
     ImGui::SameLine();
     ImGui::Spacing();
     ImGui::SameLine();
-
-    renderLogFlag("Error", Log::Verbosity::kError);
-
-    ImGui::SameLine();
-    ImGui::Spacing();
-    ImGui::SameLine();
-
-    renderLogFlag("Critical Error", Log::Verbosity::kCriticalError);
-
+    
+    renderLogFlag("Critical Error", spdlog::level::level_enum::critical);
+    
     ImGui::SameLine();
     ImGui::Spacing();
     ImGui::SameLine();
@@ -141,9 +107,9 @@ namespace Celeste::Debug
 
     ImGui::Separator();
 
-    for (const auto& logLine : m_logLines)
+    for (const auto& logLine : m_dolceLogSink->getLogLines())
     {
-      if (celstl::hasFlag(m_logFlags, std::get<0>(logLine)))
+      if (m_logFlags.test(static_cast<size_t>(std::get<0>(logLine))))
       {
         renderLogLine(logLine);
       }
@@ -153,33 +119,29 @@ namespace Celeste::Debug
   }
 
   //------------------------------------------------------------------------------------------------
-  void LogDolceWindow::toggleLogFlag(Log::Verbosity verbosity)
+  void LogDolceWindow::renderLogFlag(const char* label, spdlog::level::level_enum level)
   {
-    m_logFlags ^= verbosity;
+    size_t levelAsSizet = static_cast<size_t>(level);
+    bool isFlagEnabled = m_logFlags.test(levelAsSizet);
+
+    if (ImGui::Checkbox(label, &isFlagEnabled))
+    {
+      m_logFlags.flip(levelAsSizet);
+    }
   }
 
   //------------------------------------------------------------------------------------------------
   void LogDolceWindow::clearLog()
   {
-    m_logLines.clear();
+    m_dolceLogSink->clear();
   }
 
   //------------------------------------------------------------------------------------------------
-  void LogDolceWindow::renderLogFlag(const char* label, Log::Verbosity verbosity)
-  {
-    bool isFlagEnabled = celstl::hasFlag(m_logFlags, verbosity);
-    if (ImGui::Checkbox(label, &isFlagEnabled))
-    {
-      toggleLogFlag(verbosity);
-    }
-  }
-
-  //------------------------------------------------------------------------------------------------
-  void LogDolceWindow::renderLogLine(const std::tuple<Log::Verbosity, std::string>& logLine)
+  void LogDolceWindow::renderLogLine(const std::tuple<spdlog::level::level_enum, std::string>& logLine)
   {
     const char* text = std::get<1>(logLine).c_str();
-
-    ImGui::PushStyleColor(ImGuiCol_Text, Internals::getVerbosityColour(std::get<0>(logLine)));
+    
+    ImGui::PushStyleColor(ImGuiCol_Text, Internals::getLevelColour(std::get<0>(logLine)));
     ImGui::Text(text);
     ImGui::PopStyleColor();
   }

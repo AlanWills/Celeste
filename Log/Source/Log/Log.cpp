@@ -1,33 +1,31 @@
 #include "Log/Log.h"
-#include "Log/StdoutLogger.h"
-#include "FileSystem/Directory.h"
+#include "spdlog/sinks/basic_file_sink.h"
 
 
 namespace Celeste::Log
 {
-  std::unique_ptr<ILogger> Logging::m_logger = std::unique_ptr<ILogger>(new StdoutLogger());
-
   //------------------------------------------------------------------------------------------------
-  Logging::Logging()
+  void addSink(spdlog::sink_ptr sink)
   {
+    spdlog::default_logger()->sinks().emplace_back(sink);
   }
 
   //------------------------------------------------------------------------------------------------
-  Logging& Logging::instance()
+  void addFileSink(const std::string& logFilePath)
   {
-    static Logging instance;
-    return instance;
+    addSink(std::make_shared<spdlog::sinks::basic_file_sink_mt>(logFilePath));
   }
 
   //------------------------------------------------------------------------------------------------
-  void Logging::setLogger(std::unique_ptr<ILogger>&& logger)
-  { 
-    m_logger = std::move(logger); 
+  void removeSink(spdlog::sink_ptr sink)
+  {
+    auto& sinks = spdlog::default_logger()->sinks();
+    sinks.erase(std::remove(sinks.begin(), sinks.end(), sink));
   }
 
   //------------------------------------------------------------------------------------------------
-  ILogger& Logging::getLogger()
-  { 
-    return *m_logger; 
+  void flush()
+  {
+    spdlog::default_logger()->flush();
   }
 }
