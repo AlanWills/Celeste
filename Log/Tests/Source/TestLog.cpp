@@ -3,11 +3,8 @@
 #include "Log/Log.h"
 #include "FileSystem/Path.h"
 #include "FileSystem/Directory.h"
-
-#include "Mocks/Log/MockLogger.h"
-
-#include <chrono>
-#include <thread>
+#include "spdlog/sinks/stdout_sinks.h"
+#include "spdlog/sinks/basic_file_sink.h"
 
 using namespace Celeste;
 using namespace Celeste::Log;
@@ -15,110 +12,95 @@ using namespace Celeste::Log;
 
 namespace TestLog
 {
-  static Path logFilePath(Directory::getExecutingAppDirectory(), "Log.txt");
-
   BASE_TEST_CLASS(TestLog)
-    
+
+  std::shared_ptr<spdlog::logger> defaultLogger;
+
   //------------------------------------------------------------------------------------------------
-  void TestLog::testInitialize()
+  void TestLog::testInitialize() override
   {
-    Logging::setLogger(std::make_unique<MockLogger>());
+    defaultLogger = spdlog::default_logger();
   }
 
   //------------------------------------------------------------------------------------------------
-  MockLogger& TestLog::getMockLogger()
+  void TestLog::testCleanup() override
   {
-    return static_cast<MockLogger&>(Logging::getLogger());
+    spdlog::set_default_logger(defaultLogger);
   }
 
-#pragma region Macro Tests
+#pragma region Add Sink Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Log_LOG_Macro_LogsMessageCorrectly)
+  TEST_METHOD(Log_AddSink_AddsSinkToDefaultLogger)
   {
-    getMockLogger().m_onLogCalled = [](const std::string& message, Verbosity verbosity)
-    {
-      Assert::AreEqual("Test", message.c_str());
-      Assert::IsTrue(Verbosity::kRaw == verbosity);
-    };
+    std::shared_ptr<spdlog::logger> logger = spdlog::create<spdlog::sinks::stdout_sink_mt>("Log");
+    spdlog::set_default_logger(logger);
 
-    LOG("Test");
+    Assert::AreEqual(static_cast<size_t>(1), logger->sinks().size());
+
+    std::shared_ptr<spdlog::sinks::stderr_sink_st> sink = std::make_shared<spdlog::sinks::stderr_sink_st>();
+    addSink(sink);
+
+    Assert::AreEqual(static_cast<size_t>(2), logger->sinks().size());
+    Assert::IsTrue(sink == logger->sinks()[1]);
   }
 
+#pragma endregion
+
+#pragma region Add File Sink Tests
+
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Log_LOG_INFO_Macro_LogsMessageCorrectly)
+  TEST_METHOD(Log_AddFileSink_AddsFileSinkToDefaultLogger)
   {
-    int line = LINE;
-    LOG_INFO("Test");
+    std::shared_ptr<spdlog::logger> logger = spdlog::create<spdlog::sinks::stdout_sink_mt>("Log");
+    spdlog::set_default_logger(logger);
 
-    getMockLogger().m_onLogCalled = [&line](const std::string& message, Verbosity verbosity)
-    {
-      std::string expected("Info: \"Test\" in function: Log_LOG_INFO_Macro_LogsMessageCorrectly, in file: ");
-      expected.append(FILENAME);
-      expected.append(", on line: ");
-      expected.append(std::to_string(line + 1));
-      expected.append("\n");
+    Assert::AreEqual(static_cast<size_t>(1), logger->sinks().size());
 
-      Assert::AreEqual(expected, message);
-      Assert::IsTrue(Verbosity::kInfo == verbosity);
-    };
+    addFileSink("Log.txt");
+
+    Assert::AreEqual(static_cast<size_t>(2), logger->sinks().size());
+    Assert::IsNotNull(dynamic_cast<spdlog::sinks::basic_file_sink_mt*>(logger->sinks()[1].get()));
   }
 
-  //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Log_LOG_WARNING_Macro_LogsWarningCorrectly)
-  {
-    int line = LINE;
-    LOG_WARNING("Test");
+#pragma endregion
 
-    getMockLogger().m_onLogCalled = [&line](const std::string& message, Verbosity verbosity)
-    {
-      std::string expected("Warning: \"Test\" in function: Log_LOG_WARNING_Macro_LogsWarningCorrectly, in file: ");
-      expected.append(FILENAME);
-      expected.append(", on line: ");
-      expected.append(std::to_string(line + 1));
-      expected.append("\n");
-
-      Assert::AreEqual(expected, message);
-      Assert::IsTrue(Verbosity::kInfo == verbosity);
-    };
-  }
+#pragma region Remove Sink Tests
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Log_LOG_ERROR_Macro_LogsErrorCorrectly)
+  TEST_METHOD(Log_RemoveSink_InputtingUnregisteredSink_DoesNothing)
   {
-    int line = LINE;
-    LOG_ERROR("Test");
+    std::shared_ptr<spdlog::logger> logger = spdlog::create<spdlog::sinks::stdout_sink_mt>("Log");
+    spdlog::set_default_logger(logger);
 
-    getMockLogger().m_onLogCalled = [&line](const std::string& message, Verbosity verbosity)
-    {
-      std::string expected("Error: \"Test\" in function: Log_LOG_ERROR_Macro_LogsErrorCorrectly, in file: ");
-      expected.append(FILENAME);
-      expected.append(", on line: ");
-      expected.append(std::to_string(line + 1));
-      expected.append("\n");
+    Assert::AreEqual(static_cast<size_t>(1), logger->sinks().size());
 
-      Assert::AreEqual(expected, message);
-      Assert::IsTrue(Verbosity::kInfo == verbosity);
-    };
+    auto original = logger->sinks()[0];
+    std::shared_ptr<spdlog::sinks::stderr_sink_st> sink = std::make_shared<spdlog::sinks::stderr_sink_st>();
+    removeSink(sink);
+
+    Assert::AreEqual(static_cast<size_t>(1), logger->sinks().size());
+    Assert::IsTrue(original == logger->sinks()[0]);
   }
 
   //------------------------------------------------------------------------------------------------
-  TEST_METHOD(Log_LOG_CRITICAL_ERROR_Macro_LogsCriticalErrorCorrectly)
+  TEST_METHOD(Log_RemoveSink_InputtingRegisteredSink_RemovesSink)
   {
-    int line = LINE;
-    LOG_CRITICAL_ERROR("Test");
+    std::shared_ptr<spdlog::logger> logger = spdlog::create<spdlog::sinks::stdout_sink_mt>("Log");
+    spdlog::set_default_logger(logger);
 
-    getMockLogger().m_onLogCalled = [&line](const std::string& message, Verbosity verbosity)
-    {
-      std::string expected("Critical Error: \"Test\" in function: Log_LOG_CRITICAL_ERROR_Macro_LogsCriticalErrorCorrectly, in file: ");
-      expected.append(FILENAME);
-      expected.append(", on line: ");
-      expected.append(std::to_string(line + 1));
-      expected.append("\n");
+    Assert::AreEqual(static_cast<size_t>(1), logger->sinks().size());
 
-      Assert::AreEqual(expected, message);
-      Assert::IsTrue(Verbosity::kInfo == verbosity);
-    };
+    std::shared_ptr<spdlog::sinks::stderr_sink_st> sink = std::make_shared<spdlog::sinks::stderr_sink_st>();
+    addSink(sink);
+
+    Assert::AreEqual(static_cast<size_t>(2), logger->sinks().size());
+    Assert::IsTrue(sink == logger->sinks()[1]);
+
+    removeSink(sink);
+
+    Assert::AreEqual(static_cast<size_t>(1), logger->sinks().size());
+    Assert::IsTrue(sink != logger->sinks()[0]);
   }
 
 #pragma endregion

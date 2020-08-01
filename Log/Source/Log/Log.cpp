@@ -20,7 +20,12 @@ namespace Celeste::Log
   void removeSink(spdlog::sink_ptr sink)
   {
     auto& sinks = spdlog::default_logger()->sinks();
-    sinks.erase(std::remove(sinks.begin(), sinks.end(), sink));
+    auto sinkIt = std::remove(sinks.begin(), sinks.end(), sink);
+
+    if (sinkIt != sinks.end())
+    {
+      sinks.erase(sinkIt);
+    }
   }
 
   //------------------------------------------------------------------------------------------------
